@@ -1,0 +1,12 @@
+.checkbox {
+  cursor: pointer;
+  transform: scale(2);
+  display: table;
+  position: relative;
+  left: 43%;
+  accent-color: #f5329498;
+}
+
+/* .checkbox :disabled {
+  accent-color: #f532cb99 !important;
+} */

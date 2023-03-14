@@ -1,0 +1,56 @@
+[
+  {
+    "id": "businessDepartmentManagement",
+    "path": "factories",
+    "componentName": "BusinessDepartmentSet",
+    "onlySearch": true
+  },
+  {
+    "id": "lineManagement",
+    "path": "lines",
+    "componentName": "LineSet",
+    "onlySearch": true
+  },
+  {
+    "id": "processManagement",
+    "path": "process",
+    "componentName": "ProcessSet",
+    "onlySearch": true
+  },
+  {
+    "id": "facilityManagement",
+    "path": "equipments",
+    "componentName": "EquipmentSet",
+    "onlySearch": true
+  },
+  {
+    "id": "productClassificationManagement",
+    "path": "productsgbn",
+    "componentName": "ProductGbnSet",
+    "onlySearch": true
+  },
+  {
+    "id": "productTypeManagement",
+    "path": "productstype",
+    "componentName": "ProductTypeSet",
+    "onlySearch": true
+  },
+  {
+    "id": "productManagement",
+    "path": "products",
+    "componentName": "ProductSet",
+    "onlySearch": true
+  },
+  {
+    "id": "routingManagement",
+    "path": "routings",
+    "componentName": "RoutingSet",
+    "onlySearch": true
+  },
+  {
+    "id": "inspectionStandardManagement",
+    "path": "inspectionstandardmanagement",
+    "componentName": "InspectionStandardManagement",
+    "onlySearch": false
+  }
+]

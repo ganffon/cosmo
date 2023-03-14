@@ -1,0 +1,10 @@
+{
+  "factories": "/factories",
+  "lines": "/lines",
+  "process": "/process",
+  "equipments": "/equipments",
+  "productsgbn": "/productsgbn",
+  "productstype": "/productstype",
+  "products": "/products",
+  "routings": "/routings"
+}
