@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import Input from "components/input/Input";
 import ButtonSearch from "components/button/ButtonSearch";
 import GridModule from "components/grid/GridModule";
@@ -8,16 +8,40 @@ import { LayoutEvent } from "components/layout/common/Layout";
 
 function InspectionStandardManagement() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutEvent);
-  const [test, setTest] = useState(true);
-  // console.log(test);
+  const boxRef = useRef(null);
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollActive, setScrollActive] = useState(false);
+
+  function scrollDetect() {
+    setScrollY(boxRef?.current?.scrollTop);
+    if (boxRef?.current?.scrollTop > 240) {
+      console.log("true");
+      setScrollActive(true);
+    } else {
+      console.log("false");
+      setScrollActive(false);
+    }
+  }
+
+  useEffect(() => {
+    function watchScroll() {
+      boxRef?.current?.addEventListener("scroll", scrollDetect);
+    }
+    watchScroll();
+    return () => {
+      boxRef?.current?.removeEventListener("scroll", scrollDetect);
+    };
+  });
+
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
-      <S.ShadowBoxFixed isMenuSlide={isMenuSlide}>
+    <S.ContentsArea ref={boxRef} isAllScreen={isAllScreen}>
+      <S.ShadowBoxFixed isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ButtonWrap>
           <ButtonSearch />
         </S.ButtonWrap>
       </S.ShadowBoxFixed>
       <S.paddingBox>
+        {/* <S.paddingBox> */}
         <S.ShadowBox>
           <S.GridTopWrap>
             <GridModule
@@ -29,7 +53,12 @@ function InspectionStandardManagement() {
             />
           </S.GridTopWrap>
         </S.ShadowBox>
-        <S.ShadowBox>
+        <S.ShadowBoxSticky
+          scrollActive={scrollActive}
+          isMenuSlide={isMenuSlide}
+          isAllScreen={isAllScreen}
+        >
+          {/* <S.ShadowBoxSticky> */}
           <S.InputWrap>
             <Input id="standardNo" name="검사기준서번호" value="test test" />
             <Input id="1" name="라인" value="test test" />
@@ -41,7 +70,7 @@ function InspectionStandardManagement() {
             <Input id="7" name="개정내역" value="test test" />
             <Input id="8" name="비고" value="test test" />
           </S.InputWrap>
-        </S.ShadowBox>
+        </S.ShadowBoxSticky>
         <S.ShadowBox>
           <S.GridBottomWrap>
             <GridModule
