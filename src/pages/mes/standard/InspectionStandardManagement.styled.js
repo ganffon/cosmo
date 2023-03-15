@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { APP_BAR_HEIGHT } from "constant/Layout";
+import { APP_BAR_HEIGHT, FIXED_LEFT } from "constant/Layout";
 
 const ContentsArea = styled("div")`
   width: 100%;
@@ -15,8 +15,26 @@ const ShadowBoxFixed = styled("div")`
     props.isMenuSlide ? `calc(100% - 7.5rem)` : `calc(100% - 2rem)`};
   height: auto;
   position: fixed;
-  top: ${(props) => (props.isAllScreen ? 0 : 100)};
-  left: 1;
+  top: ${(props) => (props.isAllScreen ? "0px" : `${APP_BAR_HEIGHT}`)};
+  left: ${(props) => (props.isMenuSlide ? `${FIXED_LEFT}` : "10px")};
+  z-index: 100;
+  border-radius: 3px;
+  border-color: rgb(255, 255, 255);
+  margin-top: 8px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
+const ShadowBoxSticky = styled("div")`
+  background-color: rgb(255, 255, 255);
+  width: ${(props) =>
+    props.scrollActive
+      ? props.isMenuSlide
+        ? `calc(100% - 7.5rem)`
+        : `calc(100% - 2rem)`
+      : "100%"};
+  height: auto;
+  position: ${(props) => (props.scrollActive ? "fixed" : "static")};
+  top: ${(props) => (props.isAllScreen ? `${APP_BAR_HEIGHT}` : "93px")};
+  left: ${(props) => (props.isMenuSlide ? `${FIXED_LEFT}` : "10px")};
   z-index: 100;
   border-radius: 3px;
   border-color: rgb(255, 255, 255);
@@ -24,7 +42,7 @@ const ShadowBoxFixed = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 const paddingBox = styled("div")`
-  padding-top: 50px;
+  padding-top: ${APP_BAR_HEIGHT};
 `;
 const ShadowBox = styled("div")`
   background-color: rgb(255, 255, 255);
@@ -52,11 +70,12 @@ const GridTopWrap = styled("div")`
 `;
 const GridBottomWrap = styled("div")`
   width: 100%;
-  height: 700px;
+  height: 3000px;
 `;
 export {
   ContentsArea,
   ShadowBoxFixed,
+  ShadowBoxSticky,
   paddingBox,
   ShadowBox,
   InputWrap,
