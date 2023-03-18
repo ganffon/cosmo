@@ -93,7 +93,7 @@ function InsertPopup(props) {
           color="error"
           onClick={onClickRemoveRow}
         >
-          CANCLE ROW
+          CANCEL ROW
         </S.ButtonSet>
         <S.ButtonSet
           startIcon={<SaveIcon />}
