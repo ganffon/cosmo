@@ -32,11 +32,6 @@ export default function MainRouter() {
   // if (realMenuList.length === 0) {
   //   return <div>Loading...</div>;
   // }
-  const pages = require
-    .context("../pages/mes/material", true, /\\.jsx$/)
-    .keys()
-    .map((page) => page.slice(2, -4));
-  console.log(pages);
   return (
     <Layout>
       <Routes>

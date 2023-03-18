@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 // ⬇️ import MUI
-import InputAdornment from "@mui/material/InputAdornment";
 // ⬇️ reference of page
 import DatePicker from "./DatePicker";
 import { SearchBarBoxEvent } from "./SearchBarBox";
@@ -23,15 +22,10 @@ function InputBox(props) {
             <S.InputSet
               key={value.id}
               id={value.id}
-              InputProps={{
-                sx: { height: 30 },
-                startAdornment: (
-                  <InputAdornment position="start">{value.name}</InputAdornment>
-                ),
-              }}
               variant="outlined"
               autoComplete="off"
               size="small"
+              label={value.name}
               nameLength={value.name.length}
               onChange={inputTextChange}
               onKeyPress={onKeyPress}
