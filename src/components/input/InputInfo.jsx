@@ -1,7 +1,7 @@
 import React from "react";
-import * as S from "./Input.styled";
+import * as S from "./InputInfo.styled";
 
-function Input(props) {
+function InputInfo(props) {
   const { id, name, value } = props;
   return (
     <S.InputBox>
@@ -19,4 +19,4 @@ function Input(props) {
   );
 }
 
-export default Input;
+export default InputInfo;

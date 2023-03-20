@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import Input from "components/input/Input";
+import InputInfo from "components/input/InputInfo";
 import ButtonSearch from "components/button/ButtonSearch";
 import GridModule from "components/grid/GridModule";
 import InspectionStandardManagementSet from "pages/gridSetting/InspectionStandardManagementSet";
@@ -60,15 +60,19 @@ function InspectionStandardManagement() {
         >
           {/* <S.ShadowBoxSticky> */}
           <S.InputWrap>
-            <Input id="standardNo" name="검사기준서번호" value="test test" />
-            <Input id="1" name="라인" value="test test" />
-            <Input id="2" name="품번" value="test test" />
-            <Input id="3" name="품목명" value="test test" />
-            <Input id="4" name="개정일시" value="test test" />
-            <Input id="5" name="적용일시" value="test test" />
-            <Input id="6" name="적용여부" value="test test" />
-            <Input id="7" name="개정내역" value="test test" />
-            <Input id="8" name="비고" value="test test" />
+            <InputInfo
+              id="standardNo"
+              name="검사기준서번호"
+              value="test test"
+            />
+            <InputInfo id="1" name="라인" value="test test" />
+            <InputInfo id="2" name="품번" value="test test" />
+            <InputInfo id="3" name="품목명" value="test test" />
+            <InputInfo id="4" name="개정일시" value="test test" />
+            <InputInfo id="5" name="적용일시" value="test test" />
+            <InputInfo id="6" name="적용여부" value="test test" />
+            <InputInfo id="7" name="개정내역" value="test test" />
+            <InputInfo id="8" name="비고" value="test test" />
           </S.InputWrap>
         </S.ShadowBoxSticky>
         <S.ShadowBox>
