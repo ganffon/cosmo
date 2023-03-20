@@ -17,6 +17,8 @@ function ProcessSet(isEditMode) {
       test2: "TEST TEST",
     },
   ];
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -137,7 +139,7 @@ function ProcessSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_id",
+      name: "delete_uid",
       header: "삭제자ID",
       minWidth: WIDTH_SHORT,
       align: "center",
@@ -182,14 +184,18 @@ function ProcessSet(isEditMode) {
 
   const uri = restURI.process;
 
+  const buttonDisabled = false;
+
   return {
     data,
+    rowHeaders,
     columns,
     columnOptions,
     header,
     datePickerSet,
     inputSet,
     uri,
+    buttonDisabled,
   };
 }
 

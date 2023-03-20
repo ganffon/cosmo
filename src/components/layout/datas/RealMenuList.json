@@ -1,43 +1,43 @@
 [
   {
-    "id": "businessDepartmentManagement",
-    "path": "factories",
-    "componentName": "BusinessDepartmentSet",
+    "id": "factory",
+    "path": "factory",
+    "componentName": "FactorySet",
     "onlySearch": true
   },
   {
-    "id": "lineManagement",
-    "path": "lines",
-    "componentName": "Line",
-    "onlySearch": false
+    "id": "line",
+    "path": "line",
+    "componentName": "LineSet",
+    "onlySearch": true
   },
   {
-    "id": "processManagement",
+    "id": "process",
     "path": "process",
     "componentName": "ProcessSet",
     "onlySearch": true
   },
   {
-    "id": "facilityManagement",
-    "path": "equipments",
+    "id": "equipment",
+    "path": "equipment",
     "componentName": "EquipmentSet",
     "onlySearch": true
   },
   {
-    "id": "productClassificationManagement",
-    "path": "productsgbn",
+    "id": "product-gbn",
+    "path": "product-gbn",
     "componentName": "ProductGbnSet",
     "onlySearch": true
   },
   {
-    "id": "productTypeManagement",
-    "path": "productstype",
+    "id": "product-type",
+    "path": "product-type",
     "componentName": "ProductTypeSet",
     "onlySearch": true
   },
   {
-    "id": "productManagement",
-    "path": "products",
+    "id": "product",
+    "path": "product",
     "componentName": "ProductSet",
     "onlySearch": true
   },
@@ -48,9 +48,9 @@
     "onlySearch": true
   },
   {
-    "id": "inspectionStandardManagement",
-    "path": "inspectionstandardmanagement",
-    "componentName": "InspectionStandardManagement",
+    "id": "document",
+    "path": "document",
+    "componentName": "DocumentSet",
     "onlySearch": false
   }
 ]

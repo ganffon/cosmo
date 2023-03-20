@@ -1,204 +1,239 @@
 [
   {
     "name": "기준정보",
-    "id": "referenceInformation",
+    "id": "standard",
     "path": null,
     "under": [
       {
         "name": "**사업부관리",
-        "id": "businessDepartmentManagement",
-        "path": "factories",
+        "id": "factory",
+        "path": "factory",
         "under": null
       },
       {
         "name": "**라인관리",
-        "id": "lineManagement",
-        "path": "lines",
+        "id": "line",
+        "path": "line",
         "under": null
       },
       {
         "name": "**공정관리",
-        "id": "processManagement",
+        "id": "process",
         "path": "process",
         "under": null
       },
       {
         "name": "**설비관리",
-        "id": "facilityManagement",
-        "path": "equipments",
+        "id": "equipment",
+        "path": "equipment",
         "under": null
       },
       {
         "name": "제품정보",
-        "id": "productInformation",
+        "id": "product-info",
         "path": null,
         "under": [
           {
             "name": "**제품구분관리",
-            "id": "productClassificationManagement",
-            "path": "productsgbn",
+            "id": "product-gbn",
+            "path": "product-gbn",
             "under": null
           },
           {
-            "name": "**제품유형관리",
-            "id": "productTypeManagement",
-            "path": "productstype",
+            "name": "제품군관리",
+            "id": "product-model",
+            "path": "product-model",
             "under": null
           },
           {
-            "name": "**제품관리",
-            "id": "productManagement",
-            "path": "products",
+            "name": "**품종군관리",
+            "id": "product-type",
+            "path": "product-type",
+            "under": null
+          },
+          {
+            "name": "품종관리",
+            "id": "product-type-small",
+            "path": "product-type-small",
+            "under": null
+          },
+          {
+            "name": "**품목관리",
+            "id": "product",
+            "path": "product",
             "under": null
           }
         ]
       },
       {
-        "name": "사양정보",
-        "id": "specificationInformation",
+        "name": "단위관리",
+        "id": "unit",
+        "path": "unit",
+        "under": null
+      },
+      {
+        "name": "거래처정보",
+        "id": "partner-info",
         "path": null,
         "under": [
           {
-            "name": "BOM관리",
-            "id": "bomManagement",
-            "path": "bomManagement",
+            "name": "거래처유형관리",
+            "id": "partner-type",
+            "path": "partner-type",
             "under": null
           },
           {
-            "name": "**Routing관리",
-            "id": "routingManagement",
-            "path": "routings",
+            "name": "거래처관리",
+            "id": "partner",
+            "path": "partner",
             "under": null
           }
         ]
       },
       {
         "name": "사원정보",
-        "id": "employeeInformation",
+        "id": "employee-info",
         "path": null,
         "under": [
           {
             "name": "부서관리",
-            "id": "departmentManagement",
-            "path": "departments",
+            "id": "department",
+            "path": "department",
             "under": null
           },
           {
             "name": "직급관리",
-            "id": "positionManagement",
-            "path": "grades",
+            "id": "grade",
+            "path": "grade",
             "under": null
           },
           {
-            "name": "사원관리",
-            "id": "employeeManagement",
-            "path": "employees",
+            "name": "작업조관리",
+            "id": "working-group",
+            "path": "working-group",
+            "under": null
+          },
+          {
+            "name": "작업자관리",
+            "id": "employee",
+            "path": "employee",
+            "under": null
+          },
+          {
+            "name": "사용자관리",
+            "id": "user",
+            "path": "user",
             "under": null
           }
         ]
       },
       {
         "name": "창고정보",
-        "id": "warehouseInformation",
+        "id": "store-info",
         "path": null,
         "under": [
           {
             "name": "창고관리",
-            "id": "warehouseManagement",
-            "path": "stores",
+            "id": "store",
+            "path": "store",
             "under": null
           },
           {
             "name": "위치관리",
-            "id": "locationManagement",
-            "path": "storelocations",
+            "id": "store-location",
+            "path": "store-location",
             "under": null
           }
         ]
       },
       {
         "name": "비가동정보",
-        "id": "nonOperatingInformation",
+        "id": "downtime-info",
         "path": null,
         "under": [
           {
             "name": "비가동유형관리",
-            "id": "nonOperatingTypeManagement",
-            "path": "downTimeType",
+            "id": "downtime-type",
+            "path": "downtime-type",
             "under": null
           },
           {
             "name": "비가동코드관리",
-            "id": "nonOperatingCodeManagement",
+            "id": "downtime",
             "path": "downtime",
             "under": null
           }
         ]
       },
       {
-        "name": "검사정보",
-        "id": "inspectionInformation",
+        "name": "관리계획서정보",
+        "id": "inspection-info",
         "path": null,
         "under": [
           {
-            "name": "검사유형관리",
-            "id": "inspectionTypeManagement",
-            "path": "inspectiontype",
+            "name": "검사기록물관리",
+            "id": "filing",
+            "path": "filing",
             "under": null
           },
           {
-            "name": "검사코드관리",
-            "id": "inspectionCodeManagement",
-            "path": "dashboard",
+            "name": "검사방법관리",
+            "id": "method",
+            "path": "method",
+            "under": null
+          },
+          {
+            "name": "검사구관리",
+            "id": "tool",
+            "path": "tool",
+            "under": null
+          },
+          {
+            "name": "검사유형관리",
+            "id": "inspection-item-type",
+            "path": "inspection-item-type",
+            "under": null
+          },
+          {
+            "name": "검사항목관리",
+            "id": "inspection-item",
+            "path": "inspection-item",
             "under": null
           },
           {
             "name": "검사기준서관리",
-            "id": "inspectionStandardManagement",
-            "path": "inspectionstandardmanagement",
-            "under": null
-          }
-        ]
-      },
-      {
-        "name": "설비점검정보",
-        "id": "facilityInspectionInformation",
-        "path": null,
-        "under": [
-          {
-            "name": "설비점검유형관리",
-            "id": "facilityInspectionTypeManagement",
-            "path": null,
+            "id": "document",
+            "path": "document",
             "under": null
           },
           {
-            "name": "설비점검코드관리",
-            "id": "facilityInspectionCodeManagement",
-            "path": null,
+            "name": "관리계획서관리",
+            "id": "control-plan",
+            "path": "control-plan",
             "under": null
           }
         ]
       },
       {
         "name": "설비I/F정보",
-        "id": "facilityInterfaceInformation",
+        "id": "interface-info",
         "path": null,
         "under": [
           {
             "name": "설비I/F유형관리",
-            "id": "facilityInterfaceTypeManagement",
-            "path": null,
+            "id": "interface-item-type",
+            "path": "interface-item-type",
             "under": null
           },
           {
-            "name": "설비I/F코드관리",
-            "id": "facilityInterfaceCodeManagement",
-            "path": null,
+            "name": "설비I/F항목관리",
+            "id": "interface-item",
+            "path": "interface-item",
             "under": null
           },
           {
             "name": "MemoryMap관리",
-            "id": "memoryMapManagement",
+            "id": "interface-memory",
             "path": null,
             "under": null
           }
@@ -225,260 +260,228 @@
     ]
   },
   {
-    "name": "자재관리",
-    "id": "materialManagement",
-    "path": null,
-    "under": [
-      {
-        "name": "공정입고정보",
-        "id": "processReceivingInformation",
-        "path": null,
-        "under": [
-          {
-            "name": "공정입고관리",
-            "id": "processReceivingManagement",
-            "path": null,
-            "under": null
-          },
-          {
-            "name": "공정입고현황",
-            "id": "processReceivingStatus",
-            "path": null,
-            "under": null
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "생산관리",
-    "id": "productionManagement",
-    "path": null,
-    "under": [
-      {
-        "name": "생산의뢰서",
-        "id": "productionRequestForm",
-        "path": null,
-        "under": null
-      },
-      {
-        "name": "작업지시서",
-        "id": "operationInstructions",
-        "path": null,
-        "under": null
-      },
-      {
-        "name": "생산일지정보",
-        "id": "productionDiaryInformation",
-        "path": null,
-        "under": [
-          {
-            "name": "자재투입일지",
-            "id": "materialInputLog",
-            "path": null,
-            "under": null
-          },
-          {
-            "name": "생산일지",
-            "id": "productionLog",
-            "path": null,
-            "under": null
-          },
-          {
-            "name": "포장실적일지",
-            "id": "packagingPerformanceLog",
-            "path": null,
-            "under": null
-          }
-        ]
-      },
-      {
-        "name": "비가동관리",
-        "id": "nonOperationManagement",
-        "path": null,
-        "under": null
-      },
-      {
-        "name": "포장기준Lot추적",
-        "id": "lotTrackingBasedOnPackaging",
-        "path": null,
-        "under": null
-      }
-    ]
-  },
-  {
     "name": "재고관리",
-    "id": "inventoryManagement",
+    "id": "inventory-info",
     "path": null,
     "under": [
       {
         "name": "재고현황",
-        "id": "inventoryStatus",
+        "id": "store-view",
         "path": null,
         "under": null
       },
       {
         "name": "재고수불현황",
-        "id": "inventorySupplyStatus",
-        "path": null,
+        "id": "store-transfer-view",
+        "path": "store-transfer-view",
         "under": null
       },
       {
         "name": "재고실사",
-        "id": "inventoryInspection",
-        "path": null,
+        "id": "store-check",
+        "path": "store-check",
         "under": null
       }
     ]
   },
   {
+    "name": "자재관리",
+    "id": "material-info",
+    "path": null,
+    "under": [
+      {
+        "name": "자재입고현황",
+        "id": "material-income-view",
+        "path": "material-income-view",
+        "under": null
+      },
+      {
+        "name": "자재수불현황",
+        "id": "material-transfer-view",
+        "path": "material-transfer-view",
+        "under": null
+      }
+    ]
+  },
+  {
+    "name": "생산관리",
+    "id": "production-info",
+    "path": null,
+    "under": [
+      {
+        "name": "생산의뢰서",
+        "id": "production-request",
+        "path": "production-request",
+        "under": null
+      },
+      {
+        "name": "작업지시서",
+        "id": "production-order",
+        "path": "production-order",
+        "under": null
+      },
+      {
+        "name": "생산일지정보",
+        "id": "production-dayreport-info",
+        "path": null,
+        "under": [
+          {
+            "name": "일일계량일지",
+            "id": "production-dayreport-weight",
+            "path": "production-dayreport-weight",
+            "under": null
+          },
+          {
+            "name": "일일포장일지",
+            "id": "production-dayreport-packing",
+            "path": "production-dayreport-packing",
+            "under": null
+          },
+          {
+            "name": "Lot추적일지",
+            "id": "production-lot-tracking",
+            "path": "production-lot-tracking",
+            "under": null
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "설비관리",
-    "id": "facilityManagement",
+    "id": "equipment-info",
     "path": null,
     "under": [
       {
         "name": "설비운전점검정보",
-        "id": "facilityOperationInspectionInformation",
+        "id": "equipment-result-info",
         "path": null,
         "under": [
           {
-            "name": "점검기준서관리",
-            "id": "inspectionStandardManagement",
-            "path": null,
-            "under": null
-          },
-          {
             "name": "점검성적서관리",
-            "id": "inspectionReportManagement",
-            "path": null,
+            "id": "equipment-result",
+            "path": "equipment-result",
             "under": null
           },
           {
             "name": "점검결과현황",
-            "id": "inspectionResultStatus",
-            "path": null,
+            "id": "equipment-result-view",
+            "path": "equipment-result-view",
             "under": null
           }
         ]
       },
       {
-        "name": "설비SpareParts정보",
-        "id": "facilitySparePartsInformation",
+        "name": "상세제원정보",
+        "id": "equipment-spec-info",
         "path": null,
         "under": [
           {
-            "name": "SpareParts품번관리",
-            "id": "sparePartsItemNumberManagement",
-            "path": null,
+            "name": "대분류관리",
+            "id": "equipment-classification",
+            "path": "equipment-classification",
             "under": null
           },
           {
+            "name": "중분류관리",
+            "id": "equipment-group",
+            "path": "equipment-group",
+            "under": null
+          },
+          {
+            "name": "소분류관리",
+            "id": "equipment-class",
+            "path": "equipment-class",
+            "under": null
+          },
+          {
+            "name": "상세제원관리",
+            "id": "equipment-detail",
+            "path": "equipment-detail",
+            "under": null
+          }
+        ]
+      },
+      {
+        "name": "SpareParts정보",
+        "id": "spareparts-info",
+        "path": null,
+        "under": [
+          {
             "name": "SpareParts입고관리",
-            "id": "sparePartsReceivingManagement",
-            "path": null,
+            "id": "spareparts-income",
+            "path": "spareparts-income",
             "under": null
           },
           {
             "name": "SpareParts출고관리",
-            "id": "sparePartsForwardingManagement",
-            "path": null,
+            "id": "spareparts-outgo",
+            "path": "spareparts-outgo",
             "under": null
           },
           {
             "name": "SpareParts재고현황",
-            "id": "sparePartsInventoryStatus",
-            "path": null,
+            "id": "spareparts-store-view",
+            "path": "spareparts-store-view",
             "under": null
           },
           {
             "name": "SpareParts수불현황",
-            "id": "sparePartsSupplyStatus",
-            "path": null,
+            "id": "spareparts-store-transfer-view",
+            "path": "spareparts-store-transfer-view",
             "under": null
           }
         ]
       },
       {
-        "name": "비가동이력현황",
-        "id": "nonOperationHistoryStatus",
-        "path": null,
-        "under": null
-      },
-      {
         "name": "설비RawData현황",
-        "id": "facilityRawDataStatus",
-        "path": null,
+        "id": "equipment-rawdata-view",
+        "path": "equipment-rawdata-view",
         "under": null
       },
       {
         "name": "설비알람이력현황",
-        "id": "facilityAlarmHistoryStatus",
-        "path": null,
+        "id": "equipment-alarm-view",
+        "path": "equipment-alarm-view",
+        "under": null
+      },
+      {
+        "name": "비가동관리",
+        "id": "production-downtime",
+        "path": "production-downtime",
         "under": null
       }
     ]
   },
   {
     "name": "품질관리",
-    "id": "qualityControl",
+    "id": "quality-info",
     "path": null,
     "under": [
       {
         "name": "제품검사정보",
-        "id": "productInspectionInformation",
+        "id": "quality-result-info",
         "path": null,
         "under": [
           {
-            "name": "검사기준서관리",
-            "id": "inspectionStandardManagement",
-            "path": null,
-            "under": null
-          },
-          {
             "name": "검사성적서관리",
-            "id": "inspectionReportManagement",
-            "path": null,
+            "id": "quality-result",
+            "path": "quality-result",
             "under": null
           },
           {
             "name": "검사결과현황",
-            "id": "inspectionResultStatus",
-            "path": null,
+            "id": "quality-result-view",
+            "path": "quality-result-view",
             "under": null
           }
         ]
       },
       {
         "name": "공정관리도(SPC)",
-        "id": "SPC",
-        "path": null,
+        "id": "quality-spc",
+        "path": "quality-spc",
         "under": null
-      }
-    ]
-  },
-  {
-    "name": "영업관리",
-    "id": "salesManagement",
-    "path": null,
-    "under": [
-      {
-        "name": "제품출고정보",
-        "id": "productForwardingInformation",
-        "path": null,
-        "under": [
-          {
-            "name": "제품출고관리",
-            "id": "productForwardingManagement",
-            "path": null,
-            "under": null
-          },
-          {
-            "name": "제품출고현황",
-            "id": "productForwardingStatus",
-            "path": null,
-            "under": null
-          }
-        ]
       }
     ]
   },

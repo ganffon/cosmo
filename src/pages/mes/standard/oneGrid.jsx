@@ -4,7 +4,6 @@ import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
-import LineSet from "pages/gridSetting/LineSet";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import restAPI from "api/restAPI";
@@ -13,9 +12,54 @@ import InputSearch from "components/input/InputSearch";
 import getPostParams from "api/getPostParams";
 import getPutParams from "api/getPutParams";
 import getSearchParams from "api/getSearchParams";
-import * as S from "./Line.styled";
+import getDeleteParams from "api/getDeleteParams";
+import * as S from "./oneGrid.styled";
+import FactorySet from "pages/gridSetting/FactorySet";
+import EquipmentSet from "pages/gridSetting/EquipmentSet";
+import LineSet from "pages/gridSetting/LineSet";
+import ProcessSet from "pages/gridSetting/ProcessSet";
+import ProductGbnSet from "pages/gridSetting/ProductGbnSet";
+import ProductSet from "pages/gridSetting/ProductSet";
+import ProductTypeSet from "pages/gridSetting/ProductTypeSet";
+import RoutingSet from "pages/gridSetting/RoutingSet";
 
-function Line() {
+const getComponent = (componentName) => {
+  let component = "";
+  switch (componentName) {
+    case "FactorySet":
+      component = FactorySet;
+      break;
+    case "EquipmentSet":
+      component = EquipmentSet;
+      break;
+    case "LineSet":
+      component = LineSet;
+      break;
+    case "ProcessSet":
+      component = ProcessSet;
+      break;
+    case "ProductGbnSet":
+      component = ProductGbnSet;
+      break;
+    case "ProductSet":
+      component = ProductSet;
+      break;
+    case "ProductTypeSet":
+      component = ProductTypeSet;
+      break;
+    case "RoutingSet":
+      component = RoutingSet;
+      break;
+    default:
+  }
+  return component;
+};
+
+function OneGrid(props) {
+  const { componentName } = props;
+  const COMPONENT = getComponent(componentName);
+  const COMPONENT_NAME = componentName;
+
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutEvent);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -30,8 +74,8 @@ function Line() {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
-  const COMPONENT = LineSet(isEditMode);
-  const COMPONENT_NAME = "LineSet";
+  // const COMPONENT = LineSet(isEditMode);
+  // const COMPONENT_NAME = "LineSet";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -51,7 +95,7 @@ function Line() {
     [currentMenuName]
   );
   useEffect(() => {
-    const data = handleInputSetInit(COMPONENT.inputSet);
+    const data = handleInputSetInit(COMPONENT().inputSet);
     setInputBoxID(data[0]);
     setInputTextChange(data[1]);
     onClickSearch(true);
@@ -73,13 +117,11 @@ function Line() {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
-      ?.map((v) => ({
-        line_id: v.line_id,
-      }));
+      ?.map((raw) => getDeleteParams(COMPONENT_NAME, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .delete(COMPONENT.uri, { data })
+        .delete(COMPONENT().uri, { data })
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -113,7 +155,7 @@ function Line() {
       try {
         setIsBackDrop(true);
         const params = getSearchParams(inputBoxID, inputTextChange);
-        const readURI = COMPONENT.uri + params;
+        const readURI = COMPONENT().uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
         props &&
@@ -137,16 +179,13 @@ function Line() {
   };
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    console.log(
-      refSingleGrid?.current?.gridInst?.getModifiedRows().updatedRows
-    );
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       .updatedRows?.map((raw) => getPutParams(COMPONENT_NAME, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .put(COMPONENT.uri, data)
+        .put(COMPONENT().uri, data)
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -190,7 +229,7 @@ function Line() {
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .post(COMPONENT.uri, data)
+        .post(COMPONENT().uri, data)
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -223,7 +262,7 @@ function Line() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.InputWrap>
-            {COMPONENT.inputSet.map((v) => (
+            {COMPONENT().inputSet.map((v) => (
               <InputSearch
                 id={v.id}
                 name={v.name}
@@ -245,6 +284,7 @@ function Line() {
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
+                buttonDisabled={COMPONENT().buttonDisabled}
               />
             )}
           </S.ButtonWrap>
@@ -253,10 +293,10 @@ function Line() {
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
           <GridModule
-            columnOptions={COMPONENT.columnOptions}
-            columns={COMPONENT.columns}
-            rowHeaders={COMPONENT.rowHeaders}
-            header={COMPONENT.header}
+            columnOptions={COMPONENT().columnOptions}
+            columns={COMPONENT(isEditMode).columns}
+            rowHeaders={COMPONENT().rowHeaders}
+            header={COMPONENT().header}
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
@@ -276,11 +316,11 @@ function Line() {
           onClickModalCancelRow={onClickModalCancelRow}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
-          columns={COMPONENT.columnsModal}
-          columnOptions={COMPONENT.columnOptions}
-          header={COMPONENT.header}
-          rowHeaders={COMPONENT.rowHeadersModal}
-          uri={COMPONENT.uri}
+          columns={COMPONENT().columnsModal}
+          columnOptions={COMPONENT().columnOptions}
+          header={COMPONENT().header}
+          rowHeaders={COMPONENT().rowHeadersModal}
+          uri={COMPONENT().uri}
           refModalGrid={refModalGrid}
           setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
@@ -291,4 +331,4 @@ function Line() {
   );
 }
 
-export default Line;
+export default OneGrid;

@@ -6,7 +6,7 @@ import LoginStateChk from "pages/login/LoginStateChk";
 import { LayoutEvent } from "components/layout/common/Layout";
 import BackDrop from "components/backdrop/BackDrop";
 import * as S from "./OnlySearchSingleGrid.styled";
-import BusinessDepartmentSet from "pages/gridSetting/BusinessDepartmentSet";
+import FactorySet from "pages/gridSetting/FactorySet";
 import EquipmentSet from "pages/gridSetting/EquipmentSet";
 import LineSet from "pages/gridSetting/LineSet";
 import ProcessSet from "pages/gridSetting/ProcessSet";
@@ -20,8 +20,8 @@ export const OnlySearchSingleGridEvent = createContext();
 const componentAllocation = (componentName) => {
   let component = "";
   switch (componentName) {
-    case "BusinessDepartmentSet":
-      component = BusinessDepartmentSet;
+    case "FactorySet":
+      component = FactorySet;
       break;
     case "EquipmentSet":
       component = EquipmentSet;

@@ -9,8 +9,10 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function BusinessDepartmentSet(isEditMode) {
+function FactorySet(isEditMode) {
   const data = [];
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -119,7 +121,7 @@ function BusinessDepartmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_id",
+      name: "delete_uid",
       header: "삭제자ID",
       minWidth: WIDTH_SHORT,
       align: "center",
@@ -161,15 +163,20 @@ function BusinessDepartmentSet(isEditMode) {
 
   const uri = restURI.factories;
 
+  const buttonDisabled = true;
+
   return {
     data,
+    rowHeaders,
+    rowHeadersModal,
     columns,
     columnOptions,
     header,
     datePickerSet,
     inputSet,
     uri,
+    buttonDisabled,
   };
 }
 
-export default BusinessDepartmentSet;
+export default FactorySet;

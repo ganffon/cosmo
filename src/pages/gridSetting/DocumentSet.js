@@ -10,7 +10,7 @@ import {
   MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function InspectionStandardManagementSet(isEditMode = false) {
+function DocumentSet(isEditMode = false) {
   const data = [
     {
       prod_gbn_id: 1,
@@ -276,4 +276,4 @@ function InspectionStandardManagementSet(isEditMode = false) {
   };
 }
 
-export default InspectionStandardManagementSet;
+export default DocumentSet;
