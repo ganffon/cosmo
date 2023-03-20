@@ -1,20 +1,20 @@
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 
-const DatePickerBox = styled("div")`
+const DateBox = styled("div")`
   display: flex;
 `;
 
-const DatePicker1 = styled(TextField)`
+const DateSingle = styled(TextField)`
   width: 200px;
   margin-left: 10px;
   margin-top: 5px;
 `;
 
-const DatePicker2 = styled(TextField)`
+const DateRange = styled(TextField)`
   width: 160px;
   margin-left: 10px;
   margin-top: 5px;
 `;
 
-export { DatePickerBox, DatePicker1, DatePicker2 };
+export { DateBox, DateSingle, DateRange };

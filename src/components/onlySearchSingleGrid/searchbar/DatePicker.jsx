@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, createRef } from "react";
 // ⬇️ import MUI
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -10,6 +10,8 @@ import * as S from "./DatePicker.styled";
 function DatePicker(props) {
   const { datePickerSet } = props;
   const { dateText, setDateText } = useContext(SearchBarBoxEvent);
+
+  const dateRef = createRef();
 
   useEffect(() => {
     setDateText({
@@ -30,8 +32,9 @@ function DatePicker(props) {
           type="date"
           format="yyyy-MM-dd"
           defaultValue={DateTime().dateFull}
+          ref={dateRef}
           InputProps={{
-            sx: { height: 30 },
+            sx: { height: 40 },
             startAdornment: (
               <InputAdornment position="start">
                 {datePickerSet === "single" ? "날짜" : "기간"}
@@ -48,7 +51,7 @@ function DatePicker(props) {
           format="yyyy-MM-dd"
           defaultValue={DateTime(7).dateFull}
           InputProps={{
-            sx: { height: 30 },
+            sx: { height: 40 },
           }}
           onChange={datePickerChange}
         />
