@@ -2,11 +2,11 @@ import { useContext, useState, useEffect, useRef } from "react";
 import InputInfo from "components/input/InputInfo";
 import ButtonSearch from "components/button/ButtonSearch";
 import GridModule from "components/grid/GridModule";
-import InspectionStandardManagementSet from "pages/gridSetting/InspectionStandardManagementSet";
-import * as S from "./InspectionStandardManagement.styled";
+import DocumentSet from "pages/gridSetting/DocumentSet";
+import * as S from "./Document.styled";
 import { LayoutEvent } from "components/layout/common/Layout";
 
-function InspectionStandardManagement() {
+function Document() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutEvent);
   const boxRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
@@ -15,10 +15,8 @@ function InspectionStandardManagement() {
   function scrollDetect() {
     setScrollY(boxRef?.current?.scrollTop);
     if (boxRef?.current?.scrollTop > 240) {
-      console.log("true");
       setScrollActive(true);
     } else {
-      console.log("false");
       setScrollActive(false);
     }
   }
@@ -45,10 +43,10 @@ function InspectionStandardManagement() {
         <S.ShadowBox>
           <S.GridTopWrap>
             <GridModule
-              columnOptions={InspectionStandardManagementSet().columnOptions}
-              columns={InspectionStandardManagementSet().columns}
-              rowHeaders={InspectionStandardManagementSet().rowHeaders}
-              header={InspectionStandardManagementSet().header}
+              columnOptions={DocumentSet().columnOptions}
+              columns={DocumentSet().columns}
+              rowHeaders={DocumentSet().rowHeaders}
+              header={DocumentSet().header}
               draggable={false}
             />
           </S.GridTopWrap>
@@ -78,10 +76,10 @@ function InspectionStandardManagement() {
         <S.ShadowBox>
           <S.GridBottomWrap>
             <GridModule
-              columnOptions={InspectionStandardManagementSet().columnOptions}
-              columns={InspectionStandardManagementSet().columns}
-              rowHeaders={InspectionStandardManagementSet().rowHeaders}
-              header={InspectionStandardManagementSet().header}
+              columnOptions={DocumentSet().columnOptions}
+              columns={DocumentSet().columns}
+              rowHeaders={DocumentSet().rowHeaders}
+              header={DocumentSet().header}
               draggable={false}
             />
           </S.GridBottomWrap>
@@ -91,4 +89,4 @@ function InspectionStandardManagement() {
   );
 }
 
-export default InspectionStandardManagement;
+export default Document;

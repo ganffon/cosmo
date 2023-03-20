@@ -6,8 +6,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import * as S from "./Button.styled";
 
 function ButtonSearch(props) {
-  const { onClickNew, onClickEdit, onClickDelete, onClickSearch, btnDisabled } =
-    props;
+  const {
+    onClickNew,
+    onClickEdit,
+    onClickDelete,
+    onClickSearch,
+    buttonDisabled,
+  } = props;
   return (
     <>
       <S.ButtonSet
@@ -15,7 +20,7 @@ function ButtonSearch(props) {
         size="small"
         startIcon={<AddIcon />}
         color="success"
-        disabled={btnDisabled}
+        disabled={buttonDisabled}
         onClick={onClickNew}
       >
         NEW
@@ -25,7 +30,7 @@ function ButtonSearch(props) {
         size="small"
         startIcon={<EditIcon />}
         color="secondary"
-        disabled={btnDisabled}
+        disabled={buttonDisabled}
         onClick={onClickEdit}
       >
         EDIT
@@ -35,7 +40,7 @@ function ButtonSearch(props) {
         size="small"
         startIcon={<DeleteIcon />}
         color="error"
-        disabled={btnDisabled}
+        disabled={buttonDisabled}
         onClick={onClickDelete}
       >
         DELETE

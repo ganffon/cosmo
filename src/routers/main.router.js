@@ -2,13 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 // ⬇️ reference of page
 import Layout from "components/layout/common/Layout";
-import Line from "pages/mes/standard/Line";
-import OnlySearchSingleGrid from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
+import Line from "pages/mes/standard/oneGrid";
+// import OnlySearchSingleGrid from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
+import OneGrid from "pages/mes/standard/oneGrid";
 import Dashboard from "pages/mes/dashboard/Dashboard";
 // import * as Pages from "pages";
 import RealMenuList from "components/layout/datas/RealMenuList.json";
 // import NotFound from "pages/notfound/NotFound";
-import InspectionStandardManagement from "pages/mes/standard/InspectionStandardManagement";
+import Document from "pages/mes/standard/Document";
 
 export default function MainRouter() {
   const [realMenuList, setRealMenuList] = useState([]);
@@ -43,18 +44,13 @@ export default function MainRouter() {
               <Route
                 key={menu.id}
                 path={menu.path}
-                element={
-                  <OnlySearchSingleGrid componentName={menu.componentName} />
-                }
+                element={<OneGrid componentName={menu.componentName} />}
               />
             )
           );
         })}
-        <Route path="lines" element={<Line />} />
-        <Route
-          path="inspectionstandardmanagement"
-          element={<InspectionStandardManagement />}
-        />
+        {/* <Route path="lines" element={<Line />} /> */}
+        <Route path="document" element={<Document />} />
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
     </Layout>
