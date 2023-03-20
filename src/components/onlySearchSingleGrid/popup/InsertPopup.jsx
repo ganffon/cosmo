@@ -75,7 +75,11 @@ function InsertPopup(props) {
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ButtonBox>
-        <ButtonAdd />
+        <ButtonAdd
+          onClickAddRow={onClickAddRow}
+          onClickRemoveRow={onClickRemoveRow}
+          onClickSave={onClickSave}
+        />
       </S.ButtonBox>
       <S.GridBox>
         <GridPopup
