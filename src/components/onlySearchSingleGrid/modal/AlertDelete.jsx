@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import ModalWrap from "components/modal/ModalWrap";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import * as S from "./AlertDelete.styled";
-import { SearchBarBoxEvent } from "components/onlySearchSingleGrid/searchbar/SearchBarBox";
 
-function AlertDelete() {
-  const { handleDelete, setAlertDeleteOpen } = useContext(SearchBarBoxEvent);
+function AlertDelete(props) {
+  const { handleDelete, setIsDeleteAlertOpen } = props;
 
   return (
     <ModalWrap width={"400px"} height={"200px"}>
@@ -30,7 +29,7 @@ function AlertDelete() {
             size="small"
             startIcon={<CloseIcon />}
             color="error"
-            onClick={() => setAlertDeleteOpen(false)}
+            onClick={() => setIsDeleteAlertOpen(false)}
           >
             아니오 (No)
           </S.ButtonNo>

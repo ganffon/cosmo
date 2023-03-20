@@ -15,7 +15,6 @@ function GetPutParams(componentName, raw) {
     //     break;
     case "LineSet":
       params = new lines(raw);
-      console.log(`params: ${params}`);
       break;
     //   case "Process":
     //     params = new process(raw);

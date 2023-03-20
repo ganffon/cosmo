@@ -4,7 +4,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import { SearchBarBoxEvent } from "./SearchBarBox";
-import GetPutParams from "api/putParams";
+import GetPutParams from "api/getPutParams";
 import restAPI from "api/restAPI";
 import * as S from "./ButtonGroupEdit.styled";
 

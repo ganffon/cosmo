@@ -32,6 +32,7 @@ function LineSet(isEditMode) {
     },
   ];
   const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -267,6 +268,7 @@ function LineSet(isEditMode) {
   return {
     data,
     rowHeaders,
+    rowHeadersModal,
     columns,
     columnsModal,
     columnOptions,

@@ -9,8 +9,10 @@ function GridModule(props) {
     columns,
     rowHeaders,
     header,
+    data,
     draggable,
-    refSingleGrid,
+    refGrid,
+    onClickGrid,
   } = props;
   useEffect(() => {
     GridTheme();
@@ -26,10 +28,11 @@ function GridModule(props) {
       columnOptions={columnOptions}
       columns={columns}
       //   data={singleGridData}
-      // data={props.data}
+      data={data}
       header={header}
       draggable={draggable}
-      ref={refSingleGrid}
+      ref={refGrid}
+      onClick={onClickGrid}
     />
   );
 }

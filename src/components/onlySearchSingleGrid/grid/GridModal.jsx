@@ -7,20 +7,14 @@ import GridTheme from "../../grid/setting/GridTheme";
 import { LayoutEvent } from "components/layout/common/Layout";
 
 function GridModal(props) {
-  const {
-    refGridModal,
-    columns,
-    columnOptions,
-    header,
-    draggable,
-    onClickGrid,
-  } = props;
+  const { refGrid, columns, columnOptions, header, draggable, onClickGrid } =
+    props;
   const { isModalOpen } = useContext(LayoutEvent);
   const [gridData, setGridData] = useState();
 
   const onChange = (e) => {
     console.log(e);
-    console.log(refGridModal.current);
+    console.log(refGrid.current);
   };
 
   useEffect(() => {
@@ -29,8 +23,8 @@ function GridModal(props) {
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridModal?.current?.gridInst?.refreshLayout();
-  }, [refGridModal.current, isModalOpen]);
+    refGrid?.current?.gridInst?.refreshLayout();
+  }, [refGrid.current, isModalOpen]);
 
   return (
     <Grid
@@ -40,7 +34,7 @@ function GridModal(props) {
       rowHeight={"auto"} // index 컬럼 자동 높이 조절
       bodyHeight={"fitToParent"}
       heightResizable={false}
-      ref={refGridModal}
+      ref={refGrid}
       // onClick={frozenColumnPick}
       // onDblclick={frozenColumnPick}
       onAfterChange={onChange}
