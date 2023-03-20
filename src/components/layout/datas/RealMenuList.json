@@ -8,8 +8,8 @@
   {
     "id": "lineManagement",
     "path": "lines",
-    "componentName": "LineSet",
-    "onlySearch": true
+    "componentName": "Line",
+    "onlySearch": false
   },
   {
     "id": "processManagement",

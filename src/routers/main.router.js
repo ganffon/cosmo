@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 // ⬇️ reference of page
 import Layout from "components/layout/common/Layout";
+import Line from "pages/mes/standard/Line";
 import OnlySearchSingleGrid from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import Dashboard from "pages/mes/dashboard/Dashboard";
 // import * as Pages from "pages";
@@ -49,6 +50,7 @@ export default function MainRouter() {
             )
           );
         })}
+        <Route path="lines" element={<Line />} />
         <Route
           path="inspectionstandardmanagement"
           element={<InspectionStandardManagement />}

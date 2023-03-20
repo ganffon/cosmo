@@ -44,7 +44,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
     menuNameChangeSave,
     setMenuNameChangeSave,
     setCurrentMenuName,
-    setIsPopupOpen,
+    setIsModalOpen,
   } = useContext(LayoutEvent);
   const navigate = useNavigate();
 
@@ -71,7 +71,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
           `${menuNameChangeSave.lv1MenuName} / ${upperMenuName} / ${menu.name}`
         );
       }
-      setIsPopupOpen(false);
+      setIsModalOpen(false);
       navigate(menu.path);
     }
   };

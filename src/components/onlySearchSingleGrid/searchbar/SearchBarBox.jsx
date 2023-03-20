@@ -9,8 +9,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 // ⬇️ reference of page
 import InputBox from "./InputBox";
 import ButtonBox from "./ButtonBox";
-import InsertPopup from "components/onlySearchSingleGrid/popup/InsertPopup";
-import AlertDelete from "components/onlySearchSingleGrid/popup/AlertDelete";
+import InsertModal from "components/onlySearchSingleGrid/modal/InsertModal";
+import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import { LayoutEvent } from "components/layout/common/Layout";
 import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import restAPI from "api/restAPI";
@@ -31,7 +31,7 @@ function SearchBarBox(props) {
     inputSet,
     btnDisabled,
   } = props;
-  const { currentMenuName, isPopupOpen, setIsPopupOpen } =
+  const { currentMenuName, isModalOpen, setIsModalOpen } =
     useContext(LayoutEvent);
   const {
     refSingleGrid,
@@ -142,7 +142,7 @@ function SearchBarBox(props) {
   };
 
   const onClickNew = () => {
-    setIsPopupOpen(true);
+    setIsModalOpen(true);
   };
 
   const onClickEdit = () => {
@@ -238,9 +238,8 @@ function SearchBarBox(props) {
         />
         <NoticeSnack state={alertOpen} setState={setAlertOpen} />
         {alertDeleteOpen ? <AlertDelete /> : null}
-        {isPopupOpen ? (
-          <InsertPopup
-            componentName={componentName}
+        {isModalOpen ? (
+          <InsertModal
             columns={columns}
             columnOptions={columnOptions}
             header={header}

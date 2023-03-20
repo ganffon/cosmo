@@ -1,7 +1,7 @@
 import React from "react";
-import * as S from "./PopupWrap.styled";
+import * as S from "./ModalWrap.styled";
 
-function PopupWrap({ children, width, height }) {
+function ModalWrap({ children, width, height }) {
   return (
     <S.Overlay>
       <S.Inner width={width} height={height}>
@@ -11,4 +11,4 @@ function PopupWrap({ children, width, height }) {
   );
 }
 
-export default PopupWrap;
+export default ModalWrap;

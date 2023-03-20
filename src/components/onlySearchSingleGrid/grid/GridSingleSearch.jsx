@@ -12,7 +12,7 @@ function GridSingleSearch(props) {
   const { refSingleGrid, singleGridData, isEditMode } = useContext(
     OnlySearchSingleGridEvent
   );
-  const { isMenuSlide, isPopupOpen } = useContext(LayoutEvent);
+  const { isMenuSlide, isModalOpen } = useContext(LayoutEvent);
 
   useEffect(() => {
     GridTheme();
@@ -32,7 +32,7 @@ function GridSingleSearch(props) {
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refSingleGrid.current, isPopupOpen, isEditMode]);
+  }, [isMenuSlide, refSingleGrid.current, isModalOpen, isEditMode]);
 
   return (
     <Grid

@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
   const [isMenuSlide, setIsMenuSlide] = useState(true); //🔸메뉴 확장, 축소 Flag
   const [isMouseOver, setIsMouseOver] = useState(false); //🔸V2MenuDepth On/Off 상태 Flag
   const [isAllScreen, setIsAllScreen] = useState(false); //🔸전체화면 Flag
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [menuNameChangeSave, setMenuNameChangeSave] = useState({
     lv1MenuName: "",
     lv2MenuName: "",
@@ -47,8 +47,8 @@ const Layout = ({ children }) => {
           currentMenuName,
           setCurrentMenuName,
           isAllScreen,
-          isPopupOpen,
-          setIsPopupOpen,
+          isModalOpen,
+          setIsModalOpen,
         }}
       >
         {/* <CssBaseline /> */}

@@ -7,7 +7,7 @@ import {
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
-  POPUP_BACK_COLOR,
+  MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
 function LineSet(isEditMode) {
@@ -31,6 +31,7 @@ function LineSet(isEditMode) {
       checkTest: 0,
     },
   ];
+  const rowHeaders = ["checkbox", "rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -80,7 +81,7 @@ function LineSet(isEditMode) {
       rowSpan: false,
       // renderer: {
       //   styles: {
-      //     backgroundColor: POPUP_BACK_COLOR,
+      //     backgroundColor: MODAL_BACK_COLOR,
       //     padding: "9px",
       //     margin: "0px",
       //   },
@@ -171,7 +172,7 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
   ];
-  const columnsPopup = [
+  const columnsModal = [
     {
       header: "공장ID",
       name: "factory_id",
@@ -265,8 +266,9 @@ function LineSet(isEditMode) {
 
   return {
     data,
+    rowHeaders,
     columns,
-    columnsPopup,
+    columnsModal,
     columnOptions,
     header,
     datePickerSet,

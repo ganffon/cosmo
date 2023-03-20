@@ -132,7 +132,7 @@ function ProductGbnSet(isEditMode) {
     },
   ];
 
-  const columnsPopup = [
+  const columnsModal = [
     {
       name: "prod_gbn_id",
       header: "제품구분ID",
@@ -277,7 +277,7 @@ function ProductGbnSet(isEditMode) {
   return {
     data,
     columns,
-    columnsPopup,
+    columnsModal,
     columnOptions,
     header,
     datePickerSet,
