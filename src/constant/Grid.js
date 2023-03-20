@@ -9,7 +9,7 @@ export const REQUIRED_TEXT_COLOR = "red";
 
 export const EDITABLE_BACK_COLOR = "#fffde7";
 export const DISABLED_BACK_COLOR = "#eeeeee";
-export const POPUP_BACK_COLOR = "#f1f8e9";
+export const MODAL_BACK_COLOR = "#f1f8e9";
 
 export const FROZEN_BORDER_COLOR = "#bdbdbd";
 

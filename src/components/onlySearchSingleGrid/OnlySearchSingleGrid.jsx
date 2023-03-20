@@ -76,7 +76,7 @@ function OnlySearchSingleGrid(props) {
         datePickerSet={component().datePickerSet}
         inputSet={component().inputSet}
         componentName={componentName}
-        columns={component().columnsPopup}
+        columns={component().columnsModal}
         columnOptions={component().columnOptions}
         header={component().header}
         uri={component().uri}

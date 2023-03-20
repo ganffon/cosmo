@@ -6,21 +6,21 @@ import Grid from "@toast-ui/react-grid";
 import GridTheme from "../../grid/setting/GridTheme";
 import { LayoutEvent } from "components/layout/common/Layout";
 
-function GridPopup(props) {
+function GridModal(props) {
   const {
-    refGridPopup,
+    refGridModal,
     columns,
     columnOptions,
     header,
     draggable,
     onClickGrid,
   } = props;
-  const { isPopupOpen } = useContext(LayoutEvent);
+  const { isModalOpen } = useContext(LayoutEvent);
   const [gridData, setGridData] = useState();
 
   const onChange = (e) => {
     console.log(e);
-    console.log(refGridPopup.current);
+    console.log(refGridModal.current);
   };
 
   useEffect(() => {
@@ -29,8 +29,8 @@ function GridPopup(props) {
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridPopup?.current?.gridInst?.refreshLayout();
-  }, [refGridPopup.current, isPopupOpen]);
+    refGridModal?.current?.gridInst?.refreshLayout();
+  }, [refGridModal.current, isModalOpen]);
 
   return (
     <Grid
@@ -40,7 +40,7 @@ function GridPopup(props) {
       rowHeight={"auto"} // index 컬럼 자동 높이 조절
       bodyHeight={"fitToParent"}
       heightResizable={false}
-      ref={refGridPopup}
+      ref={refGridModal}
       // onClick={frozenColumnPick}
       // onDblclick={frozenColumnPick}
       onAfterChange={onChange}
@@ -55,4 +55,4 @@ function GridPopup(props) {
   );
 }
 
-export default GridPopup;
+export default GridModal;

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import PopupWrap from "components/popup/PopupWrap";
+import ModalWrap from "components/modal/ModalWrap";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import * as S from "./AlertDelete.styled";
@@ -9,7 +9,7 @@ function AlertDelete() {
   const { handleDelete, setAlertDeleteOpen } = useContext(SearchBarBoxEvent);
 
   return (
-    <PopupWrap width={"400px"} height={"200px"}>
+    <ModalWrap width={"400px"} height={"200px"}>
       <S.HeaderBox>
         <S.TitleBox>DELETE</S.TitleBox>
       </S.HeaderBox>
@@ -36,7 +36,7 @@ function AlertDelete() {
           </S.ButtonNo>
         </S.ButtonBox>
       </S.ContentsBox>
-    </PopupWrap>
+    </ModalWrap>
   );
 }
 

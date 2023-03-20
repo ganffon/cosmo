@@ -9,6 +9,8 @@ export const MENU_FOLD_BACK_COLOR = "#263238";
 export const MENU_DEPTH_WIDTH = "170px";
 export const MENU_DEPTH_BACK_COLOR = "#b0bec5";
 
-export const SEARCH_BAR_HEIGHT = "60px";
+export const SEARCH_BAR_HEIGHT = "50px";
 
 export const FIXED_LEFT = "100px";
+
+export const HEIGHT_MARGIN = "20px";

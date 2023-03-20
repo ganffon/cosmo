@@ -7,7 +7,7 @@ import {
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
-  POPUP_BACK_COLOR,
+  MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
 function InspectionStandardManagementSet(isEditMode = false) {
@@ -80,7 +80,7 @@ function InspectionStandardManagementSet(isEditMode = false) {
       rowSpan: false,
       // renderer: {
       //   styles: {
-      //     backgroundColor: POPUP_BACK_COLOR,
+      //     backgroundColor: MODAL_BACK_COLOR,
       //     padding: "9px",
       //     margin: "0px",
       //   },
@@ -171,7 +171,7 @@ function InspectionStandardManagementSet(isEditMode = false) {
       rowSpan: false,
     },
   ];
-  const columnsPopup = [
+  const columnsModal = [
     {
       header: "공장ID",
       name: "factory_id",
@@ -266,7 +266,7 @@ function InspectionStandardManagementSet(isEditMode = false) {
   return {
     data,
     columns,
-    columnsPopup,
+    columnsModal,
     columnOptions,
     rowHeaders,
     header,

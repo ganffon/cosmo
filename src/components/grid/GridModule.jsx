@@ -4,7 +4,14 @@ import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 
 function GridModule(props) {
-  const { columnOptions, columns, rowHeaders, header, draggable } = props;
+  const {
+    columnOptions,
+    columns,
+    rowHeaders,
+    header,
+    draggable,
+    refSingleGrid,
+  } = props;
   useEffect(() => {
     GridTheme();
   }, []);
@@ -16,13 +23,13 @@ function GridModule(props) {
       rowHeight={"auto"} // index 컬럼 자동 높이 조절
       bodyHeight={"fitToParent"}
       heightResizable={false}
-      //   ref={refSingleGrid}
       columnOptions={columnOptions}
       columns={columns}
       //   data={singleGridData}
       // data={props.data}
       header={header}
       draggable={draggable}
+      ref={refSingleGrid}
     />
   );
 }
