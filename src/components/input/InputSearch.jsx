@@ -1,8 +1,8 @@
 import React from "react";
-import * as S from "./InputBox.styled";
+import * as S from "./InputSearch.styled";
 
 function InputSearch(props) {
-  const { id, name, inputTextChange, onClickSearch } = props;
+  const { id, name, handleInputTextChange, onClickSearch } = props;
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       onClickSearch();
@@ -17,7 +17,7 @@ function InputSearch(props) {
         autoComplete="off"
         size="small"
         label={name}
-        onChange={inputTextChange}
+        onChange={handleInputTextChange}
         onKeyPress={onKeyPress}
       />
     </S.InputBox>

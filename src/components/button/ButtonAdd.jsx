@@ -5,7 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import * as S from "./Button.styled";
 
 function ButtonAdd(props) {
-  const { onClickAddRow, onClickRemoveRow, onClickSave } = props;
+  const { onClickAddRow, onClickCancelRow, onClickSave } = props;
   return (
     <>
       <S.ButtonSet
@@ -22,7 +22,7 @@ function ButtonAdd(props) {
         variant="text"
         size="small"
         color="error"
-        onClick={onClickRemoveRow}
+        onClick={onClickCancelRow}
       >
         CANCEL ROW
       </S.ButtonSet>

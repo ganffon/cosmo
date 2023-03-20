@@ -23,10 +23,16 @@ export const ShadowBoxButton = styled("div")`
   margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
+export const ToolWrap = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 5px 5px 0px;
+`;
+export const InputWrap = styled("div")`
+  display: flex;
+`;
 export const ButtonWrap = styled("div")`
   display: flex;
-  justify-content: flex-end;
-  padding: 5px 5px 5px 0px;
 `;
 export const ShadowBoxGrid = styled("div")`
   background-color: rgb(255, 255, 255);
