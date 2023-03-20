@@ -3,7 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
-import * as S from "./ButtonSearch.styled";
+import * as S from "./Button.styled";
 
 function ButtonSearch(props) {
   const { onClickNew, onClickEdit, onClickDelete, onClickSearch, btnDisabled } =

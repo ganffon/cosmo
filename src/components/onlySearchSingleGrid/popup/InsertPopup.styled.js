@@ -33,10 +33,8 @@ const TitleBox = styled("div")`
   font-weight: 700;
 `;
 
-const ButtonSet = styled(Button)``;
-
 const ButtonClose = styled(IconButton)`
   padding-right: 15px;
 `;
 
-export { HeaderBox, GridBox, TitleBox, ButtonBox, ButtonSet, ButtonClose };
+export { HeaderBox, GridBox, TitleBox, ButtonBox, ButtonClose };

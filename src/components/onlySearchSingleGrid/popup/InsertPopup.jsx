@@ -1,10 +1,8 @@
 import React, { useContext, createRef, useState } from "react";
-import UTurnLeftIcon from "@mui/icons-material/UTurnLeft";
 import CloseIcon from "@mui/icons-material/Close";
-import SaveIcon from "@mui/icons-material/Save";
-import AddIcon from "@mui/icons-material/Add";
 import GridPopup from "components/onlySearchSingleGrid/grid/GridPopup";
 import PopupWrap from "components/popup/PopupWrap";
+import ButtonAdd from "components/button/ButtonAdd";
 import { LayoutEvent } from "components/layout/common/Layout";
 import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import restAPI from "api/restAPI";
@@ -77,33 +75,7 @@ function InsertPopup(props) {
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ButtonBox>
-        <S.ButtonSet
-          startIcon={<AddIcon />}
-          variant="text"
-          size="small"
-          color="success"
-          onClick={onClickAddRow}
-        >
-          ADD ROW
-        </S.ButtonSet>
-        <S.ButtonSet
-          startIcon={<UTurnLeftIcon />}
-          variant="text"
-          size="small"
-          color="error"
-          onClick={onClickRemoveRow}
-        >
-          CANCEL ROW
-        </S.ButtonSet>
-        <S.ButtonSet
-          startIcon={<SaveIcon />}
-          variant="text"
-          size="small"
-          color="secondary"
-          onClick={onClickSave}
-        >
-          SAVE
-        </S.ButtonSet>
+        <ButtonAdd />
       </S.ButtonBox>
       <S.GridBox>
         <GridPopup
