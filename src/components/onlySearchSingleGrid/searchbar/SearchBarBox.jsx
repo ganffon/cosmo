@@ -219,7 +219,7 @@ function SearchBarBox(props) {
       }}
     >
       <S.SearchBarBox>
-        {componentName === "LineSet" && (
+        {/* {componentName === "LineSet" && (
           <S.ComboBox
             disablePortal
             id="combo-box-demo"
@@ -229,7 +229,7 @@ function SearchBarBox(props) {
               <S.TextF {...params} label="test" size="small" />
             )}
           />
-        )}
+        )} */}
         <InputBox datePickerSet={datePickerSet} inputSet={inputSet} />
         <ButtonBox
           componentName={componentName}

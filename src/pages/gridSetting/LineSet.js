@@ -245,7 +245,7 @@ function LineSet(isEditMode) {
    * 🔸날짜기간조회 - "range"
    * 🔸날짜안씀 - null
    */
-  const datePickerSet = null;
+  const datePickerSet = "range";
 
   /**
    * 🔸inputSet id 값이 ⭐ BE : query params
