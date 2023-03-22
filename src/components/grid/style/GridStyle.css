@@ -7,6 +7,10 @@
   accent-color: #f5329498;
 }
 
+.columnHeaderMultiLine {
+  white-space: pre;
+}
+
 /* .checkbox :disabled {
   accent-color: #f532cb99 !important;
 } */

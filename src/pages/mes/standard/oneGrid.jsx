@@ -59,6 +59,8 @@ function OneGrid(props) {
   const { componentName } = props;
   const COMPONENT = getComponent(componentName);
   const COMPONENT_NAME = componentName;
+  // const COMPONENT = LineSet(isEditMode);
+  // const COMPONENT_NAME = "LineSet";
 
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutEvent);
   const refSingleGrid = useRef(null);
@@ -73,9 +75,6 @@ function OneGrid(props) {
   });
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
-
-  // const COMPONENT = LineSet(isEditMode);
-  // const COMPONENT_NAME = "LineSet";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -226,6 +225,7 @@ function OneGrid(props) {
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => getPostParams(COMPONENT_NAME, raw));
+    console.log(data);
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI

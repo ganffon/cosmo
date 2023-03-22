@@ -1,3 +1,11 @@
+// ✨ UPDATE ✨
+class factories {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.factory_cd = raw.factory_cd;
+    this.factory_nm = raw.factory_nm;
+  }
+}
 class lines {
   constructor(raw) {
     this.factory_id = raw.factory_id;
@@ -10,9 +18,9 @@ function GetPutParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
-    //   case "Factory":
-    //     params = new factories(raw);
-    //     break;
+    case "FactorySet":
+      params = new factories(raw);
+      break;
     case "LineSet":
       params = new lines(raw);
       break;

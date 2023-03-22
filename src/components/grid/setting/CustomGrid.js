@@ -29,8 +29,24 @@ class CheckBox {
   }
 }
 
-export function NumComma(value) {
+function NumComma(value) {
   return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //🔸숫자 3자리마다 콤마 찍기
 }
 
-export default { CheckBox, NumComma };
+class ColumnHeaderMultiLine {
+  constructor(props) {
+    const columnInfo = props.columnInfo;
+    const el = document.createElement("div");
+    el.className = "columnHeaderMultiLine";
+    el.textContent = columnInfo.header;
+    this.el = el;
+  }
+  getElement() {
+    return this.el;
+  }
+  render(props) {
+    this.el.textContent = props.columnInfo.header;
+  }
+}
+
+export default { CheckBox, NumComma, ColumnHeaderMultiLine };

@@ -1,5 +1,4 @@
 //사업부관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
 import {
   WIDTH_SUPER_SHORT,
@@ -53,7 +52,7 @@ function FactorySet(isEditMode) {
       header: "공장명",
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -133,6 +132,44 @@ function FactorySet(isEditMode) {
       rowSpan: false,
     },
   ];
+  const columnsModal = [
+    {
+      name: "factory_id",
+      header: "공장ID",
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "factory_cd",
+      header: "공장코드",
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "factory_nm",
+      header: "공장명",
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -163,13 +200,14 @@ function FactorySet(isEditMode) {
 
   const uri = restURI.factories;
 
-  const buttonDisabled = true;
+  const buttonDisabled = false;
 
   return {
     data,
     rowHeaders,
     rowHeadersModal,
     columns,
+    columnsModal,
     columnOptions,
     header,
     datePickerSet,

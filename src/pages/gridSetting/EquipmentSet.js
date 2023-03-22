@@ -2,7 +2,7 @@
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
 import "components/grid/style/GridStyle.css";
-import CustomRenderer from "components/grid/setting/CustomGrid";
+import CustomGrid from "components/grid/setting/CustomGrid";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -256,7 +256,7 @@ function EquipmentSet(isEditMode) {
       name: "use_fg",
       header: "사용",
       renderer: {
-        type: CustomRenderer.CheckBox,
+        type: CustomGrid.CheckBox,
         options: {
           name: "use_fg",
         },
@@ -274,7 +274,7 @@ function EquipmentSet(isEditMode) {
       name: "prd_fg",
       header: "생산설비",
       renderer: {
-        type: CustomRenderer.CheckBox,
+        type: CustomGrid.CheckBox,
         options: {
           name: "prd_fg",
         },
