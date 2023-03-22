@@ -1,6 +1,8 @@
 //라인관리✨
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
+import CustomGrid from "components/grid/setting/CustomGrid";
+import "components/grid/style/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -70,14 +72,14 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "라인코드",
+      header: "라인코드\n라인코드라인코드",
       name: "line_cd",
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: true,
       whiteSpace: false,
       rowSpan: false,
       // renderer: {
@@ -95,8 +97,8 @@ function LineSet(isEditMode) {
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: true,
       whiteSpace: false,
       rowSpan: false,
     },
@@ -230,7 +232,23 @@ function LineSet(isEditMode) {
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
 
-  const header = {};
+  const header = {
+    // height: 100,
+    // complexColumns: [
+    //   {
+    //     header: "test",
+    //     name: "test_test",
+    //     childNames: ["line_cd", "line_nm"],
+    //     renderer: CustomGrid.ColumnHeaderMultiLine,
+    //   },
+    // ],
+    columns: [
+      {
+        name: "line_cd",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   // const header = {
   //   height: "60",
   //   complexColumns: [

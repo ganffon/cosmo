@@ -1,3 +1,4 @@
+// ✨ INSERT ✨
 class factories {
   constructor(raw) {
     this.factory_cd = raw.factory_cd;
@@ -312,7 +313,7 @@ function GetPostParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
-    case "Factory":
+    case "FactorySet":
       params = new factories(raw);
       break;
     case "LineSet":
