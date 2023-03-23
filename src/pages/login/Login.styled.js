@@ -3,16 +3,17 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import BackImg from "img/Login/cosmoback.png";
+import Autocomplete from "@mui/material/Autocomplete";
 
-const LoginLayout = styled("div")`
+export const LoginLayout = styled("div")`
   width: 100vw;
   height: 100vh;
   display: flex;
 `;
 
-const LeftBox = styled("aside")`
-  min-width: 220px;
-  width: 220px;
+export const LeftBox = styled("aside")`
+  min-width: 230px;
+  width: 230px;
   height: 100vh;
   padding-left: 15px;
   padding-right: 15px;
@@ -22,16 +23,18 @@ const LeftBox = styled("aside")`
   justify-content: space-between;
 `;
 
-const LeftTopBox = styled("div")``;
+export const LeftTopBox = styled("div")`
+  width: 100%;
+`;
 
-const LeftBottomBox = styled("div")`
+export const LeftBottomBox = styled("div")`
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 `;
 
-const RightBox = styled("main")`
+export const RightBox = styled("main")`
   width: 100%;
   height: 100vh;
   background-image: url(${BackImg});
@@ -41,52 +44,44 @@ const RightBox = styled("main")`
   align-items: center;
 `;
 
-const Logo = styled("img")`
+export const Logo = styled("img")`
   scale: 1.2;
 `;
 
-const LogoIspark = styled("img")`
+export const LogoIspark = styled("img")`
   width: 50%;
 `;
 
-const LoginForm = styled("form")`
+export const LoginForm = styled("form")`
   width: 100%;
   display: flex;
+  flex-direction: column;
   background-color: rgb(223, 221, 221);
 `;
 
-const LoginInputBox = styled("div")`
+export const LoginInputBox = styled("div")`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
-const LoginInput = styled(TextField)`
-  width: 90%;
+export const LoginInput = styled(TextField)`
+  width: 100%;
   margin-bottom: 10px;
 `;
 
-const LoginButton = styled(Button)`
-  height: 120px;
-  width: 80px;
+export const LoginButton = styled(Button)`
+  height: 40px;
+  width: 100%;
 `;
 
-const LoginTitle = styled(Typography)`
+export const LoginTitle = styled(Typography)`
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 20px;
 `;
 
-export {
-  LoginLayout,
-  LeftBox,
-  LeftTopBox,
-  LeftBottomBox,
-  RightBox,
-  Logo,
-  LogoIspark,
-  LoginForm,
-  LoginInputBox,
-  LoginInput,
-  LoginButton,
-  LoginTitle,
-};
+export const FactoryCombo = styled(Autocomplete)`
+  margin-bottom: 10px;
+  width: 100%;
+`;
