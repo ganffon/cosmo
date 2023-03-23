@@ -7,6 +7,11 @@ import Logo from "img/Logo/cosmo.png";
 import LogoIspark from "img/Logo/ispark_gray.png";
 import NoticeSnack from "components/alert/NoticeSnack";
 import * as S from "./Login.styled";
+import TextField from "@mui/material/TextField";
+import restAPI from "api/restAPI";
+import restURI from "api/restURI.json";
+
+const FACTORY_URI = restURI.factories + "/search";
 
 function Login() {
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -51,6 +56,14 @@ function Login() {
       goLogin();
     }
   };
+  const [factoryData, setFactoryData] = useState([]);
+  useEffect(() => {
+    async function factoryDataSetting() {
+      const data = await restAPI.get(FACTORY_URI);
+      setFactoryData(data.data.data.rows);
+    }
+    factoryDataSetting();
+  }, []);
 
   useEffect(() => {
     const state = localStorage.getItem("loginState");
@@ -70,7 +83,6 @@ function Login() {
       }
     }
   }, []);
-
   return (
     <S.LoginLayout>
       <S.LeftBox>
@@ -79,11 +91,26 @@ function Login() {
           <S.LoginTitle>Manufacturing Execution System Login</S.LoginTitle>
           <S.LoginForm>
             <S.LoginInputBox>
+              <S.FactoryCombo
+                disablePortal
+                id="factoryCombo"
+                size="small"
+                key={(factoryData) => factoryData.factory_id}
+                options={factoryData}
+                getOptionLabel={(factoryData) => factoryData.factory_nm}
+                onChange={(event, newValue) => {
+                  console.log(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="사업부" size="small" />
+                )}
+              />
               <S.LoginInput
                 id="loginID"
                 label="ID"
                 variant="outlined"
                 autoComplete="off"
+                size="small"
                 onKeyDown={onKeyDown}
                 onChange={changeLoginInfo}
               />
@@ -93,6 +120,7 @@ function Login() {
                 type="password"
                 autoComplete="current-password"
                 variant="outlined"
+                size="small"
                 onKeyDown={onKeyDown}
                 onChange={changeLoginInfo}
               />
