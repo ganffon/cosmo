@@ -11,12 +11,11 @@ import TextField from "@mui/material/TextField";
 import restAPI from "api/restAPI";
 import restURI from "api/restURI.json";
 
-const FACTORY_URI = restURI.factories + "/search";
-
 function Login() {
   const [cookie, setCookie, removeCookie] = useCookies();
 
   const [loginInfo, setLoginInfo] = useState({
+    loginFactoryID: cookie.loginFactoryID,
     loginID: cookie.loginID,
     loginPW: "",
   });
@@ -26,6 +25,26 @@ function Login() {
     message: "로그인 정보가 일치하지 않습니다.",
     severity: "error",
   });
+  const [factoryData, setFactoryData] = useState([]);
+  const [factoryDefault, setFactoryDefault] = useState();
+  useEffect(() => {
+    async function factoryDataSetting() {
+      const data = await restAPI.get(restURI.factories + "/search");
+      setFactoryData(data.data.data.rows);
+    }
+    factoryDataSetting();
+
+    async function factoryDefaultSetting() {
+      if (cookie.loginFactoryID !== undefined) {
+        const data = await restAPI.get(
+          restURI.factories + `/${cookie.loginFactoryID}`
+        );
+        setFactoryDefault(data.data.data.rows);
+      }
+    }
+    factoryDefaultSetting();
+  }, []);
+
   const changeLoginInfo = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.id]: e.target.value });
   };
@@ -37,6 +56,11 @@ function Login() {
       const expiresTime = new Date();
       expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
       setCookie("loginID", loginInfo.loginID, {
+        path: "/",
+        expires: expiresTime,
+        secure: true,
+      });
+      setCookie("loginFactoryID", loginInfo.loginFactoryID, {
         path: "/",
         expires: expiresTime,
         secure: true,
@@ -56,14 +80,6 @@ function Login() {
       goLogin();
     }
   };
-  const [factoryData, setFactoryData] = useState([]);
-  useEffect(() => {
-    async function factoryDataSetting() {
-      const data = await restAPI.get(FACTORY_URI);
-      setFactoryData(data.data.data.rows);
-    }
-    factoryDataSetting();
-  }, []);
 
   useEffect(() => {
     const state = localStorage.getItem("loginState");
@@ -83,6 +99,7 @@ function Login() {
       }
     }
   }, []);
+
   return (
     <S.LoginLayout>
       <S.LeftBox>
@@ -95,11 +112,16 @@ function Login() {
                 disablePortal
                 id="factoryCombo"
                 size="small"
-                key={(factoryData) => factoryData.factory_id}
+                key={(option) => option.factory_id}
+                // defaultValue={factoryData}
                 options={factoryData}
-                getOptionLabel={(factoryData) => factoryData.factory_nm}
+                getOptionLabel={(option) => option.factory_nm}
                 onChange={(event, newValue) => {
-                  console.log(newValue);
+                  setLoginInfo({
+                    ...loginInfo,
+                    loginFactoryID: newValue.factory_id,
+                    loginFactoryName: newValue.factory_nm,
+                  });
                 }}
                 renderInput={(params) => (
                   <TextField {...params} label="사업부" size="small" />

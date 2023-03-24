@@ -10,6 +10,8 @@ import Dashboard from "pages/mes/dashboard/Dashboard";
 import RealMenuList from "components/layout/datas/RealMenuList.json";
 // import NotFound from "pages/notfound/NotFound";
 import Document from "pages/mes/standard/Document";
+import MenuManage from "pages/admin/menu/MenuManage";
+import MenuList from "pages/admin/menu/MenuList";
 
 export default function MainRouter() {
   const [realMenuList, setRealMenuList] = useState([]);
@@ -51,6 +53,8 @@ export default function MainRouter() {
         })}
         {/* <Route path="lines" element={<Line />} /> */}
         <Route path="document" element={<Document />} />
+        <Route path="menu-manage" element={<MenuManage />} />
+        <Route path="menu-list" element={<MenuList />} />
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
     </Layout>
