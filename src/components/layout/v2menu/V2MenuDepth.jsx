@@ -24,12 +24,11 @@ function subMenu(menu, upperMenuName, isMouseOver, handleClickMenu) {
     return null;
   } else {
     result = (
-      <S.MenuItem key={menu.id} isMouseOver={isMouseOver}>
+      <S.MenuItem key={menu.id}>
         <S.MenuButton
           onClick={() => handleClickMenu(menu, upperMenuName, isMouseOver)}
-          isMouseOver={isMouseOver}
         >
-          <S.MenuText primary={menu.name} isMouseOver={isMouseOver} />
+          <S.MenuText primary={menu.name} />
         </S.MenuButton>
       </S.MenuItem>
     );
@@ -40,14 +39,13 @@ function subMenu(menu, upperMenuName, isMouseOver, handleClickMenu) {
 function V2MenuDepth({ lv2Menu, setLv2Menu }) {
   const {
     isMouseOver,
-    changeMouseOver,
+    setIsMouseOver,
     menuNameChangeSave,
     setMenuNameChangeSave,
     setCurrentMenuName,
     setIsModalOpen,
   } = useContext(LayoutEvent);
   const navigate = useNavigate();
-
   const handleClickMenu = (menu, upperMenuName, isMouseOver) => {
     if (isMouseOver === true) {
       setMenuNameChangeSave({
@@ -76,23 +74,18 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
     }
   };
 
-  return (
+  return isMouseOver ? (
     <S.MenuDepthBox
       onMouseLeave={() => {
-        changeMouseOver(false);
+        setIsMouseOver(false);
         setLv2Menu(null);
       }}
-      isMouseOver={isMouseOver}
     >
       {/* <CssBaseline /> */}
       {lv2Menu && (
         <S.MenuDepth>
           {lv2Menu.map((lv2Menu) => (
-            <S.Menu
-              key={lv2Menu.id}
-              subheader={subTitle(lv2Menu)}
-              isMouseOver={isMouseOver}
-            >
+            <S.Menu key={lv2Menu.id} subheader={subTitle(lv2Menu)}>
               {lv2Menu.under
                 ? lv2Menu.under.map((lv3Menu) =>
                     subMenu(lv3Menu, lv2Menu.name, isMouseOver, handleClickMenu)
@@ -105,7 +98,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
         </S.MenuDepth>
       )}
     </S.MenuDepthBox>
-  );
+  ) : null;
 }
 
 export default V2MenuDepth;

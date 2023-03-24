@@ -13,8 +13,8 @@ import * as S from "./AppBar.styled";
 function AppBar() {
   const {
     isMenuSlide,
-    changeMenuSlide,
-    changeMouseOver,
+    setIsMenuSlide,
+    setIsMouseOver,
     currentMenuName,
     setCurrentMenuName,
     isAllScreen,
@@ -33,8 +33,8 @@ function AppBar() {
           color="default"
           aria-label="open drawer"
           onClick={() => {
-            changeMenuSlide(!isMenuSlide);
-            changeMouseOver(false);
+            setIsMenuSlide(!isMenuSlide);
+            setIsMouseOver(false);
           }}
           edge="start"
         >
