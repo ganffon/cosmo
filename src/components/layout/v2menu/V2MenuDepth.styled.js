@@ -13,17 +13,17 @@ import {
 } from "constant/Layout";
 
 const MenuItem = styled(ListItem)`
-  width: ${(props) => (props.isMouseOver ? `${MENU_DEPTH_WIDTH}` : "0px")};
+  width: ${MENU_DEPTH_WIDTH};
   padding: 0px 0px;
 `;
 
 const MenuButton = styled(ListItemButton)`
-  width: ${(props) => (props.isMouseOver ? `${MENU_DEPTH_WIDTH}` : "0px")};
-  padding: ${(props) => (props.isMouseOver ? "4px 10px" : "0px 0px")};
+  width: ${MENU_DEPTH_WIDTH};
+  padding: 4px 10px;
 `;
 
 const MenuText = styled(ListItemText)`
-  opacity: ${(props) => (props.isMouseOver ? "1" : "0")};
+  opacity: 1;
   margin: 0px 0px;
 `;
 
@@ -45,7 +45,7 @@ const MenuDepthBox = styled("div")`
   overflow-y: scroll;
   height: ${`calc(100vh - ${APP_BAR_HEIGHT})`};
   background-color: ${MENU_DEPTH_BACK_COLOR};
-  width: ${(props) => (props.isMouseOver ? `${MENU_DEPTH_WIDTH}` : "0px")};
+  width: ${MENU_DEPTH_WIDTH};
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -62,7 +62,7 @@ const MenuDepth = styled("div")``;
 
 const Menu = styled(List)`
   background-color: ${MENU_DEPTH_BACK_COLOR};
-  width: ${(props) => (props.isMouseOver ? `${MENU_DEPTH_WIDTH}` : "0px")};
+  width: ${MENU_DEPTH_WIDTH};
   padding: 0px 0px;
 `;
 

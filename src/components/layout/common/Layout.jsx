@@ -23,15 +23,6 @@ const Layout = ({ children }) => {
   }); //🔸메뉴를 선택하기 까지의 레벨별 메뉴이름 저장
   const [currentMenuName, setCurrentMenuName] = useState("Dashboard"); //🔸현재 선택한 메뉴 이름 표시
 
-  const changeMenuSlide = (chk) => {
-    //🔸메뉴 슬라이드 접기, 펴기 Flag
-    setIsMenuSlide(chk);
-  };
-  const changeMouseOver = (chk) => {
-    //🔸Depth 메뉴 활성화 조건인 마우스 오버 확인 Flag
-    setIsMouseOver(chk);
-  };
-
   // const [singleGridData, setSingleGridData] = useState(); //🔸singleGridData 받기
 
   return (
@@ -39,9 +30,9 @@ const Layout = ({ children }) => {
       <LayoutEvent.Provider
         value={{
           isMenuSlide,
-          changeMenuSlide,
+          setIsMenuSlide,
           isMouseOver,
-          changeMouseOver,
+          setIsMouseOver,
           menuNameChangeSave,
           setMenuNameChangeSave,
           currentMenuName,

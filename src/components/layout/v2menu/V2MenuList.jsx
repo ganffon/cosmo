@@ -26,14 +26,14 @@ const menuListIcon = (id) => {
 
 function V2MenuList(props) {
   const { lv1Menu, setLv2Menu } = props;
-  const { changeMouseOver, menuNameChangeSave, setMenuNameChangeSave } =
+  const { setIsMouseOver, menuNameChangeSave, setMenuNameChangeSave } =
     useContext(LayoutEvent);
   return (
     <S.MenuList>
       <S.MenuButton
         // onMouseEnter={() => { //🔸메뉴 MouseOver로 동작 시 사용
         onClick={() => {
-          changeMouseOver(true);
+          setIsMouseOver(true);
           lv1Menu.under ? setLv2Menu(lv1Menu.under) : setLv2Menu(null);
           setMenuNameChangeSave({
             ...menuNameChangeSave,

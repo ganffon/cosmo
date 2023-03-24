@@ -7,14 +7,14 @@ import { LayoutEvent } from "../common/Layout";
 import * as S from "./V2MenuFold.styled";
 
 function V2MenuFold() {
-  const { isMenuSlide, changeMenuSlide, isAllScreen } = useContext(LayoutEvent);
+  const { isMenuSlide, setIsMenuSlide, isAllScreen } = useContext(LayoutEvent);
   const [lv2Menu, setLv2Menu] = useState(null);
 
   useEffect(() => {
     if (isAllScreen === true) {
-      changeMenuSlide(false);
+      setIsMenuSlide(false);
     } else {
-      changeMenuSlide(true);
+      setIsMenuSlide(true);
     }
   }, [isAllScreen]);
 
