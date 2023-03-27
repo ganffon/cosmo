@@ -1,5 +1,4 @@
-//라인관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
+//제품군관리✨
 import restURI from "api/restURI.json";
 import CustomGrid from "components/grid/setting/CustomGrid";
 import "components/grid/style/GridStyle.css";
@@ -12,7 +11,7 @@ import {
   MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function MenuListSet(isEditMode) {
+function ProductModelSet(isEditMode) {
   const data = [
     {
       prod_gbn_id: 1,
@@ -47,8 +46,8 @@ function MenuListSet(isEditMode) {
    */
   const columns = [
     {
-      header: "순번",
-      name: "row_no",
+      header: "제품군ID",
+      name: "model_id",
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -57,22 +56,11 @@ function MenuListSet(isEditMode) {
       filter: false,
       whiteSpace: false,
       rowSpan: false,
+      backgroundColor: "green",
     },
     {
-      header: "메뉴리스트ID",
-      name: "menu_list_id",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "부모메뉴ID",
-      name: "parents_menu_id",
+      header: "제품군코드",
+      name: "model_cd",
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -83,155 +71,16 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "부모메뉴명",
-      name: "parents_menu_nm",
+      header: "제품군명",
+      name: "model_nm",
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: true,
       whiteSpace: false,
       rowSpan: false,
-      // renderer: {
-      //   styles: {
-      //     backgroundColor: MODAL_BACK_COLOR,
-      //     padding: "9px",
-      //     margin: "0px",
-      //   },
-      // },
-    },
-    {
-      header: "자식메뉴ID",
-      name: "child_menu_id",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "자식메뉴명",
-      name: "child_menu_nm",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "메뉴Lv",
-      name: "menu_lv",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "메뉴코드",
-      name: "menu_cd",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "메뉴명",
-      name: "menu_nm",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "컴포넌트명",
-      name: "menu_cpnt",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "정렬",
-      name: "sortby",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "동작메뉴",
-      name: "act_fg",
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "act_fg",
-        },
-      },
-      minWidth: "60",
-      hidden: false,
-    },
-    {
-      header: "메뉴구분",
-      name: "read_only_fg",
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "read_only_fg",
-        },
-      },
-      minWidth: "60",
-      hidden: false,
-    },
-    {
-      header: "공용폼",
-      name: "common_fg",
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "common_fg",
-        },
-      },
-      minWidth: "60",
-      hidden: false,
-    },
-    {
-      header: "사용여부",
-      name: "use_fg",
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "use_fg",
-        },
-      },
-      minWidth: "60",
-      hidden: false,
     },
     {
       header: "등록시간",
@@ -308,8 +157,8 @@ function MenuListSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      header: "공장ID",
-      name: "factory_id",
+      header: "제품군코드",
+      name: "model_cd",
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -320,35 +169,11 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "line_id",
-      header: "라인ID",
+      header: "제품군명",
+      name: "model_nm",
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "라인코드",
-      name: "line_cd",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "line_nm",
-      header: "라인명",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
       hidden: false,
       sortable: false,
       filter: false,
@@ -364,6 +189,15 @@ function MenuListSet(isEditMode) {
   };
 
   const header = {
+    // height: 100,
+    // complexColumns: [
+    //   {
+    //     header: "test",
+    //     name: "test_test",
+    //     childNames: ["line_cd", "line_nm"],
+    //     renderer: CustomGrid.ColumnHeaderMultiLine,
+    //   },
+    // ],
     // columns: [
     //   {
     //     name: "line_cd",
@@ -394,16 +228,16 @@ function MenuListSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "메뉴코드",
-      id: "menu_cd",
+      name: "제품군코드",
+      id: "model_cd",
     },
     {
-      name: "메뉴명",
-      id: "menu_nm",
+      name: "제품군명",
+      id: "model_nm",
     },
   ];
 
-  const uri = restURI.line;
+  const uri = restURI.productModel;
 
   const buttonDisabled = false;
 
@@ -422,4 +256,4 @@ function MenuListSet(isEditMode) {
   };
 }
 
-export default MenuListSet;
+export default ProductModelSet;

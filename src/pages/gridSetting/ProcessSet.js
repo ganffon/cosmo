@@ -184,7 +184,7 @@ function ProcessSet(isEditMode) {
 
   const uri = restURI.process;
 
-  const buttonDisabled = false;
+  const buttonDisabled = true;
 
   return {
     data,

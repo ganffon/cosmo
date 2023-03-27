@@ -198,7 +198,7 @@ function FactorySet(isEditMode) {
     },
   ];
 
-  const uri = restURI.factories;
+  const uri = restURI.factory;
 
   const buttonDisabled = false;
 

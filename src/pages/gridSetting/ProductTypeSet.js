@@ -23,8 +23,8 @@ function ProductTypeSet(isEditMode) {
    */
   const columns = [
     {
+      header: "품종군ID",
       name: "prod_type_id",
-      header: "제품유형ID",
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -35,8 +35,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
+      header: "품종군코드",
       name: "prod_type_cd",
-      header: "제품유형코드",
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -47,8 +47,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
+      header: "품종군명",
       name: "prod_type_nm",
-      header: "제품유형명",
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -59,8 +59,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "create_at",
       header: "등록시간",
+      name: "create_at",
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -71,8 +71,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "create_uid",
       header: "등록자ID",
+      name: "create_uid",
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -83,8 +83,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "update_at",
       header: "수정시간",
+      name: "update_at",
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -95,8 +95,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "update_uid",
       header: "수정자ID",
+      name: "update_uid",
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -107,8 +107,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_at",
       header: "삭제시간",
+      name: "delete_at",
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -119,8 +119,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_id",
       header: "삭제자ID",
+      name: "delete_id",
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -150,16 +150,18 @@ function ProductTypeSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "제품유형코드",
+      name: "품종군코드",
       id: "prod_type_cd",
     },
     {
-      name: "제품유형명",
+      name: "품종군명",
       id: "prod_type_nm",
     },
   ];
 
-  const uri = restURI.productstype;
+  const uri = restURI.productType;
+
+  const buttonDisabled = true;
 
   return {
     data,
@@ -169,6 +171,7 @@ function ProductTypeSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
+    buttonDisabled,
   };
 }
 

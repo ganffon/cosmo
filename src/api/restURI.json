@@ -1,10 +1,11 @@
 {
-  "factories": "/factories",
-  "lines": "/lines",
+  "factory": "/factories",
+  "line": "/lines",
   "process": "/process",
-  "equipments": "/equipments",
-  "productsgbn": "/productsgbn",
-  "productstype": "/productstype",
-  "products": "/products",
-  "routings": "/routings"
+  "equipment": "/equipments",
+  "productGbn": "/productsgbn",
+  "productType": "/productstype",
+  "productModel": "",
+  "product": "/products",
+  "routing": "/routings"
 }

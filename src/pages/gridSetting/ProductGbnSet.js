@@ -272,7 +272,7 @@ function ProductGbnSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.productsgbn;
+  const uri = restURI.productGbn;
 
   return {
     data,

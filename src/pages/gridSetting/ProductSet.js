@@ -723,7 +723,7 @@ function ProductSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.products;
+  const uri = restURI.product;
 
   return {
     data,
