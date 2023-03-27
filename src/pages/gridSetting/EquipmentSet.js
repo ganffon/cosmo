@@ -12,20 +12,22 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
+const COMBO_URI = restURI.process + "/search";
+const COMPONENT_NAME = "ProcessSet";
+let listItem = [];
+
 const comboBoxData = async () => {
-  let data;
-  data = await restAPI.get("/process/search").then((res) => {
-    res.data.data.rows.map((raw) => getComboParams("ProcessSet", raw));
+  await restAPI.get(COMBO_URI).then((res) => {
+    for (var i = 0; i < res.data.data.rows.length; i++) {
+      let obj = {};
+      let dataObj = res.data.data.rows[i];
+      obj = getComboParams(COMPONENT_NAME, dataObj);
+      listItem.push(obj);
+    }
   });
-  console.log(data);
 };
 
 comboBoxData();
-// console.log(data);
-// const listItem = data?.data?.data?.rows.map((raw) =>
-//   getComboParams("ProcessSet", raw)
-// );
-// console.log(listItem);
 
 function EquipmentSet(isEditMode) {
   const data = [];
@@ -293,12 +295,7 @@ function EquipmentSet(isEditMode) {
       editor: {
         type: "select",
         options: {
-          // listItems: listItem,
-          listItems: [
-            { text: "1번공정", value: "88DB6539-57CC-ED11-A1E2-A0D3C1FA18B6" },
-            { text: "2번공정", value: "89DB6539-57CC-ED11-A1E2-A0D3C1FA18B6" },
-            { text: "3번공정", value: "8ADB6539-57CC-ED11-A1E2-A0D3C1FA18B6" },
-          ],
+          listItems: listItem,
         },
       },
       hidden: false,
