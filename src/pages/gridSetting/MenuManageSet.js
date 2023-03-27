@@ -319,7 +319,7 @@ function MenuManageSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.lines;
+  const uri = restURI.line;
 
   const buttonDisabled = false;
 

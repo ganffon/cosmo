@@ -287,7 +287,7 @@ function RoutingSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.routings;
+  const uri = restURI.routing;
 
   return {
     data,
