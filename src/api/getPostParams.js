@@ -325,7 +325,7 @@ function GetPostParams(componentName, raw) {
     case "User":
       params = new users(raw);
       break;
-    case "Equipment":
+    case "EquipmentSet":
       params = new equipments(raw);
       break;
     case "Product":
@@ -393,7 +393,7 @@ function GetPostParams(componentName, raw) {
       break;
     default:
   }
-
+  console.log(JSON.stringify(params));
   return JSON.stringify(params);
 }
 

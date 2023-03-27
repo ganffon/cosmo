@@ -23,6 +23,7 @@ function OneGrid(props) {
   LoginStateChk();
   const COMPONENT = getComponent(componentName);
   const COMPONENT_NAME = componentName;
+  console.log(`COMPONENT_NAME : ${COMPONENT_NAME}`);
   // const COMPONENT = LineSet(isEditMode);
   // const COMPONENT_NAME = "LineSet";
 
@@ -186,6 +187,7 @@ function OneGrid(props) {
   };
   const onClickModalSave = async () => {
     refModalGrid?.current?.gridInst?.finishEditing();
+    // console.log(refModalGrid?.current?.gridInst?.getModifiedRows());
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => getPostParams(COMPONENT_NAME, raw));
