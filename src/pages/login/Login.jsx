@@ -15,7 +15,8 @@ function Login() {
   const [cookie, setCookie, removeCookie] = useCookies();
 
   const [loginInfo, setLoginInfo] = useState({
-    loginFactoryID: cookie.loginFactoryID,
+    loginFactoryID: "",
+    loginFactoryName: "",
     loginID: cookie.loginID,
     loginPW: "",
   });
@@ -25,24 +26,13 @@ function Login() {
     message: "로그인 정보가 일치하지 않습니다.",
     severity: "error",
   });
-  const [factoryData, setFactoryData] = useState([]);
-  const [factoryDefault, setFactoryDefault] = useState();
+  const [factoryDataOption, setFactoryDataOption] = useState([]);
   useEffect(() => {
     async function factoryDataSetting() {
       const data = await restAPI.get(restURI.factories + "/search");
-      setFactoryData(data.data.data.rows);
+      setFactoryDataOption(data.data.data.rows);
     }
     factoryDataSetting();
-
-    async function factoryDefaultSetting() {
-      if (cookie.loginFactoryID !== undefined) {
-        const data = await restAPI.get(
-          restURI.factories + `/${cookie.loginFactoryID}`
-        );
-        setFactoryDefault(data.data.data.rows);
-      }
-    }
-    factoryDefaultSetting();
   }, []);
 
   const changeLoginInfo = (e) => {
@@ -52,7 +42,7 @@ function Login() {
   const navigate = useNavigate();
 
   const goLogin = () => {
-    if (loginInfo.loginPW === "1") {
+    if ((loginInfo.loginFactoryID !== "") & (loginInfo.loginPW === "1")) {
       const expiresTime = new Date();
       expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
       setCookie("loginID", loginInfo.loginID, {
@@ -65,12 +55,24 @@ function Login() {
         expires: expiresTime,
         secure: true,
       });
+      setCookie("loginFactoryName", loginInfo.loginFactoryName, {
+        path: "/",
+        expires: expiresTime,
+        secure: true,
+      });
       localStorage.setItem("loginState", true);
       navigate("/main");
+    } else if (loginInfo.loginFactoryID === "") {
+      setAlertOpen({
+        ...alertOpen,
+        open: true,
+        message: "사업부를 선택하세요.",
+      });
     } else {
       setAlertOpen({
         ...alertOpen,
         open: true,
+        message: "로그인 정보가 일치하지 않습니다.",
       });
     }
   };
@@ -110,21 +112,21 @@ function Login() {
             <S.LoginInputBox>
               <S.FactoryCombo
                 disablePortal
+                disableClearable
                 id="factoryCombo"
                 size="small"
-                key={(option) => option.factory_id}
-                // defaultValue={factoryData}
-                options={factoryData}
-                getOptionLabel={(option) => option.factory_nm}
-                onChange={(event, newValue) => {
+                key={(option) => option?.factory_id}
+                options={factoryDataOption || null}
+                getOptionLabel={(option) => option?.factory_nm || ""}
+                onChange={(_, newValue) => {
                   setLoginInfo({
                     ...loginInfo,
-                    loginFactoryID: newValue.factory_id,
-                    loginFactoryName: newValue.factory_nm,
+                    loginFactoryID: newValue?.factory_id,
+                    loginFactoryName: newValue?.factory_nm,
                   });
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="사업부" size="small" />
+                  <TextField {...params} label={"사업부"} size="small" />
                 )}
               />
               <S.LoginInput
