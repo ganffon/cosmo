@@ -234,7 +234,7 @@ function Equipment() {
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
-          <S.InputWrap>
+          <S.SearchWrap>
             {inputSet.map((v) => (
               <InputSearch
                 key={v.id}
@@ -244,7 +244,7 @@ function Equipment() {
                 onClickSearch={onClickSearch}
               />
             ))}
-          </S.InputWrap>
+          </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonEdit

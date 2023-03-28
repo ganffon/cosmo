@@ -24,8 +24,10 @@
   "prod_type_nm": "품종군명",
 
   "prod_type_small_id": "품종ID",
+  "prod_type_small_cd": "품종코드",
   "prod_type_small_nm": "품종명",
 
+  "prod_id": "품목ID",
   "prod_no": "품번",
   "prod_nm": "품목명",
 

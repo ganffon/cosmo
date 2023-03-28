@@ -1,5 +1,3 @@
-//제품관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
 import "components/grid/style/GridStyle.css";
 import CustomGrid from "components/grid/setting/CustomGrid";
@@ -705,7 +703,7 @@ function ProductSet(isEditMode) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -717,7 +715,7 @@ function ProductSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -745,24 +743,16 @@ function ProductSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "품번",
       id: "prod_no",
+      name: CN.prod_no,
     },
     {
-      name: "제품명",
       id: "prod_nm",
+      name: CN.prod_nm,
     },
     {
-      name: "제품구분명",
-      id: "prod_gbn_nm",
-    },
-    {
-      name: "제품유형명",
-      id: "prod_type_nm",
-    },
-    {
-      name: "모델명",
-      id: "model_nm",
+      id: "prod_std",
+      name: CN.prod_std,
     },
   ];
 

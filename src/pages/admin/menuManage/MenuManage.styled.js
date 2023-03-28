@@ -28,7 +28,7 @@ export const ToolWrap = styled("div")`
   justify-content: space-between;
   padding: 5px 5px 5px 0px;
 `;
-export const InputWrap = styled("div")`
+export const SearchWrap = styled("div")`
   display: flex;
 `;
 export const ButtonWrap = styled("div")`
