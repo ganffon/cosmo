@@ -2,6 +2,7 @@
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
 import CustomGrid from "components/grid/setting/CustomGrid";
+import CN from "constant/ColumnName.json";
 import "components/grid/style/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
@@ -47,8 +48,8 @@ function LineSet(isEditMode) {
    */
   const columns = [
     {
-      header: "공장ID",
       name: "factory_id",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -61,7 +62,7 @@ function LineSet(isEditMode) {
     },
     {
       name: "line_id",
-      header: "라인ID",
+      header: CN.line_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -72,8 +73,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "라인코드\n라인코드라인코드",
       name: "line_cd",
+      header: CN.line_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -92,7 +93,7 @@ function LineSet(isEditMode) {
     },
     {
       name: "line_nm",
-      header: "라인명",
+      header: CN.line_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -103,8 +104,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록시간",
       name: "create_at",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -115,8 +116,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록자ID",
       name: "create_uid",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -127,8 +128,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정시간",
       name: "update_at",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -139,8 +140,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정자ID",
       name: "update_uid",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -151,8 +152,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제시간",
       name: "delete_at",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -163,8 +164,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제자ID",
-      name: "delete_id",
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -272,12 +273,12 @@ function LineSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "라인코드",
       id: "line_cd",
+      name: CN.line_cd,
     },
     {
-      name: "라인명",
       id: "line_nm",
+      name: CN.line_nm,
     },
   ];
 

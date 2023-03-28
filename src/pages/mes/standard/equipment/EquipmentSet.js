@@ -4,6 +4,7 @@ import restAPI from "api/restAPI";
 import "components/grid/style/GridStyle.css";
 import CustomGrid from "components/grid/setting/CustomGrid";
 import getComboParams from "api/getComboParams";
+import CN from "constant/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -43,8 +44,8 @@ function EquipmentSet(isEditMode) {
    */
   const columns = [
     {
-      header: "설비ID",
       name: "equip_id",
+      header: CN.equip_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -55,8 +56,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "공장ID",
       name: "factory_id",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -67,8 +68,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "공정ID",
       name: "proc_id",
+      header: CN.proc_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -79,8 +80,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "공정명",
       name: "proc_nm",
+      header: CN.proc_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -91,8 +92,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "설비유형ID",
       name: "equip_type_id",
+      header: CN.equip_type_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -103,8 +104,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "설비코드",
       name: "equip_cd",
+      header: CN.equip_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -115,8 +116,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "설비명",
       name: "equip_nm",
+      header: CN.equip_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -127,8 +128,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "작업장ID",
       name: "workings_id",
+      header: CN.workings_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -139,8 +140,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "관리자(정)ID",
       name: "manager_emp_id",
+      header: CN.manager_emp_id,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -151,8 +152,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "관리자(부)ID",
       name: "sub_manager_emp_id",
+      header: CN.sub_manager_emp_id,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -164,7 +165,7 @@ function EquipmentSet(isEditMode) {
     },
     {
       name: "use_fg",
-      header: "사용여부",
+      header: CN.use_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -183,7 +184,7 @@ function EquipmentSet(isEditMode) {
     },
     {
       name: "prd_fg",
-      header: "생산설비",
+      header: CN.prd_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -202,7 +203,7 @@ function EquipmentSet(isEditMode) {
     },
     {
       name: "remark",
-      header: "비고",
+      header: CN.remark,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -213,8 +214,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록시간",
       name: "create_at",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "cneter",
       editor: false,
@@ -225,8 +226,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록자ID",
       name: "create_uid",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "cneter",
       editor: false,
@@ -237,8 +238,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정시간",
       name: "update_at",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "cneter",
       editor: false,
@@ -249,8 +250,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정자ID",
       name: "update_uid",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "cneter",
       editor: false,
@@ -261,8 +262,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제시간",
       name: "delete_at",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "cneter",
       editor: false,
@@ -273,8 +274,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제자ID",
-      name: "delete_id",
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "cneter",
       editor: false,
@@ -287,8 +288,20 @@ function EquipmentSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      header: "공정명",
+      name: "factory_id",
+      header: CN.factory_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
       name: "proc_nm",
+      header: CN.proc_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
@@ -305,8 +318,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "설비코드",
       name: "equip_cd",
+      header: CN.equip_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -317,8 +330,8 @@ function EquipmentSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "설비명",
       name: "equip_nm",
+      header: CN.equip_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -330,7 +343,7 @@ function EquipmentSet(isEditMode) {
     },
     {
       name: "use_fg",
-      header: "사용여부",
+      header: CN.use_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -349,7 +362,7 @@ function EquipmentSet(isEditMode) {
     },
     {
       name: "prd_fg",
-      header: "생산설비",
+      header: CN.prd_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -368,10 +381,10 @@ function EquipmentSet(isEditMode) {
     },
     {
       name: "remark",
-      header: "비고",
+      header: CN.remark,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: "text",
       hidden: false,
       sortable: false,
       filter: false,
@@ -384,7 +397,8 @@ function EquipmentSet(isEditMode) {
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
-
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   const header = {};
   /**
    * 🔸날짜단일조회 - "single"
@@ -398,12 +412,12 @@ function EquipmentSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "설비코드",
       id: "equip_cd",
+      name: CN.equip_cd,
     },
     {
-      name: "설비명",
       id: "equip_nm",
+      name: CN.equip_nm,
     },
   ];
 
@@ -416,6 +430,8 @@ function EquipmentSet(isEditMode) {
     columns,
     columnsModal,
     columnOptions,
+    rowHeaders,
+    rowHeadersModal,
     header,
     datePickerSet,
     inputSet,

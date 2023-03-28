@@ -2,6 +2,7 @@
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
 import CustomGrid from "components/grid/setting/CustomGrid";
+import CN from "constant/ColumnName.json";
 import "components/grid/style/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
@@ -47,8 +48,8 @@ function MenuManageSet(isEditMode) {
    */
   const columns = [
     {
-      header: "메뉴ID",
       name: "menu_id",
+      header: CN.menu_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -59,8 +60,8 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "메뉴코드",
       name: "menu_cd",
+      header: CN.menu_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -71,8 +72,8 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "메뉴명",
       name: "menu_nm",
+      header: CN.menu_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -90,8 +91,8 @@ function MenuManageSet(isEditMode) {
       // },
     },
     {
-      header: "컴포넌트명",
       name: "menu_cpnt",
+      header: CN.menu_cpnt,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -102,8 +103,8 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "동작메뉴",
       name: "act_fg",
+      header: CN.act_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -114,8 +115,8 @@ function MenuManageSet(isEditMode) {
       hidden: false,
     },
     {
-      header: "메뉴구분",
       name: "read_only_fg",
+      header: CN.read_only_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -126,8 +127,8 @@ function MenuManageSet(isEditMode) {
       hidden: false,
     },
     {
-      header: "공용폼",
       name: "common_fg",
+      header: CN.common_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -138,8 +139,8 @@ function MenuManageSet(isEditMode) {
       hidden: false,
     },
     {
-      header: "사용여부",
       name: "use_fg",
+      header: CN.use_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -150,8 +151,8 @@ function MenuManageSet(isEditMode) {
       hidden: false,
     },
     {
-      header: "등록시간",
       name: "create_at",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -162,8 +163,8 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록자ID",
       name: "create_uid",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -174,8 +175,8 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정시간",
       name: "update_at",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -186,8 +187,8 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정자ID",
       name: "update_uid",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -198,8 +199,8 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제시간",
       name: "delete_at",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -210,62 +211,12 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제자ID",
-      name: "delete_id",
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: true,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-  ];
-  const columnsModal = [
-    {
-      header: "공장ID",
-      name: "factory_id",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "line_id",
-      header: "라인ID",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "라인코드",
-      name: "line_cd",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "line_nm",
-      header: "라인명",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
-      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -310,12 +261,12 @@ function MenuManageSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "메뉴코드",
       id: "menu_cd",
+      name: CN.menu_cd,
     },
     {
-      name: "메뉴명",
       id: "menu_nm",
+      name: CN.menu_nm,
     },
   ];
 
@@ -328,7 +279,6 @@ function MenuManageSet(isEditMode) {
     rowHeaders,
     rowHeadersModal,
     columns,
-    columnsModal,
     columnOptions,
     header,
     datePickerSet,

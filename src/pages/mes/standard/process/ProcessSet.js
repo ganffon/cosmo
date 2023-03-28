@@ -1,6 +1,7 @@
 //공정관리✨
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
+import CN from "constant/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -31,7 +32,7 @@ function ProcessSet(isEditMode) {
   const columns = [
     {
       name: "factory_id",
-      header: "공장ID",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -43,7 +44,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "proc_id",
-      header: "공정ID",
+      header: CN.proc_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -55,7 +56,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "proc_cd",
-      header: "공정코드",
+      header: CN.proc_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -67,7 +68,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "proc_nm",
-      header: "공정명",
+      header: CN.proc_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -79,7 +80,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "create_at",
-      header: "등록시간",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -91,7 +92,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "create_uid",
-      header: "등록자ID",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -103,7 +104,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "update_at",
-      header: "수정시간",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -115,7 +116,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "update_uid",
-      header: "수정자ID",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -127,7 +128,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "delete_at",
-      header: "삭제시간",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -139,7 +140,7 @@ function ProcessSet(isEditMode) {
     },
     {
       name: "delete_uid",
-      header: "삭제자ID",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -172,12 +173,12 @@ function ProcessSet(isEditMode) {
 
   const inputSet = [
     {
-      name: "공정코드",
       id: "proc_cd",
+      name: CN.proc_cd,
     },
     {
-      name: "공정명",
       id: "proc_nm",
+      name: CN.proc_nm,
     },
   ];
 
