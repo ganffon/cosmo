@@ -1,5 +1,6 @@
 //사업부관리✨
 import restURI from "api/restURI.json";
+import CN from "constant/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -25,7 +26,7 @@ function FactorySet(isEditMode) {
   const columns = [
     {
       name: "factory_id",
-      header: "공장ID",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -37,7 +38,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "factory_cd",
-      header: "공장코드",
+      header: CN.factory_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -49,7 +50,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "factory_nm",
-      header: "공장명",
+      header: CN.factory_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -61,7 +62,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "create_at",
-      header: "등록시간",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -73,7 +74,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "create_uid",
-      header: "등록자ID",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -85,7 +86,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "update_at",
-      header: "수정시간",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -97,7 +98,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "update_uid",
-      header: "수정자ID",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -109,7 +110,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "delete_at",
-      header: "삭제시간",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -121,7 +122,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "delete_uid",
-      header: "삭제자ID",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -135,7 +136,7 @@ function FactorySet(isEditMode) {
   const columnsModal = [
     {
       name: "factory_id",
-      header: "공장ID",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -147,7 +148,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "factory_cd",
-      header: "공장코드",
+      header: CN.factory_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -159,7 +160,7 @@ function FactorySet(isEditMode) {
     },
     {
       name: "factory_nm",
-      header: "공장명",
+      header: CN.factory_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -189,12 +190,12 @@ function FactorySet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "공장코드",
       id: "factory_cd",
+      name: CN.factory_cd,
     },
     {
-      name: "공장명",
       id: "factory_nm",
+      name: CN.factory_nm,
     },
   ];
 

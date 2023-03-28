@@ -1,6 +1,7 @@
 //제품군관리✨
 import restURI from "api/restURI.json";
 import CustomGrid from "components/grid/setting/CustomGrid";
+import CN from "constant/ColumnName.json";
 import "components/grid/style/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
@@ -46,8 +47,8 @@ function ProductModelSet(isEditMode) {
    */
   const columns = [
     {
-      header: "제품군ID",
       name: "model_id",
+      header: CN.model.id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -59,8 +60,8 @@ function ProductModelSet(isEditMode) {
       backgroundColor: "green",
     },
     {
-      header: "제품군코드",
       name: "model_cd",
+      header: CN.model_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -71,8 +72,8 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "제품군명",
       name: "model_nm",
+      header: CN.model_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -83,8 +84,8 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록시간",
       name: "create_at",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -95,8 +96,8 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록자ID",
       name: "create_uid",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -107,8 +108,8 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정시간",
       name: "update_at",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -119,8 +120,8 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정자ID",
       name: "update_uid",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -131,8 +132,8 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제시간",
       name: "delete_at",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -143,38 +144,12 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제자ID",
-      name: "delete_id",
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: true,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-  ];
-  const columnsModal = [
-    {
-      header: "제품군코드",
-      name: "model_cd",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      header: "제품군명",
-      name: "model_nm",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -228,12 +203,12 @@ function ProductModelSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "제품군코드",
       id: "model_cd",
+      name: CN.model_cd,
     },
     {
-      name: "제품군명",
       id: "model_nm",
+      name: CN.model_nm,
     },
   ];
 
@@ -246,7 +221,6 @@ function ProductModelSet(isEditMode) {
     rowHeaders,
     rowHeadersModal,
     columns,
-    columnsModal,
     columnOptions,
     header,
     datePickerSet,

@@ -3,6 +3,7 @@
 import restURI from "api/restURI.json";
 import "components/grid/style/GridStyle.css";
 import CustomGrid from "components/grid/setting/CustomGrid";
+import CN from "constant/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -26,7 +27,7 @@ function ProductSet(isEditMode) {
   const columns = [
     {
       name: "prod_id",
-      header: "제품ID",
+      header: CN.prod_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -38,32 +39,8 @@ function ProductSet(isEditMode) {
     },
     {
       name: "factory_id",
-      header: "공장ID",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_no",
-      header: "품번",
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_nm",
-      header: "제품명",
-      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -74,19 +51,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "prod_gbn_id",
-      header: "제품구분ID",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_gbn_nm",
-      header: "제품구분명",
+      header: CN.prod_gbn_id,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -97,20 +62,8 @@ function ProductSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_type_id",
-      header: "제품유형ID",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_type_nm",
-      header: "제품유형명",
+      name: "prod_gbn_nm",
+      header: CN.prod_gbn_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -122,7 +75,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "model_id",
-      header: "모델ID",
+      header: CN.model_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -134,7 +87,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "model_nm",
-      header: "모델명",
+      header: CN.model_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -144,10 +97,9 @@ function ProductSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
-
     {
-      name: "unit_id",
-      header: "단위ID",
+      name: "prod_type_id",
+      header: CN.prod_type_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -158,10 +110,58 @@ function ProductSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "unit_nm",
-      header: "단위명",
-      minWidth: WIDTH_SUPER_SHORT,
-      align: "center",
+      name: "prod_type_nm",
+      header: CN.prod_type_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_type_small_id",
+      header: CN.prod_type_small_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_type_small_nm",
+      header: CN.prod_type_small_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_no",
+      header: CN.prod_no,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_nm",
+      header: CN.prod_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
       editor: false,
       hidden: false,
       sortable: false,
@@ -171,7 +171,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "rev",
-      header: "리비전",
+      header: CN.rev,
       minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
@@ -183,7 +183,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "prod_std",
-      header: "규격",
+      header: CN.prod_std,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -193,10 +193,33 @@ function ProductSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
-
+    {
+      name: "unit_id",
+      header: CN.unit_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "unit_nm",
+      header: CN.unit_nm,
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
     {
       name: "lot_fg",
-      header: "LOT사용",
+      header: CN.lot_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -208,7 +231,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "use_fg",
-      header: "사용",
+      header: CN.use_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -226,7 +249,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "active_fg",
-      header: "품목활성",
+      header: CN.active_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -245,7 +268,7 @@ function ProductSet(isEditMode) {
 
     {
       name: "bom_type_id",
-      header: "BOM유형ID",
+      header: CN.bom_type_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -257,7 +280,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "width",
-      header: "폭",
+      header: CN.width,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -269,19 +292,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "length",
-      header: "길이",
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "thickness",
-      header: "두께",
+      header: CN.length,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -293,7 +304,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "height",
-      header: "높이",
+      header: CN.height,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -303,9 +314,10 @@ function ProductSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "material",
-      header: "재질",
+      header: CN.material,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -317,7 +329,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "color",
-      header: "색상",
+      header: CN.color,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -329,7 +341,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "weight",
-      header: "중량",
+      header: CN.weight,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -340,8 +352,38 @@ function ProductSet(isEditMode) {
       rowSpan: false,
     },
     {
+      name: "thickness",
+      header: CN.thickness,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "is_spareparts",
+      header: CN.is_spareparts,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "is_spareparts",
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
       name: "mat_order_fg",
-      header: "발주사용",
+      header: CN.mat_order_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -359,7 +401,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "mat_unit_id",
-      header: "구매단위ID",
+      header: CN.mat_unit_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -371,7 +413,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "mat_order_min_qty",
-      header: "발주최소단위수량",
+      header: CN.mat_order_min_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -383,7 +425,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "mat_supply_days",
-      header: "발주소요일",
+      header: CN.mat_supply_days,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -395,7 +437,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "sal_order_fg",
-      header: "수주사용",
+      header: CN.sal_order_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -413,7 +455,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "inv_use_fg",
-      header: "창고사용",
+      header: CN.inv_use_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -431,7 +473,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "inv_unit_qty",
-      header: "단위수량",
+      header: CN.inv_unit_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -443,7 +485,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "inv_safe_qty",
-      header: "안전재고수량",
+      header: CN.inv_safe_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -455,7 +497,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "inv_to_store_id",
-      header: "품목입고창고ID",
+      header: CN.inv_to_store_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -466,8 +508,8 @@ function ProductSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "inv_to_store_id",
-      header: "입고창고",
+      name: "inv_to_store_nm",
+      header: CN.inv_to_store_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -479,7 +521,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "inv_to_location_id",
-      header: "품목입고위치ID",
+      header: CN.inv_to_location_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -491,7 +533,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "inv_to_location_nm",
-      header: "창고위치",
+      header: CN.inv_to_location_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -503,7 +545,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "qms_receive_insp_fg",
-      header: "수입검사",
+      header: CN.qms_receive_insp_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -521,7 +563,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "qms_proc_insp_fg",
-      header: "공정검사",
+      header: CN.qms_proc_insp_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -539,7 +581,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "qms_final_insp_fg",
-      header: "최종검사",
+      header: CN.qms_final_insp_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -557,7 +599,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "prd_plan_type_id",
-      header: "계획유형ID(MPS/MRP)",
+      header: CN.prd_plan_type_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -569,7 +611,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "prd_active_fg",
-      header: "생산품",
+      header: CN.prd_active_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
@@ -587,7 +629,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "prd_min",
-      header: "생산계획최소값",
+      header: CN.prd_min,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -599,7 +641,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "prd_max",
-      header: "생산계획최대값",
+      header: CN.prd_max,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -611,7 +653,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "create_at",
-      header: "등록자시간",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -623,7 +665,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "create_uid",
-      header: "등록자ID",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -635,7 +677,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "update_at",
-      header: "수정시간",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -647,7 +689,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "update_uid",
-      header: "수정자ID",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -659,7 +701,7 @@ function ProductSet(isEditMode) {
     },
     {
       name: "delete_at",
-      header: "삭제시간",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -670,8 +712,8 @@ function ProductSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_id",
-      header: "삭제자ID",
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -688,7 +730,8 @@ function ProductSet(isEditMode) {
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
     minWidth: "100",
   };
-
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   const header = {};
   /**
    * 🔸날짜단일조회 - "single"
@@ -731,6 +774,8 @@ function ProductSet(isEditMode) {
     data,
     columns,
     columnOptions,
+    rowHeaders,
+    rowHeadersModal,
     header,
     datePickerSet,
     inputSet,

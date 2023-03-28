@@ -1,6 +1,7 @@
 //제품유형관리✨
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
+import CN from "constant/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -23,8 +24,8 @@ function ProductTypeSmallSet(isEditMode) {
    */
   const columns = [
     {
-      header: "품종ID",
       name: "prod_type_small_id",
+      header: CN.prod_type_small_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -35,8 +36,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "품종코드",
       name: "prod_type_small_cd",
+      header: CN.prod_type_small_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -47,8 +48,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "품종명",
       name: "prod_type_small_nm",
+      header: CN.prod_type_small_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -59,8 +60,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록시간",
       name: "create_at",
+      header: CN.create_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -71,8 +72,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "등록자ID",
       name: "create_uid",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -83,8 +84,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정시간",
       name: "update_at",
+      header: CN.update_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -95,8 +96,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "수정자ID",
       name: "update_uid",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -107,8 +108,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제시간",
       name: "delete_at",
+      header: CN.delete_at,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -119,8 +120,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "삭제자ID",
-      name: "delete_id",
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -136,7 +137,8 @@ function ProductTypeSmallSet(isEditMode) {
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
-
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   const header = {};
   /**
    * 🔸날짜단일조회 - "single"
@@ -150,12 +152,12 @@ function ProductTypeSmallSet(isEditMode) {
    */
   const inputSet = [
     {
-      name: "품종코드",
       id: "prod_type_small_cd",
+      name: CN.prod_type_small_cd,
     },
     {
-      name: "품종명",
       id: "prod_type_small_nm",
+      name: CN.prod_type_small_nm,
     },
   ];
 
@@ -167,6 +169,8 @@ function ProductTypeSmallSet(isEditMode) {
     data,
     columns,
     columnOptions,
+    rowHeaders,
+    rowHeadersModal,
     header,
     datePickerSet,
     inputSet,
