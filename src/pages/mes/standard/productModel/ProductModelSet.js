@@ -239,7 +239,7 @@ function ProductModelSet(isEditMode) {
 
   const uri = restURI.productModel;
 
-  const buttonDisabled = false;
+  const buttonDisabled = true;
 
   return {
     data,

@@ -18,7 +18,6 @@ function ProcessSet(isEditMode) {
     },
   ];
   const rowHeaders = ["checkbox", "rowNum"];
-  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"

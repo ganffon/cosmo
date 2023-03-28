@@ -6,7 +6,6 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import LoginStateChk from "pages/login/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -14,18 +13,10 @@ import getPostParams from "api/getPostParams";
 import getPutParams from "api/getPutParams";
 import getSearchParams from "api/getSearchParams";
 import getDeleteParams from "api/getDeleteParams";
-import getComponent from "api/getComponent";
-import * as S from "./oneGrid.styled";
+import * as S from "./MenuManage.styled";
+import MenuManageSet from "pages/admin/menuManage/MenuManageSet";
 
-function OneGrid(props) {
-  const { componentName } = props;
-  LoginStateChk();
-  const COMPONENT = getComponent(componentName);
-  const COMPONENT_NAME = componentName;
-  console.log(`COMPONENT_NAME : ${COMPONENT_NAME}`);
-  // const COMPONENT = LineSet(isEditMode);
-  // const COMPONENT_NAME = "LineSet";
-
+function MenuManage(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutEvent);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -39,6 +30,9 @@ function OneGrid(props) {
   });
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
+
+  const COMPONENT = MenuManageSet(isEditMode);
+  const COMPONENT_NAME = "MenuManageSet";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -58,7 +52,7 @@ function OneGrid(props) {
     [currentMenuName]
   );
   useEffect(() => {
-    const data = handleInputSetInit(COMPONENT().inputSet);
+    const data = handleInputSetInit(COMPONENT.inputSet);
     setInputBoxID(data[0]);
     setInputTextChange(data[1]);
     onClickSearch(true);
@@ -84,7 +78,7 @@ function OneGrid(props) {
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .delete(COMPONENT().uri, { data })
+        .delete(COMPONENT.uri, { data })
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -118,7 +112,7 @@ function OneGrid(props) {
       try {
         setIsBackDrop(true);
         const params = getSearchParams(inputBoxID, inputTextChange);
-        const readURI = COMPONENT().uri + params;
+        const readURI = COMPONENT.uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
         props &&
@@ -148,7 +142,7 @@ function OneGrid(props) {
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .put(COMPONENT().uri, data)
+        .put(COMPONENT.uri, data)
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -186,14 +180,14 @@ function OneGrid(props) {
   };
   const onClickModalSave = async () => {
     refModalGrid?.current?.gridInst?.finishEditing();
-    // console.log(refModalGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => getPostParams(COMPONENT_NAME, raw));
+    console.log(data);
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .post(COMPONENT().uri, data)
+        .post(COMPONENT.uri, data)
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -223,13 +217,12 @@ function OneGrid(props) {
   const onClickGrid = (e) => {
     const ev = e;
   };
-
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.InputWrap>
-            {COMPONENT().inputSet.map((v) => (
+            {COMPONENT.inputSet.map((v) => (
               <InputSearch
                 key={v.id}
                 id={v.id}
@@ -252,7 +245,7 @@ function OneGrid(props) {
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
-                buttonDisabled={COMPONENT().buttonDisabled}
+                buttonDisabled={COMPONENT.buttonDisabled}
               />
             )}
           </S.ButtonWrap>
@@ -261,10 +254,10 @@ function OneGrid(props) {
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
           <GridModule
-            columnOptions={COMPONENT().columnOptions}
-            columns={COMPONENT(isEditMode).columns}
-            rowHeaders={COMPONENT().rowHeaders}
-            header={COMPONENT().header}
+            columnOptions={COMPONENT.columnOptions}
+            columns={COMPONENT.columns}
+            rowHeaders={COMPONENT.rowHeaders}
+            header={COMPONENT.header}
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
@@ -285,11 +278,11 @@ function OneGrid(props) {
           onClickModalCancelRow={onClickModalCancelRow}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
-          columns={COMPONENT().columnsModal}
-          columnOptions={COMPONENT().columnOptions}
-          header={COMPONENT().header}
-          rowHeaders={COMPONENT().rowHeadersModal}
-          uri={COMPONENT().uri}
+          columns={COMPONENT.columnsModal}
+          columnOptions={COMPONENT.columnOptions}
+          header={COMPONENT.header}
+          rowHeaders={COMPONENT.rowHeadersModal}
+          uri={COMPONENT.uri}
           refModalGrid={refModalGrid}
           setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
@@ -300,4 +293,4 @@ function OneGrid(props) {
   );
 }
 
-export default OneGrid;
+export default MenuManage;

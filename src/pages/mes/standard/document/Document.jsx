@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import InputInfo from "components/input/InputInfo";
 import ButtonSearch from "components/button/ButtonSearch";
 import GridModule from "components/grid/GridModule";
-import DocumentSet from "pages/gridSetting/DocumentSet";
+import DocumentSet from "pages/mes/standard/document/DocumentSet";
 import * as S from "./Document.styled";
 import { LayoutEvent } from "components/layout/common/Layout";
 
