@@ -61,7 +61,7 @@ function Login() {
         secure: true,
       });
       localStorage.setItem("loginState", true);
-      navigate("/main");
+      navigate("/mes");
     } else if (loginInfo.loginFactoryID === "") {
       setAlertOpen({
         ...alertOpen,
@@ -87,7 +87,7 @@ function Login() {
     const state = localStorage.getItem("loginState");
     if (state === "true") {
       //🔸로그인 이미 한 경우
-      navigate("/main");
+      navigate("/mes");
     } else {
       //🔸로그인 안 한 경우
       //🔸로그인창 ID표시 및 포커스

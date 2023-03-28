@@ -725,6 +725,8 @@ function ProductSet(isEditMode) {
 
   const uri = restURI.product;
 
+  const buttonDisabled = false;
+
   return {
     data,
     columns,
@@ -733,6 +735,7 @@ function ProductSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
+    buttonDisabled,
   };
 }
 

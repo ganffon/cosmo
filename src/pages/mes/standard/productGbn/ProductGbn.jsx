@@ -6,6 +6,7 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
+import LoginStateChk from "pages/login/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -13,10 +14,11 @@ import getPostParams from "api/getPostParams";
 import getPutParams from "api/getPutParams";
 import getSearchParams from "api/getSearchParams";
 import getDeleteParams from "api/getDeleteParams";
-import * as S from "./MenuManage.styled";
-import MenuManageSet from "pages/gridSetting/MenuManageSet";
+import ProductGbnSet from "pages/mes/standard/productGbn/ProductGbnSet";
+import * as S from "../oneGrid.styled";
 
-function MenuManage(props) {
+function ProductGbn() {
+  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutEvent);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -31,8 +33,18 @@ function MenuManage(props) {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
-  const COMPONENT = MenuManageSet(isEditMode);
-  const COMPONENT_NAME = "MenuManageSet";
+  const {
+    uri,
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+    buttonDisabled,
+  } = ProductGbnSet(isEditMode);
+  const SETTING_FILE = "ProductGbnSet";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -52,7 +64,7 @@ function MenuManage(props) {
     [currentMenuName]
   );
   useEffect(() => {
-    const data = handleInputSetInit(COMPONENT.inputSet);
+    const data = handleInputSetInit(inputSet);
     setInputBoxID(data[0]);
     setInputTextChange(data[1]);
     onClickSearch(true);
@@ -74,11 +86,11 @@ function MenuManage(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
-      ?.map((raw) => getDeleteParams(COMPONENT_NAME, raw));
+      ?.map((raw) => getDeleteParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .delete(COMPONENT.uri, { data })
+        .delete(uri, { data })
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -112,7 +124,7 @@ function MenuManage(props) {
       try {
         setIsBackDrop(true);
         const params = getSearchParams(inputBoxID, inputTextChange);
-        const readURI = COMPONENT.uri + params;
+        const readURI = uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
         props &&
@@ -138,11 +150,11 @@ function MenuManage(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
-      .updatedRows?.map((raw) => getPutParams(COMPONENT_NAME, raw));
+      .updatedRows?.map((raw) => getPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .put(COMPONENT.uri, data)
+        .put(uri, data)
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -180,14 +192,14 @@ function MenuManage(props) {
   };
   const onClickModalSave = async () => {
     refModalGrid?.current?.gridInst?.finishEditing();
+    // console.log(refModalGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
-      ?.createdRows.map((raw) => getPostParams(COMPONENT_NAME, raw));
-    console.log(data);
+      ?.createdRows.map((raw) => getPostParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
-        .post(COMPONENT.uri, data)
+        .post(uri, data)
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -217,12 +229,13 @@ function MenuManage(props) {
   const onClickGrid = (e) => {
     const ev = e;
   };
+
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.InputWrap>
-            {COMPONENT.inputSet.map((v) => (
+            {inputSet.map((v) => (
               <InputSearch
                 key={v.id}
                 id={v.id}
@@ -245,7 +258,7 @@ function MenuManage(props) {
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
-                buttonDisabled={COMPONENT.buttonDisabled}
+                buttonDisabled={buttonDisabled}
               />
             )}
           </S.ButtonWrap>
@@ -254,10 +267,10 @@ function MenuManage(props) {
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
           <GridModule
-            columnOptions={COMPONENT.columnOptions}
-            columns={COMPONENT.columns}
-            rowHeaders={COMPONENT.rowHeaders}
-            header={COMPONENT.header}
+            columnOptions={columnOptions}
+            columns={columns}
+            rowHeaders={rowHeaders}
+            header={header}
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
@@ -278,11 +291,11 @@ function MenuManage(props) {
           onClickModalCancelRow={onClickModalCancelRow}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
-          columns={COMPONENT.columnsModal}
-          columnOptions={COMPONENT.columnOptions}
-          header={COMPONENT.header}
-          rowHeaders={COMPONENT.rowHeadersModal}
-          uri={COMPONENT.uri}
+          columns={columnsModal}
+          columnOptions={columnOptions}
+          header={header}
+          rowHeaders={rowHeadersModal}
+          uri={uri}
           refModalGrid={refModalGrid}
           setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
@@ -293,4 +306,4 @@ function MenuManage(props) {
   );
 }
 
-export default MenuManage;
+export default ProductGbn;

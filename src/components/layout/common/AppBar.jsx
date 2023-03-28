@@ -22,7 +22,7 @@ function AppBar() {
   const [cookie, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
   const gotoDashboard = () => {
-    navigate("/main");
+    navigate("/mes");
     setCurrentMenuName("Dashboard");
   };
 

@@ -10,7 +10,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Navigate replace to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/main/*" element={<MainRouter />} />
+        <Route path="/mes/*" element={<MainRouter />} />
         <Route path="/not-found" element={<NotFound />} />
         <Route path="/*" element={<Navigate replace to="/not-found" />} />
       </Routes>

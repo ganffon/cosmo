@@ -1,11 +1,10 @@
-import FactorySet from "pages/gridSetting/FactorySet";
-import EquipmentSet from "pages/gridSetting/EquipmentSet";
-import LineSet from "pages/gridSetting/LineSet";
-import ProcessSet from "pages/gridSetting/ProcessSet";
-import ProductGbnSet from "pages/gridSetting/ProductGbnSet";
-import ProductSet from "pages/gridSetting/ProductSet";
-import ProductTypeSet from "pages/gridSetting/ProductTypeSet";
-import RoutingSet from "pages/gridSetting/RoutingSet";
+import FactorySet from "pages/mes/standard/factory/FactorySet";
+import EquipmentSet from "pages/mes/standard/equipment/EquipmentSet";
+import LineSet from "pages/mes/standard/line/LineSet";
+import ProcessSet from "pages/mes/standard/process/ProcessSet";
+import ProductGbnSet from "pages/mes/standard/productGbn/ProductGbnSet";
+import ProductSet from "pages/mes/standard/product/ProductSet";
+import ProductTypeSet from "pages/mes/standard/productType/ProductTypeSet";
 
 const GetComponent = (componentName) => {
   let component = "";
@@ -30,9 +29,6 @@ const GetComponent = (componentName) => {
       break;
     case "ProductTypeSet":
       component = ProductTypeSet;
-      break;
-    case "RoutingSet":
-      component = RoutingSet;
       break;
     default:
   }

@@ -13,7 +13,7 @@ const NotFound = () => {
     if (state === "false") {
       navigate("/login");
     } else {
-      navigate("/main");
+      navigate("/mes");
     }
   };
 
