@@ -10,13 +10,13 @@
         "path": null,
         "under": [
           {
-            "name": "메뉴관리",
+            "name": "메뉴관리*",
             "id": "menu-manage",
             "path": "menu-manage",
             "under": null
           },
           {
-            "name": "메뉴리스트관리",
+            "name": "메뉴리스트관리*",
             "id": "menu-list",
             "path": "menu-list",
             "under": null
@@ -31,25 +31,25 @@
     "path": null,
     "under": [
       {
-        "name": "**사업부관리",
+        "name": "사업부관리*",
         "id": "factory",
         "path": "factory",
         "under": null
       },
       {
-        "name": "**라인관리",
+        "name": "라인관리*",
         "id": "line",
         "path": "line",
         "under": null
       },
       {
-        "name": "**공정관리",
+        "name": "공정관리*",
         "id": "process",
         "path": "process",
         "under": null
       },
       {
-        "name": "**설비관리",
+        "name": "설비관리(D)",
         "id": "equipment",
         "path": "equipment",
         "under": null
@@ -60,31 +60,31 @@
         "path": null,
         "under": [
           {
-            "name": "**제품구분관리",
+            "name": "제품구분관리*",
             "id": "product-gbn",
             "path": "product-gbn",
             "under": null
           },
           {
-            "name": "제품군관리",
+            "name": "제품군관리*",
             "id": "product-model",
             "path": "product-model",
             "under": null
           },
           {
-            "name": "**품종군관리",
+            "name": "품종군관리*",
             "id": "product-type",
             "path": "product-type",
             "under": null
           },
           {
-            "name": "품종관리",
+            "name": "품종관리*",
             "id": "product-type-small",
             "path": "product-type-small",
             "under": null
           },
           {
-            "name": "**품목관리",
+            "name": "품목관리*",
             "id": "product",
             "path": "product",
             "under": null
