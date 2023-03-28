@@ -57,7 +57,7 @@ function Document() {
           isAllScreen={isAllScreen}
         >
           {/* <S.ShadowBoxSticky> */}
-          <S.InputWrap>
+          <S.SearchWrap>
             <InputInfo
               id="standardNo"
               name="검사기준서번호"
@@ -71,7 +71,7 @@ function Document() {
             <InputInfo id="6" name="적용여부" value="test test" />
             <InputInfo id="7" name="개정내역" value="test test" />
             <InputInfo id="8" name="비고" value="test test" />
-          </S.InputWrap>
+          </S.SearchWrap>
         </S.ShadowBoxSticky>
         <S.ShadowBox>
           <S.GridBottomWrap>

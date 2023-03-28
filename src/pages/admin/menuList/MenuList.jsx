@@ -223,7 +223,7 @@ function MenuList(props) {
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
-          <S.InputWrap>
+          <S.SearchWrap>
             {COMPONENT.inputSet.map((v) => (
               <InputSearch
                 key={v.id}
@@ -233,7 +233,7 @@ function MenuList(props) {
                 onClickSearch={onClickSearch}
               />
             ))}
-          </S.InputWrap>
+          </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonEdit
