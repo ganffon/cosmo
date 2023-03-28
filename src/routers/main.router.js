@@ -10,6 +10,7 @@ import ProductGbn from "pages/mes/standard/productGbn/ProductGbn";
 import ProductModel from "pages/mes/standard/productModel/ProductModel";
 import ProductType from "pages/mes/standard/productType/ProductType";
 import Product from "pages/mes/standard/product/Product";
+import ProductTypeSmall from "pages/mes/standard/productTypeSmall/ProductTypeSmall";
 // import OnlySearchSingleGrid from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import OneGrid from "pages/mes/standard/oneGrid";
 import Dashboard from "pages/mes/dashboard/Dashboard";
@@ -66,6 +67,7 @@ export default function MainRouter() {
         <Route path="product-model" element={<ProductModel />} />
         <Route path="product-type" element={<ProductType />} />
         <Route path="product" element={<Product />} />
+        <Route path="product-type-small" element={<ProductTypeSmall />} />
 
         <Route path="document" element={<Document />} />
         <Route path="menu-manage" element={<MenuManage />} />

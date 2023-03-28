@@ -5,7 +5,8 @@
   "equipment": "/equipments",
   "productGbn": "/productsgbn",
   "productType": "/productstype",
-  "productModel": "",
+  "productTypeSmall": "/producttypesmall",
+  "productModel": "/model",
   "product": "/products",
   "routing": "/routings"
 }
