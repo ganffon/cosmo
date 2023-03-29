@@ -16,6 +16,7 @@ import getSearchParams from "api/getSearchParams";
 import getDeleteParams from "api/getDeleteParams";
 import EquipmentSet from "pages/mes/standard/equipment/EquipmentSet";
 import * as S from "../oneGrid.styled";
+import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 function Equipment() {
   LoginStateChk();
@@ -43,7 +44,7 @@ function Equipment() {
     columnOptions,
     inputSet,
     buttonDisabled,
-  } = EquipmentSet(isEditMode);
+  } = EquipmentSet(isEditMode, refSingleGrid);
   const SETTING_FILE = "EquipmentSet";
 
   useEffect(() => {
@@ -63,6 +64,7 @@ function Equipment() {
     },
     [currentMenuName]
   );
+
   useEffect(() => {
     const data = handleInputSetInit(inputSet);
     setInputBoxID(data[0]);
@@ -70,11 +72,33 @@ function Equipment() {
     onClickSearch(true);
   }, [currentMenuName]);
 
+  const [disableRowCheck, setDisableRowCheck] = useState(false);
+  useEffect(() => {
+    if (isEditMode === true) {
+      for (
+        let i = 0;
+        i < refSingleGrid?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        refSingleGrid?.current?.gridInst?.disableRowCheck(i);
+      }
+    } else {
+      for (
+        let i = 0;
+        i < refSingleGrid?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        refSingleGrid?.current?.gridInst?.enableRowCheck(i);
+      }
+    }
+  }, [disableRowCheck]);
+
   const onClickNew = () => {
     setIsModalOpen(true);
   };
   const onClickEdit = () => {
     setIsEditMode(true);
+    setDisableRowCheck(!disableRowCheck);
   };
   const onClickDelete = () => {
     const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
@@ -123,8 +147,12 @@ function Equipment() {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
+        console.log(inputBoxID);
+        console.log(inputTextChange);
         const params = getSearchParams(inputBoxID, inputTextChange);
+
         const readURI = uri + params;
+        console.log(readURI);
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
         props &&
@@ -142,6 +170,7 @@ function Equipment() {
           severity: "error",
         });
       } finally {
+        setDisableRowCheck(!disableRowCheck);
         setIsBackDrop(false);
       }
     }
@@ -149,8 +178,8 @@ function Equipment() {
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
-      ?.getModifiedRows()
-      .updatedRows?.map((raw) => getPutParams(SETTING_FILE, raw));
+      ?.getCheckedRows()
+      ?.map((raw) => getPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -192,7 +221,6 @@ function Equipment() {
   };
   const onClickModalSave = async () => {
     refModalGrid?.current?.gridInst?.finishEditing();
-    // console.log(refModalGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => getPostParams(SETTING_FILE, raw));
@@ -227,7 +255,16 @@ function Equipment() {
     onClickSearch();
   };
   const onClickGrid = (e) => {
-    const ev = e;
+    if (e?.columnName === "use_fg" || e?.columnName === "prd_fg") {
+      e?.instance?.enableRowCheck(e?.rowKey);
+      e?.instance?.check(e?.rowKey);
+      e?.instance?.disableRowCheck(e?.rowKey);
+    }
+  };
+  const onEditingFinishGrid = (e) => {
+    e?.instance?.enableRowCheck(e?.rowKey);
+    e?.instance?.check(e?.rowKey);
+    e?.instance?.disableRowCheck(e?.rowKey);
   };
 
   return (
@@ -275,6 +312,7 @@ function Equipment() {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>

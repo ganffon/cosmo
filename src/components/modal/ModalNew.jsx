@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import GridModule from "components/grid/GridModule";
+import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import ButtonAdd from "components/button/ButtonAdd";
 import { LayoutEvent } from "components/layout/common/Layout";
@@ -25,8 +25,12 @@ function ModalNew(props) {
     <ModalWrap width={"1300px"} height={"650px"}>
       <S.HeaderBox>
         <S.TitleBox>{`[신규] ${currentMenuName}`}</S.TitleBox>
-        <S.ButtonClose>
-          <CloseIcon onClick={onClickModalClose} />
+        <S.ButtonClose
+          color="primary"
+          aria-label="close"
+          onClick={onClickModalClose}
+        >
+          <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ButtonBox>
@@ -37,14 +41,14 @@ function ModalNew(props) {
         />
       </S.ButtonBox>
       <S.GridBox>
-        <GridModule
+        <GridModal
           columns={columns}
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeaders}
           refGrid={refModalGrid}
           draggable={false}
-          onClickGrid={onClickModalGrid}
+          onClickModalGrid={onClickModalGrid}
         />
       </S.GridBox>
     </ModalWrap>

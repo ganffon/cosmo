@@ -36,6 +36,7 @@ class equipments {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.equip_type_id = raw.equip_type_id;
+    this.proc_id = raw.proc_nm;
     this.equip_cd = raw.equip_cd;
     this.equip_nm = raw.equip_nm;
     this.workings_id = raw.workings_id;
@@ -393,8 +394,8 @@ function GetPostParams(componentName, raw) {
       break;
     default:
   }
-  console.log(JSON.stringify(params));
-  return JSON.stringify(params);
+  console.log(params);
+  return params;
 }
 
 export default GetPostParams;
