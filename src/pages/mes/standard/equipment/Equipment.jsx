@@ -255,10 +255,12 @@ function Equipment() {
     onClickSearch();
   };
   const onClickGrid = (e) => {
-    if (e?.columnName === "use_fg" || e?.columnName === "prd_fg") {
-      e?.instance?.enableRowCheck(e?.rowKey);
-      e?.instance?.check(e?.rowKey);
-      e?.instance?.disableRowCheck(e?.rowKey);
+    if (isEditMode === true) {
+      if (e?.columnName === "use_fg" || e?.columnName === "prd_fg") {
+        e?.instance?.enableRowCheck(e?.rowKey);
+        e?.instance?.check(e?.rowKey);
+        e?.instance?.disableRowCheck(e?.rowKey);
+      }
     }
   };
   const onEditingFinishGrid = (e) => {
