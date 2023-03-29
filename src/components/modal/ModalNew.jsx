@@ -48,7 +48,7 @@ function ModalNew(props) {
           rowHeaders={rowHeaders}
           refGrid={refModalGrid}
           draggable={false}
-          onClickModalGrid={onClickModalGrid}
+          onClickGrid={onClickModalGrid}
         />
       </S.GridBox>
     </ModalWrap>
