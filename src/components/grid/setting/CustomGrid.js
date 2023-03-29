@@ -2,18 +2,19 @@ class CheckBox {
   constructor(props) {
     const el = document.createElement("input");
     const elName = props.columnInfo.renderer.options.name;
+    const disabled = props.columnInfo.renderer.options.disabled;
     el.type = "checkbox";
     el.className = "checkbox";
-    el.disabled = false; //🔸true 값을 주면 체크박스가 회색으로 비활성화됨, CSS로 색이 안바뀜, 방법 좀 찾아주세요!
+    el.disabled = disabled; //🔸true 값을 주면 체크박스가 회색으로 비활성화됨, CSS로 색이 안바뀜, 방법 좀 찾아주세요!
     el.addEventListener("click", (ev) => {
       const rowKey = el.parentElement.__preactattr_["data-row-key"];
       el.checked
         ? (el.parentElement._component.context.store.data.rawData[rowKey][
             elName
-          ] = 1)
+          ] = true)
         : (el.parentElement._component.context.store.data.rawData[rowKey][
             elName
-          ] = 0);
+          ] = false);
     });
 
     this.el = el;

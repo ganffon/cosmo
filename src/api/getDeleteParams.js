@@ -1,12 +1,17 @@
 // ✨ DELETE ✨
-class factories {
+class factory {
   constructor(raw) {
     this.factory_id = raw.factory_id;
   }
 }
-class lines {
+class line {
   constructor(raw) {
     this.line_id = raw.line_id;
+  }
+}
+class Equipment {
+  constructor(raw) {
+    this.equip_id = raw.equip_id;
   }
 }
 
@@ -15,15 +20,18 @@ function GetDeleteParams(componentName, raw) {
 
   switch (componentName) {
     case "FactorySet":
-      params = new factories(raw);
+      params = new factory(raw);
       break;
     case "LineSet":
-      params = new lines(raw);
+      params = new line(raw);
+      break;
+    case "EquipmentSet":
+      params = new Equipment(raw);
       break;
     default:
   }
 
-  return JSON.stringify(params);
+  return params;
 }
 
 export default GetDeleteParams;

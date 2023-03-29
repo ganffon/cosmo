@@ -1,12 +1,12 @@
 // ✨ UPDATE ✨
-class factories {
+class factory {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.factory_cd = raw.factory_cd;
     this.factory_nm = raw.factory_nm;
   }
 }
-class lines {
+class line {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.line_id = raw.line_id;
@@ -14,15 +14,34 @@ class lines {
     this.line_nm = raw.line_nm;
   }
 }
+class equipment {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.equip_id = raw.equip_id;
+    this.proc_id = raw.proc_id;
+    this.equip_type_id = raw.equip_type_id;
+    this.equip_cd = raw.equip_cd;
+    this.equip_nm = raw.equip_nm;
+    this.workings_id = raw.workings_id;
+    this.manager_emp_id = raw.manager_emp_id;
+    this.sub_manager_emp_id = raw.sub_manager_emp_id;
+    this.use_fg = raw.use_fg;
+    this.prd_fg = raw.prd_fg;
+    this.remark = raw.remark;
+  }
+}
 function GetPutParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
     case "FactorySet":
-      params = new factories(raw);
+      params = new factory(raw);
       break;
     case "LineSet":
-      params = new lines(raw);
+      params = new line(raw);
+      break;
+    case "EquipmentSet":
+      params = new equipment(raw);
       break;
     //   case "Process":
     //     params = new process(raw);
@@ -98,8 +117,8 @@ function GetPutParams(componentName, raw) {
     //     break;
     default:
   }
-
-  return JSON.stringify(params);
+  console.log(params);
+  return params;
 }
 
 export default GetPutParams;
