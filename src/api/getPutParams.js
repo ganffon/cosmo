@@ -25,8 +25,8 @@ class equipment {
     this.workings_id = raw.workings_id;
     this.manager_emp_id = raw.manager_emp_id;
     this.sub_manager_emp_id = raw.sub_manager_emp_id;
-    this.use_fg = raw.use_fg;
-    this.prd_fg = raw.prd_fg;
+    this.use_fg = raw.use_fg ? true : false;
+    this.prd_fg = raw.prd_fg ? true : false;
     this.remark = raw.remark;
   }
 }

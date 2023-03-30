@@ -25,15 +25,13 @@ const comboBoxData = async () => {
       obj = getComboParams(COMPONENT_NAME, dataObj);
       listItem.push(obj);
     }
+    console.log(listItem);
   });
 };
 
 comboBoxData();
 
-function EquipmentSet(isEditMode, grid) {
-  // isEditMode
-  //   ? grid?.current?.gridInst?.disableColumn("proc_id")
-  //   : grid?.current?.gridInst?.enableColumn("proc_id");
+function EquipmentSet(isEditMode) {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"

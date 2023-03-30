@@ -27,9 +27,9 @@ class users {
     this.pwd = raw.pwd;
     this.pwd_dev = raw.pwd_dev;
     this.email = raw.email;
-    this.pwd_fg = raw.pwd_fg;
-    this.admin_fg = raw.admin_fg;
-    this.super_admin_fg = raw.super_admin_fg;
+    this.pwd_fg = raw.pwd_fg ? true : false;
+    this.admin_fg = raw.admin_fg ? true : false;
+    this.super_admin_fg = raw.super_admin_fg ? true : false;
   }
 }
 class equipments {
@@ -42,8 +42,8 @@ class equipments {
     this.workings_id = raw.workings_id;
     this.manager_emp_id = raw.manager_emp_id;
     this.sub_manager_emp_id = raw.sub_manager_emp_id;
-    this.use_fg = raw.use_fg;
-    this.prd_fg = raw.prd_fg;
+    this.use_fg = raw.use_fg ? true : false;
+    this.prd_fg = raw.prd_fg ? true : false;
     this.remark = raw.remark;
   }
 }
@@ -57,9 +57,9 @@ class products {
     this.unit_id = raw.unit_id;
     this.rev = raw.rev;
     this.prod_std = raw.prod_std;
-    this.lot_fg = raw.lot_fg;
-    this.use_fg = raw.use_fg;
-    this.active_fg = raw.active_fg;
+    this.lot_fg = raw.lot_fg ? true : false;
+    this.use_fg = raw.use_fg ? true : false;
+    this.active_fg = raw.active_fg ? true : false;
     this.bom_type_id = raw.bom_type_id;
     this.width = raw.width;
     this.length = raw.length;
@@ -69,21 +69,21 @@ class products {
     this.weight = raw.weight;
     this.thickness = raw.thickness;
     this.is_spareparts = raw.is_spareparts;
-    this.mat_order_fg = raw.mat_order_fg;
+    this.mat_order_fg = raw.mat_order_fg ? true : false;
     this.mat_unit_id = raw.mat_unit_id;
     this.mat_order_min_qty = raw.mat_order_min_qty;
     this.mat_supply_days = raw.mat_supply_days;
-    this.sal_order_fg = raw.sal_order_fg;
-    this.inv_use_fg = raw.inv_use_fg;
+    this.sal_order_fg = raw.sal_order_fg ? true : false;
+    this.inv_use_fg = raw.inv_use_fg ? true : false;
     this.inv_unit_qty = raw.inv_unit_qty;
     this.inv_safe_qty = raw.inv_safe_qty;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
-    this.qms_receive_insp_fg = raw.qms_receive_insp_fg;
-    this.qms_proc_insp_fg = raw.qms_proc_insp_fg;
-    this.qms_final_insp_fg = raw.qms_final_insp_fg;
+    this.qms_receive_insp_fg = raw.qms_receive_insp_fg ? true : false;
+    this.qms_proc_insp_fg = raw.qms_proc_insp_fg ? true : false;
+    this.qms_final_insp_fg = raw.qms_final_insp_fg ? true : false;
     this.prd_plan_type_id = raw.prd_plan_type_id;
-    this.prd_active_fg = raw.prd_active_fg;
+    this.prd_active_fg = raw.prd_active_fg ? true : false;
     this.prd_min = raw.prd_min;
     this.prd_max = raw.prd_max;
   }
@@ -107,7 +107,7 @@ class routings {
     this.proc_id = raw.proc_id;
     this.prod_id = raw.prod_id;
     this.proc_no = raw.proc_no;
-    this.auto_work_fg = raw.auto_work_fg;
+    this.auto_work_fg = raw.auto_work_fg ? true : false;
     this.cycle_time = raw.cycle_time;
     this.uph = raw.uph;
   }
@@ -117,12 +117,12 @@ class stores {
     this.factory_id = raw.factory_id;
     this.store_cd = raw.store_cd;
     this.store_nm = raw.store_nm;
-    this.reject_store_fg = raw.reject_store_fg;
-    this.return_store_fg = raw.return_store_fg;
-    this.outgo_store_fg = raw.outgo_store_fg;
-    this.final_insp_store_fg = raw.final_insp_store_fg;
-    this.outsourcing_store_fg = raw.outsourcing_store_fg;
-    this.available_store_fg = raw.available_store_fg;
+    this.reject_store_fg = raw.reject_store_fg ? true : false;
+    this.return_store_fg = raw.return_store_fg ? true : false;
+    this.outgo_store_fg = raw.outgo_store_fg ? true : false;
+    this.final_insp_store_fg = raw.final_insp_store_fg ? true : false;
+    this.outsourcing_store_fg = raw.outsourcing_store_fg ? true : false;
+    this.available_store_fg = raw.available_store_fg ? true : false;
     this.position_type = raw.position_type;
   }
 }
@@ -155,7 +155,7 @@ class employees {
     this.addr_detail = raw.addr_detail;
     this.enter_date = raw.enter_date;
     this.leave_date = raw.leave_date;
-    this.worker_fg = raw.worker_fg;
+    this.worker_fg = raw.worker_fg ? true : false;
     this.remark = raw.remark;
   }
 }
@@ -178,7 +178,7 @@ class downTime {
     this.downtime_type_id = raw.downtime_type_id;
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
-    this.eqm_failure_fg = raw.eqm_failure_fg;
+    this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
   }
 }
 class inspectionType {
@@ -228,8 +228,8 @@ class receives {
     this.exchange = raw.exchange;
     this.total_price = raw.total_price;
     this.unit_qty = raw.unit_qty;
-    this.insp_fg = raw.insp_fg;
-    this.carry_fg = raw.carry_fg;
+    this.insp_fg = raw.insp_fg ? true : false;
+    this.carry_fg = raw.carry_fg ? true : false;
     this.order_detail_id = raw.order_detail_id;
     this.to_store_id = raw.to_store_id;
     this.to_location_id = raw.to_location_id;
@@ -252,8 +252,8 @@ class receiveDetails {
     this.exchange = raw.exchange;
     this.total_price = raw.total_price;
     this.unit_qty = raw.unit_qty;
-    this.insp_fg = raw.insp_fg;
-    this.carry_fg = raw.carry_fg;
+    this.insp_fg = raw.insp_fg ? true : false;
+    this.carry_fg = raw.carry_fg ? true : false;
     this.order_detail_id = raw.order_detail_id;
     this.to_store_id = raw.to_store_id;
     this.to_location_id = raw.to_location_id;
@@ -297,9 +297,9 @@ class partner {
     this.post = raw.post;
     this.addr = raw.addr;
     this.addr_detail = raw.addr_detail;
-    this.use_fg = raw.use_fg;
-    this.vendor_fg = raw.vendor_fg;
-    this.customer_fg = raw.customer_fg;
+    this.use_fg = raw.use_fg ? true : false;
+    this.vendor_fg = raw.vendor_fg ? true : false;
+    this.customer_fg = raw.customer_fg ? true : false;
     this.remark = raw.remark;
   }
 }
@@ -394,7 +394,6 @@ function GetPostParams(componentName, raw) {
       break;
     default:
   }
-  console.log(params);
   return params;
 }
 
