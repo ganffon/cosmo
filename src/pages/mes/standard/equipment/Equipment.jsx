@@ -16,7 +16,6 @@ import getSearchParams from "api/getSearchParams";
 import getDeleteParams from "api/getDeleteParams";
 import EquipmentSet from "pages/mes/standard/equipment/EquipmentSet";
 import * as S from "../oneGrid.styled";
-import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 function Equipment() {
   LoginStateChk();
@@ -147,12 +146,8 @@ function Equipment() {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        console.log(inputBoxID);
-        console.log(inputTextChange);
         const params = getSearchParams(inputBoxID, inputTextChange);
-
         const readURI = uri + params;
-        console.log(readURI);
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
         props &&
