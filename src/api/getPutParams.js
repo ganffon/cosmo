@@ -117,7 +117,7 @@ function GetPutParams(componentName, raw) {
     //     break;
     default:
   }
-  console.log(params);
+  // console.log(params);
   return params;
 }
 

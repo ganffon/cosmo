@@ -1,4 +1,5 @@
 {
+  "login": "/login",
   "factory": "/factories",
   "line": "/lines",
   "process": "/process",

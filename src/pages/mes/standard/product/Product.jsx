@@ -154,7 +154,6 @@ function Product() {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = async (props) => {
-    console.log(comboValue);
     refSingleGrid?.current?.gridInst?.finishEditing();
     //🔸검색버튼을 이미 눌러서 Loading ProgressBar가 돌고있다면 API 호출 못함
     if (isBackDrop === false) {

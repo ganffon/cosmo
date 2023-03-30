@@ -25,7 +25,6 @@ const comboBoxData = async () => {
       obj = getComboParams(COMPONENT_NAME, dataObj);
       listItem.push(obj);
     }
-    console.log(listItem);
   });
 };
 

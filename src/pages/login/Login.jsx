@@ -10,9 +10,11 @@ import * as S from "./Login.styled";
 import TextField from "@mui/material/TextField";
 import restAPI from "api/restAPI";
 import restURI from "api/restURI.json";
+import BackDrop from "components/backdrop/BackDrop";
 
 function Login() {
   const [cookie, setCookie, removeCookie] = useCookies();
+  const [isBackDrop, setIsBackDrop] = useState(false);
 
   const [loginInfo, setLoginInfo] = useState({
     loginFactoryID: "",
@@ -40,40 +42,69 @@ function Login() {
   };
 
   const navigate = useNavigate();
-
-  const goLogin = () => {
-    if ((loginInfo.loginFactoryID !== "") & (loginInfo.loginPW === "1")) {
-      const expiresTime = new Date();
-      expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-      setCookie("loginID", loginInfo.loginID, {
-        path: "/",
-        expires: expiresTime,
-        secure: true,
-      });
-      setCookie("loginFactoryID", loginInfo.loginFactoryID, {
-        path: "/",
-        expires: expiresTime,
-        secure: true,
-      });
-      setCookie("loginFactoryName", loginInfo.loginFactoryName, {
-        path: "/",
-        expires: expiresTime,
-        secure: true,
-      });
-      localStorage.setItem("loginState", true);
-      navigate("/mes");
-    } else if (loginInfo.loginFactoryID === "") {
+  const nullCheck = () => {
+    if (loginInfo.loginFactoryID === "") {
       setAlertOpen({
         ...alertOpen,
         open: true,
         message: "사업부를 선택하세요.",
       });
-    } else {
+      return false;
+    } else if (loginInfo.loginID === "") {
       setAlertOpen({
         ...alertOpen,
         open: true,
-        message: "로그인 정보가 일치하지 않습니다.",
+        message: "아이디를 입력하세요.",
       });
+      return false;
+    } else if (loginInfo.loginPW === "") {
+      setAlertOpen({
+        ...alertOpen,
+        open: true,
+        message: "비밀번호를 입력하세요.",
+      });
+      return false;
+    }
+    return true;
+  };
+  const goLogin = async () => {
+    // 57F3AE93-22CA-ED11-A1E2-A0D3C1FA18B6
+    if (nullCheck() === true) {
+      if (isBackDrop === false) {
+        setIsBackDrop(true);
+        await restAPI
+          .get(
+            restURI.login +
+              `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`
+          )
+          .then((res) => {
+            const expiresTime = new Date();
+            expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
+            setCookie("name", res?.data?.data?.rows[0]?.user_nm, {
+              path: "/",
+              expires: expiresTime,
+              secure: true,
+            });
+            navigate("/mes");
+          })
+          .catch((res) => {
+            setAlertOpen({
+              ...alertOpen,
+              open: true,
+              message: res?.response?.data?.message,
+            });
+          })
+          .finally(() => {
+            const expiresTime = new Date();
+            expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
+            setCookie("loginID", loginInfo.loginID, {
+              path: "/",
+              expires: expiresTime,
+              secure: true,
+            });
+            setIsBackDrop(false);
+          });
+      }
     }
   };
 
@@ -167,6 +198,7 @@ function Login() {
       <S.RightBox>
         <Clock />
       </S.RightBox>
+      <BackDrop isBackDrop={isBackDrop} />
     </S.LoginLayout>
   );
 }
