@@ -1,4 +1,6 @@
 import restURI from "api/restURI.json";
+import restAPI from "api/restAPI";
+import getComboParams from "api/getComboParams";
 import "components/grid/style/GridStyle.css";
 import CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "constant/ColumnName.json";
@@ -9,6 +11,47 @@ import {
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
+
+let productGbnList = [];
+let productModelList = [];
+let productTypeList = [];
+let productTypeSmallList = [];
+const comboBoxData = async () => {
+  await restAPI.get(`${restURI.productGbn}/search`).then((res) => {
+    for (var i = 0; i < res.data.data.rows.length; i++) {
+      let obj = {};
+      let dataObj = res.data.data.rows[i];
+      obj = getComboParams("ProductGbnSet", dataObj);
+      productGbnList.push(obj);
+    }
+  });
+  await restAPI.get(`${restURI.productModel}/search`).then((res) => {
+    for (var i = 0; i < res.data.data.rows.length; i++) {
+      let obj = {};
+      let dataObj = res.data.data.rows[i];
+      obj = getComboParams("productModelSet", dataObj);
+      productModelList.push(obj);
+    }
+  });
+  await restAPI.get(`${restURI.productType}/search`).then((res) => {
+    for (var i = 0; i < res.data.data.rows.length; i++) {
+      let obj = {};
+      let dataObj = res.data.data.rows[i];
+      obj = getComboParams("productTypeSet", dataObj);
+      productTypeList.push(obj);
+    }
+  });
+  await restAPI.get(`${restURI.productTypeSmall}/search`).then((res) => {
+    for (var i = 0; i < res.data.data.rows.length; i++) {
+      let obj = {};
+      let dataObj = res.data.data.rows[i];
+      obj = getComboParams("productTypeSmallSet", dataObj);
+      productTypeSmallList.push(obj);
+    }
+  });
+};
+
+comboBoxData();
 
 function ProductSet(isEditMode) {
   const data = [];
@@ -47,108 +90,136 @@ function ProductSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
-    {
-      name: "prod_gbn_id",
-      header: CN.prod_gbn_id,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_gbn_nm",
-      header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "model_id",
-      header: CN.model_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "model_nm",
-      header: CN.model_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_type_id",
-      header: CN.prod_type_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_type_nm",
-      header: CN.prod_type_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_type_small_id",
-      header: CN.prod_type_small_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_type_small_nm",
-      header: CN.prod_type_small_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    isEditMode
+      ? {
+          name: "prod_gbn_id",
+          header: CN.prod_gbn_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: productGbnList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "prod_gbn_nm",
+          header: CN.prod_gbn_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
+    isEditMode
+      ? {
+          name: "model_id",
+          header: CN.model_nm,
+          minWidth: WIDTH_SHORT,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: productModelList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "model_nm",
+          header: CN.model_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
+    isEditMode
+      ? {
+          name: "prod_type_id",
+          header: CN.prod_type_nm,
+          minWidth: WIDTH_SHORT,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: productTypeList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "prod_type_nm",
+          header: CN.prod_type_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
+    isEditMode
+      ? {
+          name: "prod_type_small_id",
+          header: CN.prod_type_small_nm,
+          minWidth: WIDTH_SHORT,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: productTypeSmallList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "prod_type_small_nm",
+          header: CN.prod_type_small_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
     {
       name: "prod_no",
       header: CN.prod_no,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -160,7 +231,7 @@ function ProductSet(isEditMode) {
       header: CN.prod_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -172,7 +243,7 @@ function ProductSet(isEditMode) {
       header: CN.rev,
       minWidth: WIDTH_SUPER_SHORT,
       align: "center",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -184,7 +255,7 @@ function ProductSet(isEditMode) {
       header: CN.prod_std,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -208,7 +279,7 @@ function ProductSet(isEditMode) {
       header: CN.unit_nm,
       minWidth: WIDTH_SUPER_SHORT,
       align: "center",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -222,6 +293,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "lot_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: "60",
@@ -234,6 +306,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "use_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -252,6 +325,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "active_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -281,7 +355,7 @@ function ProductSet(isEditMode) {
       header: CN.width,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -293,7 +367,7 @@ function ProductSet(isEditMode) {
       header: CN.length,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -305,7 +379,7 @@ function ProductSet(isEditMode) {
       header: CN.height,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -318,7 +392,7 @@ function ProductSet(isEditMode) {
       header: CN.material,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -330,7 +404,7 @@ function ProductSet(isEditMode) {
       header: CN.color,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -342,7 +416,7 @@ function ProductSet(isEditMode) {
       header: CN.weight,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -354,7 +428,7 @@ function ProductSet(isEditMode) {
       header: CN.thickness,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -368,6 +442,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "is_spareparts",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -386,6 +461,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "mat_order_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -440,6 +516,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "sal_order_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -458,6 +535,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "inv_use_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -548,6 +626,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "qms_receive_insp_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -566,6 +645,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "qms_proc_insp_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -584,6 +664,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "qms_final_insp_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,
@@ -614,6 +695,7 @@ function ProductSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "prd_active_fg",
+          disabled: isEditMode ? false : true,
         },
       },
       minWidth: WIDTH_SUPER_SHORT,

@@ -13,16 +13,14 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-const COMBO_URI = restURI.process + "/search";
-const COMPONENT_NAME = "ProcessSet";
 let listItem = [];
 
 const comboBoxData = async () => {
-  await restAPI.get(COMBO_URI).then((res) => {
+  await restAPI.get(`${restURI.process}/search`).then((res) => {
     for (var i = 0; i < res.data.data.rows.length; i++) {
       let obj = {};
       let dataObj = res.data.data.rows[i];
-      obj = getComboParams(COMPONENT_NAME, dataObj);
+      obj = getComboParams("ProcessSet", dataObj);
       listItem.push(obj);
     }
   });
