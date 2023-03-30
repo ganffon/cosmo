@@ -48,7 +48,7 @@ function ProductModelSet(isEditMode) {
   const columns = [
     {
       name: "model_id",
-      header: CN.model.id,
+      header: CN.model_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,

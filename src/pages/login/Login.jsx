@@ -78,9 +78,29 @@ function Login() {
               `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`
           )
           .then((res) => {
+            console.log(res?.data?.data?.rows[0]);
             const expiresTime = new Date();
             expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-            setCookie("name", res?.data?.data?.rows[0]?.user_nm, {
+            setCookie("userName", res?.data?.data?.rows[0]?.user_nm, {
+              path: "/",
+              expires: expiresTime,
+              secure: true,
+            });
+            setCookie("userUID", res?.data?.data?.rows[0]?.uid, {
+              path: "/",
+              expires: expiresTime,
+              secure: true,
+            });
+            setCookie(
+              "userFactoryID",
+              res?.data?.data?.rows[0]?.user_factory_id,
+              {
+                path: "/",
+                expires: expiresTime,
+                secure: true,
+              }
+            );
+            setCookie("factoryID", loginInfo.loginFactoryID, {
               path: "/",
               expires: expiresTime,
               secure: true,
@@ -102,6 +122,7 @@ function Login() {
               expires: expiresTime,
               secure: true,
             });
+            localStorage.setItem("loginState", true);
             setIsBackDrop(false);
           });
       }

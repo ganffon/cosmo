@@ -59,19 +59,34 @@ export default function MainRouter() {
             )
           );
         })} */}
-        <Route path="factory" element={<Factory />} />
-        <Route path="line" element={<Line />} />
-        <Route path="process" element={<Process />} />
-        <Route path="equipment" element={<Equipment />} />
-        <Route path="product-gbn" element={<ProductGbn />} />
-        <Route path="product-model" element={<ProductModel />} />
-        <Route path="product-type" element={<ProductType />} />
-        <Route path="product" element={<Product />} />
-        <Route path="product-type-small" element={<ProductTypeSmall />} />
+        <Route path="factory" element={<Factory menuID={"factory"} />} />
+        <Route path="line" element={<Line menuID={"line"} />} />
+        <Route path="process" element={<Process menuID={"process"} />} />
+        <Route path="equipment" element={<Equipment menuID={"equipment"} />} />
+        <Route
+          path="product-gbn"
+          element={<ProductGbn menuID={"product-gbn"} />}
+        />
+        <Route
+          path="product-model"
+          element={<ProductModel menuID={"product-model"} />}
+        />
+        <Route
+          path="product-type"
+          element={<ProductType menuID={"product-type"} />}
+        />
+        <Route path="product" element={<Product menuID={"product"} />} />
+        <Route
+          path="product-type-small"
+          element={<ProductTypeSmall menuID={"product-type-small"} />}
+        />
 
-        <Route path="document" element={<Document />} />
-        <Route path="menu-manage" element={<MenuManage />} />
-        <Route path="menu-list" element={<MenuList />} />
+        <Route path="document" element={<Document menuID={"document"} />} />
+        <Route
+          path="menu-manage"
+          element={<MenuManage menuID={"menu-manage"} />}
+        />
+        <Route path="menu-list" element={<MenuList menuID={"menu-list"} />} />
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
     </Layout>

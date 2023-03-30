@@ -44,7 +44,7 @@ function AppBar() {
         <S.MenuTitle>{currentMenuName}</S.MenuTitle>
       </S.LeftBox>
       <S.RightBox>
-        <S.UserText>{cookie.name}님 환영합니다.</S.UserText>
+        <S.UserText>{cookie.userName}님 환영합니다.</S.UserText>
         <AvatarButton />
       </S.RightBox>
     </S.AppBarBox>

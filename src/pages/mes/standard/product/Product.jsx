@@ -83,27 +83,24 @@ function Product() {
     prod_type_id: null,
     prod_type_small_id: null,
   });
+
+  const getComboOpt = useCallback(async () => {
+    await restAPI.get(restURI.productGbn + "/search").then((res) => {
+      setProductGbnOpt(res?.data?.data?.rows);
+    });
+    await restAPI.get(restURI.productModel + "/search").then((res) => {
+      setModelOpt(res?.data?.data?.rows);
+    });
+    await restAPI.get(restURI.productType + "/search").then((res) => {
+      setProductTypeOpt(res?.data?.data?.rows);
+    });
+    await restAPI.get(restURI.productTypeSmall + "/search").then((res) => {
+      setProductTypeSmallOpt(res?.data?.data?.rows);
+    });
+  }, []);
+
   useEffect(() => {
-    async function getProductGbnOpt() {
-      const data = await restAPI.get(restURI.productGbn + "/search");
-      setProductGbnOpt(data.data.data.rows);
-    }
-    async function getModelOpt() {
-      const data = await restAPI.get(restURI.productModel + "/search");
-      setModelOpt(data.data.data.rows);
-    }
-    async function getProductTypeOpt() {
-      const data = await restAPI.get(restURI.productType + "/search");
-      setProductTypeOpt(data.data.data.rows);
-    }
-    async function getProductTypeSmallOpt() {
-      const data = await restAPI.get(restURI.productTypeSmall + "/search");
-      setProductTypeSmallOpt(data.data.data.rows);
-    }
-    getProductGbnOpt();
-    getModelOpt();
-    getProductTypeOpt();
-    getProductTypeSmallOpt();
+    getComboOpt();
   }, []);
 
   const onClickNew = () => {
@@ -429,5 +426,4 @@ function Product() {
     </S.ContentsArea>
   );
 }
-
 export default Product;

@@ -1,4 +1,5 @@
 {
+  "authMenuCheck": "/menuinvest/auth",
   "login": "/login",
   "factory": "/factories",
   "line": "/lines",
