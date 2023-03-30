@@ -183,7 +183,6 @@ function MenuManage(props) {
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => getPostParams(COMPONENT_NAME, raw));
-    console.log(data);
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI

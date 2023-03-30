@@ -22,14 +22,9 @@ function ButtonGroupEdit(props) {
 
   const onClickEdit = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    console.log(
-      refSingleGrid?.current?.gridInst?.getModifiedRows().updatedRows
-    );
-    console.log(`componentName: ${componentName}`);
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       .updatedRows?.map((raw) => GetPutParams(componentName, raw));
-    console.log(data);
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
