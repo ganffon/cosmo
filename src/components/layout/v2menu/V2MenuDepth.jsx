@@ -65,25 +65,16 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
       .then((res) => {
         console.log(res?.data?.data?.rows[0]);
         if (res?.data?.data?.rows[0] !== undefined || superAdmin === true) {
-          if (superAdmin) {
-            setAuthMenuCode({
-              ...authMenuCode,
-              readOnly: false,
-              read: true,
-              create: true,
-              update: true,
-              delete: true,
-            });
-          } else {
-            setAuthMenuCode({
-              ...authMenuCode,
-              readOnly: res?.data?.data?.rows[0]?.read_only_fg,
-              read: res?.data?.data?.rows[0]?.auth_read,
-              create: res?.data?.data?.rows[0]?.auth_create,
-              update: res?.data?.data?.rows[0]?.auth_update,
-              delete: res?.data?.data?.rows[0]?.auth_delete,
-            });
-          }
+          setAuthMenuCode({
+            ...authMenuCode,
+            readOnly: superAdmin
+              ? false
+              : res?.data?.data?.rows[0]?.read_only_fg,
+            read: superAdmin ? true : res?.data?.data?.rows[0]?.auth_read,
+            create: superAdmin ? true : res?.data?.data?.rows[0]?.auth_create,
+            update: superAdmin ? true : res?.data?.data?.rows[0]?.auth_update,
+            delete: superAdmin ? true : res?.data?.data?.rows[0]?.auth_delete,
+          });
 
           if (isMouseOver === true) {
             setMenuNameChangeSave({
