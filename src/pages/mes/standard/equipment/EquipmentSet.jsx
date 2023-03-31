@@ -14,18 +14,15 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-let listItem = [];
+let processList = [];
 
 function EquipmentSet(isEditMode) {
   useEffect(() => {
     const comboBoxData = async () => {
       await restAPI.get(`${restURI.process}/search`).then((res) => {
-        for (var i = 0; i < res.data.data.rows.length; i++) {
-          let obj = {};
-          let dataObj = res.data.data.rows[i];
-          obj = getComboParams("ProcessSet", dataObj);
-          listItem.push(obj);
-        }
+        processList = res?.data?.data?.rows.map((data) => {
+          return getComboParams("ProcessSet", data);
+        });
       });
     };
 
@@ -77,7 +74,7 @@ function EquipmentSet(isEditMode) {
           editor: {
             type: "select",
             options: {
-              listItems: listItem,
+              listItems: processList,
             },
           },
           hidden: false,
@@ -318,7 +315,7 @@ function EquipmentSet(isEditMode) {
       editor: {
         type: "select",
         options: {
-          listItems: listItem,
+          listItems: processList,
         },
       },
       hidden: false,

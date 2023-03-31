@@ -22,36 +22,24 @@ function ProductSet(isEditMode) {
   useEffect(() => {
     const comboBoxData = async () => {
       await restAPI.get(`${restURI.productGbn}/search`).then((res) => {
-        for (var i = 0; i < res.data.data.rows.length; i++) {
-          let obj = {};
-          let dataObj = res.data.data.rows[i];
-          obj = getComboParams("ProductGbnSet", dataObj);
-          productGbnList.push(obj);
-        }
+        productGbnList = res?.data?.data?.rows.map((data) => {
+          return getComboParams("ProductGbnSet", data);
+        });
       });
       await restAPI.get(`${restURI.productModel}/search`).then((res) => {
-        for (var i = 0; i < res.data.data.rows.length; i++) {
-          let obj = {};
-          let dataObj = res.data.data.rows[i];
-          obj = getComboParams("productModelSet", dataObj);
-          productModelList.push(obj);
-        }
+        productModelList = res?.data?.data?.rows.map((data) => {
+          return getComboParams("productModelSet", data);
+        });
       });
       await restAPI.get(`${restURI.productType}/search`).then((res) => {
-        for (var i = 0; i < res.data.data.rows.length; i++) {
-          let obj = {};
-          let dataObj = res.data.data.rows[i];
-          obj = getComboParams("productTypeSet", dataObj);
-          productTypeList.push(obj);
-        }
+        productTypeList = res?.data?.data?.rows.map((data) => {
+          return getComboParams("productTypeSet", data);
+        });
       });
       await restAPI.get(`${restURI.productTypeSmall}/search`).then((res) => {
-        for (var i = 0; i < res.data.data.rows.length; i++) {
-          let obj = {};
-          let dataObj = res.data.data.rows[i];
-          obj = getComboParams("productTypeSmallSet", dataObj);
-          productTypeSmallList.push(obj);
-        }
+        productTypeSmallList = res?.data?.data?.rows.map((data) => {
+          return getComboParams("productTypeSmallSet", data);
+        });
       });
     };
 
