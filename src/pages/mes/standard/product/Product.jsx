@@ -6,7 +6,7 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import LoginStateChk from "pages/login/LoginStateChk";
+import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
 import restURI from "api/restURI";
 import BackDrop from "components/backdrop/BackDrop";

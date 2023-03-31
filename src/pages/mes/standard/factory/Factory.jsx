@@ -6,8 +6,7 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import AuthMenuCheck from "api/AuthMenuCheck";
-import LoginStateChk from "pages/login/LoginStateChk";
+import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -19,11 +18,10 @@ import FactorySet from "pages/mes/standard/factory/FactorySet";
 import * as S from "../oneGrid.styled";
 
 function Factory(props) {
-  const { menuID } = props;
-  AuthMenuCheck(menuID);
   LoginStateChk();
 
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutEvent);
+
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -49,7 +47,6 @@ function Factory(props) {
     buttonDisabled,
   } = FactorySet(isEditMode);
   const SETTING_FILE = "FactorySet";
-  console.log("렌더링");
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();

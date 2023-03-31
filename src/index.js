@@ -11,11 +11,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <StyledEngineProvider injectFirst>
     <RecoilRoot>
-      {/* <React.StrictMode> */}
-      <CookiesProvider>
-        <Router />
-      </CookiesProvider>
-      {/* </React.StrictMode> */}
+      <React.StrictMode>
+        <CookiesProvider>
+          <Router />
+        </CookiesProvider>
+      </React.StrictMode>
     </RecoilRoot>
   </StyledEngineProvider>
 );

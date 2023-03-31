@@ -59,34 +59,37 @@ export default function MainRouter() {
             )
           );
         })} */}
-        <Route path="factory" element={<Factory menuID={"factory"} />} />
-        <Route path="line" element={<Line menuID={"line"} />} />
-        <Route path="process" element={<Process menuID={"process"} />} />
-        <Route path="equipment" element={<Equipment menuID={"equipment"} />} />
+        <Route path="factory" element={<Factory menuCode={"factory"} />} />
+        <Route path="line" element={<Line menuCode={"line"} />} />
+        <Route path="process" element={<Process menuCode={"process"} />} />
+        <Route
+          path="equipment"
+          element={<Equipment menuCode={"equipment"} />}
+        />
         <Route
           path="product-gbn"
-          element={<ProductGbn menuID={"product-gbn"} />}
+          element={<ProductGbn menuCode={"product-gbn"} />}
         />
         <Route
           path="product-model"
-          element={<ProductModel menuID={"product-model"} />}
+          element={<ProductModel menuCode={"product-model"} />}
         />
         <Route
           path="product-type"
-          element={<ProductType menuID={"product-type"} />}
+          element={<ProductType menuCode={"product-type"} />}
         />
-        <Route path="product" element={<Product menuID={"product"} />} />
+        <Route path="product" element={<Product menuCode={"product"} />} />
         <Route
           path="product-type-small"
-          element={<ProductTypeSmall menuID={"product-type-small"} />}
+          element={<ProductTypeSmall menuCode={"product-type-small"} />}
         />
 
-        <Route path="document" element={<Document menuID={"document"} />} />
+        <Route path="document" element={<Document menuCode={"document"} />} />
         <Route
           path="menu-manage"
-          element={<MenuManage menuID={"menu-manage"} />}
+          element={<MenuManage menuCode={"menu-manage"} />}
         />
-        <Route path="menu-list" element={<MenuList menuID={"menu-list"} />} />
+        <Route path="menu-list" element={<MenuList menuCode={"menu-list"} />} />
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
     </Layout>
