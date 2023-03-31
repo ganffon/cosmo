@@ -63,7 +63,6 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
         `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${cookie.userUID}&user_factory_id=${cookie.userFactoryID}`
       )
       .then((res) => {
-        console.log(res?.data?.data?.rows[0]);
         if (res?.data?.data?.rows[0] !== undefined || superAdmin === true) {
           setAuthMenuCode({
             ...authMenuCode,
