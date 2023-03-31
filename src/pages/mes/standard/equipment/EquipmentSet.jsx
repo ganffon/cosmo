@@ -1,4 +1,5 @@
 //설비관리✨
+import React, { useEffect } from "react";
 import restURI from "api/restURI.json";
 import restAPI from "api/restAPI";
 import "components/grid/style/GridStyle.css";
@@ -15,20 +16,21 @@ import {
 
 let listItem = [];
 
-const comboBoxData = async () => {
-  await restAPI.get(`${restURI.process}/search`).then((res) => {
-    for (var i = 0; i < res.data.data.rows.length; i++) {
-      let obj = {};
-      let dataObj = res.data.data.rows[i];
-      obj = getComboParams("ProcessSet", dataObj);
-      listItem.push(obj);
-    }
-  });
-};
-
-comboBoxData();
-
 function EquipmentSet(isEditMode) {
+  useEffect(() => {
+    const comboBoxData = async () => {
+      await restAPI.get(`${restURI.process}/search`).then((res) => {
+        for (var i = 0; i < res.data.data.rows.length; i++) {
+          let obj = {};
+          let dataObj = res.data.data.rows[i];
+          obj = getComboParams("ProcessSet", dataObj);
+          listItem.push(obj);
+        }
+      });
+    };
+
+    comboBoxData();
+  }, []);
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"

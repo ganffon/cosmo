@@ -2,7 +2,7 @@ import React, { createContext, createRef, useState, useContext } from "react";
 // ⬇️ reference of page
 import SearchBarBox from "components/onlySearchSingleGrid/searchbar/SearchBarBox";
 import GridSingleSearch from "components/onlySearchSingleGrid/grid/GridSingleSearch";
-import LoginStateChk from "pages/login/LoginStateChk";
+import LoginStateChk from "function/LoginStateChk";
 import { LayoutEvent } from "components/layout/common/Layout";
 import BackDrop from "components/backdrop/BackDrop";
 import * as S from "./OnlySearchSingleGrid.styled";
