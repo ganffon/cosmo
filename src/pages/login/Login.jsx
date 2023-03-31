@@ -79,7 +79,6 @@ function Login() {
               `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`
           )
           .then((res) => {
-            console.log(res?.data?.data?.rows[0]);
             const expiresTime = new Date();
             expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
             setCookie("userName", res?.data?.data?.rows[0]?.user_nm, {
