@@ -32,6 +32,7 @@
   "prod_nm": "품목명",
 
   "unit_id": "단위ID",
+  "unit_cd": "단위코드",
   "unit_nm": "단위명",
   "rev": "리비전",
   "bom_type_id": "BOM유형ID",

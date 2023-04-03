@@ -10,5 +10,6 @@
   "productTypeSmall": "/producttypesmall",
   "productModel": "/model",
   "product": "/products",
-  "routing": "/routings"
+  "routing": "/routings",
+  "unit": "/unit"
 }

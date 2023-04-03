@@ -5,7 +5,7 @@ import restAPI from "api/restAPI";
 import "components/grid/style/GridStyle.css";
 import CustomGrid from "components/grid/setting/CustomGrid";
 import getComboParams from "api/getComboParams";
-import CN from "constant/ColumnName.json";
+import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,

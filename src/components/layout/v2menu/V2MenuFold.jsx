@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import V2MenuList from "./V2MenuList.jsx";
 import V2MenuDepth from "./V2MenuDepth.jsx";
-import MenuListJSON from "../datas/MenuList.json";
+import MenuListJSON from "json/MenuList.json";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
 import * as S from "./V2MenuFold.styled";

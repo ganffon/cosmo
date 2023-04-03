@@ -11,11 +11,10 @@ import ProductModel from "pages/mes/standard/productModel/ProductModel";
 import ProductType from "pages/mes/standard/productType/ProductType";
 import Product from "pages/mes/standard/product/Product";
 import ProductTypeSmall from "pages/mes/standard/productTypeSmall/ProductTypeSmall";
-// import OnlySearchSingleGrid from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
-import OneGrid from "pages/mes/standard/oneGrid";
+import Unit from "pages/mes/standard/unit/Unit";
 import Dashboard from "pages/mes/dashboard/Dashboard";
 // import * as Pages from "pages";
-import RealMenuList from "components/layout/datas/RealMenuList.json";
+import RealMenuList from "json/RealMenuList.json";
 // import NotFound from "pages/notfound/NotFound";
 import Document from "pages/mes/standard/document/Document";
 import MenuManage from "pages/admin/menuManage/MenuManage";
@@ -59,37 +58,20 @@ export default function MainRouter() {
             )
           );
         })} */}
-        <Route path="factory" element={<Factory menuCode={"factory"} />} />
-        <Route path="line" element={<Line menuCode={"line"} />} />
-        <Route path="process" element={<Process menuCode={"process"} />} />
-        <Route
-          path="equipment"
-          element={<Equipment menuCode={"equipment"} />}
-        />
-        <Route
-          path="product-gbn"
-          element={<ProductGbn menuCode={"product-gbn"} />}
-        />
-        <Route
-          path="product-model"
-          element={<ProductModel menuCode={"product-model"} />}
-        />
-        <Route
-          path="product-type"
-          element={<ProductType menuCode={"product-type"} />}
-        />
-        <Route path="product" element={<Product menuCode={"product"} />} />
-        <Route
-          path="product-type-small"
-          element={<ProductTypeSmall menuCode={"product-type-small"} />}
-        />
+        <Route path="factory" element={<Factory />} />
+        <Route path="line" element={<Line />} />
+        <Route path="process" element={<Process />} />
+        <Route path="equipment" element={<Equipment />} />
+        <Route path="product-gbn" element={<ProductGbn />} />
+        <Route path="product-model" element={<ProductModel />} />
+        <Route path="product-type" element={<ProductType />} />
+        <Route path="product" element={<Product />} />
+        <Route path="product-type-small" element={<ProductTypeSmall />} />
 
-        <Route path="document" element={<Document menuCode={"document"} />} />
-        <Route
-          path="menu-manage"
-          element={<MenuManage menuCode={"menu-manage"} />}
-        />
-        <Route path="menu-list" element={<MenuList menuCode={"menu-list"} />} />
+        <Route path="document" element={<Document />} />
+        <Route path="unit" element={<Unit />} />
+        <Route path="menu-manage" element={<MenuManage />} />
+        <Route path="menu-list" element={<MenuList />} />
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
     </Layout>

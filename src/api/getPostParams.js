@@ -309,7 +309,12 @@ class model {
     this.model_nm = raw.model_nm;
   }
 }
-
+class unit {
+  constructor(raw) {
+    this.unit_cd = raw.unit_cd;
+    this.unit_nm = raw.unit_nm;
+  }
+}
 function GetPostParams(componentName, raw) {
   let params = "";
 
@@ -325,6 +330,9 @@ function GetPostParams(componentName, raw) {
       break;
     case "User":
       params = new users(raw);
+      break;
+    case "UnitSet":
+      params = new unit(raw);
       break;
     case "EquipmentSet":
       params = new equipments(raw);

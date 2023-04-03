@@ -1,7 +1,7 @@
 //제품유형관리✨
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
-import CN from "constant/ColumnName.json";
+import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,

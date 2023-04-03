@@ -2,7 +2,7 @@
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
 import CustomGrid from "components/grid/setting/CustomGrid";
-import CN from "constant/ColumnName.json";
+import CN from "json/ColumnName.json";
 import "components/grid/style/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
@@ -58,7 +58,6 @@ function LineSet(isEditMode) {
       filter: false,
       whiteSpace: false,
       rowSpan: false,
-      backgroundColor: "green",
     },
     {
       name: "line_id",
@@ -79,8 +78,8 @@ function LineSet(isEditMode) {
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
-      sortable: true,
-      filter: true,
+      sortable: false,
+      filter: false,
       whiteSpace: false,
       rowSpan: false,
       // renderer: {
@@ -98,8 +97,8 @@ function LineSet(isEditMode) {
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
-      sortable: true,
-      filter: true,
+      sortable: false,
+      filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
@@ -234,6 +233,7 @@ function LineSet(isEditMode) {
   };
 
   const header = {
+    //🔸headerMerge
     // height: 100,
     // complexColumns: [
     //   {
@@ -243,12 +243,13 @@ function LineSet(isEditMode) {
     //     renderer: CustomGrid.ColumnHeaderMultiLine,
     //   },
     // ],
-    columns: [
-      {
-        name: "line_cd",
-        renderer: CustomGrid.ColumnHeaderMultiLine,
-      },
-    ],
+    //🔸multiLine
+    // columns: [
+    //   {
+    //     name: "line_cd",
+    //     renderer: CustomGrid.ColumnHeaderMultiLine,
+    //   },
+    // ],
   };
   // const header = {
   //   height: "60",

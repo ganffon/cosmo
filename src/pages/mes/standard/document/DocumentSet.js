@@ -1,5 +1,5 @@
 import restURI from "api/restURI.json";
-import CN from "constant/ColumnName.json";
+import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,

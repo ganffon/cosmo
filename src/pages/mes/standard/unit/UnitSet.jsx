@@ -1,38 +1,16 @@
-//제품군관리✨
+//단위관리✨
 import restURI from "api/restURI.json";
-import CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
-import "components/grid/style/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
-  MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function ProductModelSet(isEditMode) {
-  const data = [
-    {
-      prod_gbn_id: 1,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 2,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 3,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 0,
-    },
-  ];
+function UnitSet(isEditMode) {
+  const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
@@ -47,8 +25,8 @@ function ProductModelSet(isEditMode) {
    */
   const columns = [
     {
-      name: "model_id",
-      header: CN.model_id,
+      name: "unit_id",
+      header: CN.unit_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -57,29 +35,28 @@ function ProductModelSet(isEditMode) {
       filter: false,
       whiteSpace: false,
       rowSpan: false,
-      backgroundColor: "green",
     },
     {
-      name: "model_cd",
-      header: CN.model_cd,
-      minWidth: WIDTH_SHORT,
+      name: "unit_cd",
+      header: CN.unit_cd,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
     {
-      name: "model_nm",
-      header: CN.model_nm,
+      name: "unit_nm",
+      header: CN.unit_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
-      sortable: true,
-      filter: true,
+      sortable: false,
+      filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
@@ -156,69 +133,80 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
   ];
-
+  const columnsModal = [
+    {
+      name: "unit_id",
+      header: CN.unit_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "unit_cd",
+      header: CN.unit_cd,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "unit_nm",
+      header: CN.unit_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
 
-  const header = {
-    // height: 100,
-    // complexColumns: [
-    //   {
-    //     header: "test",
-    //     name: "test_test",
-    //     childNames: ["line_cd", "line_nm"],
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-    // columns: [
-    //   {
-    //     name: "line_cd",
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-  };
-  // const header = {
-  //   height: "60",
-  //   complexColumns: [
-  //     {
-  //       header: "ID + Name",
-  //       name: "parent1",
-  //       childNames: ["id", "name"],
-  //     },
-  //   ],
-  // };
-
+  const header = {};
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"
-   * 🔸날짜안씀 - null
+   * 🔸날짜안쓰는경우 - null
    */
   const datePickerSet = null;
 
   /**
-   * 🔸inputSet id 값이 ⭐ BE : query params
+   * 🔸inputSet id 값이 ✨ BE : query params
    */
   const inputSet = [
     {
-      id: "model_cd",
-      name: CN.model_cd,
+      id: "unit_cd",
+      name: CN.unit_cd,
     },
     {
-      id: "model_nm",
-      name: CN.model_nm,
+      id: "unit_nm",
+      name: CN.unit_nm,
     },
   ];
 
-  const uri = restURI.productModel;
+  const uri = restURI.unit;
 
   return {
     data,
     rowHeaders,
     rowHeadersModal,
     columns,
+    columnsModal,
     columnOptions,
     header,
     datePickerSet,
@@ -227,4 +215,4 @@ function ProductModelSet(isEditMode) {
   };
 }
 
-export default ProductModelSet;
+export default UnitSet;
