@@ -4,15 +4,15 @@ import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 // ⬇️ reference of page
 import GridTheme from "components/grid/setting/GridTheme";
-import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { OnlySearchSingleGridContext } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
+import { LayoutContext } from "components/layout/common/Layout";
 
 function GridSingleSearch(props) {
   const { columnOptions, columns, header, draggable } = props;
   const { refSingleGrid, singleGridData, isEditMode } = useContext(
-    OnlySearchSingleGridEvent
+    OnlySearchSingleGridContext
   );
-  const { isMenuSlide, isModalOpen } = useContext(LayoutEvent);
+  const { isMenuSlide, isModalOpen } = useContext(LayoutContext);
 
   useEffect(() => {
     GridTheme();

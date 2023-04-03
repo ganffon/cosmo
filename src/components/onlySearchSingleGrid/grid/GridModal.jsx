@@ -4,12 +4,12 @@ import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 // ⬇️ reference of page
 import GridTheme from "../../grid/setting/GridTheme";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { LayoutContext } from "components/layout/common/Layout";
 
 function GridModal(props) {
   const { refGrid, columns, columnOptions, header, draggable, onClickGrid } =
     props;
-  const { isModalOpen } = useContext(LayoutEvent);
+  const { isModalOpen } = useContext(LayoutContext);
   const [gridData, setGridData] = useState();
 
   const onChange = (e) => {

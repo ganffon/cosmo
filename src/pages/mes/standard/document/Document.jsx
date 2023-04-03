@@ -4,10 +4,10 @@ import ButtonSearch from "components/button/ButtonSearch";
 import GridModule from "components/grid/GridModule";
 import DocumentSet from "pages/mes/standard/document/DocumentSet";
 import * as S from "./Document.styled";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { LayoutContext } from "components/layout/common/Layout";
 
 function Document() {
-  const { isAllScreen, isMenuSlide } = useContext(LayoutEvent);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const boxRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
   const [scrollActive, setScrollActive] = useState(false);

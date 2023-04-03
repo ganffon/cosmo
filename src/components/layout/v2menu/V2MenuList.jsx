@@ -5,7 +5,7 @@ import Filter2 from "@mui/icons-material/Filter2";
 import Filter3 from "@mui/icons-material/Filter3";
 import Filter4 from "@mui/icons-material/Filter4";
 // ⬇️ reference of page
-import { LayoutEvent } from "../common/Layout";
+import { LayoutContext } from "../common/Layout";
 import * as S from "./V2MenuList.styled";
 
 //메뉴 리스트 아이콘 부여
@@ -27,7 +27,7 @@ const menuListIcon = (id) => {
 function V2MenuList(props) {
   const { lv1Menu, setLv2Menu } = props;
   const { setIsMouseOver, menuNameChangeSave, setMenuNameChangeSave } =
-    useContext(LayoutEvent);
+    useContext(LayoutContext);
   return (
     <S.MenuList>
       <S.MenuButton

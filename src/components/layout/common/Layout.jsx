@@ -9,7 +9,7 @@ import ExtendButton from "./ExtendButton";
 import * as S from "./Layout.styled";
 import { MENU_TYPE } from "constant";
 
-export const LayoutEvent = createContext();
+export const LayoutContext = createContext();
 
 const Layout = ({ children }) => {
   const [superAdmin, setSuperAdmin] = useState(true); //🔸false로 바꾸면 메뉴 권한에 따라 동작하게 됨 ➡️ 개발자 모드는 true 초기값 할당
@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
 
   return (
     <S.LayoutBox>
-      <LayoutEvent.Provider
+      <LayoutContext.Provider
         value={{
           isMenuSlide,
           setIsMenuSlide,
@@ -62,7 +62,7 @@ const Layout = ({ children }) => {
           isAllScreen={isAllScreen}
           setIsAllScreen={setIsAllScreen}
         />
-      </LayoutEvent.Provider>
+      </LayoutContext.Provider>
     </S.LayoutBox>
   );
 };

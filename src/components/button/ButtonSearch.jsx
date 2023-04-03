@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { LayoutContext } from "components/layout/common/Layout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,7 +15,7 @@ function ButtonSearch(props) {
     onClickSearch,
     buttonDisabled,
   } = props;
-  const { authMenuCode } = useContext(LayoutEvent);
+  const { authMenuCode } = useContext(LayoutContext);
   return (
     <>
       <S.ButtonSet

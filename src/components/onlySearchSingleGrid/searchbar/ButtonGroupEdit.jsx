@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import SaveIcon from "@mui/icons-material/Save";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
-import { SearchBarBoxEvent } from "./SearchBarBox";
+import { OnlySearchSingleGridContext } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
+import { SearchBarBoxContext } from "./SearchBarBox";
 import GetPutParams from "api/getPutParams";
 import restAPI from "api/restAPI";
 import * as S from "./ButtonGroupEdit.styled";
@@ -11,9 +11,9 @@ import * as S from "./ButtonGroupEdit.styled";
 function ButtonGroupEdit(props) {
   const { componentName, uri } = props;
   const { onClickSearch, alertOpen, setAlertOpen } =
-    useContext(SearchBarBoxEvent);
+    useContext(SearchBarBoxContext);
   const { refSingleGrid, setIsEditMode, isBackDrop, setIsBackDrop } =
-    useContext(OnlySearchSingleGridEvent);
+    useContext(OnlySearchSingleGridContext);
 
   const clickExit = () => {
     setIsEditMode(false);

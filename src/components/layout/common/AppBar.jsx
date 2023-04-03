@@ -7,7 +7,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 // ⬇️ reference of page
 import Logo from "img/Logo/cosmo.png";
 import AvatarButton from "./AvatarButton";
-import { LayoutEvent } from "./Layout";
+import { LayoutContext } from "./Layout";
 import * as S from "./AppBar.styled";
 
 function AppBar() {
@@ -18,7 +18,7 @@ function AppBar() {
     currentMenuName,
     setCurrentMenuName,
     isAllScreen,
-  } = useContext(LayoutEvent);
+  } = useContext(LayoutContext);
   const [cookie, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
   const gotoDashboard = () => {

@@ -3,11 +3,12 @@ import V2MenuList from "./V2MenuList.jsx";
 import V2MenuDepth from "./V2MenuDepth.jsx";
 import MenuListJSON from "../datas/MenuList.json";
 // ⬇️ reference of page
-import { LayoutEvent } from "../common/Layout";
+import { LayoutContext } from "../common/Layout";
 import * as S from "./V2MenuFold.styled";
 
 function V2MenuFold() {
-  const { isMenuSlide, setIsMenuSlide, isAllScreen } = useContext(LayoutEvent);
+  const { isMenuSlide, setIsMenuSlide, isAllScreen } =
+    useContext(LayoutContext);
   const [lv2Menu, setLv2Menu] = useState(null);
 
   useEffect(() => {

@@ -12,7 +12,7 @@ import { Collapse } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 // ⬇️ reference of page
-import { LayoutEvent } from "../common/Layout";
+import { LayoutContext } from "../common/Layout";
 
 //메뉴 리스트 아이콘 부여
 const menuListIcon = (id) => {
@@ -32,7 +32,7 @@ const menuListIcon = (id) => {
 
 function MenuList({ menu, depth }) {
   const [open, setOpen] = useState(false); //하위 메뉴 오픈
-  const { isMenuSlide } = useContext(LayoutEvent);
+  const { isMenuSlide } = useContext(LayoutContext);
   const navigate = useNavigate();
   const onClickMenu = () => {
     menu.under ? setOpen(!open) : navigate(menu.path);
