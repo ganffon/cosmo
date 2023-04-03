@@ -46,7 +46,7 @@ class workingGroup {
   }
 }
 
-function getPutParams(componentName, raw) {
+function GetPutParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
@@ -70,4 +70,4 @@ function getPutParams(componentName, raw) {
   return params;
 }
 
-export default getPutParams;
+export default GetPutParams;

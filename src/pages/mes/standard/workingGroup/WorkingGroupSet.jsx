@@ -147,18 +147,6 @@ function WorkingGroupSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "factory_id",
-      header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
       name: "worker_group_cd",
       header: CN.worker_group_cd,
       minWidth: WIDTH_SHORT,

@@ -25,7 +25,7 @@ class workingGroup {
   }
 }
 
-function getDeleteParams(componentName, raw) {
+function GetDeleteParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
@@ -50,4 +50,4 @@ function getDeleteParams(componentName, raw) {
   return params;
 }
 
-export default getDeleteParams;
+export default GetDeleteParams;

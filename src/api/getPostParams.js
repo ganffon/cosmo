@@ -5,20 +5,6 @@ class factories {
     this.factory_nm = raw.factory_nm;
   }
 }
-class lines {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
-    this.line_cd = raw.line_cd;
-    this.line_nm = raw.line_nm;
-  }
-}
-class process {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
-    this.proc_cd = raw.proc_cd;
-    this.proc_nm = raw.proc_nm;
-  }
-}
 class users {
   constructor(raw) {
     this.id = raw.id;
@@ -33,8 +19,8 @@ class users {
   }
 }
 class equipments {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.equip_type_id = raw.equip_type_id;
     this.proc_id = raw.proc_nm;
     this.equip_cd = raw.equip_cd;
@@ -101,8 +87,8 @@ class productsType {
   }
 }
 class routings {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.line_id = raw.line_id;
     this.proc_id = raw.proc_id;
     this.prod_id = raw.prod_id;
@@ -113,8 +99,8 @@ class routings {
   }
 }
 class stores {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.store_cd = raw.store_cd;
     this.store_nm = raw.store_nm;
     this.reject_store_fg = raw.reject_store_fg ? true : false;
@@ -127,8 +113,8 @@ class stores {
   }
 }
 class storeLocations {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.store_id = raw.store_id;
     this.location_cd = raw.location_cd;
     this.location_nm = raw.location_nm;
@@ -166,15 +152,15 @@ class grades {
   }
 }
 class downTimeType {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.downtime_type_cd = raw.downtime_type_cd;
     this.downtime_type_nm = raw.downtime_type_nm;
   }
 }
 class downTime {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.downtime_type_id = raw.downtime_type_id;
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
@@ -182,29 +168,29 @@ class downTime {
   }
 }
 class inspectionType {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.insp_item_type_cd = raw.insp_item_type_cd;
     this.insp_item_type_nm = raw.insp_item_type_nm;
   }
 }
 class inspectionMethod {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.insp_method_cd = raw.insp_method_cd;
     this.insp_method_nm = raw.insp_method_nm;
   }
 }
 class inspectionTool {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.insp_tool_cd = raw.insp_tool_cd;
     this.insp_tool_nm = raw.insp_tool_nm;
   }
 }
 class inspectionItem {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.insp_item_type_id = raw.insp_item_type_id;
     this.insp_item_cd = raw.insp_item_cd;
     this.insp_item_nm = raw.insp_item_nm;
@@ -214,10 +200,10 @@ class inspectionItem {
   }
 }
 class receives {
-  constructor(raw) {
+  constructor(raw, factory_id) {
     this.receive_id = raw.receive_id;
     this.seq = raw.seq;
-    this.factory_id = raw.factory_id;
+    this.factory_id = factory_id;
     this.prod_id = raw.prod_id;
     this.unit_id = raw.unit_id;
     this.lot_no = raw.lot_no;
@@ -238,10 +224,10 @@ class receives {
   }
 }
 class receiveDetails {
-  constructor(raw) {
+  constructor(raw, factory_id) {
     this.receive_id = raw.receive_id;
     this.seq = raw.seq;
-    this.factory_id = raw.factory_id;
+    this.factory_id = factory_id;
     this.prod_id = raw.prod_id;
     this.unit_id = raw.unit_id;
     this.lot_no = raw.lot_no;
@@ -262,8 +248,8 @@ class receiveDetails {
   }
 }
 class incomes {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.prod_id = raw.prod_id;
     this.reg_date = raw.reg_date;
     this.lot_no = raw.lot_no;
@@ -289,24 +275,18 @@ class unit {
   }
 }
 class workingGroup {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.worker_group_cd = raw.worker_group_cd;
     this.worker_group_nm = raw.worker_group_nm;
   }
 }
-function getPostParams(componentName, raw) {
+function GetPostParams(componentName, raw, factory_id) {
   let params = "";
 
   switch (componentName) {
     case "FactorySet":
       params = new factories(raw);
-      break;
-    case "LineSet":
-      params = new lines(raw);
-      break;
-    case "Process":
-      params = new process(raw);
       break;
     case "User":
       params = new users(raw);
@@ -315,7 +295,7 @@ function getPostParams(componentName, raw) {
       params = new unit(raw);
       break;
     case "EquipmentSet":
-      params = new equipments(raw);
+      params = new equipments(raw, factory_id);
       break;
     case "Product":
       params = new products(raw);
@@ -327,13 +307,13 @@ function getPostParams(componentName, raw) {
       params = new productsType(raw);
       break;
     case "Routing":
-      params = new routings(raw);
+      params = new routings(raw, factory_id);
       break;
     case "Store":
-      params = new stores(raw);
+      params = new stores(raw, factory_id);
       break;
     case "StoreLocations":
-      params = new storeLocations(raw);
+      params = new storeLocations(raw, factory_id);
       break;
     case "Department":
       params = new departments(raw);
@@ -345,41 +325,42 @@ function getPostParams(componentName, raw) {
       params = new grades(raw);
       break;
     case "DownTimeType":
-      params = new downTimeType(raw);
+      params = new downTimeType(raw, factory_id);
       break;
     case "DownTime":
-      params = new downTime(raw);
+      params = new downTime(raw, factory_id);
       break;
     case "InspectionType":
-      params = new inspectionType(raw);
+      params = new inspectionType(raw, factory_id);
       break;
     case "InspectionMethod":
-      params = new inspectionMethod(raw);
+      params = new inspectionMethod(raw, factory_id);
       break;
     case "InspectionTool":
-      params = new inspectionTool(raw);
+      params = new inspectionTool(raw, factory_id);
       break;
     case "InspectionItem":
-      params = new inspectionItem(raw);
+      params = new inspectionItem(raw, factory_id);
       break;
     case "Receive":
-      params = new receives(raw);
+      params = new receives(raw, factory_id);
       break;
     case "ReceiveDetail":
-      params = new receiveDetails(raw);
+      params = new receiveDetails(raw, factory_id);
       break;
     case "Income":
-      params = new incomes(raw);
+      params = new incomes(raw, factory_id);
       break;
     case "Model":
       params = new model(raw);
       break;
     case "WorkingGroupSet":
-      params = new workingGroup(raw);
+      params = new workingGroup(raw, factory_id);
       break;
     default:
   }
+  console.log(params);
   return params;
 }
 
-export default getPostParams;
+export default GetPostParams;

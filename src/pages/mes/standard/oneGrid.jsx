@@ -10,11 +10,11 @@ import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import getPostParams from "api/getPostParams";
-import getPutParams from "api/getPutParams";
-import getSearchParams from "api/getSearchParams";
-import getDeleteParams from "api/getDeleteParams";
-import getComponent from "api/getComponent";
+import getPostParams from "api/GetPostParams";
+import getPutParams from "api/GetPutParams";
+import getSearchParams from "api/GetSearchParams";
+import getDeleteParams from "api/GetDeleteParams";
+import getComponent from "api/GetComponent";
 import * as S from "./oneGrid.styled";
 
 function OneGrid(props) {
@@ -144,7 +144,7 @@ function OneGrid(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
-      .updatedRows?.map((raw) => getPutParams(COMPONENT_NAME, raw));
+      ?.updatedRows?.map((raw) => getPutParams(COMPONENT_NAME, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -219,9 +219,8 @@ function OneGrid(props) {
     setIsModalOpen(false);
     onClickSearch();
   };
-  const onClickGrid = (e) => {
-    const ev = e;
-  };
+  const onClickGrid = () => {};
+  const onEditingFinishGrid = () => {};
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -241,8 +240,8 @@ function OneGrid(props) {
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonEdit
-                onClickSave={onClickEditModeSave}
-                onClickExit={onClickEditModeExit}
+                onClickEditModeSave={onClickEditModeSave}
+                onClickEditModeExit={onClickEditModeExit}
                 onClickSearch={onClickSearch}
               />
             ) : (
@@ -267,6 +266,7 @@ function OneGrid(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>

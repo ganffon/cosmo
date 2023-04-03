@@ -19,10 +19,10 @@ import RealMenuList from "json/RealMenuList.json";
 import Document from "pages/mes/standard/document/Document";
 import MenuManage from "pages/admin/menuManage/MenuManage";
 import MenuList from "pages/admin/menuList/MenuList";
+import Grade from "pages/mes/standard/grade/Grade";
 import Store from "pages/mes/standard/store/Store";
 import Department from "pages/mes/standard/department/Department";
 import WorkingGroup from "pages/mes/standard/workingGroup/WorkingGroup";
-import { Grade } from "@mui/icons-material";
 
 export default function MainRouter() {
   const [realMenuList, setRealMenuList] = useState([]);

@@ -9,10 +9,10 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import getPostParams from "api/getPostParams";
-import getPutParams from "api/getPutParams";
-import getSearchParams from "api/getSearchParams";
-import getDeleteParams from "api/getDeleteParams";
+import getPostParams from "api/GetPostParams";
+import getPutParams from "api/GetPutParams";
+import getSearchParams from "api/GetSearchParams";
+import getDeleteParams from "api/GetDeleteParams";
 import * as S from "./MenuList.styled";
 import MenuListSet from "pages/admin/menuList/MenuListSet";
 
@@ -139,7 +139,7 @@ function MenuList(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
-      .updatedRows?.map((raw) => getPutParams(COMPONENT_NAME, raw));
+      ?.updatedRows?.map((raw) => getPutParams(COMPONENT_NAME, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -215,9 +215,8 @@ function MenuList(props) {
     onClickSearch();
   };
 
-  const onClickGrid = (e) => {
-    const ev = e;
-  };
+  const onClickGrid = () => {};
+  const onEditingFinishGrid = () => {};
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -237,8 +236,8 @@ function MenuList(props) {
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonEdit
-                onClickSave={onClickEditModeSave}
-                onClickExit={onClickEditModeExit}
+                onClickEditModeSave={onClickEditModeSave}
+                onClickEditModeExit={onClickEditModeExit}
                 onClickSearch={onClickSearch}
               />
             ) : (
@@ -263,6 +262,7 @@ function MenuList(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>

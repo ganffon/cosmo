@@ -1,7 +1,5 @@
 //라인관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "json/restURI.json";
-import CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import "components/grid/style/GridStyle.css";
 import {
@@ -14,26 +12,7 @@ import {
 } from "constant/Grid.js";
 
 function LineSet(isEditMode) {
-  const data = [
-    {
-      prod_gbn_id: 1,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 2,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 3,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 0,
-    },
-  ];
+  const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
@@ -177,8 +156,8 @@ function LineSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      header: "공장ID",
       name: "factory_id",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -190,7 +169,7 @@ function LineSet(isEditMode) {
     },
     {
       name: "line_id",
-      header: "라인ID",
+      header: CN.line_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -201,8 +180,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      header: "라인코드",
       name: "line_cd",
+      header: CN.line_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -214,7 +193,7 @@ function LineSet(isEditMode) {
     },
     {
       name: "line_nm",
-      header: "라인명",
+      header: CN.line_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -267,7 +246,7 @@ function LineSet(isEditMode) {
    * 🔸날짜기간조회 - "range"
    * 🔸날짜안씀 - null
    */
-  const datePickerSet = "range";
+  const datePickerSet = null;
 
   /**
    * 🔸inputSet id 값이 ⭐ BE : query params

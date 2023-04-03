@@ -11,10 +11,10 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import getPostParams from "api/getPostParams";
-import getPutParams from "api/getPutParams";
-import getSearchParams from "api/getSearchParams";
-import getDeleteParams from "api/getDeleteParams";
+import GetPostParams from "api/GetPostParams";
+import GetPutParams from "api/GetPutParams";
+import GetSearchParams from "api/GetSearchParams";
+import GetDeleteParams from "api/GetDeleteParams";
 import ProductSet from "pages/mes/standard/product/ProductSet";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
@@ -37,6 +37,35 @@ function Product() {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
+  const [productGbnOpt, setProductGbnOpt] = useState([]);
+  const [modelOpt, setModelOpt] = useState([]);
+  const [productTypeOpt, setProductTypeOpt] = useState([]);
+  const [productTypeSmallOpt, setProductTypeSmallOpt] = useState([]);
+  const [comboValue, setComboValue] = useState({
+    prod_gbn_id: null,
+    model_id: null,
+    prod_type_id: null,
+    prod_type_small_id: null,
+  });
+
+  useEffect(() => {
+    const getComboOpt = async () => {
+      await restAPI.get(restURI.productGbn + "/search").then((res) => {
+        setProductGbnOpt(res?.data?.data?.rows);
+      });
+      await restAPI.get(restURI.productModel + "/search").then((res) => {
+        setModelOpt(res?.data?.data?.rows);
+      });
+      await restAPI.get(restURI.productType + "/search").then((res) => {
+        setProductTypeOpt(res?.data?.data?.rows);
+      });
+      await restAPI.get(restURI.productTypeSmall + "/search").then((res) => {
+        setProductTypeSmallOpt(res?.data?.data?.rows);
+      });
+    };
+    getComboOpt();
+  }, []);
+
   const {
     uri,
     rowHeaders,
@@ -46,7 +75,13 @@ function Product() {
     columnsModal,
     columnOptions,
     inputSet,
-  } = ProductSet(isEditMode);
+  } = ProductSet(
+    isEditMode,
+    productGbnOpt,
+    modelOpt,
+    productTypeOpt,
+    productTypeSmallOpt
+  );
   const SETTING_FILE = "ProductSet";
 
   useEffect(() => {
@@ -73,36 +108,6 @@ function Product() {
     onClickSearch(true);
   }, [currentMenuName]);
 
-  const [productGbnOpt, setProductGbnOpt] = useState([]);
-  const [modelOpt, setModelOpt] = useState([]);
-  const [productTypeOpt, setProductTypeOpt] = useState([]);
-  const [productTypeSmallOpt, setProductTypeSmallOpt] = useState([]);
-  const [comboValue, setComboValue] = useState({
-    prod_gbn_id: null,
-    model_id: null,
-    prod_type_id: null,
-    prod_type_small_id: null,
-  });
-
-  const getComboOpt = useCallback(async () => {
-    await restAPI.get(restURI.productGbn + "/search").then((res) => {
-      setProductGbnOpt(res?.data?.data?.rows);
-    });
-    await restAPI.get(restURI.productModel + "/search").then((res) => {
-      setModelOpt(res?.data?.data?.rows);
-    });
-    await restAPI.get(restURI.productType + "/search").then((res) => {
-      setProductTypeOpt(res?.data?.data?.rows);
-    });
-    await restAPI.get(restURI.productTypeSmall + "/search").then((res) => {
-      setProductTypeSmallOpt(res?.data?.data?.rows);
-    });
-  }, []);
-
-  useEffect(() => {
-    getComboOpt();
-  }, []);
-
   const onClickNew = () => {
     setIsModalOpen(true);
   };
@@ -119,7 +124,7 @@ function Product() {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
-      ?.map((raw) => getDeleteParams(SETTING_FILE, raw));
+      ?.map((raw) => GetDeleteParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -156,7 +161,7 @@ function Product() {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const params = getSearchParams(inputBoxID, inputTextChange);
+        const params = GetSearchParams(inputBoxID, inputTextChange);
         const readURI = uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
@@ -183,7 +188,7 @@ function Product() {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
-      .updatedRows?.map((raw) => getPutParams(SETTING_FILE, raw));
+      ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -225,10 +230,9 @@ function Product() {
   };
   const onClickModalSave = async () => {
     refModalGrid?.current?.gridInst?.finishEditing();
-    // console.log(refModalGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
-      ?.createdRows.map((raw) => getPostParams(SETTING_FILE, raw));
+      ?.createdRows.map((raw) => GetPostParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -259,9 +263,8 @@ function Product() {
     setIsModalOpen(false);
     onClickSearch();
   };
-  const onClickGrid = (e) => {
-    const ev = e;
-  };
+  const onClickGrid = () => {};
+  const onEditingFinishGrid = () => {};
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -369,8 +372,8 @@ function Product() {
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonEdit
-                onClickSave={onClickEditModeSave}
-                onClickExit={onClickEditModeExit}
+                onClickEditModeSave={onClickEditModeSave}
+                onClickEditModeExit={onClickEditModeExit}
                 onClickSearch={onClickSearch}
               />
             ) : (
@@ -395,6 +398,7 @@ function Product() {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>
