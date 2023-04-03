@@ -8,22 +8,21 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
-import restURI from "api/restURI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import getPostParams from "api/getPostParams";
 import getPutParams from "api/getPutParams";
 import getSearchParams from "api/getSearchParams";
 import getDeleteParams from "api/getDeleteParams";
-import ProductSet from "pages/mes/standard/product/ProductSet";
-import TextField from "@mui/material/TextField";
-import CN from "json/ColumnName.json";
-import * as S from "./Product.styled";
+import UnitSet from "pages/mes/standard/unit/UnitSet";
+import * as S from "../oneGrid.styled";
 
-function Product() {
+function Unit(props) {
   LoginStateChk();
+
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
+
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -46,9 +45,8 @@ function Product() {
     columnsModal,
     columnOptions,
     inputSet,
-  } = ProductSet(isEditMode);
-  const SETTING_FILE = "ProductSet";
-
+  } = UnitSet(isEditMode);
+  const SETTING_FILE = "UnitSet";
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
@@ -72,36 +70,6 @@ function Product() {
     setInputTextChange(data[1]);
     onClickSearch(true);
   }, [currentMenuName]);
-
-  const [productGbnOpt, setProductGbnOpt] = useState([]);
-  const [modelOpt, setModelOpt] = useState([]);
-  const [productTypeOpt, setProductTypeOpt] = useState([]);
-  const [productTypeSmallOpt, setProductTypeSmallOpt] = useState([]);
-  const [comboValue, setComboValue] = useState({
-    prod_gbn_id: null,
-    model_id: null,
-    prod_type_id: null,
-    prod_type_small_id: null,
-  });
-
-  const getComboOpt = useCallback(async () => {
-    await restAPI.get(restURI.productGbn + "/search").then((res) => {
-      setProductGbnOpt(res?.data?.data?.rows);
-    });
-    await restAPI.get(restURI.productModel + "/search").then((res) => {
-      setModelOpt(res?.data?.data?.rows);
-    });
-    await restAPI.get(restURI.productType + "/search").then((res) => {
-      setProductTypeOpt(res?.data?.data?.rows);
-    });
-    await restAPI.get(restURI.productTypeSmall + "/search").then((res) => {
-      setProductTypeSmallOpt(res?.data?.data?.rows);
-    });
-  }, []);
-
-  useEffect(() => {
-    getComboOpt();
-  }, []);
 
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -268,103 +236,15 @@ function Product() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <S.ComboWrap>
-              <S.ComboBox
-                disablePortal
-                id="factoryCombo"
-                size="small"
-                key={(option) => option?.prod_gbn_id}
-                options={productGbnOpt || null}
-                getOptionLabel={(option) => option?.prod_gbn_nm || ""}
-                onChange={(_, newValue) => {
-                  setComboValue({
-                    ...comboValue,
-                    prod_gbn_id:
-                      newValue?.prod_gbn_id === undefined
-                        ? null
-                        : newValue?.prod_gbn_id,
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
-                )}
+            {inputSet.map((v) => (
+              <InputSearch
+                key={v.id}
+                id={v.id}
+                name={v.name}
+                handleInputTextChange={handleInputTextChange}
+                onClickSearch={onClickSearch}
               />
-              <S.ComboBox
-                disablePortal
-                id="factoryCombo"
-                size="small"
-                key={(option) => option?.model_id}
-                options={modelOpt || null}
-                getOptionLabel={(option) => option?.model_nm || ""}
-                onChange={(_, newValue) => {
-                  setComboValue({
-                    ...comboValue,
-                    model_id:
-                      newValue?.model_id === undefined
-                        ? null
-                        : newValue?.model_id,
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.model_nm} size="small" />
-                )}
-              />
-              <S.ComboBox
-                disablePortal
-                id="factoryCombo"
-                size="small"
-                key={(option) => option?.prod_type_id}
-                options={productTypeOpt || null}
-                getOptionLabel={(option) => option?.prod_type_nm || ""}
-                onChange={(_, newValue) => {
-                  setComboValue({
-                    ...comboValue,
-                    prod_type_id:
-                      newValue?.prod_type_id === undefined
-                        ? null
-                        : newValue?.prod_type_id,
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_type_nm} size="small" />
-                )}
-              />
-              <S.ComboBox
-                disablePortal
-                id="factoryCombo"
-                size="small"
-                key={(option) => option?.prod_type_small_id}
-                options={productTypeSmallOpt || null}
-                getOptionLabel={(option) => option?.prod_type_small_nm || ""}
-                onChange={(_, newValue) => {
-                  setComboValue({
-                    ...comboValue,
-                    prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined
-                        ? null
-                        : newValue?.prod_type_small_id,
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.prod_type_small_nm}
-                    size="small"
-                  />
-                )}
-              />
-            </S.ComboWrap>
-            <S.InputWrap>
-              {inputSet.map((v) => (
-                <InputSearch
-                  key={v.id}
-                  id={v.id}
-                  name={v.name}
-                  handleInputTextChange={handleInputTextChange}
-                  onClickSearch={onClickSearch}
-                />
-              ))}
-            </S.InputWrap>
+            ))}
           </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (
@@ -425,4 +305,5 @@ function Product() {
     </S.ContentsArea>
   );
 }
-export default Product;
+
+export default Unit;

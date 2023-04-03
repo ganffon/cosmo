@@ -14,6 +14,11 @@ class Equipment {
     this.equip_id = raw.equip_id;
   }
 }
+class Unit {
+  constructor(raw) {
+    this.unit_id = raw.unit_id;
+  }
+}
 
 function GetDeleteParams(componentName, raw) {
   let params = "";
@@ -27,6 +32,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "EquipmentSet":
       params = new Equipment(raw);
+      break;
+    case "UnitSet":
+      params = new Unit(raw);
       break;
     default:
   }

@@ -5,7 +5,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 // ⬇️ reference of page
 import MenuList from "./MenuList";
-import MenuListJSON from "../datas/MenuList.json";
+import MenuListJSON from "json/MenuList.json";
 import { LayoutContext } from "../common/Layout";
 
 const drawerWidth = 175;

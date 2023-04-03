@@ -49,7 +49,7 @@
         "under": null
       },
       {
-        "name": "설비관리(D)",
+        "name": "설비관리*",
         "id": "equipment",
         "path": "equipment",
         "under": null
@@ -92,7 +92,7 @@
         ]
       },
       {
-        "name": "단위관리",
+        "name": "단위관리*",
         "id": "unit",
         "path": "unit",
         "under": null

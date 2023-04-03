@@ -2,7 +2,7 @@
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "api/restURI.json";
 import CustomGrid from "components/grid/setting/CustomGrid";
-import CN from "constant/ColumnName.json";
+import CN from "json/ColumnName.json";
 import "components/grid/style/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
