@@ -251,7 +251,6 @@ function OneGrid(props) {
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
-                buttonDisabled={COMPONENT().buttonDisabled}
               />
             )}
           </S.ButtonWrap>
