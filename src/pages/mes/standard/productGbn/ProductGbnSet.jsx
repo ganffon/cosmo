@@ -165,8 +165,6 @@ function ProductGbnSet(isEditMode) {
 
   const uri = restURI.productGbn;
 
-  const buttonDisabled = true;
-
   return {
     data,
     columns,
@@ -177,7 +175,6 @@ function ProductGbnSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

@@ -43,7 +43,6 @@ function ProductModel() {
     columnsModal,
     columnOptions,
     inputSet,
-    buttonDisabled,
   } = ProductModelSet(isEditMode);
   const SETTING_FILE = "ProductModelSet";
 

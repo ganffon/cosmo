@@ -46,7 +46,6 @@ function Product() {
     columnsModal,
     columnOptions,
     inputSet,
-    buttonDisabled,
   } = ProductSet(isEditMode);
   const SETTING_FILE = "ProductSet";
 

@@ -163,8 +163,6 @@ function ProductTypeSet(isEditMode) {
 
   const uri = restURI.productType;
 
-  const buttonDisabled = true;
-
   return {
     data,
     columns,
@@ -175,7 +173,6 @@ function ProductTypeSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

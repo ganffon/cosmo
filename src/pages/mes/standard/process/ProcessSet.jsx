@@ -184,8 +184,6 @@ function ProcessSet(isEditMode) {
 
   const uri = restURI.process;
 
-  const buttonDisabled = true;
-
   return {
     data,
     rowHeaders,
@@ -195,7 +193,6 @@ function ProcessSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

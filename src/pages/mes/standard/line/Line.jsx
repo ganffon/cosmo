@@ -43,7 +43,6 @@ function Line() {
     columnsModal,
     columnOptions,
     inputSet,
-    buttonDisabled,
   } = LineSet(isEditMode);
   const SETTING_FILE = "LineSet";
 
