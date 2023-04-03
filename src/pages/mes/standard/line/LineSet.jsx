@@ -1,6 +1,6 @@
 //라인관리✨
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
-import restURI from "api/restURI.json";
+import restURI from "json/restURI.json";
 import CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import "components/grid/style/GridStyle.css";

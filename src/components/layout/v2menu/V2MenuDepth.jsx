@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
 import restAPI from "api/restAPI";
-import restURI from "api/restURI.json";
+import restURI from "json/restURI.json";
 import NoticeSnack from "components/alert/NoticeSnack";
 import { useCookies } from "react-cookie";
 import * as S from "./V2MenuDepth.styled";

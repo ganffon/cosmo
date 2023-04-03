@@ -11,5 +11,11 @@
   "productModel": "/model",
   "product": "/products",
   "routing": "/routings",
-  "unit": "/unit"
+  "unit": "/unit",
+  "partnerType": "/partnertype",
+  "partner": "/partner",
+  "department": "/departments",
+  "grade": "/grades",
+  "store": "/stores",
+  "workingGroup": "/workinggroup"
 }

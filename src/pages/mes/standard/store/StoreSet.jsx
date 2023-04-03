@@ -1,41 +1,24 @@
-//라인관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
+//창고관리✨
 import restURI from "json/restURI.json";
-import CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
-import "components/grid/style/GridStyle.css";
+import CustomGrid from "components/grid/setting/CustomGrid";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
-  MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function MenuManageSet(isEditMode) {
+function StoreSet(isEditMode) {
   const data = [
     {
-      prod_gbn_id: 1,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 2,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 3,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 0,
+      id: 1,
+      test: "TEST",
+      test2: "TEST TEST",
     },
   ];
   const rowHeaders = ["checkbox", "rowNum"];
-  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -48,8 +31,8 @@ function MenuManageSet(isEditMode) {
    */
   const columns = [
     {
-      name: "menu_id",
-      header: CN.menu_id,
+      name: "factory_id",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -60,42 +43,35 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "menu_cd",
-      header: CN.menu_cd,
+      name: "store_id",
+      header: CN.store_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
     {
-      name: "menu_nm",
-      header: CN.menu_nm,
+      name: "store_cd",
+      header: CN.store_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
-      // renderer: {
-      //   styles: {
-      //     backgroundColor: MODAL_BACK_COLOR,
-      //     padding: "9px",
-      //     margin: "0px",
-      //   },
-      // },
     },
     {
-      name: "menu_cpnt",
-      header: CN.menu_cpnt,
+      name: "store_nm",
+      header: CN.store_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -103,52 +79,136 @@ function MenuManageSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "act_fg",
-      header: CN.act_fg,
+      name: "reject_store_fg",
+      header: CN.reject_store_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
-          name: "act_fg",
+          name: "reject_store_fg",
+          disabled: isEditMode ? false : true,
         },
       },
-      minWidth: "60",
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
-      name: "read_only_fg",
-      header: CN.read_only_fg,
+      name: "return_store_fg",
+      header: CN.return_store_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
-          name: "read_only_fg",
+          name: "return_store_fg",
+          disabled: isEditMode ? false : true,
         },
       },
-      minWidth: "60",
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
-      name: "common_fg",
-      header: CN.common_fg,
+      name: "outgo_store_fg",
+      header: CN.outgo_store_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
-          name: "common_fg",
+          name: "outgo_store_fg",
+          disabled: isEditMode ? false : true,
         },
       },
-      minWidth: "60",
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
-      name: "use_fg",
-      header: CN.use_fg,
+      name: "final_insp_store_fg",
+      header: CN.final_insp_store_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
-          name: "use_fg",
+          name: "final_insp_store_fg",
+          disabled: isEditMode ? false : true,
         },
       },
-      minWidth: "60",
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "outsourcing_store_fg",
+      header: CN.outsourcing_store_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "outsourcing_store_fg",
+          disabled: isEditMode ? false : true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "available_store_fg",
+      header: CN.available_store_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "available_store_fg",
+          disabled: isEditMode ? false : true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "position_type",
+      header: CN.position_type,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
       name: "create_at",
@@ -204,7 +264,7 @@ function MenuManageSet(isEditMode) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -216,28 +276,20 @@ function MenuManageSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
   ];
-
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
-    frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
+    frozenCount: 0, // frozenColumn은 여기 값만 수정
   };
 
-  const header = {
-    // columns: [
-    //   {
-    //     name: "line_cd",
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-  };
+  const header = {};
   // const header = {
   //   height: "60",
   //   complexColumns: [
@@ -249,33 +301,24 @@ function MenuManageSet(isEditMode) {
   //   ],
   // };
 
-  /**
-   * 🔸날짜단일조회 - "single"
-   * 🔸날짜기간조회 - "range"
-   * 🔸날짜안씀 - null
-   */
-  const datePickerSet = null;
+  const datePickerSet = null; // "single" || "range" || null
 
-  /**
-   * 🔸inputSet id 값이 ⭐ BE : query params
-   */
   const inputSet = [
     {
-      id: "menu_cd",
-      name: CN.menu_cd,
+      id: "store_cd",
+      name: CN.store_cd,
     },
     {
-      id: "menu_nm",
-      name: CN.menu_nm,
+      id: "store_nm",
+      name: CN.store_nm,
     },
   ];
 
-  const uri = restURI.line;
+  const uri = restURI.store;
 
   return {
     data,
     rowHeaders,
-    rowHeadersModal,
     columns,
     columnOptions,
     header,
@@ -285,4 +328,4 @@ function MenuManageSet(isEditMode) {
   };
 }
 
-export default MenuManageSet;
+export default StoreSet;

@@ -12,13 +12,17 @@ import ProductType from "pages/mes/standard/productType/ProductType";
 import Product from "pages/mes/standard/product/Product";
 import ProductTypeSmall from "pages/mes/standard/productTypeSmall/ProductTypeSmall";
 import Unit from "pages/mes/standard/unit/Unit";
+import PartnerType from "pages/mes/standard/partnerType/PartnerType";
+import Partner from "pages/mes/standard/partner/Partner";
 import Dashboard from "pages/mes/dashboard/Dashboard";
-// import * as Pages from "pages";
 import RealMenuList from "json/RealMenuList.json";
-// import NotFound from "pages/notfound/NotFound";
 import Document from "pages/mes/standard/document/Document";
 import MenuManage from "pages/admin/menuManage/MenuManage";
 import MenuList from "pages/admin/menuList/MenuList";
+import Store from "pages/mes/standard/store/Store";
+import Department from "pages/mes/standard/department/Department";
+import WorkingGroup from "pages/mes/standard/workingGroup/WorkingGroup";
+import { Grade } from "@mui/icons-material";
 
 export default function MainRouter() {
   const [realMenuList, setRealMenuList] = useState([]);
@@ -67,6 +71,12 @@ export default function MainRouter() {
         <Route path="product-type" element={<ProductType />} />
         <Route path="product" element={<Product />} />
         <Route path="product-type-small" element={<ProductTypeSmall />} />
+        <Route path="partner-type" element={<PartnerType />} />
+        <Route path="partner" element={<Partner />} />
+        <Route path="department" element={<Department />} />
+        <Route path="grade" element={<Grade />} />
+        <Route path="store" element={<Store />} />
+        <Route path="working-group" element={<WorkingGroup />} />
 
         <Route path="document" element={<Document />} />
         <Route path="unit" element={<Unit />} />

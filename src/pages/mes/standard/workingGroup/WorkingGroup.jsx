@@ -1,26 +1,34 @@
 import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
+import { useCookies } from "react-cookie";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridModule from "components/grid/GridModule";
+import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
+import getPostParams from "api/getPostParams";
 import getPutParams from "api/getPutParams";
 import getSearchParams from "api/getSearchParams";
 import getDeleteParams from "api/getDeleteParams";
-import ProcessSet from "pages/mes/standard/process/ProcessSet";
+import WorkingGroupSet from "pages/mes/standard/workingGroup/WorkingGroupSet";
 import * as S from "../oneGrid.styled";
 
-function Process() {
+function WorkingGroup(props) {
   LoginStateChk();
+
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
+  const [cookie, setCookie, removeCookie] = useCookies();
+
   const refSingleGrid = useRef(null);
+  const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [gridData, setGridData] = useState(null);
@@ -30,11 +38,17 @@ function Process() {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
-  const { uri, rowHeaders, header, columns, columnOptions, inputSet } =
-    ProcessSet(isEditMode);
-
-  const SETTING_FILE = "ProcessSet";
-
+  const {
+    uri,
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = WorkingGroupSet(isEditMode);
+  const SETTING_FILE = "WorkingGroupSet";
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
@@ -59,9 +73,18 @@ function Process() {
     onClickSearch(true);
   }, [currentMenuName]);
 
-  const onClickNew = () => {};
-  const onClickEdit = () => {};
-  const onClickDelete = () => {};
+  const onClickNew = () => {
+    setIsModalOpen(true);
+  };
+  const onClickEdit = () => {
+    setIsEditMode(true);
+  };
+  const onClickDelete = () => {
+    const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
+    if (data.length !== 0) {
+      setIsDeleteAlertOpen(true);
+    }
+  };
   const handleDelete = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
@@ -160,7 +183,58 @@ function Process() {
     setIsEditMode(false);
     onClickSearch(true);
   };
-
+  const onClickModalAddRow = () => {
+    refModalGrid?.current?.gridInst?.appendRow();
+    // console.log(
+    //   refModalGrid?.current?.gridInst?.store?.data?.rawData[
+    //     refModalGrid?.current?.gridInst?.store?.data?.rawData?.length - 1
+    //   ]
+    // );
+    console.log(refModalGrid?.current?.gridInst);
+  };
+  let rowKey;
+  const onClickModalGrid = (e) => {
+    rowKey = e.rowKey;
+  };
+  const onClickModalCancelRow = () => {
+    refModalGrid?.current?.gridInst?.removeRow(rowKey);
+  };
+  const onClickModalSave = async () => {
+    refModalGrid?.current?.gridInst?.finishEditing();
+    // console.log(refModalGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
+    const data = refModalGrid?.current?.gridInst
+      ?.getModifiedRows()
+      ?.createdRows.map((raw) => getPostParams(SETTING_FILE, raw));
+    if (data.length !== 0 && isBackDrop === false) {
+      setIsBackDrop(true);
+      await restAPI
+        .post(uri, data)
+        .then((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.data?.message,
+            severity: "success",
+          });
+          refModalGrid?.current?.gridInst?.clear();
+        })
+        .catch((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.message ? res?.message : res?.response?.data?.message,
+            severity: "error",
+          });
+        })
+        .finally(() => {
+          setIsBackDrop(false);
+        });
+    }
+  };
+  const onClickModalClose = () => {
+    setIsModalOpen(false);
+    onClickSearch();
+  };
   const onClickGrid = (e) => {
     const ev = e;
   };
@@ -219,9 +293,25 @@ function Process() {
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}
+      {isModalOpen ? (
+        <ModalNew
+          onClickModalAddRow={onClickModalAddRow}
+          onClickModalCancelRow={onClickModalCancelRow}
+          onClickModalSave={onClickModalSave}
+          onClickModalClose={onClickModalClose}
+          columns={columnsModal}
+          columnOptions={columnOptions}
+          header={header}
+          rowHeaders={rowHeadersModal}
+          uri={uri}
+          refModalGrid={refModalGrid}
+          setIsModalOpen={setIsModalOpen}
+          onClickModalGrid={onClickModalGrid}
+        />
+      ) : null}
       <BackDrop isBackDrop={isBackDrop} />
     </S.ContentsArea>
   );
 }
 
-export default Process;
+export default WorkingGroup;

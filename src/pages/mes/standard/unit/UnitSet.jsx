@@ -1,5 +1,5 @@
 //단위관리✨
-import restURI from "api/restURI.json";
+import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,

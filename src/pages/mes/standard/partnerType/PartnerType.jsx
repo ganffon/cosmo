@@ -12,10 +12,10 @@ import InputSearch from "components/input/InputSearch";
 import getPutParams from "api/getPutParams";
 import getSearchParams from "api/getSearchParams";
 import getDeleteParams from "api/getDeleteParams";
-import ProcessSet from "pages/mes/standard/process/ProcessSet";
+import PartnerTypeSet from "pages/mes/standard/partnerType/PartnerTypeSet";
 import * as S from "../oneGrid.styled";
 
-function Process() {
+function PartnerType() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -31,9 +31,9 @@ function Process() {
   const [inputBoxID, setInputBoxID] = useState([]);
 
   const { uri, rowHeaders, header, columns, columnOptions, inputSet } =
-    ProcessSet(isEditMode);
+    PartnerTypeSet(isEditMode);
 
-  const SETTING_FILE = "ProcessSet";
+  const SETTING_FILE = "PartnerTypeSet";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -224,4 +224,4 @@ function Process() {
   );
 }
 
-export default Process;
+export default PartnerType;
