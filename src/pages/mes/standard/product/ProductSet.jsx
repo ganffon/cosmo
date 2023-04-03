@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import restURI from "api/restURI.json";
+import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
 import getComboParams from "api/getComboParams";
 import "components/grid/style/GridStyle.css";

@@ -8,7 +8,7 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
-import restURI from "api/restURI";
+import restURI from "json/restURI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import getPostParams from "api/getPostParams";

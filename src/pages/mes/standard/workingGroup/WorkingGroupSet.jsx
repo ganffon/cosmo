@@ -1,5 +1,4 @@
-//제품유형관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
+//사업부관리✨
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
 import {
@@ -10,8 +9,10 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function ProductTypeSet(isEditMode) {
+function WorkingGroupSet(isEditMode) {
   const data = [];
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -24,8 +25,8 @@ function ProductTypeSet(isEditMode) {
    */
   const columns = [
     {
-      name: "prod_type_id",
-      header: CN.prod_type_id,
+      name: "factory_id",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -36,8 +37,20 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_type_cd",
-      header: CN.prod_type_cd,
+      name: "worker_group_id",
+      header: CN.worker_group_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "worker_group_cd",
+      header: CN.worker_group_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -48,11 +61,11 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_type_nm",
-      header: CN.prod_type_nm,
+      name: "worker_group_nm",
+      header: CN.worker_group_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -113,7 +126,7 @@ function ProductTypeSet(isEditMode) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -125,6 +138,44 @@ function ProductTypeSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
+      hidden: true,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
+  const columnsModal = [
+    {
+      name: "factory_id",
+      header: CN.factory_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "worker_group_cd",
+      header: CN.worker_group_cd,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "worker_group_nm",
+      header: CN.worker_group_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
       hidden: false,
       sortable: false,
       filter: false,
@@ -137,8 +188,7 @@ function ProductTypeSet(isEditMode) {
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
-  const rowHeaders = ["checkbox", "rowNum"];
-  const rowHeadersModal = ["rowNum"];
+
   const header = {};
   /**
    * 🔸날짜단일조회 - "single"
@@ -152,23 +202,24 @@ function ProductTypeSet(isEditMode) {
    */
   const inputSet = [
     {
-      id: "prod_type_cd",
-      name: CN.prod_type_cd,
+      id: "worker_group_cd",
+      name: CN.worker_group_cd,
     },
     {
-      id: "prod_type_nm",
-      name: CN.prod_type_nm,
+      id: "worker_group_nm",
+      name: CN.worker_group_nm,
     },
   ];
 
-  const uri = restURI.productType;
+  const uri = restURI.workingGroup;
 
   return {
     data,
-    columns,
-    columnOptions,
     rowHeaders,
     rowHeadersModal,
+    columns,
+    columnsModal,
+    columnOptions,
     header,
     datePickerSet,
     inputSet,
@@ -176,4 +227,4 @@ function ProductTypeSet(isEditMode) {
   };
 }
 
-export default ProductTypeSet;
+export default WorkingGroupSet;

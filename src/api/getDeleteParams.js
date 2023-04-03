@@ -9,18 +9,23 @@ class line {
     this.line_id = raw.line_id;
   }
 }
-class Equipment {
+class equipment {
   constructor(raw) {
     this.equip_id = raw.equip_id;
   }
 }
-class Unit {
+class unit {
   constructor(raw) {
     this.unit_id = raw.unit_id;
   }
 }
+class workingGroup {
+  constructor(raw) {
+    this.worker_group_id = raw.worker_group_id;
+  }
+}
 
-function GetDeleteParams(componentName, raw) {
+function getDeleteParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
@@ -31,10 +36,13 @@ function GetDeleteParams(componentName, raw) {
       params = new line(raw);
       break;
     case "EquipmentSet":
-      params = new Equipment(raw);
+      params = new equipment(raw);
       break;
     case "UnitSet":
-      params = new Unit(raw);
+      params = new unit(raw);
+      break;
+    case "WorkingGroupSet":
+      params = new workingGroup(raw);
       break;
     default:
   }
@@ -42,4 +50,4 @@ function GetDeleteParams(componentName, raw) {
   return params;
 }
 
-export default GetDeleteParams;
+export default getDeleteParams;

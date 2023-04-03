@@ -276,33 +276,6 @@ class incomes {
     this.barcode = raw.barcode;
   }
 }
-class partnerType {
-  constructor(raw) {
-    this.partner_type_cd = raw.partner_type_cd;
-    this.partner_type_nm = raw.partner_type_nm;
-  }
-}
-class partner {
-  constructor(raw) {
-    this.factory_id = raw.factory_id;
-    this.partner_cd = raw.partner_cd;
-    this.partner_nm = raw.partner_nm;
-    this.partner_type_id = raw.partner_type_id;
-    this.partner_no = raw.partner_no;
-    this.boss_nm = raw.boss_nm;
-    this.manager = raw.manager;
-    this.email = raw.email;
-    this.tel = raw.tel;
-    this.fax = raw.fax;
-    this.post = raw.post;
-    this.addr = raw.addr;
-    this.addr_detail = raw.addr_detail;
-    this.use_fg = raw.use_fg ? true : false;
-    this.vendor_fg = raw.vendor_fg ? true : false;
-    this.customer_fg = raw.customer_fg ? true : false;
-    this.remark = raw.remark;
-  }
-}
 class model {
   constructor(raw) {
     this.model_cd = raw.model_cd;
@@ -315,7 +288,14 @@ class unit {
     this.unit_nm = raw.unit_nm;
   }
 }
-function GetPostParams(componentName, raw) {
+class workingGroup {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.worker_group_cd = raw.worker_group_cd;
+    this.worker_group_nm = raw.worker_group_nm;
+  }
+}
+function getPostParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
@@ -391,18 +371,15 @@ function GetPostParams(componentName, raw) {
     case "Income":
       params = new incomes(raw);
       break;
-    case "PartnerType":
-      params = new partnerType(raw);
-      break;
-    case "Partner":
-      params = new partner(raw);
-      break;
     case "Model":
       params = new model(raw);
+      break;
+    case "WorkingGroupSet":
+      params = new workingGroup(raw);
       break;
     default:
   }
   return params;
 }
 
-export default GetPostParams;
+export default getPostParams;

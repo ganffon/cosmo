@@ -1,5 +1,4 @@
-//제품유형관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
+//거래처유형관리✨
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
 import {
@@ -10,8 +9,15 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function ProductTypeSet(isEditMode) {
-  const data = [];
+function PartnerTypeSet(isEditMode) {
+  const data = [
+    {
+      id: 1,
+      test: "TEST",
+      test2: "TEST TEST",
+    },
+  ];
+  const rowHeaders = ["checkbox", "rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -24,8 +30,8 @@ function ProductTypeSet(isEditMode) {
    */
   const columns = [
     {
-      name: "prod_type_id",
-      header: CN.prod_type_id,
+      name: "factory_id",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -36,8 +42,20 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_type_cd",
-      header: CN.prod_type_cd,
+      name: "partner_type_id",
+      header: CN.partner_type_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "partner_type_cd",
+      header: CN.partner_type_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -48,8 +66,8 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_type_nm",
-      header: CN.prod_type_nm,
+      name: "partner_type_nm",
+      header: CN.partner_type_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -135,40 +153,41 @@ function ProductTypeSet(isEditMode) {
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
-    frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
+    frozenCount: 0, // frozenColumn은 여기 값만 수정
   };
-  const rowHeaders = ["checkbox", "rowNum"];
-  const rowHeadersModal = ["rowNum"];
-  const header = {};
-  /**
-   * 🔸날짜단일조회 - "single"
-   * 🔸날짜기간조회 - "range"
-   * 🔸날짜안쓰는경우 - null
-   */
-  const datePickerSet = null;
 
-  /**
-   * 🔸inputSet id 값이 ✨ BE : query params
-   */
+  const header = {};
+  // const header = {
+  //   height: "60",
+  //   complexColumns: [
+  //     {
+  //       header: "ID + Name",
+  //       name: "parent1",
+  //       childNames: ["id", "name"],
+  //     },
+  //   ],
+  // };
+
+  const datePickerSet = null; // "single" || "range" || null
+
   const inputSet = [
     {
-      id: "prod_type_cd",
-      name: CN.prod_type_cd,
+      id: "partner_type_cd",
+      name: CN.partner_type_cd,
     },
     {
-      id: "prod_type_nm",
-      name: CN.prod_type_nm,
+      id: "partner_type_nm",
+      name: CN.partner_type_nm,
     },
   ];
 
-  const uri = restURI.productType;
+  const uri = restURI.partnerType;
 
   return {
     data,
+    rowHeaders,
     columns,
     columnOptions,
-    rowHeaders,
-    rowHeadersModal,
     header,
     datePickerSet,
     inputSet,
@@ -176,4 +195,4 @@ function ProductTypeSet(isEditMode) {
   };
 }
 
-export default ProductTypeSet;
+export default PartnerTypeSet;

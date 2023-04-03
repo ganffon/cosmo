@@ -37,7 +37,16 @@ class unit {
     this.unit_nm = raw.unit_nm;
   }
 }
-function GetPutParams(componentName, raw) {
+class workingGroup {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.worker_group_id = raw.worker_group_id;
+    this.worker_group_cd = raw.worker_group_cd;
+    this.worker_group_nm = raw.worker_group_nm;
+  }
+}
+
+function getPutParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
@@ -53,9 +62,12 @@ function GetPutParams(componentName, raw) {
     case "UnitSet":
       params = new unit(raw);
       break;
+    case "WorkingGroupSet":
+      params = new workingGroup(raw);
+      break;
     default:
   }
   return params;
 }
 
-export default GetPutParams;
+export default getPutParams;

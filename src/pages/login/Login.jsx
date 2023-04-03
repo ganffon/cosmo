@@ -9,7 +9,7 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import * as S from "./Login.styled";
 import TextField from "@mui/material/TextField";
 import restAPI from "api/restAPI";
-import restURI from "api/restURI.json";
+import restURI from "json/restURI.json";
 import BackDrop from "components/backdrop/BackDrop";
 
 function Login() {

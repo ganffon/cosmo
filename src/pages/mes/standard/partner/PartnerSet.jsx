@@ -1,41 +1,24 @@
-//라인관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
+//거래처유형관리✨
 import restURI from "json/restURI.json";
-import CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
-import "components/grid/style/GridStyle.css";
+import CustomGrid from "components/grid/setting/CustomGrid";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
-  MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function MenuListSet(isEditMode) {
+function PartnerTypeSet(isEditMode) {
   const data = [
     {
-      prod_gbn_id: 1,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 2,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 1,
-    },
-    {
-      prod_gbn_id: 3,
-      prod_gbn_cd: "TEST",
-      prod_gbn_nm: "TEST TEST",
-      checkTest: 0,
+      id: 1,
+      test: "TEST",
+      test2: "TEST TEST",
     },
   ];
   const rowHeaders = ["checkbox", "rowNum"];
-  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -48,8 +31,8 @@ function MenuListSet(isEditMode) {
    */
   const columns = [
     {
-      name: "row_no",
-      header: CN.row_no,
+      name: "factory_id",
+      header: CN.factory_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -60,8 +43,8 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "menu_list_id",
-      header: CN.menu_list_id,
+      name: "partner_id",
+      header: CN.partner_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -72,42 +55,35 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "parents_menu_id",
-      header: CN.parents_menu_id,
-      minWidth: WIDTH_SHORT,
+      name: "partner_type_id",
+      header: CN.partner_type_id,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
     {
-      name: "parents_menu_nm",
-      header: CN.parents_menu_nm,
+      name: "partner_type_nm",
+      header: CN.partner_type_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
-      // renderer: {
-      //   styles: {
-      //     backgroundColor: MODAL_BACK_COLOR,
-      //     padding: "9px",
-      //     margin: "0px",
-      //   },
-      // },
     },
     {
-      name: "child_menu_id",
-      header: CN.child_menu_id,
+      name: "partner_cd",
+      header: CN.partner_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -115,11 +91,11 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "child_menu_nm",
-      header: CN.child_menu_nm,
+      name: "partner_nm",
+      header: CN.partner_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -127,11 +103,11 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "menu_lv",
-      header: CN.menu_lv,
+      name: "partner_no",
+      header: CN.partner_no,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -139,11 +115,11 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "menu_cd",
-      header: CN.menu_cd,
+      name: "boss_nm",
+      header: CN.boss_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -151,11 +127,11 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "menu_nm",
-      header: CN.menu_nm,
+      name: "manager",
+      header: CN.manager,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -163,11 +139,11 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "menu_cpnt",
-      header: CN.menu_cpnt,
+      name: "tel",
+      header: CN.tel,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -175,11 +151,11 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "sortby",
-      header: CN.sortby,
+      name: "fax",
+      header: CN.fax,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -187,40 +163,40 @@ function MenuListSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "act_fg",
-      header: CN.act_fg,
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "act_fg",
-        },
-      },
-      minWidth: "60",
+      name: "post",
+      header: CN.post,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
-      name: "read_only_fg",
-      header: CN.read_only_fg,
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "read_only_fg",
-        },
-      },
-      minWidth: "60",
+      name: "addr",
+      header: CN.addr,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
-      name: "common_fg",
-      header: CN.common_fg,
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "common_fg",
-        },
-      },
-      minWidth: "60",
+      name: "addr_detail",
+      header: CN.addr_detail,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
       name: "use_fg",
@@ -229,10 +205,70 @@ function MenuListSet(isEditMode) {
         type: CustomGrid.CheckBox,
         options: {
           name: "use_fg",
+          disabled: isEditMode ? false : true,
         },
       },
-      minWidth: "60",
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "vendor_fg",
+      header: CN.vendor_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "vendor_fg",
+          disabled: isEditMode ? false : true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "customer_fg",
+      header: CN.customer_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "customer_fg",
+          disabled: isEditMode ? false : true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "remark",
+      header: CN.remark,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
       name: "create_at",
@@ -288,7 +324,7 @@ function MenuListSet(isEditMode) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -300,28 +336,20 @@ function MenuListSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
   ];
-
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
-    frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
+    frozenCount: 0, // frozenColumn은 여기 값만 수정
   };
 
-  const header = {
-    // columns: [
-    //   {
-    //     name: "line_cd",
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-  };
+  const header = {};
   // const header = {
   //   height: "60",
   //   complexColumns: [
@@ -333,33 +361,24 @@ function MenuListSet(isEditMode) {
   //   ],
   // };
 
-  /**
-   * 🔸날짜단일조회 - "single"
-   * 🔸날짜기간조회 - "range"
-   * 🔸날짜안씀 - null
-   */
-  const datePickerSet = null;
+  const datePickerSet = null; // "single" || "range" || null
 
-  /**
-   * 🔸inputSet id 값이 ⭐ BE : query params
-   */
   const inputSet = [
     {
-      id: "menu_cd",
-      name: CN.menu_cd,
+      id: "partner_cd",
+      name: CN.partner_cd,
     },
     {
-      id: "menu_nm",
-      name: CN.menu_nm,
+      id: "partner_nm",
+      name: CN.partner_nm,
     },
   ];
 
-  const uri = restURI.line;
+  const uri = restURI.partnerType;
 
   return {
     data,
     rowHeaders,
-    rowHeadersModal,
     columns,
     columnOptions,
     header,
@@ -369,4 +388,4 @@ function MenuListSet(isEditMode) {
   };
 }
 
-export default MenuListSet;
+export default PartnerTypeSet;
