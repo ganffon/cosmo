@@ -10,10 +10,10 @@ import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import getPostParams from "api/getPostParams";
-import getPutParams from "api/getPutParams";
-import getSearchParams from "api/getSearchParams";
-import getDeleteParams from "api/getDeleteParams";
+import GetPostParams from "api/GetPostParams";
+import GetPutParams from "api/GetPutParams";
+import GetSearchParams from "api/GetSearchParams";
+import GetDeleteParams from "api/GetDeleteParams";
 import UnitSet from "pages/mes/standard/unit/UnitSet";
 import * as S from "../oneGrid.styled";
 
@@ -87,7 +87,7 @@ function Unit(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
-      ?.map((raw) => getDeleteParams(SETTING_FILE, raw));
+      ?.map((raw) => GetDeleteParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -124,7 +124,7 @@ function Unit(props) {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const params = getSearchParams(inputBoxID, inputTextChange);
+        const params = GetSearchParams(inputBoxID, inputTextChange);
         const readURI = uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
@@ -151,7 +151,7 @@ function Unit(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
-      .updatedRows?.map((raw) => getPutParams(SETTING_FILE, raw));
+      ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -196,7 +196,7 @@ function Unit(props) {
     // console.log(refModalGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
-      ?.createdRows.map((raw) => getPostParams(SETTING_FILE, raw));
+      ?.createdRows.map((raw) => GetPostParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -227,9 +227,8 @@ function Unit(props) {
     setIsModalOpen(false);
     onClickSearch();
   };
-  const onClickGrid = (e) => {
-    const ev = e;
-  };
+  const onClickGrid = () => {};
+  const onEditingFinishGrid = () => {};
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -249,8 +248,8 @@ function Unit(props) {
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonEdit
-                onClickSave={onClickEditModeSave}
-                onClickExit={onClickEditModeExit}
+                onClickEditModeSave={onClickEditModeSave}
+                onClickEditModeExit={onClickEditModeExit}
                 onClickSearch={onClickSearch}
               />
             ) : (
@@ -275,6 +274,7 @@ function Unit(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>

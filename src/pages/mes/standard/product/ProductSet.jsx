@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
-import getComboParams from "api/getComboParams";
+import getComboParams from "api/GetComboParams";
 import "components/grid/style/GridStyle.css";
 import CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
@@ -18,33 +18,28 @@ let productModelList = [];
 let productTypeList = [];
 let productTypeSmallList = [];
 
-function ProductSet(isEditMode) {
+function ProductSet(
+  isEditMode,
+  productGbnOpt,
+  modelOpt,
+  productTypeOpt,
+  productTypeSmallOpt
+) {
   useEffect(() => {
-    const comboBoxData = async () => {
-      await restAPI.get(`${restURI.productGbn}/search`).then((res) => {
-        productGbnList = res?.data?.data?.rows.map((data) => {
-          return getComboParams("ProductGbnSet", data);
-        });
-      });
-      await restAPI.get(`${restURI.productModel}/search`).then((res) => {
-        productModelList = res?.data?.data?.rows.map((data) => {
-          return getComboParams("productModelSet", data);
-        });
-      });
-      await restAPI.get(`${restURI.productType}/search`).then((res) => {
-        productTypeList = res?.data?.data?.rows.map((data) => {
-          return getComboParams("productTypeSet", data);
-        });
-      });
-      await restAPI.get(`${restURI.productTypeSmall}/search`).then((res) => {
-        productTypeSmallList = res?.data?.data?.rows.map((data) => {
-          return getComboParams("productTypeSmallSet", data);
-        });
-      });
-    };
+    productGbnList = productGbnOpt.map((data) => {
+      return getComboParams("ProductGbnSet", data);
+    });
+    productModelList = modelOpt.map((data) => {
+      return getComboParams("productModelSet", data);
+    });
+    productTypeList = productTypeOpt.map((data) => {
+      return getComboParams("productTypeSet", data);
+    });
+    productTypeSmallList = productTypeSmallOpt.map((data) => {
+      return getComboParams("productTypeSmallSet", data);
+    });
+  }, [productGbnOpt, modelOpt, productTypeOpt, productTypeSmallOpt]);
 
-    comboBoxData();
-  }, []);
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -795,6 +790,276 @@ function ProductSet(isEditMode) {
       rowSpan: false,
     },
   ];
+  const columnsModal = [
+    {
+      name: "prod_gbn_nm",
+      header: CN.prod_gbn_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: productGbnList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "model_nm",
+      header: CN.model_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: productModelList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_type_nm",
+      header: CN.prod_type_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: productTypeList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_type_small_nm",
+      header: CN.prod_type_small_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: productTypeSmallList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_no",
+      header: CN.prod_no,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_nm",
+      header: CN.prod_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "rev",
+      header: CN.rev,
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_std",
+      header: CN.prod_std,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "unit_nm",
+      header: CN.unit_nm,
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "lot_fg",
+      header: CN.lot_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "lot_fg",
+          disabled: false,
+        },
+      },
+      minWidth: "60",
+      hidden: false,
+    },
+    {
+      name: "use_fg",
+      header: CN.use_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "use_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "width",
+      header: CN.width,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "length",
+      header: CN.length,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "height",
+      header: CN.height,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+
+    {
+      name: "material",
+      header: CN.material,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "color",
+      header: CN.color,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "weight",
+      header: CN.weight,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "thickness",
+      header: CN.thickness,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "is_spareparts",
+      header: CN.is_spareparts,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "is_spareparts",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -834,6 +1099,7 @@ function ProductSet(isEditMode) {
   return {
     data,
     columns,
+    columnsModal,
     columnOptions,
     rowHeaders,
     rowHeadersModal,

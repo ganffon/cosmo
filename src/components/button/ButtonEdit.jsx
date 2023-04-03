@@ -5,7 +5,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import * as S from "./Button.styled";
 
 function ButtonEdit(props) {
-  const { onClickSave, onClickExit, onClickSearch } = props;
+  const { onClickEditModeSave, onClickEditModeExit, onClickSearch } = props;
   return (
     <>
       <S.ButtonSet
@@ -13,7 +13,7 @@ function ButtonEdit(props) {
         size="small"
         startIcon={<SaveIcon />}
         color="secondary"
-        onClick={onClickSave}
+        onClick={onClickEditModeSave}
       >
         SAVE
       </S.ButtonSet>
@@ -22,7 +22,7 @@ function ButtonEdit(props) {
         size="small"
         startIcon={<LogoutIcon />}
         color="error"
-        onClick={onClickExit}
+        onClick={onClickEditModeExit}
       >
         EXIT
       </S.ButtonSet>

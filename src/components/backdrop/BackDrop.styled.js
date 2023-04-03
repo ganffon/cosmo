@@ -3,7 +3,7 @@ import Backdrop from "@mui/material/Backdrop";
 
 const BackDrop = styled(Backdrop)`
   color: #fff;
-  z-index: 1000;
+  z-index: 2000;
 `;
 
 export { BackDrop };

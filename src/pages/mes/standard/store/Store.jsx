@@ -9,9 +9,9 @@ import LoginStateChk from "function/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import getPutParams from "api/getPutParams";
-import getSearchParams from "api/getSearchParams";
-import getDeleteParams from "api/getDeleteParams";
+import getPutParams from "api/GetPutParams";
+import getSearchParams from "api/GetSearchParams";
+import getDeleteParams from "api/GetDeleteParams";
 import StoreSet from "pages/mes/standard/store/StoreSet";
 import * as S from "../oneGrid.styled";
 
@@ -130,7 +130,7 @@ function Store() {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
-      .updatedRows?.map((raw) => getPutParams(SETTING_FILE, raw));
+      ?.updatedRows?.map((raw) => getPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -161,9 +161,8 @@ function Store() {
     onClickSearch(true);
   };
 
-  const onClickGrid = (e) => {
-    const ev = e;
-  };
+  const onClickGrid = () => {};
+  const onEditingFinishGrid = () => {};
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -183,8 +182,8 @@ function Store() {
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonEdit
-                onClickSave={onClickEditModeSave}
-                onClickExit={onClickEditModeExit}
+                onClickEditModeSave={onClickEditModeSave}
+                onClickEditModeExit={onClickEditModeExit}
                 onClickSearch={onClickSearch}
               />
             ) : (
@@ -209,6 +208,7 @@ function Store() {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>

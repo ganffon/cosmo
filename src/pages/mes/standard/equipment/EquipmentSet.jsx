@@ -1,10 +1,9 @@
 //설비관리✨
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import restURI from "json/restURI.json";
-import restAPI from "api/restAPI";
 import "components/grid/style/GridStyle.css";
 import CustomGrid from "components/grid/setting/CustomGrid";
-import getComboParams from "api/getComboParams";
+import getComboParams from "api/GetComboParams";
 import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
@@ -16,18 +15,13 @@ import {
 
 let processList = [];
 
-function EquipmentSet(isEditMode) {
+function EquipmentSet(isEditMode, processOpt) {
   useEffect(() => {
-    const comboBoxData = async () => {
-      await restAPI.get(`${restURI.process}/search`).then((res) => {
-        processList = res?.data?.data?.rows.map((data) => {
-          return getComboParams("ProcessSet", data);
-        });
-      });
-    };
+    processList = processOpt.map((data) => {
+      return getComboParams("ProcessSet", data);
+    });
+  }, [processOpt]);
 
-    comboBoxData();
-  }, []);
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -294,18 +288,6 @@ function EquipmentSet(isEditMode) {
     },
   ];
   const columnsModal = [
-    {
-      name: "factory_id",
-      header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
     {
       name: "proc_nm",
       header: CN.proc_nm,

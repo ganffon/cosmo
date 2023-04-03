@@ -8,7 +8,7 @@ import { OnlySearchSingleGridContext } from "components/onlySearchSingleGrid/Onl
 import restAPI from "api/restAPI";
 import * as S from "./InsertModal.styled";
 import NoticeSnack from "components/alert/NoticeSnack";
-import GetPostParams from "api/getPostParams";
+import GetPostParams from "api/GetPostParams";
 
 function InsertModal(props) {
   const { componentName, uri, columns, columnOptions, header, onClickSearch } =

@@ -1,4 +1,4 @@
-function getSearchParams(inputBoxID, inputTextChange) {
+function GetSearchParams(inputBoxID, inputTextChange) {
   try {
     let params = "";
     let cnt = 0;
@@ -31,4 +31,4 @@ function getSearchParams(inputBoxID, inputTextChange) {
   }
 }
 
-export default getSearchParams;
+export default GetSearchParams;

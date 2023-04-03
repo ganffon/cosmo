@@ -135,18 +135,6 @@ function FactorySet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "factory_id",
-      header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
       name: "factory_cd",
       header: CN.factory_cd,
       minWidth: WIDTH_SHORT,
