@@ -205,7 +205,6 @@ function Process() {
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
-                buttonDisabled={buttonDisabled}
               />
             )}
           </S.ButtonWrap>

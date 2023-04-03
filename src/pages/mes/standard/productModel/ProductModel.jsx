@@ -259,7 +259,6 @@ function ProductModel() {
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
-                buttonDisabled={buttonDisabled}
               />
             )}
           </S.ButtonWrap>

@@ -260,7 +260,6 @@ function Factory(props) {
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
-                buttonDisabled={buttonDisabled}
               />
             )}
           </S.ButtonWrap>
