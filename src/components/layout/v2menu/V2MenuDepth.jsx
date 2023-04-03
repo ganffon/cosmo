@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import CssBaseline from "@mui/material/CssBaseline";
 // ⬇️ reference of page
-import { LayoutEvent } from "../common/Layout";
+import { LayoutContext } from "../common/Layout";
 import restAPI from "api/restAPI";
 import restURI from "api/restURI.json";
 import NoticeSnack from "components/alert/NoticeSnack";
@@ -51,7 +51,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
     authMenuCode,
     setAuthMenuCode,
     superAdmin,
-  } = useContext(LayoutEvent);
+  } = useContext(LayoutContext);
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies();
   const [alertOpen, setAlertOpen] = useState({

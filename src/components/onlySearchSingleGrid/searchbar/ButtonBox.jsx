@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 // ⬇️ reference of page
-import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
+import { OnlySearchSingleGridContext } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import ButtonGroupSearch from "./ButtonGroupSearch";
 import ButtonGroupEdit from "./ButtonGroupEdit";
 import * as S from "./ButtonBox.styled";
 
 function ButtonBox(props) {
   const { componentName, btnDisabled, uri } = props;
-  const { isEditMode } = useContext(OnlySearchSingleGridEvent);
+  const { isEditMode } = useContext(OnlySearchSingleGridContext);
   return (
     <S.ButtonBox>
       {isEditMode ? (

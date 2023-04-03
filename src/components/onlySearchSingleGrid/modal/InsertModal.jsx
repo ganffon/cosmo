@@ -3,8 +3,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/onlySearchSingleGrid/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import ButtonAdd from "components/button/ButtonAdd";
-import { LayoutEvent } from "components/layout/common/Layout";
-import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
+import { LayoutContext } from "components/layout/common/Layout";
+import { OnlySearchSingleGridContext } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import restAPI from "api/restAPI";
 import * as S from "./InsertModal.styled";
 import NoticeSnack from "components/alert/NoticeSnack";
@@ -18,8 +18,8 @@ function InsertModal(props) {
     open: false,
   });
   const refGridModal = createRef();
-  const { setIsModalOpen, currentMenuName } = useContext(LayoutEvent);
-  const { isBackDrop, setIsBackDrop } = useContext(OnlySearchSingleGridEvent);
+  const { setIsModalOpen, currentMenuName } = useContext(LayoutContext);
+  const { isBackDrop, setIsBackDrop } = useContext(OnlySearchSingleGridContext);
   let rowKey;
   const onClickGrid = (e) => {
     rowKey = e.rowKey;

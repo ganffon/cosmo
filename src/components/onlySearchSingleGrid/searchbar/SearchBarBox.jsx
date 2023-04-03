@@ -11,14 +11,14 @@ import InputBox from "./InputBox";
 import ButtonBox from "./ButtonBox";
 import InsertModal from "components/onlySearchSingleGrid/modal/InsertModal";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LayoutEvent } from "components/layout/common/Layout";
-import { OnlySearchSingleGridEvent } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
+import { LayoutContext } from "components/layout/common/Layout";
+import { OnlySearchSingleGridContext } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import restAPI from "api/restAPI";
 import NoticeSnack from "components/alert/NoticeSnack";
 import * as S from "./SearchBarBox.styled";
 import InputAdornment from "@mui/material/InputAdornment";
 
-export const SearchBarBoxEvent = createContext();
+export const SearchBarBoxContext = createContext();
 
 function SearchBarBox(props) {
   const {
@@ -32,14 +32,14 @@ function SearchBarBox(props) {
     btnDisabled,
   } = props;
   const { currentMenuName, isModalOpen, setIsModalOpen } =
-    useContext(LayoutEvent);
+    useContext(LayoutContext);
   const {
     refSingleGrid,
     setSingleGridData,
     isBackDrop,
     setIsBackDrop,
     setIsEditMode,
-  } = useContext(OnlySearchSingleGridEvent);
+  } = useContext(OnlySearchSingleGridContext);
   //🔸조회 성공, 실패 스낵바 팝업 조건
   const [alertOpen, setAlertOpen] = useState({
     open: false,
@@ -202,7 +202,7 @@ function SearchBarBox(props) {
   ];
 
   return (
-    <SearchBarBoxEvent.Provider
+    <SearchBarBoxContext.Provider
       value={{
         dateText,
         setDateText,
@@ -248,7 +248,7 @@ function SearchBarBox(props) {
           />
         ) : null}
       </S.SearchBarBox>
-    </SearchBarBoxEvent.Provider>
+    </SearchBarBoxContext.Provider>
   );
 }
 

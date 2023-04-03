@@ -3,13 +3,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
-import { SearchBarBoxEvent } from "./SearchBarBox";
+import { SearchBarBoxContext } from "./SearchBarBox";
 import * as S from "./ButtonGroupSearch.styled";
 
 function ButtonGroupSearch(props) {
   const { btnDisabled } = props;
   const { onClickSearch, onClickNew, onClickDelete, onClickEdit } =
-    useContext(SearchBarBoxEvent);
+    useContext(SearchBarBoxContext);
   return (
     <>
       <S.ButtonSet

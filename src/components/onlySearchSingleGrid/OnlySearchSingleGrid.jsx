@@ -3,7 +3,7 @@ import React, { createContext, createRef, useState, useContext } from "react";
 import SearchBarBox from "components/onlySearchSingleGrid/searchbar/SearchBarBox";
 import GridSingleSearch from "components/onlySearchSingleGrid/grid/GridSingleSearch";
 import LoginStateChk from "function/LoginStateChk";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { LayoutContext } from "components/layout/common/Layout";
 import BackDrop from "components/backdrop/BackDrop";
 import * as S from "./OnlySearchSingleGrid.styled";
 import FactorySet from "pages/mes/standard/factory/FactorySet";
@@ -15,7 +15,7 @@ import ProductSet from "pages/mes/standard/product/ProductSet";
 import ProductTypeSet from "pages/mes/standard/productType/ProductTypeSet";
 import RoutingSet from "pages/gridSetting/RoutingSet";
 
-export const OnlySearchSingleGridEvent = createContext();
+export const OnlySearchSingleGridContext = createContext();
 
 const componentAllocation = (componentName) => {
   let component = "";
@@ -52,7 +52,7 @@ const componentAllocation = (componentName) => {
 function OnlySearchSingleGrid(props) {
   const { componentName } = props;
   LoginStateChk();
-  const { isAllScreen } = useContext(LayoutEvent);
+  const { isAllScreen } = useContext(LayoutContext);
   const refSingleGrid = createRef(); //🔸singleGrid 접근 ref
   const [singleGridData, setSingleGridData] = useState(); //🔸singleGridData 받기
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -61,7 +61,7 @@ function OnlySearchSingleGrid(props) {
   const component = componentAllocation(componentName);
 
   return (
-    <OnlySearchSingleGridEvent.Provider
+    <OnlySearchSingleGridContext.Provider
       value={{
         refSingleGrid,
         singleGridData,
@@ -92,7 +92,7 @@ function OnlySearchSingleGrid(props) {
         />
       </S.GridBox>
       <BackDrop isBackDrop={isBackDrop} />
-    </OnlySearchSingleGridEvent.Provider>
+    </OnlySearchSingleGridContext.Provider>
   );
 }
 

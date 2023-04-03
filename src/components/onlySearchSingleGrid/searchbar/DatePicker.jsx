@@ -3,13 +3,13 @@ import React, { useContext, useEffect, createRef } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 // ⬇️ reference of page
-import { SearchBarBoxEvent } from "./SearchBarBox";
+import { SearchBarBoxContext } from "./SearchBarBox";
 import DateTime from "components/datetime/DateTime";
 import * as S from "./DatePicker.styled";
 
 function DatePicker(props) {
   const { datePickerSet } = props;
-  const { dateText, setDateText } = useContext(SearchBarBoxEvent);
+  const { dateText, setDateText } = useContext(SearchBarBoxContext);
 
   const dateRef = createRef();
 

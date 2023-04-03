@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useCallback } from "react";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { LayoutContext } from "components/layout/common/Layout";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridModule from "components/grid/GridModule";
@@ -17,7 +17,8 @@ import * as S from "../oneGrid.styled";
 
 function Process() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutEvent);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);

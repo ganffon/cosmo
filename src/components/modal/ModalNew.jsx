@@ -3,7 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import ButtonAdd from "components/button/ButtonAdd";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalNew.styled";
 
 function ModalNew(props) {
@@ -19,7 +19,7 @@ function ModalNew(props) {
     header,
     rowHeaders,
   } = props;
-  const { currentMenuName } = useContext(LayoutEvent);
+  const { currentMenuName } = useContext(LayoutContext);
 
   return (
     <ModalWrap width={"1300px"} height={"650px"}>

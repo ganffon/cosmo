@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 // ⬇️ import MUI
 // ⬇️ reference of page
 import DatePicker from "./DatePicker";
-import { SearchBarBoxEvent } from "./SearchBarBox";
+import { SearchBarBoxContext } from "./SearchBarBox";
 import * as S from "./InputBox.styled";
 
 function InputBox(props) {
   const { datePickerSet, inputSet } = props;
-  const { inputTextChange, onClickSearch } = useContext(SearchBarBoxEvent);
+  const { inputTextChange, onClickSearch } = useContext(SearchBarBoxContext);
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       onClickSearch();

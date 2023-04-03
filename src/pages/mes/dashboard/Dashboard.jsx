@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { LayoutEvent } from "components/layout/common/Layout";
+import { LayoutContext } from "components/layout/common/Layout";
 
 const Dashboard = () => {
-  const { isAllScreen } = useContext(LayoutEvent);
+  const { isAllScreen } = useContext(LayoutContext);
   return <div>{`isAllScreen: ${isAllScreen}`}</div>;
 };
 
