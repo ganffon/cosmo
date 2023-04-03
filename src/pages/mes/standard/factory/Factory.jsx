@@ -45,7 +45,6 @@ function Factory(props) {
     columnsModal,
     columnOptions,
     inputSet,
-    buttonDisabled,
   } = FactorySet(isEditMode);
   const SETTING_FILE = "FactorySet";
   useEffect(() => {

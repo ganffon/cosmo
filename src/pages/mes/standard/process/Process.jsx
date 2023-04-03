@@ -30,15 +30,8 @@ function Process() {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
-  const {
-    uri,
-    rowHeaders,
-    header,
-    columns,
-    columnOptions,
-    inputSet,
-    buttonDisabled,
-  } = ProcessSet(isEditMode);
+  const { uri, rowHeaders, header, columns, columnOptions, inputSet } =
+    ProcessSet(isEditMode);
 
   const SETTING_FILE = "ProcessSet";
 

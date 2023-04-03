@@ -43,7 +43,6 @@ function ProductGbn() {
     columnsModal,
     columnOptions,
     inputSet,
-    buttonDisabled,
   } = ProductGbnSet(isEditMode);
   const SETTING_FILE = "ProductGbnSet";
 

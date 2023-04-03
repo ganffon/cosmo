@@ -284,8 +284,6 @@ function LineSet(isEditMode) {
 
   const uri = restURI.line;
 
-  const buttonDisabled = true;
-
   return {
     data,
     rowHeaders,
@@ -297,7 +295,6 @@ function LineSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

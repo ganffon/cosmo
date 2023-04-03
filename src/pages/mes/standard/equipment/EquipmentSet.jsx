@@ -430,8 +430,6 @@ function EquipmentSet(isEditMode) {
 
   const uri = restURI.equipment;
 
-  const buttonDisabled = false;
-
   return {
     data,
     columns,
@@ -443,7 +441,6 @@ function EquipmentSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

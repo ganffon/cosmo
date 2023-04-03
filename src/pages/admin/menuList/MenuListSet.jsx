@@ -356,8 +356,6 @@ function MenuListSet(isEditMode) {
 
   const uri = restURI.line;
 
-  const buttonDisabled = false;
-
   return {
     data,
     rowHeaders,
@@ -368,7 +366,6 @@ function MenuListSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

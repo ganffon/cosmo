@@ -163,8 +163,6 @@ function ProductTypeSmallSet(isEditMode) {
 
   const uri = restURI.productTypeSmall;
 
-  const buttonDisabled = true;
-
   return {
     data,
     columns,
@@ -175,7 +173,6 @@ function ProductTypeSmallSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

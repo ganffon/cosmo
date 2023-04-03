@@ -43,7 +43,6 @@ function ProductTypeSmall() {
     columnsModal,
     columnOptions,
     inputSet,
-    buttonDisabled,
   } = ProductTypeSmallSet(isEditMode);
   const SETTING_FILE = "ProductTypeSmallSet";
 

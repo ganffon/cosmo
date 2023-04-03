@@ -43,7 +43,6 @@ function Equipment() {
     columnsModal,
     columnOptions,
     inputSet,
-    buttonDisabled,
   } = EquipmentSet(isEditMode, refSingleGrid);
   const SETTING_FILE = "EquipmentSet";
 

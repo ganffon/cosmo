@@ -201,8 +201,6 @@ function FactorySet(isEditMode) {
 
   const uri = restURI.factory;
 
-  const buttonDisabled = false;
-
   return {
     data,
     rowHeaders,
@@ -214,7 +212,6 @@ function FactorySet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 

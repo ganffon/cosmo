@@ -214,8 +214,6 @@ function ProductModelSet(isEditMode) {
 
   const uri = restURI.productModel;
 
-  const buttonDisabled = true;
-
   return {
     data,
     rowHeaders,
@@ -226,7 +224,6 @@ function ProductModelSet(isEditMode) {
     datePickerSet,
     inputSet,
     uri,
-    buttonDisabled,
   };
 }
 
