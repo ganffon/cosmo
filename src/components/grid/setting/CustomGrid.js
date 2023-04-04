@@ -30,13 +30,22 @@ class CheckBox {
   }
 }
 
+/**
+ * ⬇️ step 값을 변수로 받아왔더니 동작을 안함
+ * EditorNumber(정수)
+ * EditorFloat1(소수점1자리)
+ * EditorFloat2(소수점2자리)
+ * EditorFloat3(소수점3자리)
+ * 총 4종류를 만들어 두었음.
+ */
+//🔸Grid Cell Type 정수
 class EditorNumber {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
     el.step = 1;
     el.className = "number";
-    el.value = Number(props.value);
+    el.value = props.value;
 
     this.el = el;
   }
@@ -47,14 +56,14 @@ class EditorNumber {
     return this.el.value;
   }
 }
-
+//🔸Grid Cell Type 소수점 1자리
 class EditorFloat1 {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
     el.step = 0.1;
     el.className = "number";
-    el.value = Number(props.value);
+    el.value = props.value;
 
     this.el = el;
   }
@@ -65,14 +74,14 @@ class EditorFloat1 {
     return this.el.value;
   }
 }
-
+//🔸Grid Cell Type 소수점 2자리
 class EditorFloat2 {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
     el.step = 0.01;
     el.className = "number";
-    el.value = Number(props.value);
+    el.value = props.value;
 
     this.el = el;
   }
@@ -83,14 +92,14 @@ class EditorFloat2 {
     return this.el.value;
   }
 }
-
+//🔸Grid Cell Type 소수점 3자리
 class EditorFloat3 {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
     el.step = 0.001;
     el.className = "number";
-    el.value = Number(props.value);
+    el.value = props.value;
 
     this.el = el;
   }
@@ -103,7 +112,11 @@ class EditorFloat3 {
 }
 
 function NumComma(value) {
-  return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //🔸숫자 3자리마다 콤마 찍기
+  if (value.value !== null) {
+    return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //🔸숫자 3자리마다 콤마 찍기
+  } else {
+    return null;
+  }
 }
 
 class ColumnHeaderMultiLine {

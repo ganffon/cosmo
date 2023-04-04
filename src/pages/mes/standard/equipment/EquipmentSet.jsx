@@ -13,16 +13,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-// let processList = [];
-
 function EquipmentSet(isEditMode, processList) {
-  // useEffect(() => {
-  //   processList = processOpt.map((data) => {
-  //     return getComboParams("ProcessSet", data);
-  //   });
-  //   console.log("set");
-  //   console.log(processList);
-  // }, [processOpt]);
 
   const data = [];
   /** 🔸columns ❗

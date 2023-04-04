@@ -317,12 +317,15 @@ function ProductSet(
       name: "width",
       header: CN.width,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: isEditMode
         ? {
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -333,12 +336,15 @@ function ProductSet(
       name: "length",
       header: CN.length,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: isEditMode
         ? {
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -349,12 +355,15 @@ function ProductSet(
       name: "height",
       header: CN.height,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: isEditMode
         ? {
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -390,12 +399,15 @@ function ProductSet(
       name: "weight",
       header: CN.weight,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: isEditMode
         ? {
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -406,12 +418,15 @@ function ProductSet(
       name: "thickness",
       header: CN.thickness,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: isEditMode
         ? {
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -478,6 +493,9 @@ function ProductSet(
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -494,6 +512,9 @@ function ProductSet(
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -548,6 +569,9 @@ function ProductSet(
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -564,6 +588,9 @@ function ProductSet(
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -716,6 +743,9 @@ function ProductSet(
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -732,6 +762,9 @@ function ProductSet(
             type: CustomGrid.EditorNumber,
           }
         : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -999,9 +1032,12 @@ function ProductSet(
       name: "width",
       header: CN.width,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
@@ -1013,9 +1049,12 @@ function ProductSet(
       name: "length",
       header: CN.length,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
@@ -1027,9 +1066,12 @@ function ProductSet(
       name: "height",
       header: CN.height,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
@@ -1066,9 +1108,12 @@ function ProductSet(
       name: "weight",
       header: CN.weight,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
@@ -1080,9 +1125,12 @@ function ProductSet(
       name: "thickness",
       header: CN.thickness,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
@@ -1136,6 +1184,9 @@ function ProductSet(
       editor: {
         type: CustomGrid.EditorNumber,
       },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -1149,6 +1200,9 @@ function ProductSet(
       align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
@@ -1202,6 +1256,9 @@ function ProductSet(
       editor: {
         type: CustomGrid.EditorNumber,
       },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -1215,6 +1272,9 @@ function ProductSet(
       align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
@@ -1306,6 +1366,9 @@ function ProductSet(
       editor: {
         type: CustomGrid.EditorNumber,
       },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -1319,6 +1382,9 @@ function ProductSet(
       align: "right",
       editor: {
         type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
       },
       hidden: false,
       sortable: false,
