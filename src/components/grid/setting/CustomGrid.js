@@ -30,6 +30,78 @@ class CheckBox {
   }
 }
 
+class EditorNumber {
+  constructor(props) {
+    const el = document.createElement("input");
+    el.type = "number";
+    el.step = 1;
+    el.className = "number";
+    el.value = Number(props.value);
+
+    this.el = el;
+  }
+  getElement() {
+    return this.el;
+  }
+  getValue() {
+    return this.el.value;
+  }
+}
+
+class EditorFloat1 {
+  constructor(props) {
+    const el = document.createElement("input");
+    el.type = "number";
+    el.step = 0.1;
+    el.className = "number";
+    el.value = Number(props.value);
+
+    this.el = el;
+  }
+  getElement() {
+    return this.el;
+  }
+  getValue() {
+    return this.el.value;
+  }
+}
+
+class EditorFloat2 {
+  constructor(props) {
+    const el = document.createElement("input");
+    el.type = "number";
+    el.step = 0.01;
+    el.className = "number";
+    el.value = Number(props.value);
+
+    this.el = el;
+  }
+  getElement() {
+    return this.el;
+  }
+  getValue() {
+    return this.el.value;
+  }
+}
+
+class EditorFloat3 {
+  constructor(props) {
+    const el = document.createElement("input");
+    el.type = "number";
+    el.step = 0.001;
+    el.className = "number";
+    el.value = Number(props.value);
+
+    this.el = el;
+  }
+  getElement() {
+    return this.el;
+  }
+  getValue() {
+    return this.el.value;
+  }
+}
+
 function NumComma(value) {
   return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //🔸숫자 3자리마다 콤마 찍기
 }
@@ -50,4 +122,12 @@ class ColumnHeaderMultiLine {
   }
 }
 
-export default { CheckBox, NumComma, ColumnHeaderMultiLine };
+export {
+  CheckBox,
+  NumComma,
+  EditorNumber,
+  EditorFloat1,
+  EditorFloat2,
+  EditorFloat3,
+  ColumnHeaderMultiLine,
+};

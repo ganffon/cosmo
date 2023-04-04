@@ -33,19 +33,19 @@ class productTypeSmall {
 function GetComboParams(componentName, raw) {
   let params = "";
   switch (componentName) {
-    case "ProcessSet":
+    case "Process":
       params = new process(raw);
       break;
-    case "ProductGbnSet":
+    case "ProductGbn":
       params = new ProductGbn(raw);
       break;
-    case "productModelSet":
+    case "ProductModel":
       params = new productModel(raw);
       break;
-    case "productTypeSet":
+    case "ProductType":
       params = new productType(raw);
       break;
-    case "productTypeSmallSet":
+    case "ProductTypeSmall":
       params = new productTypeSmall(raw);
       break;
     default:

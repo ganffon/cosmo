@@ -1,7 +1,7 @@
 //창고관리✨
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
-import CustomGrid from "components/grid/setting/CustomGrid";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,

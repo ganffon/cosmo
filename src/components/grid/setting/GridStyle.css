@@ -7,6 +7,11 @@
   accent-color: #f5329498;
 }
 
+.number {
+  height: 80%;
+  width: 95%;
+}
+
 .columnHeaderMultiLine {
   white-space: pre;
 }
