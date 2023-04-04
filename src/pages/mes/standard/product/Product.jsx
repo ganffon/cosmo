@@ -6,7 +6,7 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import LoginStateChk from "function/LoginStateChk";
+import LoginStateChk from "custom/LoginStateChk";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI";
 import BackDrop from "components/backdrop/BackDrop";
@@ -18,6 +18,7 @@ import GetDeleteParams from "api/GetDeleteParams";
 import ProductSet from "pages/mes/standard/product/ProductSet";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
+import * as Cbo from "custom/useCboSet";
 import * as S from "./Product.styled";
 
 function Product() {
@@ -37,10 +38,10 @@ function Product() {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
-  const [productGbnOpt, setProductGbnOpt] = useState([]);
-  const [modelOpt, setModelOpt] = useState([]);
-  const [productTypeOpt, setProductTypeOpt] = useState([]);
-  const [productTypeSmallOpt, setProductTypeSmallOpt] = useState([]);
+  // const [productGbnOpt, setProductGbnOpt] = useState([]);
+  // const [modelOpt, setModelOpt] = useState([]);
+  // const [productTypeOpt, setProductTypeOpt] = useState([]);
+  // const [productTypeSmallOpt, setProductTypeSmallOpt] = useState([]);
   const [comboValue, setComboValue] = useState({
     prod_gbn_id: null,
     model_id: null,
@@ -48,23 +49,28 @@ function Product() {
     prod_type_small_id: null,
   });
 
-  useEffect(() => {
-    const getComboOpt = async () => {
-      await restAPI.get(restURI.productGbn + "/search").then((res) => {
-        setProductGbnOpt(res?.data?.data?.rows);
-      });
-      await restAPI.get(restURI.productModel + "/search").then((res) => {
-        setModelOpt(res?.data?.data?.rows);
-      });
-      await restAPI.get(restURI.productType + "/search").then((res) => {
-        setProductTypeOpt(res?.data?.data?.rows);
-      });
-      await restAPI.get(restURI.productTypeSmall + "/search").then((res) => {
-        setProductTypeSmallOpt(res?.data?.data?.rows);
-      });
-    };
-    getComboOpt();
-  }, []);
+  // useEffect(() => {
+  //   const getComboOpt = async () => {
+  //     await restAPI.get(restURI.productGbn).then((res) => {
+  //       setProductGbnOpt(res?.data?.data?.rows);
+  //     });
+  //     await restAPI.get(restURI.productModel).then((res) => {
+  //       setModelOpt(res?.data?.data?.rows);
+  //     });
+  //     await restAPI.get(restURI.productType).then((res) => {
+  //       setProductTypeOpt(res?.data?.data?.rows);
+  //     });
+  //     await restAPI.get(restURI.productTypeSmall).then((res) => {
+  //       setProductTypeSmallOpt(res?.data?.data?.rows);
+  //     });
+  //   };
+  //   getComboOpt();
+  // }, []);
+
+  const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
+  const [productModelOpt, productModelList] = Cbo.useProductModel();
+  const [productTypeOpt, productTypeList] = Cbo.useProductType();
+  const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
 
   const {
     uri,
@@ -77,12 +83,12 @@ function Product() {
     inputSet,
   } = ProductSet(
     isEditMode,
-    productGbnOpt,
-    modelOpt,
-    productTypeOpt,
-    productTypeSmallOpt
+    productGbnList,
+    productModelList,
+    productTypeList,
+    productTypeSmallList
   );
-  const SETTING_FILE = "ProductSet";
+  const SETTING_FILE = "Product";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -186,6 +192,7 @@ function Product() {
   };
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
+    console.log(refSingleGrid?.current?.gridInst?.getModifiedRows());
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
@@ -233,6 +240,8 @@ function Product() {
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => GetPostParams(SETTING_FILE, raw));
+
+    console.log(data);
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -297,7 +306,7 @@ function Product() {
                 id="factoryCombo"
                 size="small"
                 key={(option) => option?.model_id}
-                options={modelOpt || null}
+                options={productModelOpt || null}
                 getOptionLabel={(option) => option?.model_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({

@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
 import restURI from "json/restURI.json";
-import restAPI from "api/restAPI";
-import getComboParams from "api/GetComboParams";
-import "components/grid/style/GridStyle.css";
-import CustomGrid from "components/grid/setting/CustomGrid";
+import "components/grid/setting/GridStyle.css";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
@@ -13,33 +10,13 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-let productGbnList = [];
-let productModelList = [];
-let productTypeList = [];
-let productTypeSmallList = [];
-
 function ProductSet(
   isEditMode,
-  productGbnOpt,
-  modelOpt,
-  productTypeOpt,
-  productTypeSmallOpt
+  productGbnList,
+  productModelList,
+  productTypeList,
+  productTypeSmallList
 ) {
-  useEffect(() => {
-    productGbnList = productGbnOpt.map((data) => {
-      return getComboParams("ProductGbnSet", data);
-    });
-    productModelList = modelOpt.map((data) => {
-      return getComboParams("productModelSet", data);
-    });
-    productTypeList = productTypeOpt.map((data) => {
-      return getComboParams("productTypeSet", data);
-    });
-    productTypeSmallList = productTypeSmallOpt.map((data) => {
-      return getComboParams("productTypeSmallSet", data);
-    });
-  }, [productGbnOpt, modelOpt, productTypeOpt, productTypeSmallOpt]);
-
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -341,7 +318,11 @@ function ProductSet(
       header: CN.width,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -353,7 +334,11 @@ function ProductSet(
       header: CN.length,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -365,7 +350,11 @@ function ProductSet(
       header: CN.height,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -402,7 +391,11 @@ function ProductSet(
       header: CN.weight,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -414,7 +407,11 @@ function ProductSet(
       header: CN.thickness,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -476,7 +473,11 @@ function ProductSet(
       header: CN.mat_order_min_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
-      editor: false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -488,7 +489,11 @@ function ProductSet(
       header: CN.mat_supply_days,
       minWidth: WIDTH_SHORT,
       align: "right",
-      editor: false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -538,7 +543,11 @@ function ProductSet(
       header: CN.inv_unit_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
-      editor: false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -550,7 +559,11 @@ function ProductSet(
       header: CN.inv_safe_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
-      editor: false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -698,7 +711,11 @@ function ProductSet(
       header: CN.prd_min,
       minWidth: WIDTH_SHORT,
       align: "right",
-      editor: false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -710,7 +727,11 @@ function ProductSet(
       header: CN.prd_max,
       minWidth: WIDTH_SHORT,
       align: "right",
-      editor: false,
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -956,11 +977,32 @@ function ProductSet(
       rowSpan: false,
     },
     {
+      name: "active_fg",
+      header: CN.active_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "active_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
       name: "width",
       header: CN.width,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: "text",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -972,7 +1014,9 @@ function ProductSet(
       header: CN.length,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: "text",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -984,7 +1028,9 @@ function ProductSet(
       header: CN.height,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: "text",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -1021,7 +1067,9 @@ function ProductSet(
       header: CN.weight,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: "text",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -1033,7 +1081,9 @@ function ProductSet(
       header: CN.thickness,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: "text",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -1053,6 +1103,223 @@ function ProductSet(
       minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "mat_order_fg",
+      header: CN.mat_order_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "mat_order_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "mat_order_min_qty",
+      header: CN.mat_order_min_qty,
+      minWidth: WIDTH_SHORT,
+      align: "right",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "mat_supply_days",
+      header: CN.mat_supply_days,
+      minWidth: WIDTH_SHORT,
+      align: "right",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "sal_order_fg",
+      header: CN.sal_order_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "sal_order_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "inv_use_fg",
+      header: CN.inv_use_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "inv_use_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "inv_unit_qty",
+      header: CN.inv_unit_qty,
+      minWidth: WIDTH_SHORT,
+      align: "right",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "inv_safe_qty",
+      header: CN.inv_safe_qty,
+      minWidth: WIDTH_SHORT,
+      align: "right",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "qms_receive_insp_fg",
+      header: CN.qms_receive_insp_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "qms_receive_insp_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "qms_proc_insp_fg",
+      header: CN.qms_proc_insp_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "qms_proc_insp_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "qms_final_insp_fg",
+      header: CN.qms_final_insp_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "qms_final_insp_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prd_active_fg",
+      header: CN.prd_active_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "prd_active_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prd_min",
+      header: CN.prd_min,
+      minWidth: WIDTH_SHORT,
+      align: "right",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prd_max",
+      header: CN.prd_max,
+      minWidth: WIDTH_SHORT,
+      align: "right",
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
       hidden: false,
       sortable: false,
       filter: false,

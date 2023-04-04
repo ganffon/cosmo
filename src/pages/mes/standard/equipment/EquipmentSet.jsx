@@ -1,9 +1,9 @@
 //설비관리✨
 import { useEffect } from "react";
 import restURI from "json/restURI.json";
-import "components/grid/style/GridStyle.css";
-import CustomGrid from "components/grid/setting/CustomGrid";
-import getComboParams from "api/GetComboParams";
+import "components/grid/setting/GridStyle.css";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
+import getComboParams from "api/GetCboParams";
 import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
@@ -13,14 +13,16 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-let processList = [];
+// let processList = [];
 
-function EquipmentSet(isEditMode, processOpt) {
-  useEffect(() => {
-    processList = processOpt.map((data) => {
-      return getComboParams("ProcessSet", data);
-    });
-  }, [processOpt]);
+function EquipmentSet(isEditMode, processList) {
+  // useEffect(() => {
+  //   processList = processOpt.map((data) => {
+  //     return getComboParams("ProcessSet", data);
+  //   });
+  //   console.log("set");
+  //   console.log(processList);
+  // }, [processOpt]);
 
   const data = [];
   /** 🔸columns ❗
@@ -71,7 +73,7 @@ function EquipmentSet(isEditMode, processOpt) {
               listItems: processList,
             },
           },
-          hidden: false,
+          hidden: true,
           sortable: false,
           filter: false,
           whiteSpace: false,
@@ -83,7 +85,7 @@ function EquipmentSet(isEditMode, processOpt) {
           minWidth: WIDTH_SHORT,
           align: "left",
           editor: false,
-          hidden: false,
+          hidden: true,
           sortable: false,
           filter: false,
           whiteSpace: false,

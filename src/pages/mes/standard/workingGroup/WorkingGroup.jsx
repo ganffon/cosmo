@@ -7,7 +7,7 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import LoginStateChk from "function/LoginStateChk";
+import LoginStateChk from "custom/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -48,7 +48,7 @@ function WorkingGroup(props) {
     columnOptions,
     inputSet,
   } = WorkingGroupSet(isEditMode);
-  const SETTING_FILE = "WorkingGroupSet";
+  const SETTING_FILE = "WorkingGroup";
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
@@ -151,7 +151,6 @@ function WorkingGroup(props) {
   };
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    console.log(refSingleGrid?.current?.gridInst?.getModifiedRows());
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
@@ -201,8 +200,6 @@ function WorkingGroup(props) {
       ?.createdRows.map((raw) =>
         GetPostParams(SETTING_FILE, raw, cookie.userFactoryID)
       );
-
-    console.log(data);
 
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);

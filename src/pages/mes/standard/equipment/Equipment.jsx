@@ -7,9 +7,8 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import LoginStateChk from "function/LoginStateChk";
+import LoginStateChk from "custom/LoginStateChk";
 import restAPI from "api/restAPI";
-import restURI from "json/restURI.json";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import GetPostParams from "api/GetPostParams";
@@ -17,6 +16,8 @@ import GetPutParams from "api/GetPutParams";
 import GetSearchParams from "api/GetSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import EquipmentSet from "pages/mes/standard/equipment/EquipmentSet";
+import * as DisableRow from "custom/useDisableRowCheck";
+import * as Cbo from "custom/useCboSet";
 import * as S from "../oneGrid.styled";
 
 function Equipment() {
@@ -37,15 +38,7 @@ function Equipment() {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
-  const [processOpt, setProcessOpt] = useState([]);
-  useEffect(() => {
-    const getComboOpt = async () => {
-      await restAPI.get(restURI.process + "/search").then((res) => {
-        setProcessOpt(res?.data?.data?.rows);
-      });
-    };
-    getComboOpt();
-  }, []);
+  const [processOpt, processList] = Cbo.useProcess();
 
   const {
     uri,
@@ -56,8 +49,8 @@ function Equipment() {
     columnsModal,
     columnOptions,
     inputSet,
-  } = EquipmentSet(isEditMode, processOpt);
-  const SETTING_FILE = "EquipmentSet";
+  } = EquipmentSet(isEditMode, processList);
+  const SETTING_FILE = "Equipment";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -84,26 +77,30 @@ function Equipment() {
     onClickSearch(true);
   }, [currentMenuName]);
 
-  const [disableRowCheck, setDisableRowCheck] = useState(false);
-  useEffect(() => {
-    if (isEditMode === true) {
-      for (
-        let i = 0;
-        i < refSingleGrid?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        refSingleGrid?.current?.gridInst?.disableRowCheck(i);
-      }
-    } else {
-      for (
-        let i = 0;
-        i < refSingleGrid?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        refSingleGrid?.current?.gridInst?.enableRowCheck(i);
-      }
-    }
-  }, [disableRowCheck]);
+  const [disableRowCheck, setDisableRowCheck] = DisableRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
+  // const [disableRowCheck, setDisableRowCheck] = useState(false);
+  // useEffect(() => {
+  //   if (isEditMode === true) {
+  //     for (
+  //       let i = 0;
+  //       i < refSingleGrid?.current?.gridInst?.getRowCount();
+  //       i++
+  //     ) {
+  //       refSingleGrid?.current?.gridInst?.disableRowCheck(i);
+  //     }
+  //   } else {
+  //     for (
+  //       let i = 0;
+  //       i < refSingleGrid?.current?.gridInst?.getRowCount();
+  //       i++
+  //     ) {
+  //       refSingleGrid?.current?.gridInst?.enableRowCheck(i);
+  //     }
+  //   }
+  // }, [disableRowCheck]);
 
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -214,7 +211,6 @@ function Equipment() {
     }
   };
   const onClickEditModeExit = () => {
-    console.log("Exit");
     setIsEditMode(false);
     onClickSearch(true);
   };
@@ -266,18 +262,10 @@ function Equipment() {
     onClickSearch();
   };
   const onClickGrid = (e) => {
-    if (isEditMode === true) {
-      if (e?.columnName === "use_fg" || e?.columnName === "prd_fg") {
-        e?.instance?.enableRowCheck(e?.rowKey);
-        e?.instance?.check(e?.rowKey);
-        e?.instance?.disableRowCheck(e?.rowKey);
-      }
-    }
+    DisableRow.handleClickGridCheck(e, isEditMode, ["use_fg", "prd_fg"]);
   };
   const onEditingFinishGrid = (e) => {
-    e?.instance?.enableRowCheck(e?.rowKey);
-    e?.instance?.check(e?.rowKey);
-    e?.instance?.disableRowCheck(e?.rowKey);
+    DisableRow.handleEditingFinishGridCheck(e);
   };
 
   return (

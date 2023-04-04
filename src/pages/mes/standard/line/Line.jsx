@@ -6,7 +6,7 @@ import GridModule from "components/grid/GridModule";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import LoginStateChk from "function/LoginStateChk";
+import LoginStateChk from "custom/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -15,7 +15,6 @@ import GetPutParams from "api/GetPutParams";
 import GetSearchParams from "api/GetSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import LineSet from "pages/mes/standard/line/LineSet";
-import FinishEditing from "function/FinishEditing";
 import * as S from "../oneGrid.styled";
 
 function Line() {
@@ -45,7 +44,7 @@ function Line() {
     columnOptions,
     inputSet,
   } = LineSet(isEditMode);
-  const SETTING_FILE = "LineSet";
+  const SETTING_FILE = "Line";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -84,7 +83,7 @@ function Line() {
     }
   };
   const handleDelete = async () => {
-    FinishEditing(refSingleGrid);
+    refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
       ?.map((raw) => GetDeleteParams(SETTING_FILE, raw));
@@ -119,7 +118,7 @@ function Line() {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = async (props) => {
-    FinishEditing(refSingleGrid);
+    refSingleGrid?.current?.gridInst?.finishEditing();
     //🔸검색버튼을 이미 눌러서 Loading ProgressBar가 돌고있다면 API 호출 못함
     if (isBackDrop === false) {
       try {
@@ -148,7 +147,7 @@ function Line() {
     }
   };
   const onClickEditModeSave = async () => {
-    FinishEditing(refSingleGrid);
+    refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
@@ -192,7 +191,7 @@ function Line() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = async () => {
-    FinishEditing(refModalGrid);
+    refModalGrid?.current?.gridInst?.finishEditing();
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => GetPostParams(SETTING_FILE, raw));

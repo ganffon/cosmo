@@ -1,7 +1,7 @@
 //라인관리✨
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
-import "components/grid/style/GridStyle.css";
+import "components/grid/setting/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,

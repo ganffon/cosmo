@@ -29,19 +29,19 @@ function GetDeleteParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
-    case "FactorySet":
+    case "Factory":
       params = new factory(raw);
       break;
-    case "LineSet":
+    case "Line":
       params = new line(raw);
       break;
-    case "EquipmentSet":
+    case "Equipment":
       params = new equipment(raw);
       break;
-    case "UnitSet":
+    case "Unit":
       params = new unit(raw);
       break;
-    case "WorkingGroupSet":
+    case "WorkingGroup":
       params = new workingGroup(raw);
       break;
     default:
