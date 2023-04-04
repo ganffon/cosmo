@@ -81,26 +81,6 @@ function Equipment() {
     isEditMode,
     refSingleGrid
   );
-  // const [disableRowCheck, setDisableRowCheck] = useState(false);
-  // useEffect(() => {
-  //   if (isEditMode === true) {
-  //     for (
-  //       let i = 0;
-  //       i < refSingleGrid?.current?.gridInst?.getRowCount();
-  //       i++
-  //     ) {
-  //       refSingleGrid?.current?.gridInst?.disableRowCheck(i);
-  //     }
-  //   } else {
-  //     for (
-  //       let i = 0;
-  //       i < refSingleGrid?.current?.gridInst?.getRowCount();
-  //       i++
-  //     ) {
-  //       refSingleGrid?.current?.gridInst?.enableRowCheck(i);
-  //     }
-  //   }
-  // }, [disableRowCheck]);
 
   const onClickNew = () => {
     setIsModalOpen(true);

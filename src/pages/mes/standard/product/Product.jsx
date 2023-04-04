@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
+import { useCookies } from "react-cookie";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridModule from "components/grid/GridModule";
@@ -8,7 +9,6 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import restAPI from "api/restAPI";
-import restURI from "json/restURI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import GetPostParams from "api/GetPostParams";
@@ -25,6 +25,7 @@ function Product() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
+  const [cookie, setCookie, removeCookie] = useCookies();
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -239,7 +240,9 @@ function Product() {
     refModalGrid?.current?.gridInst?.finishEditing();
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
-      ?.createdRows.map((raw) => GetPostParams(SETTING_FILE, raw));
+      ?.createdRows.map((raw) =>
+        GetPostParams(SETTING_FILE, raw, cookie.factoryID)
+      );
 
     console.log(data);
     if (data.length !== 0 && isBackDrop === false) {

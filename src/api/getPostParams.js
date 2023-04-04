@@ -1,4 +1,5 @@
 // ✨ INSERT ✨
+
 class factories {
   constructor(raw) {
     this.factory_cd = raw.factory_cd;
@@ -34,7 +35,8 @@ class equipments {
   }
 }
 class products {
-  constructor(raw) {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
     this.prod_no = raw.prod_no;
     this.prod_nm = raw.prod_nm;
     this.prod_gbn_id = raw.prod_gbn_nm;
@@ -299,7 +301,7 @@ function GetPostParams(componentName, raw, factory_id) {
       params = new equipments(raw, factory_id);
       break;
     case "Product":
-      params = new products(raw);
+      params = new products(raw, factory_id);
       break;
     case "ProductGbn":
       params = new productsGbn(raw);
