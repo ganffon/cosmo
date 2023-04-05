@@ -83,6 +83,22 @@ const useProductTypeSmall = () => {
   }, []);
   return [productTypeSmallOpt, productTypeSmallList];
 };
+let unitList = [];
+const useUnit = () => {
+  const [UnitOpt, setUnitOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.unit).then((res) => {
+        setUnitOpt(res?.data?.data?.rows);
+        unitList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams("Unit", data);
+        });
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [UnitOpt, unitList];
+};
 
 export {
   useProcess,
@@ -90,4 +106,5 @@ export {
   useProductModel,
   useProductType,
   useProductTypeSmall,
+  useUnit,
 };

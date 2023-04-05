@@ -29,6 +29,12 @@ class productTypeSmall {
     this.value = raw.prod_type_small_id;
   }
 }
+class unit {
+  constructor(raw) {
+    this.text = raw.unit_nm;
+    this.value = raw.unit_id;
+  }
+}
 
 function GetComboParams(componentName, raw) {
   let params = "";
@@ -47,6 +53,9 @@ function GetComboParams(componentName, raw) {
       break;
     case "ProductTypeSmall":
       params = new productTypeSmall(raw);
+      break;
+    case "Unit":
+      params = new unit(raw);
       break;
     default:
   }
