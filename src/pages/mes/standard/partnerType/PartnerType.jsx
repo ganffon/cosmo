@@ -10,7 +10,7 @@ import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import getPutParams from "api/GetPutParams";
-import getSearchParams from "api/GetSearchParams";
+import GetInputSearchParams from "api/GetInputSearchParams";
 import getDeleteParams from "api/GetDeleteParams";
 import PartnerTypeSet from "pages/mes/standard/partnerType/PartnerTypeSet";
 import * as S from "../oneGrid.styled";
@@ -103,7 +103,7 @@ function PartnerType() {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const params = getSearchParams(inputBoxID, inputTextChange);
+        const params = GetInputSearchParams(inputBoxID, inputTextChange);
         const readURI = uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);

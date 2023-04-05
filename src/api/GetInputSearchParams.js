@@ -1,4 +1,4 @@
-function GetSearchParams(inputBoxID, inputTextChange) {
+function GetInputSearchParams(inputBoxID, inputTextChange) {
   let params = "";
   let cnt = 0;
   //🔸inputBox 가 있다면?!
@@ -22,4 +22,4 @@ function GetSearchParams(inputBoxID, inputTextChange) {
   return params;
 }
 
-export default GetSearchParams;
+export default GetInputSearchParams;

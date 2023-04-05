@@ -9,10 +9,10 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import getPostParams from "api/GetPostParams";
-import getPutParams from "api/GetPutParams";
-import getSearchParams from "api/GetSearchParams";
-import getDeleteParams from "api/GetDeleteParams";
+import GetPostParams from "api/GetPostParams";
+import GetPutParams from "api/GetPutParams";
+import GetInputSearchParams from "api/GetInputSearchParams";
+import GetDeleteParams from "api/GetDeleteParams";
 import * as S from "./MenuList.styled";
 import MenuListSet from "pages/admin/menuList/MenuListSet";
 
@@ -75,7 +75,7 @@ function MenuList(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
-      ?.map((raw) => getDeleteParams(COMPONENT_NAME, raw));
+      ?.map((raw) => GetDeleteParams(COMPONENT_NAME, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -112,7 +112,7 @@ function MenuList(props) {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const params = getSearchParams(inputBoxID, inputTextChange);
+        const params = GetInputSearchParams(inputBoxID, inputTextChange);
         const readURI = COMPONENT.uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
@@ -139,7 +139,7 @@ function MenuList(props) {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
-      ?.updatedRows?.map((raw) => getPutParams(COMPONENT_NAME, raw));
+      ?.updatedRows?.map((raw) => GetPutParams(COMPONENT_NAME, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -183,7 +183,7 @@ function MenuList(props) {
     refModalGrid?.current?.gridInst?.finishEditing();
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
-      ?.createdRows.map((raw) => getPostParams(COMPONENT_NAME, raw));
+      ?.createdRows.map((raw) => GetPostParams(COMPONENT_NAME, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI

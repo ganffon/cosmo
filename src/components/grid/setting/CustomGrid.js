@@ -111,9 +111,10 @@ class EditorFloat3 {
   }
 }
 
+//🔸숫자 3자리마다 콤마 찍기
 function NumComma(value) {
   if (value.value !== null) {
-    return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //🔸숫자 3자리마다 콤마 찍기
+    return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   } else {
     return null;
   }
