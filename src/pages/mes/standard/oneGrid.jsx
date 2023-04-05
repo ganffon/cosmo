@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
-import GridModule from "components/grid/GridModule";
+import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
@@ -257,7 +257,7 @@ function OneGrid(props) {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
-          <GridModule
+          <GridSingle
             columnOptions={COMPONENT().columnOptions}
             columns={COMPONENT(isEditMode).columns}
             rowHeaders={COMPONENT().rowHeaders}

@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
-import GridModule from "components/grid/GridModule";
+import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
@@ -45,7 +45,7 @@ function Unit(props) {
     columnOptions,
     inputSet,
   } = UnitSet(isEditMode);
-  const SETTING_FILE = "Unit";
+  const SETTING_FILE = "unit";
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
@@ -253,7 +253,7 @@ function Unit(props) {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
-          <GridModule
+          <GridSingle
             columnOptions={columnOptions}
             columns={columns}
             rowHeaders={rowHeaders}

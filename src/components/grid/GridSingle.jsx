@@ -3,7 +3,7 @@ import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 
-function GridModule(props) {
+function GridSingle(props) {
   const {
     columnOptions,
     columns,
@@ -38,4 +38,4 @@ function GridModule(props) {
   );
 }
 
-export default GridModule;
+export default GridSingle;

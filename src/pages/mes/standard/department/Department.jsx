@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
-import GridModule from "components/grid/GridModule";
+import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
@@ -32,7 +32,7 @@ function Department() {
   const { uri, rowHeaders, header, columns, columnOptions, inputSet } =
     DepartmentSet(isEditMode);
 
-  const SETTING_FILE = "Department";
+  const SETTING_FILE = "department";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -187,7 +187,7 @@ function Department() {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
-          <GridModule
+          <GridSingle
             columnOptions={columnOptions}
             columns={columns}
             rowHeaders={rowHeaders}

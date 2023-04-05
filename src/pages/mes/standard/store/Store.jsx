@@ -3,7 +3,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import { useCookies } from "react-cookie";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
-import GridModule from "components/grid/GridModule";
+import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
@@ -49,7 +49,7 @@ function Store() {
     inputSet,
   } = StoreSet(isEditMode);
 
-  const SETTING_FILE = "Store";
+  const SETTING_FILE = "store";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -276,7 +276,7 @@ function Store() {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
-          <GridModule
+          <GridSingle
             columnOptions={columnOptions}
             columns={columns}
             rowHeaders={rowHeaders}
