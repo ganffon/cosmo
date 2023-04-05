@@ -107,25 +107,25 @@ function GetPutParams(componentName, raw) {
   let params = "";
 
   switch (componentName) {
-    case "Factory":
+    case "factory":
       params = new factory(raw);
       break;
-    case "Line":
+    case "line":
       params = new line(raw);
       break;
-    case "Equipment":
+    case "equipment":
       params = new equipment(raw);
       break;
-    case "Unit":
+    case "unit":
       params = new unit(raw);
       break;
-    case "WorkingGroup":
+    case "workingGroup":
       params = new workingGroup(raw);
       break;
-    case "Product":
+    case "products":
       params = new products(raw);
       break;
-    case "Store":
+    case "store":
       params = new store(raw);
       break;
     default:

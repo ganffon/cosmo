@@ -5,7 +5,7 @@ class process {
     this.value = raw.proc_id;
   }
 }
-class ProductGbn {
+class productGbn {
   constructor(raw) {
     this.text = raw.prod_gbn_nm;
     this.value = raw.prod_gbn_id;
@@ -39,22 +39,22 @@ class unit {
 function GetComboParams(componentName, raw) {
   let params = "";
   switch (componentName) {
-    case "Process":
+    case "process":
       params = new process(raw);
       break;
-    case "ProductGbn":
-      params = new ProductGbn(raw);
+    case "productGbn":
+      params = new productGbn(raw);
       break;
-    case "ProductModel":
+    case "productModel":
       params = new productModel(raw);
       break;
-    case "ProductType":
+    case "productType":
       params = new productType(raw);
       break;
-    case "ProductTypeSmall":
+    case "productTypeSmall":
       params = new productTypeSmall(raw);
       break;
-    case "Unit":
+    case "unit":
       params = new unit(raw);
       break;
     default:

@@ -1,12 +1,12 @@
 // ✨ INSERT ✨
 
-class factories {
+class factory {
   constructor(raw) {
     this.factory_cd = raw.factory_cd;
     this.factory_nm = raw.factory_nm;
   }
 }
-class users {
+class user {
   constructor(raw) {
     this.id = raw.id;
     this.group_id = raw.group_id;
@@ -19,7 +19,7 @@ class users {
     this.super_admin_fg = raw.super_admin_fg ? true : false;
   }
 }
-class equipments {
+class equipment {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.equip_type_id = raw.equip_type_id;
@@ -33,7 +33,7 @@ class equipments {
     this.remark = raw.remark;
   }
 }
-class products {
+class product {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.prod_no = raw.prod_no;
@@ -76,19 +76,19 @@ class products {
     this.prd_max = Number(raw.prd_max);
   }
 }
-class productsGbn {
+class productGbn {
   constructor(raw) {
     this.prod_gbn_cd = raw.prod_gbn_cd;
     this.prod_gbn_nm = raw.prod_gbn_nm;
   }
 }
-class productsType {
+class productType {
   constructor(raw) {
     this.prod_type_cd = raw.prod_type_cd;
     this.prod_type_nm = raw.prod_type_nm;
   }
 }
-class routings {
+class routing {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.line_id = raw.line_id;
@@ -100,7 +100,7 @@ class routings {
     this.uph = raw.uph;
   }
 }
-class stores {
+class store {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.store_cd = raw.store_cd;
@@ -114,7 +114,7 @@ class stores {
     this.position_type = raw.position_type;
   }
 }
-class storeLocations {
+class storeLocation {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.store_id = raw.store_id;
@@ -122,13 +122,13 @@ class storeLocations {
     this.location_nm = raw.location_nm;
   }
 }
-class departments {
+class department {
   constructor(raw) {
     this.dept_cd = raw.dept_cd;
     this.dept_nm = raw.dept_nm;
   }
 }
-class employees {
+class employee {
   constructor(raw) {
     this.emp_cd = raw.emp_cd;
     this.emp_nm = raw.emp_nm;
@@ -147,7 +147,7 @@ class employees {
     this.remark = raw.remark;
   }
 }
-class grades {
+class grade {
   constructor(raw) {
     this.grade_cd = raw.grade_cd;
     this.grade_nm = raw.grade_nm;
@@ -201,7 +201,7 @@ class inspectionItem {
     this.unit_id = raw.unit_id;
   }
 }
-class receives {
+class receive {
   constructor(raw, factory_id) {
     this.receive_id = raw.receive_id;
     this.seq = raw.seq;
@@ -225,7 +225,7 @@ class receives {
     this.remark = raw.remark;
   }
 }
-class receiveDetails {
+class receiveDetail {
   constructor(raw, factory_id) {
     this.receive_id = raw.receive_id;
     this.seq = raw.seq;
@@ -249,7 +249,7 @@ class receiveDetails {
     this.remark = raw.remark;
   }
 }
-class incomes {
+class income {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.prod_id = raw.prod_id;
@@ -287,76 +287,76 @@ function GetPostParams(componentName, raw, factory_id) {
   let params = "";
 
   switch (componentName) {
-    case "Factory":
-      params = new factories(raw);
+    case "factory":
+      params = new factory(raw);
       break;
-    case "User":
-      params = new users(raw);
+    case "user":
+      params = new user(raw);
       break;
-    case "Unit":
+    case "unit":
       params = new unit(raw);
       break;
-    case "Equipment":
-      params = new equipments(raw, factory_id);
+    case "equipment":
+      params = new equipment(raw, factory_id);
       break;
-    case "Product":
-      params = new products(raw, factory_id);
+    case "product":
+      params = new product(raw, factory_id);
       break;
-    case "ProductGbn":
-      params = new productsGbn(raw);
+    case "productGbn":
+      params = new productGbn(raw);
       break;
-    case "ProductType":
-      params = new productsType(raw);
+    case "productType":
+      params = new productType(raw);
       break;
-    case "Routing":
-      params = new routings(raw, factory_id);
+    case "routing":
+      params = new routing(raw, factory_id);
       break;
-    case "Store":
-      params = new stores(raw, factory_id);
+    case "store":
+      params = new store(raw, factory_id);
       break;
-    case "StoreLocations":
-      params = new storeLocations(raw, factory_id);
+    case "storeLocation":
+      params = new storeLocation(raw, factory_id);
       break;
-    case "Department":
-      params = new departments(raw);
+    case "department":
+      params = new department(raw);
       break;
-    case "Employee":
-      params = new employees(raw);
+    case "employee":
+      params = new employee(raw);
       break;
-    case "Grade":
-      params = new grades(raw);
+    case "grade":
+      params = new grade(raw);
       break;
-    case "DownTimeType":
+    case "downTimeType":
       params = new downTimeType(raw, factory_id);
       break;
-    case "DownTime":
+    case "downTime":
       params = new downTime(raw, factory_id);
       break;
-    case "InspectionType":
+    case "inspectionType":
       params = new inspectionType(raw, factory_id);
       break;
-    case "InspectionMethod":
+    case "inspectionMethod":
       params = new inspectionMethod(raw, factory_id);
       break;
-    case "InspectionTool":
+    case "inspectionTool":
       params = new inspectionTool(raw, factory_id);
       break;
-    case "InspectionItem":
+    case "inspectionItem":
       params = new inspectionItem(raw, factory_id);
       break;
-    case "Receive":
-      params = new receives(raw, factory_id);
+    case "receive":
+      params = new receive(raw, factory_id);
       break;
-    case "ReceiveDetail":
-      params = new receiveDetails(raw, factory_id);
+    case "receiveDetail":
+      params = new receiveDetail(raw, factory_id);
       break;
-    case "Income":
-      params = new incomes(raw, factory_id);
+    case "income":
+      params = new income(raw, factory_id);
       break;
-    case "Model":
+    case "model":
       params = new model(raw);
       break;
-    case "WorkingGroup":
+    case "workingGroup":
       params = new workingGroup(raw, factory_id);
       break;
     default:
