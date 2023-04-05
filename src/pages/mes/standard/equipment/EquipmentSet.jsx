@@ -13,8 +13,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function EquipmentSet(isEditMode, processList) {
-
+function EquipmentSet(isEditMode) {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -51,38 +50,6 @@ function EquipmentSet(isEditMode, processList) {
       whiteSpace: false,
       rowSpan: false,
     },
-    isEditMode
-      ? {
-          name: "proc_id",
-          header: CN.proc_nm,
-          minWidth: WIDTH_SHORT,
-          align: "left",
-          formatter: "listItemText",
-          editor: {
-            type: "select",
-            options: {
-              listItems: processList,
-            },
-          },
-          hidden: true,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        }
-      : {
-          name: "proc_nm",
-          header: CN.proc_nm,
-          minWidth: WIDTH_SHORT,
-          align: "left",
-          editor: false,
-          hidden: true,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        },
-
     {
       name: "equip_type_id",
       header: CN.equip_type_id,
@@ -281,24 +248,6 @@ function EquipmentSet(isEditMode, processList) {
     },
   ];
   const columnsModal = [
-    {
-      name: "proc_nm",
-      header: CN.proc_nm,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      formatter: "listItemText",
-      editor: {
-        type: "select",
-        options: {
-          listItems: processList,
-        },
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
     {
       name: "equip_cd",
       header: CN.equip_cd,

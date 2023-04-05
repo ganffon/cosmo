@@ -16,6 +16,7 @@ import GetPutParams from "api/GetPutParams";
 import GetInputSearchParams from "api/GetInputSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import EquipmentSet from "pages/mes/standard/equipment/EquipmentSet";
+import useInputSet from "custom/useInputSet";
 import * as DisableRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
 import * as S from "../oneGrid.styled";
@@ -35,8 +36,6 @@ function Equipment() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [inputTextChange, setInputTextChange] = useState();
-  const [inputBoxID, setInputBoxID] = useState([]);
 
   const [processOpt, processList] = Cbo.useProcess();
 
@@ -57,25 +56,13 @@ function Equipment() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const handleInputSetInit = useCallback(
-    (data) => {
-      const inputBoxID = new Array();
-      const jsonObj = new Object();
-      for (let i = 0; i < data.length; i++) {
-        inputBoxID.push(data[i].id);
-        jsonObj[data[i].id] = "";
-      }
-      return [inputBoxID, jsonObj];
-    },
-    [currentMenuName]
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
   );
-
   useEffect(() => {
-    const data = handleInputSetInit(inputSet);
-    setInputBoxID(data[0]);
-    setInputTextChange(data[1]);
     onClickSearch(true);
-  }, [currentMenuName]);
+  }, []);
 
   const [disableRowCheck, setDisableRowCheck] = DisableRow.useDisableRowCheck(
     isEditMode,
