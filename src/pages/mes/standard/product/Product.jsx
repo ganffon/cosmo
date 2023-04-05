@@ -18,6 +18,7 @@ import GetDeleteParams from "api/GetDeleteParams";
 import ProductSet from "pages/mes/standard/product/ProductSet";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
+import * as DisableRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
 import * as S from "./Product.styled";
 import GetCboSearchParams from "api/GetCboSearchParams";
@@ -94,12 +95,16 @@ function Product() {
     setInputTextChange(data[1]);
     onClickSearch(true);
   }, [currentMenuName]);
-
+  const [disableRowCheck, setDisableRowCheck] = DisableRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const onClickNew = () => {
     setIsModalOpen(true);
   };
   const onClickEdit = () => {
     setIsEditMode(true);
+    setDisableRowCheck(!disableRowCheck);
   };
   const onClickDelete = () => {
     const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
@@ -169,6 +174,7 @@ function Product() {
           severity: "error",
         });
       } finally {
+        setDisableRowCheck(!disableRowCheck);
         setIsBackDrop(false);
       }
     }
@@ -260,8 +266,24 @@ function Product() {
     setIsModalOpen(false);
     onClickSearch();
   };
-  const onClickGrid = () => {};
-  const onEditingFinishGrid = () => {};
+  const onClickGrid = (e) => {
+    DisableRow.handleClickGridCheck(e, isEditMode, [
+      "lot_fg",
+      "use_fg",
+      "active_fg",
+      "is_spareparts",
+      "mat_order_fg",
+      "sal_order_fg",
+      "inv_use_fg",
+      "qms_receive_insp_fg",
+      "qms_proc_insp_fg",
+      "qms_final_insp_fg",
+      "prd_active_fg",
+    ]);
+  };
+  const onEditingFinishGrid = (e) => {
+    DisableRow.handleEditingFinishGridCheck(e);
+  };
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>

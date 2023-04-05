@@ -27,8 +27,7 @@ const handleClickGridCheck = (e, isEditMode, columnName) => {
         condition = condition || e?.columnName === columnName[i];
       }
     }
-
-    if (e?.columnName === "use_fg" || e?.columnName === "prd_fg") {
+    if (condition) {
       e?.instance?.enableRowCheck(e?.rowKey);
       e?.instance?.check(e?.rowKey);
       e?.instance?.disableRowCheck(e?.rowKey);
