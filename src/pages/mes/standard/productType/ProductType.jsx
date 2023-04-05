@@ -12,7 +12,7 @@ import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import GetPostParams from "api/GetPostParams";
 import GetPutParams from "api/GetPutParams";
-import GetSearchParams from "api/GetSearchParams";
+import GetInputSearchParams from "api/GetInputSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import ProductTypeSet from "pages/mes/standard/productType/ProductTypeSet";
 import * as S from "../oneGrid.styled";
@@ -123,7 +123,7 @@ function ProductType() {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const params = GetSearchParams(inputBoxID, inputTextChange);
+        const params = GetInputSearchParams(inputBoxID, inputTextChange);
         const readURI = uri + params;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);

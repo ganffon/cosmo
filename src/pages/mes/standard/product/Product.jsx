@@ -13,13 +13,14 @@ import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import GetPostParams from "api/GetPostParams";
 import GetPutParams from "api/GetPutParams";
-import GetSearchParams from "api/GetSearchParams";
+import GetInputSearchParams from "api/GetInputSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import ProductSet from "pages/mes/standard/product/ProductSet";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
 import * as S from "./Product.styled";
+import GetCboSearchParams from "api/GetCboSearchParams";
 
 function Product() {
   LoginStateChk();
@@ -39,34 +40,12 @@ function Product() {
   const [inputTextChange, setInputTextChange] = useState();
   const [inputBoxID, setInputBoxID] = useState([]);
 
-  // const [productGbnOpt, setProductGbnOpt] = useState([]);
-  // const [modelOpt, setModelOpt] = useState([]);
-  // const [productTypeOpt, setProductTypeOpt] = useState([]);
-  // const [productTypeSmallOpt, setProductTypeSmallOpt] = useState([]);
   const [comboValue, setComboValue] = useState({
     prod_gbn_id: null,
     model_id: null,
     prod_type_id: null,
     prod_type_small_id: null,
   });
-
-  // useEffect(() => {
-  //   const getComboOpt = async () => {
-  //     await restAPI.get(restURI.productGbn).then((res) => {
-  //       setProductGbnOpt(res?.data?.data?.rows);
-  //     });
-  //     await restAPI.get(restURI.productModel).then((res) => {
-  //       setModelOpt(res?.data?.data?.rows);
-  //     });
-  //     await restAPI.get(restURI.productType).then((res) => {
-  //       setProductTypeOpt(res?.data?.data?.rows);
-  //     });
-  //     await restAPI.get(restURI.productTypeSmall).then((res) => {
-  //       setProductTypeSmallOpt(res?.data?.data?.rows);
-  //     });
-  //   };
-  //   getComboOpt();
-  // }, []);
 
   const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
   const [productModelOpt, productModelList] = Cbo.useProductModel();
@@ -168,8 +147,10 @@ function Product() {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const params = GetSearchParams(inputBoxID, inputTextChange);
-        const readURI = uri + params;
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const cboParams = GetCboSearchParams(inputParams, comboValue);
+
+        const readURI = uri + inputParams + cboParams;
         const gridData = await restAPI.get(readURI);
         setGridData(gridData?.data?.data?.rows);
         props &&
@@ -294,10 +275,10 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id:
-                      newValue?.prod_gbn_id === undefined
+                    prod_gbn_nm:
+                      newValue?.prod_gbn_nm === undefined
                         ? null
-                        : newValue?.prod_gbn_id,
+                        : newValue?.prod_gbn_nm,
                   });
                 }}
                 renderInput={(params) => (
@@ -314,10 +295,10 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id:
-                      newValue?.model_id === undefined
+                    model_nm:
+                      newValue?.model_nm === undefined
                         ? null
-                        : newValue?.model_id,
+                        : newValue?.model_nm,
                   });
                 }}
                 renderInput={(params) => (
@@ -334,10 +315,10 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id:
-                      newValue?.prod_type_id === undefined
+                    prod_type_nm:
+                      newValue?.prod_type_nm === undefined
                         ? null
-                        : newValue?.prod_type_id,
+                        : newValue?.prod_type_nm,
                   });
                 }}
                 renderInput={(params) => (
@@ -354,10 +335,10 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined
+                    prod_type_small_nm:
+                      newValue?.prod_type_small_nm === undefined
                         ? null
-                        : newValue?.prod_type_small_id,
+                        : newValue?.prod_type_small_nm,
                   });
                 }}
                 renderInput={(params) => (
