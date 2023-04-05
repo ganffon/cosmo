@@ -29,6 +29,11 @@ class product {
     this.prod_id = raw.prod_id;
   }
 }
+class store {
+  constructor(raw) {
+    this.store_id = raw.store_id;
+  }
+}
 
 function GetDeleteParams(componentName, raw) {
   let params = "";
@@ -51,6 +56,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "Product":
       params = new product(raw);
+      break;
+    case "Store":
+      params = new store(raw);
       break;
     default:
   }

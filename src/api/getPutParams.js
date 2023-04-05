@@ -18,7 +18,6 @@ class equipment {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.equip_id = raw.equip_id;
-    this.proc_id = raw.proc_id;
     this.equip_type_id = raw.equip_type_id;
     this.equip_cd = raw.equip_cd;
     this.equip_nm = raw.equip_nm;
@@ -88,6 +87,21 @@ class products {
     this.prd_max = Number(raw.prd_max);
   }
 }
+class store {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.store_id = raw.store_id;
+    this.store_cd = raw.store_cd;
+    this.store_nm = raw.store_nm;
+    this.reject_store_fg = raw.reject_store_fg ? true : false;
+    this.return_store_fg = raw.return_store_fg ? true : false;
+    this.outgo_store_fg = raw.outgo_store_fg ? true : false;
+    this.final_insp_store_fg = raw.final_insp_store_fg ? true : false;
+    this.outsourcing_store_fg = raw.outsourcing_store_fg ? true : false;
+    this.available_store_fg = raw.available_store_fg ? true : false;
+    this.position_type = raw.position_type;
+  }
+}
 
 function GetPutParams(componentName, raw) {
   let params = "";
@@ -110,6 +124,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "Product":
       params = new products(raw);
+      break;
+    case "Store":
+      params = new store(raw);
       break;
     default:
   }

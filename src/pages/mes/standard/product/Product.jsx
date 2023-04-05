@@ -17,6 +17,7 @@ import GetInputSearchParams from "api/GetInputSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import ProductSet from "pages/mes/standard/product/ProductSet";
 import TextField from "@mui/material/TextField";
+import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
 import * as DisableRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
@@ -38,8 +39,6 @@ function Product() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [inputTextChange, setInputTextChange] = useState();
-  const [inputBoxID, setInputBoxID] = useState([]);
 
   const [comboValue, setComboValue] = useState({
     prod_gbn_id: null,
@@ -77,24 +76,13 @@ function Product() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const handleInputSetInit = useCallback(
-    (data) => {
-      const inputBoxID = new Array();
-      const jsonObj = new Object();
-      for (let i = 0; i < data.length; i++) {
-        inputBoxID.push(data[i].id);
-        jsonObj[data[i].id] = "";
-      }
-      return [inputBoxID, jsonObj];
-    },
-    [currentMenuName]
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
   );
   useEffect(() => {
-    const data = handleInputSetInit(inputSet);
-    setInputBoxID(data[0]);
-    setInputTextChange(data[1]);
     onClickSearch(true);
-  }, [currentMenuName]);
+  }, []);
   const [disableRowCheck, setDisableRowCheck] = DisableRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
@@ -181,13 +169,9 @@ function Product() {
   };
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    console.log(
-      refSingleGrid?.current?.gridInst?.getModifiedRows()?.updatedRows
-    );
     const data = refSingleGrid?.current?.gridInst
-      ?.getModifiedRows()
-      ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
-    console.log(data);
+      ?.getCheckedRows()
+      ?.map((raw) => GetPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI

@@ -1,37 +1,53 @@
 import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
+import { useCookies } from "react-cookie";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridModule from "components/grid/GridModule";
+import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import getPutParams from "api/GetPutParams";
+import GetPostParams from "api/GetPostParams";
+import GetPutParams from "api/GetPutParams";
 import GetInputSearchParams from "api/GetInputSearchParams";
-import getDeleteParams from "api/GetDeleteParams";
+import GetDeleteParams from "api/GetDeleteParams";
 import StoreSet from "pages/mes/standard/store/StoreSet";
+import * as DisableRow from "custom/useDisableRowCheck";
+import useInputSet from "custom/useInputSet";
+import * as HD from "custom/useHandleData";
 import * as S from "../oneGrid.styled";
 
 function Store() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
+  const [cookie, setCookie, removeCookie] = useCookies();
   const refSingleGrid = useRef(null);
+  const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [inputTextChange, setInputTextChange] = useState();
-  const [inputBoxID, setInputBoxID] = useState([]);
-
-  const { uri, rowHeaders, header, columns, columnOptions, inputSet } =
-    StoreSet(isEditMode);
+  // const [isDeleteAlertOpen, setIsDeleteAlertOpen] =
+  //   HD.useClickDelete(refSingleGrid);
+  const {
+    uri,
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = StoreSet(isEditMode);
 
   const SETTING_FILE = "Store";
 
@@ -40,33 +56,36 @@ function Store() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const handleInputSetInit = useCallback(
-    (data) => {
-      const inputBoxID = new Array();
-      const jsonObj = new Object();
-      for (let i = 0; i < data.length; i++) {
-        inputBoxID.push(data[i].id);
-        jsonObj[data[i].id] = "";
-      }
-      return [inputBoxID, jsonObj];
-    },
-    [currentMenuName]
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
   );
   useEffect(() => {
-    const data = handleInputSetInit(inputSet);
-    setInputBoxID(data[0]);
-    setInputTextChange(data[1]);
     onClickSearch(true);
-  }, [currentMenuName]);
+  }, []);
 
-  const onClickNew = () => {};
-  const onClickEdit = () => {};
-  const onClickDelete = () => {};
+  const [disableRowCheck, setDisableRowCheck] = DisableRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
+  const onClickNew = () => {
+    setIsModalOpen(true);
+  };
+  const onClickEdit = () => {
+    setIsEditMode(true);
+    setDisableRowCheck(!disableRowCheck);
+  };
+  const onClickDelete = () => {
+    const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
+    if (data.length !== 0) {
+      setIsDeleteAlertOpen(true);
+    }
+  };
   const handleDelete = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
-      ?.map((raw) => getDeleteParams(SETTING_FILE, raw));
+      ?.map((raw) => GetDeleteParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -122,6 +141,7 @@ function Store() {
           severity: "error",
         });
       } finally {
+        setDisableRowCheck(!disableRowCheck);
         setIsBackDrop(false);
       }
     }
@@ -129,8 +149,8 @@ function Store() {
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
-      ?.getModifiedRows()
-      ?.updatedRows?.map((raw) => getPutParams(SETTING_FILE, raw));
+      ?.getCheckedRows()
+      ?.map((raw) => GetPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -160,9 +180,66 @@ function Store() {
     setIsEditMode(false);
     onClickSearch(true);
   };
-
-  const onClickGrid = () => {};
-  const onEditingFinishGrid = () => {};
+  const onClickModalAddRow = () => {
+    refModalGrid?.current?.gridInst?.appendRow();
+  };
+  let rowKey;
+  const onClickModalGrid = (e) => {
+    rowKey = e.rowKey;
+  };
+  const onClickModalCancelRow = () => {
+    refModalGrid?.current?.gridInst?.removeRow(rowKey);
+  };
+  const onClickModalSave = async () => {
+    refModalGrid?.current?.gridInst?.finishEditing();
+    const data = refModalGrid?.current?.gridInst
+      ?.getModifiedRows()
+      ?.createdRows.map((raw) =>
+        GetPostParams(SETTING_FILE, raw, cookie.factoryID)
+      );
+    if (data.length !== 0 && isBackDrop === false) {
+      setIsBackDrop(true);
+      await restAPI
+        .post(uri, data)
+        .then((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.data?.message,
+            severity: "success",
+          });
+          refModalGrid?.current?.gridInst?.clear();
+        })
+        .catch((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.message ? res?.message : res?.response?.data?.message,
+            severity: "error",
+          });
+        })
+        .finally(() => {
+          setIsBackDrop(false);
+        });
+    }
+  };
+  const onClickModalClose = () => {
+    setIsModalOpen(false);
+    onClickSearch();
+  };
+  const onClickGrid = (e) => {
+    DisableRow.handleClickGridCheck(e, isEditMode, [
+      "reject_store_fg",
+      "return_store_fg",
+      "outgo_store_fg",
+      "final_insp_store_fg",
+      "outsourcing_store_fg",
+      "available_store_fg",
+    ]);
+  };
+  const onEditingFinishGrid = (e) => {
+    DisableRow.handleEditingFinishGridCheck(e);
+  };
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -217,6 +294,22 @@ function Store() {
         <AlertDelete
           handleDelete={handleDelete}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        />
+      ) : null}
+      {isModalOpen ? (
+        <ModalNew
+          onClickModalAddRow={onClickModalAddRow}
+          onClickModalCancelRow={onClickModalCancelRow}
+          onClickModalSave={onClickModalSave}
+          onClickModalClose={onClickModalClose}
+          columns={columnsModal}
+          columnOptions={columnOptions}
+          header={header}
+          rowHeaders={rowHeadersModal}
+          uri={uri}
+          refModalGrid={refModalGrid}
+          setIsModalOpen={setIsModalOpen}
+          onClickModalGrid={onClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

@@ -16,6 +16,8 @@ import GetPutParams from "api/GetPutParams";
 import GetInputSearchParams from "api/GetInputSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import WorkingGroupSet from "pages/mes/standard/workingGroup/WorkingGroupSet";
+import useInputSet from "custom/useInputSet";
+import * as DisableRow from "custom/useDisableRowCheck";
 import * as S from "../oneGrid.styled";
 
 function WorkingGroup(props) {
@@ -35,8 +37,6 @@ function WorkingGroup(props) {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [inputTextChange, setInputTextChange] = useState();
-  const [inputBoxID, setInputBoxID] = useState([]);
 
   const {
     uri,
@@ -54,30 +54,23 @@ function WorkingGroup(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const handleInputSetInit = useCallback(
-    (data) => {
-      const inputBoxID = new Array();
-      const jsonObj = new Object();
-      for (let i = 0; i < data.length; i++) {
-        inputBoxID.push(data[i].id);
-        jsonObj[data[i].id] = "";
-      }
-      return [inputBoxID, jsonObj];
-    },
-    [currentMenuName]
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
   );
   useEffect(() => {
-    const data = handleInputSetInit(inputSet);
-    setInputBoxID(data[0]);
-    setInputTextChange(data[1]);
     onClickSearch(true);
-  }, [currentMenuName]);
-
+  }, []);
+  const [disableRowCheck, setDisableRowCheck] = DisableRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const onClickNew = () => {
     setIsModalOpen(true);
   };
   const onClickEdit = () => {
     setIsEditMode(true);
+    setDisableRowCheck(!disableRowCheck);
   };
   const onClickDelete = () => {
     const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
@@ -145,6 +138,7 @@ function WorkingGroup(props) {
           severity: "error",
         });
       } finally {
+        setDisableRowCheck(!disableRowCheck);
         setIsBackDrop(false);
       }
     }
@@ -152,8 +146,8 @@ function WorkingGroup(props) {
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
     const data = refSingleGrid?.current?.gridInst
-      ?.getModifiedRows()
-      ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
+      ?.getCheckedRows()
+      ?.map((raw) => GetPutParams(SETTING_FILE, raw));
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
@@ -198,7 +192,7 @@ function WorkingGroup(props) {
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) =>
-        GetPostParams(SETTING_FILE, raw, cookie.userFactoryID)
+        GetPostParams(SETTING_FILE, raw, cookie.factoryID)
       );
 
     if (data.length !== 0 && isBackDrop === false) {
@@ -231,8 +225,12 @@ function WorkingGroup(props) {
     setIsModalOpen(false);
     onClickSearch();
   };
-  const onClickGrid = () => {};
-  const onEditingFinishGrid = () => {};
+  const onClickGrid = (e) => {
+    DisableRow.handleClickGridCheck(e, isEditMode, []);
+  };
+  const onEditingFinishGrid = (e) => {
+    DisableRow.handleEditingFinishGridCheck(e);
+  };
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>

@@ -13,6 +13,7 @@ import getPutParams from "api/GetPutParams";
 import GetInputSearchParams from "api/GetInputSearchParams";
 import getDeleteParams from "api/GetDeleteParams";
 import ProcessSet from "pages/mes/standard/process/ProcessSet";
+import useInputSet from "custom/useInputSet";
 import * as S from "../oneGrid.styled";
 
 function Process() {
@@ -27,8 +28,6 @@ function Process() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [inputTextChange, setInputTextChange] = useState();
-  const [inputBoxID, setInputBoxID] = useState([]);
 
   const { uri, rowHeaders, header, columns, columnOptions, inputSet } =
     ProcessSet(isEditMode);
@@ -40,24 +39,13 @@ function Process() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const handleInputSetInit = useCallback(
-    (data) => {
-      const inputBoxID = new Array();
-      const jsonObj = new Object();
-      for (let i = 0; i < data.length; i++) {
-        inputBoxID.push(data[i].id);
-        jsonObj[data[i].id] = "";
-      }
-      return [inputBoxID, jsonObj];
-    },
-    [currentMenuName]
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
   );
   useEffect(() => {
-    const data = handleInputSetInit(inputSet);
-    setInputBoxID(data[0]);
-    setInputTextChange(data[1]);
     onClickSearch(true);
-  }, [currentMenuName]);
+  }, []);
 
   const onClickNew = () => {};
   const onClickEdit = () => {};
