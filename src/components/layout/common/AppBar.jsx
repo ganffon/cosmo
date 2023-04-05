@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 // ⬇️ import MUI
@@ -21,10 +21,10 @@ function AppBar() {
   } = useContext(LayoutContext);
   const [cookie, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
-  const gotoDashboard = () => {
+  const gotoDashboard = useCallback(() => {
     navigate("/mes");
     setCurrentMenuName("Dashboard");
-  };
+  }, []);
 
   return (
     <S.AppBarBox isAllScreen={isAllScreen}>
