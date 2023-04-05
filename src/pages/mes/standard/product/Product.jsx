@@ -51,7 +51,7 @@ function Product() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-
+  const [unitOpt, unitList] = Cbo.useUnit();
   const {
     uri,
     rowHeaders,
@@ -66,7 +66,8 @@ function Product() {
     productGbnList,
     productModelList,
     productTypeList,
-    productTypeSmallList
+    productTypeSmallList,
+    unitList
   );
   const SETTING_FILE = "Product";
 
@@ -174,10 +175,13 @@ function Product() {
   };
   const onClickEditModeSave = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    console.log(refSingleGrid?.current?.gridInst?.getModifiedRows());
+    console.log(
+      refSingleGrid?.current?.gridInst?.getModifiedRows()?.updatedRows
+    );
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.updatedRows?.map((raw) => GetPutParams(SETTING_FILE, raw));
+    console.log(data);
     if (data.length !== 0 && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI

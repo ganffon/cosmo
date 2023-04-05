@@ -43,7 +43,7 @@ class products {
     this.model_id = raw.model_nm;
     this.prod_type_id = raw.prod_type_nm;
     this.prod_type_small_id = raw.prod_type_small_nm;
-    this.unit_id = raw.unit_id;
+    this.unit_id = raw.unit_nm;
     this.rev = raw.rev;
     this.prod_std = raw.prod_std;
     this.lot_fg = raw.lot_fg ? true : false;

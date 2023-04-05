@@ -15,7 +15,8 @@ function ProductSet(
   productGbnList,
   productModelList,
   productTypeList,
-  productTypeSmallList
+  productTypeSmallList,
+  unitList
 ) {
   const data = [];
   /** 🔸columns ❗
@@ -225,30 +226,37 @@ function ProductSet(
       whiteSpace: false,
       rowSpan: false,
     },
-    {
-      name: "unit_id",
-      header: CN.unit_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "unit_nm",
-      header: CN.unit_nm,
-      minWidth: WIDTH_SUPER_SHORT,
-      align: "center",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    isEditMode
+      ? {
+          name: "unit_id",
+          header: CN.unit_nm,
+          minWidth: WIDTH_SHORT,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: unitList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "unit_nm",
+          header: CN.unit_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
     {
       name: "lot_fg",
       header: CN.lot_fg,
@@ -968,9 +976,15 @@ function ProductSet(
     {
       name: "unit_nm",
       header: CN.unit_nm,
-      minWidth: WIDTH_SUPER_SHORT,
-      align: "center",
-      editor: "text",
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: unitList,
+        },
+      },
       hidden: false,
       sortable: false,
       filter: false,

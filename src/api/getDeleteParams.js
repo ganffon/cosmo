@@ -24,6 +24,11 @@ class workingGroup {
     this.worker_group_id = raw.worker_group_id;
   }
 }
+class product {
+  constructor(raw) {
+    this.prod_id = raw.prod_id;
+  }
+}
 
 function GetDeleteParams(componentName, raw) {
   let params = "";
@@ -43,6 +48,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "WorkingGroup":
       params = new workingGroup(raw);
+      break;
+    case "Product":
+      params = new product(raw);
       break;
     default:
   }

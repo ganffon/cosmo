@@ -47,12 +47,13 @@ class workingGroup {
 }
 class products {
   constructor(raw) {
+    this.prod_id = raw.prod_id;
     this.prod_no = raw.prod_no;
     this.prod_nm = raw.prod_nm;
-    this.prod_gbn_id = raw.prod_gbn_nm;
-    this.model_id = raw.model_nm;
-    this.prod_type_id = raw.prod_type_nm;
-    this.prod_type_small_id = raw.prod_type_small_nm;
+    this.prod_gbn_id = raw.prod_gbn_id;
+    this.model_id = raw.model_id;
+    this.prod_type_id = raw.prod_type_id;
+    this.prod_type_small_id = raw.prod_type_small_id;
     this.unit_id = raw.unit_id;
     this.rev = raw.rev;
     this.prod_std = raw.prod_std;
