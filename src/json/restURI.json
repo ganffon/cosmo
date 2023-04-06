@@ -27,5 +27,7 @@
   "inspectItem": "/inspectionitem",
   "inspectDocument": "/inspectiondocument",
   "inspectDocumentDetail": "/inspectiondocumentdetail",
-  "interfaceItemType": "/interfaceitemtype"
+  "interfaceItemType": "/interfaceitemtype",
+  "interfaceItem": "/interfaceitem",
+  "interfaceMemory": "/interfacememory"
 }

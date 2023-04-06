@@ -177,5 +177,17 @@
 
   "infc_item_type_id": "IF유형ID",
   "infc_item_type_cd": "IF유형코드",
-  "infc_item_type_nm": "IF유형명"
+  "infc_item_type_nm": "IF유형명",
+
+  "infc_item_id": "IF항목ID",
+  "infc_item_cd": "IF항목코드",
+  "infc_item_nm": "IF항목명",
+
+  "infc_memory_id": "MemoryID",
+  "infc_memory_nm": "Memory명칭",
+  "plc_ip": "PLC IP",
+  "plc_port": "PLC Port",
+  "plc_ip": "PLC IP",
+  "device_addre": "Device Address",
+  "tag_id": "Tag ID"
 }

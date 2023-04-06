@@ -1,4 +1,3 @@
-import React, { useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 // ⬇️ reference of page
 import Layout from "components/layout/common/Layout";
@@ -15,7 +14,6 @@ import Unit from "pages/mes/standard/unit/Unit";
 import PartnerType from "pages/mes/standard/partnerType/PartnerType";
 import Partner from "pages/mes/standard/partner/Partner";
 import Dashboard from "pages/mes/dashboard/Dashboard";
-// import RealMenuList from "json/RealMenuList.json";
 import Document from "pages/mes/standard/document/Document";
 import MenuManage from "pages/admin/menuManage/MenuManage";
 import MenuList from "pages/admin/menuList/MenuList";
@@ -31,45 +29,15 @@ import InspectTool from "pages/mes/standard/inspectTool/InspectTool";
 import InspectType from "pages/mes/standard/inspectType/InspectType";
 import InspectItem from "pages/mes/standard/inspectItem/InspectItem";
 import InterfaceItemType from "pages/mes/standard/interfaceItemType/InterfaceItemType";
+import InterfaceItem from "pages/mes/standard/interfaceItem/InterfaceItem";
+import InterfaceMemory from "pages/mes/standard/interfaceMemory/InterfaceMemory";
 
 export default function MainRouter() {
-  // const [realMenuList, setRealMenuList] = useState([]);
-  // useEffect(() => {
-  //   setRealMenuList(RealMenuList);
-  // }, []);
-  // const routeList = useMemo(() => {
-  //   const result = realMenuList.map((menu) => {
-  //     const result = { ...menu };
-  //     // console.log(`menu.componentName: ${menu.componentName}`);
-  //     const component = Pages[menu.componentName];
-  //     // console.log(`component: ${component}`);
-  //     if (component) {
-  //       result.component = Pages[menu.componentName]();
-  //       // console.log(result.component);
-  //     }
-  //     return result;
-  //   });
-  //   return result;
-  // }, [realMenuList]);
-
-  // if (realMenuList.length === 0) {
-  //   return <div>Loading...</div>;
-  // }
   return (
     <Layout>
       <Routes>
         <Route path="" element={<Dashboard />} />
-        {/* {realMenuList.map((menu) => {
-          return (
-            menu.onlySearch && (
-              <Route
-                key={menu.id}
-                path={menu.path}
-                element={<OneGrid componentName={menu.componentName} />}
-              />
-            )
-          );
-        })} */}
+
         <Route path="factory" element={<Factory />} />
         <Route path="line" element={<Line />} />
         <Route path="process" element={<Process />} />
@@ -94,6 +62,8 @@ export default function MainRouter() {
         <Route path="inspection-item" element={<InspectItem />} />
 
         <Route path="interface-item-type" element={<InterfaceItemType />} />
+        <Route path="interface-item" element={<InterfaceItem />} />
+        <Route path="interface-memory" element={<InterfaceMemory />} />
 
         <Route path="document" element={<Document />} />
         <Route path="unit" element={<Unit />} />

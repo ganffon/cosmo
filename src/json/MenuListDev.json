@@ -252,15 +252,15 @@
             "under": null
           },
           {
-            "name": "❌설비I/F항목관리[CRUD]",
+            "name": "✴️설비I/F항목관리[CRUD]",
             "id": "interface-item",
             "path": "interface-item",
             "under": null
           },
           {
-            "name": "❌MemoryMap관리[CRUD]",
+            "name": "✴️MemoryMap관리[CRUD]",
             "id": "interface-memory",
-            "path": null,
+            "path": "interface-memory",
             "under": null
           }
         ]

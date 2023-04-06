@@ -151,7 +151,29 @@ class interfaceItemType {
     this.infc_item_type_nm = raw.infc_item_type_nm;
   }
 }
+class interfaceMemory {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.infc_memory_id = raw.infc_memory_id;
+    this.infc_item_type_id = raw.infc_item_type_id;
+    this.infc_item_id = raw.infc_item_id;
+    this.line_id = raw.line_id;
+    this.proc_id = raw.proc_id;
+    this.equip_id = raw.equip_id;
+    this.plc_ip = raw.plc_ip;
+    this.plc_port = raw.plc_port;
+    this.device_addre = raw.device_addre;
+    this.tag_id = raw.tag_id;
+    this.infc_memory_nm = raw.infc_memory_nm;
+    this.remark = raw.remark;
+  }
+}
 
+/**
+ * @param {string} componentName 소문자로 시작
+ * @param {any} raw 처리 할 데이터
+ * @returns
+ */
 function GetPutParams(componentName, raw) {
   let params = "";
 
@@ -194,6 +216,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "interfaceItemType":
       params = new interfaceItemType(raw);
+      break;
+    case "interfaceMemory":
+      params = new interfaceMemory(raw);
       break;
     default:
   }
