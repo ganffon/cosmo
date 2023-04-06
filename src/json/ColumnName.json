@@ -58,6 +58,14 @@
   "available_store_fg": "가용재고창고여부",
   "position_type": "창고위치유형",
 
+  "location_id": "위치ID",
+  "location_cd": "위치코드",
+  "location_nm": "위치명",
+
+  "downtime_type_id": "비가동유형ID",
+  "downtime_type_cd": "비가동유형코드",
+  "downtime_type_nm": "비가동유형명",
+
   "partner_type_id": "거래처유형ID",
   "partner_type_cd": "거래처유형코드",
   "partner_type_nm": "거래처유형명",
@@ -145,5 +153,17 @@
   "sortby": "정렬",
   "read_only_fg": "메뉴구분",
   "common_fg": "공용폼",
-  "act_fg": "동작메뉴"
+  "act_fg": "동작메뉴",
+
+  "insp_filing_id": "기록물ID",
+  "insp_filing_cd": "기록물코드",
+  "insp_filing_nm": "기록물명",
+
+  "insp_method_id": "검사방법ID",
+  "insp_method_cd": "검사방법코드",
+  "insp_method_nm": "검사방법명",
+
+  "insp_tool_id": "검사구ID",
+  "insp_tool_cd": "검사구코드",
+  "insp_tool_nm": "검사구명"
 }

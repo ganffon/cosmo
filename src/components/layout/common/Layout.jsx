@@ -1,13 +1,9 @@
 import React, { useState, createContext } from "react";
-// ⬇️ import MUI
-import CssBaseline from "@mui/material/CssBaseline";
 // ⬇️ reference of page
 import AppBar from "./AppBar";
-import DrawerSet from "../v1menu/DrawerSet";
 import V2MenuFold from "../v2menu/V2MenuFold";
 import ExtendButton from "./ExtendButton";
 import * as S from "./Layout.styled";
-import { MENU_TYPE } from "constant";
 
 export const LayoutContext = createContext();
 
@@ -50,7 +46,6 @@ const Layout = ({ children }) => {
           superAdmin,
         }}
       >
-        {/* <CssBaseline /> */}
         <AppBar />
         <S.MainBox>
           <V2MenuFold />

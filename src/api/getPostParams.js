@@ -153,7 +153,7 @@ class grade {
     this.grade_nm = raw.grade_nm;
   }
 }
-class downTimeType {
+class downtimeType {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.downtime_type_cd = raw.downtime_type_cd;
@@ -167,101 +167,6 @@ class downTime {
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
     this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
-  }
-}
-class inspectionType {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
-    this.insp_item_type_cd = raw.insp_item_type_cd;
-    this.insp_item_type_nm = raw.insp_item_type_nm;
-  }
-}
-class inspectionMethod {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
-    this.insp_method_cd = raw.insp_method_cd;
-    this.insp_method_nm = raw.insp_method_nm;
-  }
-}
-class inspectionTool {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
-    this.insp_tool_cd = raw.insp_tool_cd;
-    this.insp_tool_nm = raw.insp_tool_nm;
-  }
-}
-class inspectionItem {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
-    this.insp_item_type_id = raw.insp_item_type_id;
-    this.insp_item_cd = raw.insp_item_cd;
-    this.insp_item_nm = raw.insp_item_nm;
-    this.insp_tool_id = raw.insp_tool_id;
-    this.insp_method_id = raw.insp_method_id;
-    this.unit_id = raw.unit_id;
-  }
-}
-class receive {
-  constructor(raw, factory_id) {
-    this.receive_id = raw.receive_id;
-    this.seq = raw.seq;
-    this.factory_id = factory_id;
-    this.prod_id = raw.prod_id;
-    this.unit_id = raw.unit_id;
-    this.lot_no = raw.lot_no;
-    this.manufactured_lot_no = raw.manufactured_lot_no;
-    this.qty = raw.qty;
-    this.price = raw.price;
-    this.money_unit_id = raw.money_unit_id;
-    this.exchange = raw.exchange;
-    this.total_price = raw.total_price;
-    this.unit_qty = raw.unit_qty;
-    this.insp_fg = raw.insp_fg ? true : false;
-    this.carry_fg = raw.carry_fg ? true : false;
-    this.order_detail_id = raw.order_detail_id;
-    this.to_store_id = raw.to_store_id;
-    this.to_location_id = raw.to_location_id;
-    this.barcode = raw.barcode;
-    this.remark = raw.remark;
-  }
-}
-class receiveDetail {
-  constructor(raw, factory_id) {
-    this.receive_id = raw.receive_id;
-    this.seq = raw.seq;
-    this.factory_id = factory_id;
-    this.prod_id = raw.prod_id;
-    this.unit_id = raw.unit_id;
-    this.lot_no = raw.lot_no;
-    this.manufactured_lot_no = raw.manufactured_lot_no;
-    this.qty = raw.qty;
-    this.price = raw.price;
-    this.money_unit_id = raw.money_unit_id;
-    this.exchange = raw.exchange;
-    this.total_price = raw.total_price;
-    this.unit_qty = raw.unit_qty;
-    this.insp_fg = raw.insp_fg ? true : false;
-    this.carry_fg = raw.carry_fg ? true : false;
-    this.order_detail_id = raw.order_detail_id;
-    this.to_store_id = raw.to_store_id;
-    this.to_location_id = raw.to_location_id;
-    this.barcode = raw.barcode;
-    this.remark = raw.remark;
-  }
-}
-class income {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
-    this.prod_id = raw.prod_id;
-    this.reg_date = raw.reg_date;
-    this.lot_no = raw.lot_no;
-    this.qty = raw.qty;
-    this.receive_detail_id = raw.receive_detail_id;
-    this.to_store_id = raw.to_store_id;
-    this.to_location_id = raw.to_location_id;
-    this.income_uid = raw.income_uid;
-    this.remark = raw.remark;
-    this.barcode = raw.barcode;
   }
 }
 class model {
@@ -281,6 +186,27 @@ class workingGroup {
     this.factory_id = factory_id;
     this.worker_group_cd = raw.worker_group_cd;
     this.worker_group_nm = raw.worker_group_nm;
+  }
+}
+class inspectFiling {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.insp_filing_cd = raw.insp_filing_cd;
+    this.insp_filing_nm = raw.insp_filing_nm;
+  }
+}
+class inspectMethod {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.insp_method_cd = raw.insp_method_cd;
+    this.insp_method_nm = raw.insp_method_nm;
+  }
+}
+class inspectTool {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.insp_tool_cd = raw.insp_tool_cd;
+    this.insp_tool_nm = raw.insp_tool_nm;
   }
 }
 function GetPostParams(componentName, raw, factory_id) {
@@ -326,38 +252,26 @@ function GetPostParams(componentName, raw, factory_id) {
     case "grade":
       params = new grade(raw);
       break;
-    case "downTimeType":
-      params = new downTimeType(raw, factory_id);
+    case "downtimeType":
+      params = new downtimeType(raw, factory_id);
       break;
     case "downTime":
       params = new downTime(raw, factory_id);
-      break;
-    case "inspectionType":
-      params = new inspectionType(raw, factory_id);
-      break;
-    case "inspectionMethod":
-      params = new inspectionMethod(raw, factory_id);
-      break;
-    case "inspectionTool":
-      params = new inspectionTool(raw, factory_id);
-      break;
-    case "inspectionItem":
-      params = new inspectionItem(raw, factory_id);
-      break;
-    case "receive":
-      params = new receive(raw, factory_id);
-      break;
-    case "receiveDetail":
-      params = new receiveDetail(raw, factory_id);
-      break;
-    case "income":
-      params = new income(raw, factory_id);
       break;
     case "model":
       params = new model(raw);
       break;
     case "workingGroup":
       params = new workingGroup(raw, factory_id);
+      break;
+    case "inspectFiling":
+      params = new inspectFiling(raw, factory_id);
+      break;
+    case "inspectMethod":
+      params = new inspectMethod(raw, factory_id);
+      break;
+    case "inspectTool":
+      params = new inspectTool(raw, factory_id);
       break;
     default:
   }

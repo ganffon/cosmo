@@ -103,6 +103,39 @@ class store {
   }
 }
 
+class downtimeType {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.downtime_type_id = raw.downtime_type_id;
+    this.downtime_type_cd = raw.downtime_type_cd;
+    this.downtime_type_nm = raw.downtime_type_nm;
+  }
+}
+class inspectFiling {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.insp_filing_id = raw.insp_filing_id;
+    this.insp_filing_cd = raw.insp_filing_cd;
+    this.insp_filing_nm = raw.insp_filing_nm;
+  }
+}
+class inspectMethod {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.insp_method_id = raw.insp_method_id;
+    this.insp_method_cd = raw.insp_method_cd;
+    this.insp_method_nm = raw.insp_method_nm;
+  }
+}
+class inspectTool {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.insp_tool_id = raw.insp_tool_id;
+    this.insp_tool_cd = raw.insp_tool_cd;
+    this.insp_tool_nm = raw.insp_tool_nm;
+  }
+}
+
 function GetPutParams(componentName, raw) {
   let params = "";
 
@@ -127,6 +160,18 @@ function GetPutParams(componentName, raw) {
       break;
     case "store":
       params = new store(raw);
+      break;
+    case "downtimeType":
+      params = new downtimeType(raw);
+      break;
+    case "inspectFiling":
+      params = new inspectFiling(raw);
+      break;
+    case "inspectMethod":
+      params = new inspectMethod(raw);
+      break;
+    case "inspectTool":
+      params = new inspectTool(raw);
       break;
     default:
   }

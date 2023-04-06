@@ -20,10 +20,8 @@ const useDelete = (
   SETTING_FILE
 ) => {
   const [actDelete, setActDelete] = useState(false);
-
+  refGrid?.current?.gridInst?.finishEditing();
   useEffect(() => {
-    refGrid?.current?.gridInst?.finishEditing();
-
     const handle = async () => {
       const data = refGrid?.current?.gridInst
         ?.getCheckedRows()
@@ -75,10 +73,8 @@ const useSearch = (
   uri
 ) => {
   const [actSearch, setActSearch] = useState(false);
-
+  refGrid?.current?.gridInst?.finishEditing();
   useEffect(() => {
-    refGrid?.current?.gridInst?.finishEditing();
-
     const handle = async () => {
       if (isBackDrop === false) {
         try {
@@ -126,10 +122,8 @@ const useSearchCbo = (
   uri
 ) => {
   const [actSearch, setActSearch] = useState(false);
-
+  refGrid?.current?.gridInst?.finishEditing();
   useEffect(() => {
-    refGrid?.current?.gridInst?.finishEditing();
-
     const handle = async () => {
       if (isBackDrop === false) {
         try {
@@ -173,10 +167,8 @@ const useEditModeSave = (
   uri
 ) => {
   const [actEditModeSave, setActEditModeSave] = useState(false);
-
+  refGrid?.current?.gridInst?.finishEditing();
   useEffect(() => {
-    refGrid?.current?.gridInst?.finishEditing();
-
     const handle = async () => {
       const data = refGrid?.current?.gridInst
         ?.getCheckedRows()
@@ -225,10 +217,8 @@ const useModalSave = (
 ) => {
   const [actModalSave, setActModalSave] = useState(false);
   const [cookie, setCookie, removeCookie] = useCookies();
-
+  refGrid?.current?.gridInst?.finishEditing();
   useEffect(() => {
-    refGrid?.current?.gridInst?.finishEditing();
-
     const handle = async () => {
       const data = refGrid?.current?.gridInst
         ?.getModifiedRows()
