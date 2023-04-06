@@ -1,6 +1,5 @@
-import { useContext, useState, useEffect, useRef, useCallback } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import { useCookies } from "react-cookie";
 import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridSingle from "components/grid/GridSingle";
@@ -8,13 +7,8 @@ import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
-import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import GetPostParams from "api/GetPostParams";
-import GetPutParams from "api/GetPutParams";
-import GetInputSearchParams from "api/GetInputSearchParams";
-import GetDeleteParams from "api/GetDeleteParams";
 import StoreSet from "pages/mes/standard/store/StoreSet";
 import * as DisableRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
@@ -25,7 +19,6 @@ function Store() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
-  const [cookie, setCookie, removeCookie] = useCookies();
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -36,8 +29,7 @@ function Store() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  // const [isDeleteAlertOpen, setIsDeleteAlertOpen] =
-  //   HD.useClickDelete(refSingleGrid);
+  const [searchToggle, setSearchToggle] = useState(false);
   const {
     uri,
     rowHeaders,
@@ -61,19 +53,69 @@ function Store() {
     inputSet
   );
   useEffect(() => {
-    onClickSearch(true);
+    onClickSearch();
   }, []);
 
-  const [disableRowCheck, setDisableRowCheck] = DisableRow.useDisableRowCheck(
+  useEffect(() => {
+    onClickSearch();
+  }, [searchToggle]);
+
+  const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
+  );
+
+  const [actDelete, setActDelete] = HD.useDelete(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setIsDeleteAlertOpen,
+    searchToggle,
+    setSearchToggle,
+    uri,
+    SETTING_FILE
+  );
+
+  const [actSearch, setActSearch] = HD.useSearch(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    inputBoxID,
+    inputTextChange,
+    setGridData,
+    disableRowToggle,
+    setDisableRowToggle,
+    uri
+  );
+
+  const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SETTING_FILE,
+    uri
+  );
+  const [actModalSave, setActModalSave] = HD.useModalSave(
+    refModalGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SETTING_FILE,
+    uri
   );
   const onClickNew = () => {
     setIsModalOpen(true);
   };
   const onClickEdit = () => {
     setIsEditMode(true);
-    setDisableRowCheck(!disableRowCheck);
+    setDisableRowToggle(!disableRowToggle);
   };
   const onClickDelete = () => {
     const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
@@ -81,104 +123,22 @@ function Store() {
       setIsDeleteAlertOpen(true);
     }
   };
-  const handleDelete = async () => {
-    refSingleGrid?.current?.gridInst?.finishEditing();
-    const data = refSingleGrid?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetDeleteParams(SETTING_FILE, raw));
-    if (data.length !== 0 && isBackDrop === false) {
-      setIsBackDrop(true);
-      await restAPI
-        .delete(uri, { data })
-        .then((res) => {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: res?.data?.message,
-            severity: "success",
-          });
-        })
-        .catch((res) => {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: res?.response?.data?.message,
-            severity: "error",
-          });
-        })
-        .finally(() => {
-          setIsBackDrop(false);
-          setIsDeleteAlertOpen(false);
-          onClickSearch(false);
-        });
-    }
+
+  const handleDelete = () => {
+    setActDelete(!actDelete);
   };
   const handleInputTextChange = async (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
-  const onClickSearch = async (props) => {
-    refSingleGrid?.current?.gridInst?.finishEditing();
-    //🔸검색버튼을 이미 눌러서 Loading ProgressBar가 돌고있다면 API 호출 못함
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const params = GetInputSearchParams(inputBoxID, inputTextChange);
-        const readURI = uri + params;
-        const gridData = await restAPI.get(readURI);
-        setGridData(gridData?.data?.data?.rows);
-        props &&
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: gridData?.data?.message,
-            severity: "success",
-          });
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setDisableRowCheck(!disableRowCheck);
-        setIsBackDrop(false);
-      }
-    }
+  const onClickSearch = async () => {
+    setActSearch(!actSearch);
   };
-  const onClickEditModeSave = async () => {
-    refSingleGrid?.current?.gridInst?.finishEditing();
-    const data = refSingleGrid?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetPutParams(SETTING_FILE, raw));
-    if (data.length !== 0 && isBackDrop === false) {
-      setIsBackDrop(true);
-      await restAPI
-        .put(uri, data)
-        .then((res) => {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: res?.data?.message,
-            severity: "success",
-          });
-        })
-        .catch((res) => {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: res?.message ? res?.message : res?.response?.data?.message,
-            severity: "error",
-          });
-        })
-        .finally(() => {
-          setIsBackDrop(false);
-        });
-    }
+  const onClickEditModeSave = () => {
+    setActEditModeSave(!actEditModeSave);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
-    onClickSearch(true);
+    setSearchToggle(!searchToggle);
   };
   const onClickModalAddRow = () => {
     refModalGrid?.current?.gridInst?.appendRow();
@@ -190,42 +150,12 @@ function Store() {
   const onClickModalCancelRow = () => {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
-  const onClickModalSave = async () => {
-    refModalGrid?.current?.gridInst?.finishEditing();
-    const data = refModalGrid?.current?.gridInst
-      ?.getModifiedRows()
-      ?.createdRows.map((raw) =>
-        GetPostParams(SETTING_FILE, raw, cookie.factoryID)
-      );
-    if (data.length !== 0 && isBackDrop === false) {
-      setIsBackDrop(true);
-      await restAPI
-        .post(uri, data)
-        .then((res) => {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: res?.data?.message,
-            severity: "success",
-          });
-          refModalGrid?.current?.gridInst?.clear();
-        })
-        .catch((res) => {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: res?.message ? res?.message : res?.response?.data?.message,
-            severity: "error",
-          });
-        })
-        .finally(() => {
-          setIsBackDrop(false);
-        });
-    }
+  const onClickModalSave = () => {
+    setActModalSave(!actModalSave);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
-    onClickSearch();
+    setSearchToggle(!searchToggle);
   };
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, [

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const useDisableRowCheck = (isEditMode, refGrid) => {
-  const [disableRowCheck, setDisableRowCheck] = useState(false);
+  const [disableRowToggle, setDisableRowToggle] = useState(false);
   useEffect(() => {
     if (isEditMode === true) {
       for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
@@ -12,9 +12,9 @@ const useDisableRowCheck = (isEditMode, refGrid) => {
         refGrid?.current?.gridInst?.enableRowCheck(i);
       }
     }
-  }, [disableRowCheck]);
+  }, [disableRowToggle]);
 
-  return [disableRowCheck, setDisableRowCheck];
+  return [disableRowToggle, setDisableRowToggle];
 };
 
 const handleClickGridCheck = (e, isEditMode, columnName) => {

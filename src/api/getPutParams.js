@@ -122,7 +122,7 @@ function GetPutParams(componentName, raw) {
     case "workingGroup":
       params = new workingGroup(raw);
       break;
-    case "products":
+    case "product":
       params = new products(raw);
       break;
     case "store":

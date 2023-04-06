@@ -11,7 +11,7 @@ const useProcess = () => {
       await restAPI.get(restURI.process).then((res) => {
         setProcessOpt(res?.data?.data?.rows);
         processList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("Process", data);
+          return GetCboParams("process", data);
         });
       });
     };
@@ -27,7 +27,7 @@ const useProductGbn = () => {
       await restAPI.get(restURI.productGbn).then((res) => {
         setProductGbnOpt(res?.data?.data?.rows);
         productGbnList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("ProductGbn", data);
+          return GetCboParams("productGbn", data);
         });
       });
     };
@@ -43,7 +43,7 @@ const useProductModel = () => {
       await restAPI.get(restURI.productModel).then((res) => {
         setProductModelOpt(res?.data?.data?.rows);
         productModelList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("ProductModel", data);
+          return GetCboParams("productModel", data);
         });
       });
     };
@@ -59,7 +59,7 @@ const useProductType = () => {
       await restAPI.get(restURI.productType).then((res) => {
         setProductTypeOpt(res?.data?.data?.rows);
         productTypeList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("ProductType", data);
+          return GetCboParams("productType", data);
         });
       });
     };
@@ -75,7 +75,7 @@ const useProductTypeSmall = () => {
       await restAPI.get(restURI.productTypeSmall).then((res) => {
         setProductTypeSmallOpt(res?.data?.data?.rows);
         productTypeSmallList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("ProductTypeSmall", data);
+          return GetCboParams("productTypeSmall", data);
         });
       });
     };
@@ -91,7 +91,7 @@ const useUnit = () => {
       await restAPI.get(restURI.unit).then((res) => {
         setUnitOpt(res?.data?.data?.rows);
         unitList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("Unit", data);
+          return GetCboParams("unit", data);
         });
       });
     };
