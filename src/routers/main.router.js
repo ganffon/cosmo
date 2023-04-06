@@ -28,6 +28,9 @@ import DowntimeType from "pages/mes/standard/downtimeType/DowntimeType";
 import InspectFiling from "pages/mes/standard/inspectFiling/InspectFiling";
 import InspectMethod from "pages/mes/standard/inspectMethod/InspectMethod";
 import InspectTool from "pages/mes/standard/inspectTool/InspectTool";
+import InspectType from "pages/mes/standard/inspectType/InspectType";
+import InspectItem from "pages/mes/standard/inspectItem/InspectItem";
+import InterfaceItemType from "pages/mes/standard/interfaceItemType/InterfaceItemType";
 
 export default function MainRouter() {
   // const [realMenuList, setRealMenuList] = useState([]);
@@ -87,6 +90,10 @@ export default function MainRouter() {
         <Route path="filing" element={<InspectFiling />} />
         <Route path="method" element={<InspectMethod />} />
         <Route path="tool" element={<InspectTool />} />
+        <Route path="inspection-item-type" element={<InspectType />} />
+        <Route path="inspection-item" element={<InspectItem />} />
+
+        <Route path="interface-item-type" element={<InterfaceItemType />} />
 
         <Route path="document" element={<Document />} />
         <Route path="unit" element={<Unit />} />

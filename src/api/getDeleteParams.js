@@ -54,6 +54,16 @@ class inspectTool {
     this.insp_tool_id = raw.insp_tool_id;
   }
 }
+class inspectType {
+  constructor(raw) {
+    this.insp_item_type_id = raw.insp_item_type_id;
+  }
+}
+class interfaceItemType {
+  constructor(raw) {
+    this.infc_item_type_id = raw.infc_item_type_id;
+  }
+}
 
 function GetDeleteParams(componentName, raw) {
   let params = "";
@@ -91,6 +101,12 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "inspectTool":
       params = new inspectTool(raw);
+      break;
+    case "inspectType":
+      params = new inspectType(raw);
+      break;
+    case "interfaceItemType":
+      params = new interfaceItemType(raw);
       break;
     default:
   }

@@ -9,13 +9,13 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import InspectTypeSet from "pages/mes/standard/inspectType/InspectTypeSet";
+import InterfaceItemTypeSet from "pages/mes/standard/interfaceItemType/InterfaceItemTypeSet";
 import * as DisableRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import * as HD from "custom/useHandleData";
 import * as S from "../oneGrid.styled";
 
-function InspectType(props) {
+function InterfaceItemType(props) {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -39,9 +39,9 @@ function InspectType(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = InspectTypeSet(isEditMode);
+  } = InterfaceItemTypeSet(isEditMode);
 
-  const SETTING_FILE = "inspectType";
+  const SETTING_FILE = "interfaceItemType";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -240,4 +240,4 @@ function InspectType(props) {
   );
 }
 
-export default InspectType;
+export default InterfaceItemType;
