@@ -64,7 +64,17 @@ class interfaceItemType {
     this.infc_item_type_id = raw.infc_item_type_id;
   }
 }
+class interfaceMemory {
+  constructor(raw) {
+    this.infc_memory_id = raw.infc_memory_id;
+  }
+}
 
+/**
+ * @param {string} componentName 소문자로 시작
+ * @param {any} raw 처리 할 데이터
+ * @returns
+ */
 function GetDeleteParams(componentName, raw) {
   let params = "";
 
@@ -107,6 +117,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "interfaceItemType":
       params = new interfaceItemType(raw);
+      break;
+    case "interfaceMemory":
+      params = new interfaceMemory(raw);
       break;
     default:
   }

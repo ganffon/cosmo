@@ -223,6 +223,34 @@ class interfaceItemType {
     this.infc_item_type_nm = raw.infc_item_type_nm;
   }
 }
+class interfaceMemory {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.infc_item_type_id = raw.infc_item_type_nm;
+    this.infc_item_id = raw.infc_item_nm;
+    this.line_id = raw.line_nm;
+    this.proc_id = raw.proc_nm;
+    this.equip_id = raw.equip_nm;
+    this.plc_ip = raw.plc_ip;
+    this.plc_port = Number(raw.plc_port);
+    this.device_addre = raw.device_addre;
+    this.tag_id = raw.tag_id;
+    this.infc_memory_nm = raw.infc_memory_nm;
+    this.remark = raw.remark;
+  }
+}
+
+/**
+ * 🔍 Grid Cell 이 Combo 인 경우
+ * this.prod_gbn_id = raw.prod_gbn_nm; ➡️ id = nm 형식으로 작성
+ */
+
+/**
+ * @param {string} componentName 소문자로 시작
+ * @param {any} raw 처리 할 데이터
+ * @param {string} factory_id 쿠키에서 현재 로그인 한 사업부 아이디
+ * @returns
+ */
 function GetPostParams(componentName, raw, factory_id) {
   let params = "";
 
@@ -292,6 +320,9 @@ function GetPostParams(componentName, raw, factory_id) {
       break;
     case "interfaceItemType":
       params = new interfaceItemType(raw, factory_id);
+      break;
+    case "interfaceMemory":
+      params = new interfaceMemory(raw, factory_id);
       break;
     default:
   }

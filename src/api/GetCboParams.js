@@ -1,4 +1,10 @@
 // ✨ ComboBox ✨
+class line {
+  constructor(raw) {
+    this.text = raw.line_nm;
+    this.value = raw.line_id;
+  }
+}
 class process {
   constructor(raw) {
     this.text = raw.proc_nm;
@@ -35,10 +41,17 @@ class unit {
     this.value = raw.unit_id;
   }
 }
-
+/**
+ * @param {string} componentName 소문자로 시작
+ * @param {any} raw 처리 할 데이터
+ * @returns
+ */
 function GetComboParams(componentName, raw) {
   let params = "";
   switch (componentName) {
+    case "line":
+      params = new line(raw);
+      break;
     case "process":
       params = new process(raw);
       break;
