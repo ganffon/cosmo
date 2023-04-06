@@ -84,7 +84,7 @@
             "under": null
           },
           {
-            "name": "✅품목관리[CRUD]",
+            "name": "✴️품목관리[CRUD]",
             "id": "product",
             "path": "product",
             "under": null
@@ -215,19 +215,19 @@
             "under": null
           },
           {
-            "name": "❌검사유형관리[CRUD]",
+            "name": "✅검사유형관리[CRUD]",
             "id": "inspection-item-type",
             "path": "inspection-item-type",
             "under": null
           },
           {
-            "name": "❌검사항목관리[CRUD]",
+            "name": "✴️검사항목관리[CRUD]",
             "id": "inspection-item",
             "path": "inspection-item",
             "under": null
           },
           {
-            "name": "❌검사기준서관리[CRUD]",
+            "name": "✴️검사기준서관리[CRUD]",
             "id": "document",
             "path": "document",
             "under": null
@@ -246,7 +246,7 @@
         "path": null,
         "under": [
           {
-            "name": "❌설비I/F유형관리[CRUD]",
+            "name": "✅설비I/F유형관리[CRUD]",
             "id": "interface-item-type",
             "path": "interface-item-type",
             "under": null

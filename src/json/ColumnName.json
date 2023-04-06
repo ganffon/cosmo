@@ -165,5 +165,17 @@
 
   "insp_tool_id": "검사구ID",
   "insp_tool_cd": "검사구코드",
-  "insp_tool_nm": "검사구명"
+  "insp_tool_nm": "검사구명",
+
+  "insp_item_type_id": "검사유형ID",
+  "insp_item_type_cd": "검사유형코드",
+  "insp_item_type_nm": "검사유형명",
+
+  "insp_item_id": "검사항목ID",
+  "insp_item_cd": "검사항목코드",
+  "insp_item_nm": "검사항목명",
+
+  "infc_item_type_id": "IF유형ID",
+  "infc_item_type_cd": "IF유형코드",
+  "infc_item_type_nm": "IF유형명"
 }

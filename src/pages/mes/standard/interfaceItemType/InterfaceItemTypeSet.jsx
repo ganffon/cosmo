@@ -8,7 +8,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function InspectToolSet(isEditMode) {
+function InterfaceItemTypeSet(isEditMode) {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -36,8 +36,8 @@ function InspectToolSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "insp_tool_id",
-      header: CN.insp_tool_id,
+      name: "infc_item_type_id",
+      header: CN.infc_item_type_id,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -48,8 +48,8 @@ function InspectToolSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "insp_tool_cd",
-      header: CN.insp_tool_cd,
+      name: "infc_item_type_cd",
+      header: CN.infc_item_type_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -60,8 +60,8 @@ function InspectToolSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "insp_tool_nm",
-      header: CN.insp_tool_nm,
+      name: "infc_item_type_nm",
+      header: CN.infc_item_type_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -146,8 +146,8 @@ function InspectToolSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "insp_tool_cd",
-      header: CN.insp_tool_cd,
+      name: "infc_item_type_cd",
+      header: CN.infc_item_type_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -158,8 +158,8 @@ function InspectToolSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "insp_tool_nm",
-      header: CN.insp_tool_nm,
+      name: "infc_item_type_nm",
+      header: CN.infc_item_type_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -189,16 +189,16 @@ function InspectToolSet(isEditMode) {
    */
   const inputSet = [
     {
-      id: "insp_tool_cd",
-      name: CN.insp_tool_cd,
+      id: "infc_item_type_cd",
+      name: CN.infc_item_type_cd,
     },
     {
-      id: "insp_tool_nm",
-      name: CN.insp_tool_nm,
+      id: "infc_item_type_nm",
+      name: CN.infc_item_type_nm,
     },
   ];
 
-  const uri = restURI.inspectTool;
+  const uri = restURI.interfaceItemType;
 
   return {
     data,
@@ -214,4 +214,4 @@ function InspectToolSet(isEditMode) {
   };
 }
 
-export default InspectToolSet;
+export default InterfaceItemTypeSet;

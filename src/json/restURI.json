@@ -22,5 +22,10 @@
   "downtimeType": "/downTimeType",
   "inspectFiling": "/inspectionfiling",
   "inspectMethod": "/inspectionmethod",
-  "inspectTool": "/inspectiontool"
+  "inspectTool": "/inspectiontool",
+  "inspectType": "/inspectiontype",
+  "inspectItem": "/inspectionitem",
+  "inspectDocument": "/inspectiondocument",
+  "inspectDocumentDetail": "/inspectiondocumentdetail",
+  "interfaceItemType": "/interfaceitemtype"
 }

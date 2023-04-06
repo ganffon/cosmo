@@ -209,6 +209,20 @@ class inspectTool {
     this.insp_tool_nm = raw.insp_tool_nm;
   }
 }
+class inspectType {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.insp_item_type_cd = raw.insp_item_type_cd;
+    this.insp_item_type_nm = raw.insp_item_type_nm;
+  }
+}
+class interfaceItemType {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.infc_item_type_cd = raw.infc_item_type_cd;
+    this.infc_item_type_nm = raw.infc_item_type_nm;
+  }
+}
 function GetPostParams(componentName, raw, factory_id) {
   let params = "";
 
@@ -272,6 +286,12 @@ function GetPostParams(componentName, raw, factory_id) {
       break;
     case "inspectTool":
       params = new inspectTool(raw, factory_id);
+      break;
+    case "inspectType":
+      params = new inspectType(raw, factory_id);
+      break;
+    case "interfaceItemType":
+      params = new interfaceItemType(raw, factory_id);
       break;
     default:
   }
