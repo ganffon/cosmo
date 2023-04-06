@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import V2MenuList from "./V2MenuList.jsx";
 import V2MenuDepth from "./V2MenuDepth.jsx";
-import MenuListJSON from "json/MenuList.json";
+import MenuList from "json/MenuList.json";
+import MenuListDev from "json/MenuListDev.json";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
 import * as S from "./V2MenuFold.styled";
 
 function V2MenuFold() {
-  const { isMenuSlide, setIsMenuSlide, isAllScreen } =
+  const { isMenuSlide, setIsMenuSlide, isAllScreen, superAdmin } =
     useContext(LayoutContext);
   const [lv2Menu, setLv2Menu] = useState(null);
 
@@ -22,7 +23,7 @@ function V2MenuFold() {
   return (
     <S.MenuFold isMenuSlide={isMenuSlide}>
       <S.Drawer>
-        {MenuListJSON.map((lv1Menu) => (
+        {(superAdmin ? MenuListDev : MenuList).map((lv1Menu) => (
           <V2MenuList
             key={lv1Menu.id}
             lv1Menu={lv1Menu}

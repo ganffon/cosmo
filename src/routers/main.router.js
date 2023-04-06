@@ -15,7 +15,7 @@ import Unit from "pages/mes/standard/unit/Unit";
 import PartnerType from "pages/mes/standard/partnerType/PartnerType";
 import Partner from "pages/mes/standard/partner/Partner";
 import Dashboard from "pages/mes/dashboard/Dashboard";
-import RealMenuList from "json/RealMenuList.json";
+// import RealMenuList from "json/RealMenuList.json";
 import Document from "pages/mes/standard/document/Document";
 import MenuManage from "pages/admin/menuManage/MenuManage";
 import MenuList from "pages/admin/menuList/MenuList";
@@ -23,12 +23,17 @@ import Grade from "pages/mes/standard/grade/Grade";
 import Store from "pages/mes/standard/store/Store";
 import Department from "pages/mes/standard/department/Department";
 import WorkingGroup from "pages/mes/standard/workingGroup/WorkingGroup";
+import StoreLocation from "pages/mes/standard/storeLocation/StoreLocation";
+import DowntimeType from "pages/mes/standard/downtimeType/DowntimeType";
+import InspectFiling from "pages/mes/standard/inspectFiling/InspectFiling";
+import InspectMethod from "pages/mes/standard/inspectMethod/InspectMethod";
+import InspectTool from "pages/mes/standard/inspectTool/InspectTool";
 
 export default function MainRouter() {
-  const [realMenuList, setRealMenuList] = useState([]);
-  useEffect(() => {
-    setRealMenuList(RealMenuList);
-  }, []);
+  // const [realMenuList, setRealMenuList] = useState([]);
+  // useEffect(() => {
+  //   setRealMenuList(RealMenuList);
+  // }, []);
   // const routeList = useMemo(() => {
   //   const result = realMenuList.map((menu) => {
   //     const result = { ...menu };
@@ -76,7 +81,12 @@ export default function MainRouter() {
         <Route path="department" element={<Department />} />
         <Route path="grade" element={<Grade />} />
         <Route path="store" element={<Store />} />
+        <Route path="store-location" element={<StoreLocation />} />
         <Route path="working-group" element={<WorkingGroup />} />
+        <Route path="downtime-type" element={<DowntimeType />} />
+        <Route path="filing" element={<InspectFiling />} />
+        <Route path="method" element={<InspectMethod />} />
+        <Route path="tool" element={<InspectTool />} />
 
         <Route path="document" element={<Document />} />
         <Route path="unit" element={<Unit />} />

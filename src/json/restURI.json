@@ -17,5 +17,10 @@
   "department": "/departments",
   "grade": "/grades",
   "store": "/stores",
-  "workingGroup": "/workinggroup"
+  "storeLocation": "/storelocations",
+  "workingGroup": "/workinggroup",
+  "downtimeType": "/downTimeType",
+  "inspectFiling": "/inspectionfiling",
+  "inspectMethod": "/inspectionmethod",
+  "inspectTool": "/inspectiontool"
 }

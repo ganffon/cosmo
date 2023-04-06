@@ -34,6 +34,26 @@ class store {
     this.store_id = raw.store_id;
   }
 }
+class downtimeType {
+  constructor(raw) {
+    this.downtime_type_id = raw.downtime_type_id;
+  }
+}
+class inspectFiling {
+  constructor(raw) {
+    this.insp_filing_id = raw.insp_filing_id;
+  }
+}
+class inspectMethod {
+  constructor(raw) {
+    this.insp_method_id = raw.insp_method_id;
+  }
+}
+class inspectTool {
+  constructor(raw) {
+    this.insp_tool_id = raw.insp_tool_id;
+  }
+}
 
 function GetDeleteParams(componentName, raw) {
   let params = "";
@@ -59,6 +79,18 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "store":
       params = new store(raw);
+      break;
+    case "downtimeType":
+      params = new downtimeType(raw);
+      break;
+    case "inspectFiling":
+      params = new inspectFiling(raw);
+      break;
+    case "inspectMethod":
+      params = new inspectMethod(raw);
+      break;
+    case "inspectTool":
+      params = new inspectTool(raw);
       break;
     default:
   }
