@@ -161,7 +161,7 @@ class interfaceMemory {
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.plc_ip = raw.plc_ip;
-    this.plc_port = raw.plc_port;
+    this.plc_port = Number(raw.plc_port);
     this.device_addre = raw.device_addre;
     this.tag_id = raw.tag_id;
     this.infc_memory_nm = raw.infc_memory_nm;
