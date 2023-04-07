@@ -44,7 +44,7 @@ class workingGroup {
     this.worker_group_nm = raw.worker_group_nm;
   }
 }
-class products {
+class product {
   constructor(raw) {
     this.prod_id = raw.prod_id;
     this.prod_no = raw.prod_no;
@@ -87,6 +87,13 @@ class products {
     this.prd_max = Number(raw.prd_max);
   }
 }
+class productTypeSmall {
+  constructor(raw) {
+    this.prod_type_small_id = raw.prod_type_small_id;
+    this.prod_type_small_cd = raw.prod_type_small_cd;
+    this.prod_type_small_nm = raw.prod_type_small_nm;
+  }
+}
 class store {
   constructor(raw) {
     this.factory_id = raw.factory_id;
@@ -100,6 +107,15 @@ class store {
     this.outsourcing_store_fg = raw.outsourcing_store_fg ? true : false;
     this.available_store_fg = raw.available_store_fg ? true : false;
     this.position_type = raw.position_type;
+  }
+}
+class storeLocation {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.store_id = raw.store_id;
+    this.location_id = raw.location_id;
+    this.location_cd = raw.location_cd;
+    this.location_nm = raw.location_nm;
   }
 }
 
@@ -194,10 +210,16 @@ function GetPutParams(componentName, raw) {
       params = new workingGroup(raw);
       break;
     case "product":
-      params = new products(raw);
+      params = new product(raw);
+      break;
+    case "productTypeSmall":
+      params = new productTypeSmall(raw);
       break;
     case "store":
       params = new store(raw);
+      break;
+    case "storeLocation":
+      params = new storeLocation(raw);
       break;
     case "downtimeType":
       params = new downtimeType(raw);

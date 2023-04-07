@@ -34,6 +34,11 @@ class store {
     this.store_id = raw.store_id;
   }
 }
+class storeLocation {
+  constructor(raw) {
+    this.location_id = raw.location_id;
+  }
+}
 class downtimeType {
   constructor(raw) {
     this.downtime_type_id = raw.downtime_type_id;
@@ -99,6 +104,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "store":
       params = new store(raw);
+      break;
+    case "storeLocation":
+      params = new storeLocation(raw);
       break;
     case "downtimeType":
       params = new downtimeType(raw);

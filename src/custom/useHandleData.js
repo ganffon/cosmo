@@ -170,6 +170,7 @@ const useEditModeSave = (
   refGrid?.current?.gridInst?.finishEditing();
   useEffect(() => {
     const handle = async () => {
+      console.log(refGrid?.current?.gridInst?.getCheckedRows());
       const data = refGrid?.current?.gridInst
         ?.getCheckedRows()
         ?.map((raw) => GetPutParams(SETTING_FILE, raw));

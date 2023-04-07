@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import restURI from "json/restURI.json";
 import "components/grid/setting/GridStyle.css";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
-import getComboParams from "api/GetCboParams";
 import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
@@ -13,7 +12,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function EquipmentSet(isEditMode) {
+function EquipmentSet(isEditMode, processList) {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -50,6 +49,37 @@ function EquipmentSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
+    isEditMode
+      ? {
+          name: "proc_id",
+          header: CN.proc_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: processList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "proc_nm",
+          header: CN.proc_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
     {
       name: "equip_type_id",
       header: CN.equip_type_id,
@@ -248,6 +278,24 @@ function EquipmentSet(isEditMode) {
     },
   ];
   const columnsModal = [
+    {
+      name: "proc_nm",
+      header: CN.proc_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: processList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
     {
       name: "equip_cd",
       header: CN.equip_cd,
