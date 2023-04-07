@@ -11,7 +11,7 @@ const useLine = () => {
       await restAPI.get(restURI.line).then((res) => {
         setLineOpt(res?.data?.data?.rows);
         lineList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("line", data);
+          return GetCboParams(data, "line_id", "line_nm");
         });
       });
     };
@@ -27,7 +27,7 @@ const useProcess = () => {
       await restAPI.get(restURI.process).then((res) => {
         setProcessOpt(res?.data?.data?.rows);
         processList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("process", data);
+          return GetCboParams(data, "proc_id", "proc_nm");
         });
       });
     };
@@ -43,7 +43,7 @@ const useEquipment = () => {
       await restAPI.get(restURI.equipment).then((res) => {
         setEquipmentOpt(res?.data?.data?.rows);
         equipmentList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("equipment", data);
+          return GetCboParams(data, "equip_ip", "equip_nm");
         });
       });
     };
@@ -59,7 +59,7 @@ const useProductGbn = () => {
       await restAPI.get(restURI.productGbn).then((res) => {
         setProductGbnOpt(res?.data?.data?.rows);
         productGbnList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("productGbn", data);
+          return GetCboParams(data, "prod_gbn_id", "prod_gbn_nm");
         });
       });
     };
@@ -75,7 +75,7 @@ const useProductModel = () => {
       await restAPI.get(restURI.productModel).then((res) => {
         setProductModelOpt(res?.data?.data?.rows);
         productModelList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("productModel", data);
+          return GetCboParams(data, "model_id", "model_nm");
         });
       });
     };
@@ -91,7 +91,7 @@ const useProductType = () => {
       await restAPI.get(restURI.productType).then((res) => {
         setProductTypeOpt(res?.data?.data?.rows);
         productTypeList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("productType", data);
+          return GetCboParams(data, "prod_type_id", "prod_type_nm");
         });
       });
     };
@@ -107,7 +107,7 @@ const useProductTypeSmall = () => {
       await restAPI.get(restURI.productTypeSmall).then((res) => {
         setProductTypeSmallOpt(res?.data?.data?.rows);
         productTypeSmallList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("productTypeSmall", data);
+          return GetCboParams(data, "prod_type_small_id", "prod_type_small_nm");
         });
       });
     };
@@ -123,7 +123,7 @@ const useUnit = () => {
       await restAPI.get(restURI.unit).then((res) => {
         setUnitOpt(res?.data?.data?.rows);
         unitList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("unit", data);
+          return GetCboParams(data, "unit_id", "unit_nm");
         });
       });
     };
@@ -139,7 +139,7 @@ const useInterfaceItemType = () => {
       await restAPI.get(restURI.interfaceItemType).then((res) => {
         setInterfaceItemTypeOpt(res?.data?.data?.rows);
         interfaceItemTypeList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("interfaceItemType", data);
+          return GetCboParams(data, "infc_item_type_id", "infc_item_type_nm");
         });
       });
     };
@@ -155,7 +155,7 @@ const useInterfaceItem = () => {
       await restAPI.get(restURI.interfaceItem).then((res) => {
         setInterfaceItemOpt(res?.data?.data?.rows);
         interfaceItemList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams("interfaceItem", data);
+          return GetCboParams(data, "infc_item_id", "infc_item_nm");
         });
       });
     };
