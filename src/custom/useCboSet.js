@@ -3,16 +3,46 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import GetCboParams from "api/GetCboParams";
 
+const cboMUISort = (obj, key_nm) => {
+  const sortResult = obj.sort(function (a, b) {
+    let x = a[key_nm].toLowerCase();
+    let y = b[key_nm].toLowerCase();
+    if (x < y) {
+      return -1;
+    } else if (x > y) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+  return sortResult;
+};
+const cboGridSort = (obj) => {
+  const sortResult = obj.sort(function (a, b) {
+    let x = a.text.toLowerCase();
+    let y = b.text.toLowerCase();
+    if (x < y) {
+      return -1;
+    } else if (x > y) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+  return sortResult;
+};
+
 let lineList = [];
 const useLine = () => {
   const [lineOpt, setLineOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.line).then((res) => {
-        setLineOpt(res?.data?.data?.rows);
+        setLineOpt(cboMUISort(res?.data?.data?.rows, "line_nm"));
         lineList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "line_id", "line_nm");
         });
+        lineList = cboGridSort(lineList);
       });
     };
     getCboOpt();
@@ -25,10 +55,11 @@ const useProcess = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.process).then((res) => {
-        setProcessOpt(res?.data?.data?.rows);
+        setProcessOpt(cboMUISort(res?.data?.data?.rows, "proc_nm"));
         processList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "proc_id", "proc_nm");
         });
+        processList = cboGridSort(processList);
       });
     };
     getCboOpt();
@@ -41,10 +72,11 @@ const useEquipment = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.equipment).then((res) => {
-        setEquipmentOpt(res?.data?.data?.rows);
+        setEquipmentOpt(cboMUISort(res?.data?.data?.rows, "equip_nm"));
         equipmentList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "equip_ip", "equip_nm");
         });
+        equipmentList = cboGridSort(equipmentList);
       });
     };
     getCboOpt();
@@ -57,10 +89,11 @@ const useProductGbn = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.productGbn).then((res) => {
-        setProductGbnOpt(res?.data?.data?.rows);
+        setProductGbnOpt(cboMUISort(res?.data?.data?.rows, "prod_gbn_nm"));
         productGbnList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "prod_gbn_id", "prod_gbn_nm");
         });
+        productGbnList = cboGridSort(productGbnList);
       });
     };
     getCboOpt();
@@ -73,10 +106,11 @@ const useProductModel = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.productModel).then((res) => {
-        setProductModelOpt(res?.data?.data?.rows);
+        setProductModelOpt(cboMUISort(res?.data?.data?.rows, "model_nm"));
         productModelList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "model_id", "model_nm");
         });
+        productModelList = cboGridSort(productModelList);
       });
     };
     getCboOpt();
@@ -89,10 +123,11 @@ const useProductType = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.productType).then((res) => {
-        setProductTypeOpt(res?.data?.data?.rows);
+        setProductTypeOpt(cboMUISort(res?.data?.data?.rows, "prod_type_nm"));
         productTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "prod_type_id", "prod_type_nm");
         });
+        productTypeList = cboGridSort(productTypeList);
       });
     };
     getCboOpt();
@@ -105,10 +140,14 @@ const useProductTypeSmall = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.productTypeSmall).then((res) => {
-        setProductTypeSmallOpt(res?.data?.data?.rows);
+        console.log(res?.data?.data?.rows);
+        setProductTypeSmallOpt(
+          cboMUISort(res?.data?.data?.rows, "prod_type_small_nm")
+        );
         productTypeSmallList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "prod_type_small_id", "prod_type_small_nm");
         });
+        productTypeSmallList = cboGridSort(productTypeSmallList);
       });
     };
     getCboOpt();
@@ -121,10 +160,11 @@ const useUnit = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.unit).then((res) => {
-        setUnitOpt(res?.data?.data?.rows);
+        setUnitOpt(cboMUISort(res?.data?.data?.rows, "unit_nm"));
         unitList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "unit_id", "unit_nm");
         });
+        unitList = cboGridSort(unitList);
       });
     };
     getCboOpt();
@@ -137,10 +177,13 @@ const useInterfaceItemType = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.interfaceItemType).then((res) => {
-        setInterfaceItemTypeOpt(res?.data?.data?.rows);
+        setInterfaceItemTypeOpt(
+          cboMUISort(res?.data?.data?.rows, "infc_item_type_nm")
+        );
         interfaceItemTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "infc_item_type_id", "infc_item_type_nm");
         });
+        interfaceItemTypeList = cboGridSort(interfaceItemTypeList);
       });
     };
     getCboOpt();
@@ -153,10 +196,11 @@ const useInterfaceItem = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.interfaceItem).then((res) => {
-        setInterfaceItemOpt(res?.data?.data?.rows);
+        setInterfaceItemOpt(cboMUISort(res?.data?.data?.rows, "infc_item_nm"));
         interfaceItemList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "infc_item_id", "infc_item_nm");
         });
+        interfaceItemList = cboGridSort(interfaceItemList);
       });
     };
     getCboOpt();
