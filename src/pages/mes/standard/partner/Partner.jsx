@@ -68,6 +68,7 @@ function Partner(props) {
   const [actDelete, setActDelete] = HD.useDelete(
     refSingleGrid,
     isBackDrop,
+    isEditMode,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,

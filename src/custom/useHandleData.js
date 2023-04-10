@@ -10,6 +10,7 @@ import restAPI from "api/restAPI";
 const useDelete = (
   refGrid,
   isBackDrop,
+  isEditMode,
   setIsBackDrop,
   isSnackOpen,
   setIsSnackOpen,
@@ -50,11 +51,13 @@ const useDelete = (
             setIsBackDrop(false);
             setIsDeleteAlertOpen(false);
             setSearchToggle(!searchToggle);
+            alert("Delete!!~!");
           });
       }
     };
-
-    handle();
+    if (isEditMode === false) {
+      handle();
+    }
   }, [actDelete]);
   return [actDelete, setActDelete];
 };

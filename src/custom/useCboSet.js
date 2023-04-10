@@ -140,7 +140,6 @@ const useProductTypeSmall = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.productTypeSmall).then((res) => {
-        console.log(res?.data?.data?.rows);
         setProductTypeSmallOpt(
           cboMUISort(res?.data?.data?.rows, "prod_type_small_nm")
         );
