@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "components/layout/common/Layout";
 import Factory from "pages/mes/standard/factory/Factory";
 import Line from "pages/mes/standard/line/Line";
+import User from "pages/mes/standard/user/User";
+import Employee from "pages/mes/standard/employee/Employee";
 import Process from "pages/mes/standard/process/Process";
 import Equipment from "pages/mes/standard/equipment/Equipment";
 import ProductGbn from "pages/mes/standard/productGbn/ProductGbn";
@@ -31,6 +33,10 @@ import InspectItem from "pages/mes/standard/inspectItem/InspectItem";
 import InterfaceItemType from "pages/mes/standard/interfaceItemType/InterfaceItemType";
 import InterfaceItem from "pages/mes/standard/interfaceItem/InterfaceItem";
 import InterfaceMemory from "pages/mes/standard/interfaceMemory/InterfaceMemory";
+import EquipmentLarge from "pages/mes/standard/equipmentLarge/EquipmentLarge";
+import EquipmentMedium from "pages/mes/standard/equipmentMedium/EquipmentMedium";
+import EquipmentSmall from "pages/mes/standard/equipmentSmall/EquipmentSmall";
+import EquipmentDetail from "pages/mes/equipment/equipmentDetail/EquipmentDetail";
 
 export default function MainRouter() {
   return (
@@ -40,6 +46,8 @@ export default function MainRouter() {
 
         <Route path="factory" element={<Factory />} />
         <Route path="line" element={<Line />} />
+        <Route path="user" element={<User />} />
+        <Route path="employee" element={<Employee />} />
         <Route path="process" element={<Process />} />
         <Route path="equipment" element={<Equipment />} />
         <Route path="product-gbn" element={<ProductGbn />} />
@@ -64,6 +72,11 @@ export default function MainRouter() {
         <Route path="interface-item-type" element={<InterfaceItemType />} />
         <Route path="interface-item" element={<InterfaceItem />} />
         <Route path="interface-memory" element={<InterfaceMemory />} />
+
+        <Route path="equipment-classification" element={<EquipmentLarge />} />
+        <Route path="equipment-group" element={<EquipmentMedium />} />
+        <Route path="equipment-class" element={<EquipmentSmall />} />
+        <Route path="equipment-detail" element={<EquipmentDetail />} />
 
         <Route path="document" element={<Document />} />
         <Route path="unit" element={<Unit />} />

@@ -9,14 +9,14 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import StoreLocationSet from "pages/mes/standard/storeLocation/StoreLocationSet";
-import * as DisableRow from "custom/useDisableRowCheck";
+import EmployeeSet from "pages/mes/standard/employee/EmployeeSet";
 import useInputSet from "custom/useInputSet";
+import * as DisableRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
 import * as S from "../oneGrid.styled";
 
-function StoreLocation(props) {
+function Employee() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -31,7 +31,10 @@ function StoreLocation(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const [storeOpt, storeList] = Cbo.useStore();
+  const [deptOpt, deptList] = Cbo.useDept();
+  const [gradeOpt, gradeList] = Cbo.useGrade();
+  const [workingGroupOpt, workingGroupList] = Cbo.useWorkingGroup();
+
   const {
     uri,
     rowHeaders,
@@ -41,9 +44,8 @@ function StoreLocation(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = StoreLocationSet(isEditMode, storeList);
-
-  const SETTING_FILE = "storeLocation";
+  } = EmployeeSet(isEditMode, deptList, gradeList, workingGroupList);
+  const SETTING_FILE = "employee";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -161,7 +163,7 @@ function StoreLocation(props) {
     setSearchToggle(!searchToggle);
   };
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, []);
+    DisableRow.handleClickGridCheck(e, isEditMode, ["use_fg", "prd_fg"]);
   };
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
@@ -243,4 +245,4 @@ function StoreLocation(props) {
   );
 }
 
-export default StoreLocation;
+export default Employee;

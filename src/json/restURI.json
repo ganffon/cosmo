@@ -1,5 +1,7 @@
 {
   "authMenuCheck": "/menuinvest/auth",
+  "user": "users",
+  "employee": "employees",
   "login": "/login",
   "factory": "/factories",
   "line": "/lines",
@@ -20,6 +22,7 @@
   "storeLocation": "/storelocations",
   "workingGroup": "/workinggroup",
   "downtimeType": "/downTimeType",
+
   "inspectFiling": "/inspectionfiling",
   "inspectMethod": "/inspectionmethod",
   "inspectTool": "/inspectiontool",
@@ -27,7 +30,13 @@
   "inspectItem": "/inspectionitem",
   "inspectDocument": "/inspectiondocument",
   "inspectDocumentDetail": "/inspectiondocumentdetail",
+
   "interfaceItemType": "/interfaceitemtype",
   "interfaceItem": "/interfaceitem",
-  "interfaceMemory": "/interfacememory"
+  "interfaceMemory": "/interfacememory",
+
+  "equipmentLarge": "/equipmentclassification",
+  "equipmentMedium": "/equipmentgroup",
+  "equipmentSmall": "/equipmentclass",
+  "equipmentDetail": "/equipmentdetail"
 }

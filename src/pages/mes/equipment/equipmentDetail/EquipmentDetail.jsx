@@ -9,14 +9,16 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import StoreLocationSet from "pages/mes/standard/storeLocation/StoreLocationSet";
-import * as DisableRow from "custom/useDisableRowCheck";
+import EquipmentDetailSet from "pages/mes/equipment/equipmentDetail/EquipmentDetailSet";
+import TextField from "@mui/material/TextField";
 import useInputSet from "custom/useInputSet";
+import CN from "json/ColumnName.json";
+import * as DisableRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
-import * as S from "../oneGrid.styled";
+import * as S from "./EquipmentDetail.styled";
 
-function StoreLocation(props) {
+function EquipmentDetail() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -31,7 +33,17 @@ function StoreLocation(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const [storeOpt, storeList] = Cbo.useStore();
+  const [comboValue, setComboValue] = useState({
+    classification_id: null,
+    group_id: null,
+    class_id: null,
+  });
+
+  const [processOpt, processList] = Cbo.useProcess();
+  const [EquipmentOpt, EquipmentList] = Cbo.useEquipment();
+  const [equipmentLargeOpt, equipmentLargeList] = Cbo.useEquipmentLarge();
+  const [equipmentMediumOpt, equipmentMediumList] = Cbo.useEquipmentMedium();
+  const [equipmentSmallOpt, equipmentSmallList] = Cbo.useEquipmentSmall();
   const {
     uri,
     rowHeaders,
@@ -41,9 +53,15 @@ function StoreLocation(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = StoreLocationSet(isEditMode, storeList);
-
-  const SETTING_FILE = "storeLocation";
+  } = EquipmentDetailSet(
+    isEditMode,
+    processList,
+    EquipmentList,
+    equipmentLargeList,
+    equipmentMediumList,
+    equipmentSmallList
+  );
+  const SETTING_FILE = "equipmentDetail";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -81,7 +99,7 @@ function StoreLocation(props) {
     SETTING_FILE
   );
 
-  const [actSearch, setActSearch] = HD.useSearch(
+  const [actSearch, setActSearch] = HD.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -92,6 +110,7 @@ function StoreLocation(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
+    comboValue,
     uri
   );
 
@@ -126,7 +145,6 @@ function StoreLocation(props) {
       setIsDeleteAlertOpen(true);
     }
   };
-
   const handleDelete = () => {
     setActDelete(!actDelete);
   };
@@ -172,15 +190,83 @@ function StoreLocation(props) {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            {inputSet.map((v) => (
-              <InputSearch
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
+            <S.ComboWrap>
+              <S.ComboBox
+                disablePortal
+                id="equipmentLargeCbo"
+                size="small"
+                key={(option) => option?.classification_id}
+                options={equipmentLargeOpt || null}
+                getOptionLabel={(option) => option?.classification_nm || ""}
+                onChange={(_, newValue) => {
+                  setComboValue({
+                    ...comboValue,
+                    classification_nm:
+                      newValue?.classification_nm === undefined
+                        ? null
+                        : newValue?.classification_nm,
+                  });
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.classification_nm}
+                    size="small"
+                  />
+                )}
               />
-            ))}
+              <S.ComboBox
+                disablePortal
+                id="equipmentMediumCbo"
+                size="small"
+                key={(option) => option?.group_id}
+                options={equipmentMediumOpt || null}
+                getOptionLabel={(option) => option?.group_nm || ""}
+                onChange={(_, newValue) => {
+                  setComboValue({
+                    ...comboValue,
+                    group_nm:
+                      newValue?.group_nm === undefined
+                        ? null
+                        : newValue?.group_nm,
+                  });
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.group_nm} size="small" />
+                )}
+              />
+              <S.ComboBox
+                disablePortal
+                id="equipmentSmallCbo"
+                size="small"
+                key={(option) => option?.class_id}
+                options={equipmentSmallOpt || null}
+                getOptionLabel={(option) => option?.class_nm || ""}
+                onChange={(_, newValue) => {
+                  setComboValue({
+                    ...comboValue,
+                    class_nm:
+                      newValue?.class_nm === undefined
+                        ? null
+                        : newValue?.class_nm,
+                  });
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.class_nm} size="small" />
+                )}
+              />
+            </S.ComboWrap>
+            <S.InputWrap>
+              {inputSet.map((v) => (
+                <InputSearch
+                  key={v.id}
+                  id={v.id}
+                  name={v.name}
+                  handleInputTextChange={handleInputTextChange}
+                  onClickSearch={onClickSearch}
+                />
+              ))}
+            </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (
@@ -234,7 +320,6 @@ function StoreLocation(props) {
           rowHeaders={rowHeadersModal}
           uri={uri}
           refModalGrid={refModalGrid}
-          setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
         />
       ) : null}
@@ -242,5 +327,4 @@ function StoreLocation(props) {
     </S.ContentsArea>
   );
 }
-
-export default StoreLocation;
+export default EquipmentDetail;

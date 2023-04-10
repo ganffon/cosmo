@@ -120,6 +120,47 @@ function NumComma(value) {
   }
 }
 
+function OnlyNum(value) {
+  if (value.value !== null) {
+    return value.value
+      .toString()
+      .replace(/[^0-9.]/g, "")
+      .replace(/(\..*)\./g, "$1");
+  } else {
+    return null;
+  }
+}
+function DateFormat(value) {
+  if (value.value !== null) {
+    return value.value.toString().substr(0, 10);
+  } else {
+    return null;
+  }
+}
+/**
+ *
+ * @param {any} value
+ * @param {boolean} fg true인 경우 비밀번호 입력 문자 수 만큼 치환하고, false인 경우 비밀번호 치환 문자 수 고정
+ * @returns
+ */
+function Password(value, fg) {
+  if (value.value !== null) {
+    if (fg) {
+      return value.value.toString().replace(value.value.toString(), () => {
+        let passwordStr = "";
+        for (let i = 0; i < value.value.toString().length; i++) {
+          passwordStr = passwordStr + "●";
+        }
+        return passwordStr;
+      });
+    } else {
+      return value.value.toString().replace(value.value.toString(), "●●●●");
+    }
+  } else {
+    return null;
+  }
+}
+
 class ColumnHeaderMultiLine {
   constructor(props) {
     const columnInfo = props.columnInfo;
@@ -139,6 +180,9 @@ class ColumnHeaderMultiLine {
 export {
   CheckBox,
   NumComma,
+  OnlyNum,
+  DateFormat,
+  Password,
   EditorNumber,
   EditorFloat1,
   EditorFloat2,

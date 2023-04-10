@@ -9,14 +9,13 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import StoreLocationSet from "pages/mes/standard/storeLocation/StoreLocationSet";
+import EquipmentSmallSet from "pages/mes/standard/equipmentSmall/EquipmentSmallSet";
 import * as DisableRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
-import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
 import * as S from "../oneGrid.styled";
 
-function StoreLocation(props) {
+function EquipmentSmall(props) {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -31,7 +30,6 @@ function StoreLocation(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const [storeOpt, storeList] = Cbo.useStore();
   const {
     uri,
     rowHeaders,
@@ -41,9 +39,9 @@ function StoreLocation(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = StoreLocationSet(isEditMode, storeList);
+  } = EquipmentSmallSet(isEditMode);
 
-  const SETTING_FILE = "storeLocation";
+  const SETTING_FILE = "equipmentSmall";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -243,4 +241,4 @@ function StoreLocation(props) {
   );
 }
 
-export default StoreLocation;
+export default EquipmentSmall;
