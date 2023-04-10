@@ -8,7 +8,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function StoreLocationSet(isEditMode) {
+function StoreLocationSet(isEditMode, storeList) {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -35,6 +35,37 @@ function StoreLocationSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
+    isEditMode
+      ? {
+          name: "store_id",
+          header: CN.store_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: storeList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "store_nm",
+          header: CN.store_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
     {
       name: "location_id",
       header: CN.location_id,
@@ -145,6 +176,24 @@ function StoreLocationSet(isEditMode) {
     },
   ];
   const columnsModal = [
+    {
+      name: "store_nm",
+      header: CN.store_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: storeList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
     {
       name: "location_cd",
       header: CN.location_cd,

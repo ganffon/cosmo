@@ -83,6 +83,59 @@ const useEquipment = () => {
   }, []);
   return [equipmentOpt, equipmentList];
 };
+let deptList = [];
+const useDept = () => {
+  const [deptOpt, setDeptOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.department).then((res) => {
+        setDeptOpt(cboMUISort(res?.data?.data?.rows, "dept_nm"));
+        deptList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "dept_id", "dept_nm");
+        });
+        deptList = cboGridSort(deptList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [deptOpt, deptList];
+};
+let gradeList = [];
+const useGrade = () => {
+  const [gradeOpt, setGradeOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.grade).then((res) => {
+        setGradeOpt(cboMUISort(res?.data?.data?.rows, "grade_nm"));
+        gradeList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "grade_id", "grade_nm");
+        });
+        gradeList = cboGridSort(gradeList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [gradeOpt, gradeList];
+};
+let workingGroupList = [];
+const useWorkingGroup = () => {
+  const [workingGroupOpt, setWorkingGroupOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.workingGroup).then((res) => {
+        setWorkingGroupOpt(
+          cboMUISort(res?.data?.data?.rows, "worker_group_nm")
+        );
+        workingGroupList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "worker_group_id", "worker_group_nm");
+        });
+        workingGroupList = cboGridSort(workingGroupList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [workingGroupOpt, workingGroupList];
+};
 let productGbnList = [];
 const useProductGbn = () => {
   const [productGbnOpt, setProductGbnOpt] = useState([]);
@@ -206,11 +259,84 @@ const useInterfaceItem = () => {
   }, []);
   return [interfaceItemOpt, interfaceItemList];
 };
+let storeList = [];
+const useStore = () => {
+  const [storeOpt, setStoreOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.store).then((res) => {
+        setStoreOpt(cboMUISort(res?.data?.data?.rows, "store_nm"));
+        storeList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "store_id", "store_nm");
+        });
+        storeList = cboGridSort(storeList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [storeOpt, storeList];
+};
+let equipmentLargeList = [];
+const useEquipmentLarge = () => {
+  const [equipmentLargeOpt, setEquipmentLargeOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.equipmentLarge).then((res) => {
+        setEquipmentLargeOpt(
+          cboMUISort(res?.data?.data?.rows, "classification_nm")
+        );
+        equipmentLargeList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "classification_id", "classification_nm");
+        });
+        equipmentLargeList = cboGridSort(equipmentLargeList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [equipmentLargeOpt, equipmentLargeList];
+};
+let equipmentMediumList = [];
+const useEquipmentMedium = () => {
+  const [equipmentMediumOpt, setEquipmentMediumOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.equipmentMedium).then((res) => {
+        setEquipmentMediumOpt(cboMUISort(res?.data?.data?.rows, "group_nm"));
+        equipmentMediumList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "group_id", "group_nm");
+        });
+        equipmentMediumList = cboGridSort(equipmentMediumList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [equipmentMediumOpt, equipmentMediumList];
+};
+let equipmentSmallList = [];
+const useEquipmentSmall = () => {
+  const [equipmentSmallOpt, setEquipmentSmallOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.equipmentSmall).then((res) => {
+        setEquipmentSmallOpt(cboMUISort(res?.data?.data?.rows, "class_nm"));
+        equipmentSmallList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "class_id", "class_nm");
+        });
+        equipmentSmallList = cboGridSort(equipmentSmallList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [equipmentSmallOpt, equipmentSmallList];
+};
 
 export {
   useLine,
   useProcess,
   useEquipment,
+  useDept,
+  useGrade,
+  useWorkingGroup,
   useProductGbn,
   useProductModel,
   useProductType,
@@ -218,4 +344,8 @@ export {
   useUnit,
   useInterfaceItemType,
   useInterfaceItem,
+  useStore,
+  useEquipmentLarge,
+  useEquipmentMedium,
+  useEquipmentSmall,
 };

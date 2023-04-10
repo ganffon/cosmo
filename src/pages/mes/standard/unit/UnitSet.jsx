@@ -30,7 +30,7 @@ function UnitSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -134,18 +134,6 @@ function UnitSet(isEditMode) {
     },
   ];
   const columnsModal = [
-    {
-      name: "unit_id",
-      header: CN.unit_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
     {
       name: "unit_cd",
       header: CN.unit_cd,

@@ -1,18 +1,23 @@
-//라인관리✨
+//대분류관리✨
+//🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
-import "components/grid/setting/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
-  MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function LineSet(isEditMode) {
-  const data = [];
+function EquipmentSmallSet(isEditMode) {
+  const data = [
+    {
+      id: 1,
+      test: "TEST",
+      test2: "TEST TEST",
+    },
+  ];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
@@ -39,20 +44,20 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "line_id",
-      header: CN.line_id,
+      name: "class_id",
+      header: CN.class_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
     {
-      name: "line_cd",
-      header: CN.line_cd,
+      name: "class_cd",
+      header: CN.class_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -61,17 +66,10 @@ function LineSet(isEditMode) {
       filter: false,
       whiteSpace: false,
       rowSpan: false,
-      // renderer: {
-      //   styles: {
-      //     backgroundColor: MODAL_BACK_COLOR,
-      //     padding: "9px",
-      //     margin: "0px",
-      //   },
-      // },
     },
     {
-      name: "line_nm",
-      header: CN.line_nm,
+      name: "class_nm",
+      header: CN.class_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -135,7 +133,7 @@ function LineSet(isEditMode) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -147,7 +145,7 @@ function LineSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -156,8 +154,8 @@ function LineSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "line_cd",
-      header: CN.line_cd,
+      name: "class_cd",
+      header: CN.class_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -168,8 +166,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "line_nm",
-      header: CN.line_nm,
+      name: "class_nm",
+      header: CN.class_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -180,32 +178,13 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
   ];
-
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
-    frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
+    frozenCount: 0, // frozenColumn은 여기 값만 수정
   };
 
-  const header = {
-    //🔸headerMerge
-    // height: 100,
-    // complexColumns: [
-    //   {
-    //     header: "test",
-    //     name: "test_test",
-    //     childNames: ["line_cd", "line_nm"],
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-    //🔸multiLine
-    // columns: [
-    //   {
-    //     name: "line_cd",
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-  };
+  const header = {};
   // const header = {
   //   height: "60",
   //   complexColumns: [
@@ -217,28 +196,20 @@ function LineSet(isEditMode) {
   //   ],
   // };
 
-  /**
-   * 🔸날짜단일조회 - "single"
-   * 🔸날짜기간조회 - "range"
-   * 🔸날짜안씀 - null
-   */
-  const datePickerSet = null;
+  const datePickerSet = null; // "single" || "range" || null
 
-  /**
-   * 🔸inputSet id 값이 ⭐ BE : query params
-   */
   const inputSet = [
     {
-      id: "line_cd",
-      name: CN.line_cd,
+      id: "class_cd",
+      name: CN.class_cd,
     },
     {
-      id: "line_nm",
-      name: CN.line_nm,
+      id: "class_nm",
+      name: CN.class_nm,
     },
   ];
 
-  const uri = restURI.line;
+  const uri = restURI.equipmentSmall;
 
   return {
     data,
@@ -254,4 +225,4 @@ function LineSet(isEditMode) {
   };
 }
 
-export default LineSet;
+export default EquipmentSmallSet;

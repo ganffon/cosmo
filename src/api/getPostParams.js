@@ -6,6 +6,13 @@ class factory {
     this.factory_nm = raw.factory_nm;
   }
 }
+class line {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.line_cd = raw.line_cd;
+    this.line_nm = raw.line_nm;
+  }
+}
 class user {
   constructor(raw) {
     this.id = raw.id;
@@ -19,9 +26,30 @@ class user {
     this.super_admin_fg = raw.super_admin_fg ? true : false;
   }
 }
+class employee {
+  constructor(raw) {
+    this.emp_cd = raw.emp_cd;
+    this.emp_nm = raw.emp_nm;
+    this.uid = raw.uid;
+    this.dept_id = raw.dept_nm;
+    this.grade_id = raw.grade_nm;
+    this.worker_group_id = raw.worker_group_nm;
+    this.birthday = raw.birthday;
+    this.hp = raw.hp;
+    this.post = raw.post;
+    this.addr = raw.addr;
+    this.addr_detail = raw.addr_detail;
+    this.enter_date = raw.enter_date;
+    this.leave_date = raw.leave_date;
+    this.use_fg = raw.use_fg ? true : false;
+    this.worker_fg = raw.worker_fg ? true : false;
+    this.remark = raw.remark;
+  }
+}
 class equipment {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
+    this.proc_id = raw.proc_nm;
     this.equip_type_id = raw.equip_type_id;
     this.equip_cd = raw.equip_cd;
     this.equip_nm = raw.equip_nm;
@@ -117,7 +145,7 @@ class store {
 class storeLocation {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.store_id = raw.store_id;
+    this.store_id = raw.store_nm;
     this.location_cd = raw.location_cd;
     this.location_nm = raw.location_nm;
   }
@@ -126,25 +154,6 @@ class department {
   constructor(raw) {
     this.dept_cd = raw.dept_cd;
     this.dept_nm = raw.dept_nm;
-  }
-}
-class employee {
-  constructor(raw) {
-    this.emp_cd = raw.emp_cd;
-    this.emp_nm = raw.emp_nm;
-    this.uid = raw.uid;
-    this.dept_id = raw.dept_id;
-    this.grade_id = raw.grade_id;
-    this.worker_group_id = raw.worker_group_id;
-    this.birthday = raw.birthday;
-    this.hp = raw.hp;
-    this.post = raw.post;
-    this.addr = raw.addr;
-    this.addr_detail = raw.addr_detail;
-    this.enter_date = raw.enter_date;
-    this.leave_date = raw.leave_date;
-    this.worker_fg = raw.worker_fg ? true : false;
-    this.remark = raw.remark;
   }
 }
 class grade {
@@ -239,6 +248,27 @@ class interfaceMemory {
     this.remark = raw.remark;
   }
 }
+class equipmentLarge {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.classification_cd = raw.classification_cd;
+    this.classification_nm = raw.classification_nm;
+  }
+}
+class equipmentMedium {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.group_cd = raw.group_cd;
+    this.group_nm = raw.group_nm;
+  }
+}
+class equipmentSmall {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.class_cd = raw.class_cd;
+    this.class_nm = raw.class_nm;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -258,8 +288,14 @@ function GetPostParams(componentName, raw, factory_id) {
     case "factory":
       params = new factory(raw);
       break;
+    case "line":
+      params = new line(raw, factory_id);
+      break;
     case "user":
       params = new user(raw);
+      break;
+    case "employee":
+      params = new employee(raw);
       break;
     case "unit":
       params = new unit(raw);
@@ -287,9 +323,6 @@ function GetPostParams(componentName, raw, factory_id) {
       break;
     case "department":
       params = new department(raw);
-      break;
-    case "employee":
-      params = new employee(raw);
       break;
     case "grade":
       params = new grade(raw);
@@ -323,6 +356,15 @@ function GetPostParams(componentName, raw, factory_id) {
       break;
     case "interfaceMemory":
       params = new interfaceMemory(raw, factory_id);
+      break;
+    case "equipmentLarge":
+      params = new equipmentLarge(raw, factory_id);
+      break;
+    case "equipmentMedium":
+      params = new equipmentMedium(raw, factory_id);
+      break;
+    case "equipmentSmall":
+      params = new equipmentSmall(raw, factory_id);
       break;
     default:
   }

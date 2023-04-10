@@ -1,20 +1,19 @@
-//라인관리✨
+//사용자관리✨
+import { useEffect } from "react";
 import restURI from "json/restURI.json";
-import CN from "json/ColumnName.json";
 import "components/grid/setting/GridStyle.css";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
+import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
-  MODAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function LineSet(isEditMode) {
+function UserSet(isEditMode) {
   const data = [];
-  const rowHeaders = ["checkbox", "rowNum"];
-  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -27,8 +26,8 @@ function LineSet(isEditMode) {
    */
   const columns = [
     {
-      name: "factory_id",
-      header: CN.factory_id,
+      name: "uid",
+      header: CN.uid,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -39,42 +38,110 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "line_id",
-      header: CN.line_id,
+      name: "id",
+      header: CN.id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
     {
-      name: "line_cd",
-      header: CN.line_cd,
+      name: "user_nm",
+      header: CN.user_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: isEditMode ? "text" : false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "pwd",
+      header: CN.pwd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "password" : false,
+      formatter: function (value) {
+        return CustomGrid.Password(value, false);
+      },
       hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
-      // renderer: {
-      //   styles: {
-      //     backgroundColor: MODAL_BACK_COLOR,
-      //     padding: "9px",
-      //     margin: "0px",
-      //   },
-      // },
     },
     {
-      name: "line_nm",
-      header: CN.line_nm,
+      name: "email",
+      header: CN.email,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "pwd_fg",
+      header: CN.pwd_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "pwd_fg",
+          disabled: true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "admin_fg",
+      header: CN.admin_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "admin_fg",
+          disabled: isEditMode ? false : true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "super_admin_fg",
+      header: CN.super_admin_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "super_admin_fg",
+          disabled: true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -135,7 +202,7 @@ function LineSet(isEditMode) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -147,7 +214,7 @@ function LineSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -156,8 +223,20 @@ function LineSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "line_cd",
-      header: CN.line_cd,
+      name: "id",
+      header: CN.id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "user_nm",
+      header: CN.user_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -168,8 +247,23 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "line_nm",
-      header: CN.line_nm,
+      name: "pwd",
+      header: CN.pwd,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "password",
+      formatter: function (value) {
+        return CustomGrid.Password(value, true);
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "email",
+      header: CN.email,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -179,74 +273,64 @@ function LineSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
+    {
+      name: "admin_fg",
+      header: CN.admin_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "admin_fg",
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
   ];
-
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
-
-  const header = {
-    //🔸headerMerge
-    // height: 100,
-    // complexColumns: [
-    //   {
-    //     header: "test",
-    //     name: "test_test",
-    //     childNames: ["line_cd", "line_nm"],
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-    //🔸multiLine
-    // columns: [
-    //   {
-    //     name: "line_cd",
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-  };
-  // const header = {
-  //   height: "60",
-  //   complexColumns: [
-  //     {
-  //       header: "ID + Name",
-  //       name: "parent1",
-  //       childNames: ["id", "name"],
-  //     },
-  //   ],
-  // };
-
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
+  const header = {};
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"
-   * 🔸날짜안씀 - null
+   * 🔸날짜안쓰는경우 - null
    */
   const datePickerSet = null;
 
   /**
-   * 🔸inputSet id 값이 ⭐ BE : query params
+   * 🔸inputSet id 값이 ✨ BE : query params
    */
   const inputSet = [
     {
-      id: "line_cd",
-      name: CN.line_cd,
+      id: "id",
+      name: CN.id,
     },
     {
-      id: "line_nm",
-      name: CN.line_nm,
+      id: "user_nm",
+      name: CN.user_nm,
     },
   ];
 
-  const uri = restURI.line;
+  const uri = restURI.user;
 
   return {
     data,
-    rowHeaders,
-    rowHeadersModal,
     columns,
     columnsModal,
     columnOptions,
+    rowHeaders,
+    rowHeadersModal,
     header,
     datePickerSet,
     inputSet,
@@ -254,4 +338,4 @@ function LineSet(isEditMode) {
   };
 }
 
-export default LineSet;
+export default UserSet;

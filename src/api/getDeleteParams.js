@@ -9,6 +9,16 @@ class line {
     this.line_id = raw.line_id;
   }
 }
+class user {
+  constructor(raw) {
+    this.uid = raw.uid;
+  }
+}
+class employee {
+  constructor(raw) {
+    this.emp_id = raw.emp_id;
+  }
+}
 class equipment {
   constructor(raw) {
     this.equip_id = raw.equip_id;
@@ -74,6 +84,21 @@ class interfaceMemory {
     this.infc_memory_id = raw.infc_memory_id;
   }
 }
+class equipmentLarge {
+  constructor(raw) {
+    this.classification_id = raw.classification_id;
+  }
+}
+class equipmentMedium {
+  constructor(raw) {
+    this.group_id = raw.group_id;
+  }
+}
+class equipmentSmall {
+  constructor(raw) {
+    this.class_id = raw.class_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -89,6 +114,12 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "line":
       params = new line(raw);
+      break;
+    case "user":
+      params = new user(raw);
+      break;
+    case "employee":
+      params = new employee(raw);
       break;
     case "equipment":
       params = new equipment(raw);
@@ -128,6 +159,15 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "interfaceMemory":
       params = new interfaceMemory(raw);
+      break;
+    case "equipmentLarge":
+      params = new equipmentLarge(raw);
+      break;
+    case "equipmentMedium":
+      params = new equipmentMedium(raw);
+      break;
+    case "equipmentSmall":
+      params = new equipmentSmall(raw);
       break;
     default:
   }

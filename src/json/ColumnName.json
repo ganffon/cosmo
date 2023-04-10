@@ -7,6 +7,23 @@
   "line_cd": "라인코드",
   "line_nm": "라인명",
 
+  "uid": "사용자ID",
+  "id": "로그인ID",
+  "user_nm": "사용자명",
+  "pwd": "비밀번호",
+  "pwd_fg": "패스워드변경여부",
+  "admin_fg": "관리자유무",
+  "super_admin_fg": "개발자유무",
+
+  "emp_id": "사원ID",
+  "emp_cd": "사원코드",
+  "emp_nm": "사원명",
+  "birthday": "생일",
+  "hp": "휴대폰번호",
+  "enter_date": "입사일자",
+  "leave_date": "퇴사일자",
+  "worker_fg": "작업자유무",
+
   "proc_id": "공정ID",
   "proc_cd": "공정코드",
   "proc_nm": "공정명",
@@ -116,8 +133,11 @@
   "equip_nm": "설비명",
   "equip_type_id": "설비유형ID",
   "workings_id": "작업장ID",
+
   "manager_emp_id": "관리자(정)ID",
+  "manager_emp_nm": "관리자(정)",
   "sub_manager_emp_id": "관리자(부)ID",
+  "sub_manager_emp_nm": "관리자(부)",
 
   "use_fg": "사용여부",
   "prd_fg": "생산설비",
@@ -187,7 +207,32 @@
   "infc_memory_nm": "Memory명칭",
   "plc_ip": "PLC IP",
   "plc_port": "PLC Port",
-  "plc_ip": "PLC IP",
   "device_addre": "Device Address",
-  "tag_id": "Tag ID"
+  "tag_id": "Tag ID",
+
+  "classification_id": "대분류ID",
+  "classification_cd": "대분류코드",
+  "classification_nm": "대분류명",
+
+  "group_id": "중분류ID",
+  "group_cd": "중분류코드",
+  "group_nm": "중분류명",
+
+  "class_id": "소분류ID",
+  "class_cd": "소분류코드",
+  "class_nm": "소분류명",
+
+  "eqm_detail_cd": "상세제원코드",
+  "eqm_detail_nm": "상세제원명",
+  "equip_no": "설비관리번호",
+  "equip_grade": "설비등급",
+  "equip_model": "설비모델명",
+  "equip_std": "설비규격",
+  "equip_spec": "설비제원",
+  "voltage": "전압",
+  "manufacturer": "제조사",
+  "purchase_partner": "구매업체",
+  "purchase_date": "구매일자",
+  "purchase_tel": "구매업체연락처",
+  "purchase_price": "구매금액"
 }

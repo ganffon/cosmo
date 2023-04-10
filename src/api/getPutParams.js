@@ -14,9 +14,43 @@ class line {
     this.line_nm = raw.line_nm;
   }
 }
+class user {
+  constructor(raw) {
+    this.uid = raw.uid;
+    this.id = raw.id;
+    this.group_id = raw.group_id;
+    this.user_nm = raw.user_nm;
+    this.pwd = raw.pwd;
+    this.email = raw.email;
+    this.pwd_fg = raw.pwd_fg ? true : false;
+    this.admin_fg = raw.admin_fg ? true : false;
+    this.super_admin_fg = raw.super_admin_fg ? true : false;
+  }
+}
+class employee {
+  constructor(raw) {
+    this.emp_cd = raw.emp_cd;
+    this.emp_nm = raw.emp_nm;
+    this.uid = raw.uid;
+    this.dept_id = raw.dept_id;
+    this.grade_id = raw.grade_id;
+    this.worker_group_id = raw.worker_group_id;
+    this.birthday = raw.birthday;
+    this.hp = raw.hp;
+    this.post = raw.post;
+    this.addr = raw.addr;
+    this.addr_detail = raw.addr_detail;
+    this.enter_date = raw.enter_date;
+    this.leave_date = raw.leave_date;
+    this.use_fg = raw.use_fg ? true : false;
+    this.worker_fg = raw.worker_fg ? true : false;
+    this.remark = raw.remark;
+  }
+}
 class equipment {
   constructor(raw) {
     this.factory_id = raw.factory_id;
+    this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.equip_type_id = raw.equip_type_id;
     this.equip_cd = raw.equip_cd;
@@ -184,6 +218,30 @@ class interfaceMemory {
     this.remark = raw.remark;
   }
 }
+class equipmentLarge {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.classification_id = raw.classification_id;
+    this.classification_cd = raw.classification_cd;
+    this.classification_nm = raw.classification_nm;
+  }
+}
+class equipmentMedium {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.group_id = raw.group_id;
+    this.group_cd = raw.group_cd;
+    this.group_nm = raw.group_nm;
+  }
+}
+class equipmentSmall {
+  constructor(raw) {
+    this.factory_id = raw.factory_id;
+    this.class_id = raw.class_id;
+    this.class_cd = raw.class_cd;
+    this.class_nm = raw.class_nm;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -199,6 +257,12 @@ function GetPutParams(componentName, raw) {
       break;
     case "line":
       params = new line(raw);
+      break;
+    case "user":
+      params = new user(raw);
+      break;
+    case "employee":
+      params = new employee(raw);
       break;
     case "equipment":
       params = new equipment(raw);
@@ -241,6 +305,15 @@ function GetPutParams(componentName, raw) {
       break;
     case "interfaceMemory":
       params = new interfaceMemory(raw);
+      break;
+    case "equipmentLarge":
+      params = new equipmentLarge(raw);
+      break;
+    case "equipmentMedium":
+      params = new equipmentMedium(raw);
+      break;
+    case "equipmentSmall":
+      params = new equipmentSmall(raw);
       break;
     default:
   }
