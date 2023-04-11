@@ -15,7 +15,7 @@ import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
-import * as S from "../oneGrid.styled";
+import * as S from "pages/mes/style/oneGrid.styled";
 
 function InterfaceMemory(props) {
   LoginStateChk();

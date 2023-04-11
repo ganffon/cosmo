@@ -15,7 +15,7 @@ import GetPutParams from "api/GetPutParams";
 import GetInputSearchParams from "api/GetInputSearchParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import GetComponent from "api/GetComponent";
-import * as S from "./oneGrid.styled";
+import * as S from "pages/mes/style/oneGrid.styled";
 
 function OneGrid(props) {
   const { componentName } = props;

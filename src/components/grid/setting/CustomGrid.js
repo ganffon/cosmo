@@ -111,7 +111,11 @@ class EditorFloat3 {
   }
 }
 
-//🔸숫자 3자리마다 콤마 찍기
+/**
+ *
+ * @param {any} value 숫자 3자리 마다 콤마를 찍음
+ * @returns
+ */
 function NumComma(value) {
   if (value.value !== null) {
     return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -119,7 +123,11 @@ function NumComma(value) {
     return null;
   }
 }
-
+/**
+ *
+ * @param {any} value 다른 문자는 숨기고 숫자만 보여줌
+ * @returns
+ */
 function OnlyNum(value) {
   if (value.value !== null) {
     return value.value
@@ -130,6 +138,11 @@ function OnlyNum(value) {
     return null;
   }
 }
+/**
+ *
+ * @param {any} value yyyy-MM-dd 형식 표현
+ * @returns
+ */
 function DateFormat(value) {
   if (value.value !== null) {
     return value.value.toString().substr(0, 10);
