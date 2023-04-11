@@ -136,10 +136,10 @@ function InspectItem(props) {
   const handleDelete = () => {
     setActDelete(!actDelete);
   };
-  const handleInputTextChange = async (e) => {
+  const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
-  const onClickSearch = async () => {
+  const onClickSearch = () => {
     setActSearch(!actSearch);
   };
   const onClickEditModeSave = () => {

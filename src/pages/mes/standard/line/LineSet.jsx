@@ -64,8 +64,7 @@ function LineSet(isEditMode) {
       // renderer: {
       //   styles: {
       //     backgroundColor: MODAL_BACK_COLOR,
-      //     padding: "9px",
-      //     margin: "0px",
+      //     padding: "12px",
       //   },
       // },
     },
