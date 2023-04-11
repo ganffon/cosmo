@@ -302,6 +302,17 @@ class equipmentDetail {
     this.remark = raw.remark;
   }
 }
+class setup {
+  constructor(raw) {
+    this.setup_id = raw.setup_id;
+    this.setup_cd = raw.setup_cd;
+    this.setup_nm = raw.setup_nm;
+    this.auth_read = raw.auth_read ? true : false;
+    this.auth_create = raw.auth_create ? true : false;
+    this.auth_update = raw.auth_update ? true : false;
+    this.auth_delete = raw.auth_delete ? true : false;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -386,6 +397,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "equipmentDetail":
       params = new equipmentDetail(raw);
+      break;
+    case "setup":
+      params = new setup(raw);
       break;
     default:
   }

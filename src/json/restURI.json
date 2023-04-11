@@ -1,5 +1,5 @@
 {
-  "authMenuCheck": "/menuinvest",
+  "authMenuCheck": "/menuinvest/auth",
   "user": "/user",
   "employee": "/employee",
   "login": "/login",
@@ -39,5 +39,7 @@
   "equipmentLarge": "/equipment-classification",
   "equipmentMedium": "/equipment-group",
   "equipmentSmall": "/equipment-class",
-  "equipmentDetail": "/equipment-detail"
+  "equipmentDetail": "/equipment-detail",
+
+  "setup": "/setup"
 }

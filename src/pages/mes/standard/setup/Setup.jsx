@@ -9,13 +9,14 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import DepartmentSet from "pages/mes/standard/department/DepartmentSet";
-import * as DisableRow from "custom/useDisableRowCheck";
+import SetupSet from "pages/mes/standard/setup/SetupSet";
 import useInputSet from "custom/useInputSet";
+import * as DisableRow from "custom/useDisableRowCheck";
+import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
 import * as S from "pages/mes/style/oneGrid.styled";
 
-function Department(props) {
+function Setup() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -30,6 +31,7 @@ function Department(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
+
   const {
     uri,
     rowHeaders,
@@ -39,9 +41,8 @@ function Department(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = DepartmentSet(isEditMode);
-
-  const SETTING_FILE = "department";
+  } = SetupSet(isEditMode);
+  const SETTING_FILE = "setup";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -159,7 +160,12 @@ function Department(props) {
     setSearchToggle(!searchToggle);
   };
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, []);
+    DisableRow.handleClickGridCheck(e, isEditMode, [
+      "auth_read",
+      "auth_create",
+      "auth_update",
+      "auth_delete",
+    ]);
   };
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
@@ -241,4 +247,4 @@ function Department(props) {
   );
 }
 
-export default Department;
+export default Setup;

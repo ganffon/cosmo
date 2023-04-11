@@ -266,15 +266,9 @@
         ]
       },
       {
-        "name": "❌사용자설정관리",
-        "id": "manageUserSettings",
-        "path": null,
-        "under": null
-      },
-      {
         "name": "❌권한관리",
-        "id": "authorityManagement",
-        "path": null,
+        "id": "setup",
+        "path": "setup",
         "under": null
       },
       {
