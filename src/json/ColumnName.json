@@ -83,6 +83,11 @@
   "downtime_type_cd": "비가동유형코드",
   "downtime_type_nm": "비가동유형명",
 
+  "downtime_id": "비가동ID",
+  "downtime_cd": "비가동코드",
+  "downtime_nm": "비가동명",
+  "eqm_failure_fg": "설비고장여부",
+
   "partner_type_id": "거래처유형ID",
   "partner_type_cd": "거래처유형코드",
   "partner_type_nm": "거래처유형명",

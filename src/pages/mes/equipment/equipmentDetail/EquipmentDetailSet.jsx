@@ -13,7 +13,8 @@ import {
 function EquipmentDetailSet(
   isEditMode,
   processList,
-  EquipmentList,
+  employeeList,
+  equipmentList,
   equipmentLargeList,
   equipmentMediumList,
   equipmentSmallList
@@ -83,7 +84,7 @@ function EquipmentDetailSet(
           editor: {
             type: "select",
             options: {
-              listItems: EquipmentList,
+              listItems: equipmentList,
             },
           },
           hidden: false,
@@ -231,7 +232,7 @@ function EquipmentDetailSet(
           editor: {
             type: "select",
             options: {
-              listItems: null,
+              listItems: employeeList,
             },
           },
           hidden: false,
@@ -262,7 +263,7 @@ function EquipmentDetailSet(
           editor: {
             type: "select",
             options: {
-              listItems: null,
+              listItems: employeeList,
             },
           },
           hidden: false,
@@ -383,8 +384,19 @@ function EquipmentDetailSet(
       name: "purchase_date",
       header: CN.purchase_date,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
+      align: "center",
+      editor: isEditMode
+        ? {
+            type: "datePicker",
+            options: {
+              language: "ko",
+              format: "yyyy-MM-dd",
+            },
+          }
+        : false,
+      formatter: function (value) {
+        return CustomGrid.DateFormat(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -407,8 +419,15 @@ function EquipmentDetailSet(
       name: "purchase_price",
       header: CN.purchase_price,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
+      align: "right",
+      editor: isEditMode
+        ? {
+            type: CustomGrid.EditorFloat2,
+          }
+        : false,
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -547,7 +566,7 @@ function EquipmentDetailSet(
       editor: {
         type: "select",
         options: {
-          listItems: EquipmentList,
+          listItems: equipmentList,
         },
       },
       hidden: false,
@@ -643,7 +662,7 @@ function EquipmentDetailSet(
       editor: {
         type: "select",
         options: {
-          listItems: null,
+          listItems: employeeList,
         },
       },
       hidden: false,
@@ -661,7 +680,7 @@ function EquipmentDetailSet(
       editor: {
         type: "select",
         options: {
-          listItems: null,
+          listItems: employeeList,
         },
       },
       hidden: false,
@@ -770,8 +789,17 @@ function EquipmentDetailSet(
       name: "purchase_date",
       header: CN.purchase_date,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
+      align: "center",
+      editor: {
+        type: "datePicker",
+        options: {
+          language: "ko",
+          format: "yyyy-MM-dd",
+        },
+      },
+      formatter: function (value) {
+        return CustomGrid.DateFormat(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -794,8 +822,13 @@ function EquipmentDetailSet(
       name: "purchase_price",
       header: CN.purchase_price,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
+      align: "right",
+      editor: {
+        type: CustomGrid.EditorFloat2,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,

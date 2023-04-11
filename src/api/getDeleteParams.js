@@ -54,6 +54,11 @@ class downtimeType {
     this.downtime_type_id = raw.downtime_type_id;
   }
 }
+class downtime {
+  constructor(raw) {
+    this.downtime_id = raw.downtime_id;
+  }
+}
 class inspectFiling {
   constructor(raw) {
     this.insp_filing_id = raw.insp_filing_id;
@@ -74,9 +79,19 @@ class inspectType {
     this.insp_item_type_id = raw.insp_item_type_id;
   }
 }
+class inspectItem {
+  constructor(raw) {
+    this.insp_item_id = raw.insp_item_id;
+  }
+}
 class interfaceItemType {
   constructor(raw) {
     this.infc_item_type_id = raw.infc_item_type_id;
+  }
+}
+class interfaceItem {
+  constructor(raw) {
+    this.infc_item_id = raw.infc_item_id;
   }
 }
 class interfaceMemory {
@@ -97,6 +112,11 @@ class equipmentMedium {
 class equipmentSmall {
   constructor(raw) {
     this.class_id = raw.class_id;
+  }
+}
+class equipmentDetail {
+  constructor(raw) {
+    this.eqm_detail_id = raw.eqm_detail_id;
   }
 }
 
@@ -142,6 +162,9 @@ function GetDeleteParams(componentName, raw) {
     case "downtimeType":
       params = new downtimeType(raw);
       break;
+    case "downtime":
+      params = new downtime(raw);
+      break;
     case "inspectFiling":
       params = new inspectFiling(raw);
       break;
@@ -154,8 +177,14 @@ function GetDeleteParams(componentName, raw) {
     case "inspectType":
       params = new inspectType(raw);
       break;
+    case "inspectItem":
+      params = new inspectItem(raw);
+      break;
     case "interfaceItemType":
       params = new interfaceItemType(raw);
+      break;
+    case "interfaceItem":
+      params = new interfaceItem(raw);
       break;
     case "interfaceMemory":
       params = new interfaceMemory(raw);
@@ -168,6 +197,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "equipmentSmall":
       params = new equipmentSmall(raw);
+      break;
+    case "equipmentDetail":
+      params = new equipmentDetail(raw);
       break;
     default:
   }

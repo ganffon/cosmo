@@ -40,7 +40,8 @@ function EquipmentDetail() {
   });
 
   const [processOpt, processList] = Cbo.useProcess();
-  const [EquipmentOpt, EquipmentList] = Cbo.useEquipment();
+  const [employeeOpt, employeeList] = Cbo.useEmployee();
+  const [equipmentOpt, equipmentList] = Cbo.useEquipment();
   const [equipmentLargeOpt, equipmentLargeList] = Cbo.useEquipmentLarge();
   const [equipmentMediumOpt, equipmentMediumList] = Cbo.useEquipmentMedium();
   const [equipmentSmallOpt, equipmentSmallList] = Cbo.useEquipmentSmall();
@@ -56,7 +57,8 @@ function EquipmentDetail() {
   } = EquipmentDetailSet(
     isEditMode,
     processList,
-    EquipmentList,
+    employeeList,
+    equipmentList,
     equipmentLargeList,
     equipmentMediumList,
     equipmentSmallList

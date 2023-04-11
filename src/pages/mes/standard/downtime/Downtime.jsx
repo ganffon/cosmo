@@ -9,16 +9,16 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import InterfaceItemSet from "pages/mes/standard/interfaceItem/InterfaceItemSet";
-import * as DisableRow from "custom/useDisableRowCheck";
+import DowntimeSet from "pages/mes/standard/downtime/DowntimeSet";
 import useInputSet from "custom/useInputSet";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
+import * as DisableRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
-import * as S from "./InterfaceItem.styled";
+import * as S from "./Downtime.styled";
 
-function InterfaceItem(props) {
+function Downtime() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -34,10 +34,10 @@ function InterfaceItem(props) {
   });
   const [searchToggle, setSearchToggle] = useState(false);
   const [comboValue, setComboValue] = useState({
-    infc_item_type_id: null,
+    downtime_type_id: null,
   });
-  const [interfaceItemTypeOpt, interfaceItemTypeList] =
-    Cbo.useInterfaceItemType();
+  const [downtimeTypeOpt, downtimeTypeList] = Cbo.useDowntimeType();
+
   const {
     uri,
     rowHeaders,
@@ -47,9 +47,8 @@ function InterfaceItem(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = InterfaceItemSet(isEditMode, interfaceItemTypeList);
-
-  const SETTING_FILE = "interfaceItem";
+  } = DowntimeSet(isEditMode, downtimeTypeList);
+  const SETTING_FILE = "downtime";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -168,7 +167,7 @@ function InterfaceItem(props) {
     setSearchToggle(!searchToggle);
   };
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, []);
+    DisableRow.handleClickGridCheck(e, isEditMode, ["eqm_failure_fg"]);
   };
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
@@ -184,22 +183,22 @@ function InterfaceItem(props) {
                 disablePortal
                 id="factoryCombo"
                 size="small"
-                key={(option) => option?.infc_item_type_id}
-                options={interfaceItemTypeOpt || null}
-                getOptionLabel={(option) => option?.infc_item_type_nm || ""}
+                key={(option) => option?.downtime_type_id}
+                options={downtimeTypeOpt || null}
+                getOptionLabel={(option) => option?.downtime_type_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    infc_item_type_nm:
-                      newValue?.infc_item_type_nm === undefined
+                    downtime_type_nm:
+                      newValue?.downtime_type_nm === undefined
                         ? null
-                        : newValue?.infc_item_type_nm,
+                        : newValue?.downtime_type_nm,
                   });
                 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label={CN.infc_item_type_nm}
+                    label={CN.downtime_type_nm}
                     size="small"
                   />
                 )}
@@ -278,4 +277,4 @@ function InterfaceItem(props) {
   );
 }
 
-export default InterfaceItem;
+export default Downtime;

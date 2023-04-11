@@ -169,10 +169,10 @@ class downtimeType {
     this.downtime_type_nm = raw.downtime_type_nm;
   }
 }
-class downTime {
+class downtime {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.downtime_type_id = raw.downtime_type_id;
+    this.downtime_type_id = raw.downtime_type_nm;
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
     this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
@@ -225,11 +225,30 @@ class inspectType {
     this.insp_item_type_nm = raw.insp_item_type_nm;
   }
 }
+class inspectItem {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.insp_item_type_id = raw.insp_item_type_nm;
+    this.insp_item_cd = raw.insp_item_cd;
+    this.insp_item_nm = raw.insp_item_nm;
+    this.insp_tool_id = raw.insp_tool_id;
+    this.insp_method_id = raw.insp_method_id;
+    this.unit_id = raw.unit_id;
+  }
+}
 class interfaceItemType {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.infc_item_type_cd = raw.infc_item_type_cd;
     this.infc_item_type_nm = raw.infc_item_type_nm;
+  }
+}
+class interfaceItem {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.infc_item_type_id = raw.infc_item_type_nm;
+    this.infc_item_cd = raw.infc_item_cd;
+    this.infc_item_nm = raw.infc_item_nm;
   }
 }
 class interfaceMemory {
@@ -267,6 +286,33 @@ class equipmentSmall {
     this.factory_id = factory_id;
     this.class_cd = raw.class_cd;
     this.class_nm = raw.class_nm;
+  }
+}
+class equipmentDetail {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.proc_id = raw.proc_nm;
+    this.equip_id = raw.equip_nm;
+    this.eqm_detail_cd = raw.eqm_detail_cd;
+    this.eqm_detail_nm = raw.eqm_detail_nm;
+    this.classification_id = raw.classification_nm;
+    this.group_id = raw.group_nm;
+    this.class_id = raw.class_nm;
+    this.manager_emp_id = raw.manager_emp_nm;
+    this.sub_manager_emp_id = raw.sub_manager_emp_nm;
+    this.equip_no = raw.equip_no;
+    this.equip_grade = raw.equip_grade;
+    this.equip_model = raw.equip_model;
+    this.equip_std = raw.equip_std;
+    this.equip_spec = raw.equip_spec;
+    this.voltage = raw.voltage;
+    this.manufacturer = raw.manufacturer;
+    this.purchase_partner = raw.purchase_partner;
+    this.purchase_date = raw.purchase_date;
+    this.purchase_tel = raw.purchase_tel;
+    this.purchase_price = Number(raw.purchase_price);
+    this.use_fg = raw.use_fg ? true : false;
+    this.remark = raw.remark;
   }
 }
 
@@ -330,8 +376,8 @@ function GetPostParams(componentName, raw, factory_id) {
     case "downtimeType":
       params = new downtimeType(raw, factory_id);
       break;
-    case "downTime":
-      params = new downTime(raw, factory_id);
+    case "downtime":
+      params = new downtime(raw, factory_id);
       break;
     case "model":
       params = new model(raw);
@@ -351,8 +397,14 @@ function GetPostParams(componentName, raw, factory_id) {
     case "inspectType":
       params = new inspectType(raw, factory_id);
       break;
+    case "inspectItem":
+      params = new inspectItem(raw, factory_id);
+      break;
     case "interfaceItemType":
       params = new interfaceItemType(raw, factory_id);
+      break;
+    case "interfaceItem":
+      params = new interfaceItem(raw, factory_id);
       break;
     case "interfaceMemory":
       params = new interfaceMemory(raw, factory_id);
@@ -365,6 +417,9 @@ function GetPostParams(componentName, raw, factory_id) {
       break;
     case "equipmentSmall":
       params = new equipmentSmall(raw, factory_id);
+      break;
+    case "equipmentDetail":
+      params = new equipmentDetail(raw, factory_id);
       break;
     default:
   }

@@ -74,7 +74,7 @@ const useEquipment = () => {
       await restAPI.get(restURI.equipment).then((res) => {
         setEquipmentOpt(cboMUISort(res?.data?.data?.rows, "equip_nm"));
         equipmentList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams(data, "equip_ip", "equip_nm");
+          return GetCboParams(data, "equip_id", "equip_nm");
         });
         equipmentList = cboGridSort(equipmentList);
       });
@@ -116,6 +116,23 @@ const useGrade = () => {
     getCboOpt();
   }, []);
   return [gradeOpt, gradeList];
+};
+let employeeList = [];
+const useEmployee = () => {
+  const [employeeOpt, setEmployeeOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.employee).then((res) => {
+        setEmployeeOpt(cboMUISort(res?.data?.data?.rows, "emp_nm"));
+        employeeList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "emp_id", "emp_nm");
+        });
+        employeeList = cboGridSort(employeeList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [employeeOpt, employeeList];
 };
 let workingGroupList = [];
 const useWorkingGroup = () => {
@@ -329,6 +346,44 @@ const useEquipmentSmall = () => {
   }, []);
   return [equipmentSmallOpt, equipmentSmallList];
 };
+let downtimeTypeList = [];
+const useDowntimeType = () => {
+  const [downtimeTypeOpt, setDowntimeTypeOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.downtimeType).then((res) => {
+        setDowntimeTypeOpt(
+          cboMUISort(res?.data?.data?.rows, "downtime_type_nm")
+        );
+        downtimeTypeList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "downtime_type_id", "downtime_type_nm");
+        });
+        downtimeTypeList = cboGridSort(downtimeTypeList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [downtimeTypeOpt, downtimeTypeList];
+};
+let inspectItemTypeList = [];
+const useInspectItemType = () => {
+  const [inspectItemTypeOpt, setInspectItemTypeOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.inspectType).then((res) => {
+        setInspectItemTypeOpt(
+          cboMUISort(res?.data?.data?.rows, "insp_item_type_nm")
+        );
+        inspectItemTypeList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "insp_item_type_id", "insp_item_type_nm");
+        });
+        inspectItemTypeList = cboGridSort(inspectItemTypeList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [inspectItemTypeOpt, inspectItemTypeList];
+};
 
 export {
   useLine,
@@ -336,6 +391,7 @@ export {
   useEquipment,
   useDept,
   useGrade,
+  useEmployee,
   useWorkingGroup,
   useProductGbn,
   useProductModel,
@@ -348,4 +404,6 @@ export {
   useEquipmentLarge,
   useEquipmentMedium,
   useEquipmentSmall,
+  useDowntimeType,
+  useInspectItemType,
 };
