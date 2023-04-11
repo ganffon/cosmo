@@ -4,7 +4,7 @@ import InputInfo from "components/input/InputInfo";
 import ButtonSearch from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import DocumentSet from "pages/mes/standard/document/DocumentSet";
-import * as S from "./Document.styled";
+import * as S from "./DocumentBackup.styled";
 import CN from "json/ColumnName.json";
 import { LayoutContext } from "components/layout/common/Layout";
 
@@ -20,6 +20,7 @@ function Document() {
   const {
     data,
     columnsTop,
+    columnsBottom,
     columnsModal,
     columnOptions,
     rowHeadersTop,
@@ -77,7 +78,6 @@ function Document() {
         </S.ButtonWrap>
       </S.ShadowBoxFixed>
       <S.paddingBox>
-        {/* <S.paddingBox> */}
         <S.ShadowBox>
           <S.GridTopWrap>
             <GridSingle
@@ -94,7 +94,6 @@ function Document() {
           isMenuSlide={isMenuSlide}
           isAllScreen={isAllScreen}
         >
-          {/* <S.ShadowBoxSticky> */}
           <S.SearchWrap>
             <InputInfo
               id="insp_document_no"
@@ -115,7 +114,7 @@ function Document() {
           <S.GridBottomWrap>
             <GridSingle
               columnOptions={columnOptions}
-              columns={columnsTop}
+              columns={columnsBottom}
               rowHeaders={rowHeadersTop}
               header={header}
               draggable={false}

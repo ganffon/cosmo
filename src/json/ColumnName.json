@@ -246,5 +246,27 @@
   "reg_date": "개정일시",
   "apply_date": "적용일시",
   "apply_fg": "적용여부",
-  "contents": "개정내역"
+  "contents": "개정내역",
+
+  "insp_document_detail_id": "세부검사기준서ID",
+  "insp_proc_gbn": "구분",
+  "insp_item_desc": "검사항목상세내용",
+  "spec_std": "검사기준",
+  "spec_min": "최소값",
+  "spec_max": "최대값",
+  "spec_lcl": "관리최소값",
+  "spec_ucl": "관리최대값",
+  "special_property": "특별특성",
+  "worker_sample_cnt": "시료수량(작업자)",
+  "worker_insp_cycle": "점검주기(작업자)",
+  "inspector_sample_cnt": "시료수량(점검원)",
+  "inspector_insp_cycle": "점검주기(점검원)",
+
+  "setup_id": "권한설정ID",
+  "setup_cd": "권한설정코드",
+  "setup_nm": "권한설정명",
+  "auth_read": "조회",
+  "auth_create": "등록",
+  "auth_update": "수정",
+  "auth_delete": "삭제"
 }

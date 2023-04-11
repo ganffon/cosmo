@@ -119,6 +119,11 @@ class equipmentDetail {
     this.eqm_detail_id = raw.eqm_detail_id;
   }
 }
+class setup {
+  constructor(raw) {
+    this.setup_id = raw.setup_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -200,6 +205,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "equipmentDetail":
       params = new equipmentDetail(raw);
+      break;
+    case "setup":
+      params = new setup(raw);
       break;
     default:
   }

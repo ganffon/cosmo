@@ -315,6 +315,16 @@ class equipmentDetail {
     this.remark = raw.remark;
   }
 }
+class setup {
+  constructor(raw) {
+    this.setup_cd = raw.setup_cd;
+    this.setup_nm = raw.setup_nm;
+    this.auth_read = raw.auth_read ? true : false;
+    this.auth_create = raw.auth_create ? true : false;
+    this.auth_update = raw.auth_update ? true : false;
+    this.auth_delete = raw.auth_delete ? true : false;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -420,6 +430,9 @@ function GetPostParams(componentName, raw, factory_id) {
       break;
     case "equipmentDetail":
       params = new equipmentDetail(raw, factory_id);
+      break;
+    case "setup":
+      params = new setup(raw);
       break;
     default:
   }

@@ -38,6 +38,7 @@ import EquipmentLarge from "pages/mes/equipment/equipmentLarge/EquipmentLarge";
 import EquipmentMedium from "pages/mes/equipment/equipmentMedium/EquipmentMedium";
 import EquipmentSmall from "pages/mes/equipment/equipmentSmall/EquipmentSmall";
 import EquipmentDetail from "pages/mes/equipment/equipmentDetail/EquipmentDetail";
+import Setup from "pages/mes/standard/setup/Setup";
 
 export default function MainRouter() {
   return (
@@ -84,6 +85,7 @@ export default function MainRouter() {
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />
         <Route path="menu-list" element={<MenuList />} />
+        <Route path="setup" element={<Setup />} />
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
     </Layout>
