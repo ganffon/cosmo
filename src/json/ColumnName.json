@@ -239,5 +239,12 @@
   "purchase_partner": "구매업체",
   "purchase_date": "구매일자",
   "purchase_tel": "구매업체연락처",
-  "purchase_price": "구매금액"
+  "purchase_price": "구매금액",
+
+  "insp_document_id": "검사기준서ID",
+  "insp_document_no": "검사기준서번호",
+  "reg_date": "개정일시",
+  "apply_date": "적용일시",
+  "apply_fg": "적용여부",
+  "contents": "개정내역"
 }
