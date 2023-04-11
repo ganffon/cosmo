@@ -25,6 +25,7 @@ import Department from "pages/mes/standard/department/Department";
 import WorkingGroup from "pages/mes/standard/workingGroup/WorkingGroup";
 import StoreLocation from "pages/mes/standard/storeLocation/StoreLocation";
 import DowntimeType from "pages/mes/standard/downtimeType/DowntimeType";
+import Downtime from "pages/mes/standard/downtime/Downtime";
 import InspectFiling from "pages/mes/standard/inspectFiling/InspectFiling";
 import InspectMethod from "pages/mes/standard/inspectMethod/InspectMethod";
 import InspectTool from "pages/mes/standard/inspectTool/InspectTool";
@@ -63,6 +64,7 @@ export default function MainRouter() {
         <Route path="store-location" element={<StoreLocation />} />
         <Route path="working-group" element={<WorkingGroup />} />
         <Route path="downtime-type" element={<DowntimeType />} />
+        <Route path="downtime" element={<Downtime />} />
         <Route path="filing" element={<InspectFiling />} />
         <Route path="method" element={<InspectMethod />} />
         <Route path="tool" element={<InspectTool />} />

@@ -1,4 +1,7 @@
+//비가동관리✨
 import restURI from "json/restURI.json";
+import "components/grid/setting/GridStyle.css";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
@@ -8,10 +11,8 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function InspectItemSet(isEditMode, inspectItemTypeList) {
+function DowntimeSet(isEditMode, downtimeTypeList) {
   const data = [];
-  const rowHeaders = ["checkbox", "rowNum"];
-  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -37,15 +38,15 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
     },
     isEditMode
       ? {
-          name: "insp_item_type_id",
-          header: CN.insp_item_type_nm,
+          name: "downtime_type_id",
+          header: CN.downtime_type_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
           formatter: "listItemText",
           editor: {
             type: "select",
             options: {
-              listItems: inspectItemTypeList,
+              listItems: downtimeTypeList,
             },
           },
           hidden: false,
@@ -55,8 +56,8 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
           rowSpan: false,
         }
       : {
-          name: "insp_item_type_nm",
-          header: CN.insp_item_type_nm,
+          name: "downtime_type_nm",
+          header: CN.downtime_type_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
           editor: false,
@@ -67,9 +68,9 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
           rowSpan: false,
         },
     {
-      name: "insp_item_id",
-      header: CN.insp_item_id,
-      minWidth: WIDTH_MIDDLE,
+      name: "downtime_id",
+      header: CN.downtime_id,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -79,9 +80,9 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
       rowSpan: false,
     },
     {
-      name: "insp_item_cd",
-      header: CN.insp_item_cd,
-      minWidth: WIDTH_MIDDLE,
+      name: "downtime_cd",
+      header: CN.downtime_cd,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -91,11 +92,31 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
       rowSpan: false,
     },
     {
-      name: "insp_item_nm",
-      header: CN.insp_item_nm,
+      name: "downtime_nm",
+      header: CN.downtime_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "eqm_failure_fg",
+      header: CN.eqm_failure_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "eqm_failure_fg",
+          disabled: isEditMode ? false : true,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -156,7 +177,7 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -168,7 +189,7 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -177,15 +198,15 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
   ];
   const columnsModal = [
     {
-      name: "insp_item_type_nm",
-      header: CN.insp_item_type_nm,
+      name: "downtime_type_nm",
+      header: CN.downtime_type_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
         type: "select",
         options: {
-          listItems: inspectItemTypeList,
+          listItems: downtimeTypeList,
         },
       },
       hidden: false,
@@ -195,8 +216,8 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
       rowSpan: false,
     },
     {
-      name: "insp_item_cd",
-      header: CN.insp_item_cd,
+      name: "downtime_cd",
+      header: CN.downtime_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
@@ -207,11 +228,30 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
       rowSpan: false,
     },
     {
-      name: "insp_item_nm",
-      header: CN.insp_item_nm,
-      minWidth: WIDTH_SHORT,
+      name: "downtime_nm",
+      header: CN.downtime_nm,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "eqm_failure_fg",
+      header: CN.eqm_failure_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "eqm_failure_fg",
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -224,7 +264,8 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
-
+  const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   const header = {};
   /**
    * 🔸날짜단일조회 - "single"
@@ -238,24 +279,24 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
    */
   const inputSet = [
     {
-      id: "insp_item_cd",
-      name: CN.insp_item_cd,
+      id: "downtime_cd",
+      name: CN.downtime_cd,
     },
     {
-      id: "insp_item_nm",
-      name: CN.insp_item_nm,
+      id: "downtime_nm",
+      name: CN.downtime_nm,
     },
   ];
 
-  const uri = restURI.inspectItem;
+  const uri = restURI.downtime;
 
   return {
     data,
-    rowHeaders,
-    rowHeadersModal,
     columns,
     columnsModal,
     columnOptions,
+    rowHeaders,
+    rowHeadersModal,
     header,
     datePickerSet,
     inputSet,
@@ -263,4 +304,4 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
   };
 }
 
-export default InspectItemSet;
+export default DowntimeSet;

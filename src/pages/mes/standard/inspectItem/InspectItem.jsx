@@ -12,8 +12,11 @@ import InputSearch from "components/input/InputSearch";
 import InspectItemSet from "pages/mes/standard/inspectItem/InspectItemSet";
 import * as DisableRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
+import TextField from "@mui/material/TextField";
+import CN from "json/ColumnName.json";
+import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
-import * as S from "pages/mes/style/oneGrid.styled";
+import * as S from "./InspectItem.styled";
 
 function InspectItem(props) {
   LoginStateChk();
@@ -30,6 +33,10 @@ function InspectItem(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
+  const [comboValue, setComboValue] = useState({
+    insp_item_type_id: null,
+  });
+  const [inspectItemTypeOpt, inspectItemTypeList] = Cbo.useInspectItemType();
   const {
     uri,
     rowHeaders,
@@ -39,7 +46,7 @@ function InspectItem(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = InspectItemSet(isEditMode);
+  } = InspectItemSet(isEditMode, inspectItemTypeList);
 
   const SETTING_FILE = "inspectItem";
 
@@ -79,7 +86,7 @@ function InspectItem(props) {
     SETTING_FILE
   );
 
-  const [actSearch, setActSearch] = HD.useSearch(
+  const [actSearch, setActSearch] = HD.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -90,6 +97,7 @@ function InspectItem(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
+    comboValue,
     uri
   );
 
@@ -170,15 +178,43 @@ function InspectItem(props) {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            {inputSet.map((v) => (
-              <InputSearch
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
+            <S.ComboWrap>
+              <S.ComboBox
+                disablePortal
+                id="factoryCombo"
+                size="small"
+                key={(option) => option?.insp_item_type_id}
+                options={inspectItemTypeOpt || null}
+                getOptionLabel={(option) => option?.insp_item_type_nm || ""}
+                onChange={(_, newValue) => {
+                  setComboValue({
+                    ...comboValue,
+                    insp_item_type_nm:
+                      newValue?.insp_item_type_nm === undefined
+                        ? null
+                        : newValue?.insp_item_type_nm,
+                  });
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.insp_item_type_nm}
+                    size="small"
+                  />
+                )}
               />
-            ))}
+            </S.ComboWrap>
+            <S.InputWrap>
+              {inputSet.map((v) => (
+                <InputSearch
+                  key={v.id}
+                  id={v.id}
+                  name={v.name}
+                  handleInputTextChange={handleInputTextChange}
+                  onClickSearch={onClickSearch}
+                />
+              ))}
+            </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (

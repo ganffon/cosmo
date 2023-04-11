@@ -160,7 +160,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       name: "birthday",
       header: CN.birthday,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "center",
       editor: isEditMode
         ? {
             type: "datePicker",
@@ -185,9 +185,6 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
-      formatter: function (value) {
-        return CustomGrid.OnlyNum(value);
-      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -234,7 +231,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       name: "enter_date",
       header: CN.enter_date,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "center",
       editor: isEditMode
         ? {
             type: "datePicker",
@@ -257,7 +254,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       name: "leave_date",
       header: CN.leave_date,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "center",
       editor: isEditMode
         ? {
             type: "datePicker",
@@ -484,7 +481,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       name: "birthday",
       header: CN.birthday,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
+      align: "center",
       editor: {
         type: "datePicker",
         options: {
@@ -507,9 +504,6 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
-      formatter: function (value) {
-        return CustomGrid.OnlyNum(value);
-      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -556,7 +550,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       name: "enter_date",
       header: CN.enter_date,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
+      align: "center",
       editor: {
         type: "datePicker",
         options: {
@@ -577,7 +571,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       name: "leave_date",
       header: CN.leave_date,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
+      align: "center",
       editor: {
         type: "datePicker",
         options: {

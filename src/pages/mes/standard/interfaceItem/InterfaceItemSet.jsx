@@ -8,7 +8,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function InterfaceItemSet(isEditMode) {
+function InterfaceItemSet(isEditMode, interfaceItemTypeList) {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -35,6 +35,37 @@ function InterfaceItemSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
+    isEditMode
+      ? {
+          name: "infc_item_type_id",
+          header: CN.infc_item_type_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          formatter: "listItemText",
+          editor: {
+            type: "select",
+            options: {
+              listItems: interfaceItemTypeList,
+            },
+          },
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        }
+      : {
+          name: "infc_item_type_nm",
+          header: CN.infc_item_type_nm,
+          minWidth: WIDTH_MIDDLE,
+          align: "left",
+          editor: false,
+          hidden: false,
+          sortable: false,
+          filter: false,
+          whiteSpace: false,
+          rowSpan: false,
+        },
     {
       name: "infc_item_id",
       header: CN.infc_item_id,
@@ -145,6 +176,24 @@ function InterfaceItemSet(isEditMode) {
     },
   ];
   const columnsModal = [
+    {
+      name: "infc_item_type_nm",
+      header: CN.infc_item_type_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: interfaceItemTypeList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
     {
       name: "infc_item_cd",
       header: CN.infc_item_cd,

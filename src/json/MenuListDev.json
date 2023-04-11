@@ -140,7 +140,7 @@
             "under": null
           },
           {
-            "name": "❌작업자관리",
+            "name": "✅작업자관리",
             "id": "employee",
             "path": "employee",
             "under": null
@@ -184,7 +184,7 @@
             "under": null
           },
           {
-            "name": "❌비가동관리",
+            "name": "✅비가동관리",
             "id": "downtime",
             "path": "downtime",
             "under": null
@@ -221,7 +221,7 @@
             "under": null
           },
           {
-            "name": "✴️검사항목관리",
+            "name": "✅검사항목관리",
             "id": "inspection-item",
             "path": "inspection-item",
             "under": null
@@ -421,7 +421,7 @@
             "under": null
           },
           {
-            "name": "✴️상세제원관리",
+            "name": "✅상세제원관리",
             "id": "equipment-detail",
             "path": "equipment-detail",
             "under": null

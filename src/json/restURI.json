@@ -22,11 +22,12 @@
   "storeLocation": "/storelocations",
   "workingGroup": "/workinggroup",
   "downtimeType": "/downTimeType",
+  "downtime": "/downtime",
 
   "inspectFiling": "/inspectionfiling",
   "inspectMethod": "/inspectionmethod",
   "inspectTool": "/inspectiontool",
-  "inspectType": "/inspectiontype",
+  "inspectType": "/inspectionitemtype",
   "inspectItem": "/inspectionitem",
   "inspectDocument": "/inspectiondocument",
   "inspectDocumentDetail": "/inspectiondocumentdetail",
