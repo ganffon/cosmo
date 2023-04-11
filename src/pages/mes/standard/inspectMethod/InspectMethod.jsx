@@ -13,7 +13,7 @@ import InspectMethodSet from "pages/mes/standard/inspectMethod/InspectMethodSet"
 import * as DisableRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import * as HD from "custom/useHandleData";
-import * as S from "../oneGrid.styled";
+import * as S from "pages/mes/style/oneGrid.styled";
 
 function InspectMethod(props) {
   LoginStateChk();

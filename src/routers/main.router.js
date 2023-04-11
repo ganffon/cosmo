@@ -33,9 +33,9 @@ import InspectItem from "pages/mes/standard/inspectItem/InspectItem";
 import InterfaceItemType from "pages/mes/standard/interfaceItemType/InterfaceItemType";
 import InterfaceItem from "pages/mes/standard/interfaceItem/InterfaceItem";
 import InterfaceMemory from "pages/mes/standard/interfaceMemory/InterfaceMemory";
-import EquipmentLarge from "pages/mes/standard/equipmentLarge/EquipmentLarge";
-import EquipmentMedium from "pages/mes/standard/equipmentMedium/EquipmentMedium";
-import EquipmentSmall from "pages/mes/standard/equipmentSmall/EquipmentSmall";
+import EquipmentLarge from "pages/mes/equipment/equipmentLarge/EquipmentLarge";
+import EquipmentMedium from "pages/mes/equipment/equipmentMedium/EquipmentMedium";
+import EquipmentSmall from "pages/mes/equipment/equipmentSmall/EquipmentSmall";
 import EquipmentDetail from "pages/mes/equipment/equipmentDetail/EquipmentDetail";
 
 export default function MainRouter() {

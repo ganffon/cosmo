@@ -9,11 +9,11 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import EquipmentMediumSet from "pages/mes/standard/equipmentMedium/EquipmentMediumSet";
+import EquipmentMediumSet from "pages/mes/equipment/equipmentMedium/EquipmentMediumSet";
 import * as DisableRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import * as HD from "custom/useHandleData";
-import * as S from "../oneGrid.styled";
+import * as S from "pages/mes/style/oneGrid.styled";
 
 function EquipmentMedium(props) {
   LoginStateChk();
