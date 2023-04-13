@@ -5,7 +5,7 @@ import * as S from "./ModalSelect.styled";
 
 function ModalSelect(props) {
   const {
-    onClickSelectClose,
+    onClickModalSelectClose,
     refSelectGrid,
     columns,
     columnOptions,
@@ -22,7 +22,7 @@ function ModalSelect(props) {
         <S.ButtonClose
           color="primary"
           aria-label="close"
-          onClick={onClickSelectClose}
+          onClick={onClickModalSelectClose}
         >
           <CloseIcon />
         </S.ButtonClose>

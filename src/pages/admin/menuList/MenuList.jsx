@@ -214,7 +214,7 @@ function MenuList(props) {
     setIsModalOpen(false);
     onClickSearch();
   };
-
+  const onDblClickModalGrid = () => {};
   const onClickGrid = () => {};
   const onDblClickGrid = () => {};
   const onEditingFinishGrid = () => {};
@@ -285,10 +285,9 @@ function MenuList(props) {
           columnOptions={COMPONENT.columnOptions}
           header={COMPONENT.header}
           rowHeaders={COMPONENT.rowHeadersModal}
-          uri={COMPONENT.uri}
           refModalGrid={refModalGrid}
-          setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
+          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

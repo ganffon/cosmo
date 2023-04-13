@@ -851,21 +851,9 @@ function DocumentSet(
   ];
   const columnsModal = [
     {
-      name: "line_id",
-      header: CN.line_id,
+      name: "insp_document_no",
+      header: CN.insp_document_no,
       minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "line_cd",
-      header: CN.line_cd,
-      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
       hidden: false,
@@ -877,6 +865,143 @@ function DocumentSet(
     {
       name: "line_nm",
       header: CN.line_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      formatter: "listItemText",
+      editor: {
+        type: "select",
+        options: {
+          listItems: lineList,
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_id",
+      header: CN.prod_id,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      validation: {
+        required: true,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_no",
+      header: CN.prod_no,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      validation: {
+        required: true,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_nm",
+      header: CN.prod_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      validation: {
+        required: true,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "reg_date",
+      header: CN.reg_date,
+      minWidth: WIDTH_MIDDLE,
+      align: "center",
+      editor: {
+        type: "datePicker",
+        options: {
+          language: "ko",
+          format: "yyyy-MM-dd",
+        },
+      },
+      formatter: function (value) {
+        return CustomGrid.DateFormat(value);
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "apply_date",
+      header: CN.apply_date,
+      minWidth: WIDTH_MIDDLE,
+      align: "center",
+      editor: {
+        type: "datePicker",
+        options: {
+          language: "ko",
+          format: "yyyy-MM-dd",
+        },
+      },
+      formatter: function (value) {
+        return CustomGrid.DateFormat(value);
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "apply_fg",
+      header: CN.apply_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "apply_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "contents",
+      header: CN.contents,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "remark",
+      header: CN.remark,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -887,7 +1012,44 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
-
+  const columnsModalSelect = [
+    {
+      name: "prod_id",
+      header: CN.prod_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_no",
+      header: CN.prod_no,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_nm",
+      header: CN.prod_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -918,23 +1080,26 @@ function DocumentSet(
    * 🔸inputSet id 값이 ⭐ BE : query params
    */
   const inputSet = [
-    {
-      id: "line_cd",
-      name: CN.line_cd,
-    },
-    {
-      id: "line_nm",
-      name: CN.line_nm,
-    },
+    // {
+    //   id: "line_cd",
+    //   name: CN.line_cd,
+    // },
+    // {
+    //   id: "line_nm",
+    //   name: CN.line_nm,
+    // },
   ];
 
-  const uri = restURI.lines;
+  const uri = restURI.document;
+
+  const uriModalSelect = restURI.product;
 
   return {
     data,
     columnsTop,
     columnsBottom,
     columnsModal,
+    columnsModalSelect,
     columnOptions,
     rowHeadersTop,
     rowHeadersModal,
@@ -942,6 +1107,7 @@ function DocumentSet(
     datePickerSet,
     inputSet,
     uri,
+    uriModalSelect,
   };
 }
 

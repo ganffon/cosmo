@@ -18,7 +18,7 @@ const useDelete = (
   searchToggle,
   setSearchToggle,
   uri,
-  SETTING_FILE
+  componentName
 ) => {
   const [actDelete, setActDelete] = useState(false);
   refGrid?.current?.gridInst?.finishEditing();
@@ -26,7 +26,7 @@ const useDelete = (
     const handle = async () => {
       const data = refGrid?.current?.gridInst
         ?.getCheckedRows()
-        ?.map((raw) => GetDeleteParams(SETTING_FILE, raw));
+        ?.map((raw) => GetDeleteParams(componentName, raw));
       if (data.length !== 0 && isBackDrop === false) {
         setIsBackDrop(true);
         await restAPI
@@ -209,7 +209,7 @@ const useEditModeSave = (
   setIsBackDrop,
   isSnackOpen,
   setIsSnackOpen,
-  SETTING_FILE,
+  componentName,
   uri
 ) => {
   const [actEditModeSave, setActEditModeSave] = useState(false);
@@ -218,7 +218,7 @@ const useEditModeSave = (
     const handle = async () => {
       const data = refGrid?.current?.gridInst
         ?.getCheckedRows()
-        ?.map((raw) => GetPutParams(SETTING_FILE, raw));
+        ?.map((raw) => GetPutParams(componentName, raw));
       if (data.length !== 0 && isBackDrop === false) {
         setIsBackDrop(true);
         await restAPI
@@ -257,7 +257,7 @@ const useModalSave = (
   setIsBackDrop,
   isSnackOpen,
   setIsSnackOpen,
-  SETTING_FILE,
+  componentName,
   uri
 ) => {
   const [actModalSave, setActModalSave] = useState(false);
@@ -268,7 +268,7 @@ const useModalSave = (
       const data = refGrid?.current?.gridInst
         ?.getModifiedRows()
         ?.createdRows.map((raw) =>
-          GetPostParams(SETTING_FILE, raw, cookie.factoryID)
+          GetPostParams(componentName, raw, cookie.factoryID)
         );
       if (data !== undefined && isBackDrop === false) {
         setIsBackDrop(true);
