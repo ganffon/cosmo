@@ -325,6 +325,19 @@ class setup {
     this.auth_delete = raw.auth_delete ? true : false;
   }
 }
+class document {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.insp_document_no = raw.insp_document_no;
+    this.line_id = raw.line_id;
+    this.prod_id = raw.prod_id;
+    this.reg_date = raw.reg_date;
+    this.apply_date = raw.apply_date;
+    this.apply_fg = raw.apply_fg ? true : false;
+    this.contents = raw.contents;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -433,6 +446,9 @@ function GetPostParams(componentName, raw, factory_id) {
       break;
     case "setup":
       params = new setup(raw);
+      break;
+    case "document":
+      params = new document(raw, factory_id);
       break;
     default:
   }

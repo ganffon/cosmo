@@ -63,7 +63,7 @@ function EquipmentDetail() {
     equipmentMediumList,
     equipmentSmallList
   );
-  const SETTING_FILE = "equipmentDetail";
+  const SWITCH_NAME_01 = "equipmentDetail";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -98,7 +98,7 @@ function EquipmentDetail() {
     searchToggle,
     setSearchToggle,
     uri,
-    SETTING_FILE
+    SWITCH_NAME_01
   );
 
   const [actSearch, setActSearch] = HD.useSearchCbo(
@@ -122,7 +122,7 @@ function EquipmentDetail() {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const [actModalSave, setActModalSave] = HD.useModalSave(
@@ -131,7 +131,7 @@ function EquipmentDetail() {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const onClickNew = () => {

@@ -313,6 +313,20 @@ class setup {
     this.auth_delete = raw.auth_delete ? true : false;
   }
 }
+class document {
+  constructor(raw) {
+    this.insp_document_id = raw.insp_document_id;
+    this.factory_id = raw.factory_id;
+    this.insp_document_no = raw.insp_document_no;
+    this.line_id = raw.line_id;
+    this.prod_id = raw.prod_id;
+    this.reg_date = raw.reg_date;
+    this.apply_date = raw.apply_date;
+    this.apply_fg = raw.apply_fg;
+    this.contents = raw.contents;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -400,6 +414,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "setup":
       params = new setup(raw);
+      break;
+    case "document":
+      params = new document(raw);
       break;
     default:
   }

@@ -45,7 +45,7 @@ function Employee() {
     columnOptions,
     inputSet,
   } = EmployeeSet(isEditMode, deptList, gradeList, workingGroupList);
-  const SETTING_FILE = "employee";
+  const SWITCH_NAME_01 = "employee";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -80,7 +80,7 @@ function Employee() {
     searchToggle,
     setSearchToggle,
     uri,
-    SETTING_FILE
+    SWITCH_NAME_01
   );
 
   const [actSearch, setActSearch] = HD.useSearch(
@@ -103,7 +103,7 @@ function Employee() {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const [actModalSave, setActModalSave] = HD.useModalSave(
@@ -112,7 +112,7 @@ function Employee() {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const onClickNew = () => {
@@ -162,6 +162,8 @@ function Employee() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
+  const onDblClickModalGrid = () => {};
+
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, ["use_fg", "prd_fg"]);
   };
@@ -242,10 +244,9 @@ function Employee() {
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeadersModal}
-          uri={uri}
           refModalGrid={refModalGrid}
-          setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
+          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

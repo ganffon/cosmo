@@ -58,7 +58,7 @@ function InterfaceMemory(props) {
     inputSet,
   } = InterfaceMemorySet(isEditMode, lineList, processList, equipmentList);
 
-  const SETTING_FILE = "interfaceMemory";
+  const SWITCH_NAME_01 = "interfaceMemory";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -93,7 +93,7 @@ function InterfaceMemory(props) {
     searchToggle,
     setSearchToggle,
     uri,
-    SETTING_FILE
+    SWITCH_NAME_01
   );
 
   const [actSearch, setActSearch] = HD.useSearchCbo(
@@ -130,7 +130,7 @@ function InterfaceMemory(props) {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const [actModalSave, setActModalSave] = HD.useModalSave(
@@ -139,7 +139,7 @@ function InterfaceMemory(props) {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const onClickNew = () => {
@@ -236,15 +236,16 @@ function InterfaceMemory(props) {
     setIsModalSelectOpen(false);
   };
   const onDblClickModalSelectGrid = (e) => {
-    let ref;
+    let refGrid;
     if (dblClickGrid === "Grid") {
-      ref = refSingleGrid;
+      refGrid = refSingleGrid;
+      DisableRow.handleGridSelectCheck(refGrid, dblClickRowKey);
     } else if (dblClickGrid === "Modal") {
-      ref = refModalGrid;
+      refGrid = refModalGrid;
     }
     const columnName = ["infc_item_type_nm", "infc_item_id", "infc_item_nm"];
     for (let i = 0; i < columnName.length; i++) {
-      ref?.current?.gridInst?.setValue(
+      refGrid?.current?.gridInst?.setValue(
         dblClickRowKey,
         columnName[i],
         e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]

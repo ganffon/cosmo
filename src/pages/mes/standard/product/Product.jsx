@@ -62,7 +62,7 @@ function Product() {
     productTypeSmallList,
     unitList
   );
-  const SETTING_FILE = "product";
+  const SWITCH_NAME_01 = "product";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -97,7 +97,7 @@ function Product() {
     searchToggle,
     setSearchToggle,
     uri,
-    SETTING_FILE
+    SWITCH_NAME_01
   );
 
   const [actSearch, setActSearch] = HD.useSearchCbo(
@@ -121,7 +121,7 @@ function Product() {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const [actModalSave, setActModalSave] = HD.useModalSave(
@@ -130,7 +130,7 @@ function Product() {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const onClickNew = () => {

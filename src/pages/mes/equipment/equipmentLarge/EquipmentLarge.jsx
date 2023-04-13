@@ -41,7 +41,7 @@ function EquipmentLarge(props) {
     inputSet,
   } = EquipmentLargeSet(isEditMode);
 
-  const SETTING_FILE = "equipmentLarge";
+  const SWITCH_NAME_01 = "equipmentLarge";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -76,7 +76,7 @@ function EquipmentLarge(props) {
     searchToggle,
     setSearchToggle,
     uri,
-    SETTING_FILE
+    SWITCH_NAME_01
   );
 
   const [actSearch, setActSearch] = HD.useSearch(
@@ -99,7 +99,7 @@ function EquipmentLarge(props) {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const [actModalSave, setActModalSave] = HD.useModalSave(
@@ -108,7 +108,7 @@ function EquipmentLarge(props) {
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SETTING_FILE,
+    SWITCH_NAME_01,
     uri
   );
   const onClickNew = () => {
@@ -158,6 +158,7 @@ function EquipmentLarge(props) {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
+  const onDblClickModalGrid = () => {};
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, []);
   };
@@ -238,10 +239,9 @@ function EquipmentLarge(props) {
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeadersModal}
-          uri={uri}
           refModalGrid={refModalGrid}
-          setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
+          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
