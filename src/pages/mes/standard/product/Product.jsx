@@ -194,6 +194,7 @@ function Product() {
       "prd_active_fg",
     ]);
   };
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
   };
@@ -340,6 +341,7 @@ function Product() {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>

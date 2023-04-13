@@ -11,14 +11,7 @@ import {
   NORMAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function InterfaceMemorySet(
-  isEditMode,
-  interfaceItemTypeList,
-  interfaceItemList,
-  lineList,
-  processList,
-  equipmentList
-) {
+function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -63,11 +56,8 @@ function InterfaceMemorySet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      renderer: {
-        styles: {
-          backgroundColor: isEditMode ? MODAL_BACK_COLOR : NORMAL_BACK_COLOR,
-          padding: "12px",
-        },
+      validation: {
+        required: isEditMode ? true : false,
       },
       hidden: false,
       sortable: false,
@@ -81,11 +71,8 @@ function InterfaceMemorySet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      renderer: {
-        styles: {
-          backgroundColor: isEditMode ? MODAL_BACK_COLOR : NORMAL_BACK_COLOR,
-          padding: "12px",
-        },
+      validation: {
+        required: isEditMode ? true : false,
       },
       hidden: false,
       sortable: false,
@@ -99,11 +86,8 @@ function InterfaceMemorySet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      renderer: {
-        styles: {
-          backgroundColor: isEditMode ? MODAL_BACK_COLOR : NORMAL_BACK_COLOR,
-          padding: "12px",
-        },
+      validation: {
+        required: isEditMode ? true : false,
       },
       hidden: false,
       sortable: false,
@@ -359,12 +343,9 @@ function InterfaceMemorySet(
       header: CN.infc_item_type_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
-      renderer: {
-        styles: {
-          backgroundColor: MODAL_BACK_COLOR,
-          // padding: "20px",
-        },
+      editor: "text",
+      validation: {
+        required: true,
       },
       hidden: false,
       sortable: false,
@@ -377,12 +358,9 @@ function InterfaceMemorySet(
       header: CN.infc_item_id,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
-      renderer: {
-        styles: {
-          backgroundColor: MODAL_BACK_COLOR,
-          // padding: "20px",
-        },
+      editor: "text",
+      validation: {
+        required: true,
       },
       hidden: false,
       sortable: false,
@@ -395,12 +373,9 @@ function InterfaceMemorySet(
       header: CN.infc_item_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
-      renderer: {
-        styles: {
-          backgroundColor: MODAL_BACK_COLOR,
-          // padding: "20px",
-        },
+      editor: "text",
+      validation: {
+        required: true,
       },
       hidden: false,
       sortable: false,
@@ -537,7 +512,7 @@ function InterfaceMemorySet(
       rowSpan: false,
     },
   ];
-  const columnsModalPopup = [
+  const columnsModalSelect = [
     {
       name: "infc_item_type_nm",
       header: CN.infc_item_type_nm,
@@ -604,7 +579,7 @@ function InterfaceMemorySet(
   ];
 
   const uri = restURI.interfaceMemory;
-  const uriModalPopup = restURI.interfaceItem;
+  const uriModalSelect = restURI.interfaceItem;
 
   return {
     data,
@@ -612,13 +587,13 @@ function InterfaceMemorySet(
     rowHeadersModal,
     columns,
     columnsModal,
-    columnsModalPopup,
+    columnsModalSelect,
     columnOptions,
     header,
     datePickerSet,
     inputSet,
     uri,
-    uriModalPopup,
+    uriModalSelect,
   };
 }
 

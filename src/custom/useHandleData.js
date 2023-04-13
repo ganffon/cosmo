@@ -60,7 +60,6 @@ const useDelete = (
   }, [actDelete]);
   return [actDelete, setActDelete];
 };
-
 const useSearch = (
   refGrid,
   isBackDrop,
@@ -159,18 +158,18 @@ const useSearchCbo = (
   }, [actSearch]);
   return [actSearch, setActSearch];
 };
-const useSearchModalPopup = (
+const useSearchModalSelect = (
   refGrid,
   isBackDrop,
   setIsBackDrop,
   isSnackOpen,
   setIsSnackOpen,
-  setGridModalPopupData,
+  setGridModalSelectData,
   disableRowToggle,
   setDisableRowToggle,
-  uriModalPopup
+  uriModalSelect
 ) => {
-  const [actSearchModalPopup, setActSearchModalPopup] = useState(false);
+  const [actSearchModalSelect, setActSearchModalSelect] = useState(false);
   refGrid?.current?.gridInst?.finishEditing();
   useEffect(() => {
     const handle = async () => {
@@ -178,8 +177,8 @@ const useSearchModalPopup = (
         try {
           setIsBackDrop(true);
 
-          const gridData = await restAPI.get(uriModalPopup);
-          setGridModalPopupData(gridData?.data?.data?.rows);
+          const gridData = await restAPI.get(uriModalSelect);
+          setGridModalSelectData(gridData?.data?.data?.rows);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -201,8 +200,8 @@ const useSearchModalPopup = (
     };
 
     handle();
-  }, [actSearchModalPopup]);
-  return [actSearchModalPopup, setActSearchModalPopup];
+  }, [actSearchModalSelect]);
+  return [actSearchModalSelect, setActSearchModalSelect];
 };
 const useEditModeSave = (
   refGrid,
@@ -252,7 +251,6 @@ const useEditModeSave = (
   }, [actEditModeSave]);
   return [actEditModeSave, setActEditModeSave];
 };
-
 const useModalSave = (
   refGrid,
   isBackDrop,
@@ -310,7 +308,7 @@ export {
   useDelete,
   useSearch,
   useSearchCbo,
-  useSearchModalPopup,
+  useSearchModalSelect,
   useEditModeSave,
   useModalSave,
 };

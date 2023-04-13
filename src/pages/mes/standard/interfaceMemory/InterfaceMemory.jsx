@@ -4,11 +4,12 @@ import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
-import ModalPopup from "components/modal/ModalPopup";
+import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
+import TextField from "@mui/material/TextField";
 import InputSearch from "components/input/InputSearch";
 import InterfaceMemorySet from "pages/mes/standard/interfaceMemory/InterfaceMemorySet";
 import * as DisableRow from "custom/useDisableRowCheck";
@@ -16,7 +17,7 @@ import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
 import * as HD from "custom/useHandleData";
-import * as S from "pages/mes/style/oneGrid.styled";
+import * as S from "./InterfaceMemory.styled";
 
 function InterfaceMemory(props) {
   LoginStateChk();
@@ -24,14 +25,14 @@ function InterfaceMemory(props) {
     useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
-  const refModalPopupGrid = useRef(null);
+  const refModalSelectGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalPopupOpen, setIsModalPopupOpen] = useState(false);
+  const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [gridData, setGridData] = useState(null);
-  const [gridModalPopupData, setGridModalPopupData] = useState(null);
+  const [gridModalSelectData, setGridModalSelectData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
@@ -43,30 +44,19 @@ function InterfaceMemory(props) {
   const [lineOpt, lineList] = Cbo.useLine();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
   const [processOpt, processList] = Cbo.useProcess();
-  const [interfaceItemTypeOpt, interfaceItemTypeList] =
-    Cbo.useInterfaceItemType();
-  const [interfaceItemOpt, interfaceItemList] = Cbo.useInterfaceItem();
 
   const {
     uri,
-    uriModalPopup,
+    uriModalSelect,
     rowHeaders,
     rowHeadersModal,
     header,
     columns,
     columnsModal,
-    columnsModalPopup,
+    columnsModalSelect,
     columnOptions,
     inputSet,
-  } = InterfaceMemorySet(
-    isEditMode,
-    lineOpt,
-    lineList,
-    equipmentList,
-    processList,
-    interfaceItemTypeList,
-    interfaceItemList
-  );
+  } = InterfaceMemorySet(isEditMode, lineList, processList, equipmentList);
 
   const SETTING_FILE = "interfaceMemory";
 
@@ -106,7 +96,7 @@ function InterfaceMemory(props) {
     SETTING_FILE
   );
 
-  const [actSearch, setActSearch] = HD.useSearch(
+  const [actSearch, setActSearch] = HD.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -117,20 +107,22 @@ function InterfaceMemory(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
+    comboValue,
     uri
   );
 
-  const [actSearchModalPopup, setActSearchModalPopup] = HD.useSearchModalPopup(
-    refModalPopupGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridModalPopupData,
-    disableRowToggle,
-    setDisableRowToggle,
-    uriModalPopup
-  );
+  const [actSearchModalSelect, setActSearchModalSelect] =
+    HD.useSearchModalSelect(
+      refModalSelectGrid,
+      isBackDrop,
+      setIsBackDrop,
+      isSnackOpen,
+      setIsSnackOpen,
+      setGridModalSelectData,
+      disableRowToggle,
+      setDisableRowToggle,
+      uriModalSelect
+    );
 
   const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
     refSingleGrid,
@@ -163,7 +155,6 @@ function InterfaceMemory(props) {
       setIsDeleteAlertOpen(true);
     }
   };
-
   const handleDelete = () => {
     setActDelete(!actDelete);
   };
@@ -190,15 +181,23 @@ function InterfaceMemory(props) {
   const onClickModalCancelRow = () => {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
-  const [dblClickModalGridRowKey, setDblClickModalGridRowKey] = useState();
+  const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
+  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Grid" or "Modal"
   const onDblClickModalGrid = (e) => {
-    if (
-      e?.columnName === "infc_item_nm" ||
-      e?.columnName === "infc_item_type_nm"
-    ) {
-      setDblClickModalGridRowKey(e?.rowKey);
-      setIsModalPopupOpen(true);
-      setActSearchModalPopup(!actSearchModalPopup);
+    const columnName = ["infc_item_nm", "infc_item_type_nm"];
+    let condition;
+    for (let i = 0; i < columnName.length; i++) {
+      if (i === 0) {
+        condition = e?.columnName === columnName[i];
+      } else {
+        condition = condition || e?.columnName === columnName[i];
+      }
+    }
+    if (condition) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("Modal");
+      setIsModalSelectOpen(true);
+      setActSearchModalSelect(!actSearchModalSelect);
     }
   };
 
@@ -212,26 +211,46 @@ function InterfaceMemory(props) {
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, []);
   };
+
+  const onDblClickGrid = (e) => {
+    const columnName = ["infc_item_nm", "infc_item_type_nm"];
+    let condition;
+    for (let i = 0; i < columnName.length; i++) {
+      if (i === 0) {
+        condition = e?.columnName === columnName[i];
+      } else {
+        condition = condition || e?.columnName === columnName[i];
+      }
+    }
+    if (condition) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("Grid");
+      setIsModalSelectOpen(true);
+      setActSearchModalSelect(!actSearchModalSelect);
+    }
+  };
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
   };
-  const onClickModalPopupClose = () => {
-    setIsModalPopupOpen(false);
+  const onClickModalSelectClose = () => {
+    setIsModalSelectOpen(false);
   };
-  const onDblClickModalPopupGrid = (e) => {
-    console.log(
-      e?.instance?.store?.data?.rawData[e?.rowKey]["infc_item_type_nm"]
-    );
-    console.log(dblClickModalGridRowKey);
-    console.log(refModalGrid);
-    // refModalGrid?.current?.gridInst?.store?.data?.rawData[
-    //   dblClickModalGridRowKey
-    // ]["set infc_item_type_nm"]
-    refModalGrid?.current?.gridInst?.setValue(
-      dblClickModalGridRowKey,
-      "infc_item_type_nm",
-      "1"
-    );
+  const onDblClickModalSelectGrid = (e) => {
+    let ref;
+    if (dblClickGrid === "Grid") {
+      ref = refSingleGrid;
+    } else if (dblClickGrid === "Modal") {
+      ref = refModalGrid;
+    }
+    const columnName = ["infc_item_type_nm", "infc_item_id", "infc_item_nm"];
+    for (let i = 0; i < columnName.length; i++) {
+      ref?.current?.gridInst?.setValue(
+        dblClickRowKey,
+        columnName[i],
+        e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
+      );
+    }
+    setIsModalSelectOpen(false);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -244,16 +263,41 @@ function InterfaceMemory(props) {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            {inputSet.map((v) => (
-              <InputSearch
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
+            <S.ComboWrap>
+              <S.ComboBox
+                disablePortal
+                id="factoryCombo"
+                size="small"
+                key={(option) => option?.line_id}
+                options={lineOpt || null}
+                getOptionLabel={(option) => option?.line_nm || ""}
+                onChange={(_, newValue) => {
+                  setComboValue({
+                    ...comboValue,
+                    line_nm:
+                      newValue?.line_nm === undefined
+                        ? null
+                        : newValue?.line_nm,
+                  });
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.line_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
-            ))}
+            </S.ComboWrap>
+            <S.InputWrap>
+              {inputSet.map((v) => (
+                <InputSearch
+                  key={v.id}
+                  id={v.id}
+                  name={v.name}
+                  handleInputTextChange={handleInputTextChange}
+                  onClickSearch={onClickSearch}
+                  onKeyDown={onKeyDown}
+                />
+              ))}
+            </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (
@@ -284,6 +328,7 @@ function InterfaceMemory(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
@@ -310,16 +355,16 @@ function InterfaceMemory(props) {
           onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
-      {isModalPopupOpen ? (
-        <ModalPopup
-          onClickModalPopupClose={onClickModalPopupClose}
-          columns={columnsModalPopup}
+      {isModalSelectOpen ? (
+        <ModalSelect
+          onClickModalSelectClose={onClickModalSelectClose}
+          columns={columnsModalSelect}
           columnOptions={columnOptions}
           header={header}
-          gridModalPopupData={gridModalPopupData}
+          gridModalSelectData={gridModalSelectData}
           rowHeaders={rowHeadersModal}
-          refModalPopupGrid={refModalPopupGrid}
-          onDblClickModalPopupGrid={onDblClickModalPopupGrid}
+          refModalSelectGrid={refModalSelectGrid}
+          onDblClickModalSelectGrid={onDblClickModalSelectGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

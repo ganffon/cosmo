@@ -1,19 +1,18 @@
 import CloseIcon from "@mui/icons-material/Close";
-import GridModalPopup from "components/grid/GridModalPopup";
+import GridModalSelect from "components/grid/GridModalSelect";
 import ModalWrap from "components/modal/ModalWrap";
-import * as S from "./ModalPopup.styled";
+import * as S from "./ModalSelect.styled";
 
-function ModalPopup(props) {
+function ModalSelect(props) {
   const {
-    onClickModalPopupClose,
-    refModalPopupGrid,
+    onClickSelectClose,
+    refSelectGrid,
     columns,
     columnOptions,
     header,
     rowHeaders,
-    gridModalPopupData,
-    onClickModalPopupGrid,
-    onDblClickModalPopupGrid,
+    gridModalSelectData,
+    onDblClickModalSelectGrid,
   } = props;
 
   return (
@@ -23,25 +22,25 @@ function ModalPopup(props) {
         <S.ButtonClose
           color="primary"
           aria-label="close"
-          onClick={onClickModalPopupClose}
+          onClick={onClickSelectClose}
         >
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
       <S.GridBox>
-        <GridModalPopup
+        <GridModalSelect
           columns={columns}
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeaders}
-          refGrid={refModalPopupGrid}
-          data={gridModalPopupData}
+          refGrid={refSelectGrid}
+          data={gridModalSelectData}
           draggable={false}
-          onDblClick={onDblClickModalPopupGrid}
+          onDblClick={onDblClickModalSelectGrid}
         />
       </S.GridBox>
     </ModalWrap>
   );
 }
 
-export default ModalPopup;
+export default ModalSelect;

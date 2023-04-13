@@ -9,48 +9,21 @@ export const ContentsArea = styled("div")`
   background-color: white;
   padding: 0px 10px 0px 10px;
 `;
-export const ShadowBoxFixed = styled("div")`
+export const ShadowBoxButton = styled("div")`
   background-color: rgb(255, 255, 255);
-  width: ${(props) =>
-    props.isMenuSlide ? `calc(100% - 7.5rem)` : `calc(100% - 2rem)`};
+  width: calc(100% - 0.5rem);
   height: auto;
-  position: fixed;
-  top: ${(props) => (props.isAllScreen ? "0px" : `${APP_BAR_HEIGHT}`)};
-  left: ${(props) => (props.isMenuSlide ? `${FIXED_LEFT}` : "10px")};
-  z-index: 100;
   border-radius: 3px;
   border-color: rgb(255, 255, 255);
   margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
-export const ShadowBoxSticky = styled("div")`
+export const ShadowBoxInputInfo = styled("div")`
   background-color: rgb(255, 255, 255);
-  width: ${(props) =>
-    props.scrollActive
-      ? props.isMenuSlide
-        ? `calc(100% - 7.5rem)`
-        : `calc(100% - 2rem)`
-      : "100%"};
-  height: auto;
-  position: ${(props) => (props.scrollActive ? "fixed" : "static")};
-  top: ${(props) => (props.isAllScreen ? `${APP_BAR_HEIGHT}` : "93px")};
-  left: ${(props) => (props.isMenuSlide ? `${FIXED_LEFT}` : "10px")};
-  z-index: 100;
+  width: calc(100% - 0.5rem);
   border-radius: 3px;
   border-color: rgb(255, 255, 255);
-  margin-top: 8px;
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-`;
-export const paddingBox = styled("div")`
-  padding-top: ${APP_BAR_HEIGHT};
-`;
-export const ShadowBox = styled("div")`
-  background-color: rgb(255, 255, 255);
-  width: 100%;
-  height: auto;
-  border-radius: 3px;
-  border-color: rgb(255, 255, 255);
-  margin-top: 8px;
+  margin-top: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const SearchWrap = styled("div")`
@@ -65,10 +38,12 @@ export const ButtonWrap = styled("div")`
   padding: 5px 5px 5px 0px;
 `;
 export const GridTopWrap = styled("div")`
-  width: 100%;
-  height: 300px;
+  width: calc(100% - 0.5rem);
+  height: 40%;
+  margin-top: 10px;
 `;
 export const GridBottomWrap = styled("div")`
-  width: 100%;
-  height: 3000px;
+  width: calc(100% - 0.5rem);
+  height: 80%;
+  margin-top: 10px;
 `;

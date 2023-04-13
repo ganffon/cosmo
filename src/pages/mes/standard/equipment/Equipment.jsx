@@ -163,6 +163,7 @@ function Equipment() {
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, ["use_fg", "prd_fg"]);
   };
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
   };
@@ -217,6 +218,7 @@ function Equipment() {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>

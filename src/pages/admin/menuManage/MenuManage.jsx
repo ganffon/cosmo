@@ -215,6 +215,7 @@ function MenuManage(props) {
     onClickSearch();
   };
   const onClickGrid = () => {};
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = () => {};
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -260,6 +261,7 @@ function MenuManage(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>

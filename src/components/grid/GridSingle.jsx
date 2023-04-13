@@ -13,6 +13,7 @@ function GridSingle(props) {
     draggable,
     refGrid,
     onClickGrid,
+    onDblClickGrid,
     onEditingFinish,
   } = props;
   useEffect(() => {
@@ -33,6 +34,7 @@ function GridSingle(props) {
       draggable={draggable}
       ref={refGrid}
       onClick={onClickGrid}
+      onDblclick={onDblClickGrid}
       onEditingFinish={onEditingFinish}
     />
   );

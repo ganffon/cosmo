@@ -220,6 +220,7 @@ function OneGrid(props) {
     onClickSearch();
   };
   const onClickGrid = () => {};
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = () => {};
 
   return (
@@ -266,6 +267,7 @@ function OneGrid(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>

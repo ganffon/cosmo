@@ -3,7 +3,7 @@ import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 
-function GridModalPopup(props) {
+function GridModalSelect(props) {
   const {
     columnOptions,
     columns,
@@ -36,4 +36,4 @@ function GridModalPopup(props) {
   );
 }
 
-export default GridModalPopup;
+export default GridModalSelect;
