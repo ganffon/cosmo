@@ -11,6 +11,7 @@ import {
   EDITABLE_BACK_COLOR,
   DISABLED_BACK_COLOR,
   FROZEN_BORDER_COLOR,
+  MODAL_BACK_COLOR,
 } from "constant";
 
 function GridTheme() {
@@ -34,14 +35,16 @@ function GridTheme() {
         showHorizontalBorder: true,
       },
       required: {
-        background: REQUIRED_BACK_COLOR,
-        text: REQUIRED_TEXT_COLOR,
+        background: MODAL_BACK_COLOR,
       },
       editable: {
         background: EDITABLE_BACK_COLOR,
       },
       disabled: {
         background: DISABLED_BACK_COLOR,
+      },
+      invalid: {
+        background: MODAL_BACK_COLOR,
       },
 
       // oddRow: {

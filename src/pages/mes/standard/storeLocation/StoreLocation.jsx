@@ -163,6 +163,7 @@ function StoreLocation(props) {
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, []);
   };
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
   };
@@ -217,6 +218,7 @@ function StoreLocation(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>

@@ -254,8 +254,8 @@ class interfaceItem {
 class interfaceMemory {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.infc_item_type_id = raw.infc_item_type_nm;
-    this.infc_item_id = raw.infc_item_nm;
+    this.infc_item_type_id = raw.infc_item_type_id;
+    this.infc_item_id = raw.infc_item_id;
     this.line_id = raw.line_nm;
     this.proc_id = raw.proc_nm;
     this.equip_id = raw.equip_nm;

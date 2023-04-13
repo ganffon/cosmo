@@ -851,18 +851,6 @@ function DocumentSet(
   ];
   const columnsModal = [
     {
-      name: "factory_id",
-      header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
       name: "line_id",
       header: CN.line_id,
       minWidth: WIDTH_SHORT,
@@ -906,6 +894,7 @@ function DocumentSet(
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
   const rowHeadersTop = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   const header = {};
   // const header = {
   //   height: "60",
@@ -948,6 +937,7 @@ function DocumentSet(
     columnsModal,
     columnOptions,
     rowHeadersTop,
+    rowHeadersModal,
     header,
     datePickerSet,
     inputSet,

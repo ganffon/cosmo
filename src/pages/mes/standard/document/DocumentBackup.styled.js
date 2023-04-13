@@ -23,6 +23,25 @@ export const ShadowBoxFixed = styled("div")`
   margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
+
+// function scrollDetect() {
+//   setScrollY(boxRef?.current?.scrollTop);
+//   if (boxRef?.current?.scrollTop > 240) {
+//     setScrollActive(true);
+//   } else {
+//     setScrollActive(false);
+//   }
+// }
+
+// useEffect(() => {
+//   function watchScroll() {
+//     boxRef?.current?.addEventListener("scroll", scrollDetect);
+//   }
+//   watchScroll();
+//   return () => {
+//     boxRef?.current?.removeEventListener("scroll", scrollDetect);
+//   };
+// }, [scrollY]);
 export const ShadowBoxSticky = styled("div")`
   background-color: rgb(255, 255, 255);
   width: ${(props) =>

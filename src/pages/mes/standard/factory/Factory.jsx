@@ -161,8 +161,14 @@ function Factory(props) {
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, []);
   };
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
+  };
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setSearchToggle(!searchToggle);
+    }
   };
 
   return (
@@ -177,6 +183,7 @@ function Factory(props) {
                 name={v.name}
                 handleInputTextChange={handleInputTextChange}
                 onClickSearch={onClickSearch}
+                onKeyDown={onKeyDown}
               />
             ))}
           </S.SearchWrap>
@@ -209,6 +216,7 @@ function Factory(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>

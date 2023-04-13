@@ -161,6 +161,7 @@ function EquipmentSmall(props) {
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, []);
   };
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
   };
@@ -216,6 +217,7 @@ function EquipmentSmall(props) {
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
             onEditingFinish={onEditingFinishGrid}
+            onDblClickGrid={onDblClickGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>

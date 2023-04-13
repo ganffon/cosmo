@@ -216,6 +216,7 @@ function MenuList(props) {
   };
 
   const onClickGrid = () => {};
+  const onDblClickGrid = () => {};
   const onEditingFinishGrid = () => {};
 
   return (
@@ -262,6 +263,7 @@ function MenuList(props) {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
