@@ -69,7 +69,6 @@ function Login() {
     return true;
   };
   const goLogin = async () => {
-    // 57F3AE93-22CA-ED11-A1E2-A0D3C1FA18B6
     if (nullCheck() === true) {
       if (isBackDrop === false) {
         setIsBackDrop(true);

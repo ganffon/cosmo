@@ -110,7 +110,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
         }
       })
       .catch(() => {
-        console.log("Menu Click => Auth API Err");
+        alert("Menu Click => Auth API Err");
       })
       .finally();
   };

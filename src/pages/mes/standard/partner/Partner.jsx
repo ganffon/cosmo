@@ -164,6 +164,11 @@ function Partner(props) {
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
   };
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setSearchToggle(!searchToggle);
+    }
+  };
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -177,6 +182,7 @@ function Partner(props) {
                 name={v.name}
                 handleInputTextChange={handleInputTextChange}
                 onClickSearch={onClickSearch}
+                onKeyDown={onKeyDown}
               />
             ))}
           </S.SearchWrap>

@@ -3,7 +3,7 @@ import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 
-function GridModal(props) {
+function GridModalPopup(props) {
   const {
     columnOptions,
     columns,
@@ -12,7 +12,6 @@ function GridModal(props) {
     data,
     draggable,
     refGrid,
-    onClick,
     onDblClick,
   } = props;
   useEffect(() => {
@@ -32,10 +31,9 @@ function GridModal(props) {
       header={header}
       draggable={draggable}
       ref={refGrid}
-      onClick={onClick}
       onDblclick={onDblClick}
     />
   );
 }
 
-export default GridModal;
+export default GridModalPopup;

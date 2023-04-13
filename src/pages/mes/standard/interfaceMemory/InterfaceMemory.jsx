@@ -4,6 +4,7 @@ import ButtonSearch from "components/button/ButtonSearch";
 import ButtonEdit from "components/button/ButtonEdit";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
+import ModalPopup from "components/modal/ModalPopup";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
@@ -23,11 +24,14 @@ function InterfaceMemory(props) {
     useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
+  const refModalPopupGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalPopupOpen, setIsModalPopupOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [gridData, setGridData] = useState(null);
+  const [gridModalPopupData, setGridModalPopupData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
@@ -45,11 +49,13 @@ function InterfaceMemory(props) {
 
   const {
     uri,
+    uriModalPopup,
     rowHeaders,
     rowHeadersModal,
     header,
     columns,
     columnsModal,
+    columnsModalPopup,
     columnOptions,
     inputSet,
   } = InterfaceMemorySet(
@@ -114,6 +120,18 @@ function InterfaceMemory(props) {
     uri
   );
 
+  const [actSearchModalPopup, setActSearchModalPopup] = HD.useSearchModalPopup(
+    refModalPopupGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalPopupData,
+    disableRowToggle,
+    setDisableRowToggle,
+    uriModalPopup
+  );
+
   const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
     refSingleGrid,
     isBackDrop,
@@ -172,6 +190,18 @@ function InterfaceMemory(props) {
   const onClickModalCancelRow = () => {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
+  const [dblClickModalGridRowKey, setDblClickModalGridRowKey] = useState();
+  const onDblClickModalGrid = (e) => {
+    if (
+      e?.columnName === "infc_item_nm" ||
+      e?.columnName === "infc_item_type_nm"
+    ) {
+      setDblClickModalGridRowKey(e?.rowKey);
+      setIsModalPopupOpen(true);
+      setActSearchModalPopup(!actSearchModalPopup);
+    }
+  };
+
   const onClickModalSave = () => {
     setActModalSave(!actModalSave);
   };
@@ -184,6 +214,29 @@ function InterfaceMemory(props) {
   };
   const onEditingFinishGrid = (e) => {
     DisableRow.handleEditingFinishGridCheck(e);
+  };
+  const onClickModalPopupClose = () => {
+    setIsModalPopupOpen(false);
+  };
+  const onDblClickModalPopupGrid = (e) => {
+    console.log(
+      e?.instance?.store?.data?.rawData[e?.rowKey]["infc_item_type_nm"]
+    );
+    console.log(dblClickModalGridRowKey);
+    console.log(refModalGrid);
+    // refModalGrid?.current?.gridInst?.store?.data?.rawData[
+    //   dblClickModalGridRowKey
+    // ]["set infc_item_type_nm"]
+    refModalGrid?.current?.gridInst?.setValue(
+      dblClickModalGridRowKey,
+      "infc_item_type_nm",
+      "1"
+    );
+  };
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setSearchToggle(!searchToggle);
+    }
   };
 
   return (
@@ -198,6 +251,7 @@ function InterfaceMemory(props) {
                 name={v.name}
                 handleInputTextChange={handleInputTextChange}
                 onClickSearch={onClickSearch}
+                onKeyDown={onKeyDown}
               />
             ))}
           </S.SearchWrap>
@@ -251,10 +305,21 @@ function InterfaceMemory(props) {
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeadersModal}
-          uri={uri}
           refModalGrid={refModalGrid}
-          setIsModalOpen={setIsModalOpen}
           onClickModalGrid={onClickModalGrid}
+          onDblClickModalGrid={onDblClickModalGrid}
+        />
+      ) : null}
+      {isModalPopupOpen ? (
+        <ModalPopup
+          onClickModalPopupClose={onClickModalPopupClose}
+          columns={columnsModalPopup}
+          columnOptions={columnOptions}
+          header={header}
+          gridModalPopupData={gridModalPopupData}
+          rowHeaders={rowHeadersModal}
+          refModalPopupGrid={refModalPopupGrid}
+          onDblClickModalPopupGrid={onDblClickModalPopupGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

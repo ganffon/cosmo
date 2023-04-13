@@ -13,6 +13,7 @@ function ModalNew(props) {
     onClickModalSave,
     onClickModalClose,
     onClickModalGrid,
+    onDblClickModalGrid,
     refModalGrid,
     columns,
     columnOptions,
@@ -22,7 +23,7 @@ function ModalNew(props) {
   const { currentMenuName } = useContext(LayoutContext);
 
   return (
-    <ModalWrap width={"1300px"} height={"650px"}>
+    <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
         <S.TitleBox>{`[신규] ${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose
@@ -48,7 +49,8 @@ function ModalNew(props) {
           rowHeaders={rowHeaders}
           refGrid={refModalGrid}
           draggable={false}
-          onClickModalGrid={onClickModalGrid}
+          onClick={onClickModalGrid}
+          onDblClick={onDblClickModalGrid}
         />
       </S.GridBox>
     </ModalWrap>
