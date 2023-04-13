@@ -221,6 +221,7 @@ function EquipmentDetail() {
                     size="small"
                   />
                 )}
+                onKeyDown={onKeyDown}
               />
               <S.ComboBox
                 disablePortal
@@ -241,6 +242,7 @@ function EquipmentDetail() {
                 renderInput={(params) => (
                   <TextField {...params} label={CN.group_nm} size="small" />
                 )}
+                onKeyDown={onKeyDown}
               />
               <S.ComboBox
                 disablePortal
@@ -261,6 +263,7 @@ function EquipmentDetail() {
                 renderInput={(params) => (
                   <TextField {...params} label={CN.class_nm} size="small" />
                 )}
+                onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
             <S.InputWrap>

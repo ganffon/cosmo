@@ -207,6 +207,7 @@ function Downtime() {
                     size="small"
                   />
                 )}
+                onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
             <S.InputWrap>
