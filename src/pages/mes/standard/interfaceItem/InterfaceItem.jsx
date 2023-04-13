@@ -208,6 +208,7 @@ function InterfaceItem(props) {
                     size="small"
                   />
                 )}
+                onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
             <S.InputWrap>

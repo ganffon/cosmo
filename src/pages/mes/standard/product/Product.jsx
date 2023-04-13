@@ -228,6 +228,7 @@ function Product() {
                 renderInput={(params) => (
                   <TextField {...params} label={CN.prod_gbn_nm} size="small" />
                 )}
+                onKeyDown={onKeyDown}
               />
               <S.ComboBox
                 disablePortal
@@ -248,6 +249,7 @@ function Product() {
                 renderInput={(params) => (
                   <TextField {...params} label={CN.model_nm} size="small" />
                 )}
+                onKeyDown={onKeyDown}
               />
               <S.ComboBox
                 disablePortal
@@ -268,6 +270,7 @@ function Product() {
                 renderInput={(params) => (
                   <TextField {...params} label={CN.prod_type_nm} size="small" />
                 )}
+                onKeyDown={onKeyDown}
               />
               <S.ComboBox
                 disablePortal
@@ -292,6 +295,7 @@ function Product() {
                     size="small"
                   />
                 )}
+                onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
             <S.InputWrap>
