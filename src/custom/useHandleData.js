@@ -159,6 +159,51 @@ const useSearchCbo = (
   }, [actSearch]);
   return [actSearch, setActSearch];
 };
+const useSearchModalPopup = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  setGridModalPopupData,
+  disableRowToggle,
+  setDisableRowToggle,
+  uriModalPopup
+) => {
+  const [actSearchModalPopup, setActSearchModalPopup] = useState(false);
+  refGrid?.current?.gridInst?.finishEditing();
+  useEffect(() => {
+    const handle = async () => {
+      if (isBackDrop === false) {
+        try {
+          setIsBackDrop(true);
+
+          const gridData = await restAPI.get(uriModalPopup);
+          setGridModalPopupData(gridData?.data?.data?.rows);
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: gridData?.data?.message,
+            severity: "success",
+          });
+        } catch {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: "조회 실패",
+            severity: "error",
+          });
+        } finally {
+          setDisableRowToggle(!disableRowToggle);
+          setIsBackDrop(false);
+        }
+      }
+    };
+
+    handle();
+  }, [actSearchModalPopup]);
+  return [actSearchModalPopup, setActSearchModalPopup];
+};
 const useEditModeSave = (
   refGrid,
   isBackDrop,
@@ -261,4 +306,11 @@ const useModalSave = (
   return [actModalSave, setActModalSave];
 };
 
-export { useDelete, useSearch, useSearchCbo, useEditModeSave, useModalSave };
+export {
+  useDelete,
+  useSearch,
+  useSearchCbo,
+  useSearchModalPopup,
+  useEditModeSave,
+  useModalSave,
+};

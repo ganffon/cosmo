@@ -266,7 +266,7 @@
         ]
       },
       {
-        "name": "❌권한관리",
+        "name": "✅권한관리",
         "id": "setup",
         "path": "setup",
         "under": null

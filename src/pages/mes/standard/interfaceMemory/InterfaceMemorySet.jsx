@@ -7,6 +7,8 @@ import {
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
+  MODAL_BACK_COLOR,
+  NORMAL_BACK_COLOR,
 } from "constant/Grid.js";
 
 function InterfaceMemorySet(
@@ -55,68 +57,60 @@ function InterfaceMemorySet(
       whiteSpace: false,
       rowSpan: false,
     },
-    isEditMode
-      ? {
-          name: "infc_item_type_id",
-          header: CN.infc_item_type_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          formatter: "listItemText",
-          editor: {
-            type: "select",
-            options: {
-              listItems: interfaceItemTypeList,
-            },
-          },
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        }
-      : {
-          name: "infc_item_type_nm",
-          header: CN.infc_item_type_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          editor: false,
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
+    {
+      name: "infc_item_type_nm",
+      header: CN.infc_item_type_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      renderer: {
+        styles: {
+          backgroundColor: isEditMode ? MODAL_BACK_COLOR : NORMAL_BACK_COLOR,
+          padding: "12px",
         },
-    isEditMode
-      ? {
-          name: "infc_item_id",
-          header: CN.infc_item_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          formatter: "listItemText",
-          editor: {
-            type: "select",
-            options: {
-              listItems: interfaceItemList,
-            },
-          },
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        }
-      : {
-          name: "infc_item_nm",
-          header: CN.infc_item_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          editor: false,
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "infc_item_id",
+      header: CN.infc_item_id,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      renderer: {
+        styles: {
+          backgroundColor: isEditMode ? MODAL_BACK_COLOR : NORMAL_BACK_COLOR,
+          padding: "12px",
         },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "infc_item_nm",
+      header: CN.infc_item_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      renderer: {
+        styles: {
+          backgroundColor: isEditMode ? MODAL_BACK_COLOR : NORMAL_BACK_COLOR,
+          padding: "12px",
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
     isEditMode
       ? {
           name: "line_id",
@@ -363,13 +357,31 @@ function InterfaceMemorySet(
     {
       name: "infc_item_type_nm",
       header: CN.infc_item_type_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
-      formatter: "listItemText",
-      editor: {
-        type: "select",
-        options: {
-          listItems: interfaceItemTypeList,
+      editor: false,
+      renderer: {
+        styles: {
+          backgroundColor: MODAL_BACK_COLOR,
+          // padding: "20px",
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "infc_item_id",
+      header: CN.infc_item_id,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      renderer: {
+        styles: {
+          backgroundColor: MODAL_BACK_COLOR,
+          // padding: "20px",
         },
       },
       hidden: false,
@@ -381,13 +393,13 @@ function InterfaceMemorySet(
     {
       name: "infc_item_nm",
       header: CN.infc_item_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
-      formatter: "listItemText",
-      editor: {
-        type: "select",
-        options: {
-          listItems: interfaceItemList,
+      editor: false,
+      renderer: {
+        styles: {
+          backgroundColor: MODAL_BACK_COLOR,
+          // padding: "20px",
         },
       },
       hidden: false,
@@ -525,6 +537,44 @@ function InterfaceMemorySet(
       rowSpan: false,
     },
   ];
+  const columnsModalPopup = [
+    {
+      name: "infc_item_type_nm",
+      header: CN.infc_item_type_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: "select",
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "infc_item_id",
+      header: CN.infc_item_id,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "infc_item_nm",
+      header: CN.infc_item_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: "select",
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -554,6 +604,7 @@ function InterfaceMemorySet(
   ];
 
   const uri = restURI.interfaceMemory;
+  const uriModalPopup = restURI.interfaceItem;
 
   return {
     data,
@@ -561,11 +612,13 @@ function InterfaceMemorySet(
     rowHeadersModal,
     columns,
     columnsModal,
+    columnsModalPopup,
     columnOptions,
     header,
     datePickerSet,
     inputSet,
     uri,
+    uriModalPopup,
   };
 }
 
