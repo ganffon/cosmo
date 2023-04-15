@@ -31,9 +31,9 @@ class employee {
     this.emp_cd = raw.emp_cd;
     this.emp_nm = raw.emp_nm;
     this.uid = raw.uid;
-    this.dept_id = raw.dept_nm;
-    this.grade_id = raw.grade_nm;
-    this.worker_group_id = raw.worker_group_nm;
+    this.dept_id = raw.dept_id;
+    this.grade_id = raw.grade_id;
+    this.worker_group_id = raw.worker_group_id;
     this.birthday = raw.birthday;
     this.hp = raw.hp;
     this.post = raw.post;
@@ -49,7 +49,7 @@ class employee {
 class equipment {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.proc_id = raw.proc_nm;
+    this.proc_id = raw.proc_id;
     this.equip_type_id = raw.equip_type_id;
     this.equip_cd = raw.equip_cd;
     this.equip_nm = raw.equip_nm;
@@ -66,11 +66,11 @@ class product {
     this.factory_id = factory_id;
     this.prod_no = raw.prod_no;
     this.prod_nm = raw.prod_nm;
-    this.prod_gbn_id = raw.prod_gbn_nm;
-    this.model_id = raw.model_nm;
-    this.prod_type_id = raw.prod_type_nm;
-    this.prod_type_small_id = raw.prod_type_small_nm;
-    this.unit_id = raw.unit_nm;
+    this.prod_gbn_id = raw.prod_gbn_id;
+    this.model_id = raw.model_id;
+    this.prod_type_id = raw.prod_type_id;
+    this.prod_type_small_id = raw.prod_type_small_id;
+    this.unit_id = raw.unit_id;
     this.rev = raw.rev;
     this.prod_std = raw.prod_std;
     this.lot_fg = raw.lot_fg ? true : false;
@@ -145,7 +145,7 @@ class store {
 class storeLocation {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.store_id = raw.store_nm;
+    this.store_id = raw.store_id;
     this.location_cd = raw.location_cd;
     this.location_nm = raw.location_nm;
   }
@@ -172,7 +172,7 @@ class downtimeType {
 class downtime {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.downtime_type_id = raw.downtime_type_nm;
+    this.downtime_type_id = raw.downtime_type_id;
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
     this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
@@ -228,7 +228,7 @@ class inspectType {
 class inspectItem {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.insp_item_type_id = raw.insp_item_type_nm;
+    this.insp_item_type_id = raw.insp_item_type_id;
     this.insp_item_cd = raw.insp_item_cd;
     this.insp_item_nm = raw.insp_item_nm;
     this.insp_tool_id = raw.insp_tool_id;
@@ -246,7 +246,7 @@ class interfaceItemType {
 class interfaceItem {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.infc_item_type_id = raw.infc_item_type_nm;
+    this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_cd = raw.infc_item_cd;
     this.infc_item_nm = raw.infc_item_nm;
   }
@@ -256,9 +256,9 @@ class interfaceMemory {
     this.factory_id = factory_id;
     this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_id = raw.infc_item_id;
-    this.line_id = raw.line_nm;
-    this.proc_id = raw.proc_nm;
-    this.equip_id = raw.equip_nm;
+    this.line_id = raw.line_id;
+    this.proc_id = raw.proc_id;
+    this.equip_id = raw.equip_id;
     this.plc_ip = raw.plc_ip;
     this.plc_port = Number(raw.plc_port);
     this.device_addre = raw.device_addre;
@@ -291,15 +291,15 @@ class equipmentSmall {
 class equipmentDetail {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
-    this.proc_id = raw.proc_nm;
-    this.equip_id = raw.equip_nm;
+    this.proc_id = raw.proc_id;
+    this.equip_id = raw.equip_id;
     this.eqm_detail_cd = raw.eqm_detail_cd;
     this.eqm_detail_nm = raw.eqm_detail_nm;
-    this.classification_id = raw.classification_nm;
-    this.group_id = raw.group_nm;
-    this.class_id = raw.class_nm;
-    this.manager_emp_id = raw.manager_emp_nm;
-    this.sub_manager_emp_id = raw.sub_manager_emp_nm;
+    this.classification_id = raw.classification_id;
+    this.group_id = raw.group_id;
+    this.class_id = raw.class_id;
+    this.manager_emp_id = raw.manager_emp_id;
+    this.sub_manager_emp_id = raw.sub_manager_emp_id;
     this.equip_no = raw.equip_no;
     this.equip_grade = raw.equip_grade;
     this.equip_model = raw.equip_model;
@@ -338,6 +338,32 @@ class document {
     this.remark = raw.remark;
   }
 }
+class documentDetail {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.sortby = Number(raw.sortby);
+    this.proc_id = raw.proc_id;
+    this.equip_id = raw.equip_id;
+    this.insp_proc_gbn = raw.insp_proc_gbn;
+    this.insp_item_id = raw.insp_item_id;
+    this.insp_item_desc = raw.insp_item_desc;
+    this.spec_std = raw.spec_std;
+    this.spec_min = Number(raw.spec_min);
+    this.spec_max = Number(raw.spec_max);
+    this.spec_lcl = Number(raw.spec_lcl);
+    this.spec_ucl = Number(raw.spec_ucl);
+    this.insp_filing_id = raw.insp_filing_id;
+    this.insp_tool_id = raw.insp_tool_id;
+    this.insp_method_id = raw.insp_method_id;
+    this.special_property = raw.special_property;
+    this.worker_sample_cnt = Number(raw.worker_sample_cnt);
+    this.worker_insp_cycle = raw.worker_insp_cycle;
+    this.inspector_sample_cnt = Number(raw.inspector_sample_cnt);
+    this.inspector_insp_cycle = raw.inspector_insp_cycle;
+    this.infc_memory_id = raw.infc_memory_id;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -352,105 +378,109 @@ class document {
  */
 function GetPostParams(componentName, raw, factory_id) {
   let params = "";
-
-  switch (componentName) {
-    case "factory":
-      params = new factory(raw);
-      break;
-    case "line":
-      params = new line(raw, factory_id);
-      break;
-    case "user":
-      params = new user(raw);
-      break;
-    case "employee":
-      params = new employee(raw);
-      break;
-    case "unit":
-      params = new unit(raw);
-      break;
-    case "equipment":
-      params = new equipment(raw, factory_id);
-      break;
-    case "product":
-      params = new product(raw, factory_id);
-      break;
-    case "productGbn":
-      params = new productGbn(raw);
-      break;
-    case "productType":
-      params = new productType(raw);
-      break;
-    case "routing":
-      params = new routing(raw, factory_id);
-      break;
-    case "store":
-      params = new store(raw, factory_id);
-      break;
-    case "storeLocation":
-      params = new storeLocation(raw, factory_id);
-      break;
-    case "department":
-      params = new department(raw);
-      break;
-    case "grade":
-      params = new grade(raw);
-      break;
-    case "downtimeType":
-      params = new downtimeType(raw, factory_id);
-      break;
-    case "downtime":
-      params = new downtime(raw, factory_id);
-      break;
-    case "model":
-      params = new model(raw);
-      break;
-    case "workingGroup":
-      params = new workingGroup(raw, factory_id);
-      break;
-    case "inspectFiling":
-      params = new inspectFiling(raw, factory_id);
-      break;
-    case "inspectMethod":
-      params = new inspectMethod(raw, factory_id);
-      break;
-    case "inspectTool":
-      params = new inspectTool(raw, factory_id);
-      break;
-    case "inspectType":
-      params = new inspectType(raw, factory_id);
-      break;
-    case "inspectItem":
-      params = new inspectItem(raw, factory_id);
-      break;
-    case "interfaceItemType":
-      params = new interfaceItemType(raw, factory_id);
-      break;
-    case "interfaceItem":
-      params = new interfaceItem(raw, factory_id);
-      break;
-    case "interfaceMemory":
-      params = new interfaceMemory(raw, factory_id);
-      break;
-    case "equipmentLarge":
-      params = new equipmentLarge(raw, factory_id);
-      break;
-    case "equipmentMedium":
-      params = new equipmentMedium(raw, factory_id);
-      break;
-    case "equipmentSmall":
-      params = new equipmentSmall(raw, factory_id);
-      break;
-    case "equipmentDetail":
-      params = new equipmentDetail(raw, factory_id);
-      break;
-    case "setup":
-      params = new setup(raw);
-      break;
-    case "document":
-      params = new document(raw, factory_id);
-      break;
-    default:
+  if (raw !== undefined) {
+    switch (componentName) {
+      case "factory":
+        params = new factory(raw);
+        break;
+      case "line":
+        params = new line(raw, factory_id);
+        break;
+      case "user":
+        params = new user(raw);
+        break;
+      case "employee":
+        params = new employee(raw);
+        break;
+      case "unit":
+        params = new unit(raw);
+        break;
+      case "equipment":
+        params = new equipment(raw, factory_id);
+        break;
+      case "product":
+        params = new product(raw, factory_id);
+        break;
+      case "productGbn":
+        params = new productGbn(raw);
+        break;
+      case "productType":
+        params = new productType(raw);
+        break;
+      case "routing":
+        params = new routing(raw, factory_id);
+        break;
+      case "store":
+        params = new store(raw, factory_id);
+        break;
+      case "storeLocation":
+        params = new storeLocation(raw, factory_id);
+        break;
+      case "department":
+        params = new department(raw);
+        break;
+      case "grade":
+        params = new grade(raw);
+        break;
+      case "downtimeType":
+        params = new downtimeType(raw, factory_id);
+        break;
+      case "downtime":
+        params = new downtime(raw, factory_id);
+        break;
+      case "model":
+        params = new model(raw);
+        break;
+      case "workingGroup":
+        params = new workingGroup(raw, factory_id);
+        break;
+      case "inspectFiling":
+        params = new inspectFiling(raw, factory_id);
+        break;
+      case "inspectMethod":
+        params = new inspectMethod(raw, factory_id);
+        break;
+      case "inspectTool":
+        params = new inspectTool(raw, factory_id);
+        break;
+      case "inspectType":
+        params = new inspectType(raw, factory_id);
+        break;
+      case "inspectItem":
+        params = new inspectItem(raw, factory_id);
+        break;
+      case "interfaceItemType":
+        params = new interfaceItemType(raw, factory_id);
+        break;
+      case "interfaceItem":
+        params = new interfaceItem(raw, factory_id);
+        break;
+      case "interfaceMemory":
+        params = new interfaceMemory(raw, factory_id);
+        break;
+      case "equipmentLarge":
+        params = new equipmentLarge(raw, factory_id);
+        break;
+      case "equipmentMedium":
+        params = new equipmentMedium(raw, factory_id);
+        break;
+      case "equipmentSmall":
+        params = new equipmentSmall(raw, factory_id);
+        break;
+      case "equipmentDetail":
+        params = new equipmentDetail(raw, factory_id);
+        break;
+      case "setup":
+        params = new setup(raw);
+        break;
+      case "document":
+        params = new document(raw, factory_id);
+        break;
+      case "documentDetail":
+        params = new documentDetail(raw, factory_id);
+        break;
+      default:
+    }
   }
   return params;
 }

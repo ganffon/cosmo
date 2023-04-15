@@ -400,7 +400,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
   ];
   const columnsModal = [
     {
-      name: "dept_nm",
+      name: "dept_id",
       header: CN.dept_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -418,7 +418,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       rowSpan: false,
     },
     {
-      name: "grade_nm",
+      name: "grade_id",
       header: CN.grade_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -460,7 +460,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       rowSpan: false,
     },
     {
-      name: "worker_group_nm",
+      name: "worker_group_id",
       header: CN.worker_group_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

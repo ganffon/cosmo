@@ -180,6 +180,7 @@ function EquipmentDetail() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
+  const onDblClickModalGrid = () => {};
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, []);
   };
@@ -334,6 +335,7 @@ function EquipmentDetail() {
           uri={uri}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
+          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

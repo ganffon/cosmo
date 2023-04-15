@@ -177,7 +177,7 @@ function StoreLocationSet(isEditMode, storeList) {
   ];
   const columnsModal = [
     {
-      name: "store_nm",
+      name: "store_id",
       header: CN.store_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

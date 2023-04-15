@@ -179,6 +179,7 @@ function Product() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
+  const onDblClickModalGrid = () => {};
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, [
       "lot_fg",
@@ -366,6 +367,7 @@ function Product() {
           uri={uri}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
+          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

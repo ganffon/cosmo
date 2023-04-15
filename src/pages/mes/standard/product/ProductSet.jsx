@@ -854,7 +854,7 @@ function ProductSet(
   ];
   const columnsModal = [
     {
-      name: "prod_gbn_nm",
+      name: "prod_gbn_id",
       header: CN.prod_gbn_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -872,7 +872,7 @@ function ProductSet(
       rowSpan: false,
     },
     {
-      name: "model_nm",
+      name: "model_id",
       header: CN.model_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -890,7 +890,7 @@ function ProductSet(
       rowSpan: false,
     },
     {
-      name: "prod_type_nm",
+      name: "prod_type_id",
       header: CN.prod_type_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -908,7 +908,7 @@ function ProductSet(
       rowSpan: false,
     },
     {
-      name: "prod_type_small_nm",
+      name: "prod_type_small_id",
       header: CN.prod_type_small_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -974,7 +974,7 @@ function ProductSet(
       rowSpan: false,
     },
     {
-      name: "unit_nm",
+      name: "unit_id",
       header: CN.unit_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

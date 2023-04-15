@@ -73,10 +73,6 @@ function InterfaceMemory(props) {
     onClickSearch();
   }, []);
 
-  useEffect(() => {
-    onClickSearch();
-  }, [searchToggle]);
-
   const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
@@ -169,7 +165,7 @@ function InterfaceMemory(props) {
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
-    setSearchToggle(!searchToggle);
+    setActSearch(!actSearch);
   };
   const onClickModalAddRow = () => {
     refModalGrid?.current?.gridInst?.appendRow();
@@ -206,7 +202,7 @@ function InterfaceMemory(props) {
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
-    setSearchToggle(!searchToggle);
+    setActSearch(!actSearch);
   };
   const onClickGrid = (e) => {
     DisableRow.handleClickGridCheck(e, isEditMode, []);
@@ -235,6 +231,7 @@ function InterfaceMemory(props) {
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
   };
+  const onClickModalSelectGrid = () => {};
   const onDblClickModalSelectGrid = (e) => {
     let refGrid;
     if (dblClickGrid === "Grid") {
@@ -255,7 +252,7 @@ function InterfaceMemory(props) {
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
-      setSearchToggle(!searchToggle);
+      setActSearch(!actSearch);
     }
   };
 
@@ -365,6 +362,7 @@ function InterfaceMemory(props) {
           gridModalSelectData={gridModalSelectData}
           rowHeaders={rowHeadersModal}
           refModalSelectGrid={refModalSelectGrid}
+          onClickModalSelectGrid={onClickModalSelectGrid}
           onDblClickModalSelectGrid={onDblClickModalSelectGrid}
         />
       ) : null}

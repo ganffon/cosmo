@@ -322,8 +322,36 @@ class document {
     this.prod_id = raw.prod_id;
     this.reg_date = raw.reg_date;
     this.apply_date = raw.apply_date;
-    this.apply_fg = raw.apply_fg;
+    this.apply_fg = raw.apply_fg ? true : false;
     this.contents = raw.contents;
+    this.remark = raw.remark;
+  }
+}
+class documentDetail {
+  constructor(raw) {
+    this.insp_document_detail_id = raw.insp_document_detail_id;
+    this.insp_document_id = raw.insp_document_id;
+    this.sortby = Number(raw.sortby);
+    this.factory_id = raw.factory_id;
+    this.proc_id = raw.proc_id;
+    this.equip_id = raw.equip_id;
+    this.insp_proc_gbn = raw.insp_proc_gbn;
+    this.insp_item_id = raw.insp_item_id;
+    this.insp_item_desc = raw.insp_item_desc;
+    this.spec_std = raw.spec_std;
+    this.spec_min = Number(raw.spec_min);
+    this.spec_max = Number(raw.spec_max);
+    this.spec_lcl = Number(raw.spec_lcl);
+    this.spec_ucl = Number(raw.spec_ucl);
+    this.insp_filing_id = raw.insp_filing_id;
+    this.insp_tool_id = raw.insp_tool_id;
+    this.insp_method_id = raw.insp_method_id;
+    this.special_property = raw.special_property;
+    this.worker_sample_cnt = Number(raw.worker_sample_cnt);
+    this.worker_insp_cycle = raw.worker_insp_cycle;
+    this.inspector_sample_cnt = Number(raw.inspector_sample_cnt);
+    this.inspector_insp_cycle = raw.inspector_insp_cycle;
+    this.infc_memory_id = raw.infc_memory_id;
     this.remark = raw.remark;
   }
 }
@@ -417,6 +445,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "document":
       params = new document(raw);
+      break;
+    case "documentDetail":
+      params = new documentDetail(raw);
       break;
     default:
   }

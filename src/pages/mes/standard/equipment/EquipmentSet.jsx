@@ -279,7 +279,7 @@ function EquipmentSet(isEditMode, processList) {
   ];
   const columnsModal = [
     {
-      name: "proc_nm",
+      name: "proc_id",
       header: CN.proc_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
