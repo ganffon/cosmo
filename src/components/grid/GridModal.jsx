@@ -14,6 +14,7 @@ function GridModal(props) {
     refGrid,
     onClick,
     onDblClick,
+    onEditingFinish,
   } = props;
   useEffect(() => {
     GridTheme();
@@ -34,6 +35,7 @@ function GridModal(props) {
       ref={refGrid}
       onClick={onClick}
       onDblclick={onDblClick}
+      onEditingFinish={onEditingFinish}
     />
   );
 }

@@ -177,7 +177,7 @@ function InterfaceItemSet(isEditMode, interfaceItemTypeList) {
   ];
   const columnsModal = [
     {
-      name: "infc_item_type_nm",
+      name: "infc_item_type_id",
       header: CN.infc_item_type_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

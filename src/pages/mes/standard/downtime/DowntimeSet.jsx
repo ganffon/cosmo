@@ -198,7 +198,7 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
   ];
   const columnsModal = [
     {
-      name: "downtime_type_nm",
+      name: "downtime_type_id",
       header: CN.downtime_type_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

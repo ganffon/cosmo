@@ -384,6 +384,61 @@ const useInspectItemType = () => {
   }, []);
   return [inspectItemTypeOpt, inspectItemTypeList];
 };
+let inspectMethodList = [];
+const useInspectMethod = () => {
+  const [inspectMethodOpt, setInspectMethodOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.inspectMethod).then((res) => {
+        setInspectMethodOpt(
+          cboMUISort(res?.data?.data?.rows, "insp_method_nm")
+        );
+        inspectMethodList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "insp_method_id", "insp_method_nm");
+        });
+        inspectMethodList = cboGridSort(inspectMethodList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [inspectMethodOpt, inspectMethodList];
+};
+let inspectToolList = [];
+const useInspectTool = () => {
+  const [inspectToolOpt, setInspectToolOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.inspectTool).then((res) => {
+        setInspectToolOpt(cboMUISort(res?.data?.data?.rows, "insp_tool_nm"));
+        inspectToolList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "insp_tool_id", "insp_tool_nm");
+        });
+        inspectToolList = cboGridSort(inspectToolList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [inspectToolOpt, inspectToolList];
+};
+let inspectFilingList = [];
+const useInspectFiling = () => {
+  const [inspectFilingOpt, setInspectFilingOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.inspectFiling).then((res) => {
+        setInspectFilingOpt(
+          cboMUISort(res?.data?.data?.rows, "insp_filing_nm")
+        );
+        inspectFilingList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "insp_filing_id", "insp_filing_nm");
+        });
+        inspectFilingList = cboGridSort(inspectFilingList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [inspectFilingOpt, inspectFilingList];
+};
 
 export {
   useLine,
@@ -406,4 +461,7 @@ export {
   useEquipmentSmall,
   useDowntimeType,
   useInspectItemType,
+  useInspectMethod,
+  useInspectTool,
+  useInspectFiling,
 };

@@ -540,7 +540,7 @@ function EquipmentDetailSet(
   ];
   const columnsModal = [
     {
-      name: "proc_nm",
+      name: "proc_id",
       header: CN.proc_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -558,7 +558,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "equip_nm",
+      name: "equip_id",
       header: CN.equip_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -576,7 +576,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "classification_nm",
+      name: "classification_id",
       header: CN.classification_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -594,7 +594,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "group_nm",
+      name: "group_id",
       header: CN.group_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -612,7 +612,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "class_nm",
+      name: "class_id",
       header: CN.class_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -654,7 +654,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "manager_emp_nm",
+      name: "manager_emp_id",
       header: CN.manager_emp_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -672,7 +672,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "sub_manager_emp_nm",
+      name: "sub_manager_emp_id",
       header: CN.sub_manager_emp_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

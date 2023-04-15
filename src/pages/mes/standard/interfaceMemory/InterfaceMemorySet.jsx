@@ -343,7 +343,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       header: CN.infc_item_type_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: "text",
+      editor: false,
       validation: {
         required: true,
       },
@@ -358,7 +358,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       header: CN.infc_item_id,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: "text",
+      editor: false,
       validation: {
         required: true,
       },
@@ -373,7 +373,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       header: CN.infc_item_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: "text",
+      editor: false,
       validation: {
         required: true,
       },
@@ -384,7 +384,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       rowSpan: false,
     },
     {
-      name: "line_nm",
+      name: "line_id",
       header: CN.line_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -402,7 +402,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       rowSpan: false,
     },
     {
-      name: "proc_nm",
+      name: "proc_id",
       header: CN.proc_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -420,7 +420,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       rowSpan: false,
     },
     {
-      name: "equip_nm",
+      name: "equip_id",
       header: CN.equip_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

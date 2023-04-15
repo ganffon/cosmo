@@ -177,7 +177,7 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
   ];
   const columnsModal = [
     {
-      name: "insp_item_type_nm",
+      name: "insp_item_type_id",
       header: CN.insp_item_type_nm,
       minWidth: WIDTH_SHORT,
       align: "left",

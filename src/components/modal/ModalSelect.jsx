@@ -1,5 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import GridModalSelect from "components/grid/GridModalSelect";
+import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import * as S from "./ModalSelect.styled";
 
@@ -12,11 +12,12 @@ function ModalSelect(props) {
     header,
     rowHeaders,
     gridModalSelectData,
+    onClickModalSelectGrid,
     onDblClickModalSelectGrid,
   } = props;
 
   return (
-    <ModalWrap width={"90%"} height={"90%"}>
+    <ModalWrap width={"40%"} height={"90%"}>
       <S.HeaderBox>
         <S.TitleBox>{`[데이터 선택]`}</S.TitleBox>
         <S.ButtonClose
@@ -28,7 +29,7 @@ function ModalSelect(props) {
         </S.ButtonClose>
       </S.HeaderBox>
       <S.GridBox>
-        <GridModalSelect
+        <GridModal
           columns={columns}
           columnOptions={columnOptions}
           header={header}
@@ -36,6 +37,7 @@ function ModalSelect(props) {
           refGrid={refSelectGrid}
           data={gridModalSelectData}
           draggable={false}
+          onClick={onClickModalSelectGrid}
           onDblClick={onDblClickModalSelectGrid}
         />
       </S.GridBox>
