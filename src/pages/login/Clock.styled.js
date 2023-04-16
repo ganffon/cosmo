@@ -1,17 +1,15 @@
 import styled from "styled-components";
 
 const Clock = styled("div")`
-  font-size: 150px;
-  font-weight: 900;
+  font-size: 110px;
   color: white;
-  height: 180px;
+  font-family: NotoSansKR_B;
 `;
 
 const PrintDate = styled("div")`
-  font-size: 40px;
-  font-weight: 900;
+  font-size: 30px;
   color: white;
-  height: 100px;
+  font-family: NotoSansKR;
 `;
 
 export { Clock, PrintDate };

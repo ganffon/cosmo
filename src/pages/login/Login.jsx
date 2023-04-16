@@ -5,6 +5,8 @@ import { useCookies } from "react-cookie";
 import Clock from "./Clock";
 import Logo from "img/Logo/cosmo.png";
 import LogoIspark from "img/Logo/ispark_gray.png";
+import LogoCompany from "img/Login/cosmo_logo.svg";
+import Dori from "img/Login/dori.svg";
 import NoticeSnack from "components/alert/NoticeSnack";
 import * as S from "./Login.styled";
 import TextField from "@mui/material/TextField";
@@ -24,7 +26,7 @@ function Login() {
   });
   const [alertOpen, setAlertOpen] = useState({
     open: false,
-    location: "bottomLeft",
+    location: "bottomRight",
     message: "로그인 정보가 일치하지 않습니다.",
     severity: "error",
   });
@@ -155,11 +157,19 @@ function Login() {
 
   return (
     <S.LoginLayout>
-      <S.LeftBox>
-        <S.LeftTopBox>
-          <S.Logo src={Logo} />
-          <S.LoginTitle>Manufacturing Execution System Login</S.LoginTitle>
+      <S.HeaderBox>
+        <S.LogoCompany src={LogoCompany} />
+      </S.HeaderBox>
+      <S.MainBox>
+        <S.LeftBox>
+          <Clock />
+          <S.Welcome>오늘 하루도 활기차게!😄</S.Welcome>
+        </S.LeftBox>
+        <S.RightBox>
           <S.LoginForm>
+            <S.Dori src={Dori}></S.Dori>
+            <S.LoginTitle1>Login to Facdori ON</S.LoginTitle1>
+            <S.LoginTitle2>반갑습니다.</S.LoginTitle2>
             <S.LoginInputBox>
               <S.FactoryCombo
                 disablePortal
@@ -208,17 +218,12 @@ function Login() {
             >
               로그인
             </S.LoginButton>
-            <NoticeSnack state={alertOpen} setState={setAlertOpen} />
           </S.LoginForm>
-        </S.LeftTopBox>
-        <S.LeftBottomBox>
-          <S.LogoIspark src={LogoIspark} />
-        </S.LeftBottomBox>
-      </S.LeftBox>
-      <S.RightBox>
-        <Clock />
-      </S.RightBox>
+        </S.RightBox>
+      </S.MainBox>
+      <NoticeSnack state={alertOpen} setState={setAlertOpen} />
       <BackDrop isBackDrop={isBackDrop} />
+      <S.BackGroundImg />
     </S.LoginLayout>
   );
 }
