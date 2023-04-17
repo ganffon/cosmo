@@ -1,12 +1,11 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import LoginStateChk from "custom/LoginStateChk";
-import InputInfo from "components/input/InputInfo";
 import ButtonSearch from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
+import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
 import BackDrop from "components/backdrop/BackDrop";
 import DocumentSet from "pages/mes/standard/document/DocumentSet";
 import useInputSet from "custom/useInputSet";
@@ -27,6 +26,7 @@ function Document() {
   const refModalGridTop = useRef(null);
   const refModalGridBottom = useRef(null);
   const refModalSelectGrid = useRef(null);
+  const refInputInfo = useRef([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -61,6 +61,7 @@ function Document() {
     rowHeadersNum,
     header,
     inputSet,
+    inputInfo,
     uri,
     uriDetail,
   } = DocumentSet(
@@ -74,13 +75,16 @@ function Document() {
   );
   const SWITCH_NAME_01 = "document";
   const SWITCH_NAME_02 = "documentDetail";
+
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refGridTop?.current?.gridInst?.refreshLayout();
+    refGridBottom?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide, refGridTop.current, refGridBottom.current]);
+
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
     currentMenuName,
     inputSet
-  );
-  const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
-    isEditMode,
-    refGridTop
   );
 
   const [actModalSelectProd, setActModalSelectProd] = HD.useSearchModalSelect(
@@ -104,6 +108,7 @@ function Document() {
   const [actModalDetailSave, setActModalDetailSave] = HD.useModalDetailSave(
     refModalGridTop,
     refModalGridBottom,
+    isEditMode,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
@@ -116,6 +121,7 @@ function Document() {
     HD.useModalDetailEditSave(
       refModalGridTop,
       refModalGridBottom,
+      isEditMode,
       isBackDrop,
       setIsBackDrop,
       isSnackOpen,
@@ -143,14 +149,30 @@ function Document() {
     uriDetail,
     selectRowID
   );
-  const [actSearchDetailEdit, setActSearchDetailEdit] = HD.useSearchDetailEdit(
+  const [actSearchDetailEdit, setActSearchDetailEdit, actDisableRow] =
+    HD.useSearchDetailEdit(
+      isBackDrop,
+      setIsBackDrop,
+      setGridMainEditData,
+      setGridDetailData,
+      uri,
+      uriDetail,
+      selectRowID
+    );
+  useEffect(() => {
+    DisableRow.handleDisableRowCheck(refModalGridTop);
+    DisableRow.handleDisableRowCheck(refModalGridBottom);
+  }, [actDisableRow]); //🔆EditModal 처음 뜰 때 RowHeaderCheck Disable 시키기
+  const [actDelete, setActDelete, setDeleteRow] = HD.useDeleteDetail(
     isBackDrop,
     setIsBackDrop,
-    setGridMainEditData,
-    setGridDetailData,
-    uri,
+    isSnackOpen,
+    setIsSnackOpen,
+    setIsDeleteAlertOpen,
+    actSearchDetail,
+    setActSearchDetail,
     uriDetail,
-    selectRowID
+    SWITCH_NAME_02
   );
   /**
    * 🔥Main Screen Button Event
@@ -166,47 +188,56 @@ function Document() {
     // setDisableRowToggle(!disableRowToggle);
   };
   const onClickDelete = () => {
-    // const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
-    // if (data.length !== 0) {
-    // setIsDeleteAlertOpen(true);
-    // }
+    const data = refGridBottom?.current?.gridInst?.getCheckedRows();
+    if (data.length !== 0) {
+      setIsDeleteAlertOpen(true);
+      setDeleteRow(data);
+      /**
+       * 🔸삭제확인 창 뜨고나서 그리드 데이터가 사라져서 진행이 안됨, 버그인듯함
+       * setDeleteRow(data)로 삭제를 위해 체크했던 row를 담아서 전달함
+       */
+    }
   };
   const onClickSearch = () => {
     setActSearch(!actSearch);
   };
-  const handleDelete = () => {
-    // setActDelete(!actDelete);
-  };
-  // const handleInputTextChange = (e) => {
-  //   setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
-  // };
-  // const onClickEditModeSave = () => {
-  //   setActEditModeSave(!actEditModeSave);
-  // };
-  // const onClickEditModeExit = () => {
-  //   setIsEditMode(false);
-  //   setSearchToggle(!searchToggle);
-  // };
 
+  const [inputInfoValue, setInputInfoValue] = useState([]);
   const onClickGridTop = (e) => {
+    const inputInfoValueList = [
+      "insp_document_no",
+      "line_nm",
+      "prod_no",
+      "prod_nm",
+      "reg_date",
+      "apply_date",
+      "apply_fg",
+      "contents",
+      "remark",
+    ];
+    setInputInfoValue([]);
     const key = e?.instance.getValue(e?.rowKey, "insp_document_id");
     if (key !== null) {
       setSelectRowID(key);
       setActSearchDetail(!actSearchDetail);
+      for (let i = 0; i < inputInfoValueList.length; i++) {
+        let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
+        if (data === false) {
+          //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
+          data = "false";
+        }
+        setInputInfoValue((prevList) => {
+          return [...prevList, data];
+        });
+      }
     }
   };
   const onDblClickGridTop = () => {};
-  const onEditingFinishGridTop = (e) => {
-    // DisableRow.handleEditingFinishGridCheck(e);
-  };
+  const onEditingFinishGridTop = () => {};
 
-  const onClickGridBottom = (e) => {
-    // DisableRow.handleClickGridCheck(e, isEditMode, ["eqm_failure_fg"]);
-  };
+  const onClickGridBottom = () => {};
   const onDblClickGridBottom = () => {};
-  const onEditingFinishGridBottom = (e) => {
-    // DisableRow.handleEditingFinishGridCheck(e);
-  };
+  const onEditingFinishGridBottom = () => {};
 
   const onClickModalAddRow = () => {
     refModalGridBottom?.current?.gridInst?.appendRow();
@@ -227,9 +258,10 @@ function Document() {
     setIsModalOpen(false);
     setIsEditMode(false);
     setActSearch(!actSearch);
+    setActSearchDetail(!actSearchDetail);
   };
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
-  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Grid" or "Modal"
+  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "ModalTop" or "ModalBottom"
   const onDblClickModalGridTop = (e) => {
     const columnName = ["prod_no", "prod_nm"];
     let condition;
@@ -275,9 +307,7 @@ function Document() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    if (dblClickGrid === "Grid") {
-      refGrid = refGridTop;
-    } else if (dblClickGrid === "ModalTop") {
+    if (dblClickGrid === "ModalTop") {
       refGrid = refModalGridTop;
       columnName = ["prod_id", "prod_no", "prod_nm"];
     } else if (dblClickGrid === "ModalBottom") {
@@ -316,68 +346,67 @@ function Document() {
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.ButtonWrap>
-          <ButtonSearch
-            onClickNew={onClickNew}
-            onClickEdit={onClickEdit}
-            onClickDelete={onClickDelete}
-            onClickSearch={onClickSearch}
+      <S.paddingBox>
+        <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+          <S.ButtonWrap>
+            <ButtonSearch
+              onClickNew={onClickNew}
+              onClickEdit={onClickEdit}
+              onClickDelete={onClickDelete}
+              onClickSearch={onClickSearch}
+            />
+          </S.ButtonWrap>
+        </S.ShadowBoxButton>
+        <S.GridTopWrap>
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsTop}
+            rowHeaders={rowHeadersNum}
+            header={header}
+            data={gridMainData}
+            draggable={false}
+            refGrid={refGridTop}
+            onClickGrid={onClickGridTop}
+            onDblClickGrid={onDblClickGridTop}
+            onEditingFinish={onEditingFinishGridTop}
           />
-        </S.ButtonWrap>
-      </S.ShadowBoxButton>
-      <S.GridTopWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsTop}
-          rowHeaders={rowHeadersNum}
-          header={header}
-          data={gridMainData}
-          draggable={false}
-          refGrid={refGridTop}
-          onClickGrid={onClickGridTop}
-          onDblClickGrid={onDblClickGridTop}
-          onEditingFinish={onEditingFinishGridTop}
-        />
-      </S.GridTopWrap>
-      <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.SearchWrap>
-          <InputInfo
-            id="insp_document_no"
-            name={CN.insp_document_no}
-            value="test test"
+        </S.GridTopWrap>
+        <S.ShadowBoxInputInfo
+          isMenuSlide={isMenuSlide}
+          isAllScreen={isAllScreen}
+        >
+          <S.SearchWrap>
+            {inputInfo.map((v, idx) => {
+              return (
+                <S.InputBox key={v.id}>
+                  <S.Title variant="overline">{v.name}</S.Title>
+                  <S.Input
+                    value={inputInfoValue[idx] || ""}
+                    contentEditable={false}
+                    variant="outlined"
+                    autoComplete="off"
+                    size="small"
+                  />
+                </S.InputBox>
+              );
+            })}
+          </S.SearchWrap>
+        </S.ShadowBoxInputInfo>
+        <S.GridBottomWrap>
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsBottom}
+            rowHeaders={rowHeadersBoth}
+            header={header}
+            data={gridDetailData}
+            draggable={false}
+            refGrid={refGridBottom}
+            onClickGrid={onClickGridBottom}
+            onDblClickGrid={onDblClickGridBottom}
+            onEditingFinish={onEditingFinishGridBottom}
           />
-          <InputInfo id="line_nm" name={CN.line_nm} value="test test" />
-          <InputInfo id="prod_no" name={CN.prod_no} value="test test" />
-          <InputInfo id="prod_nm" name={CN.prod_nm} value="test test" />
-          <InputInfo id="reg_date" name={CN.reg_date} value="test test" />
-          <InputInfo id="apply_date" name={CN.apply_date} value="test test" />
-          <InputInfo id="apply_fg" name={CN.apply_fg} value="test test" />
-          <InputInfo id="contents" name={CN.contents} value="test test" />
-          <InputInfo id="remark" name={CN.remark} value="test test" />
-        </S.SearchWrap>
-      </S.ShadowBoxInputInfo>
-      <S.GridBottomWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsBottom}
-          rowHeaders={rowHeadersBoth}
-          header={header}
-          data={gridDetailData}
-          draggable={false}
-          refGrid={refGridBottom}
-          onClickGrid={onClickGridBottom}
-          onDblClickGrid={onDblClickGridBottom}
-          onEditingFinish={onEditingFinishGridBottom}
-        />
-      </S.GridBottomWrap>
-      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
-      {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
-      ) : null}
+        </S.GridBottomWrap>
+      </S.paddingBox>
       {isModalOpen || isEditMode ? (
         <ModalNewDetail
           gridMainEditData={gridMainEditData}
@@ -417,6 +446,16 @@ function Document() {
           onDblClickModalSelectGrid={onDblClickModalSelectGrid}
         />
       ) : null}
+      {isDeleteAlertOpen ? (
+        <AlertDeleteDetail
+          setActSearchDetail={setActSearchDetail}
+          actSearchDetail={actSearchDetail}
+          actDelete={actDelete}
+          setActDelete={setActDelete}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        />
+      ) : null}
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </S.ContentsArea>
   );

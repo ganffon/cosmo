@@ -37,7 +37,6 @@ function ModalNewDetail(props) {
   useEffect(() => {
     !isEditMode && refModalGridTop?.current?.gridInst?.appendRow();
   }, []);
-
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>

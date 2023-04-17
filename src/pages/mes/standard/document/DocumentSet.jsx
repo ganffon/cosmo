@@ -1389,6 +1389,45 @@ function DocumentSet(
     // },
   ];
 
+  const inputInfo = [
+    {
+      id: "insp_document_no",
+      name: CN.insp_document_no,
+    },
+    {
+      id: "line_nm",
+      name: CN.line_nm,
+    },
+    {
+      id: "prod_no",
+      name: CN.prod_no,
+    },
+    {
+      id: "prod_nm",
+      name: CN.prod_nm,
+    },
+    {
+      id: "reg_date",
+      name: CN.reg_date,
+    },
+    {
+      id: "apply_date",
+      name: CN.apply_date,
+    },
+    {
+      id: "apply_fg",
+      name: CN.apply_fg,
+    },
+    {
+      id: "contents",
+      name: CN.contents,
+    },
+    {
+      id: "remark",
+      name: CN.remark,
+    },
+  ];
+
   const uri = restURI.inspectDocument;
   const uriDetail = restURI.inspectDocumentDetail;
 
@@ -1406,6 +1445,7 @@ function DocumentSet(
     header,
     datePickerSet,
     inputSet,
+    inputInfo,
     uri,
     uriDetail,
   };
