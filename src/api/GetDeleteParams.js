@@ -129,6 +129,11 @@ class document {
     this.insp_document_id = raw.insp_document_id;
   }
 }
+class documentDetail {
+  constructor(raw) {
+    this.insp_document_detail_id = raw.insp_document_detail_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -216,6 +221,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "document":
       params = new document(raw);
+      break;
+    case "documentDetail":
+      params = new documentDetail(raw);
       break;
     default:
   }

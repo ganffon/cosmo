@@ -17,6 +17,12 @@ const useDisableRowCheck = (isEditMode, refGrid) => {
   return [disableRowToggle, setDisableRowToggle];
 };
 
+const handleDisableRowCheck = (refGrid) => {
+  for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
+    refGrid?.current?.gridInst?.disableRowCheck(i);
+  }
+};
+
 const handleClickGridCheck = (e, isEditMode, columnName) => {
   if (isEditMode === true) {
     let condition;
@@ -31,6 +37,16 @@ const handleClickGridCheck = (e, isEditMode, columnName) => {
       e?.instance?.enableRowCheck(e?.rowKey);
       e?.instance?.check(e?.rowKey);
       e?.instance?.disableRowCheck(e?.rowKey);
+    }
+  }
+};
+
+const handleCheckReset = (isEditMode, refGrid) => {
+  if (isEditMode === true) {
+    for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
+      refGrid?.current?.gridInst?.enableRowCheck(i);
+      refGrid?.current?.gridInst?.uncheck(i);
+      refGrid?.current?.gridInst?.disableRowCheck(i);
     }
   }
 };
@@ -55,7 +71,9 @@ const handleGridSelectCheck = (refGrid, rowKey) => {
 
 export {
   useDisableRowCheck,
+  handleDisableRowCheck,
   handleClickGridCheck,
+  handleCheckReset,
   handleEditingFinishGridCheck,
   handleGridSelectCheck,
 };

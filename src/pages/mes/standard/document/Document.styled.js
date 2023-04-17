@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import { APP_BAR_HEIGHT, FIXED_LEFT } from "constant/Layout";
 
 export const ContentsArea = styled("div")`
@@ -11,8 +13,13 @@ export const ContentsArea = styled("div")`
 `;
 export const ShadowBoxButton = styled("div")`
   background-color: rgb(255, 255, 255);
-  width: calc(100% - 0.5rem);
+  width: ${(props) =>
+    props.isMenuSlide ? `calc(100% - 7.5rem)` : `calc(100% - 2rem)`};
   height: auto;
+  position: fixed;
+  top: ${(props) => (props.isAllScreen ? "0px" : `${APP_BAR_HEIGHT}`)};
+  left: ${(props) => (props.isMenuSlide ? `${FIXED_LEFT}` : "10px")};
+  z-index: 100;
   border-radius: 3px;
   border-color: rgb(255, 255, 255);
   margin-top: 8px;
@@ -46,4 +53,22 @@ export const GridBottomWrap = styled("div")`
   width: calc(100% - 0.5rem);
   height: 80%;
   margin-top: 10px;
+`;
+export const InputBox = styled("div")`
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+`;
+export const Title = styled(Typography)`
+  width: 100px;
+`;
+
+export const Input = styled(TextField)`
+  width: 150px;
+`;
+export const paddingBox = styled("div")`
+  height: 100%;
+  padding-top: ${APP_BAR_HEIGHT};
 `;
