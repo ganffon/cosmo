@@ -143,8 +143,6 @@ function Document() {
     uri
   );
   const [actSearchDetail, setActSearchDetail] = uDM.useSearchDetail(
-    isBackDrop,
-    setIsBackDrop,
     setGridDataDetail,
     uriDetail,
     headerRowKey

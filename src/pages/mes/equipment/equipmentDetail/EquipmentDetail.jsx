@@ -87,7 +87,7 @@ function EquipmentDetail() {
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = uDS.useDelete(
+  const [actDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -101,7 +101,7 @@ function EquipmentDetail() {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = uDS.useSearchCbo(
+  const [actSearchCbo] = uDS.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -116,7 +116,7 @@ function EquipmentDetail() {
     uri
   );
 
-  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
+  const [actSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -125,7 +125,7 @@ function EquipmentDetail() {
     SWITCH_NAME_01,
     uri
   );
-  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
+  const [actSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -148,16 +148,16 @@ function EquipmentDetail() {
     }
   };
   const handleDelete = () => {
-    setActDelete(!actDelete);
+    actDelete();
   };
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
-    setActSearch(!actSearch);
+    actSearchCbo();
   };
   const onClickEditModeSave = () => {
-    setActSaveEdit(!actSaveEdit);
+    actSaveEdit();
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -174,17 +174,15 @@ function EquipmentDetail() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    setActSaveNew(!actSaveNew);
+    actSaveNew();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
-  const onDblClickModalGrid = () => {};
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
   };
-  const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -310,7 +308,6 @@ function EquipmentDetail() {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
-            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
@@ -335,7 +332,6 @@ function EquipmentDetail() {
           uri={uri}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

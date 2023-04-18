@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import GetDeleteParams from "api/GetDeleteParams";
 import GetInputSearchParams from "api/GetInputSearchParams";
@@ -6,11 +5,11 @@ import GetCboSearchParams from "api/GetCboSearchParams";
 import GetPutParams from "api/GetPutParams";
 import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
-import * as DisableRow from "custom/useDisableRowCheck";
 
 const useDelete = (
   refGrid,
   isBackDrop,
+  isEditMode,
   setIsBackDrop,
   isSnackOpen,
   setIsSnackOpen,
@@ -20,10 +19,9 @@ const useDelete = (
   uri,
   componentName
 ) => {
-  const [actDelete, setActDelete] = useState(false);
-  refGrid?.current?.gridInst?.finishEditing();
-  useEffect(() => {
-    const handle = async () => {
+  const actDelete = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isEditMode === false) {
       const data = refGrid?.current?.gridInst
         ?.getCheckedRows()
         ?.map((raw) => GetDeleteParams(componentName, raw));
@@ -31,7 +29,14 @@ const useDelete = (
         setIsBackDrop(true);
         await restAPI
           .delete(uri, { data })
-          .then(() => {})
+          .then((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.data?.message,
+              severity: "success",
+            });
+          })
           .catch((res) => {
             setIsSnackOpen({
               ...isSnackOpen,
@@ -46,13 +51,10 @@ const useDelete = (
             setSearchToggle(!searchToggle);
           });
       }
-    };
-
-    handle();
-  }, [actDelete]);
-  return [actDelete, setActDelete];
+    }
+  };
+  return [actDelete];
 };
-
 const useSearch = (
   refGrid,
   isBackDrop,
@@ -66,34 +68,29 @@ const useSearch = (
   setDisableRowToggle,
   uri
 ) => {
-  const [actSearch, setActSearch] = useState(false);
-  refGrid?.current?.gridInst?.finishEditing();
-  useEffect(() => {
-    const handle = async () => {
-      if (isBackDrop === false) {
-        try {
-          setIsBackDrop(true);
-          const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-          const readURI = uri + inputParams;
-          const gridData = await restAPI.get(readURI);
-          await setGridData(gridData?.data?.data?.rows);
-        } catch {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: "조회 실패",
-            severity: "error",
-          });
-        } finally {
-          setDisableRowToggle(!disableRowToggle);
-          setIsBackDrop(false);
-        }
+  const actSearch = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const readURI = uri + inputParams;
+        const gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setDisableRowToggle(!disableRowToggle);
+        setIsBackDrop(false);
       }
-    };
-
-    handle();
-  }, [actSearch]);
-  return [actSearch, setActSearch];
+    }
+  };
+  return [actSearch];
 };
 const useSearchCbo = (
   refGrid,
@@ -109,35 +106,30 @@ const useSearchCbo = (
   comboValue,
   uri
 ) => {
-  const [actSearch, setActSearch] = useState(false);
-  refGrid?.current?.gridInst?.finishEditing();
-  useEffect(() => {
-    const handle = async () => {
-      if (isBackDrop === false) {
-        try {
-          setIsBackDrop(true);
-          const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-          const cboParams = GetCboSearchParams(inputParams, comboValue);
-          const readURI = uri + inputParams + cboParams;
-          const gridData = await restAPI.get(readURI);
-          await setGridData(gridData?.data?.data?.rows);
-        } catch {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: "조회 실패",
-            severity: "error",
-          });
-        } finally {
-          setDisableRowToggle(!disableRowToggle);
-          setIsBackDrop(false);
-        }
+  const actSearchCbo = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const cboParams = GetCboSearchParams(inputParams, comboValue);
+        const readURI = uri + inputParams + cboParams;
+        const gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setDisableRowToggle(!disableRowToggle);
+        setIsBackDrop(false);
       }
-    };
-
-    handle();
-  }, [actSearch]);
-  return [actSearch, setActSearch];
+    }
+  };
+  return [actSearchCbo];
 };
 const useSearchSelect = (
   refGrid,
@@ -148,33 +140,27 @@ const useSearchSelect = (
   setGridModalSelectData,
   uri
 ) => {
-  const [actSearchModalSelect, setActSearchModalSelect] = useState(false);
-  refGrid?.current?.gridInst?.finishEditing();
-  useEffect(() => {
-    const handle = async () => {
-      if (isBackDrop === false) {
-        try {
-          setIsBackDrop(true);
-          const gridData = await restAPI.get(uri);
-          await setGridModalSelectData(gridData?.data?.data?.rows);
-        } catch {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: "조회 실패",
-            severity: "error",
-          });
-        } finally {
-          setIsBackDrop(false);
-        }
+  const actSearchSelect = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const gridData = await restAPI.get(uri);
+        await setGridModalSelectData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setIsBackDrop(false);
       }
-    };
-
-    handle();
-  }, [actSearchModalSelect]);
-  return [actSearchModalSelect, setActSearchModalSelect];
+    }
+  };
+  return [actSearchSelect];
 };
-
 const useSaveEdit = (
   refGrid,
   isBackDrop,
@@ -184,37 +170,37 @@ const useSaveEdit = (
   componentName,
   uri
 ) => {
-  const [actEditModeSave, setActEditModeSave] = useState(false);
-  refGrid?.current?.gridInst?.finishEditing();
-  useEffect(() => {
-    const handle = async () => {
-      const data = refGrid?.current?.gridInst
-        ?.getCheckedRows()
-        ?.map((raw) => GetPutParams(componentName, raw));
-      if (data !== undefined && isBackDrop === false) {
-        setIsBackDrop(true);
-        await restAPI
-          .put(uri, data)
-          .then(() => {})
-          .catch((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
-              severity: "error",
-            });
-          })
-          .finally(() => {
-            setIsBackDrop(false);
+  const actSaveEdit = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    const data = refGrid?.current?.gridInst
+      ?.getCheckedRows()
+      ?.map((raw) => GetPutParams(componentName, raw));
+    if (data !== undefined && isBackDrop === false) {
+      setIsBackDrop(true);
+      await restAPI
+        .put(uri, data)
+        .then((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.data?.message,
+            severity: "success",
           });
-      }
-    };
-
-    handle();
-  }, [actEditModeSave]);
-  return [actEditModeSave, setActEditModeSave];
+        })
+        .catch((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.message ? res?.message : res?.response?.data?.message,
+            severity: "error",
+          });
+        })
+        .finally(() => {
+          setIsBackDrop(false);
+        });
+    }
+  };
+  return [actSaveEdit];
 };
 const useSaveNew = (
   refGrid,
@@ -225,42 +211,41 @@ const useSaveNew = (
   componentName,
   uri
 ) => {
-  const [actModalSave, setActModalSave] = useState(false);
   const [cookie, setCookie, removeCookie] = useCookies();
-  refGrid?.current?.gridInst?.finishEditing();
-  useEffect(() => {
-    const handle = async () => {
-      const data = refGrid?.current?.gridInst
-        ?.getModifiedRows()
-        ?.createdRows.map((raw) =>
-          GetPostParams(componentName, raw, cookie.factoryID)
-        );
-      if (data !== undefined && isBackDrop === false) {
-        setIsBackDrop(true);
-        await restAPI
-          .post(uri, data)
-          .then(() => {
-            refGrid?.current?.gridInst?.clear();
-          })
-          .catch((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
-              severity: "error",
-            });
-          })
-          .finally(() => {
-            setIsBackDrop(false);
+  const actSaveNew = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    const data = refGrid?.current?.gridInst
+      ?.getModifiedRows()
+      ?.createdRows.map((raw) =>
+        GetPostParams(componentName, raw, cookie.factoryID)
+      );
+    if (data !== undefined && isBackDrop === false) {
+      setIsBackDrop(true);
+      await restAPI
+        .post(uri, data)
+        .then((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.data?.message,
+            severity: "success",
           });
-      }
-    };
-
-    handle();
-  }, [actModalSave]);
-  return [actModalSave, setActModalSave];
+          refGrid?.current?.gridInst?.clear();
+        })
+        .catch((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.message ? res?.message : res?.response?.data?.message,
+            severity: "error",
+          });
+        })
+        .finally(() => {
+          setIsBackDrop(false);
+        });
+    }
+  };
+  return [actSaveNew];
 };
 
 export {

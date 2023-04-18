@@ -82,7 +82,7 @@ function InterfaceMemory(props) {
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = uDS.useDelete(
+  const [actDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -96,7 +96,7 @@ function InterfaceMemory(props) {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = uDS.useSearchCbo(
+  const [actSearch] = uDS.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -111,7 +111,7 @@ function InterfaceMemory(props) {
     uri
   );
 
-  const [actSearchModalSelect, setActSearchModalSelect] = uDS.useSearchSelect(
+  const [actSearchSelect] = uDS.useSearchSelect(
     refModalSelectGrid,
     isBackDrop,
     setIsBackDrop,
@@ -123,7 +123,7 @@ function InterfaceMemory(props) {
     uriModalSelect
   );
 
-  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
+  const [actSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -132,7 +132,7 @@ function InterfaceMemory(props) {
     SWITCH_NAME_01,
     uri
   );
-  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
+  const [actSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -155,16 +155,16 @@ function InterfaceMemory(props) {
     }
   };
   const handleDelete = () => {
-    setActDelete(!actDelete);
+    actDelete();
   };
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
-    setActSearch(!actSearch);
+    actSearch();
   };
   const onClickEditModeSave = () => {
-    setActSaveEdit(!actSaveEdit);
+    actSaveEdit();
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -196,12 +196,12 @@ function InterfaceMemory(props) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Modal");
       setIsModalSelectOpen(true);
-      setActSearchModalSelect(!actSearchModalSelect);
+      actSearchSelect();
     }
   };
 
   const onClickModalSave = () => {
-    setActSaveNew(!actSaveNew);
+    actSaveNew();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
@@ -225,7 +225,7 @@ function InterfaceMemory(props) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Grid");
       setIsModalSelectOpen(true);
-      setActSearchModalSelect(!actSearchModalSelect);
+      actSearchSelect();
     }
   };
   const onEditingFinishGrid = (e) => {
@@ -234,7 +234,6 @@ function InterfaceMemory(props) {
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
   };
-  const onClickModalSelectGrid = () => {};
   const onDblClickModalSelectGrid = (e) => {
     let refGrid;
     if (dblClickGrid === "Grid") {
@@ -365,7 +364,6 @@ function InterfaceMemory(props) {
           gridModalSelectData={gridModalSelectData}
           rowHeaders={rowHeadersModal}
           refModalSelectGrid={refModalSelectGrid}
-          onClickModalSelectGrid={onClickModalSelectGrid}
           onDblClickModalSelectGrid={onDblClickModalSelectGrid}
         />
       ) : null}

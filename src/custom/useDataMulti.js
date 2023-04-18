@@ -285,26 +285,18 @@ const useSearchHeader = (
   return [actSearchHeader, setActSearchHeader];
 };
 //⬇️ 메인화면에서 Header 클릭 시 RowKey로 Detail 조회
-const useSearchDetail = (
-  isBackDrop,
-  setIsBackDrop,
-  setGridData,
-  uriDetail,
-  headerRowKey
-) => {
+const useSearchDetail = (setGridData, uriDetail, headerRowKey) => {
   const [actSearchDetail, setActSearchDetail] = useState(false);
   useEffect(() => {
     const handle = async () => {
-      if (isBackDrop === false && headerRowKey !== null) {
+      if (headerRowKey !== null) {
         try {
-          setIsBackDrop(true);
           const gridData = await restAPI.get(
             `${uriDetail}/detail/${headerRowKey}`
           );
           await setGridData(gridData?.data?.data?.rows);
         } catch {
         } finally {
-          setIsBackDrop(false);
         }
       }
     };
