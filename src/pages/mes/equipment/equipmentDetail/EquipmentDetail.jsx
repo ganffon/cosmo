@@ -13,9 +13,9 @@ import EquipmentDetailSet from "pages/mes/equipment/equipmentDetail/EquipmentDet
 import TextField from "@mui/material/TextField";
 import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
-import * as DisableRow from "custom/useDisableRowCheck";
+import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as HD from "custom/useHandleData";
+import * as uDS from "custom/useDataSingle";
 import * as S from "./EquipmentDetail.styled";
 
 function EquipmentDetail() {
@@ -82,12 +82,12 @@ function EquipmentDetail() {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = HD.useDelete(
+  const [actDelete, setActDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -101,7 +101,7 @@ function EquipmentDetail() {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = HD.useSearchCbo(
+  const [actSearch, setActSearch] = uDS.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -116,7 +116,7 @@ function EquipmentDetail() {
     uri
   );
 
-  const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
+  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -125,7 +125,7 @@ function EquipmentDetail() {
     SWITCH_NAME_01,
     uri
   );
-  const [actModalSave, setActModalSave] = HD.useModalSave(
+  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -157,7 +157,7 @@ function EquipmentDetail() {
     setActSearch(!actSearch);
   };
   const onClickEditModeSave = () => {
-    setActEditModeSave(!actEditModeSave);
+    setActSaveEdit(!actSaveEdit);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -174,7 +174,7 @@ function EquipmentDetail() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    setActModalSave(!actModalSave);
+    setActSaveNew(!actSaveNew);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
@@ -182,11 +182,11 @@ function EquipmentDetail() {
   };
   const onDblClickModalGrid = () => {};
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, []);
+    disRow.handleClickGridCheck(e, isEditMode, []);
   };
   const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
-    DisableRow.handleEditingFinishGridCheck(e);
+    disRow.handleEditingFinishGridCheck(e);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {

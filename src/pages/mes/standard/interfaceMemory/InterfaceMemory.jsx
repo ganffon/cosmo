@@ -12,11 +12,11 @@ import BackDrop from "components/backdrop/BackDrop";
 import TextField from "@mui/material/TextField";
 import InputSearch from "components/input/InputSearch";
 import InterfaceMemorySet from "pages/mes/standard/interfaceMemory/InterfaceMemorySet";
-import * as DisableRow from "custom/useDisableRowCheck";
+import * as disRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
-import * as HD from "custom/useHandleData";
+import * as uDS from "custom/useDataSingle";
 import * as S from "./InterfaceMemory.styled";
 
 function InterfaceMemory(props) {
@@ -77,12 +77,12 @@ function InterfaceMemory(props) {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = HD.useDelete(
+  const [actDelete, setActDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -96,7 +96,7 @@ function InterfaceMemory(props) {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = HD.useSearchCbo(
+  const [actSearch, setActSearch] = uDS.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -111,20 +111,19 @@ function InterfaceMemory(props) {
     uri
   );
 
-  const [actSearchModalSelect, setActSearchModalSelect] =
-    HD.useSearchModalSelect(
-      refModalSelectGrid,
-      isBackDrop,
-      setIsBackDrop,
-      isSnackOpen,
-      setIsSnackOpen,
-      setGridModalSelectData,
-      disableRowToggle,
-      setDisableRowToggle,
-      uriModalSelect
-    );
+  const [actSearchModalSelect, setActSearchModalSelect] = uDS.useSearchSelect(
+    refModalSelectGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalSelectData,
+    disableRowToggle,
+    setDisableRowToggle,
+    uriModalSelect
+  );
 
-  const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
+  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -133,7 +132,7 @@ function InterfaceMemory(props) {
     SWITCH_NAME_01,
     uri
   );
-  const [actModalSave, setActModalSave] = HD.useModalSave(
+  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -165,7 +164,7 @@ function InterfaceMemory(props) {
     setActSearch(!actSearch);
   };
   const onClickEditModeSave = () => {
-    setActEditModeSave(!actEditModeSave);
+    setActSaveEdit(!actSaveEdit);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -202,14 +201,14 @@ function InterfaceMemory(props) {
   };
 
   const onClickModalSave = () => {
-    setActModalSave(!actModalSave);
+    setActSaveNew(!actSaveNew);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, []);
+    disRow.handleClickGridCheck(e, isEditMode, []);
   };
 
   const onDblClickGrid = (e) => {
@@ -230,7 +229,7 @@ function InterfaceMemory(props) {
     }
   };
   const onEditingFinishGrid = (e) => {
-    DisableRow.handleEditingFinishGridCheck(e);
+    disRow.handleEditingFinishGridCheck(e);
   };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
@@ -240,7 +239,7 @@ function InterfaceMemory(props) {
     let refGrid;
     if (dblClickGrid === "Grid") {
       refGrid = refSingleGrid;
-      DisableRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
     } else if (dblClickGrid === "Modal") {
       refGrid = refModalGrid;
     }

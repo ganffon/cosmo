@@ -31,7 +31,7 @@ function DocumentSet(
    * align: "left"||"center"||"right"
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
-  const columnsTop = [
+  const columnsMain = [
     {
       name: "factory_id",
       header: CN.factory_id,
@@ -269,7 +269,7 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
-  const columnsBottom = [
+  const columnsDetail = [
     {
       name: "factory_id",
       header: CN.factory_id,
@@ -692,7 +692,7 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
-  const columnsModalTop = [
+  const columnsModalMain = [
     {
       name: "insp_document_id",
       header: CN.insp_document_id,
@@ -885,7 +885,7 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
-  const columnsModalBottom = [
+  const columnsModalDetail = [
     {
       name: "insp_document_id",
       header: CN.insp_document_id,
@@ -1261,7 +1261,7 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
-  const columnsModalSelectProd = [
+  const columnsSelectProd = [
     {
       name: "prod_id",
       header: CN.prod_id,
@@ -1299,7 +1299,7 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
-  const columnsModalSelectInsp = [
+  const columnsSelectInsp = [
     {
       name: "insp_item_type_id",
       header: CN.insp_item_type_id,
@@ -1354,7 +1354,7 @@ function DocumentSet(
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
-  const rowHeadersBoth = ["checkbox", "rowNum"];
+  const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
   // const header = {
@@ -1433,14 +1433,14 @@ function DocumentSet(
 
   return {
     data,
-    columnsTop,
-    columnsBottom,
-    columnsModalTop,
-    columnsModalBottom,
-    columnsModalSelectProd,
-    columnsModalSelectInsp,
+    columnsMain,
+    columnsDetail,
+    columnsModalMain,
+    columnsModalDetail,
+    columnsSelectProd,
+    columnsSelectInsp,
     columnOptions,
-    rowHeadersBoth,
+    rowHeadersNumCheck,
     rowHeadersNum,
     header,
     datePickerSet,

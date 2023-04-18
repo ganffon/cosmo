@@ -13,29 +13,29 @@ function ModalNewDetail(props) {
     onClickModalCancelRow,
     onClickModalSave,
     onClickModalClose,
-    onClickModalGridTop,
-    onClickModalGridBottom,
     onClickEditModalSave,
-    onDblClickModalGridTop,
-    onDblClickModalGridBottom,
-    onEditingFinishModalGridTop,
-    onEditingFinishModalGridBottom,
-    refModalGridTop,
-    refModalGridBottom,
+    onClickGridModalMain,
+    onClickGridModalDetail,
+    onDblClickGridModalMain,
+    onDblClickGridModalDetail,
+    onEditingFinishGridModalMain,
+    onEditingFinishGridModalDetail,
+    refGridModalMain,
+    refGridModalDetail,
     isEditMode,
-    columnsModalTop,
-    columnsModalBottom,
+    columnsModalMain,
+    columnsModalDetail,
     columnOptions,
     header,
-    rowHeadersTop,
-    rowHeadersBottom,
+    rowHeadersMain,
+    rowHeadersDetail,
     gridMainEditData,
     gridDetailData,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
   useEffect(() => {
-    !isEditMode && refModalGridTop?.current?.gridInst?.appendRow();
+    !isEditMode && refGridModalMain?.current?.gridInst?.appendRow();
   }, []);
   return (
     <ModalWrap width={"95%"} height={"95%"}>
@@ -57,15 +57,15 @@ function ModalNewDetail(props) {
       <S.GridBoxTop>
         <GridModal
           data={isEditMode ? gridMainEditData : null}
-          columns={columnsModalTop}
+          columns={columnsModalMain}
           columnOptions={columnOptions}
           header={header}
-          rowHeaders={rowHeadersTop}
-          refGrid={refModalGridTop}
+          rowHeaders={rowHeadersMain}
+          refGrid={refGridModalMain}
           draggable={false}
-          onClick={onClickModalGridTop}
-          onDblClick={onDblClickModalGridTop}
-          onEditingFinish={onEditingFinishModalGridTop}
+          onClick={onClickGridModalMain}
+          onDblClick={onDblClickGridModalMain}
+          onEditingFinish={onEditingFinishGridModalMain}
         />
       </S.GridBoxTop>
       <S.ButtonBox>
@@ -82,15 +82,15 @@ function ModalNewDetail(props) {
       <S.GridBoxBottom>
         <GridModal
           data={isEditMode ? gridDetailData : null}
-          columns={columnsModalBottom}
+          columns={columnsModalDetail}
           columnOptions={columnOptions}
           header={header}
-          rowHeaders={rowHeadersBottom}
-          refGrid={refModalGridBottom}
+          rowHeaders={rowHeadersDetail}
+          refGrid={refGridModalDetail}
           draggable={false}
-          onClick={onClickModalGridBottom}
-          onDblClick={onDblClickModalGridBottom}
-          onEditingFinish={onEditingFinishModalGridBottom}
+          onClick={onClickGridModalDetail}
+          onDblClick={onDblClickGridModalDetail}
+          onEditingFinish={onEditingFinishGridModalDetail}
         />
       </S.GridBoxBottom>
     </ModalWrap>

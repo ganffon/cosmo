@@ -13,9 +13,9 @@ import ProductSet from "pages/mes/standard/product/ProductSet";
 import TextField from "@mui/material/TextField";
 import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
-import * as DisableRow from "custom/useDisableRowCheck";
+import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as HD from "custom/useHandleData";
+import * as uDS from "custom/useDataSingle";
 import * as S from "./Product.styled";
 
 function Product() {
@@ -81,12 +81,12 @@ function Product() {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = HD.useDelete(
+  const [actDelete, setActDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -100,7 +100,7 @@ function Product() {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = HD.useSearchCbo(
+  const [actSearch, setActSearch] = uDS.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -115,7 +115,7 @@ function Product() {
     uri
   );
 
-  const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
+  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -124,7 +124,7 @@ function Product() {
     SWITCH_NAME_01,
     uri
   );
-  const [actModalSave, setActModalSave] = HD.useModalSave(
+  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -156,7 +156,7 @@ function Product() {
     setActSearch(!actSearch);
   };
   const onClickEditModeSave = () => {
-    setActEditModeSave(!actEditModeSave);
+    setActSaveEdit(!actSaveEdit);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -173,7 +173,7 @@ function Product() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    setActModalSave(!actModalSave);
+    setActSaveNew(!actSaveNew);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
@@ -181,7 +181,7 @@ function Product() {
   };
   const onDblClickModalGrid = () => {};
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, [
+    disRow.handleClickGridCheck(e, isEditMode, [
       "lot_fg",
       "use_fg",
       "active_fg",
@@ -197,7 +197,7 @@ function Product() {
   };
   const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
-    DisableRow.handleEditingFinishGridCheck(e);
+    disRow.handleEditingFinishGridCheck(e);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {

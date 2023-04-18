@@ -10,10 +10,10 @@ import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import StoreLocationSet from "pages/mes/standard/storeLocation/StoreLocationSet";
-import * as DisableRow from "custom/useDisableRowCheck";
+import * as disRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import * as Cbo from "custom/useCboSet";
-import * as HD from "custom/useHandleData";
+import * as uDS from "custom/useDataSingle";
 import * as S from "pages/mes/style/oneGrid.styled";
 
 function StoreLocation(props) {
@@ -62,12 +62,12 @@ function StoreLocation(props) {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = HD.useDelete(
+  const [actDelete, setActDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -81,7 +81,7 @@ function StoreLocation(props) {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = HD.useSearch(
+  const [actSearch, setActSearch] = uDS.useSearch(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -95,7 +95,7 @@ function StoreLocation(props) {
     uri
   );
 
-  const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
+  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -104,7 +104,7 @@ function StoreLocation(props) {
     SWITCH_NAME_01,
     uri
   );
-  const [actModalSave, setActModalSave] = HD.useModalSave(
+  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -137,7 +137,7 @@ function StoreLocation(props) {
     setActSearch(!actSearch);
   };
   const onClickEditModeSave = () => {
-    setActEditModeSave(!actEditModeSave);
+    setActSaveEdit(!actSaveEdit);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -154,7 +154,7 @@ function StoreLocation(props) {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    setActModalSave(!actModalSave);
+    setActSaveNew(!actSaveNew);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
@@ -163,11 +163,11 @@ function StoreLocation(props) {
   const onDblClickModalGrid = () => {};
 
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, []);
+    disRow.handleClickGridCheck(e, isEditMode, []);
   };
   const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
-    DisableRow.handleEditingFinishGridCheck(e);
+    disRow.handleEditingFinishGridCheck(e);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {

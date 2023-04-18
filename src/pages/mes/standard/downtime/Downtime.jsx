@@ -13,9 +13,9 @@ import DowntimeSet from "pages/mes/standard/downtime/DowntimeSet";
 import useInputSet from "custom/useInputSet";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
-import * as DisableRow from "custom/useDisableRowCheck";
+import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as HD from "custom/useHandleData";
+import * as uDS from "custom/useDataSingle";
 import * as S from "./Downtime.styled";
 
 function Downtime() {
@@ -67,12 +67,12 @@ function Downtime() {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = DisableRow.useDisableRowCheck(
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = HD.useDelete(
+  const [actDelete, setActDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -86,7 +86,7 @@ function Downtime() {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = HD.useSearchCbo(
+  const [actSearch, setActSearch] = uDS.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -101,7 +101,7 @@ function Downtime() {
     uri
   );
 
-  const [actEditModeSave, setActEditModeSave] = HD.useEditModeSave(
+  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -110,7 +110,7 @@ function Downtime() {
     SWITCH_NAME_01,
     uri
   );
-  const [actModalSave, setActModalSave] = HD.useModalSave(
+  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -143,7 +143,7 @@ function Downtime() {
     setActSearch(!actSearch);
   };
   const onClickEditModeSave = () => {
-    setActEditModeSave(!actEditModeSave);
+    setActSaveEdit(!actSaveEdit);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -160,7 +160,7 @@ function Downtime() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    setActModalSave(!actModalSave);
+    setActSaveNew(!actSaveNew);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
@@ -169,11 +169,11 @@ function Downtime() {
   const onDblClickModalGrid = () => {};
 
   const onClickGrid = (e) => {
-    DisableRow.handleClickGridCheck(e, isEditMode, ["eqm_failure_fg"]);
+    disRow.handleClickGridCheck(e, isEditMode, ["eqm_failure_fg"]);
   };
   const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
-    DisableRow.handleEditingFinishGridCheck(e);
+    disRow.handleEditingFinishGridCheck(e);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
