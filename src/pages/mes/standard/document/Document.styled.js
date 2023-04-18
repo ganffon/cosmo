@@ -44,12 +44,12 @@ export const ButtonWrap = styled("div")`
   justify-content: flex-end;
   padding: 5px 5px 5px 0px;
 `;
-export const GridTopWrap = styled("div")`
+export const GridHeaderWrap = styled("div")`
   width: calc(100% - 0.5rem);
   height: 40%;
   margin-top: 10px;
 `;
-export const GridBottomWrap = styled("div")`
+export const GridDetailWrap = styled("div")`
   width: calc(100% - 0.5rem);
   height: 80%;
   margin-top: 10px;

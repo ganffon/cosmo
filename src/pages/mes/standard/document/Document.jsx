@@ -11,9 +11,9 @@ import DocumentSet from "pages/mes/standard/document/DocumentSet";
 import useInputSet from "custom/useInputSet";
 import * as S from "./Document.styled";
 import CN from "json/ColumnName.json";
-import * as DisableRow from "custom/useDisableRowCheck";
+import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as HD from "custom/useHandleData";
+import * as uDM from "custom/useDataMulti";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 
@@ -21,27 +21,28 @@ function Document() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
-  const refGridTop = useRef(null);
-  const refGridBottom = useRef(null);
-  const refModalGridTop = useRef(null);
-  const refModalGridBottom = useRef(null);
-  const refModalSelectGrid = useRef(null);
-  const refInputInfo = useRef([]);
+
+  const refGridHeader = useRef(null);
+  const refGridDetail = useRef(null);
+  const refGridModalHeader = useRef(null);
+  const refGridModalDetail = useRef(null);
+  const refGridSelect = useRef(null);
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
-  const [gridMainData, setGridMainData] = useState(null);
-  const [gridDetailData, setGridDetailData] = useState(null);
-  const [gridMainEditData, setGridMainEditData] = useState(null);
-  const [gridModalSelectData, setGridModalSelectData] = useState(null);
+  const [gridHeaderData, setGridHeaderData] = useState(null);
+  const [gridDataDetail, setGridDataDetail] = useState(null);
+  const [gridDataHeaderEdit, setGridDataHeaderEdit] = useState(null);
+  const [gridDataSelect, setGridDataSelect] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [columnsModalSelect, setColumnsModalSelect] = useState([]);
+  const [columnsSelect, setColumnsSelect] = useState([]);
   const [searchToggle, setSearchToggle] = useState(false);
-  const [selectRowID, setSelectRowID] = useState(null);
+  const [headerRowKey, setHeaderRowKey] = useState(null);
   const [lineOpt, lineList] = Cbo.useLine();
   const [processOpt, processList] = Cbo.useProcess();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
@@ -50,14 +51,14 @@ function Document() {
   const [inspectFilingOpt, inspectFilingList] = Cbo.useInspectFiling();
 
   const {
-    columnsTop,
-    columnsBottom,
-    columnsModalTop,
-    columnsModalBottom,
-    columnsModalSelectProd,
-    columnsModalSelectInsp,
+    columnsHeader,
+    columnsDetail,
+    columnsModalHeader,
+    columnsModalDetail,
+    columnsSelectProd,
+    columnsSelectInsp,
     columnOptions,
-    rowHeadersBoth,
+    rowHeadersNumCheck,
     rowHeadersNum,
     header,
     inputSet,
@@ -78,36 +79,36 @@ function Document() {
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridTop?.current?.gridInst?.refreshLayout();
-    refGridBottom?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridTop.current, refGridBottom.current]);
+    refGridHeader?.current?.gridInst?.refreshLayout();
+    refGridDetail?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide, refGridHeader.current, refGridDetail.current]);
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
     currentMenuName,
     inputSet
   );
 
-  const [actModalSelectProd, setActModalSelectProd] = HD.useSearchModalSelect(
-    refModalSelectGrid,
+  const [actSelectProd, setActSelectProd] = uDM.useSearchSelect(
+    refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    setGridModalSelectData,
+    setGridDataSelect,
     restURI.product
   ); //➡️ Modal Select Search Prod
-  const [actModalSelectInsp, setActModalSelectInsp] = HD.useSearchModalSelect(
-    refModalSelectGrid,
+  const [actSelectInsp, setActSelectInsp] = uDM.useSearchSelect(
+    refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    setGridModalSelectData,
+    setGridDataSelect,
     restURI.inspectItem
   ); //➡️ Modal Select Search Insp
-  const [actModalDetailSave, setActModalDetailSave] = HD.useModalDetailSave(
-    refModalGridTop,
-    refModalGridBottom,
+  const [actSaveDetail, setActSaveDetail] = uDM.useSaveDetail(
+    refGridModalHeader,
+    refGridModalDetail,
     isEditMode,
     isBackDrop,
     setIsBackDrop,
@@ -117,53 +118,52 @@ function Document() {
     SWITCH_NAME_02,
     uri
   ); //➡️ Modal Save
-  const [actModalDetailEditSave, setActModalDetailEditSave] =
-    HD.useModalDetailEditSave(
-      refModalGridTop,
-      refModalGridBottom,
-      isEditMode,
-      isBackDrop,
-      setIsBackDrop,
-      isSnackOpen,
-      setIsSnackOpen,
-      SWITCH_NAME_01,
-      SWITCH_NAME_02,
-      uri,
-      uriDetail
-    ); //➡️ Modal Save
-  const [actSearch, setActSearch] = HD.useSearchMain(
-    refGridBottom,
+  const [actSaveDetailEdit, setActSaveDetailEdit] = uDM.useSaveDetailEdit(
+    refGridModalHeader,
+    refGridModalDetail,
+    isEditMode,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_01,
+    SWITCH_NAME_02,
+    uri,
+    uriDetail
+  ); //➡️ Modal Save
+  const [actSearchHeader, setActSearchHeader] = uDM.useSearchHeader(
+    refGridDetail,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
     inputBoxID,
     inputTextChange,
-    setGridMainData,
+    setGridHeaderData,
     uri
   );
-  const [actSearchDetail, setActSearchDetail] = HD.useSearchDetail(
+  const [actSearchDetail, setActSearchDetail] = uDM.useSearchDetail(
     isBackDrop,
     setIsBackDrop,
-    setGridDetailData,
+    setGridDataDetail,
     uriDetail,
-    selectRowID
+    headerRowKey
   );
   const [actSearchDetailEdit, setActSearchDetailEdit, actDisableRow] =
-    HD.useSearchDetailEdit(
+    uDM.useSearchDetailEdit(
       isBackDrop,
       setIsBackDrop,
-      setGridMainEditData,
-      setGridDetailData,
+      setGridDataHeaderEdit,
+      setGridDataDetail,
       uri,
       uriDetail,
-      selectRowID
+      headerRowKey
     );
   useEffect(() => {
-    DisableRow.handleDisableRowCheck(refModalGridTop);
-    DisableRow.handleDisableRowCheck(refModalGridBottom);
+    disRow.handleDisableRowCheck(refGridModalHeader);
+    disRow.handleDisableRowCheck(refGridModalDetail);
   }, [actDisableRow]); //🔆EditModal 처음 뜰 때 RowHeaderCheck Disable 시키기
-  const [actDelete, setActDelete, setDeleteRow] = HD.useDeleteDetail(
+  const [actDelete, setActDelete, setDeleteRow] = uDM.useDeleteDetail(
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
@@ -175,20 +175,20 @@ function Document() {
     SWITCH_NAME_02
   );
   /**
-   * 🔥Main Screen Button Event
+   * 🔥Header Screen Button Event
    */
   const onClickNew = () => {
     setIsModalOpen(true);
   };
   const onClickEdit = () => {
-    if (selectRowID !== null) {
+    if (headerRowKey !== null) {
       setIsEditMode(true);
       setActSearchDetailEdit(!actSearchDetailEdit);
     }
     // setDisableRowToggle(!disableRowToggle);
   };
   const onClickDelete = () => {
-    const data = refGridBottom?.current?.gridInst?.getCheckedRows();
+    const data = refGridDetail?.current?.gridInst?.getCheckedRows();
     if (data.length !== 0) {
       setIsDeleteAlertOpen(true);
       setDeleteRow(data);
@@ -199,11 +199,11 @@ function Document() {
     }
   };
   const onClickSearch = () => {
-    setActSearch(!actSearch);
+    setActSearchHeader(!actSearchHeader);
   };
 
   const [inputInfoValue, setInputInfoValue] = useState([]);
-  const onClickGridTop = (e) => {
+  const onClickGridHeader = (e) => {
     const inputInfoValueList = [
       "insp_document_no",
       "line_nm",
@@ -218,7 +218,7 @@ function Document() {
     setInputInfoValue([]);
     const key = e?.instance.getValue(e?.rowKey, "insp_document_id");
     if (key !== null) {
-      setSelectRowID(key);
+      setHeaderRowKey(key);
       setActSearchDetail(!actSearchDetail);
       for (let i = 0; i < inputInfoValueList.length; i++) {
         let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
@@ -232,37 +232,37 @@ function Document() {
       }
     }
   };
-  const onDblClickGridTop = () => {};
-  const onEditingFinishGridTop = () => {};
+  const onDblClickGridHeader = () => {};
+  const onEditingFinishGridHeader = () => {};
 
-  const onClickGridBottom = () => {};
-  const onDblClickGridBottom = () => {};
-  const onEditingFinishGridBottom = () => {};
+  const onClickGridDetail = () => {};
+  const onDblClickGridDetail = () => {};
+  const onEditingFinishGridDetail = () => {};
 
   const onClickModalAddRow = () => {
-    refModalGridBottom?.current?.gridInst?.appendRow();
+    refGridModalDetail?.current?.gridInst?.appendRow();
   };
   let rowKey;
-  const onClickModalGridTop = (e) => {
+  const onClickGridModalHeader = (e) => {
     rowKey = e.rowKey;
-    DisableRow.handleClickGridCheck(e, isEditMode, ["apply_fg"]);
+    disRow.handleClickGridCheck(e, isEditMode, ["apply_fg"]);
   };
-  const onClickModalGridBottom = (e) => {};
+  const onClickGridModalDetail = (e) => {};
   const onClickModalCancelRow = () => {
-    refModalGridBottom?.current?.gridInst?.removeRow(rowKey);
+    refGridModalDetail?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    setActModalDetailSave(!actModalDetailSave);
+    setActSaveDetail(!actSaveDetail);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
     setIsEditMode(false);
-    setActSearch(!actSearch);
+    setActSearchHeader(!actSearchHeader);
     setActSearchDetail(!actSearchDetail);
   };
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
-  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "ModalTop" or "ModalBottom"
-  const onDblClickModalGridTop = (e) => {
+  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "ModalHeader" or "ModalDetail"
+  const onDblClickGridModalHeader = (e) => {
     const columnName = ["prod_no", "prod_nm"];
     let condition;
     for (let i = 0; i < columnName.length; i++) {
@@ -274,13 +274,13 @@ function Document() {
     }
     if (condition) {
       setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalTop");
-      setColumnsModalSelect(columnsModalSelectProd);
+      setDblClickGrid("ModalHeader");
+      setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
-      setActModalSelectProd(!actModalSelectProd);
+      setActSelectProd(!actSelectProd);
     }
   };
-  const onDblClickModalGridBottom = (e) => {
+  const onDblClickGridModalDetail = (e) => {
     const columnName = ["insp_item_type_nm", "insp_item_nm"];
     let condition;
     for (let i = 0; i < columnName.length; i++) {
@@ -292,26 +292,26 @@ function Document() {
     }
     if (condition) {
       setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalBottom");
-      setColumnsModalSelect(columnsModalSelectInsp);
+      setDblClickGrid("ModalDetail");
+      setColumnsSelect(columnsSelectInsp);
       setIsModalSelectOpen(true);
-      setActModalSelectInsp(!actModalSelectInsp);
+      setActSelectInsp(!actSelectInsp);
     }
   };
 
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
   };
-  const onClickModalSelectGrid = () => {};
-  const onDblClickModalSelectGrid = (e) => {
+  const onClickGridSelect = () => {};
+  const onDblClickGridSelect = (e) => {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    if (dblClickGrid === "ModalTop") {
-      refGrid = refModalGridTop;
+    if (dblClickGrid === "ModalHeader") {
+      refGrid = refGridModalHeader;
       columnName = ["prod_id", "prod_no", "prod_nm"];
-    } else if (dblClickGrid === "ModalBottom") {
-      refGrid = refModalGridBottom;
+    } else if (dblClickGrid === "ModalDetail") {
+      refGrid = refGridModalDetail;
       columnName = [
         "insp_item_type_id",
         "insp_item_type_nm",
@@ -326,17 +326,17 @@ function Document() {
         e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
       );
     }
-    DisableRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+    disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
     setIsModalSelectOpen(false);
   };
   const onClickEditModalSave = () => {
-    setActModalDetailEditSave(!actModalDetailEditSave);
+    setActSaveDetailEdit(!actSaveDetailEdit);
   };
-  const onEditingFinishModalGridTop = (e) => {
-    DisableRow.handleEditingFinishGridCheck(e);
+  const onEditingFinishGridModalHeader = (e) => {
+    disRow.handleEditingFinishGridCheck(e);
   };
-  const onEditingFinishModalGridBottom = (e) => {
-    DisableRow.handleEditingFinishGridCheck(e);
+  const onEditingFinishGridModalDetail = (e) => {
+    disRow.handleEditingFinishGridCheck(e);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -357,20 +357,20 @@ function Document() {
             />
           </S.ButtonWrap>
         </S.ShadowBoxButton>
-        <S.GridTopWrap>
+        <S.GridHeaderWrap>
           <GridSingle
             columnOptions={columnOptions}
-            columns={columnsTop}
+            columns={columnsHeader}
             rowHeaders={rowHeadersNum}
             header={header}
-            data={gridMainData}
+            data={gridHeaderData}
             draggable={false}
-            refGrid={refGridTop}
-            onClickGrid={onClickGridTop}
-            onDblClickGrid={onDblClickGridTop}
-            onEditingFinish={onEditingFinishGridTop}
+            refGrid={refGridHeader}
+            onClickGrid={onClickGridHeader}
+            onDblClickGrid={onDblClickGridHeader}
+            onEditingFinish={onEditingFinishGridHeader}
           />
-        </S.GridTopWrap>
+        </S.GridHeaderWrap>
         <S.ShadowBoxInputInfo
           isMenuSlide={isMenuSlide}
           isAllScreen={isAllScreen}
@@ -392,58 +392,58 @@ function Document() {
             })}
           </S.SearchWrap>
         </S.ShadowBoxInputInfo>
-        <S.GridBottomWrap>
+        <S.GridDetailWrap>
           <GridSingle
             columnOptions={columnOptions}
-            columns={columnsBottom}
-            rowHeaders={rowHeadersBoth}
+            columns={columnsDetail}
+            rowHeaders={rowHeadersNumCheck}
             header={header}
-            data={gridDetailData}
+            data={gridDataDetail}
             draggable={false}
-            refGrid={refGridBottom}
-            onClickGrid={onClickGridBottom}
-            onDblClickGrid={onDblClickGridBottom}
-            onEditingFinish={onEditingFinishGridBottom}
+            refGrid={refGridDetail}
+            onClickGrid={onClickGridDetail}
+            onDblClickGrid={onDblClickGridDetail}
+            onEditingFinish={onEditingFinishGridDetail}
           />
-        </S.GridBottomWrap>
+        </S.GridDetailWrap>
       </S.paddingBox>
       {isModalOpen || isEditMode ? (
         <ModalNewDetail
-          gridMainEditData={gridMainEditData}
-          gridDetailData={gridDetailData}
+          gridDataHeaderEdit={gridDataHeaderEdit}
+          gridDataDetail={gridDataDetail}
           onClickModalAddRow={onClickModalAddRow}
           onClickModalCancelRow={onClickModalCancelRow}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
           onClickEditModalSave={onClickEditModalSave}
-          columnsModalTop={columnsModalTop}
-          columnsModalBottom={columnsModalBottom}
+          columnsModalHeader={columnsModalHeader}
+          columnsModalDetail={columnsModalDetail}
           columnOptions={columnOptions}
           header={header}
-          rowHeadersTop={isEditMode ? rowHeadersBoth : rowHeadersNum}
-          rowHeadersBottom={isEditMode ? rowHeadersBoth : rowHeadersNum}
-          refModalGridTop={refModalGridTop}
-          refModalGridBottom={refModalGridBottom}
+          rowHeadersHeader={isEditMode ? rowHeadersNumCheck : rowHeadersNum}
+          rowHeadersDetail={isEditMode ? rowHeadersNumCheck : rowHeadersNum}
+          refGridModalHeader={refGridModalHeader}
+          refGridModalDetail={refGridModalDetail}
           isEditMode={isEditMode}
-          onClickModalGridTop={onClickModalGridTop}
-          onClickModalGridBottom={onClickModalGridBottom}
-          onDblClickModalGridTop={onDblClickModalGridTop}
-          onDblClickModalGridBottom={onDblClickModalGridBottom}
-          onEditingFinishModalGridTop={onEditingFinishModalGridTop}
-          onEditingFinishModalGridBottom={onEditingFinishModalGridBottom}
+          onClickGridModalHeader={onClickGridModalHeader}
+          onClickGridModalDetail={onClickGridModalDetail}
+          onDblClickGridModalHeader={onDblClickGridModalHeader}
+          onDblClickGridModalDetail={onDblClickGridModalDetail}
+          onEditingFinishGridModalHeader={onEditingFinishGridModalHeader}
+          onEditingFinishGridModalDetail={onEditingFinishGridModalDetail}
         />
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
           onClickModalSelectClose={onClickModalSelectClose}
-          columns={columnsModalSelect}
+          columns={columnsSelect}
           columnOptions={columnOptions}
           header={header}
-          gridModalSelectData={gridModalSelectData}
+          gridDataSelect={gridDataSelect}
           rowHeaders={rowHeadersNum}
-          refModalSelectGrid={refModalSelectGrid}
-          onClickModalSelectGrid={onClickModalSelectGrid}
-          onDblClickModalSelectGrid={onDblClickModalSelectGrid}
+          refGridSelect={refGridSelect}
+          onClickGridSelect={onClickGridSelect}
+          onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
       {isDeleteAlertOpen ? (

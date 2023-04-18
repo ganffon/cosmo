@@ -11,7 +11,7 @@ function ModalSelect(props) {
     columnOptions,
     header,
     rowHeaders,
-    gridModalSelectData,
+    gridDataSelect,
     onClickModalSelectGrid,
     onDblClickModalSelectGrid,
   } = props;
@@ -35,7 +35,7 @@ function ModalSelect(props) {
           header={header}
           rowHeaders={rowHeaders}
           refGrid={refSelectGrid}
-          data={gridModalSelectData}
+          data={gridDataSelect}
           draggable={false}
           onClick={onClickModalSelectGrid}
           onDblClick={onDblClickModalSelectGrid}

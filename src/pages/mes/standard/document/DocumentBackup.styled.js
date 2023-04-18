@@ -23,6 +23,15 @@ export const ShadowBoxFixed = styled("div")`
   margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
+export const ShadowBoxButton = styled("div")`
+  background-color: rgb(255, 255, 255);
+  width: calc(100% - 0.5rem);
+  height: auto;
+  border-radius: 3px;
+  border-color: rgb(255, 255, 255);
+  margin-top: 8px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
 
 // function scrollDetect() {
 //   setScrollY(boxRef?.current?.scrollTop);
