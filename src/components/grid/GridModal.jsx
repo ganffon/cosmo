@@ -12,9 +12,9 @@ function GridModal(props) {
     data,
     draggable,
     refGrid,
-    onClick,
-    onDblClick,
-    onEditingFinish,
+    onClick = () => {},
+    onDblClick = () => {},
+    onEditingFinish = () => {},
   } = props;
   useEffect(() => {
     GridTheme();

@@ -12,13 +12,14 @@ function GridSingle(props) {
     data,
     draggable,
     refGrid,
-    onClickGrid,
-    onDblClickGrid,
-    onEditingFinish,
+    onClickGrid = () => {},
+    onDblClickGrid = () => {},
+    onEditingFinish = () => {},
   } = props;
   useEffect(() => {
     GridTheme();
   }, []);
+
   return (
     <Grid
       scrollX={true}

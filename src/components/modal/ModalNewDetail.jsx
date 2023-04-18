@@ -14,28 +14,28 @@ function ModalNewDetail(props) {
     onClickModalSave,
     onClickModalClose,
     onClickEditModalSave,
-    onClickGridModalMain,
+    onClickGridModalHeader,
     onClickGridModalDetail,
-    onDblClickGridModalMain,
+    onDblClickGridModalHeader,
     onDblClickGridModalDetail,
-    onEditingFinishGridModalMain,
+    onEditingFinishGridModalHeader,
     onEditingFinishGridModalDetail,
-    refGridModalMain,
+    refGridModalHeader,
     refGridModalDetail,
     isEditMode,
-    columnsModalMain,
+    columnsModalHeader,
     columnsModalDetail,
     columnOptions,
     header,
-    rowHeadersMain,
+    rowHeadersHeader,
     rowHeadersDetail,
-    gridMainEditData,
-    gridDetailData,
+    gridDataHeaderEdit,
+    gridDataDetail,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
   useEffect(() => {
-    !isEditMode && refGridModalMain?.current?.gridInst?.appendRow();
+    !isEditMode && refGridModalHeader?.current?.gridInst?.appendRow();
   }, []);
   return (
     <ModalWrap width={"95%"} height={"95%"}>
@@ -56,16 +56,16 @@ function ModalNewDetail(props) {
       <S.GridTopTitleBox>✳️ 검사기준서</S.GridTopTitleBox>
       <S.GridBoxTop>
         <GridModal
-          data={isEditMode ? gridMainEditData : null}
-          columns={columnsModalMain}
+          data={isEditMode ? gridDataHeaderEdit : null}
+          columns={columnsModalHeader}
           columnOptions={columnOptions}
           header={header}
-          rowHeaders={rowHeadersMain}
-          refGrid={refGridModalMain}
+          rowHeaders={rowHeadersHeader}
+          refGrid={refGridModalHeader}
           draggable={false}
-          onClick={onClickGridModalMain}
-          onDblClick={onDblClickGridModalMain}
-          onEditingFinish={onEditingFinishGridModalMain}
+          onClick={onClickGridModalHeader}
+          onDblClick={onDblClickGridModalHeader}
+          onEditingFinish={onEditingFinishGridModalHeader}
         />
       </S.GridBoxTop>
       <S.ButtonBox>
@@ -81,7 +81,7 @@ function ModalNewDetail(props) {
       </S.ButtonBox>
       <S.GridBoxBottom>
         <GridModal
-          data={isEditMode ? gridDetailData : null}
+          data={isEditMode ? gridDataDetail : null}
           columns={columnsModalDetail}
           columnOptions={columnOptions}
           header={header}

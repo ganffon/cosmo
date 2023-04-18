@@ -31,7 +31,7 @@ function DocumentSet(
    * align: "left"||"center"||"right"
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
-  const columnsMain = [
+  const columnsHeader = [
     {
       name: "factory_id",
       header: CN.factory_id,
@@ -692,7 +692,7 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
-  const columnsModalMain = [
+  const columnsModalHeader = [
     {
       name: "insp_document_id",
       header: CN.insp_document_id,
@@ -1433,9 +1433,9 @@ function DocumentSet(
 
   return {
     data,
-    columnsMain,
+    columnsHeader,
     columnsDetail,
-    columnsModalMain,
+    columnsModalHeader,
     columnsModalDetail,
     columnsSelectProd,
     columnsSelectInsp,

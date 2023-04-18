@@ -65,7 +65,7 @@ function Store() {
     refSingleGrid
   );
 
-  const [actDelete, setActDelete] = uDS.useDelete(
+  const [actDelete] = uDS.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -79,7 +79,7 @@ function Store() {
     SWITCH_NAME_01
   );
 
-  const [actSearch, setActSearch] = uDS.useSearch(
+  const [actSearch] = uDS.useSearch(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -93,7 +93,7 @@ function Store() {
     uri
   );
 
-  const [actSaveEdit, setActSaveEdit] = uDS.useSaveEdit(
+  const [actSaveEdit] = uDS.useSaveEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -102,7 +102,7 @@ function Store() {
     SWITCH_NAME_01,
     uri
   );
-  const [actSaveNew, setActSaveNew] = uDS.useSaveNew(
+  const [actSaveNew] = uDS.useSaveNew(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -126,16 +126,16 @@ function Store() {
   };
 
   const handleDelete = () => {
-    setActDelete(!actDelete);
+    actDelete();
   };
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
-    setActSearch(!actSearch);
+    actSearch();
   };
   const onClickEditModeSave = () => {
-    setActSaveEdit(!actSaveEdit);
+    actSaveEdit();
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -152,13 +152,12 @@ function Store() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    setActSaveNew(!actSaveNew);
+    actSaveNew();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
-  const onDblClickModalGrid = () => {};
 
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, [
@@ -170,7 +169,6 @@ function Store() {
       "available_store_fg",
     ]);
   };
-  const onDblClickGrid = () => {};
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -225,7 +223,6 @@ function Store() {
             draggable={false}
             refGrid={refSingleGrid}
             onClickGrid={onClickGrid}
-            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
@@ -249,7 +246,6 @@ function Store() {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
