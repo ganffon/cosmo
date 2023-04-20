@@ -16,7 +16,6 @@ export const ShadowBoxButton = styled("div")`
   height: ${C.SEARCH_BAR_HEIGHT2};
   border-radius: 3px;
   border-color: rgb(255, 255, 255);
-
   margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;

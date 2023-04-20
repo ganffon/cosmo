@@ -12,7 +12,9 @@ import {
 } from "constant/Grid.js";
 
 function DocumentSet(
-  isEditMode,
+  isEditModeHeader,
+  isEditModeDetail,
+  isNewDetail,
   lineList,
   processList,
   equipmentList,
@@ -69,11 +71,19 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "line_nm",
+      name: isEditModeHeader ? "line_id" : "line_nm",
       header: CN.line_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      formatter: isEditModeHeader ? "listItemText" : null,
+      editor: isEditModeHeader
+        ? {
+            type: "select",
+            options: {
+              listItems: lineList,
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -86,7 +96,12 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      hidden: false,
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : null,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -98,9 +113,11 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      validation: {
-        required: false,
-      },
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -113,9 +130,11 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      validation: {
-        required: false,
-      },
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -126,11 +145,16 @@ function DocumentSet(
       name: "reg_date",
       header: CN.reg_date,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      formatter: function (value) {
-        return CustomGrid.DateFormat(value);
-      },
+      align: "center",
+      editor: isEditModeHeader
+        ? {
+            type: "datePicker",
+            options: {
+              language: "ko",
+              format: "yyyy-MM-dd",
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -139,13 +163,18 @@ function DocumentSet(
     },
     {
       name: "apply_date",
-      header: CN.apply_date,
+      header: CN.reg_date,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      formatter: function (value) {
-        return CustomGrid.DateFormat(value);
-      },
+      align: "center",
+      editor: isEditModeHeader
+        ? {
+            type: "datePicker",
+            options: {
+              language: "ko",
+              format: "yyyy-MM-dd",
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -159,7 +188,7 @@ function DocumentSet(
         type: CustomGrid.CheckBox,
         options: {
           name: "apply_fg",
-          disabled: true,
+          disabled: isEditModeHeader ? false : true,
         },
       },
       minWidth: WIDTH_SHORT,
@@ -177,7 +206,7 @@ function DocumentSet(
       header: CN.contents,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeHeader ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -189,7 +218,7 @@ function DocumentSet(
       header: CN.remark,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeHeader ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -311,7 +340,7 @@ function DocumentSet(
       header: CN.sortby,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditMode
+      editor: isEditModeDetail
         ? {
             type: CustomGrid.EditorNumber,
           }
@@ -326,11 +355,19 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "proc_nm",
+      name: isEditModeDetail ? "proc_id" : "proc_nm",
       header: CN.proc_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      formatter: isEditModeDetail ? "listItemText" : null,
+      editor: isEditModeDetail
+        ? {
+            type: "select",
+            options: {
+              listItems: processList,
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -338,11 +375,19 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "equip_nm",
+      name: isEditModeDetail ? "equip_id" : "equip_nm",
       header: CN.equip_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      formatter: isEditModeDetail ? "listItemText" : null,
+      editor: isEditModeDetail
+        ? {
+            type: "select",
+            options: {
+              listItems: equipmentList,
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -354,7 +399,18 @@ function DocumentSet(
       header: CN.insp_proc_gbn,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      formatter: isEditModeDetail ? "listItemText" : null,
+      editor: isEditModeDetail
+        ? {
+            type: "select",
+            options: {
+              listItems: [
+                { text: "제품", value: "제품" },
+                { text: "공정", value: "공정" },
+              ],
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -368,7 +424,7 @@ function DocumentSet(
       align: "left",
       editor: false,
       validation: {
-        required: false,
+        required: isEditModeDetail ? true : false,
       },
       hidden: false,
       sortable: false,
@@ -383,7 +439,7 @@ function DocumentSet(
       align: "left",
       editor: false,
       validation: {
-        required: false,
+        required: isEditModeDetail ? true : false,
       },
       hidden: false,
       sortable: false,
@@ -398,7 +454,7 @@ function DocumentSet(
       align: "left",
       editor: false,
       validation: {
-        required: false,
+        required: isEditModeDetail ? true : false,
       },
       hidden: false,
       sortable: false,
@@ -413,7 +469,7 @@ function DocumentSet(
       align: "left",
       editor: false,
       validation: {
-        required: false,
+        required: isEditModeDetail ? true : false,
       },
       hidden: false,
       sortable: false,
@@ -426,7 +482,7 @@ function DocumentSet(
       header: CN.insp_item_desc,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -438,7 +494,7 @@ function DocumentSet(
       header: CN.spec_std,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -450,7 +506,11 @@ function DocumentSet(
       header: CN.spec_min,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail
+        ? {
+            type: CustomGrid.EditorFloat2,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -462,7 +522,11 @@ function DocumentSet(
       header: CN.spec_max,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail
+        ? {
+            type: CustomGrid.EditorFloat2,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -474,7 +538,11 @@ function DocumentSet(
       header: CN.spec_lcl,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail
+        ? {
+            type: CustomGrid.EditorFloat2,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -486,7 +554,11 @@ function DocumentSet(
       header: CN.spec_ucl,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail
+        ? {
+            type: CustomGrid.EditorFloat2,
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -494,11 +566,19 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "insp_method_nm",
+      name: isEditModeDetail ? "insp_method_id" : "insp_method_nm",
       header: CN.insp_method_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      formatter: isEditModeDetail ? "listItemText" : null,
+      editor: isEditModeDetail
+        ? {
+            type: "select",
+            options: {
+              listItems: inspectMethodList,
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -506,11 +586,19 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "insp_tool_nm",
+      name: isEditModeDetail ? "insp_tool_id" : "insp_tool_nm",
       header: CN.insp_tool_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      formatter: isEditModeDetail ? "listItemText" : null,
+      editor: isEditModeDetail
+        ? {
+            type: "select",
+            options: {
+              listItems: inspectToolList,
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -518,11 +606,19 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "insp_filing_nm",
+      name: isEditModeDetail ? "insp_filing_id" : "insp_filing_nm",
       header: CN.insp_filing_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      formatter: isEditModeDetail ? "listItemText" : null,
+      editor: isEditModeDetail
+        ? {
+            type: "select",
+            options: {
+              listItems: inspectFilingList,
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -534,7 +630,7 @@ function DocumentSet(
       header: CN.special_property,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -546,7 +642,11 @@ function DocumentSet(
       header: CN.worker_sample_cnt,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
@@ -561,7 +661,7 @@ function DocumentSet(
       header: CN.worker_insp_cycle,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -573,7 +673,11 @@ function DocumentSet(
       header: CN.inspector_sample_cnt,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail
+        ? {
+            type: CustomGrid.EditorNumber,
+          }
+        : false,
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
@@ -588,7 +692,7 @@ function DocumentSet(
       header: CN.inspector_insp_cycle,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -600,7 +704,7 @@ function DocumentSet(
       header: CN.infc_memory_id,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: true,
       sortable: false,
       filter: false,
@@ -612,7 +716,7 @@ function DocumentSet(
       header: CN.remark,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -710,7 +814,7 @@ function DocumentSet(
       header: CN.insp_document_no,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: "text",
+      editor: isNewDetail ? false : "text",
       hidden: false,
       sortable: false,
       filter: false,
@@ -718,41 +822,25 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "line_id",
+      name: isNewDetail ? "line_nm" : "line_id",
       header: CN.line_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
-      formatter: "listItemText",
-      editor: {
-        type: "select",
-        options: {
-          listItems: lineList,
-        },
-      },
+      formatter: isNewDetail ? null : "listItemText",
+      editor: isNewDetail
+        ? false
+        : {
+            type: "select",
+            options: {
+              listItems: lineList,
+            },
+          },
       hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
-    // {
-    //   name: "line_nm",
-    //   header: CN.line_nm,
-    //   minWidth: WIDTH_SHORT,
-    //   align: "left",
-    //   formatter: "listItemText",
-    //   editor: {
-    //     type: "select",
-    //     options: {
-    //       listItems: lineList,
-    //     },
-    //   },
-    //   hidden: false,
-    //   sortable: false,
-    //   filter: false,
-    //   whiteSpace: false,
-    //   rowSpan: false,
-    // },
     {
       name: "prod_id",
       header: CN.prod_id,
@@ -760,7 +848,7 @@ function DocumentSet(
       align: "left",
       editor: false,
       validation: {
-        required: true,
+        required: isNewDetail ? false : true,
       },
       hidden: true,
       sortable: false,
@@ -775,7 +863,7 @@ function DocumentSet(
       align: "left",
       editor: false,
       validation: {
-        required: true,
+        required: isNewDetail ? false : true,
       },
       hidden: false,
       sortable: false,
@@ -790,7 +878,7 @@ function DocumentSet(
       align: "left",
       editor: false,
       validation: {
-        required: true,
+        required: isNewDetail ? false : true,
       },
       hidden: false,
       sortable: false,
@@ -803,13 +891,15 @@ function DocumentSet(
       header: CN.reg_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
-      editor: {
-        type: "datePicker",
-        options: {
-          language: "ko",
-          format: "yyyy-MM-dd",
-        },
-      },
+      editor: isNewDetail
+        ? false
+        : {
+            type: "datePicker",
+            options: {
+              language: "ko",
+              format: "yyyy-MM-dd",
+            },
+          },
       formatter: function (value) {
         return CustomGrid.DateFormat(value);
       },
@@ -824,13 +914,15 @@ function DocumentSet(
       header: CN.apply_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
-      editor: {
-        type: "datePicker",
-        options: {
-          language: "ko",
-          format: "yyyy-MM-dd",
-        },
-      },
+      editor: isNewDetail
+        ? false
+        : {
+            type: "datePicker",
+            options: {
+              language: "ko",
+              format: "yyyy-MM-dd",
+            },
+          },
       formatter: function (value) {
         return CustomGrid.DateFormat(value);
       },
@@ -847,7 +939,7 @@ function DocumentSet(
         type: CustomGrid.CheckBox,
         options: {
           name: "apply_fg",
-          disabled: false,
+          disabled: isNewDetail ? true : false,
         },
       },
       minWidth: WIDTH_SHORT,
@@ -865,7 +957,7 @@ function DocumentSet(
       header: CN.contents,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: "text",
+      editor: isNewDetail ? false : "text",
       hidden: false,
       sortable: false,
       filter: false,
@@ -877,7 +969,7 @@ function DocumentSet(
       header: CN.remark,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: "text",
+      editor: isNewDetail ? false : "text",
       hidden: false,
       sortable: false,
       filter: false,
@@ -1379,14 +1471,14 @@ function DocumentSet(
    * 🔸inputSet id 값이 ⭐ BE : query params
    */
   const inputSet = [
-    // {
-    //   id: "line_cd",
-    //   name: CN.line_cd,
-    // },
-    // {
-    //   id: "line_nm",
-    //   name: CN.line_nm,
-    // },
+    {
+      id: "prod_no",
+      name: CN.prod_no,
+    },
+    {
+      id: "prod_nm",
+      name: CN.prod_nm,
+    },
   ];
 
   const inputInfo = [

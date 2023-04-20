@@ -341,6 +341,7 @@ class document {
 class documentDetail {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
+    this.insp_document_id = raw.insp_document_id;
     this.sortby = Number(raw.sortby);
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
