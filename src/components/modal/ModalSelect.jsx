@@ -5,15 +5,15 @@ import * as S from "./ModalSelect.styled";
 
 function ModalSelect(props) {
   const {
-    onClickModalSelectClose,
+    onClickModalSelectClose = () => {},
     refSelectGrid,
     columns,
     columnOptions,
     header,
     rowHeaders,
     gridDataSelect,
-    onClickModalSelectGrid,
-    onDblClickModalSelectGrid,
+    onClickSelectGrid = () => {},
+    onDblClickGridSelect = () => {},
   } = props;
 
   return (
@@ -37,8 +37,8 @@ function ModalSelect(props) {
           refGrid={refSelectGrid}
           data={gridDataSelect}
           draggable={false}
-          onClick={onClickModalSelectGrid}
-          onDblClick={onDblClickModalSelectGrid}
+          onClick={onClickSelectGrid}
+          onDblClick={onDblClickGridSelect}
         />
       </S.GridBox>
     </ModalWrap>

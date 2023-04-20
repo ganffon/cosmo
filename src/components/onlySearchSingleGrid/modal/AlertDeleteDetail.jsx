@@ -6,10 +6,9 @@ import * as S from "./AlertDelete.styled";
 
 function AlertDelete(props) {
   const {
-    setActSearchDetail,
+    headerClickRowKey,
     actSearchDetail,
     actDelete,
-    setActDelete,
     setIsDeleteAlertOpen,
   } = props;
   return (
@@ -25,7 +24,7 @@ function AlertDelete(props) {
             size="small"
             startIcon={<DoneIcon />}
             color="success"
-            onClick={() => setActDelete(!actDelete)}
+            onClick={() => actDelete()}
           >
             예 (Yes)
           </S.ButtonYes>
@@ -35,7 +34,7 @@ function AlertDelete(props) {
             startIcon={<CloseIcon />}
             color="error"
             onClick={() => {
-              setActSearchDetail(!actSearchDetail);
+              actSearchDetail(headerClickRowKey);
               setIsDeleteAlertOpen(false);
             }}
           >
