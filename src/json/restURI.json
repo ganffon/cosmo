@@ -41,5 +41,11 @@
   "equipmentSmall": "/equipment-class",
   "equipmentDetail": "/equipment-detail",
 
+  "controlPlan": "/control-plan",
+  "controlPlanDetail": "/control-plan-detail",
+
+  "spareReceive": "/sparereceive",
+  "spareReceiveDetail": "/sparereceivedetail",
+
   "setup": "/setup"
 }
