@@ -17,23 +17,6 @@ const useDisableRowCheck = (isEditMode, refGrid) => {
   return [disableRowToggle, setDisableRowToggle];
 };
 
-const useEnableRowCheck = (refGrid) => {
-  const [disableRowToggle, setDisableRowToggle] = useState(false);
-  useEffect(() => {
-    for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
-      refGrid?.current?.gridInst?.enableRowCheck(i);
-    }
-  }, [disableRowToggle]);
-
-  return [disableRowToggle, setDisableRowToggle];
-};
-
-const handleDisableRowCheck = (refGrid) => {
-  for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
-    refGrid?.current?.gridInst?.disableRowCheck(i);
-  }
-};
-
 const handleClickGridCheck = (e, isEditMode, columnName) => {
   if (isEditMode === true) {
     let condition;
@@ -82,8 +65,6 @@ const handleGridSelectCheck = (refGrid, rowKey) => {
 
 export {
   useDisableRowCheck,
-  useEnableRowCheck,
-  handleDisableRowCheck,
   handleClickGridCheck,
   handleCheckReset,
   handleEditingFinishGridCheck,
