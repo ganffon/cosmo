@@ -4,6 +4,7 @@ import ButtonHeader from "components/button/ButtonHeader";
 import ButtonDetail from "components/button/ButtonDetail";
 import ButtonEdit from "components/button/ButtonEdit";
 import ButtonEditDetail from "components/button/ButtonEditDetail";
+import ButtonGroup from "components/button/ButtonGroup";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
@@ -21,9 +22,6 @@ import * as Cbo from "custom/useCboSet";
 import * as uDM from "custom/useDataMulti";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
-import IconButton from "@mui/material/IconButton";
-import FolderIcon from "@mui/icons-material/Folder";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 
 function Document() {
   LoginStateChk();
@@ -293,9 +291,9 @@ function Document() {
         "contents",
         "remark",
       ];
-      setInputInfoValue([]);
       const rowID = e?.instance.getValue(e?.rowKey, "insp_document_id");
       if (rowID !== null) {
+        setInputInfoValue([]);
         setHeaderClickRowID(rowID);
         actSearchDetail(rowID);
         for (let i = 0; i < inputInfoValueList.length; i++) {
@@ -524,16 +522,33 @@ function Document() {
               onKeyDown={onKeyDown}
             />
           ))}
-          <IconButton size="large" variant="outlined" onClick={onClickProd}>
-            <FolderIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            variant="outlined"
-            onClick={onClickProdCancel}
+          <ButtonGroup
+            onClickSelect={onClickProd}
+            onClickCancel={onClickProdCancel}
+          />
+          {/* <ButtonGroup
+            disableElevation
+            variant="contained"
+            sx={{ marginLeft: "5px", marginTop: "5px" }}
           >
-            <CancelPresentationIcon />
-          </IconButton>
+            <Button
+              size="small"
+              variant="contained"
+              color="secondary"
+              sx={{ padding: "0px 0px 0px 0px", height: "40px" }}
+              onClick={onClickProd}
+            >
+              <FolderIcon sx={{ color: "white", height: "30px" }} />
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
+              sx={{ padding: "0px 0px 0px 0px", height: "40px" }}
+              onClick={onClickProdCancel}
+            >
+              <CancelPresentationIcon sx={{ color: "white", height: "30px" }} />
+            </Button>
+          </ButtonGroup> */}
         </S.ComboWrap>
         <S.ButtonWrap>
           {isEditModeHeader ? (
