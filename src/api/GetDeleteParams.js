@@ -134,6 +134,16 @@ class documentDetail {
     this.insp_document_detail_id = raw.insp_document_detail_id;
   }
 }
+class spareReceive {
+  constructor(raw) {
+    this.spare_receive_id = raw.spare_receive_id;
+  }
+}
+class spareReceiveDetail {
+  constructor(raw) {
+    this.spare_receive_detail_id = raw.spare_receive_detail_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -224,6 +234,12 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "documentDetail":
       params = new documentDetail(raw);
+      break;
+    case "spareReceive":
+      params = new spareReceive(raw);
+      break;
+    case "spareReceiveDetail":
+      params = new spareReceiveDetail(raw);
       break;
     default:
   }

@@ -355,6 +355,45 @@ class documentDetail {
     this.remark = raw.remark;
   }
 }
+class spareReceive {
+  constructor(raw) {
+    this.spare_receive_id = raw.spare_receive_id;
+    this.factory_id = raw.factory_id;
+    this.partner_id = raw.partner_id;
+    this.supplier_id = raw.supplier_id;
+    this.stmt_no = raw.stmt_no;
+    this.reg_date = raw.reg_date;
+    this.total_price = Number(raw.total_price);
+    this.total_qty = Number(raw.total_qty);
+    this.order_id = raw.order_id;
+    this.spare_receive_uid = raw.spare_receive_uid;
+    this.remark = raw.remark;
+  }
+}
+class spareReceiveDetail {
+  constructor(raw) {
+    this.spare_receive_detail_id = raw.spare_receive_detail_id;
+    this.spare_receive_id = raw.spare_receive_id;
+    this.factory_id = raw.factory_id;
+    this.prod_id = raw.prod_id;
+    this.unit_id = raw.unit_id;
+    this.lot_no = raw.lot_no;
+    this.manufactured_lot_no = raw.manufactured_lot_no;
+    this.qty = Number(raw.qty);
+    this.price = Number(raw.price);
+    this.money_unit_id = raw.money_unit_id;
+    this.exchange = Number(raw.exchange);
+    this.total_price = Number(raw.total_price);
+    this.unit_qty = Number(raw.unit_qty);
+    this.insp_fg = raw.insp_fg ? true : false;
+    this.carry_fg = raw.carry_fg ? true : false;
+    this.order_detail_id = raw.order_detail_id;
+    this.to_store_id = raw.to_store_id;
+    this.to_location_id = raw.to_location_id;
+    this.barcode = raw.barcode;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -448,6 +487,12 @@ function GetPutParams(componentName, raw) {
       break;
     case "documentDetail":
       params = new documentDetail(raw);
+      break;
+    case "spareReceive":
+      params = new spareReceive(raw);
+      break;
+    case "spareReceiveDetail":
+      params = new spareReceiveDetail(raw);
       break;
     default:
   }

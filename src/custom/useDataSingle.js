@@ -247,6 +247,47 @@ const useSaveNew = (
   };
   return [actSaveNew];
 };
+const useSearchCboDate = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  inputBoxID,
+  inputTextChange,
+  setGridData,
+  disableRowToggle,
+  setDisableRowToggle,
+  comboValue,
+  dateText,
+  uri
+) => {
+  const actSearchCboDate = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const cboParams = GetCboSearchParams(inputParams, comboValue);
+        const dateParams = GetCboSearchParams(inputParams, dateText);
+        const readURI = uri + inputParams + cboParams + dateParams;
+        const gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setDisableRowToggle(!disableRowToggle);
+        setIsBackDrop(false);
+      }
+    }
+  };
+  return [actSearchCboDate];
+};
 
 export {
   useDelete,
@@ -255,4 +296,5 @@ export {
   useSearchSelect,
   useSaveEdit,
   useSaveNew,
+  useSearchCboDate,
 };

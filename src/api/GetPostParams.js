@@ -366,6 +366,45 @@ class documentDetail {
   }
 }
 
+class spareReceive {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.partner_id = raw.partner_id;
+    this.supplier_id = raw.supplier_id;
+    this.stmt_no = raw.stmt_no;
+    this.reg_date = raw.reg_date;
+    this.total_price = Number(raw.total_price);
+    this.total_qty = Number(raw.total_qty);
+    this.order_id = raw.order_id;
+    this.spare_receive_uid = raw.spare_receive_uid;
+    this.emp_nm = raw.emp_nm;
+    this.remark = raw.remark;
+  }
+}
+class spareReceiveDetail {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.spare_receive_id = raw.spare_receive_id;
+    this.prod_id = raw.prod_id;
+    this.unit_id = raw.unit_id;
+    this.lot_no = raw.lot_no;
+    this.manufactured_lot_no = raw.manufactured_lot_no;
+    this.qty = Number(raw.qty);
+    this.price = Number(raw.price);
+    this.money_unit_id = raw.money_unit_id;
+    this.exchange = Number(raw.exchange);
+    this.total_price = Number(raw.total_price);
+    this.unit_qty = Number(raw.unit_qty);
+    this.insp_fg = raw.insp_fg ? true : false;
+    this.carry_fg = raw.carry_fg ? true : false;
+    this.order_detail_id = raw.order_detail_id;
+    this.to_store_id = raw.to_store_id;
+    this.to_location_id = raw.to_location_id;
+    this.barcode = raw.barcode;
+    this.remark = raw.remark;
+  }
+}
+
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
  * this.prod_gbn_id = raw.prod_gbn_nm; ➡️ id = nm 형식으로 작성
@@ -479,6 +518,12 @@ function GetPostParams(componentName, raw, factory_id) {
         break;
       case "documentDetail":
         params = new documentDetail(raw, factory_id);
+        break;
+      case "spareReceive":
+        params = new spareReceive(raw, factory_id);
+        break;
+      case "spareReceiveDetail":
+        params = new spareReceiveDetail(raw, factory_id);
         break;
       default:
     }
