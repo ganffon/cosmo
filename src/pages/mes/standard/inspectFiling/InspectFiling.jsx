@@ -52,9 +52,6 @@ function InspectFiling(props) {
     currentMenuName,
     inputSet
   );
-  useEffect(() => {
-    onClickSearch();
-  }, []);
 
   useEffect(() => {
     onClickSearch();

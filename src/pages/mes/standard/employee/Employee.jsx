@@ -56,9 +56,6 @@ function Employee() {
     currentMenuName,
     inputSet
   );
-  useEffect(() => {
-    onClickSearch();
-  }, []);
 
   useEffect(() => {
     onClickSearch();

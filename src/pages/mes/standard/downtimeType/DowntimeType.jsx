@@ -54,10 +54,6 @@ function DowntimeType(props) {
   );
   useEffect(() => {
     onClickSearch();
-  }, []);
-
-  useEffect(() => {
-    onClickSearch();
   }, [searchToggle]);
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(

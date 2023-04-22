@@ -243,8 +243,8 @@
 
   "insp_document_id": "검사기준서ID",
   "insp_document_no": "검사기준서번호",
-  "reg_date": "개정일시",
-  "apply_date": "적용일시",
+  "reg_date": "개정일자",
+  "apply_date": "적용일자",
   "apply_fg": "적용여부",
   "contents": "개정내역",
 
@@ -261,6 +261,14 @@
   "worker_insp_cycle": "점검주기(작업자)",
   "inspector_sample_cnt": "시료수량(점검원)",
   "inspector_insp_cycle": "점검주기(점검원)",
+
+  "control_plan_id": "관리계획서ID",
+  "control_plan_detail_id": "세부관리계획서ID",
+  "control_plan_no": "관리계획서번호",
+  "proc_no": "공정번호",
+
+  "lot_no": "LOT NO",
+  "qty": "중량",
 
   "setup_id": "권한설정ID",
   "setup_cd": "권한설정코드",

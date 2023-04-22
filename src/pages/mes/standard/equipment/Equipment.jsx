@@ -54,9 +54,6 @@ function Equipment() {
     currentMenuName,
     inputSet
   );
-  useEffect(() => {
-    onClickSearch();
-  }, []);
 
   useEffect(() => {
     onClickSearch();

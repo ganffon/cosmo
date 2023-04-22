@@ -52,9 +52,6 @@ function Grade(props) {
     currentMenuName,
     inputSet
   );
-  useEffect(() => {
-    onClickSearch();
-  }, []);
 
   useEffect(() => {
     onClickSearch();

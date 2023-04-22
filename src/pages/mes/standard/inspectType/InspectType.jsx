@@ -52,9 +52,6 @@ function InspectType(props) {
     currentMenuName,
     inputSet
   );
-  useEffect(() => {
-    onClickSearch();
-  }, []);
 
   useEffect(() => {
     onClickSearch();

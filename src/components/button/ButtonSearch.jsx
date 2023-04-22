@@ -8,7 +8,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import * as S from "./Button.styled";
 
 function ButtonSearch(props) {
-  const { onClickNew, onClickEdit, onClickDelete, onClickSearch } = props;
+  const {
+    onClickNew = () => {},
+    onClickEdit = () => {},
+    onClickDelete = () => {},
+    onClickSearch = () => {},
+  } = props;
   const { authMenuCode } = useContext(LayoutContext);
   return (
     <>

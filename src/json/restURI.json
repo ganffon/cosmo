@@ -30,7 +30,8 @@
   "inspectType": "/inspection-item-type",
   "inspectItem": "/inspection-item",
   "inspectDocument": "/document",
-  "inspectDocumentDetail": "/document-detail",
+  "inspectDocumentDetailID": "/document-detail/detail",
+  "inspectDocumentDetailIncludeHeader": "/document-detail/includeheader",
 
   "interfaceItemType": "/interface-item-type",
   "interfaceItem": "/interface-item",
@@ -43,9 +44,12 @@
 
   "controlPlan": "/control-plan",
   "controlPlanDetail": "/control-plan-detail",
+  "controlPlanDetailID": "/control-plan-detail/detail",
 
   "spareReceive": "/sparereceive",
   "spareReceiveDetail": "/sparereceivedetail",
+
+  "storeView": "/store-view",
 
   "setup": "/setup"
 }

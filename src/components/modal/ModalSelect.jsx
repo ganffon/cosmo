@@ -5,6 +5,7 @@ import * as S from "./ModalSelect.styled";
 
 function ModalSelect(props) {
   const {
+    width,
     onClickModalSelectClose = () => {},
     refSelectGrid,
     columns,
@@ -17,7 +18,7 @@ function ModalSelect(props) {
   } = props;
 
   return (
-    <ModalWrap width={"40%"} height={"90%"}>
+    <ModalWrap width={width} height={"90%"}>
       <S.HeaderBox>
         <S.TitleBox>{`[데이터 선택]`}</S.TitleBox>
         <S.ButtonClose

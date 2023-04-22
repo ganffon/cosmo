@@ -54,10 +54,6 @@ function Unit(props) {
   );
   useEffect(() => {
     onClickSearch();
-  }, []);
-
-  useEffect(() => {
-    onClickSearch();
   }, [searchToggle]);
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(

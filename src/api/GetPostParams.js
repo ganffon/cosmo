@@ -77,22 +77,26 @@ class product {
     this.use_fg = raw.use_fg ? true : false;
     this.active_fg = raw.active_fg ? true : false;
     this.bom_type_id = raw.bom_type_id;
-    this.width = Number(raw.width);
-    this.length = Number(raw.length);
-    this.height = Number(raw.height);
+    this.width = raw.width ? Number(raw.width) : null;
+    this.length = raw.length ? Number(raw.length) : null;
+    this.height = raw.height ? Number(raw.height) : null;
     this.material = raw.material;
     this.color = raw.color;
-    this.weight = Number(raw.weight);
-    this.thickness = Number(raw.thickness);
+    this.weight = raw.weight ? Number(raw.weight) : null;
+    this.thickness = raw.thickness ? Number(raw.thickness) : null;
     this.is_spareparts = raw.is_spareparts ? true : false;
     this.mat_order_fg = raw.mat_order_fg ? true : false;
     this.mat_unit_id = raw.mat_unit_id;
-    this.mat_order_min_qty = Number(raw.mat_order_min_qty);
-    this.mat_supply_days = Number(raw.mat_supply_days);
+    this.mat_order_min_qty = raw.mat_order_min_qty
+      ? Number(raw.mat_order_min_qty)
+      : null;
+    this.mat_supply_days = raw.mat_supply_days
+      ? Number(raw.mat_supply_days)
+      : null;
     this.sal_order_fg = raw.sal_order_fg ? true : false;
     this.inv_use_fg = raw.inv_use_fg ? true : false;
-    this.inv_unit_qty = Number(raw.inv_unit_qty);
-    this.inv_safe_qty = Number(raw.inv_safe_qty);
+    this.inv_unit_qty = raw.inv_unit_qty ? Number(raw.inv_unit_qty) : null;
+    this.inv_safe_qty = raw.inv_safe_qty ? Number(raw.inv_safe_qty) : null;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
     this.qms_receive_insp_fg = raw.qms_receive_insp_fg ? true : false;
@@ -100,8 +104,8 @@ class product {
     this.qms_final_insp_fg = raw.qms_final_insp_fg ? true : false;
     this.prd_plan_type_id = raw.prd_plan_type_id;
     this.prd_active_fg = raw.prd_active_fg ? true : false;
-    this.prd_min = Number(raw.prd_min);
-    this.prd_max = Number(raw.prd_max);
+    this.prd_min = raw.prd_min ? Number(raw.prd_min) : null;
+    this.prd_max = raw.prd_max ? Number(raw.prd_max) : null;
   }
 }
 class productGbn {
@@ -260,7 +264,7 @@ class interfaceMemory {
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.plc_ip = raw.plc_ip;
-    this.plc_port = Number(raw.plc_port);
+    this.plc_port = raw.plc_port ? Number(raw.plc_port) : null;
     this.device_addre = raw.device_addre;
     this.tag_id = raw.tag_id;
     this.infc_memory_nm = raw.infc_memory_nm;
@@ -310,7 +314,9 @@ class equipmentDetail {
     this.purchase_partner = raw.purchase_partner;
     this.purchase_date = raw.purchase_date;
     this.purchase_tel = raw.purchase_tel;
-    this.purchase_price = Number(raw.purchase_price);
+    this.purchase_price = raw.purchase_price
+      ? Number(raw.purchase_price)
+      : null;
     this.use_fg = raw.use_fg ? true : false;
     this.remark = raw.remark;
   }
@@ -342,24 +348,28 @@ class documentDetail {
   constructor(raw, factory_id) {
     this.factory_id = factory_id;
     this.insp_document_id = raw.insp_document_id;
-    this.sortby = Number(raw.sortby);
+    this.sortby = raw.sortby ? Number(raw.sortby) : null;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.insp_proc_gbn = raw.insp_proc_gbn;
     this.insp_item_id = raw.insp_item_id;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = Number(raw.spec_min);
-    this.spec_max = Number(raw.spec_max);
-    this.spec_lcl = Number(raw.spec_lcl);
-    this.spec_ucl = Number(raw.spec_ucl);
+    this.spec_min = raw.spec_min ? Number(raw.spec_min) : null;
+    this.spec_max = raw.spec_max ? Number(raw.spec_max) : null;
+    this.spec_lcl = raw.spec_lcl ? Number(raw.spec_lcl) : null;
+    this.spec_ucl = raw.spec_ucl ? Number(raw.spec_ucl) : null;
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_tool_id = raw.insp_tool_id;
     this.insp_method_id = raw.insp_method_id;
     this.special_property = raw.special_property;
-    this.worker_sample_cnt = Number(raw.worker_sample_cnt);
+    this.worker_sample_cnt = raw.worker_sample_cnt
+      ? Number(raw.worker_sample_cnt)
+      : null;
     this.worker_insp_cycle = raw.worker_insp_cycle;
-    this.inspector_sample_cnt = Number(raw.inspector_sample_cnt);
+    this.inspector_sample_cnt = raw.inspector_sample_cnt
+      ? Number(raw.inspector_sample_cnt)
+      : null;
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id;
     this.remark = raw.remark;
@@ -373,8 +383,8 @@ class spareReceive {
     this.supplier_id = raw.supplier_id;
     this.stmt_no = raw.stmt_no;
     this.reg_date = raw.reg_date;
-    this.total_price = Number(raw.total_price);
-    this.total_qty = Number(raw.total_qty);
+    this.total_price = raw.total_price ? Number(raw.total_price) : null;
+    this.total_qty = raw.total_qty ? Number(raw.total_qty) : null;
     this.order_id = raw.order_id;
     this.spare_receive_uid = raw.spare_receive_uid;
     this.emp_nm = raw.emp_nm;
@@ -389,18 +399,40 @@ class spareReceiveDetail {
     this.unit_id = raw.unit_id;
     this.lot_no = raw.lot_no;
     this.manufactured_lot_no = raw.manufactured_lot_no;
-    this.qty = Number(raw.qty);
-    this.price = Number(raw.price);
+    this.qty = raw.qty ? Number(raw.qty) : null;
+    this.price = raw.price ? Number(raw.price) : null;
     this.money_unit_id = raw.money_unit_id;
-    this.exchange = Number(raw.exchange);
-    this.total_price = Number(raw.total_price);
-    this.unit_qty = Number(raw.unit_qty);
+    this.exchange = raw.exchange ? Number(raw.exchange) : null;
+    this.total_price = raw.total_price ? Number(raw.total_price) : null;
+    this.unit_qty = raw.unit_qty ? Number(raw.unit_qty) : null;
     this.insp_fg = raw.insp_fg ? true : false;
     this.carry_fg = raw.carry_fg ? true : false;
     this.order_detail_id = raw.order_detail_id;
     this.to_store_id = raw.to_store_id;
     this.to_location_id = raw.to_location_id;
     this.barcode = raw.barcode;
+    this.remark = raw.remark;
+  }
+}
+class controlPlan {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.control_plan_no = raw.control_plan_no;
+    this.line_id = raw.line_id;
+    this.prod_id = raw.prod_id;
+    this.reg_date = raw.reg_date;
+    this.apply_date = raw.apply_date;
+    this.apply_fg = raw.apply_fg ? true : false;
+    this.contents = raw.contents;
+    this.remark = raw.remark;
+  }
+}
+class controlPlanDetail {
+  constructor(raw, factory_id) {
+    this.control_plan_id = raw.control_plan_id;
+    this.proc_no = raw.proc_no ? Number(raw.proc_no) : null;
+    this.insp_document_detail_id = raw.insp_document_detail_id;
+    this.insp_document_id = raw.insp_document_id;
     this.remark = raw.remark;
   }
 }
@@ -524,6 +556,12 @@ function GetPostParams(componentName, raw, factory_id) {
         break;
       case "spareReceiveDetail":
         params = new spareReceiveDetail(raw, factory_id);
+        break;
+      case "controlPlan":
+        params = new controlPlan(raw, factory_id);
+        break;
+      case "controlPlanDetail":
+        params = new controlPlanDetail(raw, factory_id);
         break;
       default:
     }

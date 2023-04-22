@@ -76,10 +76,6 @@ function EquipmentDetail() {
   );
   useEffect(() => {
     onClickSearch();
-  }, []);
-
-  useEffect(() => {
-    onClickSearch();
   }, [searchToggle]);
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
