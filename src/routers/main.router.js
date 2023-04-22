@@ -38,7 +38,9 @@ import EquipmentLarge from "pages/mes/equipment/equipmentLarge/EquipmentLarge";
 import EquipmentMedium from "pages/mes/equipment/equipmentMedium/EquipmentMedium";
 import EquipmentSmall from "pages/mes/equipment/equipmentSmall/EquipmentSmall";
 import EquipmentDetail from "pages/mes/equipment/equipmentDetail/EquipmentDetail";
+import ControlPlan from "pages/mes/standard/controlPlan/ControlPlan";
 import Setup from "pages/mes/standard/setup/Setup";
+import StoreView from "pages/mes/store/storeView/StoreView";
 
 export default function MainRouter() {
   return (
@@ -71,6 +73,8 @@ export default function MainRouter() {
         <Route path="tool" element={<InspectTool />} />
         <Route path="inspection-item-type" element={<InspectType />} />
         <Route path="inspection-item" element={<InspectItem />} />
+        <Route path="document" element={<Document />} />
+        <Route path="control-plan" element={<ControlPlan />} />
 
         <Route path="interface-item-type" element={<InterfaceItemType />} />
         <Route path="interface-item" element={<InterfaceItem />} />
@@ -81,7 +85,8 @@ export default function MainRouter() {
         <Route path="equipment-class" element={<EquipmentSmall />} />
         <Route path="equipment-detail" element={<EquipmentDetail />} />
 
-        <Route path="document" element={<Document />} />
+        <Route path="store-view" element={<StoreView />} />
+
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />
         <Route path="menu-list" element={<MenuList />} />

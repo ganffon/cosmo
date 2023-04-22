@@ -81,6 +81,7 @@ function Document() {
     inputInfo,
     uri,
     uriDetail,
+    uriDetailID,
   } = DocumentSet(
     isEditModeHeader,
     isEditModeDetail,
@@ -197,7 +198,7 @@ function Document() {
   );
   const [actSearchDetail] = uDM.useSearchDetail(
     setGridDataDetail,
-    uriDetail,
+    uriDetailID,
     disRowDetail,
     setDisRowDetail
   );
@@ -526,29 +527,6 @@ function Document() {
             onClickSelect={onClickProd}
             onClickCancel={onClickProdCancel}
           />
-          {/* <ButtonGroup
-            disableElevation
-            variant="contained"
-            sx={{ marginLeft: "5px", marginTop: "5px" }}
-          >
-            <Button
-              size="small"
-              variant="contained"
-              color="secondary"
-              sx={{ padding: "0px 0px 0px 0px", height: "40px" }}
-              onClick={onClickProd}
-            >
-              <FolderIcon sx={{ color: "white", height: "30px" }} />
-            </Button>
-            <Button
-              size="small"
-              variant="contained"
-              sx={{ padding: "0px 0px 0px 0px", height: "40px" }}
-              onClick={onClickProdCancel}
-            >
-              <CancelPresentationIcon sx={{ color: "white", height: "30px" }} />
-            </Button>
-          </ButtonGroup> */}
         </S.ComboWrap>
         <S.ButtonWrap>
           {isEditModeHeader ? (
@@ -658,6 +636,8 @@ function Document() {
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
+          width={"40%"}
+          height={"90%"}
           onClickModalSelectClose={onClickModalSelectClose}
           columns={columnsSelect}
           columnOptions={columnOptions}

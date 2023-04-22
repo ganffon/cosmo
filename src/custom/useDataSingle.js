@@ -5,6 +5,7 @@ import GetCboSearchParams from "api/GetCboSearchParams";
 import GetPutParams from "api/GetPutParams";
 import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
+import * as disRow from "custom/useDisableRowCheck";
 
 const useDelete = (
   refGrid,
@@ -131,6 +132,43 @@ const useSearchCbo = (
   };
   return [actSearchCbo];
 };
+const useSearchOnlyCbo = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  inputBoxID,
+  inputTextChange,
+  setGridData,
+  comboValue,
+  uri
+) => {
+  const actSearchOnlyCbo = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const cboParams = GetCboSearchParams(inputParams, comboValue);
+        const readURI = uri + inputParams + cboParams;
+        console.log(readURI);
+        const gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
+    }
+  };
+  return [actSearchOnlyCbo];
+};
 const useSearchSelect = (
   refGrid,
   isBackDrop,
@@ -186,6 +224,7 @@ const useSaveEdit = (
             message: res?.data?.message,
             severity: "success",
           });
+          disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
         })
         .catch((res) => {
           setIsSnackOpen({
@@ -293,6 +332,7 @@ export {
   useDelete,
   useSearch,
   useSearchCbo,
+  useSearchOnlyCbo,
   useSearchSelect,
   useSaveEdit,
   useSaveNew,

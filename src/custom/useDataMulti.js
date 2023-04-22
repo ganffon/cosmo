@@ -5,6 +5,7 @@ import GetInputSearchReadOnly from "api/GetInputSearchReadOnly";
 import GetPutParams from "api/GetPutParams";
 import GetPostParams from "api/GetPostParams";
 import GetCboSearchParams from "api/GetCboSearchParams";
+import GetIncludeHeader from "api/GetIncludeHeader";
 import restAPI from "api/restAPI";
 import * as disRow from "custom/useDisableRowCheck";
 
@@ -86,6 +87,41 @@ const useSearchSelect = (
   };
   return [actSearchSelect];
 };
+//⬇️ Select 창에서 Data 조회 (Header + Detail)
+const useSearchSelectIncludeHeader = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  setGridModalSelectData,
+  componentName,
+  uri
+) => {
+  const actSearchSelect = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const gridData = await restAPI.get(uri);
+        const data = gridData?.data?.data?.rows.map((raw) =>
+          GetIncludeHeader(componentName, raw)
+        );
+        await setGridModalSelectData(data);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
+    }
+  };
+  return [actSearchSelect];
+};
 //⬇️ 신규입력화면에서 Header와 Detail 저장
 const useSaveNew = (
   refGrid01,
@@ -118,6 +154,7 @@ const useSaveNew = (
         header: dataTop,
         details: dataBottom,
       };
+      console.log(query);
       if (query.details !== undefined && isBackDrop === false) {
         setIsBackDrop(true);
         await restAPI
@@ -351,7 +388,7 @@ const useSearchDetail = (setGridData, uri, disRowDetail, setDisRowDetail) => {
   const actSearchDetail = async (headerClickRowID) => {
     if (headerClickRowID !== undefined) {
       try {
-        const gridData = await restAPI.get(`${uri}/detail/${headerClickRowID}`);
+        const gridData = await restAPI.get(`${uri}/${headerClickRowID}`);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
       } finally {
@@ -386,6 +423,7 @@ const useSearchEditHeader = (
 export {
   useDeleteDetail,
   useSearchSelect,
+  useSearchSelectIncludeHeader,
   useSearchHeader,
   useSearchDetail,
   useSearchEditHeader,

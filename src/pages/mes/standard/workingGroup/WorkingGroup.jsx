@@ -54,10 +54,6 @@ function WorkingGroup(props) {
   );
   useEffect(() => {
     onClickSearch();
-  }, []);
-
-  useEffect(() => {
-    onClickSearch();
   }, [searchToggle]);
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(

@@ -1522,6 +1522,7 @@ function DocumentSet(
 
   const uri = restURI.inspectDocument;
   const uriDetail = restURI.inspectDocumentDetail;
+  const uriDetailID = restURI.inspectDocumentDetailID;
 
   return {
     data,
@@ -1540,6 +1541,7 @@ function DocumentSet(
     inputInfo,
     uri,
     uriDetail,
+    uriDetailID,
   };
 }
 

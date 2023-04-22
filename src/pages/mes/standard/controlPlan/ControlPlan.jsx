@@ -55,6 +55,7 @@ function ControlPlan() {
   const [comboValue, setComboValue] = useState({
     line_id: null,
   });
+  const [selectWidth, setSelectWidth] = useState("40%");
   const [columnsSelect, setColumnsSelect] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [inputInfoValue, setInputInfoValue] = useState([]);
@@ -72,7 +73,7 @@ function ControlPlan() {
     columnsModalHeader,
     columnsModalDetail,
     columnsSelectProd,
-    columnsSelectInsp,
+    columnsSelectDocument,
     columnOptions,
     rowHeadersNumCheck,
     rowHeadersNum,
@@ -81,6 +82,7 @@ function ControlPlan() {
     inputInfo,
     uri,
     uriDetail,
+    uriDetailID,
   } = ControlPlanSet(
     isEditModeHeader,
     isEditModeDetail,
@@ -127,16 +129,17 @@ function ControlPlan() {
     setIsSnackOpen,
     setGridDataSelect,
     restURI.product
-  ); //➡️ Modal Select Search Prod
-  const [actSelectInsp] = uDM.useSearchSelect(
+  );
+  const [actSelectDocument] = uDM.useSearchSelectIncludeHeader(
     refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.inspectItem
-  ); //➡️ Modal Select Search Insp
+    "documentDetailIncludeHeader",
+    restURI.inspectDocumentDetailIncludeHeader
+  );
   const [actSaveNew] = uDM.useSaveNew(
     refGridModalHeader,
     refGridModalDetail,
@@ -197,7 +200,7 @@ function ControlPlan() {
   );
   const [actSearchDetail] = uDM.useSearchDetail(
     setGridDataDetail,
-    uriDetail,
+    uriDetailID,
     disRowDetail,
     setDisRowDetail
   );
@@ -281,7 +284,7 @@ function ControlPlan() {
   const onClickGridHeader = (e) => {
     if (isEditModeHeader === false) {
       const inputInfoValueList = [
-        "insp_document_no",
+        "control_plan_no",
         "line_nm",
         "prod_no",
         "prod_nm",
@@ -291,7 +294,7 @@ function ControlPlan() {
         "contents",
         "remark",
       ];
-      const rowID = e?.instance.getValue(e?.rowKey, "insp_document_id");
+      const rowID = e?.instance.getValue(e?.rowKey, "control_plan_id");
       if (rowID !== null) {
         setInputInfoValue([]);
         setHeaderClickRowID(rowID);
@@ -324,13 +327,35 @@ function ControlPlan() {
     if (condition) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Header");
+      setSelectWidth("40%");
       setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
     }
   };
   const onDblClickGridDetail = (e) => {
-    const columnName = ["insp_item_type_nm", "insp_item_nm"];
+    const columnName = [
+      "prod_no",
+      "prod_nm",
+      "equip_nm",
+      "insp_proc_gbn",
+      "insp_item_type_nm",
+      "insp_item_nm",
+      "insp_item_desc",
+      "spec_std",
+      "spec_min",
+      "spec_max",
+      "spec_lcl",
+      "spec_ucl",
+      "insp_method_nm",
+      "insp_tool_nm",
+      "insp_filing_nm",
+      "special_property",
+      "worker_sample_cnt",
+      "worker_insp_cycle",
+      "inspector_sample_cnt",
+      "inspector_insp_cycle",
+    ];
     let condition;
     for (let i = 0; i < columnName.length; i++) {
       if (i === 0) {
@@ -342,9 +367,10 @@ function ControlPlan() {
     if (condition) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Detail");
-      setColumnsSelect(columnsSelectInsp);
+      setSelectWidth("80%");
+      setColumnsSelect(columnsSelectDocument);
       setIsModalSelectOpen(true);
-      actSelectInsp();
+      actSelectDocument();
     }
   };
   const onEditingFinishGridHeader = (e) => {
@@ -363,8 +389,8 @@ function ControlPlan() {
       for (let i = 0; i < Detail.store.viewport.rows.length; i++) {
         Detail?.setValue(
           Detail.store.viewport.rows[i].rowKey,
-          "insp_document_id",
-          Header.getValue(0, "insp_document_id")
+          "control_plan_id",
+          Header.getValue(0, "control_plan_id")
         );
       }
     }
@@ -401,13 +427,35 @@ function ControlPlan() {
     if (condition) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
+      setSelectWidth("40%");
       setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
     }
   };
   const onDblClickGridModalDetail = (e) => {
-    const columnName = ["insp_item_type_nm", "insp_item_nm"];
+    const columnName = [
+      "prod_no",
+      "prod_nm",
+      "equip_nm",
+      "insp_proc_gbn",
+      "insp_item_type_nm",
+      "insp_item_nm",
+      "insp_item_desc",
+      "spec_std",
+      "spec_min",
+      "spec_max",
+      "spec_lcl",
+      "spec_ucl",
+      "insp_method_nm",
+      "insp_tool_nm",
+      "insp_filing_nm",
+      "special_property",
+      "worker_sample_cnt",
+      "worker_insp_cycle",
+      "inspector_sample_cnt",
+      "inspector_insp_cycle",
+    ];
     let condition;
     for (let i = 0; i < columnName.length; i++) {
       if (i === 0) {
@@ -419,9 +467,10 @@ function ControlPlan() {
     if (condition) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalDetail");
-      setColumnsSelect(columnsSelectInsp);
+      setSelectWidth("80%");
+      setColumnsSelect(columnsSelectDocument);
       setIsModalSelectOpen(true);
-      actSelectInsp();
+      actSelectDocument();
     }
   };
 
@@ -433,11 +482,36 @@ function ControlPlan() {
     let refGrid;
     let columnName;
     const columnNameProd = ["prod_id", "prod_no", "prod_nm"];
-    const columnNameInspItem = [
+    const columnNameDocument = [
+      "insp_document_id",
+      "insp_document_detail_id",
+      "prod_id",
+      "prod_no",
+      "prod_nm",
+      "equip_id",
+      "equip_nm",
+      "insp_proc_gbn",
       "insp_item_type_id",
       "insp_item_type_nm",
       "insp_item_id",
       "insp_item_nm",
+      "insp_item_desc",
+      "spec_std",
+      "spec_min",
+      "spec_max",
+      "spec_lcl",
+      "spec_ucl",
+      "insp_method_id",
+      "insp_method_nm",
+      "insp_tool_id",
+      "insp_tool_nm",
+      "insp_filing_id",
+      "insp_filing_nm",
+      "special_property",
+      "worker_sample_cnt",
+      "worker_insp_cycle",
+      "inspector_sample_cnt",
+      "inspector_insp_cycle",
     ];
 
     if (dblClickGrid === "Search") {
@@ -460,10 +534,10 @@ function ControlPlan() {
         columnName = columnNameProd;
       } else if (dblClickGrid === "Detail") {
         refGrid = refGridDetail;
-        columnName = columnNameInspItem;
+        columnName = columnNameDocument;
       } else if (dblClickGrid === "ModalDetail") {
         refGrid = refGridModalDetail;
-        columnName = columnNameInspItem;
+        columnName = columnNameDocument;
       }
       for (let i = 0; i < columnName.length; i++) {
         refGrid?.current?.gridInst?.setValue(
@@ -526,29 +600,6 @@ function ControlPlan() {
             onClickSelect={onClickProd}
             onClickCancel={onClickProdCancel}
           />
-          {/* <ButtonGroup
-            disableElevation
-            variant="contained"
-            sx={{ marginLeft: "5px", marginTop: "5px" }}
-          >
-            <Button
-              size="small"
-              variant="contained"
-              color="secondary"
-              sx={{ padding: "0px 0px 0px 0px", height: "40px" }}
-              onClick={onClickProd}
-            >
-              <FolderIcon sx={{ color: "white", height: "30px" }} />
-            </Button>
-            <Button
-              size="small"
-              variant="contained"
-              sx={{ padding: "0px 0px 0px 0px", height: "40px" }}
-              onClick={onClickProdCancel}
-            >
-              <CancelPresentationIcon sx={{ color: "white", height: "30px" }} />
-            </Button>
-          </ButtonGroup> */}
         </S.ComboWrap>
         <S.ButtonWrap>
           {isEditModeHeader ? (
@@ -658,6 +709,7 @@ function ControlPlan() {
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
+          width={selectWidth}
           onClickModalSelectClose={onClickModalSelectClose}
           columns={columnsSelect}
           columnOptions={columnOptions}

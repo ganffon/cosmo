@@ -1,33 +1,25 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonSearch from "components/button/ButtonSearch";
-import ButtonEdit from "components/button/ButtonEdit";
+import ButtonSearchOnly from "components/button/ButtonSearchOnly";
 import GridSingle from "components/grid/GridSingle";
-import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import ProductSet from "pages/mes/standard/product/ProductSet";
+import StoreViewSet from "./StoreViewSet";
 import TextField from "@mui/material/TextField";
 import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
-import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
 import * as uDS from "custom/useDataSingle";
-import * as S from "./Product.styled";
+import * as S from "./StoreView.styled";
 
-function Product() {
+function StoreView() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
   const refSingleGrid = useRef(null);
-  const refModalGrid = useRef(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
-  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -44,24 +36,13 @@ function Product() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const [unitOpt, unitList] = Cbo.useUnit();
-  const {
-    uri,
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = ProductSet(
-    isEditMode,
-    productGbnList,
-    productModelList,
-    productTypeList,
-    productTypeSmallList,
-    unitList
-  );
+  const { uri, rowHeadersNum, header, columns, columnOptions, inputSet } =
+    StoreViewSet(
+      productGbnList,
+      productModelList,
+      productTypeList,
+      productTypeSmallList
+    );
   const SWITCH_NAME_01 = "product";
 
   useEffect(() => {
@@ -75,28 +56,13 @@ function Product() {
   );
   useEffect(() => {
     onClickSearch();
+  }, []);
+
+  useEffect(() => {
+    onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
-
-  const [actDelete] = uDS.useDelete(
-    refSingleGrid,
-    isBackDrop,
-    isEditMode,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setIsDeleteAlertOpen,
-    searchToggle,
-    setSearchToggle,
-    uri,
-    SWITCH_NAME_01
-  );
-
-  const [actSearch] = uDS.useSearchCbo(
+  const [actSearch] = uDS.useSearchOnlyCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -105,93 +71,14 @@ function Product() {
     inputBoxID,
     inputTextChange,
     setGridData,
-    disableRowToggle,
-    setDisableRowToggle,
     comboValue,
     uri
   );
-
-  const [actSaveEdit] = uDS.useSaveEdit(
-    refSingleGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_01,
-    uri
-  );
-  const [actSaveNew] = uDS.useSaveNew(
-    refModalGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_01,
-    uri
-  );
-  const onClickNew = () => {
-    setIsModalOpen(true);
-  };
-  const onClickEdit = () => {
-    setIsEditMode(true);
-    setDisableRowToggle(!disableRowToggle);
-  };
-  const onClickDelete = () => {
-    const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
-    if (data.length !== 0) {
-      setIsDeleteAlertOpen(true);
-    }
-  };
-  const handleDelete = () => {
-    actDelete();
-  };
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
     actSearch();
-  };
-  const onClickEditModeSave = () => {
-    actSaveEdit();
-  };
-  const onClickEditModeExit = () => {
-    setIsEditMode(false);
-    setSearchToggle(!searchToggle);
-  };
-  const onClickModalAddRow = () => {
-    refModalGrid?.current?.gridInst?.appendRow();
-  };
-  let rowKey;
-  const onClickModalGrid = (e) => {
-    rowKey = e.rowKey;
-  };
-  const onClickModalCancelRow = () => {
-    refModalGrid?.current?.gridInst?.removeRow(rowKey);
-  };
-  const onClickModalSave = () => {
-    actSaveNew();
-  };
-  const onClickModalClose = () => {
-    setIsModalOpen(false);
-    setSearchToggle(!searchToggle);
-  };
-  const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, [
-      "lot_fg",
-      "use_fg",
-      "active_fg",
-      "is_spareparts",
-      "mat_order_fg",
-      "sal_order_fg",
-      "inv_use_fg",
-      "qms_receive_insp_fg",
-      "qms_proc_insp_fg",
-      "qms_final_insp_fg",
-      "prd_active_fg",
-    ]);
-  };
-  const onEditingFinishGrid = (e) => {
-    disRow.handleEditingFinishGridCheck(e);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -207,7 +94,6 @@ function Product() {
             <S.ComboWrap>
               <S.ComboBox
                 disablePortal
-                id="factoryCombo"
                 size="small"
                 key={(option) => option?.prod_gbn_id}
                 options={productGbnOpt || null}
@@ -228,7 +114,6 @@ function Product() {
               />
               <S.ComboBox
                 disablePortal
-                id="factoryCombo"
                 size="small"
                 key={(option) => option?.model_id}
                 options={productModelOpt || null}
@@ -249,7 +134,6 @@ function Product() {
               />
               <S.ComboBox
                 disablePortal
-                id="factoryCombo"
                 size="small"
                 key={(option) => option?.prod_type_id}
                 options={productTypeOpt || null}
@@ -308,20 +192,7 @@ function Product() {
             </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
-            {isEditMode ? (
-              <ButtonEdit
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonSearch
-                onClickNew={onClickNew}
-                onClickEdit={onClickEdit}
-                onClickDelete={onClickDelete}
-                onClickSearch={onClickSearch}
-              />
-            )}
+            <ButtonSearchOnly onClickSearch={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
@@ -330,40 +201,17 @@ function Product() {
           <GridSingle
             columnOptions={columnOptions}
             columns={columns}
-            rowHeaders={rowHeaders}
+            rowHeaders={rowHeadersNum}
             header={header}
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
-            onClickGrid={onClickGrid}
-            onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
-      {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
-      ) : null}
-      {isModalOpen ? (
-        <ModalNew
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersModal}
-          uri={uri}
-          refModalGrid={refModalGrid}
-          onClickModalGrid={onClickModalGrid}
-        />
-      ) : null}
       <BackDrop isBackDrop={isBackDrop} />
     </S.ContentsArea>
   );
 }
-export default Product;
+export default StoreView;

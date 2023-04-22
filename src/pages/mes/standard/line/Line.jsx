@@ -54,10 +54,6 @@ function Line(props) {
   );
   useEffect(() => {
     onClickSearch();
-  }, []);
-
-  useEffect(() => {
-    onClickSearch();
   }, [searchToggle]);
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
@@ -135,6 +131,7 @@ function Line(props) {
   };
   const onClickEditModeSave = () => {
     actSaveEdit();
+    setSearchToggle(!searchToggle);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);

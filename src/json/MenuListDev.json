@@ -227,13 +227,13 @@
             "under": null
           },
           {
-            "name": "✴️검사기준서관리",
+            "name": "✅검사기준서관리",
             "id": "document",
             "path": "document",
             "under": null
           },
           {
-            "name": "❌관리계획서관리",
+            "name": "✅관리계획서관리",
             "id": "control-plan",
             "path": "control-plan",
             "under": null
@@ -285,9 +285,9 @@
     "path": null,
     "under": [
       {
-        "name": "❌재고현황",
+        "name": "✅재고현황",
         "id": "store-view",
-        "path": null,
+        "path": "store-view",
         "under": null
       },
       {
