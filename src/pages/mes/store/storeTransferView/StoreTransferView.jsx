@@ -6,15 +6,17 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import StoreViewSet from "./StoreViewSet";
+import StoreTransferViewSet from "./StoreTransferViewSet";
 import TextField from "@mui/material/TextField";
 import useInputSet from "custom/useInputSet";
+import DatePicker from "components/datetime/DatePicker";
+import DateTime from "components/datetime/DateTime";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
 import * as uDS from "custom/useDataSingle";
-import * as S from "./StoreView.styled";
+import * as S from "./StoreTransferView.styled";
 
-function StoreView() {
+function StoreTransferView() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -23,6 +25,10 @@ function StoreView() {
   const [gridData, setGridData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
+  });
+  const [dateText, setDateText] = useState({
+    startDate: DateTime().dateFull,
+    endDate: DateTime(7).dateFull,
   });
   const [searchToggle, setSearchToggle] = useState(false);
   const [comboValue, setComboValue] = useState({
@@ -36,14 +42,21 @@ function StoreView() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const { uri, rowHeadersNum, header, columns, columnOptions, inputSet } =
-    StoreViewSet(
-      productGbnList,
-      productModelList,
-      productTypeList,
-      productTypeSmallList
-    );
-  const SWITCH_NAME_01 = "storeView";
+  const {
+    uri,
+    rowHeadersNum,
+    header,
+    columns,
+    columnOptions,
+    inputSet,
+    datePickerSet,
+  } = StoreTransferViewSet(
+    productGbnList,
+    productModelList,
+    productTypeList,
+    productTypeSmallList
+  );
+  const SWITCH_NAME_01 = "product";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -56,13 +69,9 @@ function StoreView() {
   );
   useEffect(() => {
     onClickSearch();
-  }, []);
-
-  useEffect(() => {
-    onClickSearch();
   }, [searchToggle]);
 
-  const [actSearch] = uDS.useSearchOnlyCbo(
+  const [actSearch] = uDS.useSearchOnlyCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -72,13 +81,14 @@ function StoreView() {
     inputTextChange,
     setGridData,
     comboValue,
+    dateText,
     uri
   );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
-    actSearch();
+    actSearch("start_date", "end_date");
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -179,6 +189,11 @@ function StoreView() {
               />
             </S.ComboWrap>
             <S.InputWrap>
+              <DatePicker
+                datePickerSet={datePickerSet}
+                dateText={dateText}
+                setDateText={setDateText}
+              />
               {inputSet.map((v) => (
                 <InputSearch
                   key={v.id}
@@ -214,4 +229,4 @@ function StoreView() {
     </S.ContentsArea>
   );
 }
-export default StoreView;
+export default StoreTransferView;

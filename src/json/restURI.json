@@ -50,6 +50,8 @@
   "spareReceiveDetail": "/sparereceivedetail",
 
   "storeView": "/store-view",
+  "storeTransferView": "/store-view/tran",
+  "storeCheck": "/store-check",
 
   "setup": "/setup"
 }

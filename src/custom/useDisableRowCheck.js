@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+//Edit 모드 들어가고 나올때 disableRowToggle의 state를 이용하여
+//rowHeader의 disable 을 컨트롤함
 const useDisableRowCheck = (isEditMode, refGrid) => {
   const [disableRowToggle, setDisableRowToggle] = useState(false);
   useEffect(() => {
@@ -17,6 +19,7 @@ const useDisableRowCheck = (isEditMode, refGrid) => {
   return [disableRowToggle, setDisableRowToggle];
 };
 
+//Grid Cell 안에 구현된 Check 상호작용 시 해당 RowHeader 에 체크함
 const handleClickGridCheck = (e, isEditMode, columnName) => {
   if (isEditMode === true) {
     let condition;
@@ -35,6 +38,7 @@ const handleClickGridCheck = (e, isEditMode, columnName) => {
   }
 };
 
+//rowHeader disable 인 상태에서 체크값을 모두 해제함
 const handleCheckReset = (isEditMode, refGrid) => {
   if (isEditMode === true) {
     for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
@@ -44,7 +48,7 @@ const handleCheckReset = (isEditMode, refGrid) => {
     }
   }
 };
-
+//rowHeader disable 인 상태에서 편집이 끝난 Row 를 체크함
 const handleEditingFinishGridCheck = (e) => {
   e?.instance?.enableRowCheck(e?.rowKey);
   e?.instance?.check(e?.rowKey);

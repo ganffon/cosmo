@@ -53,7 +53,7 @@ function AvatarButton() {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={onClickLogout}>Logout</MenuItem>
+        <MenuItem onClick={onClickLogout}>📴 Logout</MenuItem>
       </Menu>
     </div>
   );

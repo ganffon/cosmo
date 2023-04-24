@@ -269,6 +269,13 @@
 
   "lot_no": "LOT NO",
   "qty": "중량",
+  "stock_inspection": "실사중량",
+
+  "tran_type_id": "수불유형ID",
+  "tran_type_nm": "수불유형명",
+  "income_qty": "입고중량",
+  "outgo_qty": "출고중량",
+  "inventory_qty": "재고중량",
 
   "setup_id": "권한설정ID",
   "setup_cd": "권한설정코드",

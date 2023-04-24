@@ -65,7 +65,7 @@ function ProductModelSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
