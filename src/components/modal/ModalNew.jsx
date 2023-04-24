@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
-import ButtonAdd from "components/button/ButtonAdd";
+import ButtonACS from "components/button/ButtonACS";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalNew.styled";
 
@@ -35,7 +35,7 @@ function ModalNew(props) {
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ButtonBox>
-        <ButtonAdd
+        <ButtonACS
           onClickAddRow={onClickModalAddRow}
           onClickCancelRow={onClickModalCancelRow}
           onClickSave={onClickModalSave}

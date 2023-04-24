@@ -2,7 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import * as S from "./Button.styled";
 
-function ButtonSearchOnly(props) {
+function ButtonS(props) {
   const { onClickSearch = () => {} } = props;
   return (
     <>
@@ -19,4 +19,4 @@ function ButtonSearchOnly(props) {
   );
 }
 
-export default ButtonSearchOnly;
+export default ButtonS;

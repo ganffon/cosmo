@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonSearchOnly from "components/button/ButtonSearchOnly";
+import ButtonS from "components/button/ButtonS";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
 import LoginStateChk from "custom/LoginStateChk";
@@ -192,7 +192,7 @@ function StoreView() {
             </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
-            <ButtonSearchOnly onClickSearch={onClickSearch} />
+            <ButtonS onClickSearch={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>

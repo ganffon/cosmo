@@ -4,7 +4,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import * as S from "./Button.styled";
 
-function ButtonAdd(props) {
+function ButtonACS(props) {
   const { onClickAddRow, onClickCancelRow, onClickSave } = props;
   return (
     <>
@@ -39,4 +39,4 @@ function ButtonAdd(props) {
   );
 }
 
-export default ButtonAdd;
+export default ButtonACS;

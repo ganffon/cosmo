@@ -1,11 +1,10 @@
 import React from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import SaveIcon from "@mui/icons-material/Save";
 import LogoutIcon from "@mui/icons-material/Logout";
 import * as S from "./Button.styled";
 
-function ButtonEdit(props) {
-  const { onClickEditModeSave, onClickEditModeExit, onClickSearch } = props;
+function ButtonSE(props) {
+  const { onClickEditSaveDetail, onClickEditExitDetail } = props;
   return (
     <>
       <S.ButtonSet
@@ -13,7 +12,7 @@ function ButtonEdit(props) {
         size="small"
         startIcon={<SaveIcon />}
         color="secondary"
-        onClick={onClickEditModeSave}
+        onClick={onClickEditSaveDetail}
       >
         SAVE
       </S.ButtonSet>
@@ -22,20 +21,12 @@ function ButtonEdit(props) {
         size="small"
         startIcon={<LogoutIcon />}
         color="error"
-        onClick={onClickEditModeExit}
+        onClick={onClickEditExitDetail}
       >
         EXIT
-      </S.ButtonSet>
-      <S.ButtonSet
-        variant="contained"
-        size="small"
-        startIcon={<SearchIcon />}
-        onClick={onClickSearch}
-      >
-        SEARCH
       </S.ButtonSet>
     </>
   );
 }
 
-export default ButtonEdit;
+export default ButtonSE;

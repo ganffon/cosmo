@@ -7,7 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import * as S from "./Button.styled";
 
-function ButtonSearch(props) {
+function ButtonNEDS(props) {
   const {
     onClickNew = () => {},
     onClickEdit = () => {},
@@ -60,4 +60,4 @@ function ButtonSearch(props) {
   );
 }
 
-export default ButtonSearch;
+export default ButtonNEDS;

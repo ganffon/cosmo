@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import LoginStateChk from "custom/LoginStateChk";
-import ButtonHeader from "components/button/ButtonHeader";
-import ButtonDetail from "components/button/ButtonDetail";
-import ButtonEdit from "components/button/ButtonEdit";
-import ButtonEditDetail from "components/button/ButtonEditDetail";
+import ButtonNES from "components/button/ButtonNES";
+import ButtonNED from "components/button/ButtonNED";
+import ButtonSES from "components/button/ButtonSES";
+import ButtonSE from "components/button/ButtonSE";
 import ButtonGroup from "components/button/ButtonGroup";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
@@ -603,13 +603,13 @@ function ControlPlan() {
         </S.ComboWrap>
         <S.ButtonWrap>
           {isEditModeHeader ? (
-            <ButtonEdit
+            <ButtonSES
               onClickEditModeSave={onClickEditModeSave}
               onClickEditModeExit={onClickEditModeExit}
               onClickSearch={onClickSearch}
             />
           ) : (
-            <ButtonHeader
+            <ButtonNES
               onClickNew={onClickNew}
               onClickEdit={onClickEditHeader}
               onClickSearch={onClickSearch}
@@ -659,12 +659,12 @@ function ControlPlan() {
       >
         <S.ButtonWrap>
           {isEditModeDetail ? (
-            <ButtonEditDetail
+            <ButtonSE
               onClickEditSaveDetail={onClickEditSaveDetail}
               onClickEditExitDetail={onClickEditExitDetail}
             />
           ) : (
-            <ButtonDetail
+            <ButtonNED
               onClickNew={onClickEditNew}
               onClickEdit={onClickEditDetail}
               onClickDelete={onClickDelete}
