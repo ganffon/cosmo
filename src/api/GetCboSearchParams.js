@@ -1,7 +1,7 @@
-function GetCboSearchParams(inputParams = null, comboValue) {
+function GetCboSearchParams(beforeParams = null, comboValue) {
   let params = "";
   let key;
-  if (inputParams) {
+  if (beforeParams) {
     for (key of Object.keys(comboValue)) {
       if (comboValue[key] !== null) {
         params = params + `&${key}=${comboValue[key]}`;

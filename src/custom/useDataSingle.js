@@ -4,6 +4,7 @@ import GetInputSearchParams from "api/GetInputSearchParams";
 import GetCboSearchParams from "api/GetCboSearchParams";
 import GetPutParams from "api/GetPutParams";
 import GetPostParams from "api/GetPostParams";
+import GetDateParams from "api/GetDateParams";
 import restAPI from "api/restAPI";
 import * as disRow from "custom/useDisableRowCheck";
 
@@ -152,7 +153,6 @@ const useSearchOnlyCbo = (
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
         const cboParams = GetCboSearchParams(inputParams, comboValue);
         const readURI = uri + inputParams + cboParams;
-        console.log(readURI);
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -327,6 +327,49 @@ const useSearchCboDate = (
   };
   return [actSearchCboDate];
 };
+const useSearchOnlyCboDate = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  inputBoxID,
+  inputTextChange,
+  setGridData,
+  comboValue,
+  dateText,
+  uri
+) => {
+  const actSearchOnlyCboDate = async (startDateNm, endDateNm) => {
+    refGrid?.current?.gridInst?.finishEditing();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const cboParams = GetCboSearchParams(inputParams, comboValue);
+        const dateParams = GetDateParams(
+          cboParams,
+          dateText,
+          startDateNm,
+          endDateNm
+        );
+        const readURI = uri + inputParams + cboParams + dateParams;
+        const gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
+    }
+  };
+  return [actSearchOnlyCboDate];
+};
 
 export {
   useDelete,
@@ -337,4 +380,5 @@ export {
   useSaveEdit,
   useSaveNew,
   useSearchCboDate,
+  useSearchOnlyCboDate,
 };

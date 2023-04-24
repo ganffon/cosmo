@@ -209,20 +209,22 @@ function InterfaceMemory(props) {
   };
 
   const onDblClickGrid = (e) => {
-    const columnName = ["infc_item_nm", "infc_item_type_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
+    if (isEditMode) {
+      const columnName = ["infc_item_nm", "infc_item_type_nm"];
+      let condition;
+      for (let i = 0; i < columnName.length; i++) {
+        if (i === 0) {
+          condition = e?.columnName === columnName[i];
+        } else {
+          condition = condition || e?.columnName === columnName[i];
+        }
       }
-    }
-    if (condition) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Grid");
-      setIsModalSelectOpen(true);
-      actSearchSelect();
+      if (condition) {
+        setDblClickRowKey(e?.rowKey);
+        setDblClickGrid("Grid");
+        setIsModalSelectOpen(true);
+        actSearchSelect();
+      }
     }
   };
   const onEditingFinishGrid = (e) => {

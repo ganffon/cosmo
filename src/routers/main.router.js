@@ -41,6 +41,9 @@ import EquipmentDetail from "pages/mes/equipment/equipmentDetail/EquipmentDetail
 import ControlPlan from "pages/mes/standard/controlPlan/ControlPlan";
 import Setup from "pages/mes/standard/setup/Setup";
 import StoreView from "pages/mes/store/storeView/StoreView";
+import StoreTransferView from "pages/mes/store/storeTransferView/StoreTransferView";
+import StoreCheck from "pages/mes/store/storeCheck/StoreCheck";
+import DayreportSubdivision from "pages/mes/production/dayreportSubdivision/DayreportSubdivision";
 
 export default function MainRouter() {
   return (
@@ -86,6 +89,13 @@ export default function MainRouter() {
         <Route path="equipment-detail" element={<EquipmentDetail />} />
 
         <Route path="store-view" element={<StoreView />} />
+        <Route path="store-transfer-view" element={<StoreTransferView />} />
+        <Route path="store-check" element={<StoreCheck />} />
+
+        <Route
+          path="production-dayreport-subdivision"
+          element={<DayreportSubdivision />}
+        />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

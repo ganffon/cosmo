@@ -305,25 +305,6 @@
     ]
   },
   {
-    "name": "자재관리",
-    "id": "material-info",
-    "path": null,
-    "under": [
-      {
-        "name": "자재입고현황",
-        "id": "material-income-view",
-        "path": "material-income-view",
-        "under": null
-      },
-      {
-        "name": "자재수불현황",
-        "id": "material-transfer-view",
-        "path": "material-transfer-view",
-        "under": null
-      }
-    ]
-  },
-  {
     "name": "생산관리",
     "id": "production-info",
     "path": null,
@@ -345,6 +326,12 @@
         "id": "production-dayreport-info",
         "path": null,
         "under": [
+          {
+            "name": "일일소분일지",
+            "id": "production-dayreport-subdivision",
+            "path": "production-dayreport-subdivision",
+            "under": null
+          },
           {
             "name": "일일계량일지",
             "id": "production-dayreport-weight",
