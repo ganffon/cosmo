@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonHeader from "components/button/ButtonHeader";
-import ButtonEdit from "components/button/ButtonEdit";
+import ButtonNES from "components/button/ButtonNES";
+import ButtonSES from "components/button/ButtonSES";
 import ModalNew from "components/modal/ModalNew";
 import ModalSelect from "components/modal/ModalSelect";
 import GridSingle from "components/grid/GridSingle";
@@ -336,13 +336,13 @@ function StoreCheck() {
           </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (
-              <ButtonEdit
+              <ButtonSES
                 onClickEditModeSave={onClickEditModeSave}
                 onClickEditModeExit={onClickEditModeExit}
                 onClickSearch={onClickSearch}
               />
             ) : (
-              <ButtonHeader
+              <ButtonNES
                 onClickNew={onClickNew}
                 onClickEdit={onClickEdit}
                 onClickSearch={onClickSearch}

@@ -2,7 +2,7 @@ import React, { useContext, createRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/onlySearchSingleGrid/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
-import ButtonAdd from "components/button/ButtonAdd";
+import ButtonACS from "components/button/ButtonACS";
 import { LayoutContext } from "components/layout/common/Layout";
 import { OnlySearchSingleGridContext } from "components/onlySearchSingleGrid/OnlySearchSingleGrid";
 import restAPI from "api/restAPI";
@@ -75,7 +75,7 @@ function InsertModal(props) {
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ButtonBox>
-        <ButtonAdd
+        <ButtonACS
           onClickAddRow={onClickAddRow}
           onClickRemoveRow={onClickRemoveRow}
           onClickSave={onClickSave}

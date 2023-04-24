@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
-import ButtonAdd from "components/button/ButtonAdd";
+import ButtonACS from "components/button/ButtonACS";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalNewDetail.styled";
 
@@ -65,7 +65,7 @@ function ModalNewDetail(props) {
         />
       </S.GridBoxTop>
       <S.ButtonBox>
-        <ButtonAdd
+        <ButtonACS
           onClickAddRow={onClickModalAddRow}
           onClickCancelRow={onClickModalCancelRow}
           onClickSave={isNewDetail ? onClickEditModalSave : onClickModalSave}

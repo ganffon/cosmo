@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonSearch from "components/button/ButtonSearch";
-import ButtonEdit from "components/button/ButtonEdit";
+import ButtonNEDS from "components/button/ButtonNEDS";
+import ButtonSES from "components/button/ButtonSES";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
@@ -185,13 +185,13 @@ function Process(props) {
           </S.SearchWrap>
           <S.ButtonWrap>
             {isEditMode ? (
-              <ButtonEdit
+              <ButtonSES
                 onClickEditModeSave={onClickEditModeSave}
                 onClickEditModeExit={onClickEditModeExit}
                 onClickSearch={onClickSearch}
               />
             ) : (
-              <ButtonSearch
+              <ButtonNEDS
                 onClickNew={onClickNew}
                 onClickEdit={onClickEdit}
                 onClickDelete={onClickDelete}

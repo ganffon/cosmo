@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import * as S from "./Button.styled";
 
-function ButtonHeader(props) {
+function ButtonNES(props) {
   const { onClickNew, onClickEdit, onClickSearch } = props;
   const { authMenuCode } = useContext(LayoutContext);
   return (
@@ -44,4 +44,4 @@ function ButtonHeader(props) {
   );
 }
 
-export default ButtonHeader;
+export default ButtonNES;
