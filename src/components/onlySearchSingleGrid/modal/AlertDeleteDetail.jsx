@@ -8,7 +8,7 @@ function AlertDelete(props) {
   const {
     headerClickRowKey,
     actSearchDetail,
-    actDelete,
+    actDeleteDetail,
     setIsDeleteAlertOpen,
   } = props;
   return (
@@ -24,7 +24,7 @@ function AlertDelete(props) {
             size="small"
             startIcon={<DoneIcon />}
             color="success"
-            onClick={() => actDelete()}
+            onClick={() => actDeleteDetail()}
           >
             예 (Yes)
           </S.ButtonYes>

@@ -428,6 +428,7 @@ class controlPlanDetail {
     this.remark = raw.remark;
   }
 }
+
 /**
  * @param {string} componentName 소문자로 시작
  * @param {any} raw 처리 할 데이터

@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import GetCboParams from "api/GetCboParams";
-
+/**
+ * 🔸MUI 로 구현된 콤보박스 이름 정렬
+ */
 const cboMUISort = (obj, key_nm) => {
   const sortResult = obj.sort(function (a, b) {
     let x = a[key_nm].toLowerCase();
@@ -17,6 +19,9 @@ const cboMUISort = (obj, key_nm) => {
   });
   return sortResult;
 };
+/**
+ * 🔸Tui Grid 로 구현된 콤보박스 이름 정렬
+ */
 const cboGridSort = (obj) => {
   const sortResult = obj.sort(function (a, b) {
     let x = a.text.toLowerCase();

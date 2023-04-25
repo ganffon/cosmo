@@ -17,9 +17,13 @@ import InputSearchDisabled from "components/input/InputSearchDisabled";
 import TextField from "@mui/material/TextField";
 import * as S from "./Document.styled";
 import CN from "json/ColumnName.json";
+import * as uSearch from "custom/useSearch";
+import * as uEdit from "custom/useEdit";
+import * as uDelete from "custom/useDelete";
+import * as uSave from "custom/useSave";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as uDM from "custom/useDataMulti";
+
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 
@@ -120,7 +124,7 @@ function Document() {
     refGridDetail
   );
 
-  const [actSelectProd] = uDM.useSearchSelect(
+  const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
     setIsBackDrop,
@@ -129,7 +133,7 @@ function Document() {
     setGridDataSelect,
     restURI.product
   ); //➡️ Modal Select Search Prod
-  const [actSelectInsp] = uDM.useSearchSelect(
+  const [actSelectInsp] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
     setIsBackDrop,
@@ -138,7 +142,7 @@ function Document() {
     setGridDataSelect,
     restURI.inspectItem
   ); //➡️ Modal Select Search Insp
-  const [actSaveNew] = uDM.useSaveNew(
+  const [actSave] = uSave.useSave(
     refGridModalHeader,
     refGridModalDetail,
     isEditModeHeader,
@@ -150,7 +154,7 @@ function Document() {
     SWITCH_NAME_02,
     uri
   );
-  const [actSaveEditHeader] = uDM.useSaveEditHeader(
+  const [actEditHeader] = uEdit.useEditHeader(
     refGridHeader,
     isEditModeHeader,
     isBackDrop,
@@ -160,7 +164,7 @@ function Document() {
     SWITCH_NAME_01,
     uri
   );
-  const [actSaveEditDetail] = uDM.useSaveEditDetail(
+  const [actEditDetail] = uEdit.useEditDetail(
     refGridDetail,
     isEditModeDetail,
     isBackDrop,
@@ -170,7 +174,7 @@ function Document() {
     SWITCH_NAME_02,
     uri
   );
-  const [actSaveEditNewDetail] = uDM.useSaveEditNewDetail(
+  const [actSaveDetail] = uSave.useSaveDetail(
     refGridModalDetail,
     isBackDrop,
     setIsBackDrop,
@@ -180,7 +184,7 @@ function Document() {
     uriDetail
   );
 
-  const [actSearchHeader] = uDM.useSearchHeader(
+  const [actSearchHeader] = uSearch.useSearchHeader(
     refGridHeader,
     refGridDetail,
     setInputInfoValue,
@@ -196,19 +200,19 @@ function Document() {
     setDisRowHeader,
     uri
   );
-  const [actSearchDetail] = uDM.useSearchDetail(
+  const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
     uriDetailID,
     disRowDetail,
     setDisRowDetail
   );
-  const [actSearchEditHeader] = uDM.useSearchEditHeader(
+  const [actSearchEditHeader] = uSearch.useSearchEditHeader(
     isBackDrop,
     setIsBackDrop,
     setGridDataHeaderRowID,
     uri
   );
-  const [actDelete] = uDM.useDeleteDetail(
+  const [actDeleteDetail] = uDelete.useDeleteDetail(
     refGridDetail,
     isBackDrop,
     setIsBackDrop,
@@ -262,7 +266,7 @@ function Document() {
     actSearchHeader();
   };
   const onClickEditModeSave = () => {
-    actSaveEditHeader();
+    actEditHeader();
     setIsEditModeDetail(false);
   };
   const onClickEditModeExit = () => {
@@ -271,7 +275,7 @@ function Document() {
     setDisRowHeader(!disRowHeader);
   };
   const onClickEditSaveDetail = () => {
-    actSaveEditDetail();
+    actEditDetail();
   };
   const onClickEditExitDetail = () => {
     setIsEditModeDetail(false);
@@ -379,7 +383,7 @@ function Document() {
     modalDetailClickRowKey = null;
   };
   const onClickModalSave = () => {
-    actSaveNew();
+    actSave();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
@@ -479,7 +483,7 @@ function Document() {
   };
 
   const onClickEditModalSave = () => {
-    actSaveEditNewDetail();
+    actSaveDetail();
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -652,7 +656,7 @@ function Document() {
         <AlertDeleteDetail
           headerClickRowID={headerClickRowID}
           actSearchDetail={actSearchDetail}
-          actDelete={actDelete}
+          actDeleteDetail={actDeleteDetail}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}

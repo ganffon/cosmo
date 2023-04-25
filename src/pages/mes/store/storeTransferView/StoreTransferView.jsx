@@ -13,7 +13,10 @@ import DatePicker from "components/datetime/DatePicker";
 import DateTime from "components/datetime/DateTime";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
-import * as uDS from "custom/useDataSingle";
+import * as uSearch from "custom/useSearch";
+import * as uEdit from "custom/useEdit";
+import * as uDelete from "custom/useDelete";
+import * as uSave from "custom/useSave";
 import * as S from "./StoreTransferView.styled";
 
 function StoreTransferView() {
@@ -71,7 +74,7 @@ function StoreTransferView() {
     onClickSearch();
   }, [searchToggle]);
 
-  const [actSearch] = uDS.useSearchOnlyCboDate(
+  const [actSearch] = uSearch.useSearchOnlyCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,

@@ -17,9 +17,11 @@ import DateTime from "components/datetime/DateTime";
 import restURI from "json/restURI.json";
 import * as disRow from "custom/useDisableRowCheck";
 import CN from "json/ColumnName.json";
-import * as uDM from "custom/useDataMulti";
 import * as Cbo from "custom/useCboSet";
-import * as uDS from "custom/useDataSingle";
+import * as uSearch from "custom/useSearch";
+import * as uEdit from "custom/useEdit";
+import * as uDelete from "custom/useDelete";
+import * as uSave from "custom/useSave";
 import * as S from "./StoreCheck.styled";
 
 function StoreCheck() {
@@ -97,7 +99,7 @@ function StoreCheck() {
     isEditMode,
     refSingleGrid
   );
-  const [actSelectProd] = uDM.useSearchSelect(
+  const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
     setIsBackDrop,
@@ -107,7 +109,7 @@ function StoreCheck() {
     restURI.product
   ); //➡️ Modal Select Search Prod
 
-  const [actSearch] = uDS.useSearchOnlyCboDate(
+  const [actSearch] = uSearch.useSearchOnlyCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -118,6 +120,15 @@ function StoreCheck() {
     setGridData,
     comboValue,
     dateText,
+    uri
+  );
+  const [actSaveStoreCheck] = uSave.useSaveStoreCheck(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_01,
     uri
   );
   const handleInputTextChange = (e) => {
@@ -137,7 +148,9 @@ function StoreCheck() {
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
-  const onClickEditModeSave = () => {};
+  const onClickEditModeSave = () => {
+    actSaveStoreCheck();
+  };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
     actSearch();
