@@ -436,23 +436,6 @@ class controlPlanDetail {
     this.remark = raw.remark;
   }
 }
-class storeCheck {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
-    this.tran_type_cd = raw.tran_type_cd;
-    this.reg_date = raw.reg_date;
-    this.store_id = raw.store_id;
-    this.location_id = raw.location_id;
-    this.prod_id = raw.prod_id;
-    this.reject_id = raw.reject_id;
-    this.partner_id = raw.partner_id;
-    this.lot_no = raw.lot_no;
-    this.Existing_qty = raw.qty ? Number(raw.qty) : null;
-    this.Modify_qty = raw.stock_inspection
-      ? Number(this.stock_inspection)
-      : null;
-  }
-}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -579,9 +562,6 @@ function GetPostParams(componentName, raw, factory_id) {
         break;
       case "controlPlanDetail":
         params = new controlPlanDetail(raw, factory_id);
-        break;
-      case "storeCheck":
-        params = new storeCheck(raw, factory_id);
         break;
       default:
     }

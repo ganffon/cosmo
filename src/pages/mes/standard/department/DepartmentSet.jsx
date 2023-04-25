@@ -59,7 +59,7 @@ function DepartmentSet(isEditMode) {
       header: CN.dept_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,

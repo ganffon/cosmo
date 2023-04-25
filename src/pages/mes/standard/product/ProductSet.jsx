@@ -183,7 +183,7 @@ function ProductSet(
       header: CN.prod_no,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,

@@ -97,7 +97,7 @@ function EquipmentSet(isEditMode, processList) {
       header: CN.equip_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditMode ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,

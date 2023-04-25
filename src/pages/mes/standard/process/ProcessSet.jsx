@@ -71,7 +71,7 @@ function ProcessSet(isEditMode) {
       header: CN.proc_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
