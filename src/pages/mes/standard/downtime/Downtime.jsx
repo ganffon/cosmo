@@ -15,7 +15,10 @@ import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as uDS from "custom/useDataSingle";
+import * as uSearch from "custom/useSearch";
+import * as uEdit from "custom/useEdit";
+import * as uDelete from "custom/useDelete";
+import * as uSave from "custom/useSave";
 import * as S from "./Downtime.styled";
 
 function Downtime() {
@@ -68,7 +71,7 @@ function Downtime() {
     refSingleGrid
   );
 
-  const [actDelete] = uDS.useDelete(
+  const [actDelete] = uDelete.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -82,7 +85,7 @@ function Downtime() {
     SWITCH_NAME_01
   );
 
-  const [actSearch] = uDS.useSearchCbo(
+  const [actSearch] = uSearch.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -97,7 +100,7 @@ function Downtime() {
     uri
   );
 
-  const [actSaveEdit] = uDS.useSaveEdit(
+  const [actEdit] = uEdit.useEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -106,7 +109,7 @@ function Downtime() {
     SWITCH_NAME_01,
     uri
   );
-  const [actSaveNew] = uDS.useSaveNew(
+  const [actSave] = uSave.useSave(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -139,7 +142,7 @@ function Downtime() {
     actSearch();
   };
   const onClickEditModeSave = () => {
-    actSaveEdit();
+    actEdit();
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -156,7 +159,7 @@ function Downtime() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    actSaveNew();
+    actSave();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);

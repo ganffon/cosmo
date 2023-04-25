@@ -11,7 +11,10 @@ import TextField from "@mui/material/TextField";
 import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
-import * as uDS from "custom/useDataSingle";
+import * as uSearch from "custom/useSearch";
+import * as uEdit from "custom/useEdit";
+import * as uDelete from "custom/useDelete";
+import * as uSave from "custom/useSave";
 import * as S from "./StoreView.styled";
 
 function StoreView() {
@@ -62,7 +65,7 @@ function StoreView() {
     onClickSearch();
   }, [searchToggle]);
 
-  const [actSearch] = uDS.useSearchOnlyCbo(
+  const [actSearch] = uSearch.useSearchOnlyCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,

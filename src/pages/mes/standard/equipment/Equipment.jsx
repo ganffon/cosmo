@@ -13,7 +13,10 @@ import EquipmentSet from "pages/mes/standard/equipment/EquipmentSet";
 import useInputSet from "custom/useInputSet";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as uDS from "custom/useDataSingle";
+import * as uSearch from "custom/useSearch";
+import * as uEdit from "custom/useEdit";
+import * as uDelete from "custom/useDelete";
+import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
 
 function Equipment() {
@@ -64,7 +67,7 @@ function Equipment() {
     refSingleGrid
   );
 
-  const [actDelete] = uDS.useDelete(
+  const [actDelete] = uDelete.useDelete(
     refSingleGrid,
     isBackDrop,
     isEditMode,
@@ -78,7 +81,7 @@ function Equipment() {
     SWITCH_NAME_01
   );
 
-  const [actSearch] = uDS.useSearch(
+  const [actSearch] = uSearch.useSearch(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -92,7 +95,7 @@ function Equipment() {
     uri
   );
 
-  const [actSaveEdit] = uDS.useSaveEdit(
+  const [actEdit] = uEdit.useEdit(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -101,7 +104,7 @@ function Equipment() {
     SWITCH_NAME_01,
     uri
   );
-  const [actSaveNew] = uDS.useSaveNew(
+  const [actSave] = uSave.useSave(
     refModalGrid,
     isBackDrop,
     setIsBackDrop,
@@ -134,7 +137,7 @@ function Equipment() {
     actSearch();
   };
   const onClickEditModeSave = () => {
-    actSaveEdit();
+    actEdit();
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -151,7 +154,7 @@ function Equipment() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    actSaveNew();
+    actSave();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
