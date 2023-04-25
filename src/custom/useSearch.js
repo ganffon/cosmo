@@ -69,7 +69,7 @@ const useSearchCbo = (
         setIsBackDrop(true);
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
         const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const readURI = uri + inputParams + cboParams;
+        const readURI = uri + cboParams;
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -105,15 +105,20 @@ const useSearchCboDate = (
   dateText,
   uri
 ) => {
-  const actSearchCboDate = async () => {
+  const actSearchCboDate = async (startDateNm, endDateNm) => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
         const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const dateParams = GetCboSearchParams(inputParams, dateText);
-        const readURI = uri + inputParams + cboParams + dateParams;
+        const dateParams = GetDateParams(
+          cboParams,
+          dateText,
+          startDateNm,
+          endDateNm
+        );
+        const readURI = uri + dateParams;
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -153,7 +158,7 @@ const useSearchOnlyCbo = (
         setIsBackDrop(true);
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
         const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const readURI = uri + inputParams + cboParams;
+        const readURI = uri + cboParams;
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -199,7 +204,7 @@ const useSearchOnlyCboDate = (
           startDateNm,
           endDateNm
         );
-        const readURI = uri + inputParams + cboParams + dateParams;
+        const readURI = uri + dateParams;
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -318,7 +323,7 @@ const useSearchHeader = (
           inputSearchValue
         );
         const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const readURI = uri + inputParams + cboParams;
+        const readURI = uri + cboParams;
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -380,10 +385,10 @@ const useSearchEditHeader = (
 export {
   useSearch,
   useSearchCbo,
-  useSearchOnlyCbo,
-  useSearchSelect,
   useSearchCboDate,
+  useSearchOnlyCbo,
   useSearchOnlyCboDate,
+  useSearchSelect,
   useSearchSelectIncludeHeader,
   useSearchHeader,
   useSearchDetail,

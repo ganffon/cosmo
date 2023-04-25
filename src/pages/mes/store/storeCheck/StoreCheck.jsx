@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNES from "components/button/ButtonNES";
+import ButtonNEDS from "components/button/ButtonNEDS";
 import ButtonSES from "components/button/ButtonSES";
-import ModalNew from "components/modal/ModalNew";
+import ModalDate from "components/modal/ModalDate";
 import ModalSelect from "components/modal/ModalSelect";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
@@ -36,6 +36,7 @@ function StoreCheck() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
@@ -45,6 +46,14 @@ function StoreCheck() {
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
     endDate: DateTime(7).dateFull,
+  });
+  const [dateModal, setDateModal] = useState({
+    startDate: DateTime().dateFull,
+    endDate: DateTime(7).dateFull,
+  });
+  const [modalSelectSize, setModalSelectSize] = useState({
+    width: "80%",
+    height: "90%",
   });
   const [searchToggle, setSearchToggle] = useState(false);
   const [comboValue, setComboValue] = useState({
@@ -69,6 +78,7 @@ function StoreCheck() {
     columns,
     columnsModal,
     columnsSelectProd,
+    columnsSelectStore,
     columnOptions,
     inputSet,
     datePickerSet,
@@ -80,6 +90,7 @@ function StoreCheck() {
     productTypeSmallList
   );
   const SWITCH_NAME_01 = "storeCheck";
+  const SWITCH_NAME_02 = "storeCheckNewLOT";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -108,8 +119,17 @@ function StoreCheck() {
     setGridDataSelect,
     restURI.product
   ); //➡️ Modal Select Search Prod
+  const [actSelectStore] = uSearch.useSearchSelect(
+    refGridSelect,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridDataSelect,
+    restURI.storeIncludeLocation
+  );
 
-  const [actSearch] = uSearch.useSearchOnlyCboDate(
+  const [actSearchOnlyCboDate] = uSearch.useSearchCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -118,6 +138,8 @@ function StoreCheck() {
     inputBoxID,
     inputTextChange,
     setGridData,
+    disableRowToggle,
+    setDisableRowToggle,
     comboValue,
     dateText,
     uri
@@ -131,6 +153,15 @@ function StoreCheck() {
     SWITCH_NAME_01,
     uri
   );
+  const [actSaveStoreCheckNewLOT] = uSave.useSaveStoreCheckNewLOT(
+    refModalGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_02,
+    uri
+  );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -142,18 +173,21 @@ function StoreCheck() {
     setDisableRowToggle(!disableRowToggle);
     disRow.handleCheckReset(true, refSingleGrid);
   };
+  const onClickDelete = () => {
+    setIsModalDeleteOpen(true);
+  };
   const onClickSearch = () => {
-    actSearch("reg_date");
+    actSearchOnlyCboDate("reg_date");
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
   const onClickEditModeSave = () => {
-    actSaveStoreCheck();
+    actSaveStoreCheck(dateText.startDate);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
-    actSearch();
+    actSearchOnlyCboDate("reg_date");
     setDisableRowToggle(!disableRowToggle);
   };
 
@@ -167,13 +201,15 @@ function StoreCheck() {
   const onClickModalCancelRow = () => {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
-  const onClickModalSave = () => {};
+  const onClickModalSave = () => {
+    actSaveStoreCheckNewLOT(dateModal.startDate);
+  };
   const onClickModalClose = () => {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   };
   const onDblClickModalGrid = (e) => {
-    const columnName = [
+    const columnNameProd = [
       "prod_gbn_nm",
       "model_nm",
       "prod_type_nm",
@@ -182,19 +218,37 @@ function StoreCheck() {
       "prod_nm",
     ];
     let condition;
-    for (let i = 0; i < columnName.length; i++) {
+    for (let i = 0; i < columnNameProd.length; i++) {
       if (i === 0) {
-        condition = e?.columnName === columnName[i];
+        condition = e?.columnName === columnNameProd[i];
       } else {
-        condition = condition || e?.columnName === columnName[i];
+        condition = condition || e?.columnName === columnNameProd[i];
       }
     }
     if (condition) {
       setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Modal");
+      setDblClickGrid("ModalProd");
       setColumnsSelect(columnsSelectProd);
+      setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
       setIsModalSelectOpen(true);
       actSelectProd();
+    }
+    const columnNameStore = ["store_nm", "location_nm"];
+    condition = "";
+    for (let i = 0; i < columnNameStore.length; i++) {
+      if (i === 0) {
+        condition = e?.columnName === columnNameStore[i];
+      } else {
+        condition = condition || e?.columnName === columnNameStore[i];
+      }
+    }
+    if (condition) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("ModalStore");
+      setColumnsSelect(columnsSelectStore);
+      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
+      setIsModalSelectOpen(true);
+      actSelectStore();
     }
   };
 
@@ -218,9 +272,18 @@ function StoreCheck() {
       "prod_no",
       "prod_nm",
     ];
-    if (dblClickGrid === "Modal") {
+    const columnNameStore = [
+      "store_id",
+      "store_nm",
+      "location_id",
+      "location_nm",
+    ];
+    if (dblClickGrid === "ModalProd") {
       refGrid = refModalGrid;
       columnName = columnNameProd;
+    } else if (dblClickGrid === "ModalStore") {
+      refGrid = refModalGrid;
+      columnName = columnNameStore;
     }
     for (let i = 0; i < columnName.length; i++) {
       refGrid?.current?.gridInst?.setValue(
@@ -355,9 +418,10 @@ function StoreCheck() {
                 onClickSearch={onClickSearch}
               />
             ) : (
-              <ButtonNES
+              <ButtonNEDS
                 onClickNew={onClickNew}
                 onClickEdit={onClickEdit}
+                onClickDelete={onClickDelete}
                 onClickSearch={onClickSearch}
               />
             )}
@@ -379,7 +443,7 @@ function StoreCheck() {
         </S.GridWrap>
       </S.ShadowBoxGrid>
       {isModalOpen ? (
-        <ModalNew
+        <ModalDate
           onClickModalAddRow={onClickModalAddRow}
           onClickModalGrid={onClickModalGrid}
           onClickModalCancelRow={onClickModalCancelRow}
@@ -391,12 +455,15 @@ function StoreCheck() {
           header={header}
           rowHeaders={rowHeadersNum}
           refModalGrid={refModalGrid}
+          dateModal={dateModal}
+          setDateModal={setDateModal}
+          datePickerSet={"single"}
         />
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
-          width={"80%"}
-          height={"90%"}
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
           onClickModalSelectClose={onClickModalSelectClose}
           columns={columnsSelect}
           columnOptions={columnOptions}
@@ -405,6 +472,24 @@ function StoreCheck() {
           rowHeaders={rowHeadersNum}
           refGridSelect={refGridSelect}
           onDblClickGridSelect={onDblClickGridSelect}
+        />
+      ) : null}
+      {isModalDeleteOpen ? (
+        <ModalDate
+          onClickModalAddRow={onClickModalAddRow}
+          onClickModalGrid={onClickModalGrid}
+          onClickModalCancelRow={onClickModalCancelRow}
+          onClickModalSave={onClickModalSave}
+          onClickModalClose={onClickModalClose}
+          onDblClickModalGrid={onDblClickModalGrid}
+          columns={columnsModal}
+          columnOptions={columnOptions}
+          header={header}
+          rowHeaders={rowHeadersNumCheck}
+          refModalGrid={refModalGrid}
+          dateModal={dateModal}
+          setDateModal={setDateModal}
+          datePickerSet={"range"}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

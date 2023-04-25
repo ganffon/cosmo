@@ -10,7 +10,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function PartnerTypeSet(isEditMode) {
+function PartnerSet(isEditMode) {
   const data = [
     {
       id: 1,
@@ -388,4 +388,4 @@ function PartnerTypeSet(isEditMode) {
   };
 }
 
-export default PartnerTypeSet;
+export default PartnerSet;

@@ -15,8 +15,9 @@ function GetDateParams(
   let params = "";
   const startDate = dateText.startDate;
   const endDate = dateText.endDate;
-  if (beforeParams) {
-    params = params + `&${date01}=${startDate}&`;
+
+  if (beforeParams.length !== 0) {
+    params = beforeParams + `&${date01}=${startDate}&`;
   } else {
     params = "?";
     params = params + `${date01}=${startDate}&`;

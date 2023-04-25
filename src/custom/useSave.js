@@ -1,5 +1,6 @@
 import { useCookies } from "react-cookie";
 import GetPostParams from "api/GetPostParams";
+import GetPostDateParams from "api/GetPostDateParams";
 import restAPI from "api/restAPI";
 import * as disRow from "custom/useDisableRowCheck";
 
@@ -181,14 +182,18 @@ const useSaveStoreCheck = (
   componentName,
   uri
 ) => {
-  const actSaveStoreCheck = async () => {
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const actSaveStoreCheck = async (startDate) => {
     refGrid?.current?.gridInst?.finishEditing();
     const obj = refGrid?.current?.gridInst?.getCheckedRows();
     let filtered = obj.filter(
       (o) => Number(o.qty) !== Number(o.stock_inspection)
     );
     if (filtered.length !== 0) {
-      const data = filtered?.map((raw) => GetPostParams(componentName, raw));
+      const data = filtered?.map((raw) =>
+        GetPostDateParams(componentName, raw, cookie.factoryID, startDate)
+      );
+      console.log(data);
       if (data !== undefined && isBackDrop === false) {
         setIsBackDrop(true);
         await restAPI
@@ -222,5 +227,61 @@ const useSaveStoreCheck = (
   };
   return [actSaveStoreCheck];
 };
+/**
+ * 🔸재고실사 할 때 새로운 LOT 생성
+ */
+const useSaveStoreCheckNewLOT = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  componentName,
+  uri
+) => {
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const actSaveStoreCheckNewLOT = async (startDate) => {
+    refGrid?.current?.gridInst?.finishEditing();
+    console.log(refGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
+    const data = refGrid?.current?.gridInst
+      ?.getModifiedRows()
+      ?.createdRows?.map((raw) =>
+        GetPostDateParams(componentName, raw, cookie.factoryID, startDate)
+      );
+    console.log(data);
+    if (data !== undefined && isBackDrop === false) {
+      setIsBackDrop(true);
+      await restAPI
+        .post(uri, data)
+        .then((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.data?.message,
+            severity: "success",
+          });
+          disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+        })
+        .catch((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.message ? res?.message : res?.response?.data?.message,
+            severity: "error",
+          });
+        })
+        .finally(() => {
+          setIsBackDrop(false);
+        });
+    }
+  };
+  return [actSaveStoreCheckNewLOT];
+};
 
-export { useSave, useSaveMulti, useSaveDetail, useSaveStoreCheck };
+export {
+  useSave,
+  useSaveMulti,
+  useSaveDetail,
+  useSaveStoreCheck,
+  useSaveStoreCheckNewLOT,
+};
