@@ -154,6 +154,11 @@ class controlPlanDetail {
     this.control_plan_detail_id = raw.control_plan_detail_id;
   }
 }
+class storeCheck {
+  constructor(raw) {
+    this.tran_id = raw.tran_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -256,6 +261,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "controlPlanDetail":
       params = new controlPlanDetail(raw);
+      break;
+    case "storeCheck":
+      params = new storeCheck(raw);
       break;
     default:
   }

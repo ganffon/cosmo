@@ -322,8 +322,6 @@ function UserSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.user;
-
   return {
     data,
     columns,
@@ -334,7 +332,6 @@ function UserSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

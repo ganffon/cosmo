@@ -222,6 +222,44 @@ const useSearchOnlyCboDate = (
   return [actSearchOnlyCboDate];
 };
 /**
+ * 🔸Edit 사용 안 하는 화면에서 검색조건 Date 있을 때 사용
+ */
+const useSearchOnlyDate = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  setGridData,
+  dateText,
+  uri
+) => {
+  const actSearchOnlyDate = async (startDateNm, endDateNm) => {
+    refGrid?.current?.gridInst?.finishEditing();
+    console.log(dateText);
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const dateParams = GetDateParams("", dateText, startDateNm, endDateNm);
+        const readURI = uri + dateParams;
+        console.log(readURI);
+        const gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
+    }
+  };
+  return [actSearchOnlyDate];
+};
+/**
  * 🔸Select Modal에서 데이터 조회
  */
 const useSearchSelect = (
@@ -388,6 +426,7 @@ export {
   useSearchCboDate,
   useSearchOnlyCbo,
   useSearchOnlyCboDate,
+  useSearchOnlyDate,
   useSearchSelect,
   useSearchSelectIncludeHeader,
   useSearchHeader,

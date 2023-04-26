@@ -247,8 +247,6 @@ function StoreLocationSet(isEditMode, storeList) {
     },
   ];
 
-  const uri = restURI.storeLocation;
-
   return {
     data,
     rowHeaders,
@@ -259,7 +257,6 @@ function StoreLocationSet(isEditMode, storeList) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

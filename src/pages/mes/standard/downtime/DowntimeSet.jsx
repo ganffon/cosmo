@@ -288,8 +288,6 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
     },
   ];
 
-  const uri = restURI.downtime;
-
   return {
     data,
     columns,
@@ -300,7 +298,6 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

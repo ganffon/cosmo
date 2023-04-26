@@ -212,8 +212,6 @@ function ProductModelSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.productModel;
-
   return {
     data,
     rowHeaders,
@@ -223,7 +221,6 @@ function ProductModelSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

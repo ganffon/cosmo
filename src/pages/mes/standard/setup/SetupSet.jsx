@@ -344,8 +344,6 @@ function SetupSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.setup;
-
   return {
     data,
     columns,
@@ -356,7 +354,6 @@ function SetupSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

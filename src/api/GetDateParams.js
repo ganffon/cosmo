@@ -7,7 +7,7 @@
  * @returns
  */
 function GetDateParams(
-  beforeParams = null,
+  beforeParams = "",
   dateText,
   date01 = null,
   date02 = null
@@ -15,7 +15,6 @@ function GetDateParams(
   let params = "";
   const startDate = dateText.startDate;
   const endDate = dateText.endDate;
-
   if (beforeParams.length !== 0) {
     params = beforeParams + `&${date01}=${startDate}&`;
   } else {
@@ -26,7 +25,6 @@ function GetDateParams(
     params = params + `${date02}=${endDate}&`;
   }
   params = params.slice(0, params.length - 1);
-
   return params;
 }
 

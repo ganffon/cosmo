@@ -17,6 +17,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
+import restURI from "json/restURI.json";
 
 function InspectMethod(props) {
   LoginStateChk();
@@ -34,7 +35,6 @@ function InspectMethod(props) {
   });
   const [searchToggle, setSearchToggle] = useState(false);
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -75,7 +75,7 @@ function InspectMethod(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.inspectMethod,
     SWITCH_NAME_01
   );
 
@@ -90,7 +90,7 @@ function InspectMethod(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    uri
+    restURI.inspectMethod
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -100,7 +100,7 @@ function InspectMethod(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.inspectMethod
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -109,7 +109,7 @@ function InspectMethod(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.inspectMethod
   );
   const onClickNew = () => {
     setIsModalOpen(true);

@@ -20,6 +20,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./InterfaceItem.styled";
+import restURI from "json/restURI.json";
 
 function InterfaceItem(props) {
   LoginStateChk();
@@ -42,7 +43,6 @@ function InterfaceItem(props) {
   const [interfaceItemTypeOpt, interfaceItemTypeList] =
     Cbo.useInterfaceItemType();
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -82,7 +82,7 @@ function InterfaceItem(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.interfaceItem,
     SWITCH_NAME_01
   );
 
@@ -98,7 +98,7 @@ function InterfaceItem(props) {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    uri
+    restURI.interfaceItem
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -108,7 +108,7 @@ function InterfaceItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.interfaceItem
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -117,7 +117,7 @@ function InterfaceItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.interfaceItem
   );
   const onClickNew = () => {
     setIsModalOpen(true);

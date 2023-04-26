@@ -163,8 +163,6 @@ function ProductGbnSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.productGbn;
-
   return {
     data,
     columns,
@@ -174,7 +172,6 @@ function ProductGbnSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

@@ -18,6 +18,7 @@ export const ToolWrap = styled("div")`
   grid-row: 2 / 2;
   display: flex;
   justify-content: space-between;
+  height: 60px;
 `;
 export const DateBox = styled("div")`
   display: flex;
@@ -26,8 +27,10 @@ export const DateBox = styled("div")`
 `;
 export const ButtonBox = styled("div")`
   display: flex;
-  height: 60px;
-  padding-right: 15px;
+  justify-content: center;
+  align-items: flex-end;
+  margin-right: 15px;
+  margin-bottom: 10px;
 `;
 export const Date = styled(DatePicker)``;
 export const GridBox = styled("div")`

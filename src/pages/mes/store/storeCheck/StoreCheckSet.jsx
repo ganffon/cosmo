@@ -255,6 +255,18 @@ function StoreCheckSet(
       whiteSpace: false,
       rowSpan: false,
     },
+    {
+      name: "remark",
+      header: CN.remark,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: isEditMode ? "text" : false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
   ];
   const columnsModal = [
     {
@@ -503,8 +515,32 @@ function StoreCheckSet(
       whiteSpace: false,
       rowSpan: false,
     },
+    {
+      name: "remark",
+      header: CN.remark,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
   ];
   const columnsModalStockInspection = [
+    {
+      name: "tran_id",
+      header: CN.tran_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
     {
       name: "prod_id",
       header: CN.prod_id,
@@ -739,6 +775,18 @@ function StoreCheckSet(
       whiteSpace: false,
       rowSpan: false,
     },
+    {
+      name: "remark",
+      header: CN.remark,
+      minWidth: WIDTH_SUPER_LONG,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
   ];
   const columnsSelectProd = [
     {
@@ -958,8 +1006,6 @@ function StoreCheckSet(
     },
   ];
 
-  const uri = restURI.storeCheck;
-
   return {
     data,
     columns,
@@ -973,7 +1019,6 @@ function StoreCheckSet(
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

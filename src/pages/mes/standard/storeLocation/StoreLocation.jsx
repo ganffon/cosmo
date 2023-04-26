@@ -18,6 +18,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
+import restURI from "json/restURI.json";
 
 function StoreLocation(props) {
   LoginStateChk();
@@ -36,7 +37,6 @@ function StoreLocation(props) {
   const [searchToggle, setSearchToggle] = useState(false);
   const [storeOpt, storeList] = Cbo.useStore();
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -76,7 +76,7 @@ function StoreLocation(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.storeLocation,
     SWITCH_NAME_01
   );
 
@@ -91,7 +91,7 @@ function StoreLocation(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    uri
+    restURI.storeLocation
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -101,7 +101,7 @@ function StoreLocation(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.storeLocation
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -110,7 +110,7 @@ function StoreLocation(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.storeLocation
   );
   const onClickNew = () => {
     setIsModalOpen(true);

@@ -1519,11 +1519,6 @@ function DocumentSet(
       name: CN.remark,
     },
   ];
-
-  const uri = restURI.inspectDocument;
-  const uriDetail = restURI.inspectDocumentDetail;
-  const uriDetailID = restURI.inspectDocumentDetailID;
-
   return {
     data,
     columnsHeader,
@@ -1539,9 +1534,6 @@ function DocumentSet(
     datePickerSet,
     inputSet,
     inputInfo,
-    uri,
-    uriDetail,
-    uriDetailID,
   };
 }
 

@@ -668,8 +668,6 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
     },
   ];
 
-  const uri = restURI.employee;
-
   return {
     data,
     columns,
@@ -680,7 +678,6 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

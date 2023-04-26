@@ -247,8 +247,6 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
     },
   ];
 
-  const uri = restURI.inspectItem;
-
   return {
     data,
     rowHeaders,
@@ -259,7 +257,6 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

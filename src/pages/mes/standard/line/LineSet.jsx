@@ -237,8 +237,6 @@ function LineSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.line;
-
   return {
     data,
     rowHeaders,
@@ -249,7 +247,6 @@ function LineSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

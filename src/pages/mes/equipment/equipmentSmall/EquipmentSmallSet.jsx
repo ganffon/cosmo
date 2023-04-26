@@ -209,8 +209,6 @@ function EquipmentSmallSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.equipmentSmall;
-
   return {
     data,
     rowHeaders,
@@ -221,7 +219,6 @@ function EquipmentSmallSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

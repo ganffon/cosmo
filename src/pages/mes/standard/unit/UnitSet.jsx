@@ -187,8 +187,6 @@ function UnitSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.unit;
-
   return {
     data,
     rowHeaders,
@@ -199,7 +197,6 @@ function UnitSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

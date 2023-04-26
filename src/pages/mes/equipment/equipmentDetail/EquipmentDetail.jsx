@@ -20,6 +20,7 @@ import * as uSearch from "custom/useSearch";
 import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
+import restURI from "json/restURI.json";
 
 function EquipmentDetail() {
   LoginStateChk();
@@ -49,7 +50,6 @@ function EquipmentDetail() {
   const [equipmentMediumOpt, equipmentMediumList] = Cbo.useEquipmentMedium();
   const [equipmentSmallOpt, equipmentSmallList] = Cbo.useEquipmentSmall();
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -96,7 +96,7 @@ function EquipmentDetail() {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.equipmentDetail,
     SWITCH_NAME_01
   );
 
@@ -112,7 +112,7 @@ function EquipmentDetail() {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    uri
+    restURI.equipmentDetail
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -122,7 +122,7 @@ function EquipmentDetail() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.equipmentDetail
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -131,7 +131,7 @@ function EquipmentDetail() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.equipmentDetail
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -328,7 +328,6 @@ function EquipmentDetail() {
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeadersModal}
-          uri={uri}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
         />

@@ -209,8 +209,6 @@ function EquipmentLargeSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.equipmentLarge;
-
   return {
     data,
     rowHeaders,
@@ -221,7 +219,6 @@ function EquipmentLargeSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

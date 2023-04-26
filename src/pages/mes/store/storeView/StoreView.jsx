@@ -16,6 +16,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./StoreView.styled";
+import restURI from "json/restURI.json";
 
 function StoreView() {
   LoginStateChk();
@@ -39,7 +40,7 @@ function StoreView() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const { uri, rowHeadersNum, header, columns, columnOptions, inputSet } =
+  const { rowHeadersNum, header, columns, columnOptions, inputSet } =
     StoreViewSet(
       productGbnList,
       productModelList,
@@ -75,7 +76,7 @@ function StoreView() {
     inputTextChange,
     setGridData,
     comboValue,
-    uri
+    restURI.storeView
   );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });

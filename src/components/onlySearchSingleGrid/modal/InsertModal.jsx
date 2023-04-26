@@ -69,7 +69,7 @@ function InsertModal(props) {
   return (
     <ModalWrap width={"1300px"} height={"650px"}>
       <S.HeaderBox>
-        <S.TitleBox>{`[신규] ${currentMenuName}`}</S.TitleBox>
+        <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose>
           <CloseIcon onClick={onClickClose} />
         </S.ButtonClose>

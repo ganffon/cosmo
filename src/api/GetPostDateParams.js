@@ -11,10 +11,11 @@ class storeCheck {
     this.reject_id = raw.reject_id;
     this.partner_id = raw.partner_id;
     this.lot_no = raw.lot_no;
-    this.Existing_qty = raw.qty ? Number(raw.qty) : null;
-    this.Modify_qty = raw.stock_inspection
+    this.Existing_qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.Modify_qty = String(raw.stock_inspection)
       ? Number(raw.stock_inspection)
       : null;
+    this.remark = raw.remark;
   }
 }
 class storeCheckNewLOT {
@@ -29,7 +30,8 @@ class storeCheckNewLOT {
     this.partner_id = raw.partner_id;
     this.lot_no = raw.lot_no;
     this.Existing_qty = 0;
-    this.Modify_qty = raw.qty ? Number(raw.qty) : null;
+    this.Modify_qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.remark = raw.remark;
   }
 }
 

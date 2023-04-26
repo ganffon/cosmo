@@ -198,8 +198,6 @@ function InspectToolSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.inspectTool;
-
   return {
     data,
     rowHeaders,
@@ -210,7 +208,6 @@ function InspectToolSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

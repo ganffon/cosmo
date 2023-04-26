@@ -2013,10 +2013,6 @@ function ControlPlanSet(
     },
   ];
 
-  const uri = restURI.controlPlan;
-  const uriDetail = restURI.controlPlanDetail;
-  const uriDetailID = restURI.controlPlanDetailID;
-
   return {
     data,
     columnsHeader,
@@ -2032,9 +2028,6 @@ function ControlPlanSet(
     datePickerSet,
     inputSet,
     inputInfo,
-    uri,
-    uriDetail,
-    uriDetailID,
   };
 }
 

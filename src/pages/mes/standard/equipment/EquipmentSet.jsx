@@ -400,8 +400,6 @@ function EquipmentSet(isEditMode, processList) {
     },
   ];
 
-  const uri = restURI.equipment;
-
   return {
     data,
     columns,
@@ -412,7 +410,6 @@ function EquipmentSet(isEditMode, processList) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

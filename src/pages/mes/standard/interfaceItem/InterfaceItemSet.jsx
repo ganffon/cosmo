@@ -247,8 +247,6 @@ function InterfaceItemSet(isEditMode, interfaceItemTypeList) {
     },
   ];
 
-  const uri = restURI.interfaceItem;
-
   return {
     data,
     rowHeaders,
@@ -259,7 +257,6 @@ function InterfaceItemSet(isEditMode, interfaceItemTypeList) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

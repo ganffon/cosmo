@@ -180,7 +180,9 @@ const useSaveStoreCheck = (
   isSnackOpen,
   setIsSnackOpen,
   componentName,
-  uri
+  uri,
+  searchToggle,
+  setSearchToggle
 ) => {
   const [cookie, setCookie, removeCookie] = useCookies();
   const actSaveStoreCheck = async (startDate) => {
@@ -189,6 +191,7 @@ const useSaveStoreCheck = (
     let filtered = obj.filter(
       (o) => Number(o.qty) !== Number(o.stock_inspection)
     );
+    console.log(filtered);
     if (filtered.length !== 0) {
       const data = filtered?.map((raw) =>
         GetPostDateParams(componentName, raw, cookie.factoryID, startDate)
@@ -218,6 +221,7 @@ const useSaveStoreCheck = (
             });
           })
           .finally(() => {
+            setSearchToggle(!searchToggle);
             setIsBackDrop(false);
           });
       }

@@ -198,8 +198,6 @@ function InspectTypeSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.inspectType;
-
   return {
     data,
     rowHeaders,
@@ -210,7 +208,6 @@ function InspectTypeSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

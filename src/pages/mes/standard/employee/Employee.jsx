@@ -18,6 +18,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
+import restURI from "json/restURI.json";
 
 function Employee() {
   LoginStateChk();
@@ -39,7 +40,6 @@ function Employee() {
   const [workingGroupOpt, workingGroupList] = Cbo.useWorkingGroup();
 
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -79,7 +79,7 @@ function Employee() {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.employee,
     SWITCH_NAME_01
   );
 
@@ -94,7 +94,7 @@ function Employee() {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    uri
+    restURI.employee
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -104,7 +104,7 @@ function Employee() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.employee
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -113,7 +113,7 @@ function Employee() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.employee
   );
   const onClickNew = () => {
     setIsModalOpen(true);

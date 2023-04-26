@@ -20,6 +20,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./InspectItem.styled";
+import restURI from "json/restURI.json";
 
 function InspectItem(props) {
   LoginStateChk();
@@ -41,7 +42,6 @@ function InspectItem(props) {
   });
   const [inspectItemTypeOpt, inspectItemTypeList] = Cbo.useInspectItemType();
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -82,7 +82,7 @@ function InspectItem(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.inspectItem,
     SWITCH_NAME_01
   );
 
@@ -98,7 +98,7 @@ function InspectItem(props) {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    uri
+    restURI.inspectItem
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -108,7 +108,7 @@ function InspectItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.inspectItem
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -117,7 +117,7 @@ function InspectItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.inspectItem
   );
   const onClickNew = () => {
     setIsModalOpen(true);

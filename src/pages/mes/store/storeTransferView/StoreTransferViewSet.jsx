@@ -304,6 +304,18 @@ function StoreTransferViewSet(
       rowSpan: false,
     },
     {
+      name: "remark",
+      header: CN.remark,
+      minWidth: WIDTH_SUPER_LONG,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
       name: "create_at",
       header: CN.create_at,
       minWidth: WIDTH_LONG,
@@ -410,8 +422,6 @@ function StoreTransferViewSet(
     },
   ];
 
-  const uri = restURI.storeTransferView;
-
   return {
     data,
     columns,
@@ -421,7 +431,6 @@ function StoreTransferViewSet(
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

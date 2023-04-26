@@ -897,8 +897,6 @@ function EquipmentDetailSet(
     },
   ];
 
-  const uri = restURI.equipmentDetail;
-
   return {
     data,
     columns,
@@ -909,7 +907,6 @@ function EquipmentDetailSet(
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 
