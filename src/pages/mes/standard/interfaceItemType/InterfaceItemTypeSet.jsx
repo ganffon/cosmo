@@ -198,8 +198,6 @@ function InterfaceItemTypeSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.interfaceItemType;
-
   return {
     data,
     rowHeaders,
@@ -210,7 +208,6 @@ function InterfaceItemTypeSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

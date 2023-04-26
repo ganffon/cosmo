@@ -170,8 +170,6 @@ function GradeSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.grade;
-
   return {
     data,
     rowHeaders,
@@ -180,7 +178,6 @@ function GradeSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

@@ -1441,8 +1441,6 @@ function ProductSet(
     },
   ];
 
-  const uri = restURI.product;
-
   return {
     data,
     columns,
@@ -1453,7 +1451,6 @@ function ProductSet(
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

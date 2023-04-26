@@ -272,8 +272,6 @@ function StoreViewSet(
     },
   ];
 
-  const uri = restURI.storeView;
-
   return {
     data,
     columns,
@@ -283,7 +281,6 @@ function StoreViewSet(
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

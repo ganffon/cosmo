@@ -95,26 +95,30 @@ class product {
     this.use_fg = raw.use_fg ? true : false;
     this.active_fg = raw.active_fg ? true : false;
     this.bom_type_id = raw.bom_type_id;
-    this.width = raw.width ? Number(raw.width) : null;
-    this.length = raw.length ? Number(raw.length) : null;
-    this.height = raw.height ? Number(raw.height) : null;
+    this.width = String(raw.width) ? Number(raw.width) : null;
+    this.length = String(raw.length) ? Number(raw.length) : null;
+    this.height = String(raw.height) ? Number(raw.height) : null;
     this.material = raw.material;
     this.color = raw.color;
-    this.weight = raw.weight ? Number(raw.weight) : null;
-    this.thickness = raw.thickness ? Number(raw.thickness) : null;
+    this.weight = String(raw.weight) ? Number(raw.weight) : null;
+    this.thickness = String(raw.thickness) ? Number(raw.thickness) : null;
     this.is_spareparts = raw.is_spareparts ? true : false;
     this.mat_order_fg = raw.mat_order_fg ? true : false;
     this.mat_unit_id = raw.mat_unit_id;
-    this.mat_order_min_qty = raw.mat_order_min_qty
+    this.mat_order_min_qty = String(raw.mat_order_min_qty)
       ? Number(raw.mat_order_min_qty)
       : null;
-    this.mat_supply_days = raw.mat_supply_days
+    this.mat_supply_days = String(raw.mat_supply_days)
       ? Number(raw.mat_supply_days)
       : null;
     this.sal_order_fg = raw.sal_order_fg ? true : false;
     this.inv_use_fg = raw.inv_use_fg ? true : false;
-    this.inv_unit_qty = raw.inv_unit_qty ? Number(raw.inv_unit_qty) : null;
-    this.inv_safe_qty = raw.inv_safe_qty ? Number(raw.inv_safe_qty) : null;
+    this.inv_unit_qty = String(raw.inv_unit_qty)
+      ? Number(raw.inv_unit_qty)
+      : null;
+    this.inv_safe_qty = String(raw.inv_safe_qty)
+      ? Number(raw.inv_safe_qty)
+      : null;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
     this.qms_receive_insp_fg = raw.qms_receive_insp_fg ? true : false;
@@ -122,8 +126,8 @@ class product {
     this.qms_final_insp_fg = raw.qms_final_insp_fg ? true : false;
     this.prd_plan_type_id = raw.prd_plan_type_id;
     this.prd_active_fg = raw.prd_active_fg ? true : false;
-    this.prd_min = raw.prd_min ? Number(raw.prd_min) : null;
-    this.prd_max = raw.prd_max ? Number(raw.prd_max) : null;
+    this.prd_min = String(raw.prd_min) ? Number(raw.prd_min) : null;
+    this.prd_max = String(raw.prd_max) ? Number(raw.prd_max) : null;
   }
 }
 class productTypeSmall {
@@ -247,7 +251,7 @@ class interfaceMemory {
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.plc_ip = raw.plc_ip;
-    this.plc_port = raw.plc_port ? Number(raw.plc_port) : null;
+    this.plc_port = String(raw.plc_port) ? Number(raw.plc_port) : null;
     this.device_addre = raw.device_addre;
     this.tag_id = raw.tag_id;
     this.infc_memory_nm = raw.infc_memory_nm;
@@ -301,7 +305,7 @@ class equipmentDetail {
     this.purchase_partner = raw.purchase_partner;
     this.purchase_date = raw.purchase_date;
     this.purchase_tel = raw.purchase_tel;
-    this.purchase_price = raw.purchase_price
+    this.purchase_price = String(raw.purchase_price)
       ? Number(raw.purchase_price)
       : null;
     this.use_fg = raw.use_fg ? true : false;
@@ -337,7 +341,7 @@ class documentDetail {
   constructor(raw) {
     this.insp_document_detail_id = raw.insp_document_detail_id;
     this.insp_document_id = raw.insp_document_id;
-    this.sortby = raw.sortby ? Number(raw.sortby) : null;
+    this.sortby = String(raw.sortby) ? Number(raw.sortby) : null;
     this.factory_id = raw.factory_id;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
@@ -345,19 +349,19 @@ class documentDetail {
     this.insp_item_id = raw.insp_item_id;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = raw.spec_min ? Number(raw.spec_min) : null;
-    this.spec_max = raw.spec_max ? Number(raw.spec_max) : null;
-    this.spec_lcl = raw.spec_lcl ? Number(raw.spec_lcl) : null;
-    this.spec_ucl = raw.spec_ucl ? Number(raw.spec_ucl) : null;
+    this.spec_min = String(raw.spec_min) ? Number(raw.spec_min) : null;
+    this.spec_max = String(raw.spec_max) ? Number(raw.spec_max) : null;
+    this.spec_lcl = String(raw.spec_lcl) ? Number(raw.spec_lcl) : null;
+    this.spec_ucl = String(raw.spec_ucl) ? Number(raw.spec_ucl) : null;
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_tool_id = raw.insp_tool_id;
     this.insp_method_id = raw.insp_method_id;
     this.special_property = raw.special_property;
-    this.worker_sample_cnt = raw.worker_sample_cnt
+    this.worker_sample_cnt = String(raw.worker_sample_cnt)
       ? Number(raw.worker_sample_cnt)
       : null;
     this.worker_insp_cycle = raw.worker_insp_cycle;
-    this.inspector_sample_cnt = raw.inspector_sample_cnt
+    this.inspector_sample_cnt = String(raw.inspector_sample_cnt)
       ? Number(raw.inspector_sample_cnt)
       : null;
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
@@ -373,8 +377,8 @@ class spareReceive {
     this.supplier_id = raw.supplier_id;
     this.stmt_no = raw.stmt_no;
     this.reg_date = raw.reg_date;
-    this.total_price = raw.total_price ? Number(raw.total_price) : null;
-    this.total_qty = raw.total_qty ? Number(raw.total_qty) : null;
+    this.total_price = String(raw.total_price) ? Number(raw.total_price) : null;
+    this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
     this.order_id = raw.order_id;
     this.spare_receive_uid = raw.spare_receive_uid;
     this.remark = raw.remark;
@@ -389,12 +393,12 @@ class spareReceiveDetail {
     this.unit_id = raw.unit_id;
     this.lot_no = raw.lot_no;
     this.manufactured_lot_no = raw.manufactured_lot_no;
-    this.qty = raw.qty ? Number(raw.qty) : null;
-    this.price = raw.price ? Number(raw.price) : null;
+    this.qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.price = String(raw.price) ? Number(raw.price) : null;
     this.money_unit_id = raw.money_unit_id;
-    this.exchange = raw.exchange ? Number(raw.exchange) : null;
-    this.total_price = raw.total_price ? Number(raw.total_price) : null;
-    this.unit_qty = raw.unit_qty ? Number(raw.unit_qty) : null;
+    this.exchange = String(raw.exchange) ? Number(raw.exchange) : null;
+    this.total_price = String(raw.total_price) ? Number(raw.total_price) : null;
+    this.unit_qty = String(raw.unit_qty) ? Number(raw.unit_qty) : null;
     this.insp_fg = raw.insp_fg ? true : false;
     this.carry_fg = raw.carry_fg ? true : false;
     this.order_detail_id = raw.order_detail_id;
@@ -422,7 +426,7 @@ class controlPlanDetail {
   constructor(raw) {
     this.control_plan_detail_id = raw.control_plan_detail_id;
     this.control_plan_id = raw.control_plan_id;
-    this.proc_no = raw.proc_no ? Number(raw.proc_no) : null;
+    this.proc_no = String(raw.proc_no) ? Number(raw.proc_no) : null;
     this.insp_document_detail_id = raw.insp_document_detail_id;
     this.insp_document_id = raw.insp_document_id;
     this.remark = raw.remark;

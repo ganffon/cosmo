@@ -161,8 +161,6 @@ function ProductTypeSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.productType;
-
   return {
     data,
     columns,
@@ -172,7 +170,6 @@ function ProductTypeSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

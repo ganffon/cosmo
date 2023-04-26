@@ -578,9 +578,6 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
     },
   ];
 
-  const uri = restURI.interfaceMemory;
-  const uriModalSelect = restURI.interfaceItem;
-
   return {
     data,
     rowHeaders,
@@ -592,8 +589,6 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
     header,
     datePickerSet,
     inputSet,
-    uri,
-    uriModalSelect,
   };
 }
 

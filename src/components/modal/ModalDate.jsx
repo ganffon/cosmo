@@ -3,32 +3,36 @@ import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import ButtonACS from "components/button/ButtonACS";
+import ButtonDS from "components/button/ButtonDS";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalDate.styled";
 
-function ModalNewDate(props) {
+function ModalDate(props) {
   const {
-    onClickModalAddRow,
-    onClickModalCancelRow,
-    onClickModalSave,
-    onClickModalClose,
+    onClickModalAddRow = () => {},
+    onClickModalCancelRow = () => {},
+    onClickModalSave = () => {},
+    onClickModalClose = () => {},
     onClickModalGrid = () => {},
     onDblClickModalGrid = () => {},
+    onClickModalDelete = () => {},
+    onClickModalSearch = () => {},
     refModalGrid,
     columns,
     columnOptions,
     header,
     rowHeaders,
     datePickerSet,
-    dateModal,
-    setDateModal,
+    dateText,
+    setDateText,
+    buttonType,
+    data,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
-
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>{`[신규] ${currentMenuName}`}</S.TitleBox>
+        <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"
@@ -41,20 +45,31 @@ function ModalNewDate(props) {
         <S.DateBox>
           <S.Date
             datePickerSet={datePickerSet}
-            dateText={dateModal}
-            setDateText={setDateModal}
+            dateText={dateText}
+            setDateText={setDateText}
           />
         </S.DateBox>
         <S.ButtonBox>
-          <ButtonACS
-            onClickAddRow={onClickModalAddRow}
-            onClickCancelRow={onClickModalCancelRow}
-            onClickSave={onClickModalSave}
-          />
+          {buttonType === "ACS" ? (
+            <ButtonACS
+              onClickAddRow={onClickModalAddRow}
+              onClickCancelRow={onClickModalCancelRow}
+              onClickSave={onClickModalSave}
+            />
+          ) : null}
+          {buttonType === "DS" ? (
+            <ButtonDS
+              onClickDelete={onClickModalDelete}
+              onClickSearch={onClickModalSearch}
+            />
+          ) : (
+            false
+          )}
         </S.ButtonBox>
       </S.ToolWrap>
       <S.GridBox>
         <GridModal
+          data={data}
           columns={columns}
           columnOptions={columnOptions}
           header={header}
@@ -69,4 +84,4 @@ function ModalNewDate(props) {
   );
 }
 
-export default ModalNewDate;
+export default ModalDate;

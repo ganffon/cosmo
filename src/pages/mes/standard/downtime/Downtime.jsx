@@ -20,6 +20,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./Downtime.styled";
+import restURI from "json/restURI.json";
 
 function Downtime() {
   LoginStateChk();
@@ -42,7 +43,6 @@ function Downtime() {
   const [downtimeTypeOpt, downtimeTypeList] = Cbo.useDowntimeType();
 
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -81,7 +81,7 @@ function Downtime() {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.downtime,
     SWITCH_NAME_01
   );
 
@@ -97,7 +97,7 @@ function Downtime() {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    uri
+    restURI.downtime
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -107,7 +107,7 @@ function Downtime() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.downtime
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -116,7 +116,7 @@ function Downtime() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.downtime
   );
   const onClickNew = () => {
     setIsModalOpen(true);

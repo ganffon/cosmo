@@ -83,9 +83,6 @@ function ControlPlan() {
     header,
     inputSet,
     inputInfo,
-    uri,
-    uriDetail,
-    uriDetailID,
   } = ControlPlanSet(
     isEditModeHeader,
     isEditModeDetail,
@@ -153,7 +150,7 @@ function ControlPlan() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    uri
+    restURI.controlPlan
   );
   const [actEditHeader] = uEdit.useEditHeader(
     refGridHeader,
@@ -163,7 +160,7 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.controlPlan
   );
   const [actEditDetail] = uEdit.useEditDetail(
     refGridDetail,
@@ -173,7 +170,7 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    uri
+    restURI.controlPlan
   );
   const [actSaveDetail] = uSave.useSaveDetail(
     refGridModalDetail,
@@ -182,7 +179,7 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    uriDetail
+    restURI.controlPlanDetail
   );
 
   const [actSearchHeader] = uSearch.useSearchHeader(
@@ -199,11 +196,11 @@ function ControlPlan() {
     setGridDataHeader,
     disRowHeader,
     setDisRowHeader,
-    uri
+    restURI.controlPlan
   );
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    uriDetailID,
+    restURI.controlPlanDetailID,
     disRowDetail,
     setDisRowDetail
   );
@@ -211,7 +208,7 @@ function ControlPlan() {
     isBackDrop,
     setIsBackDrop,
     setGridDataHeaderRowID,
-    uri
+    restURI.controlPlan
   );
   const [actDeleteDetail] = uDelete.useDeleteDetail(
     refGridDetail,
@@ -223,7 +220,7 @@ function ControlPlan() {
     actSearchHeader,
     actSearchDetail,
     headerClickRowID,
-    uriDetail,
+    restURI.controlPlanDetail,
     SWITCH_NAME_02
   );
   /**

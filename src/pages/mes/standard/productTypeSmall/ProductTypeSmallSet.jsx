@@ -161,8 +161,6 @@ function ProductTypeSmallSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.productTypeSmall;
-
   return {
     data,
     columns,
@@ -172,7 +170,6 @@ function ProductTypeSmallSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

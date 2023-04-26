@@ -20,6 +20,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./Product.styled";
+import restURI from "json/restURI.json";
 
 function Product() {
   LoginStateChk();
@@ -49,7 +50,6 @@ function Product() {
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
   const [unitOpt, unitList] = Cbo.useUnit();
   const {
-    uri,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -95,7 +95,7 @@ function Product() {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.product,
     SWITCH_NAME_01
   );
 
@@ -111,7 +111,7 @@ function Product() {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    uri
+    restURI.product
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -121,7 +121,7 @@ function Product() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.product
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -130,7 +130,7 @@ function Product() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.product
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -360,7 +360,6 @@ function Product() {
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeadersModal}
-          uri={uri}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
         />

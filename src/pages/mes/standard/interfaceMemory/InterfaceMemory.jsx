@@ -21,6 +21,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./InterfaceMemory.styled";
+import restURI from "json/restURI.json";
 
 function InterfaceMemory(props) {
   LoginStateChk();
@@ -49,8 +50,6 @@ function InterfaceMemory(props) {
   const [processOpt, processList] = Cbo.useProcess();
 
   const {
-    uri,
-    uriModalSelect,
     rowHeaders,
     rowHeadersModal,
     header,
@@ -92,7 +91,7 @@ function InterfaceMemory(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    uri,
+    restURI.interfaceMemory,
     SWITCH_NAME_01
   );
 
@@ -108,7 +107,7 @@ function InterfaceMemory(props) {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    uri
+    restURI.interfaceMemory
   );
 
   const [actSearchSelect] = uSearch.useSearchSelect(
@@ -120,7 +119,7 @@ function InterfaceMemory(props) {
     setGridModalSelectData,
     disableRowToggle,
     setDisableRowToggle,
-    uriModalSelect
+    restURI.interfaceItem
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -130,7 +129,7 @@ function InterfaceMemory(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.interfaceMemory
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -139,7 +138,7 @@ function InterfaceMemory(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.interfaceMemory
   );
   const onClickNew = () => {
     setIsModalOpen(true);

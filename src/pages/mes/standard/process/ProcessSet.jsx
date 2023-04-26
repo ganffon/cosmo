@@ -182,8 +182,6 @@ function ProcessSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.process;
-
   return {
     data,
     rowHeaders,
@@ -192,7 +190,6 @@ function ProcessSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

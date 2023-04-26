@@ -209,8 +209,6 @@ function EquipmentMediumSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.equipmentMedium;
-
   return {
     data,
     rowHeaders,
@@ -221,7 +219,6 @@ function EquipmentMediumSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

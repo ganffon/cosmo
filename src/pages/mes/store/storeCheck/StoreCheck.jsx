@@ -15,6 +15,7 @@ import useInputSet from "custom/useInputSet";
 import DatePicker from "components/datetime/DatePicker";
 import DateTime from "components/datetime/DateTime";
 import restURI from "json/restURI.json";
+import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
@@ -37,12 +38,15 @@ function StoreCheck() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);
+  const [gridModalData, setGridModalData] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
     endDate: DateTime(7).dateFull,
@@ -56,6 +60,7 @@ function StoreCheck() {
     height: "90%",
   });
   const [searchToggle, setSearchToggle] = useState(false);
+  const [searchModalToggle, setSearchModalToggle] = useState(false);
   const [comboValue, setComboValue] = useState({
     prod_gbn_id: null,
     model_id: null,
@@ -71,12 +76,12 @@ function StoreCheck() {
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
   const {
-    uri,
     rowHeadersNum,
     rowHeadersNumCheck,
     header,
     columns,
     columnsModal,
+    columnsModalStockInspection,
     columnsSelectProd,
     columnsSelectStore,
     columnOptions,
@@ -106,6 +111,10 @@ function StoreCheck() {
     onClickSearch();
   }, [searchToggle]);
 
+  useEffect(() => {
+    onClickStockSearch();
+  }, [searchModalToggle]);
+
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
     isEditMode,
     refSingleGrid
@@ -129,7 +138,7 @@ function StoreCheck() {
     restURI.storeIncludeLocation
   );
 
-  const [actSearchOnlyCboDate] = uSearch.useSearchCboDate(
+  const [actSearchCboDate] = uSearch.useSearchCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -142,7 +151,7 @@ function StoreCheck() {
     setDisableRowToggle,
     comboValue,
     dateText,
-    uri
+    restURI.storeCheck
   );
   const [actSaveStoreCheck] = uSave.useSaveStoreCheck(
     refSingleGrid,
@@ -151,7 +160,9 @@ function StoreCheck() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.storeCheck,
+    searchToggle,
+    setSearchToggle
   );
   const [actSaveStoreCheckNewLOT] = uSave.useSaveStoreCheckNewLOT(
     refModalGrid,
@@ -160,8 +171,34 @@ function StoreCheck() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    uri
+    restURI.storeCheck
   );
+
+  const [actSearchOnlyDate] = uSearch.useSearchOnlyDate(
+    refModalGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalData,
+    dateModal,
+    restURI.storeCheckHistory
+  );
+
+  const [actDelete] = uDelete.useDelete(
+    refModalGrid,
+    isBackDrop,
+    isEditMode,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setIsDeleteAlertOpen,
+    searchModalToggle,
+    setSearchModalToggle,
+    restURI.storeView,
+    SWITCH_NAME_01
+  );
+
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -175,9 +212,10 @@ function StoreCheck() {
   };
   const onClickDelete = () => {
     setIsModalDeleteOpen(true);
+    actSearchOnlyDate("start_date", "end_date");
   };
   const onClickSearch = () => {
-    actSearchOnlyCboDate("reg_date");
+    actSearchCboDate("reg_date");
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -187,7 +225,7 @@ function StoreCheck() {
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
-    actSearchOnlyCboDate("reg_date");
+    actSearchCboDate("reg_date");
     setDisableRowToggle(!disableRowToggle);
   };
 
@@ -206,6 +244,22 @@ function StoreCheck() {
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
+    setSearchToggle(!searchToggle);
+  };
+  const onClickStockSearch = () => {
+    actSearchOnlyDate("start_date", "end_date");
+  };
+  const onClickStockDelete = () => {
+    const data = refModalGrid?.current?.gridInst?.getCheckedRows();
+    if (data.length !== 0) {
+      setIsDeleteAlertOpen(true);
+    }
+  };
+  const handleDelete = () => {
+    actDelete();
+  };
+  const onClickStockClose = () => {
+    setIsModalDeleteOpen(false);
     setSearchToggle(!searchToggle);
   };
   const onDblClickModalGrid = (e) => {
@@ -455,9 +509,10 @@ function StoreCheck() {
           header={header}
           rowHeaders={rowHeadersNum}
           refModalGrid={refModalGrid}
-          dateModal={dateModal}
-          setDateModal={setDateModal}
+          dateText={dateModal}
+          setDateText={setDateModal}
           datePickerSet={"single"}
+          buttonType={"ACS"}
         />
       ) : null}
       {isModalSelectOpen ? (
@@ -476,20 +531,25 @@ function StoreCheck() {
       ) : null}
       {isModalDeleteOpen ? (
         <ModalDate
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalGrid={onClickModalGrid}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          onDblClickModalGrid={onDblClickModalGrid}
-          columns={columnsModal}
+          onClickModalSearch={onClickStockSearch}
+          onClickModalDelete={onClickStockDelete}
+          onClickModalClose={onClickStockClose}
+          columns={columnsModalStockInspection}
           columnOptions={columnOptions}
           header={header}
           rowHeaders={rowHeadersNumCheck}
+          data={gridModalData}
           refModalGrid={refModalGrid}
-          dateModal={dateModal}
-          setDateModal={setDateModal}
+          dateText={dateModal}
+          setDateText={setDateModal}
           datePickerSet={"range"}
+          buttonType={"DS"}
+        />
+      ) : null}
+      {isDeleteAlertOpen ? (
+        <AlertDelete
+          handleDelete={handleDelete}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

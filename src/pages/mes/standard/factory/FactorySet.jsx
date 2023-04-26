@@ -187,8 +187,6 @@ function FactorySet(isEditMode) {
     },
   ];
 
-  const uri = restURI.factory;
-
   return {
     data,
     rowHeaders,
@@ -199,7 +197,6 @@ function FactorySet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

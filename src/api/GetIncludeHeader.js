@@ -28,10 +28,10 @@ class documentDetailIncludeHeader {
     this.insp_item_nm = raw.insp_item_nm;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = raw.spec_min ? Number(raw.spec_min) : null;
-    this.spec_max = raw.spec_max ? Number(raw.spec_max) : null;
-    this.spec_lcl = raw.spec_lcl ? Number(raw.spec_lcl) : null;
-    this.spec_ucl = raw.spec_ucl ? Number(raw.spec_ucl) : null;
+    this.spec_min = String(raw.spec_min) ? Number(raw.spec_min) : null;
+    this.spec_max = String(raw.spec_max) ? Number(raw.spec_max) : null;
+    this.spec_lcl = String(raw.spec_lcl) ? Number(raw.spec_lcl) : null;
+    this.spec_ucl = String(raw.spec_ucl) ? Number(raw.spec_ucl) : null;
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_filing_nm = raw.insp_filing_nm;
     this.insp_tool_id = raw.insp_tool_id;
@@ -39,11 +39,11 @@ class documentDetailIncludeHeader {
     this.insp_method_id = raw.insp_method_id;
     this.insp_method_nm = raw.insp_method_nm;
     this.special_property = raw.special_property;
-    this.worker_sample_cnt = raw.worker_sample_cnt
+    this.worker_sample_cnt = String(raw.worker_sample_cnt)
       ? Number(raw.worker_sample_cnt)
       : null;
     this.worker_insp_cycle = raw.worker_insp_cycle;
-    this.inspector_sample_cnt = raw.inspector_sample_cnt
+    this.inspector_sample_cnt = String(raw.inspector_sample_cnt)
       ? Number(raw.inspector_sample_cnt)
       : null;
     this.inspector_insp_cycle = raw.inspector_insp_cycle;

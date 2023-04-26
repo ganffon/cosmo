@@ -53,6 +53,7 @@
   "storeView": "/store-view",
   "storeTransferView": "/store-view/tran",
   "storeCheck": "/store-check",
+  "storeCheckHistory": "/store-view/storecheckhistory",
 
   "setup": "/setup"
 }

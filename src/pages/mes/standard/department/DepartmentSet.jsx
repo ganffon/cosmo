@@ -170,8 +170,6 @@ function DepartmentSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.department;
-
   return {
     data,
     rowHeaders,
@@ -180,7 +178,6 @@ function DepartmentSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

@@ -181,8 +181,6 @@ function PartnerTypeSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.partnerType;
-
   return {
     data,
     rowHeaders,
@@ -191,7 +189,6 @@ function PartnerTypeSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

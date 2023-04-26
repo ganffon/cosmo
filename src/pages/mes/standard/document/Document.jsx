@@ -23,7 +23,6 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 
@@ -83,9 +82,6 @@ function Document() {
     header,
     inputSet,
     inputInfo,
-    uri,
-    uriDetail,
-    uriDetailID,
   } = DocumentSet(
     isEditModeHeader,
     isEditModeDetail,
@@ -152,7 +148,7 @@ function Document() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    uri
+    restURI.inspectDocument
   );
   const [actEditHeader] = uEdit.useEditHeader(
     refGridHeader,
@@ -162,7 +158,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    uri
+    restURI.inspectDocument
   );
   const [actEditDetail] = uEdit.useEditDetail(
     refGridDetail,
@@ -172,7 +168,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    uri
+    restURI.inspectDocument
   );
   const [actSaveDetail] = uSave.useSaveDetail(
     refGridModalDetail,
@@ -181,7 +177,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    uriDetail
+    restURI.inspectDocumentDetail
   );
 
   const [actSearchHeader] = uSearch.useSearchHeader(
@@ -198,11 +194,11 @@ function Document() {
     setGridDataHeader,
     disRowHeader,
     setDisRowHeader,
-    uri
+    restURI.inspectDocument
   );
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    uriDetailID,
+    restURI.inspectDocumentDetailID,
     disRowDetail,
     setDisRowDetail
   );
@@ -210,7 +206,7 @@ function Document() {
     isBackDrop,
     setIsBackDrop,
     setGridDataHeaderRowID,
-    uri
+    restURI.inspectDocument
   );
   const [actDeleteDetail] = uDelete.useDeleteDetail(
     refGridDetail,
@@ -222,7 +218,7 @@ function Document() {
     actSearchHeader,
     actSearchDetail,
     headerClickRowID,
-    uriDetail,
+    restURI.inspectDocumentDetail,
     SWITCH_NAME_02
   );
   /**

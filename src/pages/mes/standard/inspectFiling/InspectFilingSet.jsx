@@ -198,8 +198,6 @@ function InspectFilingSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.inspectFiling;
-
   return {
     data,
     rowHeaders,
@@ -210,7 +208,6 @@ function InspectFilingSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

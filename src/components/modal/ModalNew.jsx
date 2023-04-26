@@ -25,7 +25,7 @@ function ModalNew(props) {
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>{`[신규] ${currentMenuName}`}</S.TitleBox>
+        <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"

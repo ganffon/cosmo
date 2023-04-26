@@ -473,8 +473,6 @@ function StoreSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.store;
-
   return {
     data,
     rowHeaders,
@@ -485,7 +483,6 @@ function StoreSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

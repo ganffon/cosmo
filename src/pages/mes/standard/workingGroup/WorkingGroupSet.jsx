@@ -199,8 +199,6 @@ function WorkingGroupSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.workingGroup;
-
   return {
     data,
     rowHeaders,
@@ -211,7 +209,6 @@ function WorkingGroupSet(isEditMode) {
     header,
     datePickerSet,
     inputSet,
-    uri,
   };
 }
 

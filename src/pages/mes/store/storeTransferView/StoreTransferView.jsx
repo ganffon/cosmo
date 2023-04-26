@@ -18,6 +18,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./StoreTransferView.styled";
+import restURI from "json/restURI.json";
 
 function StoreTransferView() {
   LoginStateChk();
@@ -46,7 +47,6 @@ function StoreTransferView() {
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
   const {
-    uri,
     rowHeadersNum,
     header,
     columns,
@@ -85,7 +85,7 @@ function StoreTransferView() {
     setGridData,
     comboValue,
     dateText,
-    uri
+    restURI.storeTransferView
   );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
