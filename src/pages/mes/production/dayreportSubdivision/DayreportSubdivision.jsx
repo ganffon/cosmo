@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
+import * as S from "./DayreportSubdivision.styled";
 
 function DayreportSubdivision() {
   LoginStateChk();
@@ -12,7 +13,8 @@ function DayreportSubdivision() {
   const refGridModalHeader = useRef(null);
   const refGridModalDetail = useRef(null);
   const refGridSelect = useRef(null);
-  return <div>D</div>;
+
+  return <S.ContentsArea isAllScreen={isAllScreen}></S.ContentsArea>;
 }
 
 export default DayreportSubdivision;

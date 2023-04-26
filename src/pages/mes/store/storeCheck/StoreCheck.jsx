@@ -51,6 +51,9 @@ function StoreCheck() {
     startDate: DateTime().dateFull,
     endDate: DateTime(7).dateFull,
   });
+  const [dateNew, setDateNew] = useState({
+    startDate: DateTime().dateFull,
+  });
   const [dateModal, setDateModal] = useState({
     startDate: DateTime().dateFull,
     endDate: DateTime(7).dateFull,
@@ -240,10 +243,13 @@ function StoreCheck() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    actSaveStoreCheckNewLOT(dateModal.startDate);
+    console.log(`dateNew.startDate`);
+    console.log(dateNew.startDate);
+    actSaveStoreCheckNewLOT(dateNew.startDate);
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
+    setDateNew({ ...dateNew, startDate: DateTime.dateFull });
     setSearchToggle(!searchToggle);
   };
   const onClickStockSearch = () => {
@@ -260,6 +266,11 @@ function StoreCheck() {
   };
   const onClickStockClose = () => {
     setIsModalDeleteOpen(false);
+    setDateModal({
+      ...dateModal,
+      startDate: DateTime().dateFull,
+      endDate: DateTime(7).dateFull,
+    });
     setSearchToggle(!searchToggle);
   };
   const onDblClickModalGrid = (e) => {
@@ -509,8 +520,8 @@ function StoreCheck() {
           header={header}
           rowHeaders={rowHeadersNum}
           refModalGrid={refModalGrid}
-          dateText={dateModal}
-          setDateText={setDateModal}
+          dateText={dateNew}
+          setDateText={setDateNew}
           datePickerSet={"single"}
           buttonType={"ACS"}
         />
