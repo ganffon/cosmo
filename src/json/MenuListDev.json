@@ -327,7 +327,7 @@
         "path": null,
         "under": [
           {
-            "name": "❌일일소분일지",
+            "name": "✴️일일소분일지",
             "id": "production-dayreport-subdivision",
             "path": "production-dayreport-subdivision",
             "under": null
@@ -506,6 +506,31 @@
       {
         "name": "❌라인가동현황",
         "id": "lineOperationStatus",
+        "path": null,
+        "under": null
+      }
+    ]
+  },
+  {
+    "name": "생산현장",
+    "id": "productionSite",
+    "path": null,
+    "under": [
+      {
+        "name": "❌소분일지",
+        "id": "production-dayreport-subdivision-site",
+        "path": null,
+        "under": null
+      },
+      {
+        "name": "❌계량일지",
+        "id": "production-dayreport-weight-site",
+        "path": null,
+        "under": null
+      },
+      {
+        "name": "❌포장일지",
+        "id": "production-dayreport-packing-site",
         "path": null,
         "under": null
       }

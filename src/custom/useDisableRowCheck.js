@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Condition from "custom/Condition";
 
 //Edit 모드 들어가고 나올때 disableRowToggle의 state를 이용하여
 //rowHeader의 disable 을 컨트롤함
@@ -22,15 +23,7 @@ const useDisableRowCheck = (isEditMode, refGrid) => {
 //Grid Cell 안에 구현된 Check 상호작용 시 해당 RowHeader 에 체크함
 const handleClickGridCheck = (e, isEditMode, columnName) => {
   if (isEditMode === true) {
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, columnName)) {
       e?.instance?.enableRowCheck(e?.rowKey);
       e?.instance?.check(e?.rowKey);
       e?.instance?.disableRowCheck(e?.rowKey);

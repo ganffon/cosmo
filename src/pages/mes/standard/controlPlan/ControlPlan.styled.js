@@ -10,7 +10,7 @@ export const ContentsArea = styled("div")`
     props.isAllScreen ? "100vh" : `calc(100vh - ${APP_BAR_HEIGHT})`};
   overflow: hidden auto;
   background-color: rgb(255, 255, 255);
-  padding: 0px 10px 0px 10px;
+  padding: 0px 20px 0px 10px;
 `;
 export const ShadowBoxButtonHeader = styled("div")`
   background-color: rgb(255, 255, 255);

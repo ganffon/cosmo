@@ -21,6 +21,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./InterfaceMemory.styled";
+import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 
 function InterfaceMemory(props) {
@@ -182,16 +183,7 @@ function InterfaceMemory(props) {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Grid" or "Modal"
   const onDblClickModalGrid = (e) => {
-    const columnName = ["infc_item_nm", "infc_item_type_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["infc_item_nm", "infc_item_type_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Modal");
       setIsModalSelectOpen(true);
@@ -212,16 +204,7 @@ function InterfaceMemory(props) {
 
   const onDblClickGrid = (e) => {
     if (isEditMode) {
-      const columnName = ["infc_item_nm", "infc_item_type_nm"];
-      let condition;
-      for (let i = 0; i < columnName.length; i++) {
-        if (i === 0) {
-          condition = e?.columnName === columnName[i];
-        } else {
-          condition = condition || e?.columnName === columnName[i];
-        }
-      }
-      if (condition) {
+      if (Condition(e, ["infc_item_nm", "infc_item_type_nm"])) {
         setDblClickRowKey(e?.rowKey);
         setDblClickGrid("Grid");
         setIsModalSelectOpen(true);

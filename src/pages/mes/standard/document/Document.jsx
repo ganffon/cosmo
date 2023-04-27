@@ -23,6 +23,7 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
+import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 
@@ -313,16 +314,7 @@ function Document() {
     }
   };
   const onDblClickGridHeader = (e) => {
-    const columnName = ["prod_no", "prod_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["prod_no", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Header");
       setColumnsSelect(columnsSelectProd);
@@ -331,16 +323,7 @@ function Document() {
     }
   };
   const onDblClickGridDetail = (e) => {
-    const columnName = ["insp_item_type_nm", "insp_item_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["insp_item_type_nm", "insp_item_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Detail");
       setColumnsSelect(columnsSelectInsp);
@@ -390,16 +373,7 @@ function Document() {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const onDblClickGridModalHeader = (e) => {
-    const columnName = ["prod_no", "prod_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["prod_no", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
       setColumnsSelect(columnsSelectProd);
@@ -408,16 +382,7 @@ function Document() {
     }
   };
   const onDblClickGridModalDetail = (e) => {
-    const columnName = ["insp_item_type_nm", "insp_item_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["insp_item_type_nm", "insp_item_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalDetail");
       setColumnsSelect(columnsSelectInsp);

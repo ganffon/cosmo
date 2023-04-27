@@ -23,6 +23,7 @@ import * as uSearch from "custom/useSearch";
 import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
+import Condition from "custom/Condition";
 import * as S from "./StoreCheck.styled";
 
 function StoreCheck() {
@@ -274,23 +275,16 @@ function StoreCheck() {
     setSearchToggle(!searchToggle);
   };
   const onDblClickModalGrid = (e) => {
-    const columnNameProd = [
-      "prod_gbn_nm",
-      "model_nm",
-      "prod_type_nm",
-      "prod_type_small_nm",
-      "prod_no",
-      "prod_nm",
-    ];
-    let condition;
-    for (let i = 0; i < columnNameProd.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnNameProd[i];
-      } else {
-        condition = condition || e?.columnName === columnNameProd[i];
-      }
-    }
-    if (condition) {
+    if (
+      Condition(e, [
+        "prod_gbn_nm",
+        "model_nm",
+        "prod_type_nm",
+        "prod_type_small_nm",
+        "prod_no",
+        "prod_nm",
+      ])
+    ) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalProd");
       setColumnsSelect(columnsSelectProd);
@@ -298,16 +292,7 @@ function StoreCheck() {
       setIsModalSelectOpen(true);
       actSelectProd();
     }
-    const columnNameStore = ["store_nm", "location_nm"];
-    condition = "";
-    for (let i = 0; i < columnNameStore.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnNameStore[i];
-      } else {
-        condition = condition || e?.columnName === columnNameStore[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["store_nm", "location_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalStore");
       setColumnsSelect(columnsSelectStore);

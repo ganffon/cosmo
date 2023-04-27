@@ -23,6 +23,7 @@ import * as uSearch from "custom/useSearch";
 import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
+import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 
@@ -315,16 +316,7 @@ function ControlPlan() {
     }
   };
   const onDblClickGridHeader = (e) => {
-    const columnName = ["prod_no", "prod_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["prod_no", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Header");
       setSelectWidth("40%");
@@ -334,37 +326,30 @@ function ControlPlan() {
     }
   };
   const onDblClickGridDetail = (e) => {
-    const columnName = [
-      "prod_no",
-      "prod_nm",
-      "equip_nm",
-      "insp_proc_gbn",
-      "insp_item_type_nm",
-      "insp_item_nm",
-      "insp_item_desc",
-      "spec_std",
-      "spec_min",
-      "spec_max",
-      "spec_lcl",
-      "spec_ucl",
-      "insp_method_nm",
-      "insp_tool_nm",
-      "insp_filing_nm",
-      "special_property",
-      "worker_sample_cnt",
-      "worker_insp_cycle",
-      "inspector_sample_cnt",
-      "inspector_insp_cycle",
-    ];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (
+      Condition(e, [
+        "prod_no",
+        "prod_nm",
+        "equip_nm",
+        "insp_proc_gbn",
+        "insp_item_type_nm",
+        "insp_item_nm",
+        "insp_item_desc",
+        "spec_std",
+        "spec_min",
+        "spec_max",
+        "spec_lcl",
+        "spec_ucl",
+        "insp_method_nm",
+        "insp_tool_nm",
+        "insp_filing_nm",
+        "special_property",
+        "worker_sample_cnt",
+        "worker_insp_cycle",
+        "inspector_sample_cnt",
+        "inspector_insp_cycle",
+      ])
+    ) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Detail");
       setSelectWidth("80%");
@@ -415,16 +400,7 @@ function ControlPlan() {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const onDblClickGridModalHeader = (e) => {
-    const columnName = ["prod_no", "prod_nm"];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (Condition(e, ["prod_no", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
       setSelectWidth("40%");
@@ -434,37 +410,30 @@ function ControlPlan() {
     }
   };
   const onDblClickGridModalDetail = (e) => {
-    const columnName = [
-      "prod_no",
-      "prod_nm",
-      "equip_nm",
-      "insp_proc_gbn",
-      "insp_item_type_nm",
-      "insp_item_nm",
-      "insp_item_desc",
-      "spec_std",
-      "spec_min",
-      "spec_max",
-      "spec_lcl",
-      "spec_ucl",
-      "insp_method_nm",
-      "insp_tool_nm",
-      "insp_filing_nm",
-      "special_property",
-      "worker_sample_cnt",
-      "worker_insp_cycle",
-      "inspector_sample_cnt",
-      "inspector_insp_cycle",
-    ];
-    let condition;
-    for (let i = 0; i < columnName.length; i++) {
-      if (i === 0) {
-        condition = e?.columnName === columnName[i];
-      } else {
-        condition = condition || e?.columnName === columnName[i];
-      }
-    }
-    if (condition) {
+    if (
+      Condition(e, [
+        "prod_no",
+        "prod_nm",
+        "equip_nm",
+        "insp_proc_gbn",
+        "insp_item_type_nm",
+        "insp_item_nm",
+        "insp_item_desc",
+        "spec_std",
+        "spec_min",
+        "spec_max",
+        "spec_lcl",
+        "spec_ucl",
+        "insp_method_nm",
+        "insp_tool_nm",
+        "insp_filing_nm",
+        "special_property",
+        "worker_sample_cnt",
+        "worker_insp_cycle",
+        "inspector_sample_cnt",
+        "inspector_insp_cycle",
+      ])
+    ) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalDetail");
       setSelectWidth("80%");
