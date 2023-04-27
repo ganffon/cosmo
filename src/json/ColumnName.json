@@ -277,6 +277,15 @@
   "outgo_qty": "출고중량",
   "inventory_qty": "재고중량",
 
+  "work_subdivision_id": "소분일지ID",
+  "work_subdivision_detail_id": "세부소분일지ID",
+  "total_qty": "소분총량",
+  "before_qty": "전 중량",
+  "after_qty": "후 중량",
+  "subdivision_time": "소분시간",
+  "subdivision_uid": "작업자ID",
+  "barcode_no": "바코드번호",
+
   "setup_id": "권한설정ID",
   "setup_cd": "권한설정코드",
   "setup_nm": "권한설정명",

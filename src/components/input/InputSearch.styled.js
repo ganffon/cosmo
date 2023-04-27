@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 
 const InputBox = styled("div")`
   display: flex;
-  align-items: center;
 `;
 
 const InputSet = styled(TextField)`
