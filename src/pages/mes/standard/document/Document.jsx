@@ -105,7 +105,7 @@ function Document() {
   }, [isMenuSlide, refGridHeader.current, refGridDetail.current]);
 
   useEffect(() => {
-    actSearchHeader();
+    actSearchHeaderIC();
   }, []);
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
@@ -139,7 +139,7 @@ function Document() {
     setGridDataSelect,
     restURI.inspectItem
   ); //➡️ Modal Select Search Insp
-  const [actSave] = uSave.useSave(
+  const [actSave] = uSave.useSaveMulti(
     refGridModalHeader,
     refGridModalDetail,
     isEditModeHeader,
@@ -181,7 +181,7 @@ function Document() {
     restURI.inspectDocumentDetail
   );
 
-  const [actSearchHeader] = uSearch.useSearchHeader(
+  const [actSearchHeaderIC] = uSearch.useSearchHeaderIC(
     refGridHeader,
     refGridDetail,
     setInputInfoValue,
@@ -216,7 +216,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     setIsDeleteAlertOpen,
-    actSearchHeader,
+    actSearchHeaderIC,
     actSearchDetail,
     headerClickRowID,
     restURI.inspectDocumentDetail,
@@ -260,7 +260,7 @@ function Document() {
     setInputSearchValue([]);
   };
   const onClickSearch = () => {
-    actSearchHeader();
+    actSearchHeaderIC();
   };
   const onClickEditModeSave = () => {
     actEditHeader();
@@ -268,7 +268,7 @@ function Document() {
   };
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
-    actSearchHeader(true);
+    actSearchHeaderIC(true);
     setDisRowHeader(!disRowHeader);
   };
   const onClickEditSaveDetail = () => {
@@ -368,7 +368,7 @@ function Document() {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
-    actSearchHeader(true);
+    actSearchHeaderIC(true);
   };
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
@@ -448,7 +448,7 @@ function Document() {
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
-      actSearchHeader(true);
+      actSearchHeaderIC(true);
     }
   };
 

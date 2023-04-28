@@ -9,22 +9,23 @@
 function GetDateParams(
   beforeParams = "",
   dateText,
-  date01 = null,
-  date02 = null
+  startDateNm = null,
+  endDateNm = null
 ) {
   let params = "";
   const startDate = dateText.startDate;
   const endDate = dateText.endDate;
   if (beforeParams.length !== 0) {
-    params = beforeParams + `&${date01}=${startDate}&`;
+    params = beforeParams + `&${startDateNm}=${startDate}&`;
   } else {
     params = "?";
-    params = params + `${date01}=${startDate}&`;
+    params = params + `${startDateNm}=${startDate}&`;
   }
-  if (date02 !== null) {
-    params = params + `${date02}=${endDate}&`;
+  if (endDateNm !== "") {
+    params = params + `${endDateNm}=${endDate}&`;
   }
   params = params.slice(0, params.length - 1);
+
   return params;
 }
 

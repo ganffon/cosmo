@@ -55,5 +55,9 @@
   "storeCheck": "/store-check",
   "storeCheckHistory": "/store-view/storecheckhistory",
 
+  "dayreportSubdivision": "/production-dayreport-subdivision",
+  "dayreportSubdivisionDetail": "/production-dayreport-subdivision-detail",
+  "dayreportSubdivisionDetailID": "/production-dayreport-subdivision-detail/detail",
+
   "setup": "/setup"
 }
