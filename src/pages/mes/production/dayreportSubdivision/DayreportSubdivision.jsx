@@ -15,6 +15,7 @@ import BackDrop from "components/backdrop/BackDrop";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import * as uSearch from "custom/useSearch";
+import * as uSave from "custom/useSave";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
 import * as S from "./DayreportSubdivision.styled";
@@ -35,6 +36,7 @@ function DayreportSubdivision() {
   });
 
   const [inputInfoValue, setInputInfoValue] = useState([]);
+  const [headerClickRowID, setHeaderClickRowID] = useState(null);
 
   const {
     columnOptions,
@@ -50,6 +52,8 @@ function DayreportSubdivision() {
     inputInfo,
   } = DayreportSubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail);
 
+  const SWITCH_NAME_01 = "dayreportSubdivision";
+  const SWITCH_NAME_02 = "dayreportSubdivisionDetail";
   let modalDetailClickRowKey = null;
 
   const refGridHeader = useRef(null);
@@ -74,6 +78,16 @@ function DayreportSubdivision() {
     currentMenuName,
     inputSet
   );
+  const [comboValue, setComboValue] = useState({});
+
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
+    isEditModeHeader,
+    refGridHeader
+  );
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
+    isEditModeDetail,
+    refGridDetail
+  );
 
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
@@ -84,6 +98,42 @@ function DayreportSubdivision() {
     setGridDataSelect,
     restURI.product
   ); //➡️ Modal Select Search Prod
+
+  const [actSave] = uSave.useSaveMulti(
+    refGridModalHeader,
+    refGridModalDetail,
+    isEditModeHeader,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_01,
+    SWITCH_NAME_02,
+    restURI.dayreportSubdivision
+  );
+  const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
+    refGridHeader,
+    refGridDetail,
+    setInputInfoValue,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    inputBoxID,
+    inputTextChange,
+    dateText,
+    setGridDataHeader,
+    disRowHeader,
+    setDisRowHeader,
+    restURI.dayreportSubdivision
+  );
+
+  const [actSearchDetail] = uSearch.useSearchDetail(
+    setGridDataDetail,
+    restURI.dayreportSubdivisionDetailID,
+    disRowDetail,
+    setDisRowDetail
+  );
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -101,7 +151,7 @@ function DayreportSubdivision() {
     setIsModalOpen(true);
   };
   const onClickSearch = () => {
-    // actSearch();
+    actSearchHeaderDI(true, "start_date", "end_date");
   };
   const onClickModalAddRow = () => {
     const Header = refGridModalHeader?.current?.gridInst;
@@ -128,7 +178,8 @@ function DayreportSubdivision() {
     modalDetailClickRowKey = null;
   };
   const onClickModalSave = () => {
-    // actSave();
+    console.log(refGridModalDetail?.current?.gridInst.getModifiedRows());
+    actSave();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
@@ -146,32 +197,47 @@ function DayreportSubdivision() {
     }
   };
   const onEditingFinishGridModalDetail = (e) => {
+    const Header = refGridModalHeader?.current?.gridInst;
     const Detail = refGridModalDetail?.current?.gridInst;
     if (Condition(e, ["subdivision_time"])) {
       //🔸시간 정규표현식 적용
       RE.Time(e, refGridModalDetail, "subdivision_time");
     }
     if (Condition(e, ["before_qty"])) {
-      if (Detail.getValue(e?.rowKey, "after_qty")) {
-        Detail?.setValue(
-          e?.rowKey,
-          "qty",
-          e?.value - Detail.getValue(e?.rowKey, "after_qty")
-        );
+      const beforeQty = e?.value;
+      const afterQty = Detail.getValue(e?.rowKey, "after_qty");
+      if (afterQty) {
+        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
       } else {
-        Detail?.setValue(e?.rowKey, "qty", e?.value);
+        Detail?.setValue(e?.rowKey, "qty", beforeQty);
       }
+      let totalQty = 0;
+      for (
+        let i = 0;
+        i < refGridModalDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+      }
+      Header?.setValue(0, "total_qty", totalQty);
     }
     if (Condition(e, ["after_qty"])) {
-      if (Detail.getValue(e?.rowKey, "before_qty")) {
-        Detail?.setValue(
-          e?.rowKey,
-          "qty",
-          Detail.getValue(e?.rowKey, "before_qty") - e?.value
-        );
+      const beforeQty = Detail.getValue(e?.rowKey, "before_qty");
+      const afterQty = e?.value;
+      if (beforeQty) {
+        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
       } else {
         Detail?.setValue(e?.rowKey, "qty", -e?.value);
       }
+      let totalQty = 0;
+      for (
+        let i = 0;
+        i < refGridModalDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+      }
+      Header?.setValue(0, "total_qty", totalQty);
     }
   };
   const onClickModalSelectClose = () => {
@@ -225,6 +291,31 @@ function DayreportSubdivision() {
     }
     setIsModalSelectOpen(false);
   };
+  const onClickGridHeader = (e) => {
+    const inputInfoValueList = [
+      "reg_date",
+      "prod_no",
+      "prod_nm",
+      "total_qty",
+      "remark",
+    ];
+    const rowID = e?.instance.getValue(e?.rowKey, "work_subdivision_id");
+    if (rowID !== null) {
+      setInputInfoValue([]);
+      setHeaderClickRowID(rowID);
+      actSearchDetail(rowID);
+      for (let i = 0; i < inputInfoValueList.length; i++) {
+        let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
+        if (data === false) {
+          //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
+          data = "false";
+        }
+        setInputInfoValue((prevList) => {
+          return [...prevList, data];
+        });
+      }
+    }
+  };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       // setSearchToggle(!searchToggle);
@@ -237,7 +328,7 @@ function DayreportSubdivision() {
         <S.SearchLeftWrap>
           <S.SearchLeftTopWrap>
             <S.Date
-              datePickerSet={"single"}
+              datePickerSet={"range"}
               dateText={dateText}
               setDateText={setDateText}
             />
@@ -253,7 +344,7 @@ function DayreportSubdivision() {
             ))}
           </S.SearchLeftTopWrap>
           <S.SearchLeftBottomWrap>
-            <ButtonNES onClickNew={onClickNew} />
+            <ButtonNES onClickNew={onClickNew} onClickSearch={onClickSearch} />
           </S.SearchLeftBottomWrap>
         </S.SearchLeftWrap>
         <S.GridHeaderWrap>
@@ -265,7 +356,7 @@ function DayreportSubdivision() {
             data={gridDataHeader}
             draggable={false}
             refGrid={refGridHeader}
-            // onClickGrid={onClickGrid}
+            onClickGrid={onClickGridHeader}
             // onDblClickGrid={onDblClickGrid}
             // onEditingFinish={onEditingFinishGrid}
           />
@@ -349,6 +440,8 @@ function DayreportSubdivision() {
           onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
+      <BackDrop isBackDrop={isBackDrop} />
     </S.ContentsArea>
   );
 }

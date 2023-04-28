@@ -87,6 +87,8 @@ const useSaveMulti = (
         header: dataTop,
         details: dataBottom,
       };
+
+      console.log(query);
       if (query.details !== undefined && isBackDrop === false) {
         setIsBackDrop(true);
         await restAPI

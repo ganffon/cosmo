@@ -40,7 +40,7 @@ function DayreportSubdivisionSet(
     {
       name: "reg_date",
       header: CN.reg_date,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "center",
       editor: isEditModeHeader
         ? {
@@ -108,7 +108,7 @@ function DayreportSubdivisionSet(
     {
       name: "total_qty",
       header: CN.total_qty,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeHeader
         ? {
@@ -250,7 +250,7 @@ function DayreportSubdivisionSet(
     {
       name: "before_qty",
       header: CN.before_qty,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeHeader
         ? {
@@ -269,7 +269,7 @@ function DayreportSubdivisionSet(
     {
       name: "after_qty",
       header: CN.after_qty,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeHeader
         ? {
@@ -288,7 +288,7 @@ function DayreportSubdivisionSet(
     {
       name: "qty",
       header: CN.qty,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeHeader
         ? {
@@ -453,7 +453,7 @@ function DayreportSubdivisionSet(
     {
       name: "reg_date",
       header: CN.reg_date,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "center",
       editor: isNewDetail
         ? false
@@ -476,7 +476,7 @@ function DayreportSubdivisionSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isNewDetail ? false : "text",
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -485,7 +485,7 @@ function DayreportSubdivisionSet(
     {
       name: "total_qty",
       header: CN.total_qty,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       formatter: function (value) {

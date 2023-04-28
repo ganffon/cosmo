@@ -106,7 +106,7 @@ function ControlPlan() {
   }, [isMenuSlide, refGridHeader.current, refGridDetail.current]);
 
   useEffect(() => {
-    actSearchHeader();
+    actSearchHeaderIC();
   }, []);
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
@@ -183,7 +183,7 @@ function ControlPlan() {
     restURI.controlPlanDetail
   );
 
-  const [actSearchHeader] = uSearch.useSearchHeader(
+  const [actSearchHeaderIC] = uSearch.useSearchHeaderIC(
     refGridHeader,
     refGridDetail,
     setInputInfoValue,
@@ -218,7 +218,7 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     setIsDeleteAlertOpen,
-    actSearchHeader,
+    actSearchHeaderIC,
     actSearchDetail,
     headerClickRowID,
     restURI.controlPlanDetail,
@@ -262,7 +262,7 @@ function ControlPlan() {
     setInputSearchValue([]);
   };
   const onClickSearch = () => {
-    actSearchHeader();
+    actSearchHeaderIC();
   };
   const onClickEditModeSave = () => {
     actEditHeader();
@@ -270,7 +270,7 @@ function ControlPlan() {
   };
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
-    actSearchHeader(true);
+    actSearchHeaderIC(true);
     setDisRowHeader(!disRowHeader);
   };
   const onClickEditSaveDetail = () => {
@@ -395,7 +395,7 @@ function ControlPlan() {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
-    actSearchHeader(true);
+    actSearchHeaderIC(true);
   };
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
@@ -525,7 +525,7 @@ function ControlPlan() {
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
-      actSearchHeader(true);
+      actSearchHeaderIC(true);
     }
   };
 

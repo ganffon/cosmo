@@ -236,7 +236,6 @@ const useSearchOnlyDate = (
 ) => {
   const actSearchOnlyDate = async (startDateNm, endDateNm) => {
     refGrid?.current?.gridInst?.finishEditing();
-    console.log(dateText);
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
@@ -332,9 +331,9 @@ const useSearchSelectIncludeHeader = (
   return [actSearchSelect];
 };
 /**
- * 🔸 메인화면에서 Header 조회
+ * 🔸 메인화면에서 Header 조회 + I(Input) + C(Cbo)
  */
-const useSearchHeader = (
+const useSearchHeaderIC = (
   refGrid01,
   refGrid02,
   setInputInfoValue,
@@ -350,7 +349,7 @@ const useSearchHeader = (
   setDisRowHeader,
   uri
 ) => {
-  const actSearchHeader = async (inputReset = true) => {
+  const actSearchHeaderIC = async (inputReset = true) => {
     inputReset && setInputInfoValue([]); //🔸Header 조회 시 InputBox 초기화
     refGrid02?.current?.gridInst.clear();
     if (isBackDrop === false) {
@@ -377,7 +376,62 @@ const useSearchHeader = (
       }
     }
   };
-  return [actSearchHeader];
+  return [actSearchHeaderIC];
+};
+/**
+ * 🔸 메인화면에서 Header 조회 + D(Date) + I(Input)
+ */
+const useSearchHeaderDI = (
+  refGrid01,
+  refGrid02,
+  setInputInfoValue,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  inputBoxID,
+  inputTextChange,
+  dateText,
+  setGridData,
+  disRowHeader,
+  setDisRowHeader,
+  uri
+) => {
+  const actSearchHeaderDI = async (
+    inputReset = true,
+    startDateNm,
+    endDateNm
+  ) => {
+    inputReset && setInputInfoValue([]); //🔸Header 조회 시 InputBox 초기화
+    refGrid02?.current?.gridInst.clear();
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const dateParams = GetDateParams(
+          inputParams,
+          dateText,
+          startDateNm,
+          endDateNm
+        );
+        const readURI = uri + dateParams;
+        const gridData = await restAPI.get(readURI);
+        console.log(gridData?.data?.data?.rows);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setIsBackDrop(false);
+        setDisRowHeader(!disRowHeader);
+      }
+    }
+  };
+  return [actSearchHeaderDI];
 };
 /**
  * 🔸 메인화면에서 Header 클릭 시 RowKey로 Detail 조회
@@ -429,7 +483,8 @@ export {
   useSearchOnlyDate,
   useSearchSelect,
   useSearchSelectIncludeHeader,
-  useSearchHeader,
+  useSearchHeaderIC,
+  useSearchHeaderDI,
   useSearchDetail,
   useSearchEditHeader,
 };

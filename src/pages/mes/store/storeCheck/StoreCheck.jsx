@@ -219,7 +219,7 @@ function StoreCheck() {
     actSearchOnlyDate("start_date", "end_date");
   };
   const onClickSearch = () => {
-    actSearchCboDate("reg_date");
+    actSearchCboDate("reg_date", "");
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -229,7 +229,7 @@ function StoreCheck() {
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
-    actSearchCboDate("reg_date");
+    actSearchCboDate("reg_date", "");
     setDisableRowToggle(!disableRowToggle);
   };
 
