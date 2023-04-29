@@ -33,7 +33,7 @@ export const ContentsRight = styled("div")`
   padding: 10px 10px 10px 10px;
 `;
 export const SearchLeftWrap = styled("div")`
-  height: 110px;
+  height: 16%;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
@@ -41,7 +41,7 @@ export const SearchLeftWrap = styled("div")`
   padding: 10px 5px 5px 0px;
 `;
 export const GridHeaderWrap = styled("div")`
-  height: ${`calc(100% - 105px)`};
+  height: 83%;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
