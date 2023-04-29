@@ -432,6 +432,33 @@ class controlPlanDetail {
     this.remark = raw.remark;
   }
 }
+class dayreportSubdivision {
+  constructor(raw) {
+    this.work_subdivision_id = raw.work_subdivision_id;
+    this.reg_date = raw.reg_date;
+    this.lot_no = raw.lot_no;
+    this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
+    this.remark = raw.remark;
+  }
+}
+class dayreportSubdivisionDetail {
+  constructor(raw) {
+    this.work_subdivision_detail_id = raw.work_subdivision_detail_id;
+    this.work_subdivision_id = raw.work_subdivision_id;
+    this.order_detail_id = raw.order_detail_id;
+    this.prod_id = raw.prod_id;
+    this.lot_no = raw.lot_no;
+    this.before_qty = String(raw.before_qty) ? Number(raw.before_qty) : null;
+    this.after_qty = String(raw.after_qty) ? Number(raw.after_qty) : null;
+    this.qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.subdivision_time = raw.subdivision_time;
+    this.subdivision_uid = raw.subdivision_uid;
+    this.inv_to_store_id = raw.inv_to_store_id;
+    this.inv_to_location_id = raw.inv_to_location_id;
+    this.barcode_no = raw.barcode_no;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -537,6 +564,12 @@ function GetPutParams(componentName, raw) {
       break;
     case "controlPlanDetail":
       params = new controlPlanDetail(raw);
+      break;
+    case "dayreportSubdivision":
+      params = new dayreportSubdivision(raw);
+      break;
+    case "dayreportSubdivisionDetail":
+      params = new dayreportSubdivisionDetail(raw);
       break;
     default:
   }

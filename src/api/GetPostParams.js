@@ -443,6 +443,7 @@ class controlPlanDetail {
 class dayreportSubdivision {
   constructor(raw, factory_id) {
     this.reg_date = raw.reg_date;
+    this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
     this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
     this.remark = raw.remark;
@@ -451,7 +452,6 @@ class dayreportSubdivision {
 class dayreportSubdivisionDetail {
   constructor(raw, factory_id) {
     this.work_subdivision_id = raw.work_subdivision_id;
-    this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
     this.before_qty = String(raw.before_qty) ? Number(raw.before_qty) : null;
     this.after_qty = String(raw.after_qty) ? Number(raw.after_qty) : null;

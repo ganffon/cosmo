@@ -98,4 +98,52 @@ const useDeleteDetail = (
   return [actDeleteDetail];
 };
 
-export { useDelete, useDeleteDetail };
+const useDeleteDetailDateRange = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  setIsDeleteAlertOpen,
+  actSearchHeader,
+  actSearchDetail,
+  headerClickRowID,
+  uri,
+  componentName
+) => {
+  const actDeleteDetailDateRange = async () => {
+    const data = refGrid?.current?.gridInst
+      ?.getCheckedRows()
+      ?.map((raw) => GetDeleteParams(componentName, raw));
+    if (data !== undefined && isBackDrop === false) {
+      setIsBackDrop(true);
+      await restAPI
+        .delete(uri, { data })
+        .then((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.data?.message,
+            severity: "success",
+          });
+        })
+        .catch((res) => {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: res?.response?.data?.message,
+            severity: "error",
+          });
+        })
+        .finally(() => {
+          setIsBackDrop(false);
+          setIsDeleteAlertOpen(false);
+          actSearchHeader(false, "start_date", "end_date");
+          actSearchDetail(headerClickRowID);
+        });
+    }
+  };
+  return [actDeleteDetailDateRange];
+};
+
+export { useDelete, useDeleteDetail, useDeleteDetailDateRange };

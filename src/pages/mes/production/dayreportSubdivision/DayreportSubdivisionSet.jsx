@@ -240,7 +240,7 @@ function DayreportSubdivisionSet(
       header: CN.lot_no,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -252,7 +252,7 @@ function DayreportSubdivisionSet(
       header: CN.before_qty,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditModeHeader
+      editor: isEditModeDetail
         ? {
             type: CustomGrid.EditorNumber,
           }
@@ -271,7 +271,7 @@ function DayreportSubdivisionSet(
       header: CN.after_qty,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditModeHeader
+      editor: isEditModeDetail
         ? {
             type: CustomGrid.EditorNumber,
           }
@@ -290,7 +290,7 @@ function DayreportSubdivisionSet(
       header: CN.qty,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditModeHeader
+      editor: isEditModeDetail
         ? {
             type: CustomGrid.EditorNumber,
           }
@@ -309,15 +309,7 @@ function DayreportSubdivisionSet(
       header: CN.subdivision_time,
       minWidth: WIDTH_MIDDLE,
       align: "center",
-      editor: isEditModeHeader
-        ? {
-            type: "datePicker",
-            options: {
-              language: "ko",
-              format: "yyyy-MM-dd",
-            },
-          }
-        : false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -341,7 +333,7 @@ function DayreportSubdivisionSet(
       header: CN.barcode_no,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditModeHeader
+      editor: isEditModeDetail
         ? {
             type: CustomGrid.EditorNumber,
           }
@@ -357,7 +349,7 @@ function DayreportSubdivisionSet(
       header: CN.remark,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditModeHeader ? "text" : false,
+      editor: isEditModeDetail ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -471,6 +463,51 @@ function DayreportSubdivisionSet(
       rowSpan: false,
     },
     {
+      name: "prod_id",
+      header: CN.prod_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      validation: {
+        required: true,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_no",
+      header: CN.prod_no,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      validation: {
+        required: true,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_nm",
+      header: CN.prod_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      validation: {
+        required: true,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
       name: "lot_no",
       header: CN.lot_no,
       minWidth: WIDTH_MIDDLE,
@@ -535,51 +572,7 @@ function DayreportSubdivisionSet(
       whiteSpace: false,
       rowSpan: false,
     },
-    {
-      name: "prod_id",
-      header: CN.prod_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      validation: {
-        required: true,
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_no",
-      header: CN.prod_no,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      validation: {
-        required: true,
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_nm",
-      header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      validation: {
-        required: true,
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+
     {
       name: "lot_no",
       header: CN.lot_no,
@@ -734,6 +727,10 @@ function DayreportSubdivisionSet(
     {
       id: "prod_nm",
       name: CN.prod_nm,
+    },
+    {
+      id: "lot_no",
+      name: CN.lot_no,
     },
     {
       id: "total_qty",
