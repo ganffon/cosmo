@@ -310,12 +310,6 @@
     "path": null,
     "under": [
       {
-        "name": "생산의뢰서",
-        "id": "production-request",
-        "path": "production-request",
-        "under": null
-      },
-      {
         "name": "작업지시서",
         "id": "production-order",
         "path": "production-order",

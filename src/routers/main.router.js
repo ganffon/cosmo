@@ -44,6 +44,7 @@ import StoreView from "pages/mes/store/storeView/StoreView";
 import StoreTransferView from "pages/mes/store/storeTransferView/StoreTransferView";
 import StoreCheck from "pages/mes/store/storeCheck/StoreCheck";
 import DayreportSubdivision from "pages/mes/production/dayreportSubdivision/DayreportSubdivision";
+import ProductionOrder from "pages/mes/production/productionOrder/ProductionOrder";
 
 export default function MainRouter() {
   return (
@@ -96,6 +97,7 @@ export default function MainRouter() {
           path="production-dayreport-subdivision"
           element={<DayreportSubdivision />}
         />
+        <Route path="production-order" element={<ProductionOrder />} />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

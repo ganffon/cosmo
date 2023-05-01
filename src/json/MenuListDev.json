@@ -291,13 +291,13 @@
         "under": null
       },
       {
-        "name": "✴️재고수불현황",
+        "name": "✅재고수불현황",
         "id": "store-transfer-view",
         "path": "store-transfer-view",
         "under": null
       },
       {
-        "name": "✴️재고실사",
+        "name": "✅재고실사",
         "id": "store-check",
         "path": "store-check",
         "under": null
@@ -310,13 +310,7 @@
     "path": null,
     "under": [
       {
-        "name": "❌생산의뢰서",
-        "id": "production-request",
-        "path": "production-request",
-        "under": null
-      },
-      {
-        "name": "❌작업지시서",
+        "name": "✴️작업지시서",
         "id": "production-order",
         "path": "production-order",
         "under": null
