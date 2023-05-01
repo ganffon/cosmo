@@ -115,6 +115,7 @@ const useDeleteDetailDateRange = (
     const data = refGrid?.current?.gridInst
       ?.getCheckedRows()
       ?.map((raw) => GetDeleteParams(componentName, raw));
+    console.log(data);
     if (data !== undefined && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI

@@ -402,7 +402,6 @@ const useSearchHeaderDI = (
     startDateNm,
     endDateNm
   ) => {
-    console.log(dateText);
     inputReset && setInputInfoValue([]); //🔸Header 조회 시 InputBox 초기화
     refGrid02?.current?.gridInst.clear();
     if (isBackDrop === false) {
@@ -416,9 +415,7 @@ const useSearchHeaderDI = (
           endDateNm
         );
         const readURI = uri + dateParams;
-        console.log(readURI);
         const gridData = await restAPI.get(readURI);
-        console.log(gridData?.data?.data?.rows);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
         setIsSnackOpen({
@@ -443,7 +440,6 @@ const useSearchDetail = (setGridData, uri, disRowDetail, setDisRowDetail) => {
     if (headerClickRowID !== undefined) {
       try {
         const gridData = await restAPI.get(`${uri}/${headerClickRowID}`);
-        console.log(gridData);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
       } finally {

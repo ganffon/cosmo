@@ -159,6 +159,11 @@ class storeCheck {
     this.tran_id = raw.tran_id;
   }
 }
+class dayreportSubdivisionDetail {
+  constructor(raw) {
+    this.work_subdivision_detail_id = raw.work_subdivision_detail_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -264,6 +269,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "storeCheck":
       params = new storeCheck(raw);
+      break;
+    case "dayreportSubdivisionDetail":
+      params = new dayreportSubdivisionDetail(raw);
       break;
     default:
   }

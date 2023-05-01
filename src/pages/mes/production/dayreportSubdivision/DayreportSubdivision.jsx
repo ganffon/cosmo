@@ -41,6 +41,7 @@ function DayreportSubdivision() {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [inputInfoValue, setInputInfoValue] = useState([]);
   const [headerClickRowID, setHeaderClickRowID] = useState(null);
+  const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
   const {
@@ -246,14 +247,13 @@ function DayreportSubdivision() {
     modalDetailClickRowKey = null;
   };
   const onClickModalSave = () => {
-    console.log(refGridModalDetail?.current?.gridInst.getModifiedRows());
     actSave();
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
-    // actSearchHeader(true);
+    actSearchHeaderDI(true, "start_date", "end_date");
   };
   const onDblClickGridModalHeader = (e) => {
     if (Condition(e, ["prod_no", "prod_nm"])) {
@@ -373,6 +373,7 @@ function DayreportSubdivision() {
       if (rowID !== null) {
         setInputInfoValue([]);
         setHeaderClickRowID(rowID);
+        setHeaderClickRowKey(e?.rowKey);
         actSearchDetail(rowID);
         for (let i = 0; i < inputInfoValueList.length; i++) {
           let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
@@ -421,6 +422,66 @@ function DayreportSubdivision() {
       RE.Time(e, refGridDetail, "subdivision_time");
     }
     disRow.handleEditingFinishGridCheck(e);
+
+    const Header = refGridHeader?.current?.gridInst;
+    const Detail = refGridDetail?.current?.gridInst;
+
+    if (Condition(e, ["before_qty"])) {
+      const beforeQty = e?.value;
+      const afterQty = Detail.getValue(e?.rowKey, "after_qty");
+      if (afterQty) {
+        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
+      } else {
+        Detail?.setValue(e?.rowKey, "qty", beforeQty);
+      }
+      let totalQty = 0;
+      for (
+        let i = 0;
+        i < refGridDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+      }
+      Header?.setValue(headerClickRowKey, "total_qty", totalQty);
+    }
+    if (Condition(e, ["after_qty"])) {
+      const beforeQty = Detail.getValue(e?.rowKey, "before_qty");
+      const afterQty = e?.value;
+      if (beforeQty) {
+        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
+      } else {
+        Detail?.setValue(e?.rowKey, "qty", -e?.value);
+      }
+      let totalQty = 0;
+      for (
+        let i = 0;
+        i < refGridDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+      }
+      Header?.setValue(headerClickRowKey, "total_qty", totalQty);
+    }
+
+    const inputInfoValueList = [
+      "reg_date",
+      "prod_no",
+      "prod_nm",
+      "lot_no",
+      "total_qty",
+      "remark",
+    ];
+    setInputInfoValue([]);
+    for (let i = 0; i < inputInfoValueList.length; i++) {
+      let data = Header.getValue(headerClickRowKey, inputInfoValueList[i]);
+      if (data === false) {
+        //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
+        data = "false";
+      }
+      setInputInfoValue((prevList) => {
+        return [...prevList, data];
+      });
+    }
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
