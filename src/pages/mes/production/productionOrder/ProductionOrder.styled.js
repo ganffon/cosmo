@@ -11,107 +11,78 @@ export const ContentsArea = styled("div")`
     props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
   width: 100%;
   background-color: rgb(255, 255, 255);
-  padding: 5px 10px 5px 10px;
-  display: flex;
+  padding: 5px 25px 5px 10px;
+  overflow: hidden auto;
 `;
-export const ContentsLeft = styled("div")`
-  height: 100%;
-  width: 40%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-right: 2.5px;
-  padding: 10px 10px 10px 10px;
-`;
-export const ContentsRight = styled("div")`
-  height: 100%;
-  width: 60%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-left: 2.5px;
-  padding: 10px 10px 10px 10px;
-`;
-export const SearchLeftWrap = styled("div")`
-  height: 16%;
-  width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 5px 5px 0px;
-`;
-export const GridHeaderWrap = styled("div")`
-  height: 83%;
-  width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-top: 10px;
-`;
-export const SearchInfoWrap = styled("div")`
-  height: 115px;
+export const ContentTop = styled("div")`
+  height: 65px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   margin-bottom: 10px;
-`;
-export const SearchRightWrap = styled("div")`
-  height: 40px;
-  width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-`;
-export const GridDetailWrap = styled("div")`
-  height: calc(100% - 175px);
-  width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-top: 10px;
-`;
-export const SearchLeftTopWrap = styled("div")`
-  height: 50%;
+  padding: 10px 10px 10px 10px;
   display: flex;
-  flex-flow: row wrap;
+  justify-content: space-between;
 `;
-export const SearchLeftBottomWrap = styled("div")`
-  height: 50%;
+export const SearchCondition = styled("div")`
   display: flex;
-  justify-content: end;
+`;
+export const ButtonTop = styled("div")`
+  display: flex;
   align-items: end;
-  padding-bottom: 5px;
 `;
-export const SearchRightTopWrap = styled("div")`
-  height: 50%;
-  display: flex;
-  flex-flow: row wrap;
+export const ButtonMid = styled("div")`
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 10px;
   padding: 10px 10px 10px 10px;
-`;
-export const SearchRightBottomWrap = styled("div")`
-  height: 100%;
   display: flex;
   justify-content: end;
-  align-items: center;
+`;
+export const ButtonBottom = styled("div")`
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  justify-content: end;
+`;
+export const GridTopWrap = styled("div")`
+  height: 200px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 10px;
   padding: 10px 10px 10px 10px;
 `;
-export const Date = styled(DatePicker)`
-  height: 40px;
+export const GridMidWrap = styled("div")`
+  height: 400px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 10px;
+  padding: 10px 10px 10px 10px;
+`;
+export const GridBottomWrap = styled("div")`
+  height: 400px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 10px;
+  padding: 10px 10px 10px 10px;
 `;
 export const InputS = styled(InputSearch)`
   height: 40px;
 `;
-export const InputBox = styled("div")`
-  width: 250px;
-  display: flex;
-  margin-right: 5px;
-  margin-top: 5px;
-`;
-export const Title = styled(Typography)`
-  width: 50px;
-`;
-
-export const Input = styled(TextField)`
-  width: 150px;
+export const Date = styled(DatePicker)`
+  height: 40px;
 `;

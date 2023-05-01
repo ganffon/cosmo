@@ -542,7 +542,7 @@ function DayreportSubdivision() {
         </S.GridHeaderWrap>
       </S.ContentsLeft>
       <S.ContentsRight>
-        <S.SearchRightWrap>
+        <S.SearchInfoWrap>
           <S.SearchRightTopWrap>
             {inputInfo.map((v, idx) => {
               return (
@@ -563,6 +563,8 @@ function DayreportSubdivision() {
               );
             })}
           </S.SearchRightTopWrap>
+        </S.SearchInfoWrap>
+        <S.SearchRightWrap>
           <S.SearchRightBottomWrap>
             {isEditModeDetail ? (
               <ButtonSE
@@ -578,7 +580,7 @@ function DayreportSubdivision() {
             )}
           </S.SearchRightBottomWrap>
         </S.SearchRightWrap>
-        <S.GridDetailWrap>
+        <S.GridDetailWrap isAllScreen={isAllScreen}>
           <GridSingle
             columnOptions={columnOptions}
             columns={columnsDetail}

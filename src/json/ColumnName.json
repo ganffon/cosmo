@@ -286,6 +286,18 @@
   "subdivision_uid": "작업자ID",
   "barcode_no": "바코드번호",
 
+  "order_id": "작업지시ID",
+  "order_no": "작업지시번호",
+  "request_no": "생산의뢰ID",
+  "line_dept_id": "라인부서ID",
+  "line_dept_nm": "라인부서명",
+  "start_date": "시작일자",
+  "end_date": "종료일자",
+  "complete_fg": "마감여부",
+  "complete_date": "마감일자",
+  "order_input_id": "투입작업지시ID",
+  "order_detail_id": "세부작업지시ID",
+
   "setup_id": "권한설정ID",
   "setup_cd": "권한설정코드",
   "setup_nm": "권한설정명",
