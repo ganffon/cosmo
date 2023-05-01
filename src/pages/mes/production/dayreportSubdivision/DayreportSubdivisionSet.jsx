@@ -290,11 +290,7 @@ function DayreportSubdivisionSet(
       header: CN.qty,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditModeDetail
-        ? {
-            type: CustomGrid.EditorNumber,
-          }
-        : false,
+      editor: false,
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
