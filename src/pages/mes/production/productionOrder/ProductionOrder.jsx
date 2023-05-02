@@ -143,9 +143,23 @@ function ProductionOrder() {
           refGrid={refGridHeader}
         />
       </S.GridTopWrap>
-      <S.ButtonMid>
-        <ButtonED />
-      </S.ButtonMid>
+      <S.ContentMid>
+        <S.TitleMid>❇️ 투입품</S.TitleMid>
+        <S.ButtonMid>
+          {isEditModeMid ? (
+            <ButtonSE
+              onClickEditModeSave={onClickEditModeSave}
+              onClickEditModeExit={onClickEditModeExit}
+            />
+          ) : (
+            <ButtonED
+              onClickNew={onClickNew}
+              onClickEdit={onClickEditHeader}
+              onClickSearch={onClickSearch}
+            />
+          )}
+        </S.ButtonMid>
+      </S.ContentMid>
       <S.GridMidWrap>
         <GridSingle
           columnOptions={columnOptions}
@@ -157,9 +171,23 @@ function ProductionOrder() {
           refGrid={refGridMid}
         />
       </S.GridMidWrap>
-      <S.ButtonBottom>
-        <ButtonED />
-      </S.ButtonBottom>
+      <S.ContentBottom>
+        <S.TitleBottom>❇️ 점검기준서</S.TitleBottom>
+        <S.ButtonBottom>
+          {isEditModeBottom ? (
+            <ButtonSE
+              onClickEditModeSave={onClickEditModeSave}
+              onClickEditModeExit={onClickEditModeExit}
+            />
+          ) : (
+            <ButtonED
+              onClickNew={onClickNew}
+              onClickEdit={onClickEditHeader}
+              onClickSearch={onClickSearch}
+            />
+          )}
+        </S.ButtonBottom>
+      </S.ContentBottom>
       <S.GridBottomWrap>
         <GridSingle
           columnOptions={columnOptions}

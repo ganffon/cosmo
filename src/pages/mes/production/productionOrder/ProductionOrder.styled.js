@@ -32,26 +32,46 @@ export const ButtonTop = styled("div")`
   display: flex;
   align-items: end;
 `;
-export const ButtonMid = styled("div")`
-  height: 50px;
+export const ContentMid = styled("div")`
+  height: 40px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   margin-bottom: 10px;
-  padding: 10px 10px 10px 10px;
+  padding: 5px 5px 5px 5px;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
 `;
-export const ButtonBottom = styled("div")`
-  height: 50px;
+export const ButtonMid = styled("div")`
+  display: flex;
+  align-items: center;
+`;
+export const TitleMid = styled("div")`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  font-family: NotoSansKR_B;
+`;
+export const ContentBottom = styled("div")`
+  height: 40px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
+  padding: 5px 5px 5px 5px;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+`;
+export const ButtonBottom = styled("div")`
+  display: flex;
+  align-items: end;
+`;
+export const TitleBottom = styled("div")`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  font-family: NotoSansKR_B;
 `;
 export const GridTopWrap = styled("div")`
   height: 200px;

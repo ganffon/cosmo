@@ -164,6 +164,17 @@ class dayreportSubdivisionDetail {
     this.work_subdivision_detail_id = raw.work_subdivision_detail_id;
   }
 }
+class partnerType {
+  constructor(raw) {
+    this.partner_type_id = raw.partner_type_id;
+  }
+}
+
+class partner {
+  constructor(raw) {
+    this.partner_id = raw.partner_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -273,6 +284,13 @@ function GetDeleteParams(componentName, raw) {
     case "dayreportSubdivisionDetail":
       params = new dayreportSubdivisionDetail(raw);
       break;
+    case "partnerType":
+      params = new partnerType(raw);
+      break;
+    case "partner":
+      params = new partner(raw);
+      break;
+
     default:
   }
 

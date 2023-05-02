@@ -18,9 +18,11 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
+import * as Cbo from "custom/useCboSet";
 
 function Partner(props) {
   LoginStateChk();
+  const [partnerTypeOpt, partnerTypeList] = Cbo.usePartnerTypeList();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
   const refSingleGrid = useRef(null);
@@ -42,7 +44,7 @@ function Partner(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = PartnerSet(isEditMode);
+  } = PartnerSet(isEditMode, partnerTypeList);
 
   const SWITCH_NAME_01 = "partner";
 
@@ -74,7 +76,7 @@ function Partner(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.partnerType,
+    restURI.partner,
     SWITCH_NAME_01
   );
 
@@ -89,7 +91,7 @@ function Partner(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.partnerType
+    restURI.partner
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -99,7 +101,7 @@ function Partner(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.partnerType
+    restURI.partner
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -108,7 +110,7 @@ function Partner(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.partnerType
+    restURI.partner
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -159,7 +161,11 @@ function Partner(props) {
   };
 
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, []);
+    disRow.handleClickGridCheck(e, isEditMode, [
+      "use_fg",
+      "vendor_fg",
+      "customer_fg",
+    ]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
