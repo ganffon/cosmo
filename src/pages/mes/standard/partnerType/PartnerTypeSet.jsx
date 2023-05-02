@@ -30,18 +30,6 @@ function PartnerTypeSet(isEditMode) {
    */
   const columns = [
     {
-      name: "factory_id",
-      header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
       name: "partner_type_id",
       header: CN.partner_type_id,
       minWidth: WIDTH_SHORT,
@@ -58,7 +46,7 @@ function PartnerTypeSet(isEditMode) {
       header: CN.partner_type_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -70,7 +58,7 @@ function PartnerTypeSet(isEditMode) {
       header: CN.partner_type_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -168,6 +156,35 @@ function PartnerTypeSet(isEditMode) {
   //   ],
   // };
 
+  const columnsModal = [
+    {
+      name: "partner_type_cd",
+      header: CN.partner_type_cd,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "partner_type_nm",
+      header: CN.partner_type_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
+
+  const rowHeadersModal = ["rowNum"];
+
   const datePickerSet = null; // "single" || "range" || null
 
   const inputSet = [
@@ -188,6 +205,8 @@ function PartnerTypeSet(isEditMode) {
     columnOptions,
     header,
     datePickerSet,
+    columnsModal,
+    rowHeadersModal,
     inputSet,
   };
 }

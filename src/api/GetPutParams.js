@@ -459,6 +459,35 @@ class dayreportSubdivisionDetail {
     this.remark = raw.remark;
   }
 }
+class partnerType {
+  constructor(raw) {
+    this.partner_type_id = raw.partner_type_id;
+    this.partner_type_cd = raw.partner_type_cd;
+    this.partner_type_nm = raw.partner_type_nm;
+  }
+}
+
+class partner {
+  constructor(raw) {
+    this.partner_id = raw.partner_id;
+    this.partner_cd = raw.partner_cd;
+    this.partner_nm = raw.partner_nm;
+    this.partner_type_id = raw.partner_type_id;
+    this.partner_no = raw.partner_no;
+    this.boss_nm = raw.boss_nm;
+    this.manager = raw.manager;
+    this.email = raw.email;
+    this.tel = raw.tel;
+    this.fax = raw.fax;
+    this.post = raw.post;
+    this.addr = raw.addr;
+    this.addr_detail = raw.addr_detail;
+    this.use_fg = raw.use_fg ? true : false;
+    this.vendor_fg = raw.vendor_fg ? true : false;
+    this.customer_fg = raw.customer_fg ? true : false;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -570,6 +599,13 @@ function GetPutParams(componentName, raw) {
       break;
     case "dayreportSubdivisionDetail":
       params = new dayreportSubdivisionDetail(raw);
+      break;
+    case "partnerType":
+      params = new partnerType(raw);
+      break;
+
+    case "partner":
+      params = new partner(raw);
       break;
     default:
   }

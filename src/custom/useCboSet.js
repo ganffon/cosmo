@@ -444,6 +444,25 @@ const useInspectFiling = () => {
   }, []);
   return [inspectFilingOpt, inspectFilingList];
 };
+let partnerTypeList = [];
+const usePartnerTypeList = () => {
+  const [partnerTypeOpt, setPartnerTypeOpt] = useState([]);
+
+  useEffect(() => {
+    const getCboOpt = async () => {
+      console.log(restURI.partnerType);
+      await restAPI.get(restURI.partnerType).then((res) => {
+        setPartnerTypeOpt(cboMUISort(res?.data?.data?.rows, "partner_type_nm"));
+        partnerTypeList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "partner_type_id", "partner_type_nm");
+        });
+        partnerTypeList = cboGridSort(partnerTypeList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [partnerTypeOpt, partnerTypeList];
+};
 
 export {
   useLine,
@@ -469,4 +488,5 @@ export {
   useInspectMethod,
   useInspectTool,
   useInspectFiling,
+  usePartnerTypeList,
 };

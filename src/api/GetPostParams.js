@@ -463,6 +463,34 @@ class dayreportSubdivisionDetail {
     this.remark = raw.remark;
   }
 }
+class partnerType {
+  constructor(raw, factory_id) {
+    this.partner_type_cd = raw.partner_type_cd;
+    this.partner_type_nm = raw.partner_type_nm;
+  }
+}
+
+class partner {
+  constructor(raw, factory_id) {
+    this.factory_id = factory_id;
+    this.partner_cd = raw.partner_cd;
+    this.partner_nm = raw.partner_nm;
+    this.partner_type_id = raw.partner_type_id;
+    this.partner_no = raw.partner_no;
+    this.boss_nm = raw.boss_nm;
+    this.manager = raw.manager;
+    this.email = raw.email;
+    this.tel = raw.tel;
+    this.fax = raw.fax;
+    this.post = raw.post;
+    this.addr = raw.addr;
+    this.addr_detail = raw.addr_detail;
+    this.use_fg = raw.use_fg ? true : false;
+    this.vendor_fg = raw.vendor_fg ? true : false;
+    this.customer_fg = raw.customer_fg ? true : false;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -595,6 +623,12 @@ function GetPostParams(componentName, raw, factory_id) {
         break;
       case "dayreportSubdivisionDetail":
         params = new dayreportSubdivisionDetail(raw, factory_id);
+        break;
+      case "partnerType":
+        params = new partnerType(raw, factory_id);
+        break;
+      case "partner":
+        params = new partner(raw, factory_id);
         break;
       default:
     }
