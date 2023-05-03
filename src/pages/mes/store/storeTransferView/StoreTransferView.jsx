@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonS from "components/button/ButtonS";
+import ButtonS from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
 import LoginStateChk from "custom/LoginStateChk";

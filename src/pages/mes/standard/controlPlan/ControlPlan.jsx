@@ -59,7 +59,10 @@ function ControlPlan() {
   const [comboValue, setComboValue] = useState({
     line_id: null,
   });
-  const [selectWidth, setSelectWidth] = useState("40%");
+  const [modalSelectSize, setModalSelectSize] = useState({
+    width: "80%",
+    height: "90%",
+  });
   const [columnsSelect, setColumnsSelect] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [inputInfoValue, setInputInfoValue] = useState([]);
@@ -319,7 +322,7 @@ function ControlPlan() {
     if (Condition(e, ["prod_no", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Header");
-      setSelectWidth("40%");
+      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
       setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
@@ -352,7 +355,7 @@ function ControlPlan() {
     ) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Detail");
-      setSelectWidth("80%");
+      setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
       setColumnsSelect(columnsSelectDocument);
       setIsModalSelectOpen(true);
       actSelectDocument();
@@ -403,7 +406,7 @@ function ControlPlan() {
     if (Condition(e, ["prod_no", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
-      setSelectWidth("40%");
+      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
       setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
@@ -436,7 +439,7 @@ function ControlPlan() {
     ) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalDetail");
-      setSelectWidth("80%");
+      setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
       setColumnsSelect(columnsSelectDocument);
       setIsModalSelectOpen(true);
       actSelectDocument();
@@ -629,8 +632,8 @@ function ControlPlan() {
         <S.ButtonWrap>
           {isEditModeDetail ? (
             <ButtonSE
-              onClickEditSaveDetail={onClickEditSaveDetail}
-              onClickEditExitDetail={onClickEditExitDetail}
+              onClickSave={onClickEditSaveDetail}
+              onClickExit={onClickEditExitDetail}
             />
           ) : (
             <ButtonNED
@@ -678,7 +681,8 @@ function ControlPlan() {
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
-          width={selectWidth}
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
           onClickModalSelectClose={onClickModalSelectClose}
           columns={columnsSelect}
           columnOptions={columnOptions}

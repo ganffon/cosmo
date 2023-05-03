@@ -36,7 +36,7 @@ function AvatarButton() {
         aria-expanded={open ? "true" : undefined}
         onClick={onClickAvatar}
       >
-        {avatarCharacter(cookie.loginID)}
+        {avatarCharacter(cookie.loginID ? cookie.loginID : "A")}
       </S.AvatarButton>
       <Menu
         id="avatarMenu"

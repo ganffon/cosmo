@@ -59,6 +59,10 @@ function Document() {
   const [comboValue, setComboValue] = useState({
     line_id: null,
   });
+  const [modalSelectSize, setModalSelectSize] = useState({
+    width: "80%",
+    height: "90%",
+  });
   const [columnsSelect, setColumnsSelect] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [inputInfoValue, setInputInfoValue] = useState([]);
@@ -552,8 +556,8 @@ function Document() {
         <S.ButtonWrap>
           {isEditModeDetail ? (
             <ButtonSE
-              onClickEditSaveDetail={onClickEditSaveDetail}
-              onClickEditExitDetail={onClickEditExitDetail}
+              onClickSave={onClickEditSaveDetail}
+              onClickExit={onClickEditExitDetail}
             />
           ) : (
             <ButtonNED
@@ -601,8 +605,8 @@ function Document() {
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
-          width={"40%"}
-          height={"90%"}
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
           onClickModalSelectClose={onClickModalSelectClose}
           columns={columnsSelect}
           columnOptions={columnOptions}

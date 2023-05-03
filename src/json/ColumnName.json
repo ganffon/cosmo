@@ -288,7 +288,7 @@
 
   "order_id": "작업지시ID",
   "order_no": "작업지시번호",
-  "request_no": "생산의뢰ID",
+  "request_no": "생산의뢰번호",
   "line_dept_id": "라인부서ID",
   "line_dept_nm": "라인부서명",
   "start_date": "시작일자",

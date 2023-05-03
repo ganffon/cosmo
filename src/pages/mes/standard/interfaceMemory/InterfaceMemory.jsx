@@ -45,6 +45,10 @@ function InterfaceMemory(props) {
   const [comboValue, setComboValue] = useState({
     line_id: null,
   });
+  const [modalSelectSize, setModalSelectSize] = useState({
+    width: "80%",
+    height: "90%",
+  });
 
   const [lineOpt, lineList] = Cbo.useLine();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
@@ -341,6 +345,8 @@ function InterfaceMemory(props) {
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
           onClickModalSelectClose={onClickModalSelectClose}
           columns={columnsModalSelect}
           columnOptions={columnOptions}
