@@ -76,6 +76,10 @@ function DayreportSubdivision() {
     startDate: DateTime().dateFull,
     endDate: DateTime(7).dateFull,
   });
+  const [modalSelectSize, setModalSelectSize] = useState({
+    width: "80%",
+    height: "90%",
+  });
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const [columnsSelect, setColumnsSelect] = useState([]);
@@ -619,8 +623,8 @@ function DayreportSubdivision() {
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
-          width={"40%"}
-          height={"90%"}
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
           onClickModalSelectClose={onClickModalSelectClose}
           columns={columnsSelect}
           columnOptions={columnOptions}

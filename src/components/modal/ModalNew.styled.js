@@ -14,11 +14,21 @@ export const HeaderBox = styled("div")`
 `;
 export const ButtonBox = styled("div")`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   grid-column: 1 / -1;
   grid-row: 2 / 2;
   height: 40px;
-  padding-right: 15px;
+`;
+export const ButtonWrap = styled("div")`
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+`;
+export const TitleWrap = styled("div")`
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  font-family: NotoSansKR_B;
 `;
 export const GridBox = styled("div")`
   width: 100%;
@@ -31,6 +41,7 @@ export const TitleBox = styled("div")`
   padding-top: 8px;
   padding-left: 15px;
   font-weight: 700;
+  font-family: NotoSansKR_B;
 `;
 
 export const ButtonClose = styled(IconButton)`

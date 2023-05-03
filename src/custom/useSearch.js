@@ -136,6 +136,48 @@ const useSearchCboDate = (
   };
   return [actSearchCboDate];
 };
+const useSearchDI = (
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  inputBoxID,
+  inputTextChange,
+  dateText,
+  setGridData,
+  disRowHeader,
+  setDisRowHeader,
+  uri
+) => {
+  const actSearchDI = async (startDateNm, endDateNm) => {
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const dateParams = GetDateParams(
+          inputParams,
+          dateText,
+          startDateNm,
+          endDateNm
+        );
+        const readURI = uri + dateParams;
+        const gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setIsBackDrop(false);
+        setDisRowHeader(!disRowHeader);
+      }
+    }
+  };
+  return [actSearchDI];
+};
 /**
  * 🔸Edit 사용 안 하는 화면에서 검색조건 Input Box + Cbo 있을 때 사용
  */
@@ -477,6 +519,7 @@ export {
   useSearch,
   useSearchCbo,
   useSearchCboDate,
+  useSearchDI,
   useSearchOnlyCbo,
   useSearchOnlyCboDate,
   useSearchOnlyDate,
