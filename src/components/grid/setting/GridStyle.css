@@ -15,6 +15,9 @@
 .columnHeaderMultiLine {
   white-space: pre;
 }
+.tui-grid-container {
+  font-family: "NotoSansKR";
+}
 
 /* .checkbox :disabled {
   accent-color: #f532cb99 !important;

@@ -45,6 +45,8 @@ import StoreTransferView from "pages/mes/store/storeTransferView/StoreTransferVi
 import StoreCheck from "pages/mes/store/storeCheck/StoreCheck";
 import DayreportSubdivision from "pages/mes/production/dayreportSubdivision/DayreportSubdivision";
 import ProductionOrder from "pages/mes/production/productionOrder/ProductionOrder";
+import SparepartIncome from "pages/mes/equipment/sparepartsIncome/SparepartsIncome";
+import SparepartsRelease from "pages/mes/equipment/sparepartsRelease/sparepartsRelease";
 
 export default function MainRouter() {
   return (
@@ -98,6 +100,9 @@ export default function MainRouter() {
           element={<DayreportSubdivision />}
         />
         <Route path="production-order" element={<ProductionOrder />} />
+
+        <Route path="spareparts-income" element={<SparepartIncome />} />
+        <Route path="spareparts-outgo" element={<SparepartsRelease />} />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

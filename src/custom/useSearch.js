@@ -2,7 +2,7 @@ import { useCookies } from "react-cookie";
 import GetInputSearchParams from "api/GetInputSearchParams";
 import GetCboSearchParams from "api/GetCboSearchParams";
 import GetDateParams from "api/GetDateParams";
-import GetIncludeHeader from "api/GetIncludeHeader";
+import GetSearchParams from "api/GetSearchParams";
 import GetInputSearchReadOnly from "api/GetInputSearchReadOnly";
 import restAPI from "api/restAPI";
 /**
@@ -28,7 +28,7 @@ const useSearch = (
         setIsBackDrop(true);
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
         const readURI = uri + inputParams;
-        const gridData = await restAPI.get(readURI);
+        let gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
         setIsSnackOpen({
@@ -310,54 +310,23 @@ const useSearchSelect = (
   isSnackOpen,
   setIsSnackOpen,
   setGridModalSelectData,
-  uri
+  uri,
+  componentName = null
 ) => {
   const actSearchSelect = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const gridData = await restAPI.get(uri);
-        await setGridModalSelectData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
-      }
-    }
-  };
-  return [actSearchSelect];
-};
-/**
- * 🔸 Select 창에서 Data 조회 (Header + Detail)
- * 하나의 헤더(A)에 여러개의 디테일(01~03)이 있을 때
- * A - 01 / A - 02 / A - 03 이렇게 조회하기 위함.
- */
-const useSearchSelectIncludeHeader = (
-  refGrid,
-  isBackDrop,
-  setIsBackDrop,
-  isSnackOpen,
-  setIsSnackOpen,
-  setGridModalSelectData,
-  componentName,
-  uri
-) => {
-  const actSearchSelect = async () => {
-    refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const gridData = await restAPI.get(uri);
-        const data = gridData?.data?.data?.rows.map((raw) =>
-          GetIncludeHeader(componentName, raw)
-        );
-        await setGridModalSelectData(data);
+        let gridData = await restAPI.get(uri);
+        if (componentName !== null) {
+          gridData = gridData?.data?.data?.rows.map((raw) =>
+            GetSearchParams(componentName, raw)
+          );
+          await setGridModalSelectData(gridData);
+        } else {
+          await setGridModalSelectData(gridData?.data?.data?.rows);
+        }
       } catch {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -524,7 +493,6 @@ export {
   useSearchOnlyCboDate,
   useSearchOnlyDate,
   useSearchSelect,
-  useSearchSelectIncludeHeader,
   useSearchHeaderIC,
   useSearchHeaderDI,
   useSearchDetail,

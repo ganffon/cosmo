@@ -281,7 +281,7 @@
   },
   {
     "name": "재고관리",
-    "id": "inventory-info",
+    "id": "inventory",
     "path": null,
     "under": [
       {
@@ -306,7 +306,7 @@
   },
   {
     "name": "생산관리",
-    "id": "production-info",
+    "id": "production",
     "path": null,
     "under": [
       {
@@ -350,7 +350,7 @@
   },
   {
     "name": "설비관리",
-    "id": "equipment-info",
+    "id": "equipment",
     "path": null,
     "under": [
       {
@@ -456,7 +456,7 @@
   },
   {
     "name": "품질관리",
-    "id": "quality-info",
+    "id": "quality",
     "path": null,
     "under": [
       {
@@ -488,7 +488,7 @@
   },
   {
     "name": "경영정보",
-    "id": "managementInformation",
+    "id": "management",
     "path": null,
     "under": [
       {
@@ -507,7 +507,7 @@
   },
   {
     "name": "생산현장",
-    "id": "productionSite",
+    "id": "panel",
     "path": null,
     "under": [
       {

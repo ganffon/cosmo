@@ -1,3 +1,12 @@
+// ✨ SEARCH ✨
+class storeFrom {
+  constructor(raw) {
+    this.from_store_id = raw.store_id;
+    this.from_store_nm = raw.store_nm;
+    this.from_location_id = raw.location_id;
+    this.from_location_nm = raw.location_nm;
+  }
+}
 class documentDetailIncludeHeader {
   constructor(raw) {
     this.insp_document_id = raw.H_insp_document_id;
@@ -58,17 +67,26 @@ class documentDetailIncludeHeader {
   }
 }
 
-function GetIncludeHeader(componentName, raw) {
+/**
+ * @param {string} componentName 소문자로 시작
+ * @param {any} raw 처리 할 데이터
+ * @returns
+ */
+function GetSearchParams(componentName, raw) {
   let params = "";
   if (raw !== undefined) {
     switch (componentName) {
+      case "storeFrom":
+        params = new storeFrom(raw);
+        break;
       case "documentDetailIncludeHeader":
         params = new documentDetailIncludeHeader(raw);
         break;
+
       default:
     }
   }
   return params;
 }
 
-export default GetIncludeHeader;
+export default GetSearchParams;
