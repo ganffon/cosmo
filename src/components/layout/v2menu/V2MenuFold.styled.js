@@ -23,6 +23,7 @@ const Drawer = styled("div")`
   background-color: ${MENU_FOLD_BACK_COLOR};
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
 `;
 
 export { MenuFold, Drawer };

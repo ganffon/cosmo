@@ -134,15 +134,15 @@ function ControlPlan() {
     setGridDataSelect,
     restURI.product
   );
-  const [actSelectDocument] = uSearch.useSearchSelectIncludeHeader(
+  const [actSelectDocument] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    "documentDetailIncludeHeader",
-    restURI.inspectDocumentDetailIncludeHeader
+    restURI.inspectDocumentDetailIncludeHeader,
+    "documentDetailIncludeHeader"
   );
   const [actSave] = uSave.useSave(
     refGridModalHeader,

@@ -8,7 +8,7 @@ export const HeaderBox = styled("div")`
   grid-row: 1 / 1;
   display: flex;
   justify-content: space-between;
-  background-color: ${APP_BAR_COLOR};
+  background-color: #f2f2f2;
   border-radius: 10px 10px 0px 0px;
   height: 40px;
 `;
@@ -35,6 +35,7 @@ export const GridBox = styled("div")`
   height: 100%;
   grid-column: 1 / -1;
   grid-row: 3 / -1;
+  padding: 0px 10px 10px 10px;
 `;
 
 export const TitleBox = styled("div")`

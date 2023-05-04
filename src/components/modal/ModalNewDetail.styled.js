@@ -34,12 +34,14 @@ export const GridBoxTop = styled("div")`
   height: 100%;
   grid-column: 1 / -1;
   grid-row: 3 / 6;
+  padding: 0px 10px 0px 10px;
 `;
 export const GridBoxBottom = styled("div")`
   width: 100%;
   height: 100%;
   grid-column: 1 / -1;
   grid-row: 7 / -1;
+  padding: 0px 10px 10px 10px;
 `;
 
 export const TitleBox = styled("div")`

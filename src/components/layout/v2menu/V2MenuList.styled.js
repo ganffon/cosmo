@@ -18,8 +18,9 @@ const MenuIcon = styled(ListItemIcon)`
   min-width: 0px;
   justify-content: center;
 `;
+const Icon = styled("img")``;
 
 const MenuText = styled(ListItemText)`
   color: white;
 `;
-export { MenuList, MenuButton, MenuIcon, MenuText };
+export { MenuList, MenuButton, MenuIcon, Icon, MenuText };

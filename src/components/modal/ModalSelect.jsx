@@ -5,7 +5,7 @@ import * as S from "./ModalSelect.styled";
 
 function ModalSelect(props) {
   const {
-    width,
+    width = "80%",
     height,
     onClickModalSelectClose = () => {},
     refSelectGrid,

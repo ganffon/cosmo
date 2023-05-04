@@ -24,14 +24,14 @@ const MenuButton = styled(ListItemButton)`
 
 const MenuText = styled(ListItemText)`
   opacity: 1;
-  margin: 0px 0px;
+  color: #ddf1ff;
+  padding-left: 15px;
 `;
 
 const MenuSubheader = styled(ListSubheader)`
   background-color: ${MENU_DEPTH_BACK_COLOR};
-  font-weight: 700;
-  font-size: 14px;
-  color: ${MENU_FOLD_BACK_COLOR};
+  font-size: 18px;
+  color: white;
   padding: 0px 4px;
   line-height: 30px;
 `;

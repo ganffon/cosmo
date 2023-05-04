@@ -1,5 +1,8 @@
-export const HEADER_BORDER_COLOR = "#bdbdbd";
-export const HEADER_BACK_COLOR = "#cfd8dc";
+// export const HEADER_BORDER_COLOR = "#A7CFEA";
+// export const HEADER_BACK_COLOR = "#F0FAFF";
+// export const HEADER_BORDER_COLOR = "#D9D9D9";
+export const HEADER_BORDER_COLOR = "#D9D9D9";
+export const HEADER_BACK_COLOR = "#F2F2F2";
 
 export const NORMAL_BACK_COLOR = "white";
 export const NORMAL_BORDER_COLOR = "#e0e0e0";

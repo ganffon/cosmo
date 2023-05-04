@@ -304,5 +304,24 @@
   "auth_read": "조회",
   "auth_create": "등록",
   "auth_update": "수정",
-  "auth_delete": "삭제"
+  "auth_delete": "삭제",
+
+  "spare_receive_id": "SpareParts입하ID",
+  "supplier_id": "공급처ID",
+  "stmt_no": "전표번호",
+  "total_price": "합계 금액",
+  "spare_receive_uid": "입고자",
+  "spare_receive_detail_id": "SpareParts입하 상세ID",
+  "to_store_id": "입고 창고ID",
+  "to_location_id": "입고 위치ID",
+  "income_uid": "입고자ID",
+  "barcode": "바코드",
+  "spare_release_id": "SpareParts출고ID",
+  "eqm_detail_id": "상세설비ID",
+  "from_store_id": "출고 창고ID",
+  "from_store_nm": "출고 창고",
+  "from_location_id": "출고 위치ID",
+  "from_location_nm": "출고 위치",
+  "release_uid": "출고자ID",
+  "release_nm": "출고자"
 }

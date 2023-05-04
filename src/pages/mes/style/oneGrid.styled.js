@@ -11,7 +11,7 @@ export const ContentsArea = styled("div")`
   height: ${(props) =>
     props.isAllScreen ? "100vh" : `calc(100vh - ${APP_BAR_HEIGHT})`};
   overflow: hidden auto;
-  background-color: white;
+  background-color: #efefef;
   padding: 0px 10px 0px 10px;
 `;
 export const ShadowBoxButton = styled("div")`
@@ -45,7 +45,7 @@ export const ShadowBoxGrid = styled("div")`
     props.isAllScreen
       ? `calc(100vh - ${APP_BAR_HEIGHT} - ${HEIGHT_MARGIN})`
       : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - ${HEIGHT_MARGIN})`};
-  border-radius: 3px;
+  border-radius: 10px;
   border-color: rgb(255, 255, 255);
   margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -53,4 +53,5 @@ export const ShadowBoxGrid = styled("div")`
 export const GridWrap = styled("div")`
   width: 100%;
   height: 100%;
+  padding: 10px 10px 10px 10px;
 `;

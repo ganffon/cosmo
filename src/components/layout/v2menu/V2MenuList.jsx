@@ -6,21 +6,39 @@ import Filter3 from "@mui/icons-material/Filter3";
 import Filter4 from "@mui/icons-material/Filter4";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
+import Admin from "img/Menu/admin.svg";
+import Equipment from "img/Menu/equipment.svg";
+import Management from "img/Menu/management.svg";
+import Material from "img/Menu/material.svg";
+import Panel from "img/Menu/panel.svg";
+import Production from "img/Menu/production.svg";
+import Quality from "img/Menu/quality.svg";
+import Standard from "img/Menu/standard.svg";
+import Inventory from "img/Menu/inventory.svg";
+import Star from "img/Menu/star.svg";
 import * as S from "./V2MenuList.styled";
 
 //메뉴 리스트 아이콘 부여
-const menuListIcon = (id) => {
-  switch (id) {
-    case 100:
-      return <Filter1 />;
-    case 200:
-      return <Filter2 />;
-    case 300:
-      return <Filter3 />;
-    case 400:
-      return <Filter4 />;
+const menuListIcon = (key) => {
+  switch (key) {
+    case "admin":
+      return <S.Icon src={Admin} />;
+    case "standard":
+      return <S.Icon src={Standard} />;
+    case "inventory":
+      return <S.Icon src={Inventory} />;
+    case "production":
+      return <S.Icon src={Production} />;
+    case "equipment":
+      return <S.Icon src={Equipment} />;
+    case "quality":
+      return <S.Icon src={Quality} />;
+    case "management":
+      return <S.Icon src={Management} />;
+    case "panel":
+      return <S.Icon src={Panel} />;
     default:
-      return <Filter1 sx={{ color: "white" }} />;
+      return <S.Icon src={Star} />;
   }
 };
 
@@ -41,7 +59,7 @@ function V2MenuList(props) {
           });
         }}
       >
-        <S.MenuIcon>{menuListIcon(0)}</S.MenuIcon>
+        <S.MenuIcon>{menuListIcon(lv1Menu.id)}</S.MenuIcon>
         <S.MenuText key={lv1Menu.id} primary={lv1Menu.name} />
       </S.MenuButton>
     </S.MenuList>

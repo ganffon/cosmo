@@ -175,6 +175,11 @@ class partner {
     this.partner_id = raw.partner_id;
   }
 }
+class sparepartsIncome {
+  constructor(raw) {
+    this.spare_income_id = raw.spare_income_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -289,6 +294,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "partner":
       params = new partner(raw);
+      break;
+    case "sparepartsIncome":
+      params = new sparepartsIncome(raw);
       break;
 
     default:
