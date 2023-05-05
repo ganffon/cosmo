@@ -22,7 +22,7 @@ import MenuList from "pages/admin/menuList/MenuList";
 import Grade from "pages/mes/standard/grade/Grade";
 import Store from "pages/mes/standard/store/Store";
 import Department from "pages/mes/standard/department/Department";
-import WorkingGroup from "pages/mes/standard/workingGroup/WorkingGroup";
+import WorkerGroup from "pages/mes/standard/workerGroup/WorkerGroup";
 import StoreLocation from "pages/mes/standard/storeLocation/StoreLocation";
 import DowntimeType from "pages/mes/standard/downtimeType/DowntimeType";
 import Downtime from "pages/mes/standard/downtime/Downtime";
@@ -71,7 +71,7 @@ export default function MainRouter() {
         <Route path="grade" element={<Grade />} />
         <Route path="store" element={<Store />} />
         <Route path="store-location" element={<StoreLocation />} />
-        <Route path="working-group" element={<WorkingGroup />} />
+        <Route path="worker-group" element={<WorkerGroup />} />
         <Route path="downtime-type" element={<DowntimeType />} />
         <Route path="downtime" element={<Downtime />} />
         <Route path="filing" element={<InspectFiling />} />

@@ -14,7 +14,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
+function EmployeeSet(isEditMode, deptList, gradeList, workerGroupList) {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -135,7 +135,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
           editor: {
             type: "select",
             options: {
-              listItems: workingGroupList,
+              listItems: workerGroupList,
             },
           },
           hidden: false,
@@ -468,7 +468,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workingGroupList) {
       editor: {
         type: "select",
         options: {
-          listItems: workingGroupList,
+          listItems: workerGroupList,
         },
       },
       hidden: false,

@@ -28,6 +28,7 @@ const useSearch = (
         setIsBackDrop(true);
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
         const readURI = uri + inputParams;
+        console.log(readURI);
         let gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {

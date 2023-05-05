@@ -156,6 +156,32 @@ function ProductModelSet(isEditMode) {
       rowSpan: false,
     },
   ];
+  const columnsModal = [
+    {
+      name: "model_cd",
+      header: CN.model_cd,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "model_nm",
+      header: CN.model_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: true,
+      filter: true,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
 
   const columnOptions = {
     resizable: true,
@@ -217,6 +243,7 @@ function ProductModelSet(isEditMode) {
     rowHeaders,
     rowHeadersModal,
     columns,
+    columnsModal,
     columnOptions,
     header,
     datePickerSet,

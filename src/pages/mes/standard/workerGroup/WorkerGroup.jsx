@@ -9,7 +9,7 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import WorkingGroupSet from "pages/mes/standard/workingGroup/WorkingGroupSet";
+import WorkerGroupSet from "pages/mes/standard/workerGroup/WorkerGroupSet";
 import * as disRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
@@ -19,7 +19,7 @@ import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 
-function WorkingGroup(props) {
+function WorkerGroup(props) {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -42,9 +42,9 @@ function WorkingGroup(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = WorkingGroupSet(isEditMode);
+  } = WorkerGroupSet(isEditMode);
 
-  const SWITCH_NAME_01 = "workingGroup";
+  const SWITCH_NAME_01 = "workerGroup";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -74,7 +74,7 @@ function WorkingGroup(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.workingGroup,
+    restURI.workerGroup,
     SWITCH_NAME_01
   );
 
@@ -89,7 +89,7 @@ function WorkingGroup(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.workingGroup
+    restURI.workerGroup
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -99,7 +99,7 @@ function WorkingGroup(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.workingGroup
+    restURI.workerGroup
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -108,7 +108,7 @@ function WorkingGroup(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.workingGroup
+    restURI.workerGroup
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -245,4 +245,4 @@ function WorkingGroup(props) {
   );
 }
 
-export default WorkingGroup;
+export default WorkerGroup;

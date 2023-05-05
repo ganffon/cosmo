@@ -19,6 +19,7 @@ function ProcessSet(isEditMode) {
     },
   ];
   const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -151,6 +152,32 @@ function ProcessSet(isEditMode) {
       rowSpan: false,
     },
   ];
+  const columnsModal = [
+    {
+      name: "proc_cd",
+      header: CN.proc_cd,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "proc_nm",
+      header: CN.proc_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -185,7 +212,9 @@ function ProcessSet(isEditMode) {
   return {
     data,
     rowHeaders,
+    rowHeadersModal,
     columns,
+    columnsModal,
     columnOptions,
     header,
     datePickerSet,

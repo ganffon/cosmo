@@ -139,24 +139,22 @@ const useEmployee = () => {
   }, []);
   return [employeeOpt, employeeList];
 };
-let workingGroupList = [];
-const useWorkingGroup = () => {
-  const [workingGroupOpt, setWorkingGroupOpt] = useState([]);
+let workerGroupList = [];
+const useWorkerGroup = () => {
+  const [workerGroupOpt, setWorkerGroupOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
-      await restAPI.get(restURI.workingGroup).then((res) => {
-        setWorkingGroupOpt(
-          cboMUISort(res?.data?.data?.rows, "worker_group_nm")
-        );
-        workingGroupList = res?.data?.data?.rows.map((data) => {
+      await restAPI.get(restURI.workerGroup).then((res) => {
+        setWorkerGroupOpt(cboMUISort(res?.data?.data?.rows, "worker_group_nm"));
+        workerGroupList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "worker_group_id", "worker_group_nm");
         });
-        workingGroupList = cboGridSort(workingGroupList);
+        workerGroupList = cboGridSort(workerGroupList);
       });
     };
     getCboOpt();
   }, []);
-  return [workingGroupOpt, workingGroupList];
+  return [workerGroupOpt, workerGroupList];
 };
 let productGbnList = [];
 const useProductGbn = () => {
@@ -470,7 +468,7 @@ export {
   useDept,
   useGrade,
   useEmployee,
-  useWorkingGroup,
+  useWorkerGroup,
   useProductGbn,
   useProductModel,
   useProductType,

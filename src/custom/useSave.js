@@ -22,32 +22,34 @@ const useSave = (
         ?.createdRows.map((raw) =>
           GetPostParams(componentName, raw, cookie.factoryID)
         );
-      if (data !== undefined && isBackDrop === false) {
-        setIsBackDrop(true);
-        await restAPI
-          .post(uri, data)
-          .then((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.data?.message,
-              severity: "success",
+      if (data !== undefined) {
+        if (data.length !== 0) {
+          setIsBackDrop(true);
+          await restAPI
+            .post(uri, data)
+            .then((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.data?.message,
+                severity: "success",
+              });
+              refGrid?.current?.gridInst?.clear();
+            })
+            .catch((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.message
+                  ? res?.message
+                  : res?.response?.data?.message,
+                severity: "error",
+              });
+            })
+            .finally(() => {
+              setIsBackDrop(false);
             });
-            refGrid?.current?.gridInst?.clear();
-          })
-          .catch((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
-              severity: "error",
-            });
-          })
-          .finally(() => {
-            setIsBackDrop(false);
-          });
+        }
       }
     }
   };
@@ -140,33 +142,34 @@ const useSaveDetail = (
         ?.createdRows.map((raw) =>
           GetPostParams(componentName, raw, cookie.factoryID)
         );
-
-      if (data.length !== 0) {
-        setIsBackDrop(true);
-        await restAPI
-          .post(uri, data)
-          .then((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.data?.message,
-              severity: "success",
+      if (data !== undefined) {
+        if (data.length !== 0) {
+          setIsBackDrop(true);
+          await restAPI
+            .post(uri, data)
+            .then((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.data?.message,
+                severity: "success",
+              });
+              disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+            })
+            .catch((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.message
+                  ? res?.message
+                  : res?.response?.data?.message,
+                severity: "error",
+              });
+            })
+            .finally(() => {
+              setIsBackDrop(false);
             });
-            disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
-          })
-          .catch((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
-              severity: "error",
-            });
-          })
-          .finally(() => {
-            setIsBackDrop(false);
-          });
+        }
       }
     }
   };
@@ -248,13 +251,11 @@ const useSaveStoreCheckNewLOT = (
   const [cookie, setCookie, removeCookie] = useCookies();
   const actSaveStoreCheckNewLOT = async (startDate) => {
     refGrid?.current?.gridInst?.finishEditing();
-    console.log(refGrid?.current?.gridInst?.getModifiedRows()?.createdRows);
     const data = refGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows?.map((raw) =>
         GetPostDateParams(componentName, raw, cookie.factoryID, startDate)
       );
-    console.log(data);
     if (data !== undefined && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI
