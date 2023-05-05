@@ -114,10 +114,10 @@ function StoreTransferView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_nm:
-                      newValue?.prod_gbn_nm === undefined
+                    prod_gbn_id:
+                      newValue?.prod_gbn_id === undefined
                         ? null
-                        : newValue?.prod_gbn_nm,
+                        : newValue?.prod_gbn_id,
                   });
                 }}
                 renderInput={(params) => (
@@ -134,10 +134,10 @@ function StoreTransferView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_nm:
-                      newValue?.model_nm === undefined
+                    model_id:
+                      newValue?.model_id === undefined
                         ? null
-                        : newValue?.model_nm,
+                        : newValue?.model_id,
                   });
                 }}
                 renderInput={(params) => (
@@ -154,10 +154,10 @@ function StoreTransferView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_nm:
-                      newValue?.prod_type_nm === undefined
+                    prod_type_id:
+                      newValue?.prod_type_id === undefined
                         ? null
-                        : newValue?.prod_type_nm,
+                        : newValue?.prod_type_id,
                   });
                 }}
                 renderInput={(params) => (
@@ -175,10 +175,10 @@ function StoreTransferView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_small_nm:
-                      newValue?.prod_type_small_nm === undefined
+                    prod_type_small_id:
+                      newValue?.prod_type_small_id === undefined
                         ? null
-                        : newValue?.prod_type_small_nm,
+                        : newValue?.prod_type_small_id,
                   });
                 }}
                 renderInput={(params) => (

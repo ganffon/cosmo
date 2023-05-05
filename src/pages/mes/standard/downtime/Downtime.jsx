@@ -85,7 +85,7 @@ function Downtime() {
     SWITCH_NAME_01
   );
 
-  const [actSearch] = uSearch.useSearchCbo(
+  const [actSearchCbo] = uSearch.useSearchCbo(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -139,7 +139,7 @@ function Downtime() {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
-    actSearch();
+    actSearchCbo();
   };
   const onClickEditModeSave = () => {
     actEdit();
@@ -194,10 +194,10 @@ function Downtime() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    downtime_type_nm:
-                      newValue?.downtime_type_nm === undefined
+                    downtime_type_id:
+                      newValue?.downtime_type_id === undefined
                         ? null
-                        : newValue?.downtime_type_nm,
+                        : newValue?.downtime_type_id,
                   });
                 }}
                 renderInput={(params) => (

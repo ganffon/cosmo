@@ -262,10 +262,10 @@ function InterfaceMemory(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    line_nm:
-                      newValue?.line_nm === undefined
+                    line_id:
+                      newValue?.line_id === undefined
                         ? null
-                        : newValue?.line_nm,
+                        : newValue?.line_id,
                   });
                 }}
                 renderInput={(params) => (

@@ -49,6 +49,16 @@ class storeLocation {
     this.location_id = raw.location_id;
   }
 }
+class department {
+  constructor(raw) {
+    this.dept_id = raw.dept_id;
+  }
+}
+class grade {
+  constructor(raw) {
+    this.grade_id = raw.grade_id;
+  }
+}
 class downtimeType {
   constructor(raw) {
     this.downtime_type_id = raw.downtime_type_id;
@@ -220,11 +230,17 @@ function GetDeleteParams(componentName, raw) {
     case "storeLocation":
       params = new storeLocation(raw);
       break;
+    case "department":
+      params = new department(raw);
+      break;
     case "downtimeType":
       params = new downtimeType(raw);
       break;
     case "downtime":
       params = new downtime(raw);
+      break;
+    case "grade":
+      params = new grade(raw);
       break;
     case "inspectFiling":
       params = new inspectFiling(raw);

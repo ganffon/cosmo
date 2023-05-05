@@ -549,8 +549,8 @@ function ControlPlan() {
             onChange={(_, newValue) => {
               setComboValue({
                 ...comboValue,
-                line_nm:
-                  newValue?.line_nm === undefined ? null : newValue?.line_nm,
+                line_id:
+                  newValue?.line_id === undefined ? null : newValue?.line_id,
               });
             }}
             renderInput={(params) => (

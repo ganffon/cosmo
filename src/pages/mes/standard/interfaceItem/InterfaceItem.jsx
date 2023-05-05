@@ -194,10 +194,10 @@ function InterfaceItem(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    infc_item_type_nm:
-                      newValue?.infc_item_type_nm === undefined
+                    infc_item_type_id:
+                      newValue?.infc_item_type_id === undefined
                         ? null
-                        : newValue?.infc_item_type_nm,
+                        : newValue?.infc_item_type_id,
                   });
                 }}
                 renderInput={(params) => (

@@ -7,8 +7,7 @@ class factory {
   }
 }
 class line {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.line_cd = raw.line_cd;
     this.line_nm = raw.line_nm;
   }
@@ -47,8 +46,7 @@ class employee {
   }
 }
 class equipment {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.proc_id = raw.proc_id;
     this.equip_type_id = raw.equip_type_id;
     this.equip_cd = raw.equip_cd;
@@ -62,8 +60,7 @@ class equipment {
   }
 }
 class product {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.prod_cd = raw.prod_cd;
     this.prod_nm = raw.prod_nm;
     this.prod_gbn_id = raw.prod_gbn_id;
@@ -125,8 +122,7 @@ class productType {
   }
 }
 class routing {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.line_id = raw.line_id;
     this.proc_id = raw.proc_id;
     this.prod_id = raw.prod_id;
@@ -137,8 +133,7 @@ class routing {
   }
 }
 class store {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.store_cd = raw.store_cd;
     this.store_nm = raw.store_nm;
     this.reject_store_fg = raw.reject_store_fg ? true : false;
@@ -151,8 +146,7 @@ class store {
   }
 }
 class storeLocation {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.store_id = raw.store_id;
     this.location_cd = raw.location_cd;
     this.location_nm = raw.location_nm;
@@ -171,15 +165,13 @@ class grade {
   }
 }
 class downtimeType {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.downtime_type_cd = raw.downtime_type_cd;
     this.downtime_type_nm = raw.downtime_type_nm;
   }
 }
 class downtime {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.downtime_type_id = raw.downtime_type_id;
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
@@ -199,43 +191,37 @@ class unit {
   }
 }
 class workingGroup {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.worker_group_cd = raw.worker_group_cd;
     this.worker_group_nm = raw.worker_group_nm;
   }
 }
 class inspectFiling {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.insp_filing_cd = raw.insp_filing_cd;
     this.insp_filing_nm = raw.insp_filing_nm;
   }
 }
 class inspectMethod {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.insp_method_cd = raw.insp_method_cd;
     this.insp_method_nm = raw.insp_method_nm;
   }
 }
 class inspectTool {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.insp_tool_cd = raw.insp_tool_cd;
     this.insp_tool_nm = raw.insp_tool_nm;
   }
 }
 class inspectType {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.insp_item_type_cd = raw.insp_item_type_cd;
     this.insp_item_type_nm = raw.insp_item_type_nm;
   }
 }
 class inspectItem {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.insp_item_type_id = raw.insp_item_type_id;
     this.insp_item_cd = raw.insp_item_cd;
     this.insp_item_nm = raw.insp_item_nm;
@@ -245,23 +231,20 @@ class inspectItem {
   }
 }
 class interfaceItemType {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.infc_item_type_cd = raw.infc_item_type_cd;
     this.infc_item_type_nm = raw.infc_item_type_nm;
   }
 }
 class interfaceItem {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_cd = raw.infc_item_cd;
     this.infc_item_nm = raw.infc_item_nm;
   }
 }
 class interfaceMemory {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_id = raw.infc_item_id;
     this.line_id = raw.line_id;
@@ -276,29 +259,25 @@ class interfaceMemory {
   }
 }
 class equipmentLarge {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.classification_cd = raw.classification_cd;
     this.classification_nm = raw.classification_nm;
   }
 }
 class equipmentMedium {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.group_cd = raw.group_cd;
     this.group_nm = raw.group_nm;
   }
 }
 class equipmentSmall {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.class_cd = raw.class_cd;
     this.class_nm = raw.class_nm;
   }
 }
 class equipmentDetail {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.eqm_detail_cd = raw.eqm_detail_cd;
@@ -336,8 +315,7 @@ class setup {
   }
 }
 class document {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.insp_document_no = raw.insp_document_no;
     this.line_id = raw.line_id;
     this.prod_id = raw.prod_id;
@@ -349,8 +327,7 @@ class document {
   }
 }
 class documentDetail {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.insp_document_id = raw.insp_document_id;
     this.sortby = String(raw.sortby) ? Number(raw.sortby) : null;
     this.proc_id = raw.proc_id;
@@ -381,8 +358,7 @@ class documentDetail {
 }
 
 class spareReceive {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.partner_id = raw.partner_id;
     this.supplier_id = raw.supplier_id;
     this.stmt_no = raw.stmt_no;
@@ -396,8 +372,7 @@ class spareReceive {
   }
 }
 class spareReceiveDetail {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.spare_receive_id = raw.spare_receive_id;
     this.prod_id = raw.prod_id;
     this.unit_id = raw.unit_id;
@@ -419,8 +394,7 @@ class spareReceiveDetail {
   }
 }
 class controlPlan {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.control_plan_no = raw.control_plan_no;
     this.line_id = raw.line_id;
     this.prod_id = raw.prod_id;
@@ -432,7 +406,7 @@ class controlPlan {
   }
 }
 class controlPlanDetail {
-  constructor(raw, factory_id) {
+  constructor(raw) {
     this.control_plan_id = raw.control_plan_id;
     this.proc_no = String(raw.proc_no) ? Number(raw.proc_no) : null;
     this.insp_document_detail_id = raw.insp_document_detail_id;
@@ -441,7 +415,7 @@ class controlPlanDetail {
   }
 }
 class dayreportSubdivision {
-  constructor(raw, factory_id) {
+  constructor(raw) {
     this.reg_date = raw.reg_date;
     this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
@@ -450,7 +424,7 @@ class dayreportSubdivision {
   }
 }
 class dayreportSubdivisionDetail {
-  constructor(raw, factory_id) {
+  constructor(raw) {
     this.work_subdivision_id = raw.work_subdivision_id;
     this.lot_no = raw.lot_no;
     this.before_qty = String(raw.before_qty) ? Number(raw.before_qty) : null;
@@ -464,15 +438,14 @@ class dayreportSubdivisionDetail {
   }
 }
 class partnerType {
-  constructor(raw, factory_id) {
+  constructor(raw) {
     this.partner_type_cd = raw.partner_type_cd;
     this.partner_type_nm = raw.partner_type_nm;
   }
 }
 
 class partner {
-  constructor(raw, factory_id) {
-    this.factory_id = factory_id;
+  constructor(raw) {
     this.partner_cd = raw.partner_cd;
     this.partner_nm = raw.partner_nm;
     this.partner_type_id = raw.partner_type_id;
@@ -503,7 +476,7 @@ class partner {
  * @param {string} factory_id 쿠키에서 현재 로그인 한 사업부 아이디
  * @returns
  */
-function GetPostParams(componentName, raw, factory_id) {
+function GetPostParams(componentName, raw) {
   let params = "";
   if (raw !== undefined) {
     switch (componentName) {
@@ -511,7 +484,7 @@ function GetPostParams(componentName, raw, factory_id) {
         params = new factory(raw);
         break;
       case "line":
-        params = new line(raw, factory_id);
+        params = new line(raw);
         break;
       case "user":
         params = new user(raw);
@@ -523,10 +496,10 @@ function GetPostParams(componentName, raw, factory_id) {
         params = new unit(raw);
         break;
       case "equipment":
-        params = new equipment(raw, factory_id);
+        params = new equipment(raw);
         break;
       case "product":
-        params = new product(raw, factory_id);
+        params = new product(raw);
         break;
       case "productGbn":
         params = new productGbn(raw);
@@ -535,13 +508,13 @@ function GetPostParams(componentName, raw, factory_id) {
         params = new productType(raw);
         break;
       case "routing":
-        params = new routing(raw, factory_id);
+        params = new routing(raw);
         break;
       case "store":
-        params = new store(raw, factory_id);
+        params = new store(raw);
         break;
       case "storeLocation":
-        params = new storeLocation(raw, factory_id);
+        params = new storeLocation(raw);
         break;
       case "department":
         params = new department(raw);
@@ -550,85 +523,85 @@ function GetPostParams(componentName, raw, factory_id) {
         params = new grade(raw);
         break;
       case "downtimeType":
-        params = new downtimeType(raw, factory_id);
+        params = new downtimeType(raw);
         break;
       case "downtime":
-        params = new downtime(raw, factory_id);
+        params = new downtime(raw);
         break;
       case "model":
         params = new model(raw);
         break;
       case "workingGroup":
-        params = new workingGroup(raw, factory_id);
+        params = new workingGroup(raw);
         break;
       case "inspectFiling":
-        params = new inspectFiling(raw, factory_id);
+        params = new inspectFiling(raw);
         break;
       case "inspectMethod":
-        params = new inspectMethod(raw, factory_id);
+        params = new inspectMethod(raw);
         break;
       case "inspectTool":
-        params = new inspectTool(raw, factory_id);
+        params = new inspectTool(raw);
         break;
       case "inspectType":
-        params = new inspectType(raw, factory_id);
+        params = new inspectType(raw);
         break;
       case "inspectItem":
-        params = new inspectItem(raw, factory_id);
+        params = new inspectItem(raw);
         break;
       case "interfaceItemType":
-        params = new interfaceItemType(raw, factory_id);
+        params = new interfaceItemType(raw);
         break;
       case "interfaceItem":
-        params = new interfaceItem(raw, factory_id);
+        params = new interfaceItem(raw);
         break;
       case "interfaceMemory":
-        params = new interfaceMemory(raw, factory_id);
+        params = new interfaceMemory(raw);
         break;
       case "equipmentLarge":
-        params = new equipmentLarge(raw, factory_id);
+        params = new equipmentLarge(raw);
         break;
       case "equipmentMedium":
-        params = new equipmentMedium(raw, factory_id);
+        params = new equipmentMedium(raw);
         break;
       case "equipmentSmall":
-        params = new equipmentSmall(raw, factory_id);
+        params = new equipmentSmall(raw);
         break;
       case "equipmentDetail":
-        params = new equipmentDetail(raw, factory_id);
+        params = new equipmentDetail(raw);
         break;
       case "setup":
         params = new setup(raw);
         break;
       case "document":
-        params = new document(raw, factory_id);
+        params = new document(raw);
         break;
       case "documentDetail":
-        params = new documentDetail(raw, factory_id);
+        params = new documentDetail(raw);
         break;
       case "spareReceive":
-        params = new spareReceive(raw, factory_id);
+        params = new spareReceive(raw);
         break;
       case "spareReceiveDetail":
-        params = new spareReceiveDetail(raw, factory_id);
+        params = new spareReceiveDetail(raw);
         break;
       case "controlPlan":
-        params = new controlPlan(raw, factory_id);
+        params = new controlPlan(raw);
         break;
       case "controlPlanDetail":
-        params = new controlPlanDetail(raw, factory_id);
+        params = new controlPlanDetail(raw);
         break;
       case "dayreportSubdivision":
-        params = new dayreportSubdivision(raw, factory_id);
+        params = new dayreportSubdivision(raw);
         break;
       case "dayreportSubdivisionDetail":
-        params = new dayreportSubdivisionDetail(raw, factory_id);
+        params = new dayreportSubdivisionDetail(raw);
         break;
       case "partnerType":
-        params = new partnerType(raw, factory_id);
+        params = new partnerType(raw);
         break;
       case "partner":
-        params = new partner(raw, factory_id);
+        params = new partner(raw);
         break;
       default:
     }

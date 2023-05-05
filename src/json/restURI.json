@@ -17,7 +17,7 @@
   "unit": "/unit",
   "partnerType": "/partner-type",
   "partner": "/partner",
-  "department": "/department",
+  "department": "/dept",
   "grade": "/grade",
   "store": "/store",
   "storeIncludeLocation": "/store/includelocation",
