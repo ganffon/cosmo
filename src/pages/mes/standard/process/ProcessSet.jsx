@@ -2,6 +2,7 @@
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -10,7 +11,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function ProcessSet(isEditMode) {
+function ProcessSet(isEditMode, barcodePrint) {
   const data = [
     {
       id: 1,
@@ -73,6 +74,26 @@ function ProcessSet(isEditMode) {
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "barcode",
+      header: "barcode",
+      width: WIDTH_SHORT,
+      minWidth: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      renderer: {
+        type: CustomGrid.BarcodeButton,
+        options: {
+          name: "barcode",
+          onClick: barcodePrint,
+        },
+      },
       hidden: false,
       sortable: false,
       filter: false,
