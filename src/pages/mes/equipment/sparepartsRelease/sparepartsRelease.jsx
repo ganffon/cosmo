@@ -215,7 +215,7 @@ function SparepartsRelease() {
   const onDblClickModalSelectGrid = (e) => {
     let refGrid;
     let columnName = [];
-    let columnNameProd = ["prod_id", "prod_no", "prod_nm"];
+    let columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
     let columnNameEquip = ["eqm_detail_id", "eqm_detail_nm"];
     let columnNameStore = [
       "from_store_id",
@@ -249,7 +249,7 @@ function SparepartsRelease() {
   };
 
   const onDblClickModalGrid = (e) => {
-    if (Condition(e, ["prod_id", "prod_no", "prod_nm"])) {
+    if (Condition(e, ["prod_id", "prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalProd");
       setColumnsSelect(columnsModalSelectProduct);

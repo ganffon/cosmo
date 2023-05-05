@@ -289,7 +289,7 @@ function Document() {
       const inputInfoValueList = [
         "insp_document_no",
         "line_nm",
-        "prod_no",
+        "prod_cd",
         "prod_nm",
         "reg_date",
         "apply_date",
@@ -318,7 +318,7 @@ function Document() {
     }
   };
   const onDblClickGridHeader = (e) => {
-    if (Condition(e, ["prod_no", "prod_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Header");
       setColumnsSelect(columnsSelectProd);
@@ -377,7 +377,7 @@ function Document() {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const onDblClickGridModalHeader = (e) => {
-    if (Condition(e, ["prod_no", "prod_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
       setColumnsSelect(columnsSelectProd);
@@ -402,7 +402,7 @@ function Document() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameProd = ["prod_id", "prod_no", "prod_nm"];
+    const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
     const columnNameInspItem = [
       "insp_item_type_id",
       "insp_item_type_nm",
@@ -412,7 +412,7 @@ function Document() {
 
     if (dblClickGrid === "Search") {
       setInputSearchValue([]);
-      columnName = ["prod_no", "prod_nm"];
+      columnName = ["prod_cd", "prod_nm"];
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
           return [

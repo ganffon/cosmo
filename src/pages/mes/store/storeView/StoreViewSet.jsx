@@ -139,8 +139,8 @@ function StoreViewSet(
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -259,8 +259,8 @@ function StoreViewSet(
    */
   const inputSet = [
     {
-      id: "prod_no",
-      name: CN.prod_no,
+      id: "prod_cd",
+      name: CN.prod_cd,
     },
     {
       id: "prod_nm",

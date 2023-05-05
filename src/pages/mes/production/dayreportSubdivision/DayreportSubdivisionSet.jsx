@@ -70,8 +70,8 @@ function DayreportSubdivisionSet(
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -474,8 +474,8 @@ function DayreportSubdivisionSet(
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -681,8 +681,8 @@ function DayreportSubdivisionSet(
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -717,8 +717,8 @@ function DayreportSubdivisionSet(
       name: CN.reg_date,
     },
     {
-      id: "prod_no",
-      name: CN.prod_no,
+      id: "prod_cd",
+      name: CN.prod_cd,
     },
     {
       id: "prod_nm",

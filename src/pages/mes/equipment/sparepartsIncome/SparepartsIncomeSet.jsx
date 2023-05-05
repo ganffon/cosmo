@@ -412,8 +412,8 @@ function SparepartsIncomeSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "create_user_nm",
-      header: CN.create_user_nm,
+      name: "create_uid",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -436,8 +436,8 @@ function SparepartsIncomeSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "update_user_nm",
-      header: CN.update_user_nm,
+      name: "update_uid",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -460,8 +460,8 @@ function SparepartsIncomeSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "delete_user_nm",
-      header: CN.delete_user_nm,
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -741,8 +741,8 @@ function SparepartsIncomeSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,

@@ -290,7 +290,7 @@ function ControlPlan() {
       const inputInfoValueList = [
         "control_plan_no",
         "line_nm",
-        "prod_no",
+        "prod_cd",
         "prod_nm",
         "reg_date",
         "apply_date",
@@ -319,7 +319,7 @@ function ControlPlan() {
     }
   };
   const onDblClickGridHeader = (e) => {
-    if (Condition(e, ["prod_no", "prod_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("Header");
       setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
@@ -331,7 +331,7 @@ function ControlPlan() {
   const onDblClickGridDetail = (e) => {
     if (
       Condition(e, [
-        "prod_no",
+        "prod_cd",
         "prod_nm",
         "equip_nm",
         "insp_proc_gbn",
@@ -403,7 +403,7 @@ function ControlPlan() {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const onDblClickGridModalHeader = (e) => {
-    if (Condition(e, ["prod_no", "prod_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
       setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
@@ -415,7 +415,7 @@ function ControlPlan() {
   const onDblClickGridModalDetail = (e) => {
     if (
       Condition(e, [
-        "prod_no",
+        "prod_cd",
         "prod_nm",
         "equip_nm",
         "insp_proc_gbn",
@@ -453,12 +453,12 @@ function ControlPlan() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameProd = ["prod_id", "prod_no", "prod_nm"];
+    const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
     const columnNameDocument = [
       "insp_document_id",
       "insp_document_detail_id",
       "prod_id",
-      "prod_no",
+      "prod_cd",
       "prod_nm",
       "equip_id",
       "equip_nm",
@@ -488,7 +488,7 @@ function ControlPlan() {
 
     if (dblClickGrid === "Search") {
       setInputSearchValue([]);
-      columnName = ["prod_no", "prod_nm"];
+      columnName = ["prod_cd", "prod_nm"];
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
           return [

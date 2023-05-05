@@ -108,8 +108,8 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -857,8 +857,8 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -1367,8 +1367,8 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -1472,8 +1472,8 @@ function DocumentSet(
    */
   const inputSet = [
     {
-      id: "prod_no",
-      name: CN.prod_no,
+      id: "prod_cd",
+      name: CN.prod_cd,
     },
     {
       id: "prod_nm",
@@ -1491,8 +1491,8 @@ function DocumentSet(
       name: CN.line_nm,
     },
     {
-      id: "prod_no",
-      name: CN.prod_no,
+      id: "prod_cd",
+      name: CN.prod_cd,
     },
     {
       id: "prod_nm",
