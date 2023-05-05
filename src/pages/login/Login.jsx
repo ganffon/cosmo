@@ -33,7 +33,7 @@ function Login() {
   const [factoryDataOption, setFactoryDataOption] = useState([]);
   useEffect(() => {
     async function factoryDataSetting() {
-      await restAPI.get(restURI.factory).then((res) => {
+      await restAPI.get(restURI.loginFactory).then((res) => {
         setFactoryDataOption(res?.data?.data?.rows);
       });
     }

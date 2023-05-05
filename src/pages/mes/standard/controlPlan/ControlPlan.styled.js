@@ -69,11 +69,19 @@ export const GridHeaderWrap = styled("div")`
   width: calc(100% - 0.5rem);
   height: 45%;
   margin-top: 10px;
+  border-radius: 10px;
+  border-color: rgb(255, 255, 255);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 10px 10px 10px 10px;
 `;
 export const GridDetailWrap = styled("div")`
   width: calc(100% - 0.5rem);
   height: 75%;
   margin-top: 10px;
+  border-radius: 10px;
+  border-color: rgb(255, 255, 255);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 10px 10px 10px 10px;
 `;
 export const InputBox = styled("div")`
   width: 250px;

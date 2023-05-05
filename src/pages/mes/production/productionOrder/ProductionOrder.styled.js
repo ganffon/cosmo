@@ -15,22 +15,29 @@ export const ContentsArea = styled("div")`
   overflow: hidden auto;
 `;
 export const ContentTop = styled("div")`
-  height: 65px;
+  height: 40px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 10px;
-  padding: 10px 10px 10px 10px;
+  margin-bottom: 8px;
+  padding: 5px 5px 5px 5px;
   display: flex;
   justify-content: space-between;
 `;
 export const SearchCondition = styled("div")`
+  height: 60px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 8px;
+  padding: 5px 5px 5px 5px;
   display: flex;
 `;
 export const ButtonTop = styled("div")`
   display: flex;
-  align-items: end;
+  align-items: center;
 `;
 export const ContentMid = styled("div")`
   height: 40px;
@@ -38,7 +45,7 @@ export const ContentMid = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding: 5px 5px 5px 5px;
   display: flex;
   justify-content: space-between;
@@ -79,7 +86,7 @@ export const GridTopWrap = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding: 10px 10px 10px 10px;
 `;
 export const GridMidWrap = styled("div")`
@@ -88,7 +95,7 @@ export const GridMidWrap = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding: 10px 10px 10px 10px;
 `;
 export const GridBottomWrap = styled("div")`
@@ -97,7 +104,7 @@ export const GridBottomWrap = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding: 10px 10px 10px 10px;
 `;
 export const InputS = styled(InputSearch)`

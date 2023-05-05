@@ -1,6 +1,7 @@
 //라인관리✨
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 import "components/grid/setting/GridStyle.css";
 import {
   WIDTH_SUPER_SHORT,
@@ -81,6 +82,25 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
+      name: "barcode",
+      header: "barcode",
+      width: WIDTH_SHORT,
+      minWidth: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      renderer: {
+        type: CustomGrid.BarcodeButton,
+        options: {
+          name: "barcode",
+        },
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
       name: "create_at",
       header: CN.create_at,
       minWidth: WIDTH_LONG,
@@ -93,8 +113,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "create_uid",
-      header: CN.create_uid,
+      name: "create_user_nm",
+      header: CN.create_user_nm,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -117,8 +137,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "update_uid",
-      header: CN.update_uid,
+      name: "update_user_nm",
+      header: CN.update_user_nm,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -141,8 +161,8 @@ function LineSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_uid",
-      header: CN.delete_uid,
+      name: "delete_user_nm",
+      header: CN.delete_user_nm,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,

@@ -109,6 +109,7 @@ function ProductionOrder() {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
+    setHeaderClickRowKey(null);
     // actSearchHeaderDI(true, "start_date", "end_date");
   };
   const onClickGridHeader = (e) => {
@@ -283,24 +284,25 @@ function ProductionOrder() {
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
-      <S.ContentTop>
-        <S.SearchCondition>
-          <S.Date
-            datePickerSet={"range"}
-            dateText={dateText}
-            setDateText={setDateText}
+      <S.SearchCondition>
+        <S.Date
+          datePickerSet={"range"}
+          dateText={dateText}
+          setDateText={setDateText}
+        />
+        {inputSet.map((v) => (
+          <S.InputS
+            key={v.id}
+            id={v.id}
+            name={v.name}
+            handleInputTextChange={handleInputTextChange}
+            onClickSearch={onClickSearch}
+            onKeyDown={onKeyDown}
           />
-          {inputSet.map((v) => (
-            <S.InputS
-              key={v.id}
-              id={v.id}
-              name={v.name}
-              handleInputTextChange={handleInputTextChange}
-              onClickSearch={onClickSearch}
-              onKeyDown={onKeyDown}
-            />
-          ))}
-        </S.SearchCondition>
+        ))}
+      </S.SearchCondition>
+      <S.ContentTop>
+        <S.TitleMid>❇️ 생산품목</S.TitleMid>
         <S.ButtonTop>
           {isEditModeHeader ? (
             <ButtonSES
@@ -331,7 +333,7 @@ function ProductionOrder() {
         />
       </S.GridTopWrap>
       <S.ContentMid>
-        <S.TitleMid>❇️ 투입품</S.TitleMid>
+        <S.TitleMid>❇️ 투입품목</S.TitleMid>
         <S.ButtonMid>
           {isEditModeMid ? (
             <ButtonSE

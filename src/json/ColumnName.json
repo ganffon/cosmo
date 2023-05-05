@@ -158,11 +158,11 @@
   "remark": "비고",
 
   "create_at": "등록시간",
-  "create_uid": "등록자",
+  "create_user_nm": "등록자",
   "update_at": "수정시간",
-  "update_uid": "수정자",
+  "update_user_nm": "수정자",
   "delete_at": "삭제시간",
-  "delete_uid": "삭제자",
+  "delete_user_nm": "삭제자",
 
   "row_no": "순번",
   "menu_list_id": "메뉴리스트ID",

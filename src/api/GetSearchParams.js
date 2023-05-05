@@ -59,11 +59,11 @@ class documentDetailIncludeHeader {
     this.infc_memory_id = raw.infc_memory_id;
     this.remark = raw.remark;
     this.create_at = raw.create_at;
-    this.create_uid = raw.create_uid;
+    this.create_user_nm = raw.create_user_nm;
     this.update_at = raw.update_at;
-    this.update_uid = raw.update_uid;
+    this.update_user_nm = raw.update_user_nm;
     this.delete_at = raw.delete_at;
-    this.delete_uid = raw.delete_uid;
+    this.delete_user_nm = raw.delete_user_nm;
   }
 }
 

@@ -109,6 +109,10 @@ function Line(props) {
     SWITCH_NAME_01,
     restURI.line
   );
+
+  // const btn = new CustomGrid.BarcodeButton().getElement();
+  // console.log(btn);
+
   const onClickNew = () => {
     setIsModalOpen(true);
   };
