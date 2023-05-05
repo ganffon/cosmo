@@ -260,7 +260,7 @@ function DayreportSubdivision() {
     actSearchHeaderDI(true, "start_date", "end_date");
   };
   const onDblClickGridModalHeader = (e) => {
-    if (Condition(e, ["prod_no", "prod_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
       setColumnsSelect(columnsSelectProd);
@@ -319,7 +319,7 @@ function DayreportSubdivision() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameProd = ["prod_id", "prod_no", "prod_nm"];
+    const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
     const columnNameInspItem = [
       "insp_item_type_id",
       "insp_item_type_nm",
@@ -329,7 +329,7 @@ function DayreportSubdivision() {
 
     if (dblClickGrid === "Search") {
       setInputSearchValue([]);
-      columnName = ["prod_no", "prod_nm"];
+      columnName = ["prod_cd", "prod_nm"];
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
           return [
@@ -367,7 +367,7 @@ function DayreportSubdivision() {
     if (!isEditModeHeader) {
       const inputInfoValueList = [
         "reg_date",
-        "prod_no",
+        "prod_cd",
         "prod_nm",
         "lot_no",
         "total_qty",
@@ -469,7 +469,7 @@ function DayreportSubdivision() {
 
     const inputInfoValueList = [
       "reg_date",
-      "prod_no",
+      "prod_cd",
       "prod_nm",
       "lot_no",
       "total_qty",

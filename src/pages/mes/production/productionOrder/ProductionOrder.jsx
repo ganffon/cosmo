@@ -129,7 +129,7 @@ function ProductionOrder() {
     setIsModalHeaderOpen(false);
   };
   const onDblClickModalHeader = (e) => {
-    if (Condition(e, ["request_no", "prod_no", "prod_nm"])) {
+    if (Condition(e, ["request_no", "prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
       setColumnsSelect(columnsSelectRequest);
@@ -162,7 +162,7 @@ function ProductionOrder() {
     clickModalMidRowKey = null;
   };
   const onDblClickModalMid = (e) => {
-    if (Condition(e, ["prod_no", "prod_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalMid");
       setColumnsSelect(columnsSelectRequest); // 관리계획서 투입품
@@ -241,7 +241,7 @@ function ProductionOrder() {
       "request_id",
       "request_no",
       "prod_id",
-      "prod_no",
+      "prod_cd",
       "prod_nm",
     ];
     const columnNameInspItem = [

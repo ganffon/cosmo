@@ -62,8 +62,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -375,8 +375,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
       validation: {
@@ -610,8 +610,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_no",
-      header: CN.prod_no,
+      name: "prod_cd",
+      header: CN.prod_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -650,7 +650,7 @@ function SparePartReleaseSet(isEditMode) {
     },
     {
       name: "eqm_detail_nm",
-      header: CN.prod_no,
+      header: CN.prod_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,

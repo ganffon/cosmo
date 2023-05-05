@@ -281,7 +281,7 @@ function StoreCheck() {
         "model_nm",
         "prod_type_nm",
         "prod_type_small_nm",
-        "prod_no",
+        "prod_cd",
         "prod_nm",
       ])
     ) {
@@ -319,7 +319,7 @@ function StoreCheck() {
       "prod_type_small_id",
       "prod_type_small_nm",
       "prod_id",
-      "prod_no",
+      "prod_cd",
       "prod_nm",
     ];
     const columnNameStore = [
