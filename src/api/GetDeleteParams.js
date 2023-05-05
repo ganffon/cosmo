@@ -9,6 +9,11 @@ class line {
     this.line_id = raw.line_id;
   }
 }
+class process {
+  constructor(raw) {
+    this.proc_id = raw.proc_id;
+  }
+}
 class user {
   constructor(raw) {
     this.uid = raw.uid;
@@ -29,14 +34,34 @@ class unit {
     this.unit_id = raw.unit_id;
   }
 }
-class workingGroup {
+class workerGroup {
   constructor(raw) {
     this.worker_group_id = raw.worker_group_id;
+  }
+}
+class productGbn {
+  constructor(raw) {
+    this.prod_gbn_id = raw.prod_gbn_id;
   }
 }
 class product {
   constructor(raw) {
     this.prod_id = raw.prod_id;
+  }
+}
+class productType {
+  constructor(raw) {
+    this.prod_type_id = raw.prod_type_id;
+  }
+}
+class productTypeSmall {
+  constructor(raw) {
+    this.prod_type_small_id = raw.prod_type_small_id;
+  }
+}
+class productModel {
+  constructor(raw) {
+    this.model_id = raw.model_id;
   }
 }
 class store {
@@ -206,6 +231,9 @@ function GetDeleteParams(componentName, raw) {
     case "line":
       params = new line(raw);
       break;
+    case "process":
+      params = new process(raw);
+      break;
     case "user":
       params = new user(raw);
       break;
@@ -218,11 +246,23 @@ function GetDeleteParams(componentName, raw) {
     case "unit":
       params = new unit(raw);
       break;
-    case "workingGroup":
-      params = new workingGroup(raw);
+    case "workerGroup":
+      params = new workerGroup(raw);
+      break;
+    case "productGbn":
+      params = new productGbn(raw);
       break;
     case "product":
       params = new product(raw);
+      break;
+    case "productType":
+      params = new productType(raw);
+      break;
+    case "productTypeSmall":
+      params = new productTypeSmall(raw);
+      break;
+    case "productModel":
+      params = new productModel(raw);
       break;
     case "store":
       params = new store(raw);

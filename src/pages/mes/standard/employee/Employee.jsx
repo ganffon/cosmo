@@ -37,7 +37,7 @@ function Employee() {
   const [searchToggle, setSearchToggle] = useState(false);
   const [deptOpt, deptList] = Cbo.useDept();
   const [gradeOpt, gradeList] = Cbo.useGrade();
-  const [workingGroupOpt, workingGroupList] = Cbo.useWorkingGroup();
+  const [workerGroupOpt, workerGroupList] = Cbo.useWorkerGroup();
 
   const {
     rowHeaders,
@@ -47,7 +47,7 @@ function Employee() {
     columnsModal,
     columnOptions,
     inputSet,
-  } = EmployeeSet(isEditMode, deptList, gradeList, workingGroupList);
+  } = EmployeeSet(isEditMode, deptList, gradeList, workerGroupList);
   const SWITCH_NAME_01 = "employee";
 
   useEffect(() => {

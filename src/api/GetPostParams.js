@@ -12,6 +12,12 @@ class line {
     this.line_nm = raw.line_nm;
   }
 }
+class process {
+  constructor(raw) {
+    this.proc_cd = raw.proc_cd;
+    this.proc_nm = raw.proc_nm;
+  }
+}
 class user {
   constructor(raw) {
     this.id = raw.id;
@@ -121,6 +127,12 @@ class productType {
     this.prod_type_nm = raw.prod_type_nm;
   }
 }
+class productTypeSmall {
+  constructor(raw) {
+    this.prod_type_small_cd = raw.prod_type_small_cd;
+    this.prod_type_small_nm = raw.prod_type_small_nm;
+  }
+}
 class routing {
   constructor(raw) {
     this.line_id = raw.line_id;
@@ -178,7 +190,7 @@ class downtime {
     this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
   }
 }
-class model {
+class productModel {
   constructor(raw) {
     this.model_cd = raw.model_cd;
     this.model_nm = raw.model_nm;
@@ -190,7 +202,7 @@ class unit {
     this.unit_nm = raw.unit_nm;
   }
 }
-class workingGroup {
+class workerGroup {
   constructor(raw) {
     this.worker_group_cd = raw.worker_group_cd;
     this.worker_group_nm = raw.worker_group_nm;
@@ -486,6 +498,9 @@ function GetPostParams(componentName, raw) {
       case "line":
         params = new line(raw);
         break;
+      case "process":
+        params = new process(raw);
+        break;
       case "user":
         params = new user(raw);
         break;
@@ -506,6 +521,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "productType":
         params = new productType(raw);
+        break;
+      case "productTypeSmall":
+        params = new productTypeSmall(raw);
         break;
       case "routing":
         params = new routing(raw);
@@ -528,11 +546,11 @@ function GetPostParams(componentName, raw) {
       case "downtime":
         params = new downtime(raw);
         break;
-      case "model":
-        params = new model(raw);
+      case "productModel":
+        params = new productModel(raw);
         break;
-      case "workingGroup":
-        params = new workingGroup(raw);
+      case "workerGroup":
+        params = new workerGroup(raw);
         break;
       case "inspectFiling":
         params = new inspectFiling(raw);

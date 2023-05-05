@@ -135,8 +135,8 @@
           },
           {
             "name": "작업조관리",
-            "id": "working-group",
-            "path": "working-group",
+            "id": "worker-group",
+            "path": "worker-group",
             "under": null
           },
           {

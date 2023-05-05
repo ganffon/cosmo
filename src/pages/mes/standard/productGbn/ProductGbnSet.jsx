@@ -132,6 +132,32 @@ function ProductGbnSet(isEditMode) {
       rowSpan: false,
     },
   ];
+  const columnsModal = [
+    {
+      name: "prod_gbn_cd",
+      header: CN.prod_gbn_cd,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_gbn_nm",
+      header: CN.prod_gbn_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
 
   const columnOptions = {
     resizable: true,
@@ -166,6 +192,7 @@ function ProductGbnSet(isEditMode) {
   return {
     data,
     columns,
+    columnsModal,
     columnOptions,
     rowHeaders,
     rowHeadersModal,

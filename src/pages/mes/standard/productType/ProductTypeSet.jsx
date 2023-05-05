@@ -132,6 +132,32 @@ function ProductTypeSet(isEditMode) {
       rowSpan: false,
     },
   ];
+  const columnsModal = [
+    {
+      name: "prod_type_cd",
+      header: CN.prod_type_cd,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "prod_type_nm",
+      header: CN.prod_type_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -164,6 +190,7 @@ function ProductTypeSet(isEditMode) {
   return {
     data,
     columns,
+    columnsModal,
     columnOptions,
     rowHeaders,
     rowHeadersModal,

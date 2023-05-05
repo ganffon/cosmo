@@ -9,7 +9,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function WorkingGroupSet(isEditMode) {
+function WorkerGroupSet(isEditMode) {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -212,4 +212,4 @@ function WorkingGroupSet(isEditMode) {
   };
 }
 
-export default WorkingGroupSet;
+export default WorkerGroupSet;
