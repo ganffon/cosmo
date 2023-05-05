@@ -497,7 +497,7 @@ function DayreportSubdivision() {
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ContentsLeft>
         <S.SearchLeftWrap>
-          <S.SearchLeftTopWrap>
+          <S.SearchWrap>
             <S.Date
               datePickerSet={"range"}
               dateText={dateText}
@@ -513,8 +513,11 @@ function DayreportSubdivision() {
                 onKeyDown={onKeyDown}
               />
             ))}
-          </S.SearchLeftTopWrap>
-          <S.SearchLeftBottomWrap>
+          </S.SearchWrap>
+        </S.SearchLeftWrap>
+        <S.ContentsHeader>
+          <S.TitleMid>❇️ 소분일지</S.TitleMid>
+          <S.ContentsHeaderWrap>
             {isEditModeHeader ? (
               <ButtonSES
                 onClickEditModeSave={onClickEditModeSave}
@@ -528,8 +531,8 @@ function DayreportSubdivision() {
                 onClickSearch={onClickSearch}
               />
             )}
-          </S.SearchLeftBottomWrap>
-        </S.SearchLeftWrap>
+          </S.ContentsHeaderWrap>
+        </S.ContentsHeader>
         <S.GridHeaderWrap>
           <GridSingle
             columnOptions={columnOptions}
@@ -569,6 +572,7 @@ function DayreportSubdivision() {
           </S.SearchRightTopWrap>
         </S.SearchInfoWrap>
         <S.SearchRightWrap>
+          <S.TitleMid>❇️ 세부소분일지</S.TitleMid>
           <S.SearchRightBottomWrap>
             {isEditModeDetail ? (
               <ButtonSE

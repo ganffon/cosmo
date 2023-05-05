@@ -72,8 +72,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "create_uid",
-      header: CN.create_uid,
+      name: "create_user_nm",
+      header: CN.create_user_nm,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -96,8 +96,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "update_uid",
-      header: CN.update_uid,
+      name: "update_user_nm",
+      header: CN.update_user_nm,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -120,8 +120,8 @@ function ProductTypeSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_uid",
-      header: CN.delete_uid,
+      name: "delete_user_nm",
+      header: CN.delete_user_nm,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,

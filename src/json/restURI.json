@@ -3,6 +3,7 @@
   "user": "/user",
   "employee": "/employee",
   "login": "/login",
+  "loginFactory": "/factory/sign-in",
   "factory": "/factory",
   "line": "/line",
   "process": "/process",
