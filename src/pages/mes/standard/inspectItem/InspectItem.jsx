@@ -195,10 +195,10 @@ function InspectItem(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    insp_item_type_nm:
-                      newValue?.insp_item_type_nm === undefined
+                    insp_item_type_id:
+                      newValue?.insp_item_type_id === undefined
                         ? null
-                        : newValue?.insp_item_type_nm,
+                        : newValue?.insp_item_type_id,
                   });
                 }}
                 renderInput={(params) => (

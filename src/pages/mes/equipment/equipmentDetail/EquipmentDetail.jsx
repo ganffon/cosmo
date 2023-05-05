@@ -207,10 +207,10 @@ function EquipmentDetail() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    classification_nm:
-                      newValue?.classification_nm === undefined
+                    classification_id:
+                      newValue?.classification_id === undefined
                         ? null
-                        : newValue?.classification_nm,
+                        : newValue?.classification_id,
                   });
                 }}
                 renderInput={(params) => (
@@ -232,10 +232,10 @@ function EquipmentDetail() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    group_nm:
-                      newValue?.group_nm === undefined
+                    group_id:
+                      newValue?.group_id === undefined
                         ? null
-                        : newValue?.group_nm,
+                        : newValue?.group_id,
                   });
                 }}
                 renderInput={(params) => (
@@ -253,10 +253,10 @@ function EquipmentDetail() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    class_nm:
-                      newValue?.class_nm === undefined
+                    class_id:
+                      newValue?.class_id === undefined
                         ? null
-                        : newValue?.class_nm,
+                        : newValue?.class_id,
                   });
                 }}
                 renderInput={(params) => (

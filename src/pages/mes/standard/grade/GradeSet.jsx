@@ -19,6 +19,7 @@ function GradeSet(isEditMode) {
     },
   ];
   const rowHeaders = ["checkbox", "rowNum"];
+  const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -139,6 +140,32 @@ function GradeSet(isEditMode) {
       rowSpan: false,
     },
   ];
+  const columnsModal = [
+    {
+      name: "grade_cd",
+      header: CN.grade_cd,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "grade_nm",
+      header: CN.grade_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -173,7 +200,9 @@ function GradeSet(isEditMode) {
   return {
     data,
     rowHeaders,
+    rowHeadersModal,
     columns,
+    columnsModal,
     columnOptions,
     header,
     datePickerSet,

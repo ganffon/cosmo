@@ -161,7 +161,18 @@ class storeLocation {
     this.location_nm = raw.location_nm;
   }
 }
-
+class department {
+  constructor(raw) {
+    this.dept_id = raw.dept_id;
+    this.dept_nm = raw.dept_nm;
+  }
+}
+class grade {
+  constructor(raw) {
+    this.grade_id = raw.grade_id;
+    this.grade_nm = raw.grade_nm;
+  }
+}
 class downtimeType {
   constructor(raw) {
     this.factory_id = raw.factory_id;
@@ -530,6 +541,12 @@ function GetPutParams(componentName, raw) {
       break;
     case "storeLocation":
       params = new storeLocation(raw);
+      break;
+    case "department":
+      params = new department(raw);
+      break;
+    case "grade":
+      params = new grade(raw);
       break;
     case "downtimeType":
       params = new downtimeType(raw);
