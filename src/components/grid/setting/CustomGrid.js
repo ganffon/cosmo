@@ -42,6 +42,11 @@ class BarcodeButton {
     el.onclick = (e) => {
       const rowKey = el.parentElement.__preactattr_["data-row-key"];
       console.log(rowKey);
+      if (props.columnInfo.renderer.options.onClick != null) {
+        props.columnInfo.renderer.options.onClick(rowKey);
+      } else {
+        console.log("hello");
+      }
     };
     // el.addEventListener("click", (ev) => {
     //   const rowKey = el.parentElement.__preactattr_["data-row-key"];

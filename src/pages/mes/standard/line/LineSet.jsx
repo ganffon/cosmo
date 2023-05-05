@@ -81,25 +81,7 @@ function LineSet(isEditMode) {
       whiteSpace: false,
       rowSpan: false,
     },
-    {
-      name: "barcode",
-      header: "barcode",
-      width: WIDTH_SHORT,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      renderer: {
-        type: CustomGrid.BarcodeButton,
-        options: {
-          name: "barcode",
-        },
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+
     {
       name: "create_at",
       header: CN.create_at,
