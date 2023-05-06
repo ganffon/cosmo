@@ -55,6 +55,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -62,11 +67,16 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_cd",
-      header: CN.prod_cd,
+      name: "prod_no",
+      header: CN.prod_no,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -80,6 +90,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -111,7 +126,7 @@ function SparePartReleaseSet(isEditMode) {
       header: CN.lot_no,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -143,6 +158,12 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -155,6 +176,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -167,6 +193,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -179,6 +210,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -191,6 +227,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -203,6 +244,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -215,6 +261,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -227,6 +278,11 @@ function SparePartReleaseSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditMode
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -238,7 +294,7 @@ function SparePartReleaseSet(isEditMode) {
       header: CN.remark,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -250,7 +306,7 @@ function SparePartReleaseSet(isEditMode) {
       header: CN.barcode,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditMode ? "text" : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -271,8 +327,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "create_user_nm",
-      header: CN.create_user_nm,
+      name: "create_uid",
+      header: CN.create_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -295,8 +351,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "update_user_nm",
-      header: CN.update_user_nm,
+      name: "update_uid",
+      header: CN.update_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -319,8 +375,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "delete_user_nm",
-      header: CN.delete_user_nm,
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -375,8 +431,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_cd",
-      header: CN.prod_cd,
+      name: "prod_no",
+      header: CN.prod_no,
       minWidth: WIDTH_SHORT,
       align: "left",
       validation: {
@@ -610,8 +666,8 @@ function SparePartReleaseSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "prod_cd",
-      header: CN.prod_cd,
+      name: "prod_no",
+      header: CN.prod_no,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -650,7 +706,7 @@ function SparePartReleaseSet(isEditMode) {
     },
     {
       name: "eqm_detail_nm",
-      header: CN.prod_cd,
+      header: CN.prod_no,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -714,6 +770,33 @@ function SparePartReleaseSet(isEditMode) {
     },
   ];
 
+  const columnsModalSelectReleaseUser = [
+    {
+      name: "release_uid",
+      header: CN.release_uid,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: "select",
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "release_nm",
+      header: CN.release_nm,
+      minWidth: WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
+
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -760,6 +843,7 @@ function SparePartReleaseSet(isEditMode) {
     columnsModalSelectProduct,
     columnsModalSelectEquipDetail,
     columnsModalSelectStore,
+    columnsModalSelectReleaseUser,
   };
 }
 

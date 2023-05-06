@@ -45,7 +45,7 @@ function SparepartsRelease() {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Grid" or "Modal"
 
-  const SWITCH_NAME_01 = "spareparts-outgo";
+  const SWITCH_NAME_01 = "sparepartsoutgo";
 
   LoginStateChk();
   const {
@@ -60,6 +60,7 @@ function SparepartsRelease() {
     columnsModalSelectProduct,
     columnsModalSelectEquipDetail,
     columnsModalSelectStore,
+    columnsModalSelectReleaseUser,
   } = SparePartReleaseSet(isEditMode);
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
     currentMenuName,
@@ -157,7 +158,61 @@ function SparepartsRelease() {
     isSnackOpen,
     setIsSnackOpen,
     setGridModalSelectData,
-    restURI.storeIncludeLocation
+    restURI.storeIncludeLocation,
+    "storeFrom"
+  );
+
+  const [actSearchSelectReleaseUser] = uSearch.useSearchSelect(
+    refModalSelectGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalSelectData,
+    restURI.employee,
+    "releaseUser"
+  );
+
+  const [actSearchGridUpdate] = uSearch.useSearchSelect(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalSelectData,
+    restURI.product
+  );
+
+  const [actSearchGridUpdateEquipDetail] = uSearch.useSearchSelect(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalSelectData,
+    restURI.equipmentDetail
+  );
+
+  const [actSearchGridUpdateStore] = uSearch.useSearchSelect(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalSelectData,
+    restURI.storeIncludeLocation,
+    "storeFrom"
+  );
+
+  const [actSearchGridUpdateReleaseUser] = uSearch.useSearchSelect(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridModalSelectData,
+    restURI.employee,
+    "releaseUser"
   );
 
   // 검색 시작
@@ -175,6 +230,22 @@ function SparepartsRelease() {
     restURI.sparepartsoutgo
   );
 
+  const [actDelete] = uDelete.useDelete(
+    refSingleGrid,
+    isBackDrop,
+    isEditMode,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setIsDeleteAlertOpen,
+    searchToggle,
+    setSearchToggle,
+    restURI.sparepartsoutgo,
+    SWITCH_NAME_01
+  );
+  useEffect(() => {
+    actSearch(true, "start_date", "end_date");
+  }, []);
   const onClickEditModeSave = () => {
     actEdit();
   };
@@ -185,12 +256,15 @@ function SparepartsRelease() {
   };
   //==== 수정 끝
 
+  const handleDelete = () => {
+    actDelete();
+  };
   const onClickSearch = () => {
     actSearch();
   };
   useEffect(() => {
     onClickSearch();
-  }, []);
+  }, [searchToggle]);
 
   // 검색 끝
 
@@ -215,7 +289,7 @@ function SparepartsRelease() {
   const onDblClickModalSelectGrid = (e) => {
     let refGrid;
     let columnName = [];
-    let columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
+    let columnNameProd = ["prod_id", "prod_no", "prod_nm"];
     let columnNameEquip = ["eqm_detail_id", "eqm_detail_nm"];
     let columnNameStore = [
       "from_store_id",
@@ -223,6 +297,7 @@ function SparepartsRelease() {
       "from_location_id",
       "from_location_nm",
     ];
+    let columnNameEmployee = ["release_uid", "release_nm"];
     if (dblClickGrid === "Grid") {
       refGrid = refSingleGrid;
       disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
@@ -235,6 +310,25 @@ function SparepartsRelease() {
     } else if (dblClickGrid === "ModalStore") {
       refGrid = refModalGrid;
       columnName = columnNameStore;
+    } else if (dblClickGrid === "ModalEmployee") {
+      refGrid = refModalGrid;
+      columnName = columnNameEmployee;
+    } else if (dblClickGrid === "GridProd") {
+      refGrid = refSingleGrid;
+      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      columnName = columnNameProd;
+    } else if (dblClickGrid === "GridEquip") {
+      refGrid = refSingleGrid;
+      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      columnName = columnNameEquip;
+    } else if (dblClickGrid === "GridStore") {
+      refGrid = refSingleGrid;
+      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      columnName = columnNameStore;
+    } else if (dblClickGrid === "GridEmployee") {
+      refGrid = refSingleGrid;
+      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      columnName = columnNameEmployee;
     }
 
     for (let i = 0; i < columnName.length; i++) {
@@ -249,7 +343,7 @@ function SparepartsRelease() {
   };
 
   const onDblClickModalGrid = (e) => {
-    if (Condition(e, ["prod_id", "prod_cd", "prod_nm"])) {
+    if (Condition(e, ["prod_id", "prod_no", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalProd");
       setColumnsSelect(columnsModalSelectProduct);
@@ -277,6 +371,52 @@ function SparepartsRelease() {
       setColumnsSelect(columnsModalSelectStore);
       setIsModalSelectOpen(true);
       actSearchSelectStore();
+    }
+    if (Condition(e, ["release_uid", "release_nm"])) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("ModalEmployee");
+      setColumnsSelect(columnsModalSelectReleaseUser);
+      setIsModalSelectOpen(true);
+      actSearchSelectReleaseUser();
+    }
+  };
+
+  const onDblClickGrid = (e) => {
+    if (Condition(e, ["prod_id", "prod_no", "prod_nm"])) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("GridProd");
+      setColumnsSelect(columnsModalSelectProduct);
+      setIsModalSelectOpen(true);
+      actSearchGridUpdate();
+    }
+
+    if (Condition(e, ["eqm_detail_id", "eqm_detail_nm"])) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("GridEquip");
+      setColumnsSelect(columnsModalSelectEquipDetail);
+      setIsModalSelectOpen(true);
+      actSearchGridUpdateEquipDetail();
+    }
+    if (
+      Condition(e, [
+        "from_store_id",
+        "from_store_nm",
+        "from_location_id",
+        "from_location_nm",
+      ])
+    ) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("GridStore");
+      setColumnsSelect(columnsModalSelectStore);
+      setIsModalSelectOpen(true);
+      actSearchGridUpdateStore();
+    }
+    if (Condition(e, ["release_uid", "release_nm"])) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("GridEmployee");
+      setColumnsSelect(columnsModalSelectReleaseUser);
+      setIsModalSelectOpen(true);
+      actSearchGridUpdateReleaseUser();
     }
   };
 
@@ -325,17 +465,39 @@ function SparepartsRelease() {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columns}
-            rowHeaders={rowHeaders}
-            header={header}
-            data={gridData}
-            draggable={false}
-            refGrid={refSingleGrid}
-            onClickGrid={onClickGrid}
-            onEditingFinish={onEditingFinishGrid}
-          />
+          <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
+          {isDeleteAlertOpen ? (
+            <AlertDelete
+              handleDelete={handleDelete}
+              setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+            />
+          ) : null}
+          {isEditMode ? (
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columns}
+              rowHeaders={rowHeaders}
+              header={header}
+              data={gridData}
+              draggable={false}
+              refGrid={refSingleGrid}
+              onClickGrid={onClickGrid}
+              onDblClickGrid={onDblClickGrid}
+              onEditingFinish={onEditingFinishGrid}
+            />
+          ) : (
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columns}
+              rowHeaders={rowHeaders}
+              header={header}
+              data={gridData}
+              draggable={false}
+              refGrid={refSingleGrid}
+              onClickGrid={onClickGrid}
+              onEditingFinish={onEditingFinishGrid}
+            />
+          )}
         </S.GridWrap>
       </S.ShadowBoxGrid>
       {isModalOpen ? (

@@ -520,6 +520,21 @@ class partner {
     this.remark = raw.remark;
   }
 }
+class sparepartsOutgo {
+  constructor(raw) {
+    this.spare_release_id = raw.spare_release_id;
+    this.prod_id = raw.prod_id;
+    this.reg_date = raw.reg_date;
+    this.lot_no = raw.lot_no;
+    this.qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.eqm_detail_id = raw.eqm_detail_id;
+    this.from_store_id = raw.from_store_id;
+    this.from_location_id = raw.from_location_id;
+    this.release_uid = raw.release_uid;
+    this.remark = raw.remark;
+    this.barcode = raw.barcode;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -656,6 +671,9 @@ function GetPutParams(componentName, raw) {
 
     case "partner":
       params = new partner(raw);
+      break;
+    case "sparepartsOutgo":
+      params = new sparepartsOutgo(raw);
       break;
     default:
   }
