@@ -52,6 +52,7 @@
   "spareReceiveDetail": "/sparereceivedetail",
   "sparepartsIncome": "/spareparts-income",
   "sparepartsoutgo": "/spareparts-release",
+  "sparepartsStoreView": "/spareparts-store-view",
 
   "storeView": "/store-view",
   "storeTransferView": "/store-view/tran",

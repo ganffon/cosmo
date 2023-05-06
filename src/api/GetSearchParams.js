@@ -66,6 +66,12 @@ class documentDetailIncludeHeader {
     this.delete_user_nm = raw.delete_user_nm;
   }
 }
+class releaseUser {
+  constructor(raw) {
+    this.release_uid = raw.emp_id;
+    this.release_nm = raw.emp_nm;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -81,6 +87,9 @@ function GetSearchParams(componentName, raw) {
         break;
       case "documentDetailIncludeHeader":
         params = new documentDetailIncludeHeader(raw);
+        break;
+      case "releaseUser":
+        params = new releaseUser(raw);
         break;
 
       default:

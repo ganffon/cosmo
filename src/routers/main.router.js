@@ -47,6 +47,7 @@ import DayreportSubdivision from "pages/mes/production/dayreportSubdivision/Dayr
 import ProductionOrder from "pages/mes/production/productionOrder/ProductionOrder";
 import SparepartIncome from "pages/mes/equipment/sparepartsIncome/SparepartsIncome";
 import SparepartsRelease from "pages/mes/equipment/sparepartsRelease/sparepartsRelease";
+import SparepartsStoreView from "pages/mes/equipment/sparepartsStoreView/sparepartsStoreView";
 
 export default function MainRouter() {
   return (
@@ -103,6 +104,7 @@ export default function MainRouter() {
 
         <Route path="spareparts-income" element={<SparepartIncome />} />
         <Route path="spareparts-outgo" element={<SparepartsRelease />} />
+        <Route path="spareparts-store-view" element={<SparepartsStoreView />} />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

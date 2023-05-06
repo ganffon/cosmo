@@ -476,6 +476,20 @@ class partner {
     this.remark = raw.remark;
   }
 }
+class sparepartsOutgo {
+  constructor(raw) {
+    this.prod_id = raw.prod_id;
+    this.reg_date = raw.reg_date;
+    this.lot_no = raw.lot_no;
+    this.qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.eqm_detail_id = raw.eqm_detail_id;
+    this.from_store_id = raw.from_store_id;
+    this.from_location_id = raw.from_location_id;
+    this.release_uid = raw.release_uid;
+    this.remark = raw.remark;
+    this.barcode = raw.barcode;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -620,6 +634,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "partner":
         params = new partner(raw);
+        break;
+      case "sparepartsOutgo":
+        params = new sparepartsOutgo(raw);
         break;
       default:
     }
