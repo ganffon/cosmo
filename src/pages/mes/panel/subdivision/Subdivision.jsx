@@ -24,6 +24,16 @@ import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
 import * as S from "./Subdivision.styled";
+import InputPaper from "components/input/InputPaper";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import FolderIcon from "@mui/icons-material/Folder";
+import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 
 function Subdivision() {
   LoginStateChk();
@@ -498,59 +508,89 @@ function Subdivision() {
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ContentsLeft>
         <S.ItemInfoBox>
-          <S.InputBoxLeft>
-            <S.InputSelectBox key={"v.id"}>
-              <S.Title variant="overline">{"품목코드"}</S.Title>
-              <S.Input
-                value={"text" || ""}
-                variant="outlined"
-                autoComplete="off"
-                size="large"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-              <ButtonGroup />
-            </S.InputSelectBox>
-            <S.InputBox key={"v.id"}>
-              <S.Title variant="overline">{"소분LOT"}</S.Title>
-              <S.Input
-                value={"text" || ""}
-                variant="outlined"
-                autoComplete="off"
-                size="large"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-            </S.InputBox>
-          </S.InputBoxLeft>
-          <S.InputBoxRight>
-            <S.InputBox key={"v.id"}>
-              <S.Title variant="overline">{"소분일자"}</S.Title>
-              <S.Input
-                value={"text" || ""}
-                variant="outlined"
-                autoComplete="off"
-                size="large"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-            </S.InputBox>
-            <S.InputBox key={"v.id"}>
-              <S.Title variant="overline">{"소분총량"}</S.Title>
-              <S.Input
-                value={"text" || ""}
-                variant="outlined"
-                autoComplete="off"
-                size="large"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-            </S.InputBox>
-          </S.InputBoxRight>
+          {/* <S.InputBoxLeft> */}
+          {/* <S.InputSelectBox key={"v.id"}> */}
+          <S.Title variant="overline">{"품목코드"}</S.Title>
+          <S.Input
+            value={"text" || ""}
+            variant="outlined"
+            autoComplete="off"
+            size="large"
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <S.BG />
+
+          <Paper
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 300,
+              height: 50,
+            }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search Google Maps"
+              inputProps={{
+                readOnly: true,
+              }}
+            />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <FolderIcon />
+            </IconButton>
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton
+              color="primary"
+              sx={{ p: "10px" }}
+              aria-label="directions"
+            >
+              <CancelPresentationIcon sx={{ color: "gray" }} />
+            </IconButton>
+          </Paper>
+          <InputPaper />
+          {/* </S.InputSelectBox> */}
+          {/* <S.InputBox key={"v.id"}>
+            <S.Title variant="overline">{"소분LOT"}</S.Title>
+            <S.Input
+              value={"text" || ""}
+              variant="outlined"
+              autoComplete="off"
+              size="large"
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+          </S.InputBox> */}
+          {/* </S.InputBoxLeft> */}
+          {/* <S.InputBoxRight> */}
+          {/* <S.InputBox key={"v.id"}>
+            <S.Title variant="overline">{"소분일자"}</S.Title>
+            <S.Input
+              value={"text" || ""}
+              variant="outlined"
+              autoComplete="off"
+              size="large"
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+          </S.InputBox>
+          <S.InputBox key={"v.id"}>
+            <S.Title variant="overline">{"소분총량"}</S.Title>
+            <S.Input
+              value={"text" || ""}
+              variant="outlined"
+              autoComplete="off"
+              size="large"
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+          </S.InputBox> */}
+          {/* </S.InputBoxRight> */}
         </S.ItemInfoBox>
         <S.DataInterfaceBox></S.DataInterfaceBox>
         {/* <S.Date

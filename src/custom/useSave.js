@@ -20,7 +20,7 @@ const useSave = (
         result.push(refGrid?.current?.gridInst?.getRowAt(i));
       }
       const data = result.map((raw) => GetPostParams(componentName, raw));
-
+      console.log(data);
       if (data !== undefined) {
         if (data.length !== 0) {
           setIsBackDrop(true);

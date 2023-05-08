@@ -173,7 +173,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.inspDocument
+    restURI.inspDocumentDetail
   );
   const [actSaveDetail] = uSave.useSaveDetail(
     refGridModalDetail,
@@ -203,7 +203,7 @@ function Document() {
   );
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    restURI.inspDocumentDetailID,
+    restURI.inspDocumentDetail + "?insp_document_id=",
     disRowDetail,
     setDisRowDetail
   );
@@ -291,7 +291,7 @@ function Document() {
         "line_nm",
         "prod_cd",
         "prod_nm",
-        "reg_date",
+        "insp_document_reg_date",
         "apply_date",
         "apply_fg",
         "contents",

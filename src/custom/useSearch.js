@@ -325,7 +325,6 @@ const useSearchSelect = (
           );
           await setGridModalSelectData(gridData);
         } else {
-          console.log(gridData?.data?.data?.rows);
           await setGridModalSelectData(gridData?.data?.data?.rows);
         }
       } catch {
@@ -451,7 +450,7 @@ const useSearchDetail = (setGridData, uri, disRowDetail, setDisRowDetail) => {
   const actSearchDetail = async (headerClickRowID) => {
     if (headerClickRowID !== undefined) {
       try {
-        const gridData = await restAPI.get(`${uri}/${headerClickRowID}`);
+        const gridData = await restAPI.get(`${uri}${headerClickRowID}`);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
       } finally {

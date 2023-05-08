@@ -32,8 +32,8 @@
   "inspItemType": "/insp-item-type",
   "inspItem": "/insp-item",
   "inspDocument": "/insp-document",
-  "inspDocumentDetailID": "/document-detail/detail",
-  "inspDocumentDetailIncludeHeader": "/document-detail/includeheader",
+  "inspDocumentDetail": "/insp-document-detail",
+  "inspDocumentDetailIncludeHeader": "/insp-document/include-details",
 
   "infcItemType": "/infc-item-type",
   "infcItem": "/infc-item",
@@ -46,7 +46,6 @@
 
   "controlPlan": "/control-plan",
   "controlPlanDetail": "/control-plan-detail",
-  "controlPlanDetailID": "/control-plan-detail/detail",
 
   "spareReceive": "/sparereceive",
   "spareReceiveDetail": "/sparereceivedetail",

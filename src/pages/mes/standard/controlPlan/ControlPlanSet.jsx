@@ -163,7 +163,7 @@ function ControlPlanSet(
     },
     {
       name: "apply_date",
-      header: CN.control_plan_reg_date,
+      header: CN.apply_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
       editor: isEditModeHeader

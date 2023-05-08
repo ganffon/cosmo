@@ -1,31 +1,5 @@
 [
   {
-    "name": "관리자",
-    "id": "admin",
-    "path": null,
-    "under": [
-      {
-        "name": "메뉴",
-        "id": "menu",
-        "path": null,
-        "under": [
-          {
-            "name": "메뉴관리",
-            "id": "menu-manage",
-            "path": "menu-manage",
-            "under": null
-          },
-          {
-            "name": "메뉴리스트관리",
-            "id": "menu-list",
-            "path": "menu-list",
-            "under": null
-          }
-        ]
-      }
-    ]
-  },
-  {
     "name": "기준정보",
     "id": "standard",
     "path": null,

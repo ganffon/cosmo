@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
+import ButtonGroup from "components/button/ButtonGroup";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
@@ -28,6 +29,7 @@ export const ItemInfoBox = styled("div")`
   height: 30%;
   width: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
@@ -91,4 +93,9 @@ export const Title = styled(Typography)`
   width: 100px;
   font-family: NotoSansKR_B;
   font-size: 15px;
+`;
+export const BG = styled(ButtonGroup)`
+  width: 100px;
+  grid-column: 4 / 2;
+  grid-row: 2 / 1;
 `;
