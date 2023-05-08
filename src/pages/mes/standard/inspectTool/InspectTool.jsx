@@ -44,7 +44,7 @@ function InspectTool(props) {
     inputSet,
   } = InspectToolSet(isEditMode);
 
-  const SWITCH_NAME_01 = "inspectTool";
+  const SWITCH_NAME_01 = "inspTool";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -74,7 +74,7 @@ function InspectTool(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.inspectTool,
+    restURI.inspTool,
     SWITCH_NAME_01
   );
 
@@ -89,7 +89,7 @@ function InspectTool(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.inspectTool
+    restURI.inspTool
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -99,7 +99,7 @@ function InspectTool(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.inspectTool
+    restURI.inspTool
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -108,7 +108,7 @@ function InspectTool(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.inspectTool
+    restURI.inspTool
   );
   const onClickNew = () => {
     setIsModalOpen(true);

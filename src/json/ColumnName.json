@@ -248,6 +248,9 @@
   "apply_fg": "적용여부",
   "contents": "개정내역",
 
+  "insp_document_reg_date": "개정일자",
+  "control_plan_reg_date": "개정일자",
+
   "insp_document_detail_id": "세부검사기준서ID",
   "insp_proc_gbn": "구분",
   "insp_item_desc": "검사항목상세내용",
@@ -323,5 +326,10 @@
   "from_location_id": "출고 위치ID",
   "from_location_nm": "출고 위치",
   "release_uid": "출고자ID",
-  "release_nm": "출고자"
+  "release_nm": "출고자",
+
+  "request_id": "생산의뢰ID",
+  "erp_request_date": "납품요청일",
+  "erp_deliver_date": "납기일자",
+  "erp_contract_qty": "수주량"
 }

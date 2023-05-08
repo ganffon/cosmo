@@ -18,9 +18,9 @@ function DocumentSet(
   lineList,
   processList,
   equipmentList,
-  inspectMethodList,
-  inspectToolList,
-  inspectFilingList
+  inspMethodList,
+  inspToolList,
+  inspFilingList
 ) {
   const data = [];
   /** 🔸columns ❗
@@ -142,8 +142,8 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "insp_document_reg_date",
+      header: CN.insp_document_reg_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
       editor: isEditModeHeader
@@ -163,7 +163,7 @@ function DocumentSet(
     },
     {
       name: "apply_date",
-      header: CN.reg_date,
+      header: CN.insp_document_reg_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
       editor: isEditModeHeader
@@ -575,7 +575,7 @@ function DocumentSet(
         ? {
             type: "select",
             options: {
-              listItems: inspectMethodList,
+              listItems: inspMethodList,
             },
           }
         : false,
@@ -595,7 +595,7 @@ function DocumentSet(
         ? {
             type: "select",
             options: {
-              listItems: inspectToolList,
+              listItems: inspToolList,
             },
           }
         : false,
@@ -615,7 +615,7 @@ function DocumentSet(
         ? {
             type: "select",
             options: {
-              listItems: inspectFilingList,
+              listItems: inspFilingList,
             },
           }
         : false,
@@ -887,8 +887,8 @@ function DocumentSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "insp_document_reg_date",
+      header: CN.insp_document_reg_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
       editor: isNewDetail
@@ -1213,7 +1213,7 @@ function DocumentSet(
       editor: {
         type: "select",
         options: {
-          listItems: inspectMethodList,
+          listItems: inspMethodList,
         },
       },
       hidden: false,
@@ -1231,7 +1231,7 @@ function DocumentSet(
       editor: {
         type: "select",
         options: {
-          listItems: inspectToolList,
+          listItems: inspToolList,
         },
       },
       hidden: false,
@@ -1249,7 +1249,7 @@ function DocumentSet(
       editor: {
         type: "select",
         options: {
-          listItems: inspectFilingList,
+          listItems: inspFilingList,
         },
       },
       hidden: false,
@@ -1499,8 +1499,8 @@ function DocumentSet(
       name: CN.prod_nm,
     },
     {
-      id: "reg_date",
-      name: CN.reg_date,
+      id: "insp_document_reg_date",
+      name: CN.insp_document_reg_date,
     },
     {
       id: "apply_date",

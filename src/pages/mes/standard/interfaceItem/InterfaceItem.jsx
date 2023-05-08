@@ -40,8 +40,7 @@ function InterfaceItem(props) {
   const [comboValue, setComboValue] = useState({
     infc_item_type_id: null,
   });
-  const [interfaceItemTypeOpt, interfaceItemTypeList] =
-    Cbo.useInterfaceItemType();
+  const [infcItemTypeOpt, infcItemTypeList] = Cbo.useInfcItemType();
   const {
     rowHeaders,
     rowHeadersModal,
@@ -50,9 +49,9 @@ function InterfaceItem(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = InterfaceItemSet(isEditMode, interfaceItemTypeList);
+  } = InterfaceItemSet(isEditMode, infcItemTypeList);
 
-  const SWITCH_NAME_01 = "interfaceItem";
+  const SWITCH_NAME_01 = "infcItem";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -82,7 +81,7 @@ function InterfaceItem(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.interfaceItem,
+    restURI.infcItem,
     SWITCH_NAME_01
   );
 
@@ -98,7 +97,7 @@ function InterfaceItem(props) {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    restURI.interfaceItem
+    restURI.infcItem
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -108,7 +107,7 @@ function InterfaceItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.interfaceItem
+    restURI.infcItem
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -117,7 +116,7 @@ function InterfaceItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.interfaceItem
+    restURI.infcItem
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -189,7 +188,7 @@ function InterfaceItem(props) {
                 id="factoryCombo"
                 size="small"
                 key={(option) => option?.infc_item_type_id}
-                options={interfaceItemTypeOpt || null}
+                options={infcItemTypeOpt || null}
                 getOptionLabel={(option) => option?.infc_item_type_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({

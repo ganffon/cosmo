@@ -44,7 +44,7 @@ function InspectFiling(props) {
     inputSet,
   } = InspectFilingSet(isEditMode);
 
-  const SWITCH_NAME_01 = "inspectFiling";
+  const SWITCH_NAME_01 = "inspFiling";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -75,7 +75,7 @@ function InspectFiling(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.inspectFiling,
+    restURI.inspFiling,
     SWITCH_NAME_01
   );
 
@@ -90,7 +90,7 @@ function InspectFiling(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.inspectFiling
+    restURI.inspFiling
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -100,7 +100,7 @@ function InspectFiling(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.inspectFiling
+    restURI.inspFiling
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -109,7 +109,7 @@ function InspectFiling(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.inspectFiling
+    restURI.inspFiling
   );
   const onClickNew = () => {
     setIsModalOpen(true);

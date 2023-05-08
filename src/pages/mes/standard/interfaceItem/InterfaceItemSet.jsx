@@ -8,7 +8,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function InterfaceItemSet(isEditMode, interfaceItemTypeList) {
+function InterfaceItemSet(isEditMode, infcItemTypeList) {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -45,7 +45,7 @@ function InterfaceItemSet(isEditMode, interfaceItemTypeList) {
           editor: {
             type: "select",
             options: {
-              listItems: interfaceItemTypeList,
+              listItems: infcItemTypeList,
             },
           },
           hidden: false,
@@ -185,7 +185,7 @@ function InterfaceItemSet(isEditMode, interfaceItemTypeList) {
       editor: {
         type: "select",
         options: {
-          listItems: interfaceItemTypeList,
+          listItems: infcItemTypeList,
         },
       },
       hidden: false,

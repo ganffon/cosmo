@@ -94,42 +94,42 @@ class downtime {
     this.downtime_id = raw.downtime_id;
   }
 }
-class inspectFiling {
+class inspFiling {
   constructor(raw) {
     this.insp_filing_id = raw.insp_filing_id;
   }
 }
-class inspectMethod {
+class inspMethod {
   constructor(raw) {
     this.insp_method_id = raw.insp_method_id;
   }
 }
-class inspectTool {
+class inspTool {
   constructor(raw) {
     this.insp_tool_id = raw.insp_tool_id;
   }
 }
-class inspectType {
+class inspItemType {
   constructor(raw) {
     this.insp_item_type_id = raw.insp_item_type_id;
   }
 }
-class inspectItem {
+class inspItem {
   constructor(raw) {
     this.insp_item_id = raw.insp_item_id;
   }
 }
-class interfaceItemType {
+class infcItemType {
   constructor(raw) {
     this.infc_item_type_id = raw.infc_item_type_id;
   }
 }
-class interfaceItem {
+class infcItem {
   constructor(raw) {
     this.infc_item_id = raw.infc_item_id;
   }
 }
-class interfaceMemory {
+class infcMemory {
   constructor(raw) {
     this.infc_memory_id = raw.infc_memory_id;
   }
@@ -287,29 +287,29 @@ function GetDeleteParams(componentName, raw) {
     case "grade":
       params = new grade(raw);
       break;
-    case "inspectFiling":
-      params = new inspectFiling(raw);
+    case "inspFiling":
+      params = new inspFiling(raw);
       break;
-    case "inspectMethod":
-      params = new inspectMethod(raw);
+    case "inspMethod":
+      params = new inspMethod(raw);
       break;
-    case "inspectTool":
-      params = new inspectTool(raw);
+    case "inspTool":
+      params = new inspTool(raw);
       break;
-    case "inspectType":
-      params = new inspectType(raw);
+    case "inspItemType":
+      params = new inspItemType(raw);
       break;
-    case "inspectItem":
-      params = new inspectItem(raw);
+    case "inspItem":
+      params = new inspItem(raw);
       break;
-    case "interfaceItemType":
-      params = new interfaceItemType(raw);
+    case "infcItemType":
+      params = new infcItemType(raw);
       break;
-    case "interfaceItem":
-      params = new interfaceItem(raw);
+    case "infcItem":
+      params = new infcItem(raw);
       break;
-    case "interfaceMemory":
-      params = new interfaceMemory(raw);
+    case "infcMemory":
+      params = new infcMemory(raw);
       break;
     case "equipmentLarge":
       params = new equipmentLarge(raw);

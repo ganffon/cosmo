@@ -243,41 +243,41 @@ const useUnit = () => {
   }, []);
   return [UnitOpt, unitList];
 };
-let interfaceItemTypeList = [];
-const useInterfaceItemType = () => {
-  const [interfaceItemTypeOpt, setInterfaceItemTypeOpt] = useState([]);
+let infcItemTypeList = [];
+const useInfcItemType = () => {
+  const [infcItemTypeOpt, setInfcItemTypeOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
-      await restAPI.get(restURI.interfaceItemType).then((res) => {
-        setInterfaceItemTypeOpt(
+      await restAPI.get(restURI.infcItemType).then((res) => {
+        setInfcItemTypeOpt(
           cboMUISort(res?.data?.data?.rows, "infc_item_type_nm")
         );
-        interfaceItemTypeList = res?.data?.data?.rows.map((data) => {
+        infcItemTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "infc_item_type_id", "infc_item_type_nm");
         });
-        interfaceItemTypeList = cboGridSort(interfaceItemTypeList);
+        infcItemTypeList = cboGridSort(infcItemTypeList);
       });
     };
     getCboOpt();
   }, []);
-  return [interfaceItemTypeOpt, interfaceItemTypeList];
+  return [infcItemTypeOpt, infcItemTypeList];
 };
-let interfaceItemList = [];
-const useInterfaceItem = () => {
-  const [interfaceItemOpt, setInterfaceItemOpt] = useState([]);
+let infcItemList = [];
+const useInfcItem = () => {
+  const [infcItemOpt, setInfcItemOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
-      await restAPI.get(restURI.interfaceItem).then((res) => {
-        setInterfaceItemOpt(cboMUISort(res?.data?.data?.rows, "infc_item_nm"));
-        interfaceItemList = res?.data?.data?.rows.map((data) => {
+      await restAPI.get(restURI.infcItem).then((res) => {
+        setInfcItemOpt(cboMUISort(res?.data?.data?.rows, "infc_item_nm"));
+        infcItemList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "infc_item_id", "infc_item_nm");
         });
-        interfaceItemList = cboGridSort(interfaceItemList);
+        infcItemList = cboGridSort(infcItemList);
       });
     };
     getCboOpt();
   }, []);
-  return [interfaceItemOpt, interfaceItemList];
+  return [infcItemOpt, infcItemList];
 };
 let storeList = [];
 const useStore = () => {
@@ -368,79 +368,75 @@ const useDowntimeType = () => {
   }, []);
   return [downtimeTypeOpt, downtimeTypeList];
 };
-let inspectItemTypeList = [];
-const useInspectItemType = () => {
-  const [inspectItemTypeOpt, setInspectItemTypeOpt] = useState([]);
+let inspItemTypeList = [];
+const useInspItemType = () => {
+  const [inspItemTypeOpt, setInspItemTypeOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
-      await restAPI.get(restURI.inspectType).then((res) => {
-        setInspectItemTypeOpt(
+      await restAPI.get(restURI.inspItemType).then((res) => {
+        setInspItemTypeOpt(
           cboMUISort(res?.data?.data?.rows, "insp_item_type_nm")
         );
-        inspectItemTypeList = res?.data?.data?.rows.map((data) => {
+        inspItemTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "insp_item_type_id", "insp_item_type_nm");
         });
-        inspectItemTypeList = cboGridSort(inspectItemTypeList);
+        inspItemTypeList = cboGridSort(inspItemTypeList);
       });
     };
     getCboOpt();
   }, []);
-  return [inspectItemTypeOpt, inspectItemTypeList];
+  return [inspItemTypeOpt, inspItemTypeList];
 };
-let inspectMethodList = [];
-const useInspectMethod = () => {
-  const [inspectMethodOpt, setInspectMethodOpt] = useState([]);
+let inspMethodList = [];
+const useInspMethod = () => {
+  const [inspMethodOpt, setInspMethodOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
-      await restAPI.get(restURI.inspectMethod).then((res) => {
-        setInspectMethodOpt(
-          cboMUISort(res?.data?.data?.rows, "insp_method_nm")
-        );
-        inspectMethodList = res?.data?.data?.rows.map((data) => {
+      await restAPI.get(restURI.inspMethod).then((res) => {
+        setInspMethodOpt(cboMUISort(res?.data?.data?.rows, "insp_method_nm"));
+        inspMethodList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "insp_method_id", "insp_method_nm");
         });
-        inspectMethodList = cboGridSort(inspectMethodList);
+        inspMethodList = cboGridSort(inspMethodList);
       });
     };
     getCboOpt();
   }, []);
-  return [inspectMethodOpt, inspectMethodList];
+  return [inspMethodOpt, inspMethodList];
 };
-let inspectToolList = [];
-const useInspectTool = () => {
-  const [inspectToolOpt, setInspectToolOpt] = useState([]);
+let inspToolList = [];
+const useInspTool = () => {
+  const [inspToolOpt, setInspToolOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
-      await restAPI.get(restURI.inspectTool).then((res) => {
-        setInspectToolOpt(cboMUISort(res?.data?.data?.rows, "insp_tool_nm"));
-        inspectToolList = res?.data?.data?.rows.map((data) => {
+      await restAPI.get(restURI.inspTool).then((res) => {
+        setInspToolOpt(cboMUISort(res?.data?.data?.rows, "insp_tool_nm"));
+        inspToolList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "insp_tool_id", "insp_tool_nm");
         });
-        inspectToolList = cboGridSort(inspectToolList);
+        inspToolList = cboGridSort(inspToolList);
       });
     };
     getCboOpt();
   }, []);
-  return [inspectToolOpt, inspectToolList];
+  return [inspToolOpt, inspToolList];
 };
-let inspectFilingList = [];
-const useInspectFiling = () => {
-  const [inspectFilingOpt, setInspectFilingOpt] = useState([]);
+let inspFilingList = [];
+const useInspFiling = () => {
+  const [inspFilingOpt, setInspFilingOpt] = useState([]);
   useEffect(() => {
     const getCboOpt = async () => {
-      await restAPI.get(restURI.inspectFiling).then((res) => {
-        setInspectFilingOpt(
-          cboMUISort(res?.data?.data?.rows, "insp_filing_nm")
-        );
-        inspectFilingList = res?.data?.data?.rows.map((data) => {
+      await restAPI.get(restURI.inspFiling).then((res) => {
+        setInspFilingOpt(cboMUISort(res?.data?.data?.rows, "insp_filing_nm"));
+        inspFilingList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "insp_filing_id", "insp_filing_nm");
         });
-        inspectFilingList = cboGridSort(inspectFilingList);
+        inspFilingList = cboGridSort(inspFilingList);
       });
     };
     getCboOpt();
   }, []);
-  return [inspectFilingOpt, inspectFilingList];
+  return [inspFilingOpt, inspFilingList];
 };
 let partnerTypeList = [];
 const usePartnerTypeList = () => {
@@ -474,16 +470,16 @@ export {
   useProductType,
   useProductTypeSmall,
   useUnit,
-  useInterfaceItemType,
-  useInterfaceItem,
+  useInfcItemType,
+  useInfcItem,
   useStore,
   useEquipmentLarge,
   useEquipmentMedium,
   useEquipmentSmall,
   useDowntimeType,
-  useInspectItemType,
-  useInspectMethod,
-  useInspectTool,
-  useInspectFiling,
+  useInspItemType,
+  useInspMethod,
+  useInspTool,
+  useInspFiling,
   usePartnerTypeList,
 };

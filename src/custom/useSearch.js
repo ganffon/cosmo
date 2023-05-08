@@ -284,7 +284,6 @@ const useSearchOnlyDate = (
         setIsBackDrop(true);
         const dateParams = GetDateParams("", dateText, startDateNm, endDateNm);
         const readURI = uri + dateParams;
-        console.log(readURI);
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -326,6 +325,7 @@ const useSearchSelect = (
           );
           await setGridModalSelectData(gridData);
         } else {
+          console.log(gridData?.data?.data?.rows);
           await setGridModalSelectData(gridData?.data?.data?.rows);
         }
       } catch {

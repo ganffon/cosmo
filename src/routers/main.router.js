@@ -49,6 +49,8 @@ import SparepartIncome from "pages/mes/equipment/sparepartsIncome/SparepartsInco
 import SparepartsRelease from "pages/mes/equipment/sparepartsRelease/sparepartsRelease";
 import SparepartsStoreView from "pages/mes/equipment/sparepartsStoreView/sparepartsStoreView";
 
+import Subdivision from "pages/mes/panel/subdivision/Subdivision";
+
 export default function MainRouter() {
   return (
     <Layout>
@@ -105,6 +107,8 @@ export default function MainRouter() {
         <Route path="spareparts-income" element={<SparepartIncome />} />
         <Route path="spareparts-outgo" element={<SparepartsRelease />} />
         <Route path="spareparts-store-view" element={<SparepartsStoreView />} />
+
+        <Route path="subdivision-site" element={<Subdivision />} />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

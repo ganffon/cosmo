@@ -40,7 +40,7 @@ function InspectItem(props) {
   const [comboValue, setComboValue] = useState({
     insp_item_type_id: null,
   });
-  const [inspectItemTypeOpt, inspectItemTypeList] = Cbo.useInspectItemType();
+  const [inspItemTypeOpt, inspItemTypeList] = Cbo.useInspItemType();
   const {
     rowHeaders,
     rowHeadersModal,
@@ -49,9 +49,9 @@ function InspectItem(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = InspectItemSet(isEditMode, inspectItemTypeList);
+  } = InspectItemSet(isEditMode, inspItemTypeList);
 
-  const SWITCH_NAME_01 = "inspectItem";
+  const SWITCH_NAME_01 = "inspItem";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -82,7 +82,7 @@ function InspectItem(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.inspectItem,
+    restURI.inspItem,
     SWITCH_NAME_01
   );
 
@@ -98,7 +98,7 @@ function InspectItem(props) {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    restURI.inspectItem
+    restURI.inspItem
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -108,7 +108,7 @@ function InspectItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.inspectItem
+    restURI.inspItem
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -117,7 +117,7 @@ function InspectItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.inspectItem
+    restURI.inspItem
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -190,7 +190,7 @@ function InspectItem(props) {
                 id="factoryCombo"
                 size="small"
                 key={(option) => option?.insp_item_type_id}
-                options={inspectItemTypeOpt || null}
+                options={inspItemTypeOpt || null}
                 getOptionLabel={(option) => option?.insp_item_type_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({

@@ -49,6 +49,8 @@ function InterfaceMemory(props) {
     width: "80%",
     height: "90%",
   });
+  const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
+  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Grid" or "Modal"
 
   const [lineOpt, lineList] = Cbo.useLine();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
@@ -65,7 +67,7 @@ function InterfaceMemory(props) {
     inputSet,
   } = InterfaceMemorySet(isEditMode, lineList, processList, equipmentList);
 
-  const SWITCH_NAME_01 = "interfaceMemory";
+  const SWITCH_NAME_01 = "infcMemory";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -96,7 +98,7 @@ function InterfaceMemory(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.interfaceMemory,
+    restURI.infcMemory,
     SWITCH_NAME_01
   );
 
@@ -112,7 +114,7 @@ function InterfaceMemory(props) {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    restURI.interfaceMemory
+    restURI.infcMemory
   );
 
   const [actSearchSelect] = uSearch.useSearchSelect(
@@ -122,9 +124,7 @@ function InterfaceMemory(props) {
     isSnackOpen,
     setIsSnackOpen,
     setGridModalSelectData,
-    disableRowToggle,
-    setDisableRowToggle,
-    restURI.interfaceItem
+    restURI.infcItem
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -134,7 +134,7 @@ function InterfaceMemory(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.interfaceMemory
+    restURI.infcMemory
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -143,7 +143,7 @@ function InterfaceMemory(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.interfaceMemory
+    restURI.infcMemory
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -184,8 +184,7 @@ function InterfaceMemory(props) {
   const onClickModalCancelRow = () => {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
-  const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
-  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Grid" or "Modal"
+
   const onDblClickModalGrid = (e) => {
     if (Condition(e, ["infc_item_nm", "infc_item_type_nm"])) {
       setDblClickRowKey(e?.rowKey);
