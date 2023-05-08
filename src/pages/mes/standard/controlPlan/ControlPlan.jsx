@@ -144,7 +144,7 @@ function ControlPlan() {
     restURI.inspDocumentDetailIncludeHeader,
     "documentDetailIncludeHeader"
   );
-  const [actSave] = uSave.useSave(
+  const [actSave] = uSave.useSaveMulti(
     refGridModalHeader,
     refGridModalDetail,
     isEditModeHeader,
@@ -174,7 +174,7 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.controlPlan
+    restURI.controlPlanDetail
   );
   const [actSaveDetail] = uSave.useSaveDetail(
     refGridModalDetail,
@@ -204,7 +204,7 @@ function ControlPlan() {
   );
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    restURI.controlPlanDetailID,
+    restURI.controlPlanDetail + "?control_plan_id=",
     disRowDetail,
     setDisRowDetail
   );
@@ -292,7 +292,7 @@ function ControlPlan() {
         "line_nm",
         "prod_cd",
         "prod_nm",
-        "reg_date",
+        "control_plan_reg_date",
         "apply_date",
         "apply_fg",
         "contents",
@@ -392,6 +392,7 @@ function ControlPlan() {
     modalDetailClickRowKey = null;
   };
   const onClickModalSave = () => {
+    console.log("here");
     actSave();
   };
   const onClickModalClose = () => {

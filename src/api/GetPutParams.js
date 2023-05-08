@@ -273,7 +273,6 @@ class infcMemory {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.infc_memory_id = raw.infc_memory_id;
-    this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_id = raw.infc_item_id;
     this.line_id = raw.line_id;
     this.proc_id = raw.proc_id;

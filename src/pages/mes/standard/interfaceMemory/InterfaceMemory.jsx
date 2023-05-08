@@ -350,10 +350,10 @@ function InterfaceMemory(props) {
           columns={columnsModalSelect}
           columnOptions={columnOptions}
           header={header}
-          gridModalSelectData={gridModalSelectData}
+          gridDataSelect={gridModalSelectData}
           rowHeaders={rowHeadersModal}
-          refModalSelectGrid={refModalSelectGrid}
-          onDblClickModalSelectGrid={onDblClickModalSelectGrid}
+          refSelectGrid={refModalSelectGrid}
+          onDblClickGridSelect={onDblClickModalSelectGrid}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

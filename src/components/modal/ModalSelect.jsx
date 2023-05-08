@@ -6,7 +6,7 @@ import * as S from "./ModalSelect.styled";
 function ModalSelect(props) {
   const {
     width = "80%",
-    height,
+    height = "90%",
     onClickModalSelectClose = () => {},
     refSelectGrid,
     columns,
