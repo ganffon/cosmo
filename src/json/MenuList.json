@@ -512,19 +512,19 @@
     "under": [
       {
         "name": "소분일지",
-        "id": "production-dayreport-subdivision-site",
-        "path": null,
+        "id": "subdivision-site",
+        "path": "subdivision-site",
         "under": null
       },
       {
         "name": "계량일지",
-        "id": "production-dayreport-weight-site",
+        "id": "weight-site",
         "path": null,
         "under": null
       },
       {
         "name": "포장일지",
-        "id": "production-dayreport-packing-site",
+        "id": "packing-site",
         "path": null,
         "under": null
       }

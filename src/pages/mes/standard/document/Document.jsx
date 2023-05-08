@@ -70,9 +70,9 @@ function Document() {
   const [lineOpt, lineList] = Cbo.useLine();
   const [processOpt, processList] = Cbo.useProcess();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
-  const [inspectMethodOpt, inspectMethodList] = Cbo.useInspectMethod();
-  const [inspectToolOpt, inspectToolList] = Cbo.useInspectTool();
-  const [inspectFilingOpt, inspectFilingList] = Cbo.useInspectFiling();
+  const [inspMethodOpt, inspMethodList] = Cbo.useInspMethod();
+  const [inspToolOpt, inspToolList] = Cbo.useInspTool();
+  const [inspFilingOpt, inspFilingList] = Cbo.useInspFiling();
 
   const {
     columnsHeader,
@@ -94,9 +94,9 @@ function Document() {
     lineList,
     processList,
     equipmentList,
-    inspectMethodList,
-    inspectToolList,
-    inspectFilingList
+    inspMethodList,
+    inspToolList,
+    inspFilingList
   );
   const SWITCH_NAME_01 = "document";
   const SWITCH_NAME_02 = "documentDetail";
@@ -141,7 +141,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.inspectItem
+    restURI.inspItem
   ); //➡️ Modal Select Search Insp
   const [actSave] = uSave.useSaveMulti(
     refGridModalHeader,
@@ -153,7 +153,7 @@ function Document() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.inspectDocument
+    restURI.inspDocument
   );
   const [actEditHeader] = uEdit.useEditHeader(
     refGridHeader,
@@ -163,7 +163,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.inspectDocument
+    restURI.inspDocument
   );
   const [actEditDetail] = uEdit.useEditDetail(
     refGridDetail,
@@ -173,7 +173,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.inspectDocument
+    restURI.inspDocument
   );
   const [actSaveDetail] = uSave.useSaveDetail(
     refGridModalDetail,
@@ -182,7 +182,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.inspectDocumentDetail
+    restURI.inspDocumentDetail
   );
 
   const [actSearchHeaderIC] = uSearch.useSearchHeaderIC(
@@ -199,11 +199,11 @@ function Document() {
     setGridDataHeader,
     disRowHeader,
     setDisRowHeader,
-    restURI.inspectDocument
+    restURI.inspDocument
   );
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    restURI.inspectDocumentDetailID,
+    restURI.inspDocumentDetailID,
     disRowDetail,
     setDisRowDetail
   );
@@ -211,7 +211,7 @@ function Document() {
     isBackDrop,
     setIsBackDrop,
     setGridDataHeaderRowID,
-    restURI.inspectDocument
+    restURI.inspDocument
   );
   const [actDeleteDetail] = uDelete.useDeleteDetail(
     refGridDetail,
@@ -223,7 +223,7 @@ function Document() {
     actSearchHeaderIC,
     actSearchDetail,
     headerClickRowID,
-    restURI.inspectDocumentDetail,
+    restURI.inspDocumentDetail,
     SWITCH_NAME_02
   );
   /**

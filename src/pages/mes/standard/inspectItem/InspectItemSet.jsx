@@ -8,7 +8,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function InspectItemSet(isEditMode, inspectItemTypeList) {
+function InspectItemSet(isEditMode, inspItemTypeList) {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -45,7 +45,7 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
           editor: {
             type: "select",
             options: {
-              listItems: inspectItemTypeList,
+              listItems: inspItemTypeList,
             },
           },
           hidden: false,
@@ -185,7 +185,7 @@ function InspectItemSet(isEditMode, inspectItemTypeList) {
       editor: {
         type: "select",
         options: {
-          listItems: inspectItemTypeList,
+          listItems: inspItemTypeList,
         },
       },
       hidden: false,

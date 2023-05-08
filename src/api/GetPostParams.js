@@ -54,10 +54,8 @@ class employee {
 class equipment {
   constructor(raw) {
     this.proc_id = raw.proc_id;
-    this.equip_type_id = raw.equip_type_id;
     this.equip_cd = raw.equip_cd;
     this.equip_nm = raw.equip_nm;
-    this.workings_id = raw.workings_id;
     this.manager_emp_id = raw.manager_emp_id;
     this.sub_manager_emp_id = raw.sub_manager_emp_id;
     this.use_fg = raw.use_fg ? true : false;
@@ -208,31 +206,31 @@ class workerGroup {
     this.worker_group_nm = raw.worker_group_nm;
   }
 }
-class inspectFiling {
+class inspFiling {
   constructor(raw) {
     this.insp_filing_cd = raw.insp_filing_cd;
     this.insp_filing_nm = raw.insp_filing_nm;
   }
 }
-class inspectMethod {
+class inspMethod {
   constructor(raw) {
     this.insp_method_cd = raw.insp_method_cd;
     this.insp_method_nm = raw.insp_method_nm;
   }
 }
-class inspectTool {
+class inspTool {
   constructor(raw) {
     this.insp_tool_cd = raw.insp_tool_cd;
     this.insp_tool_nm = raw.insp_tool_nm;
   }
 }
-class inspectType {
+class inspItemType {
   constructor(raw) {
     this.insp_item_type_cd = raw.insp_item_type_cd;
     this.insp_item_type_nm = raw.insp_item_type_nm;
   }
 }
-class inspectItem {
+class inspItem {
   constructor(raw) {
     this.insp_item_type_id = raw.insp_item_type_id;
     this.insp_item_cd = raw.insp_item_cd;
@@ -242,20 +240,20 @@ class inspectItem {
     this.unit_id = raw.unit_id;
   }
 }
-class interfaceItemType {
+class infcItemType {
   constructor(raw) {
     this.infc_item_type_cd = raw.infc_item_type_cd;
     this.infc_item_type_nm = raw.infc_item_type_nm;
   }
 }
-class interfaceItem {
+class infcItem {
   constructor(raw) {
     this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_cd = raw.infc_item_cd;
     this.infc_item_nm = raw.infc_item_nm;
   }
 }
-class interfaceMemory {
+class infcMemory {
   constructor(raw) {
     this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_id = raw.infc_item_id;
@@ -331,7 +329,7 @@ class document {
     this.insp_document_no = raw.insp_document_no;
     this.line_id = raw.line_id;
     this.prod_id = raw.prod_id;
-    this.reg_date = raw.reg_date;
+    this.insp_document_reg_date = raw.insp_document_reg_date;
     this.apply_date = raw.apply_date;
     this.apply_fg = raw.apply_fg ? true : false;
     this.contents = raw.contents;
@@ -410,7 +408,7 @@ class controlPlan {
     this.control_plan_no = raw.control_plan_no;
     this.line_id = raw.line_id;
     this.prod_id = raw.prod_id;
-    this.reg_date = raw.reg_date;
+    this.control_plan_reg_date = raw.control_plan_reg_date;
     this.apply_date = raw.apply_date;
     this.apply_fg = raw.apply_fg ? true : false;
     this.contents = raw.contents;
@@ -566,29 +564,29 @@ function GetPostParams(componentName, raw) {
       case "workerGroup":
         params = new workerGroup(raw);
         break;
-      case "inspectFiling":
-        params = new inspectFiling(raw);
+      case "inspFiling":
+        params = new inspFiling(raw);
         break;
-      case "inspectMethod":
-        params = new inspectMethod(raw);
+      case "inspMethod":
+        params = new inspMethod(raw);
         break;
-      case "inspectTool":
-        params = new inspectTool(raw);
+      case "inspTool":
+        params = new inspTool(raw);
         break;
-      case "inspectType":
-        params = new inspectType(raw);
+      case "inspItemType":
+        params = new inspItemType(raw);
         break;
-      case "inspectItem":
-        params = new inspectItem(raw);
+      case "inspItem":
+        params = new inspItem(raw);
         break;
-      case "interfaceItemType":
-        params = new interfaceItemType(raw);
+      case "infcItemType":
+        params = new infcItemType(raw);
         break;
-      case "interfaceItem":
-        params = new interfaceItem(raw);
+      case "infcItem":
+        params = new infcItem(raw);
         break;
-      case "interfaceMemory":
-        params = new interfaceMemory(raw);
+      case "infcMemory":
+        params = new infcMemory(raw);
         break;
       case "equipmentLarge":
         params = new equipmentLarge(raw);

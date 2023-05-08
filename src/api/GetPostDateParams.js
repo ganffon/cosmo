@@ -1,8 +1,7 @@
 // ✨ INSERT ✨
 
 class storeCheck {
-  constructor(raw, factory_id, date) {
-    this.factory_id = factory_id;
+  constructor(raw, date) {
     this.reg_date = date;
     this.tran_type_id = null;
     this.store_id = raw.store_id;
@@ -19,8 +18,7 @@ class storeCheck {
   }
 }
 class storeCheckNewLOT {
-  constructor(raw, factory_id, date) {
-    this.factory_id = factory_id;
+  constructor(raw, date) {
     this.reg_date = date;
     this.tran_type_id = null;
     this.store_id = raw.store_id;
@@ -46,15 +44,15 @@ class storeCheckNewLOT {
  * @param {string} factory_id 쿠키에서 현재 로그인 한 사업부 아이디
  * @returns
  */
-function GetPostDateParams(componentName, raw, factory_id, date) {
+function GetPostDateParams(componentName, raw, date) {
   let params = "";
   if (raw !== undefined) {
     switch (componentName) {
       case "storeCheck":
-        params = new storeCheck(raw, factory_id, date);
+        params = new storeCheck(raw, date);
         break;
       case "storeCheckNewLOT":
-        params = new storeCheckNewLOT(raw, factory_id, date);
+        params = new storeCheckNewLOT(raw, date);
         break;
       default:
     }

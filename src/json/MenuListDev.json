@@ -409,25 +409,25 @@
         "path": null,
         "under": [
           {
-            "name": "❌SpareParts입고관리",
+            "name": "✴️SpareParts입고관리",
             "id": "spareparts-income",
             "path": "spareparts-income",
             "under": null
           },
           {
-            "name": "❌SpareParts출고관리",
+            "name": "✴️SpareParts출고관리",
             "id": "spareparts-outgo",
             "path": "spareparts-outgo",
             "under": null
           },
           {
-            "name": "❌SpareParts재고현황",
+            "name": "✴️SpareParts재고현황",
             "id": "spareparts-store-view",
             "path": "spareparts-store-view",
             "under": null
           },
           {
-            "name": "❌SpareParts수불현황",
+            "name": "✴️SpareParts수불현황",
             "id": "spareparts-store-transfer-view",
             "path": "spareparts-store-transfer-view",
             "under": null
@@ -511,20 +511,20 @@
     "path": null,
     "under": [
       {
-        "name": "❌소분일지",
-        "id": "production-dayreport-subdivision-site",
-        "path": null,
+        "name": "✴️소분일지",
+        "id": "subdivision-site",
+        "path": "subdivision-site",
         "under": null
       },
       {
         "name": "❌계량일지",
-        "id": "production-dayreport-weight-site",
+        "id": "weight-site",
         "path": null,
         "under": null
       },
       {
         "name": "❌포장일지",
-        "id": "production-dayreport-packing-site",
+        "id": "packing-site",
         "path": null,
         "under": null
       }

@@ -70,9 +70,9 @@ function ControlPlan() {
   const [lineOpt, lineList] = Cbo.useLine();
   const [processOpt, processList] = Cbo.useProcess();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
-  const [inspectMethodOpt, inspectMethodList] = Cbo.useInspectMethod();
-  const [inspectToolOpt, inspectToolList] = Cbo.useInspectTool();
-  const [inspectFilingOpt, inspectFilingList] = Cbo.useInspectFiling();
+  const [inspMethodOpt, inspMethodList] = Cbo.useInspMethod();
+  const [inspToolOpt, inspToolList] = Cbo.useInspTool();
+  const [inspFilingOpt, inspFilingList] = Cbo.useInspFiling();
 
   const {
     columnsHeader,
@@ -94,9 +94,9 @@ function ControlPlan() {
     lineList,
     processList,
     equipmentList,
-    inspectMethodList,
-    inspectToolList,
-    inspectFilingList
+    inspMethodList,
+    inspToolList,
+    inspFilingList
   );
   const SWITCH_NAME_01 = "controlPlan";
   const SWITCH_NAME_02 = "controlPlanDetail";
@@ -141,7 +141,7 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.inspectDocumentDetailIncludeHeader,
+    restURI.inspDocumentDetailIncludeHeader,
     "documentDetailIncludeHeader"
   );
   const [actSave] = uSave.useSave(

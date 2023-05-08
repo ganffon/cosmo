@@ -44,7 +44,7 @@ function InterfaceItemType(props) {
     inputSet,
   } = InterfaceItemTypeSet(isEditMode);
 
-  const SWITCH_NAME_01 = "interfaceItemType";
+  const SWITCH_NAME_01 = "infcItemType";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -74,7 +74,7 @@ function InterfaceItemType(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.interfaceItemType,
+    restURI.infcItemType,
     SWITCH_NAME_01
   );
 
@@ -89,7 +89,7 @@ function InterfaceItemType(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.interfaceItemType
+    restURI.infcItemType
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -99,7 +99,7 @@ function InterfaceItemType(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.interfaceItemType
+    restURI.infcItemType
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -108,7 +108,7 @@ function InterfaceItemType(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.interfaceItemType
+    restURI.infcItemType
   );
   const onClickNew = () => {
     setIsModalOpen(true);

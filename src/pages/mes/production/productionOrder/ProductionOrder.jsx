@@ -87,6 +87,8 @@ function ProductionOrder() {
     columnsModalMid,
     columnsModalBottom,
     columnsSelectRequest,
+    columnsSelectMid,
+    columnsSelectBottom,
     inputSet,
     inputInfo,
   } = ProductionOrderSet(isEditModeHeader, isEditModeMid, isEditModeBottom);
@@ -165,7 +167,7 @@ function ProductionOrder() {
     if (Condition(e, ["prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalMid");
-      setColumnsSelect(columnsSelectRequest); // 관리계획서 투입품
+      setColumnsSelect(columnsSelectMid); // 관리계획서 투입품
       setIsModalSelectOpen(true);
       // actSelectProd();
     }
@@ -208,8 +210,8 @@ function ProductionOrder() {
       ])
     ) {
       setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalMid");
-      setColumnsSelect(columnsSelectRequest); // 관리계획서 점검일지
+      setDblClickGrid("ModalBottom");
+      setColumnsSelect(columnsSelectBottom); // 관리계획서 점검일지
       setIsModalSelectOpen(true);
       // actSelectProd();
     }

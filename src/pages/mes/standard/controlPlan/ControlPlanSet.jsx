@@ -18,9 +18,9 @@ function ControlPlanSet(
   lineList,
   processList,
   equipmentList,
-  inspectMethodList,
-  inspectToolList,
-  inspectFilingList
+  inspMethodList,
+  inspToolList,
+  inspFilingList
 ) {
   const data = [];
   /** 🔸columns ❗
@@ -142,8 +142,8 @@ function ControlPlanSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "control_plan_reg_date",
+      header: CN.control_plan_reg_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
       editor: isEditModeHeader
@@ -163,7 +163,7 @@ function ControlPlanSet(
     },
     {
       name: "apply_date",
-      header: CN.reg_date,
+      header: CN.control_plan_reg_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
       editor: isEditModeHeader
@@ -965,8 +965,8 @@ function ControlPlanSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "control_plan_reg_date",
+      header: CN.control_plan_reg_date,
       minWidth: WIDTH_MIDDLE,
       align: "center",
       editor: isNewDetail
@@ -1992,8 +1992,8 @@ function ControlPlanSet(
       name: CN.prod_nm,
     },
     {
-      id: "reg_date",
-      name: CN.reg_date,
+      id: "control_plan_reg_date",
+      name: CN.control_plan_reg_date,
     },
     {
       id: "apply_date",

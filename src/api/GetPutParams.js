@@ -54,13 +54,10 @@ class employee {
 }
 class equipment {
   constructor(raw) {
-    this.factory_id = raw.factory_id;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
-    this.equip_type_id = raw.equip_type_id;
     this.equip_cd = raw.equip_cd;
     this.equip_nm = raw.equip_nm;
-    this.workings_id = raw.workings_id;
     this.manager_emp_id = raw.manager_emp_id;
     this.sub_manager_emp_id = raw.sub_manager_emp_id;
     this.use_fg = raw.use_fg ? true : false;
@@ -77,7 +74,6 @@ class unit {
 }
 class workerGroup {
   constructor(raw) {
-    this.factory_id = raw.factory_id;
     this.worker_group_id = raw.worker_group_id;
     this.worker_group_cd = raw.worker_group_cd;
     this.worker_group_nm = raw.worker_group_nm;
@@ -212,7 +208,7 @@ class downtime {
     this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
   }
 }
-class inspectFiling {
+class inspFiling {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.insp_filing_id = raw.insp_filing_id;
@@ -220,7 +216,7 @@ class inspectFiling {
     this.insp_filing_nm = raw.insp_filing_nm;
   }
 }
-class inspectMethod {
+class inspMethod {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.insp_method_id = raw.insp_method_id;
@@ -228,7 +224,7 @@ class inspectMethod {
     this.insp_method_nm = raw.insp_method_nm;
   }
 }
-class inspectTool {
+class inspTool {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.insp_tool_id = raw.insp_tool_id;
@@ -236,7 +232,7 @@ class inspectTool {
     this.insp_tool_nm = raw.insp_tool_nm;
   }
 }
-class inspectType {
+class inspItemType {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.insp_item_type_id = raw.insp_item_type_id;
@@ -244,7 +240,7 @@ class inspectType {
     this.insp_item_type_nm = raw.insp_item_type_nm;
   }
 }
-class inspectItem {
+class inspItem {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.insp_item_type_id = raw.insp_item_type_id;
@@ -256,7 +252,7 @@ class inspectItem {
     this.unit_id = raw.unit_id;
   }
 }
-class interfaceItemType {
+class infcItemType {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.infc_item_type_id = raw.infc_item_type_id;
@@ -264,7 +260,7 @@ class interfaceItemType {
     this.infc_item_type_nm = raw.infc_item_type_nm;
   }
 }
-class interfaceItem {
+class infcItem {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.infc_item_type_id = raw.infc_item_type_id;
@@ -273,7 +269,7 @@ class interfaceItem {
     this.infc_item_nm = raw.infc_item_nm;
   }
 }
-class interfaceMemory {
+class infcMemory {
   constructor(raw) {
     this.factory_id = raw.factory_id;
     this.infc_memory_id = raw.infc_memory_id;
@@ -358,11 +354,10 @@ class setup {
 class document {
   constructor(raw) {
     this.insp_document_id = raw.insp_document_id;
-    this.factory_id = raw.factory_id;
     this.insp_document_no = raw.insp_document_no;
     this.line_id = raw.line_id;
     this.prod_id = raw.prod_id;
-    this.reg_date = raw.reg_date;
+    this.insp_document_reg_date = raw.insp_document_reg_date;
     this.apply_date = raw.apply_date;
     this.apply_fg = raw.apply_fg ? true : false;
     this.contents = raw.contents;
@@ -374,7 +369,6 @@ class documentDetail {
     this.insp_document_detail_id = raw.insp_document_detail_id;
     this.insp_document_id = raw.insp_document_id;
     this.sortby = String(raw.sortby) ? Number(raw.sortby) : null;
-    this.factory_id = raw.factory_id;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.insp_proc_gbn = raw.insp_proc_gbn;
@@ -443,11 +437,10 @@ class spareReceiveDetail {
 class controlPlan {
   constructor(raw) {
     this.control_plan_id = raw.control_plan_id;
-    this.factory_id = raw.factory_id;
     this.control_plan_no = raw.control_plan_no;
     this.line_id = raw.line_id;
     this.prod_id = raw.prod_id;
-    this.reg_date = raw.reg_date;
+    this.control_plan_reg_date = raw.control_plan_reg_date;
     this.apply_date = raw.apply_date;
     this.apply_fg = raw.apply_fg ? true : false;
     this.contents = raw.contents;
@@ -602,29 +595,29 @@ function GetPutParams(componentName, raw) {
     case "downtime":
       params = new downtime(raw);
       break;
-    case "inspectFiling":
-      params = new inspectFiling(raw);
+    case "inspFiling":
+      params = new inspFiling(raw);
       break;
-    case "inspectMethod":
-      params = new inspectMethod(raw);
+    case "inspMethod":
+      params = new inspMethod(raw);
       break;
-    case "inspectTool":
-      params = new inspectTool(raw);
+    case "inspTool":
+      params = new inspTool(raw);
       break;
-    case "inspectType":
-      params = new inspectType(raw);
+    case "inspItemType":
+      params = new inspItemType(raw);
       break;
-    case "inspectItem":
-      params = new inspectItem(raw);
+    case "inspItem":
+      params = new inspItem(raw);
       break;
-    case "interfaceItemType":
-      params = new interfaceItemType(raw);
+    case "infcItemType":
+      params = new infcItemType(raw);
       break;
-    case "interfaceItem":
-      params = new interfaceItem(raw);
+    case "infcItem":
+      params = new infcItem(raw);
       break;
-    case "interfaceMemory":
-      params = new interfaceMemory(raw);
+    case "infcMemory":
+      params = new infcMemory(raw);
       break;
     case "equipmentLarge":
       params = new equipmentLarge(raw);

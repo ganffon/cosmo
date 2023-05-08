@@ -1,4 +1,3 @@
-import { useCookies } from "react-cookie";
 import GetPostParams from "api/GetPostParams";
 import GetPostDateParams from "api/GetPostDateParams";
 import restAPI from "api/restAPI";
@@ -13,15 +12,15 @@ const useSave = (
   componentName,
   uri
 ) => {
-  const [cookie, setCookie, removeCookie] = useCookies();
   const actSave = async () => {
     if (isBackDrop === false) {
       refGrid?.current?.gridInst?.finishEditing();
-      const data = refGrid?.current?.gridInst
-        ?.getModifiedRows()
-        ?.createdRows.map((raw) =>
-          GetPostParams(componentName, raw, cookie.factoryID)
-        );
+      let result = [];
+      for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
+        result.push(refGrid?.current?.gridInst?.getRowAt(i));
+      }
+      const data = result.map((raw) => GetPostParams(componentName, raw));
+
       if (data !== undefined) {
         if (data.length !== 0) {
           setIsBackDrop(true);
@@ -70,21 +69,23 @@ const useSaveMulti = (
   componentName02,
   uri
 ) => {
-  const [cookie, setCookie, removeCookie] = useCookies();
   const actSaveMulti = async () => {
     refGrid01?.current?.gridInst?.finishEditing();
     refGrid02?.current?.gridInst?.finishEditing();
     if (idEditMode === false) {
       const dataTop = GetPostParams(
         componentName01,
-        refGrid01?.current?.gridInst?.getModifiedRows()?.createdRows[0],
-        cookie.factoryID
+        refGrid01?.current?.gridInst?.getRowAt(0)
       );
-      const dataBottom = refGrid02?.current?.gridInst
-        ?.getModifiedRows()
-        ?.createdRows.map((raw) =>
-          GetPostParams(componentName02, raw, cookie.factoryID)
-        );
+
+      let result = [];
+      for (let i = 0; i < refGrid02?.current?.gridInst?.getRowCount(); i++) {
+        result.push(refGrid02?.current?.gridInst?.getRowAt(i));
+      }
+      const dataBottom = result.map((raw) =>
+        GetPostParams(componentName02, raw)
+      );
+
       const query = {
         header: dataTop,
         details: dataBottom,
@@ -133,15 +134,14 @@ const useSaveDetail = (
   componentName,
   uri
 ) => {
-  const [cookie, setCookie, removeCookie] = useCookies();
   const actSaveDetail = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isBackDrop === false) {
-      const data = refGrid?.current?.gridInst
-        ?.getModifiedRows()
-        ?.createdRows.map((raw) =>
-          GetPostParams(componentName, raw, cookie.factoryID)
-        );
+      let result = [];
+      for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
+        result.push(refGrid?.current?.gridInst?.getRowAt(i));
+      }
+      const data = result.map((raw) => GetPostParams(componentName, raw));
       if (data !== undefined) {
         if (data.length !== 0) {
           setIsBackDrop(true);
@@ -189,19 +189,16 @@ const useSaveStoreCheck = (
   searchToggle,
   setSearchToggle
 ) => {
-  const [cookie, setCookie, removeCookie] = useCookies();
   const actSaveStoreCheck = async (startDate) => {
     refGrid?.current?.gridInst?.finishEditing();
     const obj = refGrid?.current?.gridInst?.getCheckedRows();
     let filtered = obj.filter(
       (o) => Number(o.qty) !== Number(o.stock_inspection)
     );
-    console.log(filtered);
     if (filtered.length !== 0) {
       const data = filtered?.map((raw) =>
-        GetPostDateParams(componentName, raw, cookie.factoryID, startDate)
+        GetPostDateParams(componentName, raw, startDate)
       );
-      console.log(data);
       if (data !== undefined && isBackDrop === false) {
         setIsBackDrop(true);
         await restAPI
@@ -248,14 +245,16 @@ const useSaveStoreCheckNewLOT = (
   componentName,
   uri
 ) => {
-  const [cookie, setCookie, removeCookie] = useCookies();
   const actSaveStoreCheckNewLOT = async (startDate) => {
     refGrid?.current?.gridInst?.finishEditing();
-    const data = refGrid?.current?.gridInst
-      ?.getModifiedRows()
-      ?.createdRows?.map((raw) =>
-        GetPostDateParams(componentName, raw, cookie.factoryID, startDate)
-      );
+
+    let result = [];
+    for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
+      result.push(refGrid?.current?.gridInst?.getRowAt(i));
+    }
+    const data = result.map((raw) =>
+      GetPostDateParams(componentName, raw, startDate)
+    );
     if (data !== undefined && isBackDrop === false) {
       setIsBackDrop(true);
       await restAPI

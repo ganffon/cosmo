@@ -17,7 +17,7 @@ class documentDetailIncludeHeader {
     this.prod_id = raw.H_prod_id;
     this.prod_cd = raw.H_prod_cd;
     this.prod_nm = raw.H_prod_nm;
-    this.reg_date = raw.H_reg_date;
+    this.insp_document_reg_date = raw.H_insp_document_reg_date;
     this.apply_date = raw.H_apply_date;
     this.apply_fg = raw.H_apply_fg ? true : false;
     this.contents = raw.H_contents;
