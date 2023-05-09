@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
-import DayreportSubdivisionSet from "./DayreportSubdivisionSet";
+import SubdivisionSet from "./SubdivisionSet";
 import useInputSet from "custom/useInputSet";
 import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
@@ -22,9 +22,9 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
-import * as S from "./DayreportSubdivision.styled";
+import * as S from "./Subdivision.styled";
 
-function DayreportSubdivision() {
+function Subdivision() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -56,10 +56,10 @@ function DayreportSubdivision() {
     columnsSelectProd,
     inputSet,
     inputInfo,
-  } = DayreportSubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail);
+  } = SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail);
 
-  const SWITCH_NAME_01 = "dayreportSubdivision";
-  const SWITCH_NAME_02 = "dayreportSubdivisionDetail";
+  const SWITCH_NAME_01 = "subdivision";
+  const SWITCH_NAME_02 = "subdivisionDetail";
   let modalDetailClickRowKey = null;
 
   const refGridHeader = useRef(null);
@@ -129,7 +129,7 @@ function DayreportSubdivision() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.dayreportSubdivision
+    restURI.subdivision
   );
   const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
     refGridHeader,
@@ -145,12 +145,12 @@ function DayreportSubdivision() {
     setGridDataHeader,
     disRowHeader,
     setDisRowHeader,
-    restURI.dayreportSubdivision
+    restURI.subdivision
   );
 
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    restURI.dayreportSubdivisionDetailID,
+    restURI.SubdivisionDetail + "?work_subdivision_id=",
     disRowDetail,
     setDisRowDetail
   );
@@ -164,7 +164,7 @@ function DayreportSubdivision() {
     actSearchHeaderDI,
     actSearchDetail,
     headerClickRowID,
-    restURI.dayreportSubdivisionDetail,
+    restURI.subdivisionDetail,
     SWITCH_NAME_02
   );
 
@@ -172,7 +172,7 @@ function DayreportSubdivision() {
     isBackDrop,
     setIsBackDrop,
     setGridDataHeaderRowID,
-    restURI.dayreportSubdivision
+    restURI.subdivision
   );
   const [actEditHeader] = uEdit.useEditHeader(
     refGridHeader,
@@ -182,7 +182,7 @@ function DayreportSubdivision() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.dayreportSubdivision
+    restURI.subdivision
   );
   const [actEditDetail] = uEdit.useEditDetail(
     refGridDetail,
@@ -192,7 +192,7 @@ function DayreportSubdivision() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.dayreportSubdivisionDetail
+    restURI.subdivisionDetail
   );
 
   useEffect(() => {
@@ -653,4 +653,4 @@ function DayreportSubdivision() {
   );
 }
 
-export default DayreportSubdivision;
+export default Subdivision;

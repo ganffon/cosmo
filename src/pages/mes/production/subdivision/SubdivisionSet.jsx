@@ -631,7 +631,13 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       header: CN.subdivision_time,
       minWidth: WIDTH_SHORT,
       align: "center",
-      editor: "text",
+      editor: {
+        type: "datePicker",
+        options: {
+          format: "yyyy-MM-dd HH:mm A",
+          timepicker: true,
+        },
+      },
       hidden: false,
       sortable: false,
       filter: false,

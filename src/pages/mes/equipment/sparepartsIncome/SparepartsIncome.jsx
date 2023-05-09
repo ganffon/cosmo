@@ -160,12 +160,6 @@ function SparepartIncome() {
     disRow.handleEditingFinishGridCheck(e);
   };
 
-  const [actSearchDetail] = uSearch.useSearchDetail(
-    setGridDataDetail,
-    restURI.dayreportSubdivisionDetailID,
-    disRowDetail,
-    setDisRowDetail
-  );
   useEffect(() => {
     onClickSearch();
   }, []);

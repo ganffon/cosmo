@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
-import SubdivisionSet from "./SubdivisionSet";
+import SubdivisionPanelSet from "./SubdivisionPanelSet";
 import useInputSet from "custom/useInputSet";
 import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
@@ -23,9 +23,9 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
-import * as S from "./Subdivision.styled";
+import * as S from "./SubdivisionPanel.styled";
 
-function Subdivision() {
+function SubdivisionPanel() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -57,10 +57,10 @@ function Subdivision() {
     columnsSelectProd,
     inputSet,
     inputInfo,
-  } = SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail);
+  } = SubdivisionPanelSet(isEditModeHeader, isEditModeDetail, isNewDetail);
 
-  const SWITCH_NAME_01 = "Subdivision";
-  const SWITCH_NAME_02 = "SubdivisionDetail";
+  const SWITCH_NAME_01 = "subdivision";
+  const SWITCH_NAME_02 = "subdivisionDetail";
   let modalDetailClickRowKey = null;
 
   const refGridHeader = useRef(null);
@@ -151,7 +151,7 @@ function Subdivision() {
 
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    restURI.SubdivisionDetailID,
+    restURI.SubdivisionDetail + "?work_subdivision_id=",
     disRowDetail,
     setDisRowDetail
   );
@@ -503,34 +503,42 @@ function Subdivision() {
             width={"220px"}
             height={"60px"}
             name={"품목코드"}
-            nameSize={"16px"}
+            nameSize={"20px"}
+            namePosition={"-30px"}
+            nameColor={"white"}
             value={""}
-            valueSize={"20px"}
+            valueSize={"22px"}
             btn={true}
           />
           <InputPaper
             width={"220px"}
             height={"60px"}
             name={"소분일자"}
+            nameSize={"20px"}
+            namePosition={"-30px"}
+            nameColor={"white"}
             value={"2023-05-09"}
-            valueSize={"20px"}
-            nameSize={"16px"}
+            valueSize={"22px"}
           />
           <InputPaper
             width={"220px"}
             height={"60px"}
             name={"소분LOT"}
-            nameSize={"16px"}
+            nameSize={"20px"}
+            namePosition={"-30px"}
+            nameColor={"white"}
             value={""}
-            valueSize={"20px"}
+            valueSize={"22px"}
           />
           <InputPaper
             width={"220px"}
             height={"60px"}
             name={"소분총량"}
-            nameSize={"16px"}
+            nameSize={"20px"}
+            namePosition={"-30px"}
+            nameColor={"white"}
             value={""}
-            valueSize={"20px"}
+            valueSize={"22px"}
           />
         </S.ItemInfoBox>
         <S.DataInterfaceBox>
@@ -539,40 +547,48 @@ function Subdivision() {
               width={"220px"}
               height={"60px"}
               name={"Barcode"}
-              nameSize={"16px"}
+              nameSize={"20px"}
+              namePosition={"-30px"}
+              nameColor={"black"}
               value={""}
-              valueSize={"20px"}
+              valueSize={"22px"}
             />
             <InputPaper
               width={"220px"}
               height={"60px"}
               name={"투입LOT"}
-              nameSize={"16px"}
+              nameSize={"20px"}
+              namePosition={"-30px"}
+              nameColor={"black"}
               value={""}
-              valueSize={"20px"}
+              valueSize={"22px"}
             />
             <InputPaper
               width={"220px"}
               height={"60px"}
               name={"소분 전"}
-              nameSize={"16px"}
+              nameSize={"20px"}
+              namePosition={"-30px"}
+              nameColor={"black"}
               value={""}
-              valueSize={"20px"}
+              valueSize={"22px"}
             />
             <InputPaper
               width={"220px"}
               height={"60px"}
               name={"소분 후"}
-              nameSize={"16px"}
+              nameSize={"20px"}
+              namePosition={"-30px"}
+              nameColor={"black"}
               value={""}
-              valueSize={"20px"}
+              valueSize={"22px"}
             />
           </S.DataInterfaceWrap>
           <S.MadeButtonWrap>
             <S.MadeButton color={"#28a745"} hoverColor={"#218838"}>
               Before
             </S.MadeButton>
-            <S.MadeButton color={"#212529"} hoverColor={"#ffc107"}>
+            <S.MadeButton color={"#0d6efd"} hoverColor={"#025ce2"}>
               After
             </S.MadeButton>
             <S.MadeButton color={"#212529"} hoverColor={"#ffc107"}>
@@ -606,4 +622,4 @@ function Subdivision() {
   );
 }
 
-export default Subdivision;
+export default SubdivisionPanel;

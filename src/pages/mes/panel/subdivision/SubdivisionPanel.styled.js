@@ -14,8 +14,9 @@ export const ContentsArea = styled("div")`
   width: 100%;
   background-color: rgb(255, 255, 255);
   display: flex;
-  gap: 5px 5px;
+  gap: 10px 10px;
   padding: 10px 20px 10px 10px;
+  overflow: hidden auto;
 `;
 export const ContentsLeft = styled("div")`
   height: 100%;
@@ -46,36 +47,43 @@ export const ItemInfoBox = styled("div")`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 40px 15px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 5% 5% 5% 5%;
+  padding: 8% 5% 8% 5%;
+  background: #415c76;
 `;
 export const DataInterfaceBox = styled("div")`
   height: 100%;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px 15px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 5% 5% 5% 5%;
+  padding: 5% 5% 0% 5%;
+  background: #83bef4;
 `;
 export const DataInterfaceWrap = styled("div")`
   height: auto;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px 15px;
 `;
 export const MadeButtonWrap = styled("div")`
-  height: 100%;
+  height: 90px;
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 40px;
+  margin-top: 30px;
 `;
 export const MadeButton = styled("button")`
   -webkit-appearance: none;
@@ -83,8 +91,7 @@ export const MadeButton = styled("button")`
   appearance: none;
 
   width: 120px;
-  height: 120px;
-  margin: 0;
+  height: 100px;
   padding: 0.5rem 1rem;
 
   font-family: "NotoSansKR_B", sans-serif;
@@ -96,7 +103,7 @@ export const MadeButton = styled("button")`
   display: inline-block;
 
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
