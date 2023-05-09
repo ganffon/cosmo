@@ -11,11 +11,7 @@ import {
   NORMAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function DayreportSubdivisionSet(
-  isEditModeHeader,
-  isEditModeDetail,
-  isNewDetail
-) {
+function SubdivisionPanelSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -751,4 +747,4 @@ function DayreportSubdivisionSet(
     inputInfo,
   };
 }
-export default DayreportSubdivisionSet;
+export default SubdivisionPanelSet;

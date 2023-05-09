@@ -43,7 +43,7 @@ import Setup from "pages/mes/standard/setup/Setup";
 import StoreView from "pages/mes/store/storeView/StoreView";
 import StoreTransferView from "pages/mes/store/storeTransferView/StoreTransferView";
 import StoreCheck from "pages/mes/store/storeCheck/StoreCheck";
-import DayreportSubdivision from "pages/mes/production/dayreportSubdivision/DayreportSubdivision";
+import Subdivision from "pages/mes/production/subdivision/Subdivision";
 import ProductionOrder from "pages/mes/production/productionOrder/ProductionOrder";
 import SparepartIncome from "pages/mes/equipment/sparepartsIncome/SparepartsIncome";
 import SparepartsRelease from "pages/mes/equipment/sparepartsRelease/sparepartsRelease";
@@ -52,7 +52,7 @@ import SparepartsStoreTransView from "pages/mes/equipment/sparepartsStoreTransVi
 import LineDepartment from "pages/mes/standard/lineDepartment/lineDepartment";
 import ProductClass from "pages/mes/standard/productClass/productClass";
 
-import Subdivision from "pages/mes/panel/subdivision/Subdivision";
+import SubdivisionPanel from "pages/mes/panel/subdivision/SubdivisionPanel";
 
 export default function MainRouter() {
   return (
@@ -101,10 +101,7 @@ export default function MainRouter() {
         <Route path="store-transfer-view" element={<StoreTransferView />} />
         <Route path="store-check" element={<StoreCheck />} />
 
-        <Route
-          path="production-dayreport-subdivision"
-          element={<DayreportSubdivision />}
-        />
+        <Route path="subdivision" element={<Subdivision />} />
         <Route path="production-order" element={<ProductionOrder />} />
 
         <Route path="spareparts-income" element={<SparepartIncome />} />
@@ -117,7 +114,7 @@ export default function MainRouter() {
         <Route path="line-dept" element={<LineDepartment />} />
         <Route path="product-class" element={<ProductClass />} />
 
-        <Route path="subdivision-site" element={<Subdivision />} />
+        <Route path="subdivision-panel" element={<SubdivisionPanel />} />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

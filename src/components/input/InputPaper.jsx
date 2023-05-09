@@ -11,6 +11,8 @@ function InputPaper(props) {
     id = "",
     name = "",
     nameSize = "13px",
+    namePosition = "-10px",
+    nameColor = "gray",
     value = "",
     valueSize = "15px",
     btn = false,
@@ -20,7 +22,13 @@ function InputPaper(props) {
   } = props;
   return (
     <S.PaperBox width={width} height={height}>
-      <S.PaperTitle nameSize={nameSize}>{name}</S.PaperTitle>
+      <S.PaperTitle
+        nameSize={nameSize}
+        namePosition={namePosition}
+        nameColor={nameColor}
+      >
+        {name}
+      </S.PaperTitle>
       <S.Text
         inputProps={{
           readOnly: true,

@@ -19,10 +19,11 @@ export const PaperTitle = styled("div")`
   width: auto;
   height: 20px;
   position: absolute;
-  top: -10px;
+  top: ${(props) => props.namePosition};
   left: 10px;
+  font-family: NotoSansKR_B;
   font-size: ${(props) => props.nameSize};
-  color: gray;
+  color: ${(props) => props.nameColor};
 `;
 export const Text = styled(InputBase)`
   margin-left: 10px;

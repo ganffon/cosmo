@@ -308,8 +308,8 @@
         "under": [
           {
             "name": "일일소분일지",
-            "id": "production-dayreport-subdivision",
-            "path": "production-dayreport-subdivision",
+            "id": "subdivision",
+            "path": "subdivision",
             "under": null
           },
           {
@@ -498,8 +498,8 @@
     "under": [
       {
         "name": "소분일지",
-        "id": "subdivision-site",
-        "path": "subdivision-site",
+        "id": "subdivision-panel",
+        "path": "subdivision-panel",
         "under": null
       },
       {
