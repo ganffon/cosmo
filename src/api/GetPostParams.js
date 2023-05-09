@@ -488,6 +488,21 @@ class sparepartsOutgo {
     this.barcode = raw.barcode;
   }
 }
+class lineDepartment {
+  constructor(raw) {
+    this.line_dept_cd = raw.line_dept_cd;
+    this.line_dept_nm = raw.line_dept_nm;
+    this.line_id = raw.line_id;
+    this.dept_id = raw.dept_id;
+  }
+}
+
+class productClass {
+  constructor(raw) {
+    this.prod_class_cd = raw.prod_class_cd;
+    this.prod_class_nm = raw.prod_class_nm;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -635,6 +650,13 @@ function GetPostParams(componentName, raw) {
         break;
       case "sparepartsOutgo":
         params = new sparepartsOutgo(raw);
+        break;
+      case "lineDepartment":
+        params = new lineDepartment(raw);
+        break;
+
+      case "productClass":
+        params = new productClass(raw);
         break;
       default:
     }

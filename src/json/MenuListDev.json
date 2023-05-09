@@ -43,6 +43,12 @@
         "under": null
       },
       {
+        "name": "✅라인부서관리",
+        "id": "line-dept",
+        "path": "line-dept",
+        "under": null
+      },
+      {
         "name": "✅공정관리",
         "id": "process",
         "path": "process",
@@ -81,6 +87,12 @@
             "name": "✅품종관리",
             "id": "product-type-small",
             "path": "product-type-small",
+            "under": null
+          },
+          {
+            "name": "✅제품분류",
+            "id": "product-class",
+            "path": "product-class",
             "under": null
           },
           {

@@ -10,7 +10,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function SparepartSstoreViewSet() {
+function SparepartSstoreTransViewSet() {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -37,6 +37,7 @@ function SparepartSstoreViewSet() {
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "prod_gbn_id",
       header: CN.prod_gbn_id,
@@ -51,7 +52,7 @@ function SparepartSstoreViewSet() {
     },
     {
       name: "prod_gbn_nm",
-      header: CN.prod_gbn_id,
+      header: CN.prod_gbn_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -145,9 +146,22 @@ function SparepartSstoreViewSet() {
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "prod_nm",
       header: CN.prod_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "reg_date",
+      header: CN.reg_date,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -181,7 +195,6 @@ function SparepartSstoreViewSet() {
       whiteSpace: false,
       rowSpan: false,
     },
-
     {
       name: "location_id",
       header: CN.location_id,
@@ -194,6 +207,7 @@ function SparepartSstoreViewSet() {
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "location_nm",
       header: CN.location_nm,
@@ -219,8 +233,129 @@ function SparepartSstoreViewSet() {
       rowSpan: false,
     },
     {
-      name: "qty",
-      header: CN.qty,
+      name: "tran_type_id",
+      header: CN.tran_type_id,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "tran_type_nm",
+      header: CN.tran_type_nm,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "income_qty",
+      header: CN.income_qty,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "outgo_qty",
+      header: CN.outgo_qty,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "inventory_qty",
+      header: CN.inventory_qty,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+
+    {
+      name: "create_at",
+      header: CN.create_at,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "create_uid",
+      header: CN.create_uid,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "update_at",
+      header: CN.update_at,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "update_uid",
+      header: CN.update_uid,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "delete_at",
+      header: CN.delete_at,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "delete_uid",
+      header: CN.delete_uid,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -244,7 +379,7 @@ function SparepartSstoreViewSet() {
    * 🔸날짜기간조회 - "range"
    * 🔸날짜안쓰는경우 - null
    */
-  const datePickerSet = null;
+  const datePickerSet = "range";
 
   /**
    * 🔸inputSet id 값이 ✨ BE : query params
@@ -276,4 +411,4 @@ function SparepartSstoreViewSet() {
   };
 }
 
-export default SparepartSstoreViewSet;
+export default SparepartSstoreTransViewSet;

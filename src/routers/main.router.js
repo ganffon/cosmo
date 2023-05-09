@@ -48,6 +48,9 @@ import ProductionOrder from "pages/mes/production/productionOrder/ProductionOrde
 import SparepartIncome from "pages/mes/equipment/sparepartsIncome/SparepartsIncome";
 import SparepartsRelease from "pages/mes/equipment/sparepartsRelease/sparepartsRelease";
 import SparepartsStoreView from "pages/mes/equipment/sparepartsStoreView/sparepartsStoreView";
+import SparepartsStoreTransView from "pages/mes/equipment/sparepartsStoreTransView/sparepartsStoreTransView";
+import LineDepartment from "pages/mes/standard/lineDepartment/lineDepartment";
+import ProductClass from "pages/mes/standard/productClass/productClass";
 
 import Subdivision from "pages/mes/panel/subdivision/Subdivision";
 
@@ -107,6 +110,12 @@ export default function MainRouter() {
         <Route path="spareparts-income" element={<SparepartIncome />} />
         <Route path="spareparts-outgo" element={<SparepartsRelease />} />
         <Route path="spareparts-store-view" element={<SparepartsStoreView />} />
+        <Route
+          path="spareparts-store-transfer-view"
+          element={<SparepartsStoreTransView />}
+        />
+        <Route path="line-dept" element={<LineDepartment />} />
+        <Route path="product-class" element={<ProductClass />} />
 
         <Route path="subdivision-site" element={<Subdivision />} />
 
