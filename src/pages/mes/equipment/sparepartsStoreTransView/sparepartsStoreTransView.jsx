@@ -17,7 +17,7 @@ import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
 import * as LS from "./sparepartsStoreTransView.styled";
 import * as Cbo from "custom/useCboSet";
-import SparepartSstoreTransViewSet from "./sparepartsStoreTransViewSet";
+import SparepartsStoreTransViewSet from "./sparepartsStoreTransViewSet";
 
 function SparepartsStoreTransView() {
   const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
@@ -39,7 +39,7 @@ function SparepartsStoreTransView() {
     columnsModalSelectEquipDetail,
     columnsModalSelectStore,
     columnsModalSelectReleaseUser,
-  } = SparepartSstoreTransViewSet(
+  } = SparepartsStoreTransViewSet(
     productGbnList,
     productModelList,
     productTypeList,

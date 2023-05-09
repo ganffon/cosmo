@@ -243,9 +243,6 @@ function SparepartsRelease() {
     restURI.sparepartsoutgo,
     SWITCH_NAME_01
   );
-  useEffect(() => {
-    actSearch(true, "start_date", "end_date");
-  }, []);
   const onClickEditModeSave = () => {
     actEdit();
   };
@@ -260,7 +257,7 @@ function SparepartsRelease() {
     actDelete();
   };
   const onClickSearch = () => {
-    actSearch();
+    actSearch("start_date", "end_date");
   };
   useEffect(() => {
     onClickSearch();
