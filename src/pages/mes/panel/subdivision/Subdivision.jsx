@@ -8,7 +8,7 @@ import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
 import ButtonSES from "components/button/ButtonSES";
 import ButtonSE from "components/button/ButtonSE";
-import ButtonGroup from "components/button/ButtonGroup";
+import InputPaper from "components/input/InputPaper";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
@@ -24,16 +24,6 @@ import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
 import * as S from "./Subdivision.styled";
-import InputPaper from "components/input/InputPaper";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
-import FolderIcon from "@mui/icons-material/Folder";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 
 function Subdivision() {
   LoginStateChk();
@@ -507,92 +497,89 @@ function Subdivision() {
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ContentsLeft>
+        <S.ScreenTitleBox>❇️ 일일소분일지</S.ScreenTitleBox>
         <S.ItemInfoBox>
-          {/* <S.InputBoxLeft> */}
-          {/* <S.InputSelectBox key={"v.id"}> */}
-          <S.Title variant="overline">{"품목코드"}</S.Title>
-          <S.Input
-            value={"text" || ""}
-            variant="outlined"
-            autoComplete="off"
-            size="large"
-            InputProps={{
-              readOnly: true,
-            }}
+          <InputPaper
+            width={"220px"}
+            height={"60px"}
+            name={"품목코드"}
+            nameSize={"16px"}
+            value={""}
+            valueSize={"20px"}
+            btn={true}
           />
-          <S.BG />
-
-          <Paper
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 300,
-              height: 50,
-            }}
-          >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search Google Maps"
-              inputProps={{
-                readOnly: true,
-              }}
-            />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <FolderIcon />
-            </IconButton>
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton
-              color="primary"
-              sx={{ p: "10px" }}
-              aria-label="directions"
-            >
-              <CancelPresentationIcon sx={{ color: "gray" }} />
-            </IconButton>
-          </Paper>
-          <InputPaper />
-          {/* </S.InputSelectBox> */}
-          {/* <S.InputBox key={"v.id"}>
-            <S.Title variant="overline">{"소분LOT"}</S.Title>
-            <S.Input
-              value={"text" || ""}
-              variant="outlined"
-              autoComplete="off"
-              size="large"
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-          </S.InputBox> */}
-          {/* </S.InputBoxLeft> */}
-          {/* <S.InputBoxRight> */}
-          {/* <S.InputBox key={"v.id"}>
-            <S.Title variant="overline">{"소분일자"}</S.Title>
-            <S.Input
-              value={"text" || ""}
-              variant="outlined"
-              autoComplete="off"
-              size="large"
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-          </S.InputBox>
-          <S.InputBox key={"v.id"}>
-            <S.Title variant="overline">{"소분총량"}</S.Title>
-            <S.Input
-              value={"text" || ""}
-              variant="outlined"
-              autoComplete="off"
-              size="large"
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-          </S.InputBox> */}
-          {/* </S.InputBoxRight> */}
+          <InputPaper
+            width={"220px"}
+            height={"60px"}
+            name={"소분일자"}
+            value={"2023-05-09"}
+            valueSize={"20px"}
+            nameSize={"16px"}
+          />
+          <InputPaper
+            width={"220px"}
+            height={"60px"}
+            name={"소분LOT"}
+            nameSize={"16px"}
+            value={""}
+            valueSize={"20px"}
+          />
+          <InputPaper
+            width={"220px"}
+            height={"60px"}
+            name={"소분총량"}
+            nameSize={"16px"}
+            value={""}
+            valueSize={"20px"}
+          />
         </S.ItemInfoBox>
-        <S.DataInterfaceBox></S.DataInterfaceBox>
+        <S.DataInterfaceBox>
+          <S.DataInterfaceWrap>
+            <InputPaper
+              width={"220px"}
+              height={"60px"}
+              name={"Barcode"}
+              nameSize={"16px"}
+              value={""}
+              valueSize={"20px"}
+            />
+            <InputPaper
+              width={"220px"}
+              height={"60px"}
+              name={"투입LOT"}
+              nameSize={"16px"}
+              value={""}
+              valueSize={"20px"}
+            />
+            <InputPaper
+              width={"220px"}
+              height={"60px"}
+              name={"소분 전"}
+              nameSize={"16px"}
+              value={""}
+              valueSize={"20px"}
+            />
+            <InputPaper
+              width={"220px"}
+              height={"60px"}
+              name={"소분 후"}
+              nameSize={"16px"}
+              value={""}
+              valueSize={"20px"}
+            />
+          </S.DataInterfaceWrap>
+          <S.MadeButtonWrap>
+            <S.MadeButton color={"#28a745"} hoverColor={"#218838"}>
+              Before
+            </S.MadeButton>
+            <S.MadeButton color={"#212529"} hoverColor={"#ffc107"}>
+              After
+            </S.MadeButton>
+            <S.MadeButton color={"#212529"} hoverColor={"#ffc107"}>
+              Next
+            </S.MadeButton>
+          </S.MadeButtonWrap>
+        </S.DataInterfaceBox>
         {/* <S.Date
           datePickerSet={"range"}
           dateText={dateText}

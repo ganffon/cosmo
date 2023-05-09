@@ -57,8 +57,8 @@ export const ComboBox = styled(Autocomplete)`
 export const SearchWrap = styled("div")`
   display: flex;
   flex-flow: row wrap;
-  gap: 0px 10px;
-  padding: 5px 5px 5px 10px;
+  gap: 5px 5px;
+  padding: 10px 5px 10px 5px;
 `;
 export const ButtonWrap = styled("div")`
   display: flex;

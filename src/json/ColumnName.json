@@ -337,5 +337,8 @@
 
   "prod_class_id": "제품분류ID",
   "prod_class_cd": "제품분류코드",
-  "prod_class_nm": "제품분류명"
+  "prod_class_nm": "제품분류명",
+
+  "stock": "재고중량",
+  "tran_reg_date": "수불일자"
 }

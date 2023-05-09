@@ -37,7 +37,7 @@ export const ComboWrap = styled("div")`
 export const ComboBox = styled(Autocomplete)`
   margin-top: 5px;
   margin-left: 10px;
-  width: 180px;
+  width: 160px;
 `;
 export const InputWrap = styled("div")`
   display: flex;

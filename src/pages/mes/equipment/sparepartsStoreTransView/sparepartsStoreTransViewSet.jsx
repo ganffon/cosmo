@@ -10,7 +10,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function SparepartSstoreTransViewSet() {
+function SparepartsStoreTransViewSet() {
   const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
@@ -160,8 +160,8 @@ function SparepartSstoreTransViewSet() {
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "tran_reg_date",
+      header: CN.tran_reg_date,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -281,8 +281,8 @@ function SparepartSstoreTransViewSet() {
       rowSpan: false,
     },
     {
-      name: "inventory_qty",
-      header: CN.inventory_qty,
+      name: "stock",
+      header: CN.stock,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -411,4 +411,4 @@ function SparepartSstoreTransViewSet() {
   };
 }
 
-export default SparepartSstoreTransViewSet;
+export default SparepartsStoreTransViewSet;

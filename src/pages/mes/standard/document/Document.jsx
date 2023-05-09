@@ -4,7 +4,7 @@ import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
 import ButtonSES from "components/button/ButtonSES";
 import ButtonSE from "components/button/ButtonSE";
-import ButtonGroup from "components/button/ButtonGroup";
+import InputPaper from "components/input/InputPaper";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
@@ -13,7 +13,6 @@ import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDelete
 import BackDrop from "components/backdrop/BackDrop";
 import DocumentSet from "pages/mes/standard/document/DocumentSet";
 import useInputSet from "custom/useInputSet";
-import InputSearchDisabled from "components/input/InputSearchDisabled";
 import TextField from "@mui/material/TextField";
 import * as S from "./Document.styled";
 import CN from "json/ColumnName.json";
@@ -484,18 +483,18 @@ function Document() {
           />
 
           {inputSet.map((v, idx) => (
-            <InputSearchDisabled
+            <InputPaper
               key={v.id}
               id={v.id}
               name={v.name}
               value={inputSearchValue[idx] || ""}
               onKeyDown={onKeyDown}
+              width={idx === 1 ? "220px" : "180px"}
+              btn={idx === 1 ? true : false}
+              onClickSelect={onClickProd}
+              onClickCancel={onClickProdCancel}
             />
           ))}
-          <ButtonGroup
-            onClickSelect={onClickProd}
-            onClickCancel={onClickProdCancel}
-          />
         </S.ComboWrap>
         <S.ButtonWrap>
           {isEditModeHeader ? (
@@ -531,20 +530,12 @@ function Document() {
         <S.SearchWrap>
           {inputInfo.map((v, idx) => {
             return (
-              <S.InputBox key={v.id}>
-                <S.Title variant="overline">{v.name}</S.Title>
-                <S.Input
-                  // disabled
-                  value={inputInfoValue[idx] || ""}
-                  // contentEditable={false}
-                  variant="outlined"
-                  autoComplete="off"
-                  size="small"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </S.InputBox>
+              <InputPaper
+                key={v.id}
+                id={v.id}
+                name={v.name}
+                value={inputInfoValue[idx] || ""}
+              />
             );
           })}
         </S.SearchWrap>

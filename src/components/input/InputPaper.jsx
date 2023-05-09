@@ -1,28 +1,47 @@
 import React from "react";
 import * as S from "./InputPaper.styled";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import FolderIcon from "@mui/icons-material/Folder";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 function InputPaper(props) {
-  const { width = "260px" } = props;
+  const {
+    width = "180px",
+    height = "40px",
+    id = "",
+    name = "",
+    nameSize = "13px",
+    value = "",
+    valueSize = "15px",
+    btn = false,
+    onKeyDown = () => {},
+    onClickSelect = () => {},
+    onClickCancel = () => {},
+  } = props;
   return (
-    <S.PaperBox width={width}>
+    <S.PaperBox width={width} height={height}>
+      <S.PaperTitle nameSize={nameSize}>{name}</S.PaperTitle>
       <S.Text
         inputProps={{
           readOnly: true,
         }}
+        id={id}
+        value={value}
+        valueSize={valueSize}
+        align={"right"}
+        onKeyDown={onKeyDown}
       />
-      <S.Icon>
-        <FolderIcon />
-      </S.Icon>
-      <Divider sx={{ height: "70%", m: 0.5 }} orientation="vertical" />
-      <S.Icon>
-        <CancelPresentationIcon />
-      </S.Icon>
+      {btn === true ? (
+        <>
+          <S.Icon>
+            <HighlightOffIcon onClick={onClickCancel} />
+          </S.Icon>
+          <Divider sx={{ height: "70%", m: 0.5 }} orientation="vertical" />
+          <S.Icon>
+            <FolderIcon onClick={onClickSelect} />
+          </S.Icon>
+        </>
+      ) : null}
     </S.PaperBox>
   );
 }
