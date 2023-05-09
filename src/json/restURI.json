@@ -62,5 +62,9 @@
   "dayreportSubdivisionDetail": "/production-dayreport-subdivision-detail",
   "dayreportSubdivisionDetailID": "/production-dayreport-subdivision-detail/detail",
 
-  "setup": "/setup"
+  "setup": "/setup",
+
+  "lineDepartment": "/line-dept",
+  "productClass": "/prod-class",
+  "sparepartsStoreTransView": "/spareparts-store-transfer-view"
 }

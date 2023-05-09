@@ -220,6 +220,17 @@ class sparepartsOutgo {
     this.spare_release_id = raw.spare_release_id;
   }
 }
+class lineDepartment {
+  constructor(raw) {
+    this.line_dept_id = raw.line_dept_id;
+  }
+}
+
+class productClass {
+  constructor(raw) {
+    this.prod_class_id = raw.prod_class_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -361,6 +372,12 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "sparepartsOutgo":
       params = new sparepartsOutgo(raw);
+      break;
+    case "lineDepartment":
+      params = new lineDepartment(raw);
+      break;
+    case "productClass":
+      params = new productClass(raw);
       break;
 
     default:

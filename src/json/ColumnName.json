@@ -331,5 +331,11 @@
   "request_id": "생산의뢰ID",
   "erp_request_date": "납품요청일",
   "erp_deliver_date": "납기일자",
-  "erp_contract_qty": "수주량"
+  "erp_contract_qty": "수주량",
+
+  "line_dept_cd": "라인부서 코드",
+
+  "prod_class_id": "제품분류ID",
+  "prod_class_cd": "제품분류코드",
+  "prod_class_nm": "제품분류명"
 }

@@ -6,7 +6,7 @@ import ButtonNEDS from "components/button/ButtonNEDS";
 import * as uSearch from "custom/useSearch";
 import ButtonSearch from "components/button/ButtonSearch";
 import LoginStateChk from "custom/LoginStateChk";
-import SparepartsStoreViewSet from "./sparepartsStoreViewSet";
+
 import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";
 import DateTime from "components/datetime/DateTime";
@@ -15,11 +15,11 @@ import restURI from "json/restURI.json";
 import GridSingle from "components/grid/GridSingle";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
-import * as LS from "./sparepartsStoreView.styled";
-
+import * as LS from "./sparepartsStoreTransView.styled";
 import * as Cbo from "custom/useCboSet";
+import SparepartSstoreTransViewSet from "./sparepartsStoreTransViewSet";
 
-function SparepartsStoreView() {
+function SparepartsStoreTransView() {
   const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
@@ -39,12 +39,17 @@ function SparepartsStoreView() {
     columnsModalSelectEquipDetail,
     columnsModalSelectStore,
     columnsModalSelectReleaseUser,
-  } = SparepartsStoreViewSet(
+  } = SparepartSstoreTransViewSet(
     productGbnList,
     productModelList,
     productTypeList,
     productTypeSmallList
   );
+
+  const [dateText, setDateText] = useState({
+    startDate: DateTime().dateFull,
+    endDate: DateTime(7).dateFull,
+  });
 
   LoginStateChk();
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -80,7 +85,7 @@ function SparepartsStoreView() {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   // 검색 시작
-  const [actSearch] = uSearch.useSearchOnlyCbo(
+  const [actSearch] = uSearch.useSearchOnlyCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -90,11 +95,12 @@ function SparepartsStoreView() {
     inputTextChange,
     setGridData,
     comboValue,
-    restURI.sparepartsStoreView
+    dateText,
+    restURI.sparepartsStoreTransView
   );
 
   const onClickSearch = () => {
-    actSearch();
+    actSearch("start_date", "end_date");
   };
   useEffect(() => {
     onClickSearch();
@@ -110,6 +116,11 @@ function SparepartsStoreView() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
+            <LS.Date
+              datePickerSet={"range"}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             <LS.ComboWrap>
               <LS.ComboBox
                 disablePortal
@@ -200,18 +211,17 @@ function SparepartsStoreView() {
                 onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
-            <LS.InputWrap>
-              {inputSet.map((v) => (
-                <InputSearch
-                  key={v.id}
-                  id={v.id}
-                  name={v.name}
-                  handleInputTextChange={handleInputTextChange}
-                  onClickSearch={onClickSearch}
-                  onKeyDown={onKeyDown}
-                />
-              ))}
-            </LS.InputWrap>
+
+            {inputSet.map((v) => (
+              <InputSearch
+                key={v.id}
+                id={v.id}
+                name={v.name}
+                handleInputTextChange={handleInputTextChange}
+                onClickSearch={onClickSearch}
+                onKeyDown={onKeyDown}
+              />
+            ))}
           </S.SearchWrap>
           <S.ButtonWrap>
             <ButtonSearch onClickSearch={onClickSearch} />
@@ -235,4 +245,4 @@ function SparepartsStoreView() {
     </S.ContentsArea>
   );
 }
-export default SparepartsStoreView;
+export default SparepartsStoreTransView;

@@ -527,6 +527,23 @@ class sparepartsOutgo {
     this.barcode = raw.barcode;
   }
 }
+class lineDepartment {
+  constructor(raw) {
+    this.line_dept_id = raw.line_dept_id;
+    this.line_dept_cd = raw.line_dept_cd;
+    this.line_dept_nm = raw.line_dept_nm;
+    this.line_id = raw.line_id;
+    this.dept_id = raw.dept_id;
+  }
+}
+
+class productClass {
+  constructor(raw) {
+    this.prod_class_id = raw.prod_class_id;
+    this.prod_class_cd = raw.prod_class_cd;
+    this.prod_class_nm = raw.prod_class_nm;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -666,6 +683,13 @@ function GetPutParams(componentName, raw) {
       break;
     case "sparepartsOutgo":
       params = new sparepartsOutgo(raw);
+      break;
+    case "lineDepartment":
+      params = new lineDepartment(raw);
+      break;
+
+    case "productClass":
+      params = new productClass(raw);
       break;
     default:
   }
