@@ -260,7 +260,7 @@ function ControlPlan() {
     setIsModalSelectOpen(true);
     actSelectProd();
   };
-  const onClickProdCancel = () => {
+  const onClickProdRemove = () => {
     setInputSearchValue([]);
   };
   const onClickSearch = () => {
@@ -569,7 +569,7 @@ function ControlPlan() {
               width={idx === 1 ? "220px" : "180px"}
               btn={idx === 1 ? true : false}
               onClickSelect={onClickProd}
-              onClickCancel={onClickProdCancel}
+              onClickRemove={onClickProdRemove}
             />
           ))}
         </S.ComboWrap>

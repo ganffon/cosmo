@@ -285,7 +285,11 @@
   "total_qty": "소분총량",
   "before_qty": "전 중량",
   "after_qty": "후 중량",
+  "subdivision_date": "소분날짜",
   "subdivision_time": "소분시간",
+  "before_subdivision_qty": "소분 전 중량",
+  "after_subdivision_qty": "소분 후 중량",
+  "subdivision_qty": "소분중량",
   "subdivision_uid": "작업자ID",
   "barcode_no": "바코드번호",
 
@@ -340,5 +344,6 @@
   "prod_class_nm": "제품분류명",
 
   "stock": "재고중량",
-  "tran_reg_date": "수불일자"
+  "tran_reg_date": "수불일자",
+  "subdivision_reg_date": "소분일자"
 }

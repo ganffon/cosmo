@@ -1,14 +1,23 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionPanelSet from "./SubdivisionPanelSet";
 import useInputSet from "custom/useInputSet";
-import ButtonNES from "components/button/ButtonNES";
+import BtnSubdivisionScale from "components/button/panel/BtnSubdivisionScale";
+import ButtonSCLHE from "components/button/panel/ButtonSCLHE";
 import ButtonNED from "components/button/ButtonNED";
 import ButtonSES from "components/button/ButtonSES";
 import ButtonSE from "components/button/ButtonSE";
 import InputPaper from "components/input/InputPaper";
+import InputText from "components/input/InputText";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
@@ -24,6 +33,10 @@ import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
 import * as S from "./SubdivisionPanel.styled";
+import restAPI from "api/restAPI";
+import GetPostParams from "api/GetPostParams";
+import ModalSelectMulti from "components/modal/ModalSelectMulti";
+import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 
 function SubdivisionPanel() {
   LoginStateChk();
@@ -35,6 +48,7 @@ function SubdivisionPanel() {
   const [isNewDetail, setIsNewDetail] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
+  const [isModalSelectMultiOpen, setIsModalSelectMultiOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -45,71 +59,84 @@ function SubdivisionPanel() {
   const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
+  const [isLockScale, setIsLockScale] = useState(true);
+
   const {
     columnOptions,
     rowHeadersNumCheck,
     rowHeadersNum,
     header,
-    columnsHeader,
-    columnsDetail,
-    columnsModalHeader,
-    columnsModalDetail,
+    columns,
     columnsSelectProd,
+    columnsSelectLoadHeader,
+    columnsSelectLoadDetail,
     inputSet,
     inputInfo,
-  } = SubdivisionPanelSet(isEditModeHeader, isEditModeDetail, isNewDetail);
+  } = SubdivisionPanelSet(isEditModeHeader);
 
   const SWITCH_NAME_01 = "subdivision";
   const SWITCH_NAME_02 = "subdivisionDetail";
   let modalDetailClickRowKey = null;
 
-  const refGridHeader = useRef(null);
-  const refGridDetail = useRef(null);
-  const refGridModalHeader = useRef(null);
-  const refGridModalDetail = useRef(null);
+  const refGridSingle = useRef(null);
+  // const refGridDetail = useRef(null);
+  // const refGridModalHeader = useRef(null);
+  // const refGridModalDetail = useRef(null);
   const refGridSelect = useRef(null);
+  const refGridSelectDetail = useRef(null);
+
+  const refBarcode = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
+  const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
 
-  const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+  const [require, setRequire] = useState({
+    prod_id: "",
+    prod_cd: "",
+    date: "", //🔸소분일자
+    totalQty: "", //🔸소분총량
+    lot: "", //🔸잔량Bag LOT
+    workSubdivisionID: "", //🔸소분일지ID
   });
   const [modalSelectSize, setModalSelectSize] = useState({
     width: "80%",
     height: "90%",
   });
+  const [scaleInfo, setScaleInfo] = useState({
+    barcode: "",
+    lot: "",
+    before: "",
+    after: "",
+    qty: "",
+  });
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const [columnsSelect, setColumnsSelect] = useState([]);
-  const [inputSearchValue, setInputSearchValue] = useState([]);
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
-  const [comboValue, setComboValue] = useState({});
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
-
-  useEffect(() => {
-    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridHeader?.current?.gridInst?.refreshLayout();
-    refGridDetail?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridHeader.current, refGridDetail.current]);
-
-  useEffect(() => {
-    actSearchHeaderDI(true, "start_date", "end_date");
-  }, []);
-
+  const resetRequire = () => {
+    setRequire({
+      ...require,
+      prod_id: "",
+      prod_cd: "",
+      date: "",
+      lot: "",
+      totalQty: "",
+      workSubdivisionID: "",
+    });
+    setGridDataHeader([]);
+  };
+  const resetScaleInfo = () => {
+    setScaleInfo({
+      ...scaleInfo,
+      barcode: "",
+      lot: "",
+      before: "",
+      after: "",
+      qty: "",
+    });
+  };
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
@@ -119,375 +146,344 @@ function SubdivisionPanel() {
     setGridDataSelect,
     restURI.product
   ); //➡️ Modal Select Search Prod
-
-  const [actSave] = uSave.useSaveMulti(
-    refGridModalHeader,
-    refGridModalDetail,
-    isEditModeHeader,
+  const [actSelectLoadHeader] = uSearch.useSearchSelect(
+    refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SWITCH_NAME_01,
-    SWITCH_NAME_02,
-    restURI.Subdivision
-  );
-  const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
-    refGridHeader,
-    refGridDetail,
-    setInputInfoValue,
+    setGridDataSelect,
+    restURI.subdivision + "?complete_fg=INCOMPLETE"
+  ); //➡️ Modal Select Search Load Header
+  const [actSelectLoadDetail] = uSearch.useSearchSelect(
+    refGridSelectDetail,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    inputBoxID,
-    inputTextChange,
-    dateText,
-    setGridDataHeader,
-    disRowHeader,
-    setDisRowHeader,
-    restURI.Subdivision
-  );
-
-  const [actSearchDetail] = uSearch.useSearchDetail(
-    setGridDataDetail,
-    restURI.SubdivisionDetail + "?work_subdivision_id=",
-    disRowDetail,
-    setDisRowDetail
-  );
-  const [actDeleteDetailDateRange] = uDelete.useDeleteDetailDateRange(
-    refGridDetail,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setIsDeleteAlertOpen,
-    actSearchHeaderDI,
-    actSearchDetail,
-    headerClickRowID,
-    restURI.SubdivisionDetail,
-    SWITCH_NAME_02
-  );
-
-  const [actSearchEditHeader] = uSearch.useSearchEditHeader(
-    isBackDrop,
-    setIsBackDrop,
-    setGridDataHeaderRowID,
-    restURI.Subdivision
-  );
-  const [actEditHeader] = uEdit.useEditHeader(
-    refGridHeader,
-    isEditModeHeader,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_01,
-    restURI.Subdivision
-  );
-  const [actEditDetail] = uEdit.useEditDetail(
-    refGridDetail,
-    isEditModeDetail,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_02,
-    restURI.SubdivisionDetail
-  );
-
+    setGridDataSelectDetail,
+    restURI.subdivisionDetail
+  ); //➡️ Modal Select Search Load Detail
+  useEffect(() => {
+    refBarcode?.current?.firstChild?.focus();
+  }, [gridDataHeader]);
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridHeader?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridHeader.current]);
-  useEffect(() => {
-    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridDetail?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridDetail.current]);
+    refGridSingle?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide]);
 
-  const handleInputTextChange = (e) => {
-    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
+  useEffect(() => {
+    let before;
+    let after;
+    if (scaleInfo.before) {
+      before = Number(scaleInfo.before);
+    } else {
+      before = 0;
+    }
+    if (scaleInfo.after) {
+      after = Number(scaleInfo.after);
+    } else {
+      after = 0;
+    }
+    setScaleInfo({ ...scaleInfo, qty: before - after });
+  }, [scaleInfo.before, scaleInfo.after]);
+
+  const onClickModalSelectClose = () => {
+    setIsModalSelectOpen(false);
   };
-  const onClickNew = () => {
-    setIsModalOpen(true);
-  };
-  const onClickEditHeader = () => {
-    setIsEditModeHeader(true);
-    setDisRowHeader(!disRowHeader);
-  };
-  const onClickEditModeSave = () => {
-    actEditHeader();
-    setIsEditModeDetail(false);
-  };
-  const onClickEditModeExit = () => {
-    setIsEditModeHeader(false);
-    actSearchHeaderDI(false, "start_date", "end_date");
-    setDisRowHeader(!disRowHeader);
-  };
-  const onClickSearch = () => {
-    actSearchHeaderDI(true, "start_date", "end_date");
-  };
-  const onClickModalAddRow = () => {
-    const Header = refGridModalHeader?.current?.gridInst;
-    const Detail = refGridModalDetail?.current?.gridInst;
-    Header?.finishEditing();
-    Detail?.finishEditing();
-    Detail?.appendRow();
-    if (isNewDetail === true) {
-      for (let i = 0; i < Detail.store.viewport.rows.length; i++) {
-        Detail?.setValue(
-          Detail.store.viewport.rows[i].rowKey,
-          "insp_document_id",
-          Header.getValue(0, "insp_document_id")
-        );
+  const onClickGridSelect = (e) => {
+    if (e?.targetType !== "columnHeader") {
+      const Header = refGridSelect?.current?.gridInst;
+      const rowID = Header.getValue(e?.rowKey, "work_subdivision_id");
+      const params = `?work_subdivision_id=${rowID}`;
+      if (rowID !== require.workSubdivisionID) {
+        setRequire({
+          ...require,
+          prod_id: Header.getValue(e?.rowKey, "prod_id"),
+          prod_cd: Header.getValue(e?.rowKey, "prod_cd"),
+          date: Header.getValue(e?.rowKey, "subdivision_date"),
+          lot: Header.getValue(e?.rowKey, "lot_no"),
+          totalQty: Header.getValue(e?.rowKey, "total_qty"),
+          workSubdivisionID: rowID,
+        });
+        actSelectLoadDetail(params);
       }
     }
   };
-  const onClickGridModalDetail = (e) => {
-    modalDetailClickRowKey = e.rowKey;
+  const onDblClickGridSelect = (e) => {
+    //🔸Select Grid에서 DblClick
+    if (dblClickGrid === "Search") {
+      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+      setRequire({
+        ...require,
+        prod_id: data.prod_id,
+        prod_cd: data.prod_cd,
+        date: DateTime().dateFull,
+        totalQty: 0,
+        lot: "",
+        workSubdivisionID: "",
+      });
+      setIsModalSelectOpen(false);
+    }
   };
-  const onClickModalCancelRow = () => {
-    const gridEvent = refGridModalDetail?.current?.gridInst;
-    gridEvent?.removeRow(modalDetailClickRowKey);
-    modalDetailClickRowKey = null;
+  const onClickPick = async () => {
+    try {
+      const result = await restAPI.get(
+        restURI.subdivisionDetail +
+          `?work_subdivision_id=${require.workSubdivisionID}`
+      );
+      setGridDataHeader(result?.data?.data?.rows);
+
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+
+      setIsModalSelectMultiOpen(false);
+      setIsLockScale(false);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    }
+    refBarcode?.current?.firstChild?.focus();
   };
-  const onClickModalSave = () => {
-    actSave();
+  const onClickStart = async (e) => {
+    if (require.prod_id === "") {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "품번 정보를 입력하세요!",
+        severity: "error",
+        location: "bottomLeft",
+      });
+    } else {
+      if (require.workSubdivisionID === "") {
+        let obj = [];
+        obj.push({
+          prod_id: require.prod_id,
+          subdivision_date: require.date,
+        });
+        try {
+          const result = await restAPI.post(restURI.subdivisions, obj);
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: result?.data?.message,
+            severity: "success",
+            location: "bottomRight",
+          });
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        }
+      }
+      setIsLockScale(false);
+    }
   };
-  const onClickModalClose = () => {
-    setIsModalOpen(false);
-    setIsNewDetail(false);
-    setIsEditModeHeader(false);
-    actSearchHeaderDI(true, "start_date", "end_date");
+  const [isDelete, setIsDelete] = useState(false);
+  const onClickDelete = () => {
+    setIsDelete(true);
   };
-  const onDblClickGridModalHeader = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalHeader");
+  const handleDelete = async () => {
+    try {
+      const result = await restAPI.delete(
+        restURI.subdivision + `/${require.workSubdivisionID}`
+      );
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+      resetRequire();
+      resetScaleInfo();
+      setIsLockScale(true);
+      setIsDelete(false);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    }
+  };
+  const onClickLoad = (e) => {
+    resetRequire();
+    actSelectLoadHeader();
+    setIsModalSelectMultiOpen(true);
+    setDblClickGrid("Load");
+  };
+  const [isHold, setIsHold] = useState(false);
+  const onClickHold = () => {
+    setIsHold(true);
+  };
+  const handleHold = () => {
+    resetRequire();
+    resetScaleInfo();
+    setIsLockScale(true);
+    setIsHold(false);
+  };
+  const onClickModalSelectMultiClose = () => {
+    resetRequire();
+    setIsModalSelectMultiOpen(false);
+  };
+  const [isEnd, setIsEnd] = useState(false);
+  const onClickEnd = (e) => {
+    setIsEnd(true);
+  };
+  const handleEnd = async () => {
+    try {
+      const result = await restAPI.patch(
+        restURI.subdivision + `/${require.workSubdivisionID}/complete`
+      );
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+      resetRequire();
+      resetScaleInfo();
+      setIsLockScale(true);
+      setIsEnd(false);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    }
+  };
+  const onClickSelect = (e) => {
+    if (isLockScale) {
+      setDblClickGrid("Search");
       setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
     }
   };
-  const onEditingFinishGridModalDetail = (e) => {
-    const Header = refGridModalHeader?.current?.gridInst;
-    const Detail = refGridModalDetail?.current?.gridInst;
-    if (Condition(e, ["subdivision_time"])) {
-      //🔸시간 정규표현식 적용
-      RE.Time(e, refGridModalDetail, "subdivision_time");
-    }
-    if (Condition(e, ["before_qty"])) {
-      const beforeQty = e?.value;
-      const afterQty = Detail.getValue(e?.rowKey, "after_qty");
-      if (afterQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
-      }
-      Header?.setValue(0, "total_qty", totalQty);
-    }
-    if (Condition(e, ["after_qty"])) {
-      const beforeQty = Detail.getValue(e?.rowKey, "before_qty");
-      const afterQty = e?.value;
-      if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "qty", -e?.value);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
-      }
-      Header?.setValue(0, "total_qty", totalQty);
+  const onClickRemove = (e) => {
+    if (isLockScale) {
+      resetRequire();
+      resetScaleInfo();
+      setIsLockScale(true);
     }
   };
-  const onClickModalSelectClose = () => {
-    setIsModalSelectOpen(false);
+  const onClickBefore = () => {
+    refBarcode?.current?.firstChild?.focus();
+    setScaleInfo({ ...scaleInfo, before: "505" });
   };
-  const onDblClickGridSelect = (e) => {
-    //🔸Select Grid에서 DblClick
-    let refGrid;
-    let columnName;
-    const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
-    const columnNameInspItem = [
-      "insp_item_type_id",
-      "insp_item_type_nm",
-      "insp_item_id",
-      "insp_item_nm",
-    ];
-
-    if (dblClickGrid === "Search") {
-      setInputSearchValue([]);
-      columnName = ["prod_cd", "prod_nm"];
-      for (let i = 0; i < columnName.length; i++) {
-        setInputSearchValue((prevList) => {
-          return [
-            ...prevList,
-            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]],
-          ];
+  const onClickAfter = () => {
+    refBarcode?.current?.firstChild?.focus();
+    setScaleInfo({ ...scaleInfo, after: "465" });
+  };
+  const onClickNext = async () => {
+    if (
+      scaleInfo.lot !== "" ||
+      scaleInfo.before !== "" ||
+      scaleInfo.after !== ""
+    ) {
+      const raw = [
+        {
+          work_subdivision_id: require.workSubdivisionID,
+          subdivision_date: require.date,
+          subdivision_time: `${DateTime().hour}:${DateTime().minute}`,
+          lot_no: scaleInfo.lot,
+          before_qty: String(scaleInfo.before)
+            ? Number(scaleInfo.before)
+            : null,
+          after_qty: String(scaleInfo.after) ? Number(scaleInfo.after) : null,
+          qty: String(scaleInfo.qty) ? Number(scaleInfo.qty) : null,
+        },
+      ];
+      try {
+        const result = await restAPI.post(restURI.subdivisionDetail, raw);
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
+        try {
+          const result = await restAPI.get(
+            restURI.subdivisionDetail +
+              `?work_subdivision_id=${require.workSubdivisionID}`
+          );
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: result?.data?.message,
+            severity: "success",
+            location: "bottomRight",
+          });
+          setGridDataHeader(result?.data?.data?.rows);
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        }
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
         });
       }
     } else {
-      if (dblClickGrid === "Header") {
-        refGrid = refGridHeader;
-        columnName = columnNameProd;
-      } else if (dblClickGrid === "ModalHeader") {
-        refGrid = refGridModalHeader;
-        columnName = columnNameProd;
-      } else if (dblClickGrid === "Detail") {
-        refGrid = refGridDetail;
-        columnName = columnNameInspItem;
-      } else if (dblClickGrid === "ModalDetail") {
-        refGrid = refGridModalDetail;
-        columnName = columnNameProd;
-      }
-      for (let i = 0; i < columnName.length; i++) {
-        refGrid?.current?.gridInst?.setValue(
-          dblClickRowKey,
-          columnName[i],
-          e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
-        );
-      }
-      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
-    }
-    setIsModalSelectOpen(false);
-  };
-  const onClickGridHeader = (e) => {
-    if (!isEditModeHeader) {
-      const inputInfoValueList = [
-        "reg_date",
-        "prod_cd",
-        "prod_nm",
-        "lot_no",
-        "total_qty",
-        "remark",
-      ];
-      const rowID = e?.instance.getValue(e?.rowKey, "work_subdivision_id");
-      if (rowID !== null) {
-        setInputInfoValue([]);
-        setHeaderClickRowID(rowID);
-        setHeaderClickRowKey(e?.rowKey);
-        actSearchDetail(rowID);
-        for (let i = 0; i < inputInfoValueList.length; i++) {
-          let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
-          if (data === false) {
-            //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-            data = "false";
-          }
-          setInputInfoValue((prevList) => {
-            return [...prevList, data];
-          });
-        }
-      }
-    }
-  };
-  const onClickEditSaveDetail = () => {
-    actEditDetail();
-  };
-  const onClickEditExitDetail = () => {
-    setIsEditModeDetail(false);
-    actSearchDetail(headerClickRowID);
-    setDisRowDetail(!disRowDetail);
-  };
-  const onClickEditNew = () => {
-    if (refGridDetail?.current?.gridInst?.getRowCount() !== 0) {
-      setIsNewDetail(true);
-      setIsModalOpen(true);
-      actSearchEditHeader(headerClickRowID);
-    }
-  };
-  const onClickEditDetail = () => {
-    setIsEditModeDetail(true);
-    setDisRowDetail(!disRowDetail);
-  };
-  const onClickDelete = () => {
-    const data = refGridDetail?.current?.gridInst?.getCheckedRows();
-    if (data.length !== 0) {
-      setIsDeleteAlertOpen(true);
-    }
-  };
-  const onEditingFinishGridHeader = (e) => {
-    disRow.handleEditingFinishGridCheck(e);
-  };
-  const onEditingFinishGridDetail = (e) => {
-    if (Condition(e, ["subdivision_time"])) {
-      //🔸시간 정규표현식 적용
-      RE.Time(e, refGridDetail, "subdivision_time");
-    }
-    disRow.handleEditingFinishGridCheck(e);
-
-    const Header = refGridHeader?.current?.gridInst;
-    const Detail = refGridDetail?.current?.gridInst;
-
-    if (Condition(e, ["before_qty"])) {
-      const beforeQty = e?.value;
-      const afterQty = Detail.getValue(e?.rowKey, "after_qty");
-      if (afterQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
-      }
-      Header?.setValue(headerClickRowKey, "total_qty", totalQty);
-    }
-    if (Condition(e, ["after_qty"])) {
-      const beforeQty = Detail.getValue(e?.rowKey, "before_qty");
-      const afterQty = e?.value;
-      if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "qty", -e?.value);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
-      }
-      Header?.setValue(headerClickRowKey, "total_qty", totalQty);
-    }
-
-    const inputInfoValueList = [
-      "reg_date",
-      "prod_cd",
-      "prod_nm",
-      "lot_no",
-      "total_qty",
-      "remark",
-    ];
-    setInputInfoValue([]);
-    for (let i = 0; i < inputInfoValueList.length; i++) {
-      let data = Header.getValue(headerClickRowKey, inputInfoValueList[i]);
-      if (data === false) {
-        //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-        data = "false";
-      }
-      setInputInfoValue((prevList) => {
-        return [...prevList, data];
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "투입LOT와 소분 전, 후 중량을 모두 입력하세요!",
+        severity: "error",
+        location: "bottomLeft",
       });
     }
+    refBarcode?.current?.firstChild?.focus();
   };
+
+  const handleBarcodeEnter = async (e) => {
+    if (e.key === "Enter") {
+      try {
+        const result = await restAPI.get(
+          restURI.barcodeERP + `?lot_no=${e?.target?.value}`
+        );
+        setScaleInfo({ ...scaleInfo, lot: "MTM1804130002" });
+      } catch (err) {
+        alert(`Err : ${err}`);
+      }
+    }
+    refBarcode?.current?.firstChild?.focus();
+  };
+  const handleChange = (e) => {
+    setScaleInfo({ ...scaleInfo, [e.target.id]: e.target.value });
+  };
+
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       // setSearchToggle(!searchToggle);
@@ -500,15 +496,17 @@ function SubdivisionPanel() {
         <S.ScreenTitleBox>❇️ 일일소분일지</S.ScreenTitleBox>
         <S.ItemInfoBox>
           <InputPaper
-            width={"220px"}
+            width={"500px"}
             height={"60px"}
-            name={"품목코드"}
+            name={"품번"}
             nameSize={"20px"}
             namePosition={"-30px"}
             nameColor={"white"}
-            value={""}
-            valueSize={"22px"}
+            value={require.prod_cd || ""}
+            // valueSize={"22px"}
             btn={true}
+            onClickSelect={onClickSelect}
+            onClickRemove={onClickRemove}
           />
           <InputPaper
             width={"220px"}
@@ -517,18 +515,8 @@ function SubdivisionPanel() {
             nameSize={"20px"}
             namePosition={"-30px"}
             nameColor={"white"}
-            value={"2023-05-09"}
-            valueSize={"22px"}
-          />
-          <InputPaper
-            width={"220px"}
-            height={"60px"}
-            name={"소분LOT"}
-            nameSize={"20px"}
-            namePosition={"-30px"}
-            nameColor={"white"}
-            value={""}
-            valueSize={"22px"}
+            value={require.date}
+            // valueSize={"22px"}
           />
           <InputPaper
             width={"220px"}
@@ -537,87 +525,145 @@ function SubdivisionPanel() {
             nameSize={"20px"}
             namePosition={"-30px"}
             nameColor={"white"}
-            value={""}
-            valueSize={"22px"}
+            value={require.totalQty}
+            // valueSize={"22px"}
           />
         </S.ItemInfoBox>
         <S.DataInterfaceBox>
-          <S.DataInterfaceWrap>
-            <InputPaper
-              width={"220px"}
-              height={"60px"}
-              name={"Barcode"}
-              nameSize={"20px"}
-              namePosition={"-30px"}
-              nameColor={"black"}
-              value={""}
-              valueSize={"22px"}
-            />
-            <InputPaper
-              width={"220px"}
-              height={"60px"}
-              name={"투입LOT"}
-              nameSize={"20px"}
-              namePosition={"-30px"}
-              nameColor={"black"}
-              value={""}
-              valueSize={"22px"}
-            />
-            <InputPaper
-              width={"220px"}
-              height={"60px"}
-              name={"소분 전"}
-              nameSize={"20px"}
-              namePosition={"-30px"}
-              nameColor={"black"}
-              value={""}
-              valueSize={"22px"}
-            />
-            <InputPaper
-              width={"220px"}
-              height={"60px"}
-              name={"소분 후"}
-              nameSize={"20px"}
-              namePosition={"-30px"}
-              nameColor={"black"}
-              value={""}
-              valueSize={"22px"}
-            />
-          </S.DataInterfaceWrap>
-          <S.MadeButtonWrap>
-            <S.MadeButton color={"#28a745"} hoverColor={"#218838"}>
-              Before
-            </S.MadeButton>
-            <S.MadeButton color={"#0d6efd"} hoverColor={"#025ce2"}>
-              After
-            </S.MadeButton>
-            <S.MadeButton color={"#212529"} hoverColor={"#ffc107"}>
-              Next
-            </S.MadeButton>
-          </S.MadeButtonWrap>
+          {isLockScale === false ? (
+            <>
+              <S.DataInterfaceWrap>
+                <InputText
+                  id={"barcode"}
+                  name={"Barcode"}
+                  nameColor={"black"}
+                  value={scaleInfo.barcode}
+                  refInput={refBarcode}
+                  handleEnter={handleBarcodeEnter}
+                  onChange={handleChange}
+                />
+                <InputText
+                  id={"lot"}
+                  name={"투입LOT"}
+                  nameColor={"black"}
+                  value={scaleInfo.lot}
+                  onChange={handleChange}
+                />
+                <InputText
+                  id={"before"}
+                  name={"소분 전"}
+                  nameColor={"black"}
+                  value={scaleInfo.before}
+                  onChange={handleChange}
+                />
+                <InputText
+                  id={"after"}
+                  name={"소분 후"}
+                  nameColor={"black"}
+                  value={scaleInfo.after}
+                  onChange={handleChange}
+                />
+              </S.DataInterfaceWrap>
+              <S.MadeButtonWrap>
+                <BtnSubdivisionScale
+                  onClickBefore={onClickBefore}
+                  onClickAfter={onClickAfter}
+                  onClickNext={onClickNext}
+                />
+              </S.MadeButtonWrap>
+            </>
+          ) : (
+            <S.ScaleLock>
+              <S.ScaleLockIcon />
+            </S.ScaleLock>
+          )}
         </S.DataInterfaceBox>
-        {/* <S.Date
-          datePickerSet={"range"}
-          dateText={dateText}
-          setDateText={setDateText}
-        /> */}
-        {/* {inputSet.map((v) => (
-              <S.InputS
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
-                onKeyDown={onKeyDown}
-              />
-            ))} */}
       </S.ContentsLeft>
       <S.ContentsRight>
-        <S.ButtonBox></S.ButtonBox>
-        <S.DataHandleBox></S.DataHandleBox>
+        <S.ButtonBox>
+          <ButtonSCLHE
+            onClickStart={onClickStart}
+            startDisable={isLockScale ? false : true}
+            onClickDelete={onClickDelete}
+            deleteDisable={isLockScale}
+            onClickLoad={onClickLoad}
+            loadDisable={isLockScale ? false : true}
+            onClickHold={onClickHold}
+            holdDisable={isLockScale}
+            onClickEnd={onClickEnd}
+            endDisable={isLockScale}
+          />
+        </S.ButtonBox>
+        <S.DataHandleBox>
+          <GridSingle
+            data={gridDataHeader}
+            columnOptions={columnOptions}
+            columns={columns}
+            rowHeaders={rowHeadersNum}
+            refGrid={refGridSingle}
+          />
+        </S.DataHandleBox>
       </S.ContentsRight>
+      {isModalSelectOpen ? (
+        <ModalSelect
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
+          onClickModalSelectClose={onClickModalSelectClose}
+          columns={columnsSelectProd}
+          columnOptions={columnOptions}
+          header={header}
+          gridDataSelect={gridDataSelect}
+          rowHeaders={rowHeadersNum}
+          refSelectGrid={refGridSelect}
+          onDblClickGridSelect={onDblClickGridSelect}
+        />
+      ) : null}
+      {isModalSelectMultiOpen ? (
+        <ModalSelectMulti
+          onClickModalClose={onClickModalSelectMultiClose}
+          columnsModalHeader={columnsSelectLoadHeader}
+          columnsModalDetail={columnsSelectLoadDetail}
+          columnOptions={columnOptions}
+          header={header}
+          setGridDataHeader={setGridDataSelect}
+          gridDataHeader={gridDataSelect}
+          gridDataDetail={gridDataSelectDetail}
+          rowHeadersHeader={rowHeadersNum}
+          rowHeadersDetail={rowHeadersNum}
+          refGridModalHeader={refGridSelect}
+          refGridModalDetail={refGridSelectDetail}
+          onClickGridModalHeader={onClickGridSelect}
+          onDblClickGridModalHeader={onDblClickGridSelect}
+          onClickPick={onClickPick}
+          require={require}
+        />
+      ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
+      {isDelete ? (
+        <AlertDelete
+          setIsDeleteAlertOpen={setIsDelete}
+          handleDelete={handleDelete}
+          title={"Delete"}
+          message={"모든 작업을 취소하고 삭제하시겠습니까?"}
+        />
+      ) : null}
+      {isHold ? (
+        <AlertDelete
+          setIsDeleteAlertOpen={setIsHold}
+          handleDelete={handleHold}
+          title={"Hold"}
+          message={"모든 작업을 보류시키겠습니까?"}
+        />
+      ) : null}
+      {isEnd ? (
+        <AlertDelete
+          setIsDeleteAlertOpen={setIsEnd}
+          handleDelete={handleEnd}
+          title={"End"}
+          message={"모든 작업을 완료하고 마감하시겠습니까?"}
+        />
+      ) : null}
     </S.ContentsArea>
   );
 }

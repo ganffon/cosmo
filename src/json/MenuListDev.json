@@ -487,6 +487,12 @@
             "id": "quality-result-view",
             "path": "quality-result-view",
             "under": null
+          },
+          {
+            "name": "❌Excel Import",
+            "id": "insp-result-upload",
+            "path": "insp-result-upload",
+            "under": null
           }
         ]
       },
