@@ -30,35 +30,25 @@ class CheckBox {
   }
 }
 
-class BarcodeButton {
+class Button {
   constructor(props) {
     const el = document.createElement("button");
     const elName = props.columnInfo.renderer.options.name;
     const disabled = props.columnInfo.renderer.options.disabled;
     el.type = "button";
     el.className = "barcodeButton";
-    el.innerText = "바코드 출력";
+    el.innerText = elName;
     el.disabled = disabled;
     el.onclick = (e) => {
-      const rowKey = el.parentElement.__preactattr_["data-row-key"];
-      console.log(rowKey);
-      if (props.columnInfo.renderer.options.onClick != null) {
-        props.columnInfo.renderer.options.onClick(rowKey);
-      } else {
-        console.log("hello");
-      }
+      // const rowKey = el.parentElement.__preactattr_["data-row-key"];
+      // console.log(rowKey);
+      // if (props.columnInfo.renderer.options.onClick != null) {
+      //   props.columnInfo.renderer.options.onClick(rowKey);
+      // } else {
+      //   console.log("hello");
+      // }
+      props.columnInfo.renderer.options.onClick();
     };
-    // el.addEventListener("click", (ev) => {
-    //   const rowKey = el.parentElement.__preactattr_["data-row-key"];
-    //   console.log(ev);
-    // el.checked
-    //   ? (el.parentElement._component.context.store.data.rawData[rowKey][
-    //       elName
-    //     ] = true)
-    //   : (el.parentElement._component.context.store.data.rawData[rowKey][
-    //       elName
-    //     ] = false);
-    // });
 
     this.el = el;
     this.render(props);
@@ -234,7 +224,7 @@ class ColumnHeaderMultiLine {
 
 export {
   CheckBox,
-  BarcodeButton,
+  Button,
   NumComma,
   OnlyNum,
   DateFormat,

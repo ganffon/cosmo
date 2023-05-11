@@ -1,11 +1,7 @@
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import DatePicker from "components/datetime/DatePicker";
-import InputSearch from "components/input/InputSearch";
-import ButtonGroup from "components/button/ButtonGroup";
-import InputPaper from "components/input/InputPaper";
+import LockIcon from "@mui/icons-material/Lock";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
@@ -20,14 +16,14 @@ export const ContentsArea = styled("div")`
 `;
 export const ContentsLeft = styled("div")`
   height: 100%;
-  width: 900px;
+  width: 530px;
   display: flex;
   flex-direction: column;
   gap: 10px 10px;
 `;
 export const ContentsRight = styled("div")`
   height: 100%;
-  width: 100%;
+  width: calc(100% - 540px);
   display: flex;
   flex-direction: column;
   gap: 10px 10px;
@@ -64,7 +60,7 @@ export const DataInterfaceBox = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 5% 5% 0% 5%;
+  padding: 5% 3% 3% 3%;
   background: #83bef4;
 `;
 export const DataInterfaceWrap = styled("div")`
@@ -85,53 +81,24 @@ export const MadeButtonWrap = styled("div")`
   gap: 10px 40px;
   margin-top: 30px;
 `;
-export const MadeButton = styled("button")`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  width: 120px;
-  height: 100px;
-  padding: 0.5rem 1rem;
-
-  font-family: "NotoSansKR_B", sans-serif;
-  font-size: 1.5rem;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-
-  display: inline-block;
-
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-  transition: 0.5s;
-
-  background: ${(props) => props.color};
-
-  &:hover {
-    background: ${(props) => props.hoverColor};
-  }
-`;
 export const ButtonBox = styled("div")`
-  height: 50px;
+  height: 80px;
   width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 5px;
+  padding: 1% 0%;
 `;
 export const DataHandleBox = styled("div")`
-  height: calc(100% - 50px - 5px);
+  height: calc(100% - 90px);
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 5px;
+  padding: 10px 10px 10px 10px;
 `;
 export const InputSelectBox = styled("div")`
   width: 370px;
@@ -164,4 +131,16 @@ export const Title = styled(Typography)`
   width: 100px;
   font-family: NotoSansKR_B;
   font-size: 15px;
+`;
+export const ScaleLock = styled("div")`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const ScaleLockIcon = styled(LockIcon)`
+  width: 30%;
+  height: 30%;
+  color: gray;
 `;

@@ -17,7 +17,7 @@ function AlertDelete(props) {
         <S.TitleBox>DELETE</S.TitleBox>
       </S.HeaderBox>
       <S.ContentsBox>
-        <S.Messeage>정말로 삭제하시겠습니까?</S.Messeage>
+        <S.Message>정말로 삭제하시겠습니까?</S.Message>
         <S.ButtonBox>
           <S.ButtonYes
             variant="contained"

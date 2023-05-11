@@ -8,17 +8,17 @@ function InputPaper(props) {
   const {
     width = "180px",
     height = "40px",
-    id = "",
-    name = "",
+    id = null,
+    name = null,
     nameSize = "13px",
     namePosition = "-10px",
     nameColor = "gray",
-    value = "",
-    valueSize = "15px",
+    value = null,
+    // valueSize = "15px",
     btn = false,
     onKeyDown = () => {},
     onClickSelect = () => {},
-    onClickCancel = () => {},
+    onClickRemove = () => {},
   } = props;
   return (
     <S.PaperBox width={width} height={height}>
@@ -33,20 +33,20 @@ function InputPaper(props) {
         inputProps={{
           readOnly: true,
         }}
+        key={id}
         id={id}
         value={value}
-        valueSize={valueSize}
-        align={"right"}
+        // valueSize={valueSize}
         onKeyDown={onKeyDown}
       />
       {btn === true ? (
         <>
-          <S.Icon>
-            <HighlightOffIcon onClick={onClickCancel} />
+          <S.Icon onClick={onClickRemove}>
+            <HighlightOffIcon />
           </S.Icon>
           <Divider sx={{ height: "70%", m: 0.5 }} orientation="vertical" />
-          <S.Icon>
-            <FolderIcon onClick={onClickSelect} />
+          <S.Icon onClick={onClickSelect}>
+            <FolderIcon />
           </S.Icon>
         </>
       ) : null}

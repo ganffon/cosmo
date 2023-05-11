@@ -313,12 +313,17 @@ const useSearchSelect = (
   uri,
   componentName = null
 ) => {
-  const actSearchSelect = async () => {
+  const actSearchSelect = async (params = null) => {
+    let gridData;
     refGrid?.current?.gridInst?.finishEditing();
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        let gridData = await restAPI.get(uri);
+        if (params) {
+          gridData = await restAPI.get(uri + params);
+        } else {
+          gridData = await restAPI.get(uri);
+        }
         if (componentName !== null) {
           gridData = gridData?.data?.data?.rows.map((raw) =>
             GetSearchParams(componentName, raw)

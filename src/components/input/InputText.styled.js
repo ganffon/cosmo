@@ -13,24 +13,21 @@ export const PaperBox = styled(Paper)`
   position: relative;
   margin: 6px 0px 0px 10px;
 `;
+export const Text = styled(InputBase)`
+  margin-left: 10px;
+  flex: 1;
+  // font-size: ${(props) => props.valueSize};
+  font-size: 20px;
+`;
 export const PaperTitle = styled("div")`
-  padding: 2px 4px;
   display: flex;
   align-items: center;
   width: auto;
   height: 20px;
   position: absolute;
   top: ${(props) => props.namePosition};
-  left: 10px;
+  left: 15px;
   font-family: NotoSansKR_B;
-  font-size: ${(props) => props.nameFontSize};
+  font-size: ${(props) => props.nameSize};
   color: ${(props) => props.nameColor};
-`;
-export const Text = styled(InputBase)`
-  margin-left: 10px;
-  flex: 1;
-  font-size: ${(props) => props.valueFontSize};
-`;
-export const Icon = styled(IconButton)`
-  padding: 5px;
 `;

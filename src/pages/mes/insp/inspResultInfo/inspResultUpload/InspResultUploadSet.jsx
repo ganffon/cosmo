@@ -1,8 +1,6 @@
-//공정관리✨
-//🔍 OnlySearchSingleGrid.jsx 에서 사용
+//사업부관리✨
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
-import * as CustomGrid from "components/grid/setting/CustomGrid";
 import {
   WIDTH_SUPER_SHORT,
   WIDTH_SHORT,
@@ -11,14 +9,8 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function ProcessSet(isEditMode, barcodePrint) {
-  const data = [
-    {
-      id: 1,
-      test: "TEST",
-      test2: "TEST TEST",
-    },
-  ];
+function InspResultUploadSet(isEditMode) {
+  const data = [];
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
   /** 🔸columns ❗
@@ -45,20 +37,8 @@ function ProcessSet(isEditMode, barcodePrint) {
       rowSpan: false,
     },
     {
-      name: "proc_id",
-      header: CN.proc_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "proc_cd",
-      header: CN.proc_cd,
+      name: "factory_cd",
+      header: CN.factory_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
@@ -69,31 +49,11 @@ function ProcessSet(isEditMode, barcodePrint) {
       rowSpan: false,
     },
     {
-      name: "proc_nm",
-      header: CN.proc_nm,
+      name: "factory_nm",
+      header: CN.factory_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "barcode",
-      header: "barcode",
-      width: WIDTH_SHORT,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      renderer: {
-        type: CustomGrid.Button,
-        options: {
-          name: "바코드 출력",
-          onClick: barcodePrint,
-        },
-      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -154,7 +114,7 @@ function ProcessSet(isEditMode, barcodePrint) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -166,7 +126,7 @@ function ProcessSet(isEditMode, barcodePrint) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -175,9 +135,9 @@ function ProcessSet(isEditMode, barcodePrint) {
   ];
   const columnsModal = [
     {
-      name: "proc_cd",
-      header: CN.proc_cd,
-      minWidth: WIDTH_MIDDLE,
+      name: "factory_cd",
+      header: CN.factory_cd,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -187,9 +147,9 @@ function ProcessSet(isEditMode, barcodePrint) {
       rowSpan: false,
     },
     {
-      name: "proc_nm",
-      header: CN.proc_nm,
-      minWidth: WIDTH_MIDDLE,
+      name: "factory_nm",
+      header: CN.factory_nm,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -202,31 +162,28 @@ function ProcessSet(isEditMode, barcodePrint) {
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
-    frozenCount: 0, // frozenColumn은 여기 값만 수정
+    frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
 
   const header = {};
-  // const header = {
-  //   height: "60",
-  //   complexColumns: [
-  //     {
-  //       header: "ID + Name",
-  //       name: "parent1",
-  //       childNames: ["id", "name"],
-  //     },
-  //   ],
-  // };
+  /**
+   * 🔸날짜단일조회 - "single"
+   * 🔸날짜기간조회 - "range"
+   * 🔸날짜안쓰는경우 - null
+   */
+  const datePickerSet = null;
 
-  const datePickerSet = null; // "single" || "range" || null
-
+  /**
+   * 🔸inputSet id 값이 ✨ BE : query params
+   */
   const inputSet = [
     {
-      id: "proc_cd",
-      name: CN.proc_cd,
+      id: "factory_cd",
+      name: CN.factory_cd,
     },
     {
-      id: "proc_nm",
-      name: CN.proc_nm,
+      id: "factory_nm",
+      name: CN.factory_nm,
     },
   ];
 
@@ -243,4 +200,4 @@ function ProcessSet(isEditMode, barcodePrint) {
   };
 }
 
-export default ProcessSet;
+export default InspResultUploadSet;

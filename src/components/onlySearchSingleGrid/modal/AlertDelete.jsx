@@ -5,15 +5,20 @@ import CloseIcon from "@mui/icons-material/Close";
 import * as S from "./AlertDelete.styled";
 
 function AlertDelete(props) {
-  const { handleDelete, setIsDeleteAlertOpen } = props;
+  const {
+    handleDelete = () => {},
+    setIsDeleteAlertOpen,
+    title = "DELETE",
+    message = "정말로 삭제하시겠습니까?",
+  } = props;
 
   return (
     <ModalWrap width={"400px"} height={"200px"}>
       <S.HeaderBox>
-        <S.TitleBox>DELETE</S.TitleBox>
+        <S.TitleBox>{title}</S.TitleBox>
       </S.HeaderBox>
       <S.ContentsBox>
-        <S.Messeage>정말로 삭제하시겠습니까?</S.Messeage>
+        <S.Message>{message}</S.Message>
         <S.ButtonBox>
           <S.ButtonYes
             variant="contained"

@@ -53,6 +53,7 @@ import LineDepartment from "pages/mes/standard/lineDepartment/lineDepartment";
 import ProductClass from "pages/mes/standard/productClass/productClass";
 
 import SubdivisionPanel from "pages/mes/panel/subdivision/SubdivisionPanel";
+import InspResultUpload from "pages/mes/insp/inspResultInfo/inspResultUpload/InspResultUpload";
 
 export default function MainRouter() {
   return (
@@ -120,6 +121,8 @@ export default function MainRouter() {
         <Route path="menu-manage" element={<MenuManage />} />
         <Route path="menu-list" element={<MenuList />} />
         <Route path="setup" element={<Setup />} />
+        <Route path="insp-result-upload" element={<InspResultUpload />} />
+
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
     </Layout>

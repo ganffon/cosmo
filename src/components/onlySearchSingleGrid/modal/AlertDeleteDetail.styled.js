@@ -27,7 +27,7 @@ const ContentsBox = styled("div")`
   align-items: center;
 `;
 
-const Messeage = styled(Typography)`
+const Message = styled(Typography)`
   margin-bottom: 25px;
   font-size: 20px;
   font-weight: 500;
@@ -44,7 +44,7 @@ export {
   HeaderBox,
   TitleBox,
   ContentsBox,
-  Messeage,
+  Message,
   ButtonBox,
   ButtonYes,
   ButtonNo,

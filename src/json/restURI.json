@@ -59,12 +59,15 @@
   "storeCheckHistory": "/inv/store/check-history",
 
   "subdivision": "/prd/subdivision",
+  "subdivisions": "/prd/subdivisions",
   "subdivisionDetail": "/prd/subdivision-detail",
-  "subdivisionDetailID": "/production-dayreport-subdivision-detail/detail",
 
   "setup": "/setup",
 
   "lineDepartment": "/std/line-dept",
   "productClass": "/std/prod-class",
-  "sparepartsStoreTransView": "/spareparts-store-transfer-view"
+  "sparepartsStoreTransView": "/spareparts-store-transfer-view",
+
+  "inspResultUpload": "/qms/insp-result-upload",
+  "barcodeERP": "/std/barcode/erp"
 }
