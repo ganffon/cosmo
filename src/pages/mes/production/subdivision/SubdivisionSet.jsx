@@ -146,7 +146,7 @@ function SubdivisionSet(
       editor: false,
       hidden: false,
       renderer: {
-        type: CustomGrid.BarcodeButton,
+        type: CustomGrid.Button,
         options: {
           name: "barcode",
           onClick: barcodePrintHeader,
@@ -385,7 +385,7 @@ function SubdivisionSet(
       editor: false,
       hidden: false,
       renderer: {
-        type: CustomGrid.BarcodeButton,
+        type: CustomGrid.Button,
         options: {
           name: "barcode",
           onClick: barcodePrintDetail,
