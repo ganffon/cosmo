@@ -36,18 +36,17 @@ class Button {
     const elName = props.columnInfo.renderer.options.name;
     const disabled = props.columnInfo.renderer.options.disabled;
     el.type = "button";
-    el.className = "barcodeButton";
+    el.className = "customButton";
     el.innerText = elName;
     el.disabled = disabled;
     el.onclick = (e) => {
-      // const rowKey = el.parentElement.__preactattr_["data-row-key"];
-      // console.log(rowKey);
-      // if (props.columnInfo.renderer.options.onClick != null) {
-      //   props.columnInfo.renderer.options.onClick(rowKey);
-      // } else {
-      //   console.log("hello");
-      // }
-      props.columnInfo.renderer.options.onClick();
+      const rowKey = el.parentElement.__preactattr_["data-row-key"];
+      if (props.columnInfo.renderer.options.onClick != null) {
+        props.columnInfo.renderer.options.onClick(rowKey);
+      } else {
+        console.log("Custom Grid Button Err");
+      }
+      // props.columnInfo.renderer.options.onClick();
     };
 
     this.el = el;
