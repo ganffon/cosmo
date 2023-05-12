@@ -4,6 +4,7 @@ import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import ButtonACS from "components/button/ButtonACS";
 import ButtonDS from "components/button/ButtonDS";
+import ButtonSearch from "components/button/ButtonSearch";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalDate.styled";
 
@@ -65,6 +66,9 @@ function ModalDate(props) {
           ) : (
             false
           )}
+          {buttonType === "Search" ? (
+            <ButtonSearch onClickSearch={onClickModalSearch} />
+          ) : null}
         </S.ButtonBox>
       </S.ToolWrap>
       <S.GridBox>

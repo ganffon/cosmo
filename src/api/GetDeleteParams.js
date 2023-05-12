@@ -194,7 +194,7 @@ class storeCheck {
     this.tran_id = raw.tran_id;
   }
 }
-class dayreportSubdivisionDetail {
+class subdivisionDetail {
   constructor(raw) {
     this.work_subdivision_detail_id = raw.work_subdivision_detail_id;
   }
@@ -358,8 +358,8 @@ function GetDeleteParams(componentName, raw) {
     case "storeCheck":
       params = new storeCheck(raw);
       break;
-    case "dayreportSubdivisionDetail":
-      params = new dayreportSubdivisionDetail(raw);
+    case "subdivisionDetail":
+      params = new subdivisionDetail(raw);
       break;
     case "partnerType":
       params = new partnerType(raw);

@@ -10,8 +10,15 @@ import {
   MODAL_BACK_COLOR,
   NORMAL_BACK_COLOR,
 } from "constant/Grid.js";
+import { format } from "date-fns";
 
-function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
+function SubdivisionSet(
+  isEditModeHeader,
+  isEditModeDetail,
+  isNewDetail,
+  barcodePrintDetail,
+  barcodePrintHeader
+) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -34,8 +41,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "subdivision_date",
+      header: CN.subdivision_date,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: isEditModeHeader
@@ -60,6 +67,11 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       align: "left",
       editor: false,
       hidden: false,
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -72,6 +84,11 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       align: "left",
       editor: false,
       hidden: false,
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -84,6 +101,11 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       align: "left",
       editor: false,
       hidden: false,
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -94,7 +116,7 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       header: CN.lot_no,
       minWidth: WIDTH_MIDDLE,
       align: "left",
-      editor: isEditModeHeader ? "text" : false,
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -106,15 +128,30 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       header: CN.total_qty,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditModeHeader
-        ? {
-            type: CustomGrid.EditorNumber,
-          }
-        : false,
+      editor: false,
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "barcode_no",
+      header: CN.barcode_no,
+      minWidth: WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      renderer: {
+        type: CustomGrid.BarcodeButton,
+        options: {
+          name: "barcode",
+          onClick: barcodePrintHeader,
+        },
+      },
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -244,8 +281,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "before_qty",
-      header: CN.before_qty,
+      name: "before_subdivision_qty",
+      header: CN.before_subdivision_qty,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeDetail
@@ -263,8 +300,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "after_qty",
-      header: CN.after_qty,
+      name: "after_subdivision_qty",
+      header: CN.after_subdivision_qty,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeDetail
@@ -282,14 +319,34 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "qty",
-      header: CN.qty,
+      name: "subdivision_qty",
+      header: CN.subdivision_qty,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "subdivision_date",
+      header: CN.subdivision_date,
+      minWidth: WIDTH_SHORT,
+      align: "center",
+      editor: isEditModeDetail
+        ? {
+            type: "datePicker",
+            options: {
+              format: "yyyy-MM-dd",
+              timepicker: false,
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -309,8 +366,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "subdivision_uid",
-      header: CN.subdivision_uid,
+      name: "subdivision_emp_id",
+      header: CN.subdivision_emp_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -325,17 +382,21 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       header: CN.barcode_no,
       minWidth: WIDTH_SHORT,
       align: "left",
-      editor: isEditModeDetail
-        ? {
-            type: CustomGrid.EditorNumber,
-          }
-        : false,
+      editor: false,
       hidden: false,
+      renderer: {
+        type: CustomGrid.BarcodeButton,
+        options: {
+          name: "barcode",
+          onClick: barcodePrintDetail,
+        },
+      },
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "remark",
       header: CN.remark,
@@ -435,8 +496,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "subdivision_date",
+      header: CN.subdivision_date,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: isNewDetail
@@ -460,9 +521,12 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      validation: {
-        required: true,
-      },
+
+      validation: isNewDetail
+        ? false
+        : {
+            required: true,
+          },
       hidden: false,
       sortable: false,
       filter: false,
@@ -475,9 +539,11 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      validation: {
-        required: true,
-      },
+      validation: isNewDetail
+        ? false
+        : {
+            required: true,
+          },
       hidden: false,
       sortable: false,
       filter: false,
@@ -490,9 +556,11 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      validation: {
-        required: true,
-      },
+      validation: isNewDetail
+        ? false
+        : {
+            required: true,
+          },
       hidden: false,
       sortable: false,
       filter: false,
@@ -505,7 +573,7 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isNewDetail ? false : "text",
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -520,7 +588,7 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
-      hidden: false,
+      hidden: isNewDetail ? false : true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -578,8 +646,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "before_qty",
-      header: CN.before_qty,
+      name: "before_subdivision_qty",
+      header: CN.before_subdivision_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: {
@@ -595,8 +663,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "after_qty",
-      header: CN.after_qty,
+      name: "after_subdivision_qty",
+      header: CN.after_subdivision_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: {
@@ -612,8 +680,8 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "qty",
-      header: CN.qty,
+      name: "subdivision_qty",
+      header: CN.subdivision_qty,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -627,15 +695,15 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "subdivision_time",
-      header: CN.subdivision_time,
+      name: "subdivision_date",
+      header: CN.subdivision_date,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: {
         type: "datePicker",
         options: {
-          format: "yyyy-MM-dd HH:mm A",
-          timepicker: true,
+          format: "yyyy-MM-dd",
+          timepicker: false,
         },
       },
       hidden: false,
@@ -645,8 +713,20 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
       rowSpan: false,
     },
     {
-      name: "subdivision_uid",
-      header: CN.subdivision_uid,
+      name: "subdivision_time",
+      header: CN.subdivision_time,
+      minWidth: WIDTH_SHORT,
+      align: "center",
+      editor: "text",
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "subdivision_emp_id",
+      header: CN.subdivision_emp_id,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -709,14 +789,18 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail) {
   ];
   const inputSet = [
     {
-      id: "lot_no",
-      name: CN.lot_no,
+      id: "prod_cd",
+      name: CN.prod_cd,
+    },
+    {
+      id: "prod_nm",
+      name: CN.prod_nm,
     },
   ];
   const inputInfo = [
     {
-      id: "reg_date",
-      name: CN.reg_date,
+      id: "subdivision_date",
+      name: CN.subdivision_date,
     },
     {
       id: "prod_cd",

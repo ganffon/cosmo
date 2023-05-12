@@ -456,30 +456,34 @@ class controlPlanDetail {
     this.remark = raw.remark;
   }
 }
-class dayreportSubdivision {
+class subdivision {
   constructor(raw) {
     this.work_subdivision_id = raw.work_subdivision_id;
-    this.reg_date = raw.reg_date;
-    this.lot_no = raw.lot_no;
-    this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
+    this.subdivision_date = raw.subdivision_date;
+    this.prod_id = raw.prod_id;
     this.remark = raw.remark;
   }
 }
-class dayreportSubdivisionDetail {
+class subdivisionDetail {
   constructor(raw) {
     this.work_subdivision_detail_id = raw.work_subdivision_detail_id;
     this.work_subdivision_id = raw.work_subdivision_id;
     this.order_detail_id = raw.order_detail_id;
     this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
-    this.before_qty = String(raw.before_qty) ? Number(raw.before_qty) : null;
-    this.after_qty = String(raw.after_qty) ? Number(raw.after_qty) : null;
-    this.qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.before_qty = String(raw.before_subdivision_qty)
+      ? Number(raw.before_subdivision_qty)
+      : null;
+    this.after_qty = String(raw.after_subdivision_qty)
+      ? Number(raw.after_subdivision_qty)
+      : null;
+    this.qty = String(raw.subdivision_qty) ? Number(raw.subdivision_qty) : null;
+    this.subdivision_date = raw.subdivision_date;
     this.subdivision_time = raw.subdivision_time;
-    this.subdivision_uid = raw.subdivision_uid;
+    this.subdivision_emp_id = raw.subdivision_emp_id;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
-    this.barcode_no = raw.barcode_no;
+    // this.barcode_no = raw.barcode_no;
     this.remark = raw.remark;
   }
 }
@@ -668,11 +672,11 @@ function GetPutParams(componentName, raw) {
     case "controlPlanDetail":
       params = new controlPlanDetail(raw);
       break;
-    case "dayreportSubdivision":
-      params = new dayreportSubdivision(raw);
+    case "subdivision":
+      params = new subdivision(raw);
       break;
-    case "dayreportSubdivisionDetail":
-      params = new dayreportSubdivisionDetail(raw);
+    case "subdivisionDetail":
+      params = new subdivisionDetail(raw);
       break;
     case "partnerType":
       params = new partnerType(raw);
