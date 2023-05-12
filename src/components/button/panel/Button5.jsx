@@ -1,6 +1,6 @@
-import * as S from "./ButtonSCLHE.styled";
+import * as S from "./Button5.styled";
 
-function ButtonSCLHE(props) {
+function Button5(props) {
   const {
     onClickStart = () => {},
     onClickDelete = () => {},
@@ -24,32 +24,32 @@ function ButtonSCLHE(props) {
         Start
       </S.ButtonSet>
       <S.ButtonSet
-        color={"#28a745"}
-        hoverColor={"#218838"}
+        color={"#e91717"}
+        hoverColor={"#aa1111"}
         onClick={onClickDelete}
         disabled={deleteDisable}
       >
         Delete
       </S.ButtonSet>
       <S.ButtonSet
-        color={"#0d6efd"}
-        hoverColor={"#025ce2"}
+        color={"#e5a711"}
+        hoverColor={"#b2820d"}
         onClick={onClickLoad}
         disabled={loadDisable}
       >
         Load
       </S.ButtonSet>
       <S.ButtonSet
-        color={"#212529"}
-        hoverColor={"#ffc107"}
+        color={"#e5a711"}
+        hoverColor={"#b2820d"}
         onClick={onClickHold}
         disabled={holdDisable}
       >
         Hold
       </S.ButtonSet>
       <S.ButtonSet
-        color={"#212529"}
-        hoverColor={"#ffc107"}
+        color={"#2986cc"}
+        hoverColor={"#1f5e8e"}
         onClick={onClickEnd}
         disabled={endDisable}
       >
@@ -59,4 +59,4 @@ function ButtonSCLHE(props) {
   );
 }
 
-export default ButtonSCLHE;
+export default Button5;

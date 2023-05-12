@@ -1,41 +1,21 @@
-import {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useCallback,
-} from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionPanelSet from "./SubdivisionPanelSet";
-import useInputSet from "custom/useInputSet";
 import BtnSubdivisionScale from "components/button/panel/BtnSubdivisionScale";
-import ButtonSCLHE from "components/button/panel/ButtonSCLHE";
-import ButtonNED from "components/button/ButtonNED";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonSE from "components/button/ButtonSE";
+import Button5 from "components/button/panel/Button5";
 import InputPaper from "components/input/InputPaper";
 import InputText from "components/input/InputText";
 import GridSingle from "components/grid/GridSingle";
-import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
 import BackDrop from "components/backdrop/BackDrop";
-import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import * as uSearch from "custom/useSearch";
-import * as uSave from "custom/useSave";
-import * as uEdit from "custom/useEdit";
-import * as uDelete from "custom/useDelete";
-import * as disRow from "custom/useDisableRowCheck";
-import * as RE from "custom/RegularExpression";
 import * as S from "./SubdivisionPanel.styled";
 import restAPI from "api/restAPI";
-import GetPostParams from "api/GetPostParams";
-import ModalSelectMulti from "components/modal/ModalSelectMulti";
+import ModalSubdivision from "./ModalSubdivision";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 
 function SubdivisionPanel() {
@@ -43,52 +23,32 @@ function SubdivisionPanel() {
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
 
-  const [isEditModeHeader, setIsEditModeHeader] = useState(false);
-  const [isEditModeDetail, setIsEditModeDetail] = useState(false);
-  const [isNewDetail, setIsNewDetail] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
-  const [isModalSelectMultiOpen, setIsModalSelectMultiOpen] = useState(false);
+  const [isModalSubdivisionOpen, setIsModalSubdivisionOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
-  const [inputInfoValue, setInputInfoValue] = useState([]);
-  const [headerClickRowID, setHeaderClickRowID] = useState(null);
-  const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
-  const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
   const [isLockScale, setIsLockScale] = useState(true);
 
   const {
     columnOptions,
-    rowHeadersNumCheck,
     rowHeadersNum,
     header,
     columns,
     columnsSelectProd,
     columnsSelectLoadHeader,
     columnsSelectLoadDetail,
-    inputSet,
-    inputInfo,
-  } = SubdivisionPanelSet(isEditModeHeader);
-
-  const SWITCH_NAME_01 = "subdivision";
-  const SWITCH_NAME_02 = "subdivisionDetail";
-  let modalDetailClickRowKey = null;
+  } = SubdivisionPanelSet();
 
   const refGridSingle = useRef(null);
-  // const refGridDetail = useRef(null);
-  // const refGridModalHeader = useRef(null);
-  // const refGridModalDetail = useRef(null);
   const refGridSelect = useRef(null);
   const refGridSelectDetail = useRef(null);
 
   const refBarcode = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
-  const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
   const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
 
@@ -111,9 +71,7 @@ function SubdivisionPanel() {
     after: "",
     qty: "",
   });
-  const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
-  const [columnsSelect, setColumnsSelect] = useState([]);
 
   const resetRequire = () => {
     setRequire({
@@ -227,31 +185,33 @@ function SubdivisionPanel() {
     }
   };
   const onClickPick = async () => {
-    try {
-      const result = await restAPI.get(
-        restURI.subdivisionDetail +
-          `?work_subdivision_id=${require.workSubdivisionID}`
-      );
-      setGridDataHeader(result?.data?.data?.rows);
+    if (require.prod_id !== "") {
+      try {
+        const result = await restAPI.get(
+          restURI.subdivisionDetail +
+            `?work_subdivision_id=${require.workSubdivisionID}`
+        );
+        setGridDataHeader(result?.data?.data?.rows);
 
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: result?.data?.message,
-        severity: "success",
-        location: "bottomRight",
-      });
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
 
-      setIsModalSelectMultiOpen(false);
-      setIsLockScale(false);
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-        location: "bottomRight",
-      });
+        setIsModalSubdivisionOpen(false);
+        setIsLockScale(false);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      }
     }
     refBarcode?.current?.firstChild?.focus();
   };
@@ -326,7 +286,7 @@ function SubdivisionPanel() {
   const onClickLoad = (e) => {
     resetRequire();
     actSelectLoadHeader();
-    setIsModalSelectMultiOpen(true);
+    setIsModalSubdivisionOpen(true);
     setDblClickGrid("Load");
   };
   const [isHold, setIsHold] = useState(false);
@@ -339,9 +299,9 @@ function SubdivisionPanel() {
     setIsLockScale(true);
     setIsHold(false);
   };
-  const onClickModalSelectMultiClose = () => {
+  const onClickModalSubdivisionClose = () => {
     resetRequire();
-    setIsModalSelectMultiOpen(false);
+    setIsModalSubdivisionOpen(false);
   };
   const [isEnd, setIsEnd] = useState(false);
   const onClickEnd = (e) => {
@@ -376,7 +336,6 @@ function SubdivisionPanel() {
   const onClickSelect = (e) => {
     if (isLockScale) {
       setDblClickGrid("Search");
-      setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
     }
@@ -581,7 +540,7 @@ function SubdivisionPanel() {
       </S.ContentsLeft>
       <S.ContentsRight>
         <S.ButtonBox>
-          <ButtonSCLHE
+          <Button5
             onClickStart={onClickStart}
             startDisable={isLockScale ? false : true}
             onClickDelete={onClickDelete}
@@ -618,9 +577,9 @@ function SubdivisionPanel() {
           onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
-      {isModalSelectMultiOpen ? (
-        <ModalSelectMulti
-          onClickModalClose={onClickModalSelectMultiClose}
+      {isModalSubdivisionOpen ? (
+        <ModalSubdivision
+          onClickModalClose={onClickModalSubdivisionClose}
           columnsModalHeader={columnsSelectLoadHeader}
           columnsModalDetail={columnsSelectLoadDetail}
           columnOptions={columnOptions}
