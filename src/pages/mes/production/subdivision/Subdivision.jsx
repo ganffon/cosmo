@@ -23,6 +23,9 @@ import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
 import * as S from "./Subdivision.styled";
+import InputPaper from "components/input/InputPaper";
+import GetPostParams from "api/GetPostParams";
+import restAPI from "api/restAPI";
 
 function Subdivision() {
   LoginStateChk();
@@ -44,6 +47,78 @@ function Subdivision() {
   const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
+  const barcodePrintDetail = async (rowKey) => {
+    const gridDetailId =
+      refGridDetail?.current?.gridInst.store.data.rawData[rowKey]
+        .work_subdivision_detail_id;
+
+    const data = GetPostParams("createSubdivisionDetailBarcode", gridDetailId);
+    if (data !== undefined) {
+      if (data.length !== 0) {
+        setIsBackDrop(true);
+        await restAPI
+          .post(restURI.createSubdivisionBarcode, data)
+          .then((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.data?.message,
+              severity: "success",
+            });
+          })
+          .catch((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.message
+                ? res?.message
+                : res?.response?.data?.message,
+              severity: "error",
+            });
+          })
+          .finally(() => {
+            setIsBackDrop(false);
+          });
+      }
+    }
+  };
+
+  const barcodePrintHeader = async (rowKey) => {
+    const gridHeaderId =
+      refGridHeader?.current?.gridInst.store.data.rawData[rowKey]
+        .work_subdivision_id;
+
+    const data = GetPostParams("createSubdivisionBarcode", gridHeaderId);
+    if (data !== undefined) {
+      if (data.length !== 0) {
+        setIsBackDrop(true);
+        await restAPI
+          .post(restURI.createSubdivisionBarcode, data)
+          .then((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.data?.message,
+              severity: "success",
+            });
+          })
+          .catch((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.message
+                ? res?.message
+                : res?.response?.data?.message,
+              severity: "error",
+            });
+          })
+          .finally(() => {
+            setIsBackDrop(false);
+          });
+      }
+    }
+  };
+
   const {
     columnOptions,
     rowHeadersNumCheck,
@@ -56,7 +131,13 @@ function Subdivision() {
     columnsSelectProd,
     inputSet,
     inputInfo,
-  } = SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail);
+  } = SubdivisionSet(
+    isEditModeHeader,
+    isEditModeDetail,
+    isNewDetail,
+    barcodePrintDetail,
+    barcodePrintHeader
+  );
 
   const SWITCH_NAME_01 = "subdivision";
   const SWITCH_NAME_02 = "subdivisionDetail";
@@ -140,7 +221,7 @@ function Subdivision() {
     isSnackOpen,
     setIsSnackOpen,
     inputBoxID,
-    inputTextChange,
+    inputSearchValue,
     dateText,
     setGridDataHeader,
     disRowHeader,
@@ -150,10 +231,11 @@ function Subdivision() {
 
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
-    restURI.SubdivisionDetail + "?work_subdivision_id=",
+    restURI.subdivisionDetail + "?work_subdivision_id=",
     disRowDetail,
     setDisRowDetail
   );
+
   const [actDeleteDetailDateRange] = uDelete.useDeleteDetailDateRange(
     refGridDetail,
     isBackDrop,
@@ -194,6 +276,15 @@ function Subdivision() {
     SWITCH_NAME_02,
     restURI.subdivisionDetail
   );
+  const [actSaveDetail] = uSave.useSaveDetail(
+    refGridModalDetail,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_02,
+    restURI.subdivisionDetail
+  );
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -210,9 +301,21 @@ function Subdivision() {
   const onClickNew = () => {
     setIsModalOpen(true);
   };
+  const onClickEditModalSave = () => {
+    actSaveDetail();
+  };
   const onClickEditHeader = () => {
     setIsEditModeHeader(true);
     setDisRowHeader(!disRowHeader);
+  };
+  const onClickProdCancel = () => {
+    setInputSearchValue([]);
+  };
+  const onClickProd = () => {
+    setDblClickGrid("Search");
+    setColumnsSelect(columnsSelectProd);
+    setIsModalSelectOpen(true);
+    actSelectProd();
   };
   const onClickEditModeSave = () => {
     actEditHeader();
@@ -221,6 +324,7 @@ function Subdivision() {
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
     actSearchHeaderDI(false, "start_date", "end_date");
+    //actSearchDetail(headerClickRowID);
     setDisRowHeader(!disRowHeader);
   };
   const onClickSearch = () => {
@@ -232,12 +336,19 @@ function Subdivision() {
     Header?.finishEditing();
     Detail?.finishEditing();
     Detail?.appendRow();
+
+    Detail?.setValue(
+      Detail.store.data.rawData.length - 1,
+      "subdivision_date",
+      DateTime().dateFull
+    );
+
     if (isNewDetail === true) {
-      for (let i = 0; i < Detail.store.viewport.rows.length; i++) {
+      for (let i = 0; i < Detail.store.data.rawData.length; i++) {
         Detail?.setValue(
-          Detail.store.viewport.rows[i].rowKey,
-          "insp_document_id",
-          Header.getValue(0, "insp_document_id")
+          Detail.store.data.rawData[i].rowKey,
+          "work_subdivision_id",
+          Header.getValue(0, "work_subdivision_id")
         );
       }
     }
@@ -258,16 +369,20 @@ function Subdivision() {
     setIsNewDetail(false);
     setIsEditModeHeader(false);
     actSearchHeaderDI(true, "start_date", "end_date");
+    actSearchDetail(headerClickRowID);
   };
   const onDblClickGridModalHeader = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalHeader");
-      setColumnsSelect(columnsSelectProd);
-      setIsModalSelectOpen(true);
-      actSelectProd();
+    if (!isNewDetail) {
+      if (Condition(e, ["prod_cd", "prod_nm"])) {
+        setDblClickRowKey(e?.rowKey);
+        setDblClickGrid("ModalHeader");
+        setColumnsSelect(columnsSelectProd);
+        setIsModalSelectOpen(true);
+        actSelectProd();
+      }
     }
   };
+
   const onEditingFinishGridModalDetail = (e) => {
     const Header = refGridModalHeader?.current?.gridInst;
     const Detail = refGridModalDetail?.current?.gridInst;
@@ -275,13 +390,13 @@ function Subdivision() {
       //🔸시간 정규표현식 적용
       RE.Time(e, refGridModalDetail, "subdivision_time");
     }
-    if (Condition(e, ["before_qty"])) {
+    if (Condition(e, ["before_subdivision_qty"])) {
       const beforeQty = e?.value;
-      const afterQty = Detail.getValue(e?.rowKey, "after_qty");
+      const afterQty = Detail.getValue(e?.rowKey, "after_subdivision_qty");
       if (afterQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
       } else {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty);
       }
       let totalQty = 0;
       for (
@@ -289,17 +404,18 @@ function Subdivision() {
         i < refGridModalDetail?.current?.gridInst?.getRowCount();
         i++
       ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+        totalQty =
+          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
-      Header?.setValue(0, "total_qty", totalQty);
+      //Header?.setValue(0, "total_qty", totalQty); 합계내역 보여주지 않기로 하여 주석처리
     }
-    if (Condition(e, ["after_qty"])) {
-      const beforeQty = Detail.getValue(e?.rowKey, "before_qty");
+    if (Condition(e, ["after_subdivision_qty"])) {
+      const beforeQty = Detail.getValue(e?.rowKey, "before_subdivision_qty");
       const afterQty = e?.value;
       if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
       } else {
-        Detail?.setValue(e?.rowKey, "qty", -e?.value);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", -e?.value);
       }
       let totalQty = 0;
       for (
@@ -307,26 +423,22 @@ function Subdivision() {
         i < refGridModalDetail?.current?.gridInst?.getRowCount();
         i++
       ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+        totalQty =
+          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
-      Header?.setValue(0, "total_qty", totalQty);
+      //Header?.setValue(0, "total_qty", totalQty);
     }
   };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
+    actSearchDetail(headerClickRowID);
   };
   const onDblClickGridSelect = (e) => {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
     const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
-    const columnNameInspItem = [
-      "insp_item_type_id",
-      "insp_item_type_nm",
-      "insp_item_id",
-      "insp_item_nm",
-    ];
-
+    console.log(refGridHeader);
     if (dblClickGrid === "Search") {
       setInputSearchValue([]);
       columnName = ["prod_cd", "prod_nm"];
@@ -347,7 +459,6 @@ function Subdivision() {
         columnName = columnNameProd;
       } else if (dblClickGrid === "Detail") {
         refGrid = refGridDetail;
-        columnName = columnNameInspItem;
       } else if (dblClickGrid === "ModalDetail") {
         refGrid = refGridModalDetail;
         columnName = columnNameProd;
@@ -366,7 +477,7 @@ function Subdivision() {
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
       const inputInfoValueList = [
-        "reg_date",
+        "subdivision_date",
         "prod_cd",
         "prod_nm",
         "lot_no",
@@ -395,6 +506,17 @@ function Subdivision() {
   const onClickEditSaveDetail = () => {
     actEditDetail();
   };
+
+  const onDblClickGridHeader = (e) => {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("Header");
+      setColumnsSelect(columnsSelectProd);
+      setIsModalSelectOpen(true);
+      actSelectProd();
+    }
+  };
+
   const onClickEditExitDetail = () => {
     setIsEditModeDetail(false);
     actSearchDetail(headerClickRowID);
@@ -430,13 +552,13 @@ function Subdivision() {
     const Header = refGridHeader?.current?.gridInst;
     const Detail = refGridDetail?.current?.gridInst;
 
-    if (Condition(e, ["before_qty"])) {
+    if (Condition(e, ["before_subdivision_qty"])) {
       const beforeQty = e?.value;
-      const afterQty = Detail.getValue(e?.rowKey, "after_qty");
+      const afterQty = Detail.getValue(e?.rowKey, "after_subdivision_qty");
       if (afterQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
       } else {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty);
       }
       let totalQty = 0;
       for (
@@ -444,17 +566,18 @@ function Subdivision() {
         i < refGridDetail?.current?.gridInst?.getRowCount();
         i++
       ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+        totalQty =
+          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
-      Header?.setValue(headerClickRowKey, "total_qty", totalQty);
+      //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
-    if (Condition(e, ["after_qty"])) {
-      const beforeQty = Detail.getValue(e?.rowKey, "before_qty");
+    if (Condition(e, ["after_subdivision_qty"])) {
+      const beforeQty = Detail.getValue(e?.rowKey, "before_subdivision_qty");
       const afterQty = e?.value;
       if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "qty", beforeQty - afterQty);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
       } else {
-        Detail?.setValue(e?.rowKey, "qty", -e?.value);
+        Detail?.setValue(e?.rowKey, "subdivision_qty", -e?.value);
       }
       let totalQty = 0;
       for (
@@ -462,13 +585,14 @@ function Subdivision() {
         i < refGridDetail?.current?.gridInst?.getRowCount();
         i++
       ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "qty"));
+        totalQty =
+          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
-      Header?.setValue(headerClickRowKey, "total_qty", totalQty);
+      //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
 
     const inputInfoValueList = [
-      "reg_date",
+      "subdivision_date",
       "prod_cd",
       "prod_nm",
       "lot_no",
@@ -503,14 +627,17 @@ function Subdivision() {
               dateText={dateText}
               setDateText={setDateText}
             />
-            {inputSet.map((v) => (
-              <S.InputS
+          </S.SearchWrap>
+          <S.SearchWrap>
+            {inputSet.map((v, idx) => (
+              <InputPaper
                 key={v.id}
                 id={v.id}
                 name={v.name}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
-                onKeyDown={onKeyDown}
+                btn={idx === 1 ? true : false}
+                value={inputSearchValue[idx] || ""}
+                onClickSelect={onClickProd}
+                onClickCancel={onClickProdCancel}
               />
             ))}
           </S.SearchWrap>
@@ -534,18 +661,33 @@ function Subdivision() {
           </S.ContentsHeaderWrap>
         </S.ContentsHeader>
         <S.GridHeaderWrap>
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsHeader}
-            rowHeaders={rowHeadersNumCheck}
-            header={header}
-            data={gridDataHeader}
-            draggable={false}
-            refGrid={refGridHeader}
-            onClickGrid={onClickGridHeader}
-            // onDblClickGrid={onDblClickGrid}
-            onEditingFinish={onEditingFinishGridHeader}
-          />
+          {isEditModeHeader ? (
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columnsHeader}
+              rowHeaders={rowHeadersNumCheck}
+              header={header}
+              data={gridDataHeader}
+              draggable={false}
+              refGrid={refGridHeader}
+              //onClickGrid={onClickGridHeader}
+              onDblClickGrid={onDblClickGridHeader}
+              onEditingFinish={onEditingFinishGridHeader}
+            />
+          ) : (
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columnsHeader}
+              rowHeaders={rowHeadersNumCheck}
+              header={header}
+              data={gridDataHeader}
+              draggable={false}
+              refGrid={refGridHeader}
+              onClickGrid={onClickGridHeader}
+              //onDblClickGrid={onDblClickGridHeader}
+              onEditingFinish={onEditingFinishGridHeader}
+            />
+          )}
         </S.GridHeaderWrap>
       </S.ContentsLeft>
       <S.ContentsRight>
@@ -553,20 +695,11 @@ function Subdivision() {
           <S.SearchRightTopWrap>
             {inputInfo.map((v, idx) => {
               return (
-                <S.InputBox key={v.id}>
-                  <S.Title variant="overline">{v.name}</S.Title>
-                  <S.Input
-                    // disabled
-                    value={inputInfoValue[idx] || ""}
-                    // contentEditable={false}
-                    variant="outlined"
-                    autoComplete="off"
-                    size="small"
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </S.InputBox>
+                <InputPaper
+                  key={v.id}
+                  name={v.name}
+                  value={inputInfoValue[idx] || ""}
+                />
               );
             })}
           </S.SearchRightTopWrap>
@@ -576,8 +709,8 @@ function Subdivision() {
           <S.SearchRightBottomWrap>
             {isEditModeDetail ? (
               <ButtonSE
-                onClickEditSaveDetail={onClickEditSaveDetail}
-                onClickEditExitDetail={onClickEditExitDetail}
+                onClickSave={onClickEditSaveDetail}
+                onClickExit={onClickEditExitDetail}
               />
             ) : (
               <ButtonNED
@@ -598,7 +731,8 @@ function Subdivision() {
             draggable={false}
             refGrid={refGridDetail}
             // onClickGrid={onClickGrid}
-            // onDblClickGrid={onDblClickGrid}
+
+            onDblClickGrid={onDblClickGridHeader}
             onEditingFinish={onEditingFinishGridDetail}
           />
         </S.GridDetailWrap>
@@ -606,12 +740,11 @@ function Subdivision() {
       {isModalOpen ? (
         <ModalNewDetail
           isNewDetail={isNewDetail}
-          // gridDataHeaderRowID={gridDataHeaderRowID}
           onClickModalAddRow={onClickModalAddRow}
           onClickModalCancelRow={onClickModalCancelRow}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
-          // onClickEditModalSave={onClickEditModalSave}
+          onClickEditModalSave={onClickEditModalSave}
           columnsModalHeader={columnsModalHeader}
           columnsModalDetail={columnsModalDetail}
           columnOptions={columnOptions}
@@ -620,6 +753,7 @@ function Subdivision() {
           rowHeadersDetail={rowHeadersNum}
           refGridModalHeader={refGridModalHeader}
           refGridModalDetail={refGridModalDetail}
+          gridDataHeaderRowID={gridDataHeaderRowID}
           onClickGridModalDetail={onClickGridModalDetail}
           onDblClickGridModalHeader={onDblClickGridModalHeader}
           onEditingFinishGridModalDetail={onEditingFinishGridModalDetail}

@@ -275,7 +275,8 @@ const useSearchOnlyDate = (
   setIsSnackOpen,
   setGridData,
   dateText,
-  uri
+  uri,
+  componentName = null
 ) => {
   const actSearchOnlyDate = async (startDateNm, endDateNm) => {
     refGrid?.current?.gridInst?.finishEditing();
@@ -284,8 +285,16 @@ const useSearchOnlyDate = (
         setIsBackDrop(true);
         const dateParams = GetDateParams("", dateText, startDateNm, endDateNm);
         const readURI = uri + dateParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
+        let gridData = await restAPI.get(readURI);
+        if (componentName !== null) {
+          gridData = gridData?.data?.data?.rows.map((raw) =>
+            GetSearchParams(componentName, raw)
+          );
+
+          await setGridData(gridData);
+        } else {
+          await setGridData(gridData?.data?.data?.rows);
+        }
       } catch {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -423,7 +432,8 @@ const useSearchHeaderDI = (
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
-        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        // const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+        const inputParams = GetInputSearchReadOnly(inputBoxID, inputTextChange);
         const dateParams = GetDateParams(
           inputParams,
           dateText,

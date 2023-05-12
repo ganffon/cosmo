@@ -70,6 +70,19 @@ class releaseUser {
     this.release_nm = raw.emp_nm;
   }
 }
+class productionOrderRequest {
+  constructor(raw) {
+    this.request_id = raw.request_id;
+    this.request_no = raw.request_no;
+    this.prod_id = raw.prod_id;
+    this.prod_cd = raw.prod_cd;
+    this.prod_nm = raw.prod_nm;
+    this.request_partner_nm = raw.partner_nm;
+    this.erp_request_date = raw.erp_request_date;
+    this.erp_deliver_date = raw.erp_deliver_date;
+    this.erp_contract_qty = raw.erp_contract_qty;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -88,6 +101,9 @@ function GetSearchParams(componentName, raw) {
         break;
       case "releaseUser":
         params = new releaseUser(raw);
+        break;
+      case "productionOrderRequest":
+        params = new productionOrderRequest(raw);
         break;
 
       default:

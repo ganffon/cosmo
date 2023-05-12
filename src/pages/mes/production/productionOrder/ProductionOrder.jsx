@@ -25,6 +25,7 @@ import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
 import * as S from "./ProductionOrder.styled";
 import ModalNew from "components/modal/ModalNew";
+import ModalDate from "components/modal/ModalDate";
 
 function ProductionOrder() {
   LoginStateChk();
@@ -114,6 +115,10 @@ function ProductionOrder() {
     setHeaderClickRowKey(null);
     // actSearchHeaderDI(true, "start_date", "end_date");
   };
+
+  const onClickSelectSearch = () => {
+    actSelectRequestOnlyDate("start_date", "end_date");
+  };
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
       const rowID = e?.instance.getValue(e?.rowKey, "order_id");
@@ -136,7 +141,7 @@ function ProductionOrder() {
       setDblClickGrid("ModalHeader");
       setColumnsSelect(columnsSelectRequest);
       setIsModalSelectOpen(true);
-      // actSelectProd();
+      actSelectRequestOnlyDate("start_date", "end_date");
     }
   };
   const onClickEditHeader = () => {};
@@ -177,6 +182,10 @@ function ProductionOrder() {
   const onClickEditModeSaveMid = () => {};
   const onClickEditModeExitMid = () => {};
 
+  const [dateModal, setDateModal] = useState({
+    startDate: DateTime().dateFull,
+    endDate: DateTime(7).dateFull,
+  });
   const onClickNewBottom = () => {
     if (headerClickRowKey !== null) {
       setIsModalBottomOpen(true);
@@ -283,6 +292,18 @@ function ProductionOrder() {
       // setSearchToggle(!searchToggle);
     }
   };
+
+  const [actSelectRequestOnlyDate] = uSearch.useSearchOnlyDate(
+    refGridSelect,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridDataSelect,
+    dateModal,
+    restURI.productionOrderRequese,
+    "productionOrderRequest"
+  ); //➡️ Modal Select Search Prod
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -441,15 +462,19 @@ function ProductionOrder() {
         />
       ) : null}
       {isModalSelectOpen ? (
-        <ModalSelect
-          width={modalSelectSize.width}
-          height={modalSelectSize.height}
-          onClickModalSelectClose={onClickModalSelectClose}
+        <ModalDate
+          onClickModalSearch={onClickSelectSearch}
+          onClickModalClose={onClickModalSelectClose}
           columns={columnsSelect}
           columnOptions={columnOptions}
           header={header}
-          gridDataSelect={gridDataSelect}
           rowHeaders={rowHeadersNum}
+          refModalGrid={refGridSelect}
+          dateText={dateText}
+          setDateText={setDateModal}
+          datePickerSet={"range"}
+          buttonType={"Search"}
+          data={gridDataSelect}
           refGridSelect={refGridSelect}
           onDblClickGridSelect={onDblClickGridSelect}
         />
