@@ -1,30 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
-import ModalWrap from "components/modal/ModalWrap";
-import ButtonACS from "components/button/ButtonACS";
 import { LayoutContext } from "components/layout/common/Layout";
-import * as S from "./ModalSelectMulti.styled";
+import * as S from "./ModalSubdivision.styled";
 import InputPaper from "components/input/InputPaper";
-import InputText from "components/input/InputText";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 
-function ModalSelectMulti(props) {
+function ModalSubdivision(props) {
   const {
     width = "95%",
     height = "95%",
-    onClickModalAddRow = () => {},
-    onClickModalCancelRow = () => {},
-    onClickModalSave = () => {},
     onClickModalClose = () => {},
-    onClickEditModalSave = () => {},
-    onClickGridModalDetail = () => {},
     onClickGridModalHeader = () => {},
     onDblClickGridModalHeader = () => {},
-    onDblClickGridModalDetail = () => {},
-    onEditingFinishGridModalHeader = () => {},
-    onEditingFinishGridModalDetail = () => {},
     onClickPick = () => {},
     onKeyDownModalMulti = () => {},
     setGridDataHeader = () => {},
@@ -93,8 +82,8 @@ function ModalSelectMulti(props) {
               />
               <S.ButtonSet
                 width={"120px"}
-                color={"#212529"}
-                hoverColor={"#ffc107"}
+                color={"#2986cc"}
+                hoverColor={"#1f5e8e"}
                 onClick={onClickSearch}
               >
                 Search
@@ -158,8 +147,8 @@ function ModalSelectMulti(props) {
           />
           <S.ButtonSet
             width={"200px"}
-            color={"#212529"}
-            hoverColor={"#ffc107"}
+            color={"#e5a711"}
+            hoverColor={"#b2820d"}
             onClick={onClickPick}
           >
             Data Select
@@ -182,4 +171,4 @@ function ModalSelectMulti(props) {
   );
 }
 
-export default ModalSelectMulti;
+export default ModalSubdivision;

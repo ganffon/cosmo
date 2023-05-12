@@ -11,7 +11,7 @@ import {
   NORMAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function SubdivisionPanelSet(isEditModeHeader) {
+function SubdivisionPanelSet() {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
