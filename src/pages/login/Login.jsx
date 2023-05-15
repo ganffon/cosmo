@@ -13,6 +13,8 @@ import TextField from "@mui/material/TextField";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import BackDrop from "components/backdrop/BackDrop";
+import Cookies from "js-cookie";
+import { Cookie } from "@mui/icons-material";
 
 function Login() {
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -82,17 +84,17 @@ function Login() {
           .then((res) => {
             const expiresTime = new Date();
             expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-            setCookie("userName", res?.data?.data?.rows[0]?.user_nm, {
+            Cookie.set("userName", res?.data?.data?.rows[0]?.user_nm, {
               path: "/",
               expires: expiresTime,
               secure: true,
             });
-            setCookie("userUID", res?.data?.data?.rows[0]?.uid, {
+            Cookie.set("userUID", res?.data?.data?.rows[0]?.uid, {
               path: "/",
               expires: expiresTime,
               secure: true,
             });
-            setCookie(
+            Cookie.set(
               "userFactoryID",
               res?.data?.data?.rows[0]?.user_factory_id,
               {
@@ -101,7 +103,7 @@ function Login() {
                 secure: true,
               }
             );
-            setCookie("factoryID", loginInfo.loginFactoryID, {
+            Cookie.set("factoryID", loginInfo.loginFactoryID, {
               path: "/",
               expires: expiresTime,
               secure: true,
@@ -118,11 +120,17 @@ function Login() {
           .finally(() => {
             const expiresTime = new Date();
             expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-            setCookie("loginID", loginInfo.loginID, {
+            Cookie.set("loginID", loginInfo.loginID, {
               path: "/",
               expires: expiresTime,
               secure: true,
             });
+            // restAPI 헤더 값 추가
+            restAPI.defaults.headers = {
+              "Content-Type": "application/json; charset=utf-8",
+              factory: Cookies.get("factoryID"),
+              user: Cookies.get("userUID"),
+            };
             localStorage.setItem("loginState", true);
             setIsBackDrop(false);
           });
