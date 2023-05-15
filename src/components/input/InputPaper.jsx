@@ -14,7 +14,7 @@ function InputPaper(props) {
     namePosition = "-10px",
     nameColor = "gray",
     value = null,
-    // valueSize = "15px",
+    size = "15px",
     btn = false,
     onKeyDown = () => {},
     onClickSelect = () => {},
@@ -36,7 +36,7 @@ function InputPaper(props) {
         key={id}
         id={id}
         value={value}
-        // valueSize={valueSize}
+        size={size}
         onKeyDown={onKeyDown}
       />
       {btn === true ? (

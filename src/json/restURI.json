@@ -71,5 +71,8 @@
   "inspResultUpload": "/qms/insp-result-upload",
   "barcodeERP": "/std/barcode/erp",
   "createSubdivisionBarcode": "/std/barcode",
-  "productionOrderRequest": "/prd/request"
+  "prdOrderRequest": "/prd/request",
+  "prdOrder": "/prd/order",
+  "prdOrderInput": "/prd/order-input",
+  "prdOrderDetail": "/prd/order-detail"
 }

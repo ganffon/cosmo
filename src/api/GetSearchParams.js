@@ -70,7 +70,7 @@ class releaseUser {
     this.release_nm = raw.emp_nm;
   }
 }
-class productionOrderRequest {
+class prdOrderRequest {
   constructor(raw) {
     this.request_id = raw.request_id;
     this.request_no = raw.request_no;
@@ -102,8 +102,8 @@ function GetSearchParams(componentName, raw) {
       case "releaseUser":
         params = new releaseUser(raw);
         break;
-      case "productionOrderRequest":
-        params = new productionOrderRequest(raw);
+      case "prdOrderRequest":
+        params = new prdOrderRequest(raw);
         break;
 
       default:

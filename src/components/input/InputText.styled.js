@@ -12,12 +12,15 @@ export const PaperBox = styled(Paper)`
   height: ${(props) => props.height};
   position: relative;
   margin: 6px 0px 0px 10px;
+
+  #barcode {
+    border: 1px solid red;
+  }
 `;
 export const Text = styled(InputBase)`
   margin-left: 10px;
   flex: 1;
-  // font-size: ${(props) => props.valueSize};
-  font-size: 20px;
+  font-size: ${(props) => props.size};
 `;
 export const PaperTitle = styled("div")`
   display: flex;

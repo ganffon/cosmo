@@ -10,14 +10,14 @@ function InputText(props) {
     nameSize = "20px",
     namePosition = "-25px",
     nameColor = "gray",
-    // valueSize = "25px",
+    size = "25px",
     refInput = null,
     handleEnter = () => {},
     onChange = () => {},
     value = "",
   } = props;
   return (
-    <S.PaperBox width={width} height={height}>
+    <S.PaperBox id={id} width={width} height={height}>
       <S.PaperTitle
         nameSize={nameSize}
         namePosition={namePosition}
@@ -26,10 +26,9 @@ function InputText(props) {
         {name}
       </S.PaperTitle>
       <S.Text
-        id={id}
         autoComplete="off"
         value={value}
-        // valueSize={valueSize}
+        size={size}
         ref={refInput}
         onKeyDown={handleEnter}
         onChange={onChange}
