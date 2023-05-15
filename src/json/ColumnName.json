@@ -1,15 +1,15 @@
 {
   "factory_id": "공장ID",
   "factory_cd": "공장코드",
-  "factory_nm": "공장명",
+  "factory_nm": "공장",
 
   "line_id": "라인ID",
   "line_cd": "라인코드",
-  "line_nm": "라인명",
+  "line_nm": "라인",
 
   "uid": "사용자ID",
   "id": "로그인ID",
-  "user_nm": "사용자명",
+  "user_nm": "사용자",
   "pwd": "비밀번호",
   "pwd_fg": "패스워드변경여부",
   "admin_fg": "관리자유무",
@@ -17,7 +17,7 @@
 
   "emp_id": "사원ID",
   "emp_cd": "사원코드",
-  "emp_nm": "사원명",
+  "emp_nm": "사원",
   "birthday": "생일",
   "hp": "휴대폰번호",
   "enter_date": "입사일자",
@@ -26,47 +26,47 @@
 
   "proc_id": "공정ID",
   "proc_cd": "공정코드",
-  "proc_nm": "공정명",
+  "proc_nm": "공정",
 
   "prod_gbn_id": "제품구분ID",
   "prod_gbn_cd": "제품구분코드",
-  "prod_gbn_nm": "제품구분명",
+  "prod_gbn_nm": "제품구분",
 
   "model_id": "제품군ID",
   "model_cd": "제품군코드",
-  "model_nm": "제품군명",
+  "model_nm": "제품군",
 
   "prod_type_id": "품종군ID",
   "prod_type_cd": "품종군코드",
-  "prod_type_nm": "품종군명",
+  "prod_type_nm": "품종군",
 
   "prod_type_small_id": "품종ID",
   "prod_type_small_cd": "품종코드",
-  "prod_type_small_nm": "품종명",
+  "prod_type_small_nm": "품종",
 
   "prod_id": "품목ID",
   "prod_cd": "품번",
-  "prod_nm": "품목명",
+  "prod_nm": "품목",
 
   "unit_id": "단위ID",
   "unit_cd": "단위코드",
-  "unit_nm": "단위명",
+  "unit_nm": "단위",
 
   "dept_id": "부서ID",
   "dept_cd": "부서코드",
-  "dept_nm": "부서명",
+  "dept_nm": "부서",
 
   "grade_id": "직급ID",
   "grade_cd": "직급코드",
-  "grade_nm": "직급명",
+  "grade_nm": "직급",
 
   "worker_group_id": "작업조ID",
   "worker_group_cd": "작업조코드",
-  "worker_group_nm": "작업조명",
+  "worker_group_nm": "작업조",
 
   "store_id": "창고ID",
   "store_cd": "창고코드",
-  "store_nm": "창고명",
+  "store_nm": "창고",
   "reject_store_fg": "부적합창고여부",
   "return_store_fg": "반출창고여부",
   "outgo_store_fg": "출하창고여부",
@@ -77,24 +77,24 @@
 
   "location_id": "위치ID",
   "location_cd": "위치코드",
-  "location_nm": "위치명",
+  "location_nm": "위치",
 
   "downtime_type_id": "비가동유형ID",
   "downtime_type_cd": "비가동유형코드",
-  "downtime_type_nm": "비가동유형명",
+  "downtime_type_nm": "비가동유형",
 
   "downtime_id": "비가동ID",
   "downtime_cd": "비가동코드",
-  "downtime_nm": "비가동명",
+  "downtime_nm": "비가동",
   "eqm_failure_fg": "설비고장여부",
 
   "partner_type_id": "거래처유형ID",
   "partner_type_cd": "거래처유형코드",
-  "partner_type_nm": "거래처유형명",
+  "partner_type_nm": "거래처유형",
 
   "partner_id": "거래처ID",
   "partner_cd": "거래처코드",
-  "partner_nm": "거래처명",
+  "partner_nm": "거래처",
   "partner_no": "사업자등록번호",
   "boss_nm": "대표자",
   "manager": "담당자",
@@ -135,7 +135,7 @@
 
   "equip_id": "설비ID",
   "equip_cd": "설비코드",
-  "equip_nm": "설비명",
+  "equip_nm": "설비",
   "equip_type_id": "설비유형ID",
   "workings_id": "작업장ID",
 
@@ -167,14 +167,14 @@
   "row_no": "순번",
   "menu_list_id": "메뉴리스트ID",
   "parents_menu_id": "부모메뉴ID",
-  "parents_menu_nm": "부모메뉴명",
+  "parents_menu_nm": "부모메뉴",
   "child_menu_id": "자식메뉴ID",
-  "child_menu_nm": "자식메뉴명",
+  "child_menu_nm": "자식메뉴",
   "menu_id": "메뉴ID",
   "menu_lv": "메뉴Lv",
   "menu_cd": "메뉴코드",
-  "menu_nm": "메뉴명",
-  "menu_cpnt": "컴포넌트명",
+  "menu_nm": "메뉴",
+  "menu_cpnt": "컴포넌트",
   "sortby": "정렬",
   "read_only_fg": "메뉴구분",
   "common_fg": "공용폼",
@@ -182,34 +182,34 @@
 
   "insp_filing_id": "기록물ID",
   "insp_filing_cd": "기록물코드",
-  "insp_filing_nm": "기록물명",
+  "insp_filing_nm": "기록물",
 
   "insp_method_id": "검사방법ID",
   "insp_method_cd": "검사방법코드",
-  "insp_method_nm": "검사방법명",
+  "insp_method_nm": "검사방법",
 
   "insp_tool_id": "검사구ID",
   "insp_tool_cd": "검사구코드",
-  "insp_tool_nm": "검사구명",
+  "insp_tool_nm": "검사구",
 
   "insp_item_type_id": "검사유형ID",
   "insp_item_type_cd": "검사유형코드",
-  "insp_item_type_nm": "검사유형명",
+  "insp_item_type_nm": "검사유형",
 
   "insp_item_id": "검사항목ID",
   "insp_item_cd": "검사항목코드",
-  "insp_item_nm": "검사항목명",
+  "insp_item_nm": "검사항목",
 
   "infc_item_type_id": "IF유형ID",
   "infc_item_type_cd": "IF유형코드",
-  "infc_item_type_nm": "IF유형명",
+  "infc_item_type_nm": "IF유형",
 
   "infc_item_id": "IF항목ID",
   "infc_item_cd": "IF항목코드",
-  "infc_item_nm": "IF항목명",
+  "infc_item_nm": "IF항목",
 
   "infc_memory_id": "MemoryID",
-  "infc_memory_nm": "Memory명칭",
+  "infc_memory_nm": "Memory",
   "plc_ip": "PLC IP",
   "plc_port": "PLC Port",
   "device_addre": "Device Address",
@@ -217,21 +217,21 @@
 
   "classification_id": "대분류ID",
   "classification_cd": "대분류코드",
-  "classification_nm": "대분류명",
+  "classification_nm": "대분류",
 
   "group_id": "중분류ID",
   "group_cd": "중분류코드",
-  "group_nm": "중분류명",
+  "group_nm": "중분류",
 
   "class_id": "소분류ID",
   "class_cd": "소분류코드",
-  "class_nm": "소분류명",
+  "class_nm": "소분류",
 
   "eqm_detail_cd": "상세제원코드",
-  "eqm_detail_nm": "상세제원명",
+  "eqm_detail_nm": "상세제원",
   "equip_no": "설비관리번호",
   "equip_grade": "설비등급",
-  "equip_model": "설비모델명",
+  "equip_model": "설비모델",
   "equip_std": "설비규격",
   "equip_spec": "설비제원",
   "voltage": "전압",
@@ -275,7 +275,7 @@
   "stock_inspection": "실사중량",
 
   "tran_type_id": "수불유형ID",
-  "tran_type_nm": "수불유형명",
+  "tran_type_nm": "수불유형",
   "income_qty": "입고중량",
   "outgo_qty": "출고중량",
   "inventory_qty": "재고중량",
@@ -297,7 +297,7 @@
   "order_no": "작업지시번호",
   "request_no": "생산의뢰번호",
   "line_dept_id": "라인부서ID",
-  "line_dept_nm": "라인부서명",
+  "line_dept_nm": "라인부서",
   "start_date": "시작일자",
   "end_date": "종료일자",
   "complete_fg": "마감여부",
@@ -307,7 +307,7 @@
 
   "setup_id": "권한설정ID",
   "setup_cd": "권한설정코드",
-  "setup_nm": "권한설정명",
+  "setup_nm": "권한설정",
   "auth_read": "조회",
   "auth_create": "등록",
   "auth_update": "수정",
@@ -341,9 +341,16 @@
 
   "prod_class_id": "제품분류ID",
   "prod_class_cd": "제품분류코드",
-  "prod_class_nm": "제품분류명",
+  "prod_class_nm": "제품분류",
 
   "stock": "재고중량",
   "tran_reg_date": "수불일자",
-  "subdivision_reg_date": "소분일자"
+  "subdivision_reg_date": "소분일자",
+
+  "work_order_id": "지시ID",
+  "work_order_no": "지시번호",
+  "work_order_date": "지시일자",
+  "work_start_date": "지시시작일자",
+  "work_end_date": "지시종료일자",
+  "work_order_qty": "지시수량"
 }

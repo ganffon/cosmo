@@ -4,7 +4,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionPanelSet from "./SubdivisionPanelSet";
 import BtnSubdivisionScale from "components/button/panel/BtnSubdivisionScale";
-import Button5 from "components/button/panel/Button5";
+import BtnSubdivisionSL from "components/button/panel/BtnSubdivisionSL";
 import InputPaper from "components/input/InputPaper";
 import InputText from "components/input/InputText";
 import GridSingle from "components/grid/GridSingle";
@@ -17,6 +17,7 @@ import * as S from "./SubdivisionPanel.styled";
 import restAPI from "api/restAPI";
 import ModalSubdivision from "./ModalSubdivision";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
+import BtnSubdivisionDHE from "components/button/panel/BtnSubdivisionDHE";
 
 function SubdivisionPanel() {
   LoginStateChk();
@@ -123,11 +124,11 @@ function SubdivisionPanel() {
     restURI.subdivisionDetail
   ); //➡️ Modal Select Search Load Detail
   useEffect(() => {
-    refBarcode?.current?.firstChild?.focus();
+    // refBarcode?.current?.firstChild?.focus();
   }, [gridDataHeader]);
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridSingle?.current?.gridInst?.refreshLayout();
+    // refGridSingle?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
 
   useEffect(() => {
@@ -462,7 +463,7 @@ function SubdivisionPanel() {
             namePosition={"-30px"}
             nameColor={"white"}
             value={require.prod_cd || ""}
-            // valueSize={"22px"}
+            size={"22px"}
             btn={true}
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
@@ -475,7 +476,7 @@ function SubdivisionPanel() {
             namePosition={"-30px"}
             nameColor={"white"}
             value={require.date}
-            // valueSize={"22px"}
+            size={"22px"}
           />
           <InputPaper
             width={"220px"}
@@ -485,7 +486,7 @@ function SubdivisionPanel() {
             namePosition={"-30px"}
             nameColor={"white"}
             value={require.totalQty}
-            // valueSize={"22px"}
+            size={"22px"}
           />
         </S.ItemInfoBox>
         <S.DataInterfaceBox>
@@ -540,18 +541,23 @@ function SubdivisionPanel() {
       </S.ContentsLeft>
       <S.ContentsRight>
         <S.ButtonBox>
-          <Button5
-            onClickStart={onClickStart}
-            startDisable={isLockScale ? false : true}
-            onClickDelete={onClickDelete}
-            deleteDisable={isLockScale}
-            onClickLoad={onClickLoad}
-            loadDisable={isLockScale ? false : true}
-            onClickHold={onClickHold}
-            holdDisable={isLockScale}
-            onClickEnd={onClickEnd}
-            endDisable={isLockScale}
-          />
+          {isLockScale ? (
+            <BtnSubdivisionSL
+              onClickStart={onClickStart}
+              startDisable={isLockScale ? false : true}
+              onClickLoad={onClickLoad}
+              loadDisable={isLockScale ? false : true}
+            />
+          ) : (
+            <BtnSubdivisionDHE
+              onClickDelete={onClickDelete}
+              deleteDisable={isLockScale}
+              onClickHold={onClickHold}
+              holdDisable={isLockScale}
+              onClickEnd={onClickEnd}
+              endDisable={isLockScale}
+            />
+          )}
         </S.ButtonBox>
         <S.DataHandleBox>
           <GridSingle

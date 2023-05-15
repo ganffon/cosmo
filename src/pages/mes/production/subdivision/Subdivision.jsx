@@ -634,10 +634,12 @@ function Subdivision() {
                 key={v.id}
                 id={v.id}
                 name={v.name}
+                nameSize={"12px"}
+                width={idx === 1 ? "240px" : "180px"}
                 btn={idx === 1 ? true : false}
                 value={inputSearchValue[idx] || ""}
                 onClickSelect={onClickProd}
-                onClickCancel={onClickProdCancel}
+                onClickRemove={onClickProdCancel}
               />
             ))}
           </S.SearchWrap>

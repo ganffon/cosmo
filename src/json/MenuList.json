@@ -504,14 +504,14 @@
       },
       {
         "name": "계량일지",
-        "id": "weight-site",
-        "path": null,
+        "id": "weight-panel",
+        "path": "weight-panel",
         "under": null
       },
       {
         "name": "포장일지",
-        "id": "packing-site",
-        "path": null,
+        "id": "packing-panel",
+        "path": "packing-panel",
         "under": null
       }
     ]

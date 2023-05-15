@@ -160,8 +160,8 @@ let productGbnList = [];
 const useProductGbn = () => {
   const [productGbnOpt, setProductGbnOpt] = useState([]);
   useEffect(() => {
-    const getCboOpt = () => {
-      restAPI.get(restURI.productGbn).then((res) => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.productGbn).then((res) => {
         setProductGbnOpt(cboMUISort(res?.data?.data?.rows, "prod_gbn_nm"));
         productGbnList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "prod_gbn_id", "prod_gbn_nm");
@@ -177,8 +177,8 @@ let productModelList = [];
 const useProductModel = () => {
   const [productModelOpt, setProductModelOpt] = useState([]);
   useEffect(() => {
-    const getCboOpt = () => {
-      restAPI.get(restURI.productModel).then((res) => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.productModel).then((res) => {
         setProductModelOpt(cboMUISort(res?.data?.data?.rows, "model_nm"));
         productModelList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "model_id", "model_nm");
@@ -194,8 +194,8 @@ let productTypeList = [];
 const useProductType = () => {
   const [productTypeOpt, setProductTypeOpt] = useState([]);
   useEffect(() => {
-    const getCboOpt = () => {
-      restAPI.get(restURI.productType).then((res) => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.productType).then((res) => {
         setProductTypeOpt(cboMUISort(res?.data?.data?.rows, "prod_type_nm"));
         productTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "prod_type_id", "prod_type_nm");
@@ -211,8 +211,8 @@ let productTypeSmallList = [];
 const useProductTypeSmall = () => {
   const [productTypeSmallOpt, setProductTypeSmallOpt] = useState([]);
   useEffect(() => {
-    const getCboOpt = () => {
-      restAPI.get(restURI.productTypeSmall).then((res) => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.productTypeSmall).then((res) => {
         setProductTypeSmallOpt(
           cboMUISort(res?.data?.data?.rows, "prod_type_small_nm")
         );
@@ -230,8 +230,8 @@ let unitList = [];
 const useUnit = () => {
   const [UnitOpt, setUnitOpt] = useState([]);
   useEffect(() => {
-    const getCboOpt = () => {
-      restAPI.get(restURI.unit).then((res) => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.unit).then((res) => {
         setUnitOpt(cboMUISort(res?.data?.data?.rows, "unit_nm"));
         unitList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "unit_id", "unit_nm");

@@ -301,8 +301,8 @@ function ProductionOrder() {
     setIsSnackOpen,
     setGridDataSelect,
     dateModal,
-    restURI.productionOrderRequese,
-    "productionOrderRequest"
+    restURI.prdOrderRequest,
+    "prdOrderRequest"
   ); //➡️ Modal Select Search Prod
 
   return (

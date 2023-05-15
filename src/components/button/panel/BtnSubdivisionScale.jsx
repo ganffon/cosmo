@@ -13,21 +13,21 @@ function BtnSubdivisionScale(props) {
         hoverColor={"#28a745"}
         onClick={onClickBefore}
       >
-        Before
+        Before Weight
       </S.ButtonSet>
       <S.ButtonSet
         color={"#212529"}
         hoverColor={"#0d6efd"}
         onClick={onClickAfter}
       >
-        After
+        After Weight
       </S.ButtonSet>
       <S.ButtonSet
         color={"#212529"}
         hoverColor={"#ffc107"}
         onClick={onClickNext}
       >
-        Next
+        Next Bag
       </S.ButtonSet>
     </>
   );

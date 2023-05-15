@@ -54,6 +54,7 @@ import ProductClass from "pages/mes/standard/productClass/productClass";
 
 import SubdivisionPanel from "pages/mes/panel/subdivision/SubdivisionPanel";
 import InspResultUpload from "pages/mes/insp/inspResultInfo/inspResultUpload/InspResultUpload";
+import WeightPanel from "pages/mes/panel/weight/WeightPanel";
 
 export default function MainRouter() {
   return (
@@ -116,6 +117,7 @@ export default function MainRouter() {
         <Route path="product-class" element={<ProductClass />} />
 
         <Route path="subdivision-panel" element={<SubdivisionPanel />} />
+        <Route path="weight-panel" element={<WeightPanel />} />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

@@ -29,7 +29,7 @@ function DateRange(props) {
         InputProps={{
           sx: { height: 40 },
           startAdornment: (
-            <InputAdornment position="start">"기간"</InputAdornment>
+            <InputAdornment position="start">기간</InputAdornment>
           ),
         }}
         onChange={dateRangeChange}

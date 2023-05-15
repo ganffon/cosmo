@@ -101,6 +101,7 @@ export const SearchRightTopWrap = styled("div")`
   height: 50%;
   display: flex;
   flex-flow: row wrap;
+  gap: 5px 5px;
   padding: 10px 10px 10px 10px;
 `;
 export const SearchRightBottomWrap = styled("div")`

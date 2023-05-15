@@ -22,14 +22,14 @@ export const PaperTitle = styled("div")`
   position: absolute;
   top: ${(props) => props.namePosition};
   left: 10px;
-  font-family: NotoSansKR_B;
-  font-size: ${(props) => props.nameFontSize};
+  font-family: NotoSansKR;
+  font-size: ${(props) => props.nameSize};
   color: ${(props) => props.nameColor};
 `;
 export const Text = styled(InputBase)`
   margin-left: 10px;
   flex: 1;
-  font-size: ${(props) => props.valueFontSize};
+  font-size: ${(props) => props.size};
 `;
 export const Icon = styled(IconButton)`
   padding: 5px;
