@@ -11,7 +11,8 @@ function InputPaper(props) {
     id = null,
     name = null,
     nameSize = "13px",
-    namePosition = "-10px",
+    namePositionTop = "-10px",
+    namePositionLeft = "10px",
     nameColor = "gray",
     value = null,
     size = "15px",
@@ -24,7 +25,8 @@ function InputPaper(props) {
     <S.PaperBox width={width} height={height}>
       <S.PaperTitle
         nameSize={nameSize}
-        namePosition={namePosition}
+        namePositionTop={namePositionTop}
+        namePositionLeft={namePositionLeft}
         nameColor={nameColor}
       >
         {name}

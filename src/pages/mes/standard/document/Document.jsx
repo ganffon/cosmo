@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef, useCallback } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
@@ -50,7 +50,7 @@ function Document() {
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
-  const [headerClickRowID, setHeaderClickRowID] = useState(null);
+  const headerClickRowID = useRef("");
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -105,7 +105,7 @@ function Document() {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
     refGridDetail?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridHeader.current, refGridDetail.current]);
+  }, [isMenuSlide]);
 
   useEffect(() => {
     actSearchHeaderIC();
@@ -221,7 +221,7 @@ function Document() {
     setIsDeleteAlertOpen,
     actSearchHeaderIC,
     actSearchDetail,
-    headerClickRowID,
+    headerClickRowID.current,
     restURI.inspDocumentDetail,
     SWITCH_NAME_02
   );
@@ -233,14 +233,14 @@ function Document() {
   };
   const onClickEditHeader = () => {
     setIsEditModeHeader(true);
+    headerClickRowID.current = "";
     setDisRowHeader(!disRowHeader);
-    // }
   };
   const onClickEditNew = () => {
     if (refGridDetail?.current?.gridInst?.getRowCount() !== 0) {
       setIsNewDetail(true);
       setIsModalOpen(true);
-      actSearchEditHeader(headerClickRowID);
+      actSearchEditHeader(headerClickRowID.current);
     }
   };
   const onClickEditDetail = () => {
@@ -279,11 +279,11 @@ function Document() {
   };
   const onClickEditExitDetail = () => {
     setIsEditModeDetail(false);
-    actSearchDetail(headerClickRowID);
+    actSearchDetail(headerClickRowID.current);
     setDisRowDetail(!disRowDetail);
   };
 
-  const onClickGridHeader = (e) => {
+  const onClickGridHeader = async (e) => {
     if (isEditModeHeader === false) {
       const inputInfoValueList = [
         "insp_document_no",
@@ -296,20 +296,26 @@ function Document() {
         "contents",
         "remark",
       ];
-      const rowID = e?.instance.getValue(e?.rowKey, "insp_document_id");
-      if (rowID !== null) {
-        setInputInfoValue([]);
-        setHeaderClickRowID(rowID);
-        actSearchDetail(rowID);
-        for (let i = 0; i < inputInfoValueList.length; i++) {
-          let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
-          if (data === false) {
-            //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-            data = "false";
+      if (
+        headerClickRowID.current !==
+        e?.instance.getValue(e?.rowKey, "insp_document_id")
+      ) {
+        const rowID = e?.instance.getValue(e?.rowKey, "insp_document_id");
+        if (rowID !== null) {
+          // handleHeaderRowID(rowID);
+          headerClickRowID.current = rowID;
+          setInputInfoValue([]);
+          actSearchDetail(rowID);
+          for (let i = 0; i < inputInfoValueList.length; i++) {
+            let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
+            if (data === false) {
+              //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
+              data = "false";
+            }
+            setInputInfoValue((prevList) => {
+              return [...prevList, data];
+            });
           }
-          setInputInfoValue((prevList) => {
-            return [...prevList, data];
-          });
         }
       }
     } else {
@@ -368,6 +374,7 @@ function Document() {
     actSave();
   };
   const onClickModalClose = () => {
+    headerClickRowID.current = "";
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
@@ -454,6 +461,22 @@ function Document() {
       actSearchHeaderIC(true);
     }
   };
+  const GridHeader = useMemo(() => {
+    return (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columnsHeader}
+        rowHeaders={rowHeadersNumCheck}
+        header={header}
+        data={gridDataHeader}
+        draggable={false}
+        refGrid={refGridHeader}
+        onClickGrid={onClickGridHeader}
+        onDblClickGrid={onDblClickGridHeader}
+        onEditingFinish={onEditingFinishGridHeader}
+      />
+    );
+  }, [gridDataHeader, isEditModeHeader]);
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -512,20 +535,7 @@ function Document() {
           )}
         </S.ButtonWrap>
       </S.ShadowBoxButtonHeader>
-      <S.GridHeaderWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsHeader}
-          rowHeaders={rowHeadersNumCheck}
-          header={header}
-          data={gridDataHeader}
-          draggable={false}
-          refGrid={refGridHeader}
-          onClickGrid={onClickGridHeader}
-          onDblClickGrid={onDblClickGridHeader}
-          onEditingFinish={onEditingFinishGridHeader}
-        />
-      </S.GridHeaderWrap>
+      <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
       <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.SearchWrap>
           {inputInfo.map((v, idx) => {
@@ -610,7 +620,7 @@ function Document() {
       ) : null}
       {isDeleteAlertOpen ? (
         <AlertDeleteDetail
-          headerClickRowID={headerClickRowID}
+          headerClickRowID={headerClickRowID.current}
           actSearchDetail={actSearchDetail}
           actDeleteDetail={actDeleteDetail}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}

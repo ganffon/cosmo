@@ -12,10 +12,6 @@ export const PaperBox = styled(Paper)`
   height: ${(props) => props.height};
   position: relative;
   margin: 6px 0px 0px 10px;
-
-  #barcode {
-    border: 1px solid red;
-  }
 `;
 export const Text = styled(InputBase)`
   margin-left: 10px;

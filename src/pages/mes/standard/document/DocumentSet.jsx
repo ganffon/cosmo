@@ -298,6 +298,7 @@ function DocumentSet(
       rowSpan: false,
     },
   ];
+
   const columnsDetail = [
     {
       name: "factory_id",

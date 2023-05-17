@@ -2,37 +2,35 @@ import React, { useContext, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import { LayoutContext } from "components/layout/common/Layout";
-import * as S from "./ModalWeight.styled";
+import * as S from "./ModalInput.styled";
 import InputPaper from "components/input/InputPaper";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import DateTime from "components/datetime/DateTime";
 import InputText from "components/input/InputText";
 
-function ModalWeight(props) {
+function ModalInput(props) {
   const {
     width = "95%",
     height = "95%",
     onClickModalClose = () => {},
     onClickSelect = () => {},
     onClickRemove = () => {},
-    onClickWeightSave = () => {},
-    onEditingFinishWeight = () => {},
-    refGridWeight = null,
-    columnsWeight = [],
+    onClickInputSave = () => {},
+    onEditingFinishInput = () => {},
+    onClickNowTime = () => {},
+    refGridInput = null,
+    columnsInput = [],
     columnOptions = [],
     header = [],
     rowHeadersDetail = [],
-    gridDataWeight = [],
+    gridDataInput = [],
+    nowDateTime = {},
     lineNM = "",
     empNM = "",
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
-  const [inputChange, setInputChange] = useState();
 
-  const handleInputChange = (e) => {
-    setInputChange(e.target.value);
-  };
   const handleBarcodeEnter = async (e) => {
     if (e.key === "Enter") {
       // let uri;
@@ -58,7 +56,7 @@ function ModalWeight(props) {
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
-        <S.TitleBox>${currentMenuName}</S.TitleBox>
+        <S.TitleBox>{currentMenuName}</S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"
@@ -69,11 +67,11 @@ function ModalWeight(props) {
       </S.HeaderBox>
       <S.Content>
         <S.GridTitleBox>
-          <div>✳️ 일일계량일지</div>
+          <div>✳️ 일일투입일지</div>
           <S.ButtonSet
             color={"#28a745"}
             hoverColor={"#218838"}
-            onClick={onClickWeightSave}
+            onClick={onClickInputSave}
             width={"150px"}
           >
             Save
@@ -89,16 +87,7 @@ function ModalWeight(props) {
             size={"30px"}
             btn={false}
           />
-          <S.InfoTitle>계량일자</S.InfoTitle>
-          <InputPaper
-            width={"200px"}
-            height={"60px"}
-            nameColor={"black"}
-            value={DateTime().dateFull}
-            size={"30px"}
-            btn={false}
-          />
-          <S.InfoTitle>계량자</S.InfoTitle>
+          <S.InfoTitle>투입자</S.InfoTitle>
           <InputPaper
             width={"250px"}
             height={"60px"}
@@ -109,29 +98,42 @@ function ModalWeight(props) {
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
           />
-          <S.InfoTitle>바코드</S.InfoTitle>
-          <InputText
-            id={"barcode"}
+          <S.InfoTitle>투입일시</S.InfoTitle>
+          <InputPaper
             width={"200px"}
             height={"60px"}
             nameColor={"black"}
-            value={inputChange}
-            size={"25px"}
+            value={nowDateTime.nowDate}
+            size={"30px"}
             btn={false}
-            handleEnter={handleBarcodeEnter}
-            onChange={handleInputChange}
           />
+          <InputPaper
+            width={"120px"}
+            height={"60px"}
+            nameColor={"black"}
+            value={nowDateTime.nowTime}
+            size={"30px"}
+            btn={false}
+          />
+          <S.ButtonTime
+            color={"#28a745"}
+            hoverColor={"#218838"}
+            onClick={onClickNowTime}
+            width={"120px"}
+          >
+            현재시간
+          </S.ButtonTime>
         </S.InfoBox>
         <S.GridBox>
           <GridModal
-            data={gridDataWeight}
-            columns={columnsWeight}
+            data={gridDataInput}
+            columns={columnsInput}
             columnOptions={columnOptions}
             header={header}
             rowHeaders={rowHeadersDetail}
-            refGrid={refGridWeight}
+            refGrid={refGridInput}
             draggable={false}
-            onEditingFinish={onEditingFinishWeight}
+            onEditingFinish={onEditingFinishInput}
           />
         </S.GridBox>
       </S.Content>
@@ -139,4 +141,4 @@ function ModalWeight(props) {
   );
 }
 
-export default ModalWeight;
+export default ModalInput;

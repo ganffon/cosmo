@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ const avatarCharacter = (loginID) => {
 };
 
 function AvatarButton() {
-  const [cookie, setCookie, removeCookie] = useCookies();
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -36,7 +35,7 @@ function AvatarButton() {
         aria-expanded={open ? "true" : undefined}
         onClick={onClickAvatar}
       >
-        {avatarCharacter(cookie.loginID ? cookie.loginID : "A")}
+        {avatarCharacter(Cookies.get("loginID") ? Cookies.get("loginID") : "A")}
       </S.AvatarButton>
       <Menu
         id="avatarMenu"

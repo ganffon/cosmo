@@ -1,4 +1,3 @@
-import { useCookies } from "react-cookie";
 import GetInputSearchParams from "api/GetInputSearchParams";
 import GetCboSearchParams from "api/GetCboSearchParams";
 import GetDateParams from "api/GetDateParams";
@@ -461,7 +460,21 @@ const useSearchHeaderDI = (
 /**
  * 🔸 메인화면에서 Header 클릭 시 RowKey로 Detail 조회
  */
-const useSearchDetail = (setGridData, uri, disRowDetail, setDisRowDetail) => {
+// const useSearchDetail = (setGridData, uri, disRowDetail, setDisRowDetail) => {
+//   const actSearchDetail = async (headerClickRowID) => {
+//     if (headerClickRowID !== undefined) {
+//       try {
+//         const gridData = await restAPI.get(`${uri}${headerClickRowID}`);
+//         await setGridData(gridData?.data?.data?.rows);
+//       } catch {
+//       } finally {
+//         setDisRowDetail(!disRowDetail);
+//       }
+//     }
+//   };
+//   return [actSearchDetail];
+// };
+const useSearchDetail = (setGridData, uri) => {
   const actSearchDetail = async (headerClickRowID) => {
     if (headerClickRowID !== undefined) {
       try {
@@ -469,7 +482,6 @@ const useSearchDetail = (setGridData, uri, disRowDetail, setDisRowDetail) => {
         await setGridData(gridData?.data?.data?.rows);
       } catch {
       } finally {
-        setDisRowDetail(!disRowDetail);
       }
     }
   };
