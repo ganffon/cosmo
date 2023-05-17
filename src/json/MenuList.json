@@ -314,14 +314,14 @@
           },
           {
             "name": "일일계량일지",
-            "id": "production-dayreport-weight",
-            "path": "production-dayreport-weight",
+            "id": "weight",
+            "path": "weight",
             "under": null
           },
           {
             "name": "일일포장일지",
-            "id": "production-dayreport-packing",
-            "path": "production-dayreport-packing",
+            "id": "packing",
+            "path": "packing",
             "under": null
           },
           {

@@ -72,15 +72,16 @@ class releaseUser {
 }
 class prdOrderRequest {
   constructor(raw) {
-    this.request_id = raw.request_id;
     this.request_no = raw.request_no;
     this.prod_id = raw.prod_id;
     this.prod_cd = raw.prod_cd;
     this.prod_nm = raw.prod_nm;
-    this.request_partner_nm = raw.partner_nm;
-    this.erp_request_date = raw.erp_request_date;
-    this.erp_deliver_date = raw.erp_deliver_date;
-    this.erp_contract_qty = raw.erp_contract_qty;
+    this.partner_nm = raw.request_partner_nm;
+    this.request_date = raw.request_date;
+    this.request_work_qty = raw.request_work_qty;
+    this.sal_order_no = raw.sal_order_no;
+    this.request_dept_nm = raw.request_dept_nm;
+    this.request_emp_nm = raw.request_emp_nm;
   }
 }
 

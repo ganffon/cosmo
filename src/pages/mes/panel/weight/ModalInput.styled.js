@@ -26,22 +26,11 @@ export const InfoBox = styled("div")`
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 10px 0px;
-  margin-bottom: 10px;
 `;
 export const InfoTitle = styled("div")`
   font-size: 30px;
   font-weight: 700;
   margin-left: 30px;
-`;
-
-export const ButtonBox = styled("div")`
-  width: 100%;
-  height: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  font-weight: 700;
-  padding: 0px 10px 0px 10px;
 `;
 export const GridTitleBox = styled("div")`
   width: 100%;
@@ -51,16 +40,24 @@ export const GridTitleBox = styled("div")`
   align-items: center;
   padding-top: 8px;
   padding-left: 15px;
+  font-size: 20px;
   font-weight: 700;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 10px 10px 10px 10px;
-  margin-bottom: 10px;
 `;
 export const GridBox = styled("div")`
   width: 100%;
-  height: calc(100% - 150px);
+  height: 300px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 10px 10px 10px 10px;
+`;
+export const GridBoxBottom = styled("div")`
+  width: 100%;
+  height: calc(100% - 550px);
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -81,26 +78,7 @@ export const Content = styled("div")`
   height: calc(100% - 35px);
   flex-direction: column;
   padding: 10px 10px;
-`;
-export const ContentTopLeft = styled("div")`
-  width: calc(100% - 230px);
-  display: flex;
-  flex-direction: column;
-`;
-export const ItemInfoBox = styled("div")`
-  height: 370px;
-  width: 230px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px 10px;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 0px 5px;
-  background: #415c76;
-  margin: 0px 10px;
+  gap: 10px;
 `;
 export const ButtonSet = styled("button")`
   -webkit-appearance: none;
@@ -167,10 +145,4 @@ export const ButtonTime = styled("button")`
   &:hover {
     background: ${(props) => props.hoverColor};
   }
-`;
-export const SearchBox = styled("div")`
-  display: flex;
-`;
-export const Input = styled(InputSearch)`
-  display: flex;
 `;

@@ -1,8 +1,8 @@
-import { useContext, useState, useEffect, useRef, useMemo } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
-import SubdivisionSet from "./SubdivisionSet";
+import SubdivisionSet from "./PackingSet";
 import useInputSet from "custom/useInputSet";
 import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
@@ -22,12 +22,12 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
-import * as S from "./Subdivision.styled";
+import * as S from "./Packing.styled";
 import InputPaper from "components/input/InputPaper";
 import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
 
-function Subdivision() {
+function Packing() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -169,6 +169,7 @@ function Subdivision() {
     currentMenuName,
     inputSet
   );
+  const [comboValue, setComboValue] = useState({});
 
   const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
     isEditModeHeader,
@@ -522,9 +523,11 @@ function Subdivision() {
     setDisRowDetail(!disRowDetail);
   };
   const onClickEditNew = () => {
-    setIsNewDetail(true);
-    setIsModalOpen(true);
-    actSearchEditHeader(headerClickRowID);
+    if (refGridDetail?.current?.gridInst?.getRowCount() !== 0) {
+      setIsNewDetail(true);
+      setIsModalOpen(true);
+      actSearchEditHeader(headerClickRowID);
+    }
   };
   const onClickEditDetail = () => {
     setIsEditModeDetail(true);
@@ -614,23 +617,6 @@ function Subdivision() {
     }
   };
 
-  const GridHeader = useMemo(() => {
-    return (
-      <GridSingle
-        columnOptions={columnOptions}
-        columns={columnsHeader}
-        rowHeaders={rowHeadersNumCheck}
-        header={header}
-        data={gridDataHeader}
-        draggable={false}
-        refGrid={refGridHeader}
-        onClickGrid={onClickGridHeader}
-        onDblClickGrid={onDblClickGridHeader}
-        onEditingFinish={onEditingFinishGridHeader}
-      />
-    );
-  }, [gridDataHeader, isEditModeHeader]);
-
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ContentsLeft>
@@ -676,7 +662,35 @@ function Subdivision() {
             )}
           </S.ContentsHeaderWrap>
         </S.ContentsHeader>
-        <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
+        <S.GridHeaderWrap>
+          {isEditModeHeader ? (
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columnsHeader}
+              rowHeaders={rowHeadersNumCheck}
+              header={header}
+              data={gridDataHeader}
+              draggable={false}
+              refGrid={refGridHeader}
+              //onClickGrid={onClickGridHeader}
+              onDblClickGrid={onDblClickGridHeader}
+              onEditingFinish={onEditingFinishGridHeader}
+            />
+          ) : (
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columnsHeader}
+              rowHeaders={rowHeadersNumCheck}
+              header={header}
+              data={gridDataHeader}
+              draggable={false}
+              refGrid={refGridHeader}
+              onClickGrid={onClickGridHeader}
+              //onDblClickGrid={onDblClickGridHeader}
+              onEditingFinish={onEditingFinishGridHeader}
+            />
+          )}
+        </S.GridHeaderWrap>
       </S.ContentsLeft>
       <S.ContentsRight>
         <S.SearchInfoWrap>
@@ -718,6 +732,8 @@ function Subdivision() {
             data={gridDataDetail}
             draggable={false}
             refGrid={refGridDetail}
+            // onClickGrid={onClickGrid}
+
             onDblClickGrid={onDblClickGridHeader}
             onEditingFinish={onEditingFinishGridDetail}
           />
@@ -773,4 +789,4 @@ function Subdivision() {
   );
 }
 
-export default Subdivision;
+export default Packing;

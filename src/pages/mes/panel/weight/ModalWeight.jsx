@@ -80,7 +80,7 @@ function ModalWeight(props) {
           </S.ButtonSet>
         </S.GridTitleBox>
         <S.InfoBox>
-          <S.InfoTitle>라인</S.InfoTitle>
+          <S.InfoTitle>🔸라인</S.InfoTitle>
           <InputPaper
             width={"150px"}
             height={"60px"}
@@ -89,7 +89,7 @@ function ModalWeight(props) {
             size={"30px"}
             btn={false}
           />
-          <S.InfoTitle>계량일자</S.InfoTitle>
+          <S.InfoTitle>🔸계량일자</S.InfoTitle>
           <InputPaper
             width={"200px"}
             height={"60px"}
@@ -98,7 +98,7 @@ function ModalWeight(props) {
             size={"30px"}
             btn={false}
           />
-          <S.InfoTitle>계량자</S.InfoTitle>
+          <S.InfoTitle>🔸계량자</S.InfoTitle>
           <InputPaper
             width={"250px"}
             height={"60px"}
@@ -109,7 +109,7 @@ function ModalWeight(props) {
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
           />
-          <S.InfoTitle>바코드</S.InfoTitle>
+          <S.InfoTitle>🔸바코드</S.InfoTitle>
           <InputText
             id={"barcode"}
             width={"200px"}

@@ -421,6 +421,7 @@ class controlPlanDetail {
     this.proc_no = String(raw.proc_no) ? Number(raw.proc_no) : null;
     this.insp_document_detail_id = raw.insp_document_detail_id;
     this.insp_document_id = raw.insp_document_id;
+    this.order_input_fg = raw.order_input_fg ? true : false;
     this.remark = raw.remark;
   }
 }
@@ -519,6 +520,25 @@ class productClass {
   constructor(raw) {
     this.prod_class_cd = raw.prod_class_cd;
     this.prod_class_nm = raw.prod_class_nm;
+  }
+}
+class order {
+  constructor(raw) {
+    this.request_no = raw.request_no;
+    this.work_order_date = raw.work_order_date;
+    this.line_dept_id = raw.line_dept_id;
+    this.line_id = raw.line_id;
+    this.prod_id = raw.prod_id;
+    this.prod_cd = raw.prod_cd;
+    this.prod_nm = raw.prod_nm;
+    this.work_start_date = raw.work_start_date;
+    this.work_end_date = raw.work_end_date;
+    this.work_order_qty = String(raw.work_order_qty)
+      ? Number(raw.work_order_qty)
+      : null;
+    this.complete_fg = raw.complete_fg;
+    this.complete_date = raw.complete_date;
+    this.remark = raw.remark;
   }
 }
 
@@ -678,9 +698,11 @@ function GetPostParams(componentName, raw) {
       case "lineDepartment":
         params = new lineDepartment(raw);
         break;
-
       case "productClass":
         params = new productClass(raw);
+        break;
+      case "order":
+        params = new order(raw);
         break;
       default:
     }

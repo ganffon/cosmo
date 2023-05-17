@@ -355,5 +355,20 @@
   "work_order_qty": "지시수량",
 
   "bag_qty": "Bag중량",
-  "input_qty": "실중량"
+  "input_qty": "실중량",
+
+  "work_weigh_date": "계량일자",
+  "work_weigh_time": "계량시간",
+  "weigh_emp_id": "계량자ID",
+  "weigh_emp_nm": "계량자",
+
+  "work_order_input_id": "투입작업지시ID",
+  "request_partner_nm": "거래처명",
+  "request_date": "요청 일자",
+  "request_work_qty": "요청 수량",
+  "sal_order_no": "수주 번호",
+  "request_dept_nm": "요청 부서",
+  "request_emp_nm": "요청자",
+
+  "order_input_fg": "투입품 여부"
 }

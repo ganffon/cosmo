@@ -75,5 +75,6 @@
   "prdOrder": "/prd/order",
   "prdOrderInput": "/prd/order-input",
   "prdOrderDetail": "/prd/order-detail",
-  "prdWeightPanel": "/prd/weigh/panel"
+  "prdWeightPanel": "/prd/weigh/panel",
+  "prodWeight": "/prd/weigh"
 }

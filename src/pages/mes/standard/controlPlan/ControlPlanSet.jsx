@@ -624,6 +624,7 @@ function ControlPlanSet(
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "insp_method_id",
       header: CN.insp_method_id,
@@ -1361,6 +1362,26 @@ function ControlPlanSet(
       validation: {
         required: true,
       },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "order_input_fg",
+      header: CN.order_input_fg,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "order_input_fg",
+          disabled: false,
+        },
+      },
+      minWidth: WIDTH_SHORT,
+      width: WIDTH_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,

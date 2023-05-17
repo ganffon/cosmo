@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import LockIcon from "@mui/icons-material/Lock";
 import * as C from "constant/Layout";
+import InputPaper from "components/input/InputPaper";
 
 export const ContentsArea = styled("div")`
   height: ${(props) =>
@@ -15,7 +16,14 @@ export const ContentsArea = styled("div")`
   padding: 10px 20px 10px 10px;
   // overflow: hidden auto;
 `;
-
+export const TopWrap = styled("div")`
+  height: 50%;
+`;
+export const BottomWrap = styled("div")`
+  height: 50%;
+  display: flex;
+  gap: 5px;
+`;
 export const ScreenTitleBox = styled("div")`
   height: 40px;
   width: 100%;
@@ -47,16 +55,30 @@ export const SearchButton = styled("div")`
   display: flex;
 `;
 export const GridHeader = styled("div")`
-  height: 280px;
+  height: calc(100% - 100px);
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 10px 10px 10px 10px;
 `;
+export const ContentBottomLeft = styled("div")`
+  width: 600px;
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+  background-color: #415c76;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 40px 10px 10px 10px;
+`;
+export const SelectInfo = styled(InputPaper)``;
 export const ButtonBox = styled("div")`
-  height: calc(100% - 400px);
-  width: 100%;
+  height: 100%;
+  width: calc(100% - 600px);
+  background-color: #a0adba;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -70,8 +92,8 @@ export const ButtonSet = styled("button")`
   -moz-appearance: none;
   appearance: none;
 
-  width: 600px;
-  height: 250px;
+  width: 500px;
+  height: 350px;
   padding: 0rem 1rem;
   margin: 5px 0px 0px 10px;
 
