@@ -510,6 +510,45 @@ const useSearchEditHeader = (
   };
   return [actSearchEditHeader];
 };
+const useSearchIndex = (
+  refGrid,
+  isBackDrop,
+  setIsBackDrop,
+  isSnackOpen,
+  setIsSnackOpen,
+  inputBoxID,
+  inputTextChange,
+  setGridData,
+  disableRowToggle,
+  setDisableRowToggle,
+  uri
+) => {
+  const actSearchIndex = async () => {
+    refGrid?.current?.gridInst?.finishEditing();
+
+    if (isBackDrop === false) {
+      try {
+        setIsBackDrop(true);
+        const inputParams = GetInputSearchReadOnly(inputBoxID, inputTextChange);
+
+        const readURI = uri + inputParams;
+        let gridData = await restAPI.get(readURI);
+        await setGridData(gridData?.data?.data?.rows);
+      } catch {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "조회 실패",
+          severity: "error",
+        });
+      } finally {
+        setDisableRowToggle(!disableRowToggle);
+        setIsBackDrop(false);
+      }
+    }
+  };
+  return [actSearchIndex];
+};
 
 export {
   useSearch,
@@ -524,4 +563,5 @@ export {
   useSearchHeaderDI,
   useSearchDetail,
   useSearchEditHeader,
+  useSearchIndex,
 };

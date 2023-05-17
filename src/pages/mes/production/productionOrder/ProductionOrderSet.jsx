@@ -38,8 +38,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "order_id",
-      header: CN.order_id,
+      name: "work_order_id",
+      header: CN.work_order_id,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -62,8 +62,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "order_no",
-      header: CN.order_no,
+      name: "work_order_no",
+      header: CN.work_order_no,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -74,8 +74,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "work_order_date",
+      header: CN.work_order_date,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditModeHeader
@@ -108,6 +108,30 @@ function ProductionOrderSet(
     {
       name: "line_dept_nm",
       header: CN.line_dept_nm,
+      minWidth: C.WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "line_id",
+      header: CN.line_id,
+      minWidth: C.WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "line_nm",
+      header: CN.line_nm,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -154,8 +178,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "start_date",
-      header: CN.start_date,
+      name: "work_start_date",
+      header: CN.work_start_date,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditModeHeader
@@ -174,8 +198,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "end_date",
-      header: CN.end_date,
+      name: "work_end_date",
+      header: CN.work_end_date,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditModeHeader
@@ -194,8 +218,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "qty",
-      header: CN.qty,
+      name: "work_order_qty",
+      header: CN.work_order_qty,
       minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: isEditModeHeader
@@ -218,6 +242,13 @@ function ProductionOrderSet(
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
+      renderer: {
+        type: CustomGrid.CheckBox,
+        options: {
+          name: "complete_fg",
+          disabled: true,
+        },
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -236,6 +267,7 @@ function ProductionOrderSet(
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "remark",
       header: CN.remark,
@@ -323,8 +355,8 @@ function ProductionOrderSet(
   ];
   const columnsMid = [
     {
-      name: "order_input_id",
-      header: CN.order_input_id,
+      name: "work_order_input_id",
+      header: CN.work_order_input_id,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -335,8 +367,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "order_id",
-      header: CN.order_id,
+      name: "work_order_id",
+      header: CN.work_order_id,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -569,8 +601,8 @@ function ProductionOrderSet(
   ];
   const columnsBottom = [
     {
-      name: "order_detail_id",
-      header: CN.order_detail_id,
+      name: "work_order_detail_id",
+      header: CN.work_order_detail_id,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -581,8 +613,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "order_id",
-      header: CN.order_id,
+      name: "work_order_id",
+      header: CN.work_order_id,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -985,8 +1017,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "work_order_date",
+      header: CN.work_order_date,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: {
@@ -1008,6 +1040,9 @@ function ProductionOrderSet(
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: {
+        required: true,
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -1017,6 +1052,21 @@ function ProductionOrderSet(
     {
       name: "line_dept_nm",
       header: CN.line_dept_nm,
+      minWidth: C.WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      validation: {
+        required: true,
+      },
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "line_id",
+      header: CN.line_id,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -1072,8 +1122,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "start_date",
-      header: CN.start_date,
+      name: "work_start_date",
+      header: CN.work_start_date,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: {
@@ -1090,8 +1140,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "end_date",
-      header: CN.end_date,
+      name: "work_end_date",
+      header: CN.work_end_date,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: {
@@ -1108,8 +1158,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "qty",
-      header: CN.qty,
+      name: "work_order_qty",
+      header: CN.work_order_qty,
       minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: {
@@ -1691,10 +1741,11 @@ function ProductionOrderSet(
       rowSpan: false,
     },
   ];
-  const columnsSelectRequest = [
+
+  const columnsSelectLineDept = [
     {
-      name: "request_id",
-      header: CN.request_id,
+      name: "line_dept_id",
+      header: CN.line_dept_id,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -1704,6 +1755,33 @@ function ProductionOrderSet(
       whiteSpace: false,
       rowSpan: false,
     },
+    {
+      name: "line_dept_nm",
+      header: CN.line_dept_nm,
+      minWidth: C.WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "line_id",
+      header: CN.line_id,
+      minWidth: C.WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+  ];
+
+  const columnsSelectRequest = [
     {
       name: "request_no",
       header: CN.request_no,
@@ -1765,8 +1843,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "erp_request_date",
-      header: CN.erp_request_date,
+      name: "sal_order_no",
+      header: CN.sal_order_no,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -1777,8 +1855,8 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "erp_deliver_date",
-      header: CN.erp_deliver_date,
+      name: "request_work_qty",
+      header: CN.request_work_qty,
       minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
@@ -1789,10 +1867,34 @@ function ProductionOrderSet(
       rowSpan: false,
     },
     {
-      name: "erp_contract_qty",
-      header: CN.erp_contract_qty,
+      name: "request_dept_nm",
+      header: CN.request_dept_nm,
       minWidth: C.WIDTH_SHORT,
       align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "request_emp_nm",
+      header: CN.request_emp_nm,
+      minWidth: C.WIDTH_SHORT,
+      align: "left",
+      editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "request_date",
+      header: CN.request_date,
+      minWidth: C.WIDTH_SHORT,
+      align: "center",
       editor: false,
       hidden: false,
       sortable: false,
@@ -2216,6 +2318,7 @@ function ProductionOrderSet(
     columnsHeader,
     columnsMid,
     columnsBottom,
+    columnsSelectLineDept,
     columnsModalHeader,
     columnsModalMid,
     columnsModalBottom,

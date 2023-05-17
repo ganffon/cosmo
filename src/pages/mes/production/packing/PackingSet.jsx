@@ -795,8 +795,6 @@ function SubdivisionSet(
       id: "prod_nm",
       name: CN.prod_nm,
     },
-
-    { id: "complete_flag", hidden: true, defaultvalue: "ALL" },
   ];
   const inputInfo = [
     {

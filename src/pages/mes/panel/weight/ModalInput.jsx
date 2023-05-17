@@ -19,12 +19,16 @@ function ModalInput(props) {
     onClickInputSave = () => {},
     onEditingFinishInput = () => {},
     onClickNowTime = () => {},
+    onClickGridInput = () => {},
     refGridInput = null,
+    refGridInputDetail = null,
     columnsInput = [],
+    columnsInputDetail = [],
     columnOptions = [],
     header = [],
     rowHeadersDetail = [],
     gridDataInput = [],
+    gridDataInputDetail = [],
     nowDateTime = {},
     lineNM = "",
     empNM = "",
@@ -78,7 +82,7 @@ function ModalInput(props) {
           </S.ButtonSet>
         </S.GridTitleBox>
         <S.InfoBox>
-          <S.InfoTitle>라인</S.InfoTitle>
+          <S.InfoTitle>🔸라인</S.InfoTitle>
           <InputPaper
             width={"150px"}
             height={"60px"}
@@ -87,7 +91,7 @@ function ModalInput(props) {
             size={"30px"}
             btn={false}
           />
-          <S.InfoTitle>투입자</S.InfoTitle>
+          <S.InfoTitle>🔸투입자</S.InfoTitle>
           <InputPaper
             width={"250px"}
             height={"60px"}
@@ -98,7 +102,7 @@ function ModalInput(props) {
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
           />
-          <S.InfoTitle>투입일시</S.InfoTitle>
+          <S.InfoTitle>🔸투입일시</S.InfoTitle>
           <InputPaper
             width={"200px"}
             height={"60px"}
@@ -133,9 +137,24 @@ function ModalInput(props) {
             rowHeaders={rowHeadersDetail}
             refGrid={refGridInput}
             draggable={false}
+            onClick={onClickGridInput}
             onEditingFinish={onEditingFinishInput}
           />
         </S.GridBox>
+        <S.GridTitleBox>
+          <div>✳️ 세부계량내역</div>
+        </S.GridTitleBox>
+        <S.GridBoxBottom>
+          <GridModal
+            data={gridDataInputDetail}
+            columns={columnsInputDetail}
+            columnOptions={columnOptions}
+            header={header}
+            rowHeaders={rowHeadersDetail}
+            refGrid={refGridInput}
+            draggable={false}
+          />
+        </S.GridBoxBottom>
       </S.Content>
     </S.ModalWrapBox>
   );

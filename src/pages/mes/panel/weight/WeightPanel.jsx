@@ -49,6 +49,8 @@ function WeightPanel() {
     nowDate: DateTime().dateFull,
     nowTime: DateTime().hour + ":" + DateTime().minute,
   });
+
+  const [selectInfo, setSelectInfo] = useState({});
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalWeightOpen, setIsModalWeightOpen] = useState(false);
   const [isModalInputOpen, setIsModalInputOpen] = useState(false);
@@ -65,6 +67,7 @@ function WeightPanel() {
     columnsWeight,
     columnsSelectEmp,
     columnsInput,
+    columnsInputDetail,
   } = WeightPanelSet();
 
   const resetRequire = () => {
@@ -73,6 +76,14 @@ function WeightPanel() {
     lineID.current = "";
     lineNM.current = "";
     workOrderID.current = "";
+    setSelectInfo({
+      ...selectInfo,
+      orderDate: "",
+      line: "",
+      orderQty: "",
+      prodCD: "",
+      prodNM: "",
+    });
   };
   const resetEmp = () => {
     empID.current = "";
@@ -84,11 +95,13 @@ function WeightPanel() {
   const refGridSelect = useRef(null);
   const refGridWeight = useRef(null);
   const refGridInput = useRef(null);
+  const refGridInputDetail = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataWeight, setGridDataWeight] = useState(null);
   const [gridDataInput, setGridDataInput] = useState(null);
+  const [gridDataInputDetail, setGridDataInputDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
 
   const [modalSelectSize, setModalSelectSize] = useState({
@@ -123,9 +136,37 @@ function WeightPanel() {
       nowTime: DateTime().hour + ":" + DateTime().minute,
     });
   };
+  const onClickGridInput = (e) => {
+    if (e?.rowKey !== undefined) {
+      const Header = refGridInputDetail?.current?.gridInst;
+      prodID.current = Header.getValue(e?.rowKey, "prod_id");
+      lineID.current = Header.getValue(e?.rowKey, "line_id");
+      lineNM.current = Header.getValue(e?.rowKey, "line_nm");
+      lineDeptID.current = Header.getValue(e?.rowKey, "line_dept_id");
+      workOrderID.current = Header.getValue(e?.rowKey, "work_order_id");
+    }
+  };
   const onClickInput = async () => {
     if (workOrderID.current !== "") {
-      setIsModalInputOpen(true);
+      setNowDateTime({
+        nowDate: DateTime().dateFull,
+        nowTime: DateTime().hour + ":" + DateTime().minute,
+      });
+      try {
+        const result = await restAPI.get(
+          restURI.prodWeight + `?complete_fg=INCOMPLETE`
+        );
+        setGridDataInput(result?.data?.data?.rows);
+        setIsModalInputOpen(true);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      }
     }
   };
   const onClickWeight = async () => {
@@ -151,9 +192,24 @@ function WeightPanel() {
     if (isBackDrop === false) {
       try {
         setIsBackDrop(true);
+        let conditionLine;
+        let conditionProdCD;
+        let conditionProdNM;
+        inputTextChange.line
+          ? (conditionLine = `&line_nm=${inputTextChange.line}`)
+          : (conditionLine = "");
+        inputTextChange.prod_cd
+          ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`)
+          : (conditionProdCD = "");
+        inputTextChange.prod_nm
+          ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`)
+          : (conditionProdNM = "");
         const result = await restAPI.get(
           restURI.prdOrder +
-            `?start_date=${dateText.startDate}&end_date=${dateText.endDate}`
+            `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+            conditionLine +
+            conditionProdCD +
+            conditionProdNM
         );
         setGridDataHeader(result?.data?.data?.rows);
 
@@ -177,11 +233,13 @@ function WeightPanel() {
       }
     }
   };
+
   const onClickWeightClose = () => {
     resetRequire();
     resetEmp();
     setIsModalWeightOpen(false);
   };
+
   const onClickGridHeader = async (e) => {
     if (e?.rowKey !== undefined) {
       const Header = refGridHeader?.current?.gridInst;
@@ -190,6 +248,14 @@ function WeightPanel() {
       lineNM.current = Header.getValue(e?.rowKey, "line_nm");
       lineDeptID.current = Header.getValue(e?.rowKey, "line_dept_id");
       workOrderID.current = Header.getValue(e?.rowKey, "work_order_id");
+      setSelectInfo({
+        ...selectInfo,
+        orderDate: Header.getValue(e?.rowKey, "work_order_date"),
+        line: Header.getValue(e?.rowKey, "line_nm"),
+        orderQty: Header.getValue(e?.rowKey, "work_order_qty"),
+        prodCD: Header.getValue(e?.rowKey, "prod_cd"),
+        prodNM: Header.getValue(e?.rowKey, "prod_nm"),
+      });
     }
   };
 
@@ -332,50 +398,115 @@ function WeightPanel() {
   return (
     <>
       <S.ContentsArea isAllScreen={isAllScreen}>
-        <S.ScreenTitleBox>❇️ 작업지시 List</S.ScreenTitleBox>
-        <S.SearchBox>
-          <S.SearchCondition>
-            <DateRange dateText={dateText} setDateText={setDateText} />
-            <InputSearch
-              id={"line"}
-              name={"라인명"}
-              handleInputTextChange={handleInputTextChange}
-              onClickSearch={onClickSearch}
+        <S.TopWrap>
+          <S.ScreenTitleBox>❇️ 작업지시 List</S.ScreenTitleBox>
+          <S.SearchBox>
+            <S.SearchCondition>
+              <DateRange
+                dateText={dateText}
+                setDateText={setDateText}
+                onClickSearch={onClickSearch}
+              />
+              <InputSearch
+                id={"line"}
+                name={"라인명"}
+                handleInputTextChange={handleInputTextChange}
+                onClickSearch={onClickSearch}
+              />
+              <InputSearch
+                id={"prod_cd"}
+                name={"품번"}
+                handleInputTextChange={handleInputTextChange}
+                onClickSearch={onClickSearch}
+              />
+              <InputSearch
+                id={"prod_nm"}
+                name={"품목"}
+                handleInputTextChange={handleInputTextChange}
+                onClickSearch={onClickSearch}
+              />
+            </S.SearchCondition>
+            <S.SearchButton>
+              <BtnWeight onClickSearch={onClickSearch} />
+            </S.SearchButton>
+          </S.SearchBox>
+          <S.GridHeader>{GridHeader}</S.GridHeader>
+        </S.TopWrap>
+        <S.BottomWrap>
+          <S.ContentBottomLeft>
+            <S.SelectInfo
+              width={"180px"}
+              height={"60px"}
+              name={"지시일자"}
+              nameSize={"20px"}
+              namePositionTop={"-25px"}
+              nameColor={"white"}
+              value={selectInfo.orderDate}
+              size={"30px"}
+              btn={false}
             />
-            <InputSearch
-              id={"prod_cd"}
+            <S.SelectInfo
+              width={"150px"}
+              height={"60px"}
+              name={"라인"}
+              nameSize={"20px"}
+              namePositionTop={"-25px"}
+              nameColor={"white"}
+              value={selectInfo.line}
+              size={"30px"}
+              btn={false}
+            />
+            <S.SelectInfo
+              width={"150px"}
+              height={"60px"}
+              name={"지시수량"}
+              nameSize={"20px"}
+              namePositionTop={"-25px"}
+              nameColor={"white"}
+              value={selectInfo.orderQty}
+              size={"30px"}
+              btn={false}
+            />
+            <S.SelectInfo
+              width={"400px"}
+              height={"60px"}
               name={"품번"}
-              handleInputTextChange={handleInputTextChange}
-              onClickSearch={onClickSearch}
+              nameSize={"20px"}
+              namePositionTop={"-25px"}
+              nameColor={"white"}
+              value={selectInfo.prodCD}
+              size={"30px"}
+              btn={false}
             />
-            <InputSearch
-              id={"prod_nm"}
+            <S.SelectInfo
+              width={"400px"}
+              height={"60px"}
               name={"품목"}
-              handleInputTextChange={handleInputTextChange}
-              onClickSearch={onClickSearch}
+              nameSize={"20px"}
+              namePositionTop={"-25px"}
+              nameColor={"white"}
+              value={selectInfo.prodNM}
+              size={"30px"}
+              btn={false}
             />
-          </S.SearchCondition>
-          <S.SearchButton>
-            <BtnWeight onClickSearch={onClickSearch} />
-          </S.SearchButton>
-        </S.SearchBox>
-        <S.GridHeader>{GridHeader}</S.GridHeader>
-        <S.ButtonBox>
-          <S.ButtonSet
-            color={"#28a745"}
-            hoverColor={"#218838"}
-            onClick={onClickWeight}
-          >
-            계량
-          </S.ButtonSet>
-          <S.ButtonSet
-            color={"#28a745"}
-            hoverColor={"#218838"}
-            onClick={onClickInput}
-          >
-            투입
-          </S.ButtonSet>
-        </S.ButtonBox>
+          </S.ContentBottomLeft>
+          <S.ButtonBox>
+            <S.ButtonSet
+              color={"#415c76"}
+              hoverColor={"#ffc125"}
+              onClick={onClickWeight}
+            >
+              계량
+            </S.ButtonSet>
+            <S.ButtonSet
+              color={"#415c76"}
+              hoverColor={"#990b11"}
+              onClick={onClickInput}
+            >
+              투입
+            </S.ButtonSet>
+          </S.ButtonBox>
+        </S.BottomWrap>
         {isModalWeightOpen ? (
           <ModalWeight
             onClickModalClose={onClickWeightClose}
@@ -399,16 +530,20 @@ function WeightPanel() {
           <ModalInput
             onClickModalClose={onClickInputClose}
             columnsInput={columnsInput}
+            columnsInputDetail={columnsInputDetail}
             columnOptions={columnOptions}
             header={header}
             gridDataInput={gridDataInput}
+            gridDataInputDetail={gridDataInputDetail}
             rowHeadersHeader={rowHeadersNum}
             rowHeadersDetail={rowHeadersNum}
             refGridInput={refGridInput}
+            refGridInputDetail={refGridInputDetail}
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
             onClickInputSave={onClickInputSave}
             onClickNowTime={onClickNowTime}
+            onClickGridInput={onClickGridInput}
             nowDateTime={nowDateTime}
             lineNM={lineNM.current}
             empID={empID.current}

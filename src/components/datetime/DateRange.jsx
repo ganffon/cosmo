@@ -6,7 +6,7 @@ import DateTime from "components/datetime/DateTime";
 import * as S from "./Date.styled";
 
 function DateRange(props) {
-  const { dateText, setDateText } = props;
+  const { dateText, setDateText, onClickSearch = () => {} } = props;
 
   useEffect(() => {
     setDateText({
@@ -17,6 +17,12 @@ function DateRange(props) {
 
   const dateRangeChange = (e) => {
     setDateText({ ...dateText, [e.target.id]: e.target.value });
+  };
+
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      onClickSearch();
+    }
   };
 
   return (
@@ -33,6 +39,7 @@ function DateRange(props) {
           ),
         }}
         onChange={dateRangeChange}
+        onKeyPress={onKeyPress}
       />
 
       <S.DateRange
@@ -44,6 +51,7 @@ function DateRange(props) {
           sx: { height: 40 },
         }}
         onChange={dateRangeChange}
+        onKeyPress={onKeyPress}
       />
     </S.DateBox>
   );

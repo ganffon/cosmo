@@ -548,6 +548,36 @@ class productClass {
     this.prod_class_nm = raw.prod_class_nm;
   }
 }
+class order {
+  constructor(raw) {
+    this.work_order_id = raw.work_order_id;
+    this.work_order_date = raw.work_order_date;
+  }
+}
+
+class orderInput {
+  constructor(raw) {
+    this.work_order_input_id = raw.work_order_input_id;
+    this.spec_lcl = String(raw.spec_lcl) ? Number(raw.spec_lcl) : null;
+    this.spec_max = String(raw.spec_max) ? Number(raw.spec_max) : null;
+    this.spec_min = String(raw.spec_min) ? Number(raw.spec_min) : null;
+    this.spec_std = raw.spec_std;
+    this.spec_ucl = String(raw.spec_ucl) ? Number(raw.spec_ucl) : null;
+    this.remark = raw.remark;
+  }
+}
+
+class orderDetail {
+  constructor(raw) {
+    this.work_order_detail_id = raw.work_order_detail_id;
+    this.spec_lcl = String(raw.spec_lcl) ? Number(raw.spec_lcl) : null;
+    this.spec_max = String(raw.spec_max) ? Number(raw.spec_max) : null;
+    this.spec_min = String(raw.spec_min) ? Number(raw.spec_min) : null;
+    this.spec_std = raw.spec_std;
+    this.spec_ucl = String(raw.spec_ucl) ? Number(raw.spec_ucl) : null;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -681,7 +711,6 @@ function GetPutParams(componentName, raw) {
     case "partnerType":
       params = new partnerType(raw);
       break;
-
     case "partner":
       params = new partner(raw);
       break;
@@ -691,9 +720,17 @@ function GetPutParams(componentName, raw) {
     case "lineDepartment":
       params = new lineDepartment(raw);
       break;
-
     case "productClass":
       params = new productClass(raw);
+      break;
+    case "order":
+      params = new order(raw);
+      break;
+    case "orderInput":
+      params = new orderInput(raw);
+      break;
+    case "orderDetail":
+      params = new orderDetail(raw);
       break;
     default:
   }

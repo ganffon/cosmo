@@ -231,6 +231,21 @@ class productClass {
     this.prod_class_id = raw.prod_class_id;
   }
 }
+class orderInput {
+  constructor(raw) {
+    this.work_order_input_id = raw.work_order_input_id;
+  }
+}
+class orderDetail {
+  constructor(raw) {
+    this.work_order_detail_id = raw.work_order_detail_id;
+  }
+}
+class order {
+  constructor(raw) {
+    this.work_order_id = raw.work_order_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -378,6 +393,15 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "productClass":
       params = new productClass(raw);
+      break;
+    case "orderInput":
+      params = new orderInput(raw);
+      break;
+    case "orderDetail":
+      params = new orderDetail(raw);
+      break;
+    case "order":
+      params = new order(raw);
       break;
 
     default:
