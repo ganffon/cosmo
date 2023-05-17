@@ -8,7 +8,7 @@ import { LayoutContext } from "../common/Layout";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 import * as S from "./V2MenuDepth.styled";
 
 function subTitle(lv2Menu) {
@@ -53,14 +53,15 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
     superAdmin,
   } = useContext(LayoutContext);
   const navigate = useNavigate();
-  const [cookie, setCookie, removeCookie] = useCookies();
   const [alertOpen, setAlertOpen] = useState({
     open: false,
   });
   const handleClickMenu = async (menu, upperMenuName, isMouseOver) => {
     await restAPI
       .get(
-        `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${cookie.userUID}&user_factory_id=${cookie.userFactoryID}`
+        `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get(
+          "userUID"
+        )}&user_factory_id=${Cookies.get("userFactoryID")}`
       )
       .then((res) => {
         if (res?.data?.data?.rows[0] !== undefined || superAdmin === true) {

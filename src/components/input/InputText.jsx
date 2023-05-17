@@ -17,7 +17,7 @@ function InputText(props) {
     value = "",
   } = props;
   return (
-    <S.PaperBox id={id} width={width} height={height}>
+    <S.PaperBox width={width} height={height}>
       <S.PaperTitle
         nameSize={nameSize}
         namePosition={namePosition}
@@ -26,6 +26,7 @@ function InputText(props) {
         {name}
       </S.PaperTitle>
       <S.Text
+        id={id}
         autoComplete="off"
         value={value}
         size={size}

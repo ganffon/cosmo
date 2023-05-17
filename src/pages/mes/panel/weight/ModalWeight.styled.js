@@ -10,7 +10,6 @@ export const ModalWrapBox = styled(ModalWrapMulti)`
   flex-direction: column;
   background-color: ${APP_BAR_COLOR};
   border-radius: 10px 10px 0px 0px;
-  height: 40px;
 `;
 export const HeaderBox = styled("div")`
   display: flex;
@@ -19,13 +18,22 @@ export const HeaderBox = styled("div")`
   border-radius: 10px 10px 0px 0px;
   height: 40px;
 `;
-export const GridTopTitleBox = styled("div")`
+export const InfoBox = styled("div")`
   display: flex;
-  justify-content: start;
-  height: 40px;
-  padding-left: 15px;
-  font-weight: 700;
+  align-items: center;
+  height: 80px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 10px 0px;
+  margin-bottom: 10px;
 `;
+export const InfoTitle = styled("div")`
+  font-size: 30px;
+  font-weight: 700;
+  margin-left: 20px;
+`;
+
 export const ButtonBox = styled("div")`
   width: 100%;
   height: 40px;
@@ -34,27 +42,29 @@ export const ButtonBox = styled("div")`
   align-items: end;
   font-weight: 700;
   padding: 0px 10px 0px 10px;
-  margin-bottom: 10px;
 `;
-export const GridBottomTitleBox = styled("div")`
+export const GridTitleBox = styled("div")`
   width: 100%;
-  height: 40px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-top: 8px;
   padding-left: 15px;
   font-weight: 700;
-`;
-export const GridBoxTop = styled("div")`
-  width: 100%;
-  height: 320px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 0px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 10px;
 `;
-export const GridBoxBottom = styled("div")`
+export const GridBox = styled("div")`
   width: 100%;
-  height: calc(100% - 450px);
-  padding: 0px 10px 10px 10px;
+  height: calc(100% - 150px);
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 10px 10px 10px 10px;
 `;
 
 export const TitleBox = styled("div")`
@@ -66,8 +76,11 @@ export const TitleBox = styled("div")`
 export const ButtonClose = styled(IconButton)`
   padding-right: 15px;
 `;
-export const ContentTop = styled("div")`
+export const Content = styled("div")`
   display: flex;
+  height: calc(100% - 35px);
+  flex-direction: column;
+  padding: 10px 10px;
 `;
 export const ContentTopLeft = styled("div")`
   width: calc(100% - 230px);
@@ -97,7 +110,6 @@ export const ButtonSet = styled("button")`
   width: ${(props) => props.width};
   height: 40px;
   padding: 0.5rem 1rem;
-  margin-left: 10px;
 
   font-family: "NotoSansKR_B", sans-serif;
   font-size: 1rem;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 // ⬇️ reference of page
 import Clock from "./Clock";
 import Logo from "img/Logo/cosmo.png";
@@ -14,16 +13,14 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import BackDrop from "components/backdrop/BackDrop";
 import Cookies from "js-cookie";
-import { Cookie } from "@mui/icons-material";
 
 function Login() {
-  const [cookie, setCookie, removeCookie] = useCookies();
   const [isBackDrop, setIsBackDrop] = useState(false);
 
   const [loginInfo, setLoginInfo] = useState({
     loginFactoryID: "",
     loginFactoryName: "",
-    loginID: cookie.loginID,
+    loginID: Cookies.get("loginID"),
     loginPW: "",
   });
   const [alertOpen, setAlertOpen] = useState({
@@ -82,31 +79,31 @@ function Login() {
               `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`
           )
           .then((res) => {
-            const expiresTime = new Date();
-            expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-            Cookie.set("userName", res?.data?.data?.rows[0]?.user_nm, {
+            // const expiresTime = new Date();
+            // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
+            Cookies.set("userName", res?.data?.data?.rows[0]?.user_nm, {
               path: "/",
-              expires: expiresTime,
-              secure: true,
+              expires: 7,
+              secure: false,
             });
-            Cookie.set("userUID", res?.data?.data?.rows[0]?.uid, {
+            Cookies.set("userUID", res?.data?.data?.rows[0]?.uid, {
               path: "/",
-              expires: expiresTime,
-              secure: true,
+              expires: 7,
+              secure: false,
             });
-            Cookie.set(
+            Cookies.set(
               "userFactoryID",
               res?.data?.data?.rows[0]?.user_factory_id,
               {
                 path: "/",
-                expires: expiresTime,
-                secure: true,
+                expires: 7,
+                secure: false,
               }
             );
-            Cookie.set("factoryID", loginInfo.loginFactoryID, {
+            Cookies.set("factoryID", loginInfo.loginFactoryID, {
               path: "/",
-              expires: expiresTime,
-              secure: true,
+              expires: 7,
+              secure: false,
             });
             navigate("/mes");
           })
@@ -118,12 +115,12 @@ function Login() {
             });
           })
           .finally(() => {
-            const expiresTime = new Date();
-            expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-            Cookie.set("loginID", loginInfo.loginID, {
+            // const expiresTime = new Date();
+            // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
+            Cookies.set("loginID", loginInfo.loginID, {
               path: "/",
-              expires: expiresTime,
-              secure: true,
+              expires: 7,
+              secure: false,
             });
             // restAPI 헤더 값 추가
             restAPI.defaults.headers = {
@@ -154,7 +151,7 @@ function Login() {
       //🔸로그인창 ID표시 및 포커스
       const idBox = document.querySelector("#loginID");
       const pwBox = document.querySelector("#loginPW");
-      if (cookie.loginID === undefined) {
+      if (Cookies.get("loginID") === undefined) {
         idBox.focus();
       } else {
         idBox.value = loginInfo.loginID;

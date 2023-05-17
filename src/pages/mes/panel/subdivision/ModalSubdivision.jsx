@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import { LayoutContext } from "components/layout/common/Layout";
@@ -27,7 +27,6 @@ function ModalSubdivision(props) {
     rowHeadersDetail = [],
     gridDataHeader = [],
     gridDataDetail = [],
-    require = {},
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
   const [inputChange, setInputChange] = useState();
@@ -55,6 +54,21 @@ function ModalSubdivision(props) {
       alert(err);
     }
   };
+  const GridHeader = useMemo(() => {
+    return (
+      <GridModal
+        data={gridDataHeader}
+        columns={columnsModalHeader}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersHeader}
+        refGrid={refGridModalHeader}
+        draggable={false}
+        onClick={onClickGridModalHeader}
+        onDblClick={onDblClickGridModalHeader}
+      />
+    );
+  }, [gridDataHeader]);
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
@@ -68,8 +82,8 @@ function ModalSubdivision(props) {
         </S.ButtonClose>
       </S.HeaderBox>
 
-      <S.ContentTop>
-        <S.ContentTopLeft>
+      <S.Content>
+        <S.ContentTop>
           <S.ButtonBox>
             <div>✳️ 소분정보</div>
             <S.SearchBox>
@@ -88,85 +102,33 @@ function ModalSubdivision(props) {
               >
                 Search
               </S.ButtonSet>
+              <S.ButtonSet
+                width={"140px"}
+                color={"#e5a711"}
+                hoverColor={"#b2820d"}
+                onClick={onClickPick}
+              >
+                Data Select
+              </S.ButtonSet>
             </S.SearchBox>
           </S.ButtonBox>
-          <S.GridBoxTop>
+          <S.GridBoxTop>{GridHeader}</S.GridBoxTop>
+        </S.ContentTop>
+        <S.ContentBottom>
+          <S.GridBottomTitleBox>✳️ 세부소분정보</S.GridBottomTitleBox>
+          <S.GridBoxBottom>
             <GridModal
-              data={gridDataHeader}
-              columns={columnsModalHeader}
+              data={gridDataDetail}
+              columns={columnsModalDetail}
               columnOptions={columnOptions}
               header={header}
-              rowHeaders={rowHeadersHeader}
-              refGrid={refGridModalHeader}
+              rowHeaders={rowHeadersDetail}
+              refGrid={refGridModalDetail}
               draggable={false}
-              onClick={onClickGridModalHeader}
-              onDblClick={onDblClickGridModalHeader}
             />
-          </S.GridBoxTop>
-        </S.ContentTopLeft>
-        <S.ItemInfoBox>
-          <InputPaper
-            width={"200px"}
-            height={"45px"}
-            name={"품번"}
-            nameSize={"20px"}
-            namePosition={"-25px"}
-            nameColor={"white"}
-            value={require.prod_cd || ""}
-            // valueSize={"22px"}
-          />
-          <InputPaper
-            width={"200px"}
-            height={"45px"}
-            name={"소분일자"}
-            nameSize={"20px"}
-            namePosition={"-25px"}
-            nameColor={"white"}
-            value={require.date || ""}
-            // valueSize={"22px"}
-          />
-          <InputPaper
-            width={"200px"}
-            height={"45px"}
-            name={"Lot No"}
-            nameSize={"20px"}
-            namePosition={"-25px"}
-            nameColor={"white"}
-            value={require.lot || ""}
-            // valueSize={"22px"}
-          />
-          <InputPaper
-            width={"200px"}
-            height={"45px"}
-            name={"소분총량"}
-            nameSize={"20px"}
-            namePosition={"-25px"}
-            nameColor={"white"}
-            value={require.totalQty || ""}
-            // valueSize={"22px"}
-          />
-          <S.ButtonSet
-            width={"200px"}
-            color={"#e5a711"}
-            hoverColor={"#b2820d"}
-            onClick={onClickPick}
-          >
-            Data Select
-          </S.ButtonSet>
-        </S.ItemInfoBox>
-      </S.ContentTop>
-      <S.GridBottomTitleBox>✳️ 세부소분정보</S.GridBottomTitleBox>
-      <S.GridBoxBottom>
-        <GridModal
-          data={gridDataDetail}
-          columns={columnsModalDetail}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersDetail}
-          refGrid={refGridModalDetail}
-          draggable={false}
-        />
-      </S.GridBoxBottom>
+          </S.GridBoxBottom>
+        </S.ContentBottom>
+      </S.Content>
     </S.ModalWrapBox>
   );
 }

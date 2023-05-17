@@ -352,5 +352,8 @@
   "work_order_date": "지시일자",
   "work_start_date": "지시시작일자",
   "work_end_date": "지시종료일자",
-  "work_order_qty": "지시수량"
+  "work_order_qty": "지시수량",
+
+  "bag_qty": "Bag중량",
+  "input_qty": "실중량"
 }

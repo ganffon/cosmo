@@ -20,8 +20,8 @@ export const PaperTitle = styled("div")`
   width: auto;
   height: 20px;
   position: absolute;
-  top: ${(props) => props.namePosition};
-  left: 10px;
+  top: ${(props) => props.namePositionTop};
+  left: ${(props) => props.namePositionLeft};
   font-family: NotoSansKR;
   font-size: ${(props) => props.nameSize};
   color: ${(props) => props.nameColor};

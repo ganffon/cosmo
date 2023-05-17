@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from "react";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 // ⬇️ import MUI
 import IconButton from "@mui/material/IconButton";
@@ -19,7 +19,6 @@ function AppBar() {
     setCurrentMenuName,
     isAllScreen,
   } = useContext(LayoutContext);
-  const [cookie, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
   const gotoDashboard = useCallback(() => {
     navigate("/mes");
@@ -44,7 +43,7 @@ function AppBar() {
         <S.MenuTitle>{currentMenuName}</S.MenuTitle>
       </S.LeftBox>
       <S.RightBox>
-        <S.UserText>{cookie.userName}님 환영합니다.</S.UserText>
+        <S.UserText>{Cookies.get("userName")}님 환영합니다.</S.UserText>
         <AvatarButton />
       </S.RightBox>
     </S.AppBarBox>
