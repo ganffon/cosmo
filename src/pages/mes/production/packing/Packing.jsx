@@ -24,6 +24,8 @@ import ModalNew from "components/modal/ModalNew";
 import ModalSelectDate from "components/modal/ModalSelectDate";
 import GetPutParams from "api/GetPutParams";
 import ModalSelectMulti from "components/modal/ModalSelectMulti";
+import GetDeleteParams from "api/GetDeleteParams";
+import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 
 function Packing() {
   LoginStateChk();
@@ -34,6 +36,7 @@ function Packing() {
   const prodCD = useRef("");
   const prodNM = useRef("");
   const workOrderID = useRef("");
+  const workWeighID = useRef("");
   const workPackingID = useRef("");
 
   const resetProd = () => {
@@ -48,6 +51,7 @@ function Packing() {
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalSelectDateOpen, setIsModalSelectDateOpen] = useState(false);
   const [isModalSelectMultiOpen, setIsModalSelectMultiOpen] = useState(false);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -151,6 +155,8 @@ function Packing() {
   const refGridHeaderNew = useRef(null);
   const refGridDetailNew = useRef(null);
   const refGridSelectMultiHeader = useRef(null);
+  const refGridSelectMultiDetail = useRef(null);
+
   const refGridSelect = useRef(null);
   const refGridSelectDate = useRef(null);
 
@@ -344,7 +350,41 @@ function Packing() {
       alert("생산품목 선택해라 새캬");
     }
   };
-  const onClickDeleteDetail = () => {};
+  const handleDelete = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridDetail?.current?.gridInst;
+      Grid?.finishEditing();
+
+      const data = Grid.getCheckedRows().map((raw) =>
+        GetDeleteParams("packingDetail", raw)
+      );
+      const res = await restAPI.delete(restURI.prdPackingDetail, { data });
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: res?.data?.message,
+        severity: "success",
+      });
+      handleGridHeaderClick();
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+      });
+    } finally {
+      setIsDeleteAlertOpen(false);
+      setIsBackDrop(false);
+    }
+  };
+  const onClickDeleteDetail = () => {
+    const Grid = refGridDetail?.current?.gridInst;
+    if (Grid.getCheckedRows().length !== 0) {
+      setIsDeleteAlertOpen(true);
+    }
+  };
   const onClickModalAddRow = () => {
     const Grid = refGridHeaderNew?.current?.gridInst;
     Grid?.finishEditing();
@@ -360,6 +400,11 @@ function Packing() {
     const Grid = refGridDetailNew?.current?.gridInst;
     Grid?.finishEditing();
     Grid?.appendRow();
+    Grid?.setValue(
+      Grid.getRowCount() - 1,
+      "work_packing_id",
+      workPackingID.current
+    );
   };
   const onClickModalGrid = (e) => {
     modalDetailClickRowKey = e.rowKey;
@@ -376,6 +421,35 @@ function Packing() {
     const gridEvent = refGridDetailNew?.current?.gridInst;
     gridEvent?.removeRow(modalDetailClickRowKey);
     modalDetailClickRowKey = null;
+  };
+  const onClickModalDetailSave = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridDetailNew?.current?.gridInst;
+      Grid?.finishEditing();
+      let result = [];
+      for (let i = 0; i < Grid?.getRowCount(); i++) {
+        result.push(Grid?.getRowAt(i));
+      }
+      const data = result.map((raw) => GetPostParams("packingDetail", raw));
+      const res = await restAPI.post(restURI.prdPackingDetail, data);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: res?.data?.message,
+        severity: "success",
+      });
+      setIsModalDetailOpen(false);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
   const onClickModalSave = async () => {
     try {
@@ -437,7 +511,9 @@ function Packing() {
     }
   };
   const onDblClickModalDetailGrid = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm", "lot_no", "input_qty"])) {
+    if (
+      Condition(e, ["prod_cd", "prod_nm", "lot_no", "store_nm", "location_nm"])
+    ) {
       dblClickTarget.current = "Weight";
       dblClickRowKey.current = e?.rowKey;
       setIsModalSelectMultiOpen(true);
@@ -462,28 +538,57 @@ function Packing() {
     setIsModalSelectDateOpen(false);
   };
   const onClickModalSelectMultiClose = () => {
+    refGridSelectMultiDetail?.current?.gridInst?.clear();
     setIsModalSelectMultiOpen(false);
   };
   const onClickModalSelectMulti = async (e) => {
     const Grid = refGridSelectMultiHeader?.current?.gridInst;
-    const workWeighID = Grid?.getValue(e?.rowKey, "work_weigh_id");
-    try {
-      setIsBackDrop(true);
-      const result = await restAPI.get(
-        restURI.prodWeightDetail + `?work_weigh_id=${workWeighID}`
-      );
-      setGridDataSelectDetail(result?.data?.data?.rows);
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-        location: "bottomRight",
-      });
-    } finally {
-      setIsBackDrop(false);
+    if (workWeighID.current !== Grid?.getValue(e?.rowKey, "work_weigh_id")) {
+      workWeighID.current = Grid?.getValue(e?.rowKey, "work_weigh_id");
+      try {
+        setIsBackDrop(true);
+        const result = await restAPI.get(
+          restURI.prodWeightDetail + `?work_weigh_id=${workWeighID.current}`
+        );
+        setGridDataSelectDetail(result?.data?.data?.rows);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
     }
+  };
+  const onDblClickSelectMulti = (e) => {
+    const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+    const Grid = refGridDetailNew?.current?.gridInst;
+    Grid?.setValue(dblClickRowKey.current, "work_weigh_id", data.work_weigh_id);
+    Grid?.setValue(dblClickRowKey.current, "prod_id", data.prod_id);
+    Grid?.setValue(dblClickRowKey.current, "prod_cd", data.prod_cd);
+    Grid?.setValue(dblClickRowKey.current, "prod_nm", data.prod_nm);
+    Grid?.setValue(dblClickRowKey.current, "lot_no", data.lot_no);
+    Grid?.setValue(dblClickRowKey.current, "input_qty", data.total_qty);
+    Grid?.setValue(
+      dblClickRowKey.current,
+      "inv_to_store_id",
+      data.inv_to_store_id
+    );
+    Grid?.setValue(dblClickRowKey.current, "store_nm", data.store_nm);
+    Grid?.setValue(
+      dblClickRowKey.current,
+      "inv_to_location_id",
+      data.inv_to_location_id
+    );
+    Grid?.setValue(dblClickRowKey.current, "location_nm", data.location_nm);
+    workWeighID.current = "";
+    dblClickRowKey.current = "";
+    refGridSelectMultiDetail?.current?.gridInst?.clear();
+    setIsModalSelectMultiOpen(false);
   };
   const onDblClickGridSelect = (e) => {
     const data = e?.instance?.store?.data?.rawData[e?.rowKey];
@@ -536,33 +641,35 @@ function Packing() {
   const onClickSearchSelectDate = () => {
     actSelectOrder();
   };
-  const onClickGridHeader = (e) => {
+  const handleGridHeaderClick = async () => {
+    if (workPackingID.current) {
+      try {
+        setIsBackDrop(true);
+        const result = await restAPI.get(
+          restURI.prdPackingDetail + `?work_packing_id=${workPackingID.current}`
+        );
+        setGridDataDetail(result?.data?.data?.rows);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
+    }
+  };
+  const onClickGridHeader = async (e) => {
     if (!isEditModeHeader) {
       workOrderID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
       workPackingID.current = e?.instance.getValue(
         e?.rowKey,
         "work_packing_id"
       );
-      if (workPackingID.current) {
-        try {
-          setIsBackDrop(true);
-          const result = restAPI.get(
-            restURI.prdPackingDetail +
-              `?work_packing_id=${workPackingID.current}`
-          );
-          setGridDataDetail(result?.data?.data?.rows);
-        } catch (err) {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: err?.response?.data?.message,
-            severity: "error",
-            location: "bottomRight",
-          });
-        } finally {
-          setIsBackDrop(false);
-        }
-      }
+      handleGridHeaderClick();
     }
   };
   const onEditingFinishGridHeader = (e) => {
@@ -585,6 +692,19 @@ function Packing() {
       />
     );
   }, [gridDataHeader, isEditModeHeader]);
+  const GridDetail = useMemo(() => {
+    return (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columnsDetail}
+        rowHeaders={rowHeadersNumCheck}
+        header={header}
+        data={gridDataDetail}
+        draggable={false}
+        refGrid={refGridDetail}
+      />
+    );
+  }, [gridDataDetail]);
   const GridHeaderNew = useMemo(() => {
     return (
       <ModalNew
@@ -619,6 +739,7 @@ function Packing() {
         refModalGrid={refGridDetailNew}
         onClickModalAddRow={onClickModalDetailAddRow}
         onClickModalCancelRow={onClickModalDetailCancelRow}
+        onClickModalSave={onClickModalDetailSave}
         onClickModalGrid={onClickModalDetailGrid}
         onDblClickModalGrid={onDblClickModalDetailGrid}
       />
@@ -672,6 +793,7 @@ function Packing() {
         rowHeaders={rowHeadersNum}
         gridDataSelect={gridDataSelectHeader}
         gridDataDetail={gridDataSelectDetail}
+        onDblClickGridSelect={onDblClickSelectMulti}
         onClickSelectGrid={onClickModalSelectMulti}
       />
     );
@@ -747,114 +869,22 @@ function Packing() {
               />
             </S.ButtonWrap>
           </S.ContentsHeader>
-          <S.GridDetailWrap>
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columnsDetail}
-              rowHeaders={rowHeadersNum}
-              header={header}
-              data={gridDataDetail}
-              draggable={false}
-              refGrid={refGridDetail}
-            />
-          </S.GridDetailWrap>
+          <S.GridDetailWrap>{GridDetail}</S.GridDetailWrap>
         </S.BottomWrap>
       </S.ContentsArea>
       {/*🔸🔸🔸Header New*/}
-      {isModalOpen
-        ? // <ModalNew
-          //   width={"90%"}
-          //   height={"90%"}
-          //   title={"생산품목 추가"}
-          //   onClickModalClose={onClickModalClose}
-          //   columns={columnsHeaderNew}
-          //   columnOptions={columnOptions}
-          //   header={header}
-          //   rowHeaders={rowHeadersNum}
-          //   refModalGrid={refGridHeaderNew}
-          //   onClickModalAddRow={onClickModalAddRow}
-          //   onClickModalCancelRow={onClickModalCancelRow}
-          //   onClickModalSave={onClickModalSave}
-          //   onClickModalGrid={onClickModalGrid}
-          //   onDblClickModalGrid={onDblClickModalGrid}
-          // />
-          GridHeaderNew
-        : null}
+      {isModalOpen ? GridHeaderNew : null}
       {/*🔸🔸🔸Detail New*/}
-      {isModalDetailOpen
-        ? // <ModalNew
-          //   width={"90%"}
-          //   height={"90%"}
-          //   title={"투입품목 추가"}
-          //   onClickModalClose={onClickModalDetailClose}
-          //   columns={columnsDetailNew}
-          //   columnOptions={columnOptions}
-          //   header={header}
-          //   rowHeaders={rowHeadersNum}
-          //   refModalGrid={refGridDetailNew}
-          //   onClickModalAddRow={onClickModalDetailAddRow}
-          //   onClickModalCancelRow={onClickModalDetailCancelRow}
-          //   onClickModalGrid={onClickModalDetailGrid}
-          //   onDblClickModalGrid={onDblClickModalDetailGrid}
-          // />
-          GridDetailNew
-        : null}
-      {isModalSelectOpen
-        ? // <ModalSelect
-          //   width={modalSelectSize.width}
-          //   height={modalSelectSize.height}
-          //   onClickModalSelectClose={onClickModalSelectClose}
-          //   columns={columnsSelect}
-          //   columnOptions={columnOptions}
-          //   header={header}
-          //   gridDataSelect={gridDataSelect}
-          //   rowHeaders={rowHeadersNum}
-          //   refGridSelect={refGridSelect}
-          //   onDblClickGridSelect={onDblClickGridSelect}
-          // />
-          GridModalSelect
-        : null}
-      {isModalSelectDateOpen
-        ? // <ModalSelectDate
-          //   height={"60%"}
-          //   onClickModalSelectDateClose={onClickModalSelectDateClose}
-          //   columns={columnsSelect}
-          //   columnOptions={columnOptions}
-          //   header={header}
-          //   gridDataSelect={gridDataSelect}
-          //   rowHeaders={rowHeadersNum}
-          //   refGridSelect={refGridSelect}
-          //   onDblClickGridSelectDate={onDblClickGridSelectDate}
-          //   dateText={dateOrder}
-          //   setDateText={setDateOrder}
-          //   onClickSearch={onClickSearchSelectDate}
-          // />
-          GridModalSelectDate
-        : null}
-      {isModalSelectMultiOpen
-        ? // <ModalSelectMulti
-          //   height={"70%"}
-          //   onClickModalSelectClose={onClickModalSelectMultiClose}
-          //   refGridSelect={refGridSelectMultiHeader}
-          //   columns={columnsSelectWeight}
-          //   columnsDetail={columnsSelectWeightDetail}
-          //   columnOptions={columnOptions}
-          //   header={header}
-          //   rowHeaders={rowHeadersNum}
-          //   gridDataSelect={gridDataSelect}
-          //   gridDataDetail={gridDataSelectDetail}
-          //   onClickSelectGrid={onClickModalSelectMulti}
-          // />
-          GridModalSelectMulti
-        : null}
-      {/* {isDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          headerClickRowID={headerClickRowID}
-          // actSearchDetail={actSearchDetail}
-          // actDeleteDetail={actDeleteDetailDateRange}
+      {isModalDetailOpen ? GridDetailNew : null}
+      {isModalSelectOpen ? GridModalSelect : null}
+      {isModalSelectDateOpen ? GridModalSelectDate : null}
+      {isModalSelectMultiOpen ? GridModalSelectMulti : null}
+      {isDeleteAlertOpen ? (
+        <AlertDelete
+          handleDelete={handleDelete}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
-      ) : null} */}
+      ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </>

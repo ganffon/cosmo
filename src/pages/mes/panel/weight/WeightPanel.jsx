@@ -395,7 +395,7 @@ function WeightPanel() {
           });
         }
       } else {
-        alert("계량자 넣어라 새캬");
+        alert("계량자 입력 모달창 개발");
       }
     }
   };
@@ -463,10 +463,10 @@ function WeightPanel() {
           });
         }
       } else {
-        alert("투입자 넣어라 새캬");
+        alert("투입자 입력 모달창 개발");
       }
     } else {
-      alert("창고 넣어라 새캬");
+      alert("창고 입력 모달창 개발");
     }
   };
   const onDblClickGridSelect = (e) => {
