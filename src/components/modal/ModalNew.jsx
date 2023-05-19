@@ -2,10 +2,9 @@ import React, { useContext, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
-import ButtonACS from "components/button/ButtonACS";
-import ButtonSave from "components/button/ButtonSave";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalNew.styled";
+import ButtonModule from "components/button/ButtonModule";
 
 function ModalNew(props) {
   const {
@@ -15,15 +14,15 @@ function ModalNew(props) {
     onClickModalClose = () => {},
     onClickModalGrid = () => {},
     onDblClickModalGrid = () => {},
-    refModalGrid,
-    columns,
-    columnOptions,
-    header,
-    rowHeaders,
+    refModalGrid = null,
+    columns = [],
+    columnOptions = [],
+    header = [],
+    rowHeaders = [],
     width = "95%",
     height = "95%",
     buttonType = "ACS",
-    step = null,
+    title = null,
     isAddOneRow = false,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
@@ -45,17 +44,20 @@ function ModalNew(props) {
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ButtonBox>
-        <S.TitleWrap>{step}</S.TitleWrap>
+        <S.TitleWrap>{title}</S.TitleWrap>
         <S.ButtonWrap>
           {buttonType === "ACS" ? (
-            <ButtonACS
+            <ButtonModule
+              addRowBtn={true}
+              cancelRowBtn={true}
+              saveBtn={true}
               onClickAddRow={onClickModalAddRow}
               onClickCancelRow={onClickModalCancelRow}
               onClickSave={onClickModalSave}
             />
           ) : null}
           {buttonType === "Save" ? (
-            <ButtonSave onClickSave={onClickModalSave} />
+            <ButtonModule saveBtn={true} onClickSave={onClickModalSave} />
           ) : null}
         </S.ButtonWrap>
       </S.ButtonBox>

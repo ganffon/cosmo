@@ -5,13 +5,13 @@ import GridTheme from "components/grid/setting/GridTheme";
 
 function GridModal(props) {
   const {
-    columnOptions,
-    columns,
-    rowHeaders,
-    header,
-    data,
-    draggable,
-    refGrid,
+    columnOptions = [],
+    columns = [],
+    rowHeaders = [],
+    header = [],
+    data = [],
+    draggable = false,
+    refGrid = null,
     onClick = () => {},
     onDblClick = () => {},
     onEditingFinish = () => {},

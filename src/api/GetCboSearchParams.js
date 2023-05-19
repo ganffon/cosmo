@@ -1,14 +1,12 @@
 function GetCboSearchParams(beforeParams = null, comboValue) {
   let params = "";
   let key;
-  if (beforeParams.length !== 0) {
+  if (beforeParams) {
+    params = beforeParams;
     for (key of Object.keys(comboValue)) {
-      if (comboValue[key] !== null) {
-        params = params + beforeParams + `&${key}=${comboValue[key]}`;
+      if (comboValue[key]) {
+        params = params + `&${key}=${comboValue[key]}`;
       }
-    }
-    if (params.length === 0) {
-      params = beforeParams;
     }
   } else {
     params = "?";

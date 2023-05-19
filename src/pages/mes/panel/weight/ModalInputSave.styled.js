@@ -20,17 +20,19 @@ export const HeaderBox = styled("div")`
 `;
 export const InfoBox = styled("div")`
   display: flex;
-  align-items: center;
-  height: 80px;
+  flex-direction: column;
+  height: calc(100% - 80px);
+  gap: 30px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 0px;
+  padding: 30px 0px;
 `;
 export const InfoTitle = styled("div")`
   font-size: 30px;
   font-weight: 700;
   margin-left: 30px;
+  margin-top: 15px;
 `;
 export const GridTitleBox = styled("div")`
   width: 100%;
@@ -42,22 +44,6 @@ export const GridTitleBox = styled("div")`
   padding-left: 15px;
   font-size: 20px;
   font-weight: 700;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
-`;
-export const GridBox = styled("div")`
-  width: 100%;
-  height: 400px;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
-`;
-export const GridBoxBottom = styled("div")`
-  width: 100%;
-  height: calc(100% - 560px);
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -145,4 +131,8 @@ export const ButtonTime = styled("button")`
   &:hover {
     background: ${(props) => props.hoverColor};
   }
+`;
+export const InfoWrap = styled("div")`
+  display: flex;
+  width: 100%;
 `;

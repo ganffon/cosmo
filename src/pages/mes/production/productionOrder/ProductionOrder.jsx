@@ -4,13 +4,11 @@ import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import ProductionOrderSet from "./ProductionOrderSet";
 import useInputSet from "custom/useInputSet";
-import ButtonNED from "components/button/ButtonNED";
 import ButtonNEDS from "components/button/ButtonNEDS";
 import ButtonED from "components/button/ButtonED";
 import ButtonSES from "components/button/ButtonSES";
 import ButtonSE from "components/button/ButtonSE";
 import GridSingle from "components/grid/GridSingle";
-import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
@@ -23,12 +21,9 @@ import * as uSave from "custom/useSave";
 import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
-import * as RE from "custom/RegularExpression";
 import * as S from "./ProductionOrder.styled";
 import ModalNew from "components/modal/ModalNew";
 import ModalDate from "components/modal/ModalDate";
-import GetSearchParams from "api/GetSearchParams";
-import GetInputSearchParams from "api/GetInputSearchParams";
 import restAPI from "api/restAPI";
 
 function ProductionOrder() {
@@ -47,11 +42,8 @@ function ProductionOrder() {
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeMid, setIsEditModeMid] = useState(false);
   const [isEditModeBottom, setIsEditModeBottom] = useState(false);
-  const [isNewDetail, setIsNewDetail] = useState(false);
 
   const [isModalHeaderOpen, setIsModalHeaderOpen] = useState(false);
-  const [isModalMidOpen, setIsModalMidOpen] = useState(false);
-  const [isModalBottomOpen, setIsModalBottomOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
 
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -63,28 +55,18 @@ function ProductionOrder() {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const [columnsSelect, setColumnsSelect] = useState([]);
-  const [inputInfoValue, setInputInfoValue] = useState([]);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataMid, setGridDataMid] = useState(null);
 
   const [gridDataBottom, setGridDataBottom] = useState(null);
-  const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
-  const [headerClickRowID, setHeaderClickRowID] = useState(null);
-  const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
   const [headerModalControl, setHeaderModalControl] = useState(null);
   const [inputSearchValue, setInputSearchValue] = useState([]);
-  const refGridDetail = useRef(null);
 
   const SWITCH_NAME_01 = "order";
   const SWITCH_NAME_02 = "orderInput";
   const SWITCH_NAME_03 = "orderDetail";
-
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
     isEditModeMid,
@@ -135,20 +117,11 @@ function ProductionOrder() {
     columnsMid,
     columnsBottom,
     columnsModalHeader,
-    columnsModalMid,
-    columnsModalBottom,
     columnsSelectRequest,
     columnsSelectLineDept,
-    columnsSelectMid,
-    columnsSelectBottom,
     inputSet,
-    inputInfo,
   } = ProductionOrderSet(isEditModeHeader, isEditModeMid, isEditModeBottom);
 
-  let clickModalMidRowKey = null;
-  let clickModalBottomRowKey = null;
-  const lineID = useRef("");
-  const prodCode = useRef("");
   const headerRowID = useRef("");
 
   useEffect(() => {
@@ -169,7 +142,6 @@ function ProductionOrder() {
   const onClickSearch = () => {
     headerRowID.current = "";
     actSearchGridTop();
-    // actSearchHeaderDI("start_date", "end_date");
     refGridMid?.current?.gridInst?.clear();
     refGridBottom?.current?.gridInst?.clear();
   };
@@ -226,11 +198,10 @@ function ProductionOrder() {
   };
   const onClickEditModeSaveHeader = () => {
     actEditHeader();
-    //setIsEditModeHeader(false);
   };
   const onClickEditModeExitHeader = () => {
     setIsEditModeHeader(false);
-    setDisRowTop();
+    setDisRowTop(!disRowTop);
   };
 
   const onClickMidDelete = () => {
@@ -240,38 +211,6 @@ function ProductionOrder() {
     }
   };
 
-  const onClickNewMid = () => {
-    lineID.current =
-      refGridHeader?.current?.gridInst.store.data.rawData[0].line_id;
-    prodCode.current =
-      refGridHeader?.current?.gridInst.store.data.rawData[0].prod_cd;
-    if (headerRowID.current !== null) {
-      actSearchMidModalData();
-      setIsModalMidOpen(true);
-    }
-  };
-  const onClickModalCloseMid = () => {
-    setIsModalMidOpen(false);
-  };
-
-  const onClickModalGridMid = (e) => {
-    clickModalMidRowKey = e.rowKey;
-  };
-  /*
-  const [actSearchHeaderDI] = uSearch.useSearchDI(
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    inputBoxID,
-    inputTextChange,
-    dateText,
-    setGridDataHeader,
-    disRowHeader,
-    setDisRowHeader,
-    restURI.order
-  );
-  */
   const onEditingFinishGridHeader = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -370,47 +309,12 @@ function ProductionOrder() {
     }
   };
 
-  const actSearchMidModalData = async () => {
-    try {
-      setIsBackDrop(true);
-
-      const readURI = `/std/control-plan?line-id=${lineID.current}&&prod_cd=${prodCode.current}&&apply_fg=true`;
-      let controlPlanData = await restAPI.get(readURI);
-
-      const controlPlanID = controlPlanData.data.data.rows[0].control_plan_id;
-      let gridData = await restAPI.get(
-        `/std/control-plan-detail?control_plan_id=${controlPlanID}&&order_input_fg=APPLY`
-      );
-
-      setGridDataMid(gridData?.data?.data?.rows);
-    } catch {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: "조회 실패",
-        severity: "error",
-      });
-    } finally {
-      setDisableRowToggle(!disableRowToggle);
-      setIsBackDrop(false);
-    }
-  };
-
   useEffect(() => {
     setInputTextChange();
     //actSearchHeaderDI("start_date", "end_date");
     actSearchGridTop();
   }, []);
 
-  const onDblClickModalMid = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalMid");
-      setColumnsSelect(columnsSelectMid); // 관리계획서 투입품
-      setIsModalSelectOpen(true);
-      // actSelectProd();
-    }
-  };
   const onClickEditMid = () => {
     setDisableRowToggleMid(!disableRowToggleMid);
     setIsEditModeMid(true);
@@ -428,45 +332,6 @@ function ProductionOrder() {
     startDate: DateTime().dateFull,
     endDate: DateTime(7).dateFull,
   });
-  const onClickNewBottom = () => {
-    if (headerClickRowKey !== null) {
-      setIsModalBottomOpen(true);
-    }
-  };
-  const onClickModalCloseBottom = () => {
-    setIsModalBottomOpen(false);
-  };
-  const onClickModalAddRowBottom = () => {
-    refGridModalBottom?.current?.gridInst?.appendRow();
-  };
-  const onClickModalGridBottom = (e) => {
-    clickModalBottomRowKey = e.rowKey;
-  };
-  const onClickModalCancelRowBottom = () => {
-    const gridEvent = refGridModalBottom?.current?.gridInst;
-    gridEvent?.removeRow(clickModalBottomRowKey);
-    clickModalBottomRowKey = null;
-  };
-  const onDblClickModalBottom = (e) => {
-    if (
-      Condition(e, [
-        "proc_nm",
-        "equip_nm",
-        "insp_item_type_nm",
-        "insp_item_nm",
-        "insp_item_desc",
-        "insp_method_nm",
-        "insp_tool_nm",
-        "insp_filing_nm",
-      ])
-    ) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalBottom");
-      setColumnsSelect(columnsSelectBottom); // 관리계획서 점검일지
-      setIsModalSelectOpen(true);
-      // actSelectProd();
-    }
-  };
   const onClickEditBottom = () => {
     setDisableRowToggleBottom(!disableRowToggleBottom);
     setIsEditModeBottom(true);
@@ -487,13 +352,6 @@ function ProductionOrder() {
 
   const onClickModalSaveHeader = async (e) => {
     actSave();
-  };
-  const onClickModalSaveMid = () => {
-    setIsModalMidOpen(false);
-    setIsModalBottomOpen(true);
-  };
-  const onClickModalSaveBottom = () => {
-    setIsModalBottomOpen(false);
   };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
@@ -786,7 +644,7 @@ function ProductionOrder() {
       </S.GridBottomWrap>
       {isModalHeaderOpen ? (
         <ModalNew
-          step={"01. 생산품목"}
+          title={"01. 생산품목"}
           height={"30%"}
           onClickModalSave={onClickModalSaveHeader}
           onClickModalClose={onClickModalCloseHeader}
@@ -797,40 +655,6 @@ function ProductionOrder() {
           rowHeaders={rowHeadersNum}
           refModalGrid={refGridModalHeader}
           isAddOneRow={true}
-          buttonType={"Save"}
-        />
-      ) : null}
-      {isModalMidOpen ? (
-        <ModalNew
-          step={"02. 투입품목"}
-          height={"70%"}
-          onClickModalSave={onClickModalSaveMid}
-          onClickModalClose={onClickModalCloseMid}
-          onClickModalGrid={onClickModalGridMid}
-          onDblClickModalGrid={onDblClickModalMid}
-          columns={columnsModalMid}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersNum}
-          refModalGrid={refGridModalMid}
-          buttonType={"Save"}
-        />
-      ) : null}
-      {isModalBottomOpen ? (
-        <ModalNew
-          step={"03. 점검기준서"}
-          height={"70%"}
-          onClickModalSave={onClickModalSaveBottom}
-          onClickModalClose={onClickModalCloseBottom}
-          onClickModalAddRow={false}
-          onClickModalCancelRow={false}
-          onClickModalGrid={onClickModalGridBottom}
-          onDblClickModalGrid={onDblClickModalBottom}
-          columns={columnsModalBottom}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersNum}
-          refModalGrid={refGridModalBottom}
           buttonType={"Save"}
         />
       ) : null}

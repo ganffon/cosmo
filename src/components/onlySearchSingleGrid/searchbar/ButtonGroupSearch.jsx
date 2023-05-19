@@ -13,7 +13,7 @@ function ButtonGroupSearch(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<AddIcon />}
         color="success"
@@ -23,7 +23,7 @@ function ButtonGroupSearch(props) {
         NEW
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<EditIcon />}
         color="secondary"
@@ -33,7 +33,7 @@ function ButtonGroupSearch(props) {
         EDIT
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<DeleteIcon />}
         color="error"

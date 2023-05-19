@@ -12,7 +12,7 @@ function ButtonNES(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<AddIcon />}
         color="success"
@@ -22,7 +22,7 @@ function ButtonNES(props) {
         NEW
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<EditIcon />}
         color="secondary"

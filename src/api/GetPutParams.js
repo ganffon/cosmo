@@ -578,6 +578,13 @@ class orderDetail {
     this.remark = raw.remark;
   }
 }
+class packing {
+  constructor(raw) {
+    this.work_packing_id = raw.work_packing_id;
+    this.packing_emp_id = raw.packing_emp_id;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -731,6 +738,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "orderDetail":
       params = new orderDetail(raw);
+      break;
+    case "packing":
+      params = new packing(raw);
       break;
     default:
   }

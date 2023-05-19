@@ -53,7 +53,7 @@ function ButtonGroupEdit(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<SaveIcon />}
         color="secondary"
@@ -62,7 +62,7 @@ function ButtonGroupEdit(props) {
         SAVE
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<LogoutIcon />}
         color="error"

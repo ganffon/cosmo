@@ -8,7 +8,7 @@ function ButtonSE(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<SaveIcon />}
         color="secondary"
@@ -17,7 +17,7 @@ function ButtonSE(props) {
         SAVE
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<LogoutIcon />}
         color="error"

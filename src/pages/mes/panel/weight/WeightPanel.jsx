@@ -1,19 +1,8 @@
-import {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-  useMemo,
-} from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import WeightPanelSet from "./WeightPanelSet";
-import BtnSubdivisionScale from "components/button/panel/BtnSubdivisionScale";
-import Button5 from "components/button/panel/BtnSubdivisionSL";
-import InputPaper from "components/input/InputPaper";
-import InputText from "components/input/InputText";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
@@ -22,16 +11,23 @@ import restURI from "json/restURI.json";
 import * as uSearch from "custom/useSearch";
 import * as S from "./WeightPanel.styled";
 import restAPI from "api/restAPI";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import DateRange from "components/datetime/DateRange";
 import InputSearch from "components/input/InputSearch";
 import BtnWeight from "components/button/panel/BtnWeight";
 import ModalWeight from "./ModalWeight";
 import Condition from "custom/Condition";
 import ModalInput from "./ModalInput";
+import ModalInputSave from "./ModalInputSave";
 
 function WeightPanel() {
   const prodID = useRef("");
+  const prodCD = useRef("");
+  const prodNM = useRef("");
+  const storeID = useRef("");
+  const storeNM = useRef("");
+  const locationID = useRef("");
+  const locationNM = useRef("");
+  const workWeighID = useRef("");
   const lineDeptID = useRef("");
   const lineID = useRef("");
   const lineNM = useRef("");
@@ -54,6 +50,7 @@ function WeightPanel() {
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalWeightOpen, setIsModalWeightOpen] = useState(false);
   const [isModalInputOpen, setIsModalInputOpen] = useState(false);
+  const [isModalInputSaveOpen, setIsModalInputSaveOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -66,9 +63,10 @@ function WeightPanel() {
     columns,
     columnsWeight,
     columnsSelectEmp,
+    columnsSelectStore,
     columnsInput,
     columnsInputDetail,
-  } = WeightPanelSet();
+  } = WeightPanelSet(onClickGridButton);
 
   const resetRequire = () => {
     prodID.current = "";
@@ -76,6 +74,15 @@ function WeightPanel() {
     lineID.current = "";
     lineNM.current = "";
     workOrderID.current = "";
+    workWeighID.current = "";
+    prodCD.current = "";
+    prodNM.current = "";
+    storeID.current = "";
+    storeNM.current = "";
+    locationID.current = "";
+    locationNM.current = "";
+    empID.current = "";
+    empNM.current = "";
     setSelectInfo({
       ...selectInfo,
       orderDate: "",
@@ -89,6 +96,12 @@ function WeightPanel() {
     empID.current = "";
     empNM.current = "";
   };
+  const resetStore = () => {
+    storeID.current = "";
+    storeNM.current = "";
+    locationID.current = "";
+    locationNM.current = "";
+  };
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
@@ -98,15 +111,17 @@ function WeightPanel() {
   const refGridInputDetail = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
-  const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataWeight, setGridDataWeight] = useState(null);
   const [gridDataInput, setGridDataInput] = useState(null);
   const [gridDataInputDetail, setGridDataInputDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
 
+  const [selectColumn, setSelectColumn] = useState([]);
+  const [selectName, setSelectName] = useState("");
+
   const [modalSelectSize, setModalSelectSize] = useState({
-    width: "80%",
-    height: "90%",
+    width: "50%",
+    height: "60%",
   });
 
   useEffect(() => {
@@ -127,7 +142,16 @@ function WeightPanel() {
     setIsSnackOpen,
     setGridDataSelect,
     restURI.employee + `?use_fg=true`
-  ); //➡️ Modal Select Search Prod
+  );
+  const [actSelectStore] = uSearch.useSearchSelect(
+    refGridSelect,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridDataSelect,
+    restURI.storeIncludeLocation
+  );
 
   const onClickNowTime = () => {
     setNowDateTime({
@@ -136,28 +160,16 @@ function WeightPanel() {
       nowTime: DateTime().hour + ":" + DateTime().minute,
     });
   };
-  const onClickGridInput = (e) => {
+  const onClickGridInput = async (e) => {
     if (e?.rowKey !== undefined) {
-      const Header = refGridInputDetail?.current?.gridInst;
-      prodID.current = Header.getValue(e?.rowKey, "prod_id");
-      lineID.current = Header.getValue(e?.rowKey, "line_id");
-      lineNM.current = Header.getValue(e?.rowKey, "line_nm");
-      lineDeptID.current = Header.getValue(e?.rowKey, "line_dept_id");
-      workOrderID.current = Header.getValue(e?.rowKey, "work_order_id");
-    }
-  };
-  const onClickInput = async () => {
-    if (workOrderID.current !== "") {
-      setNowDateTime({
-        nowDate: DateTime().dateFull,
-        nowTime: DateTime().hour + ":" + DateTime().minute,
-      });
+      const Header = refGridInput?.current?.gridInst;
+      const workWeighID = Header.getValue(e?.rowKey, "work_weigh_id");
+      handleInputSaveInfo(e?.rowKey);
       try {
         const result = await restAPI.get(
-          restURI.prodWeight + `?complete_fg=INCOMPLETE`
+          restURI.prodWeightDetail + `?work_weigh_id=${workWeighID}`
         );
-        setGridDataInput(result?.data?.data?.rows);
-        setIsModalInputOpen(true);
+        setGridDataInputDetail(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -167,6 +179,45 @@ function WeightPanel() {
           location: "bottomRight",
         });
       }
+    }
+  };
+  const handleInputSaveInfo = (rowKey) => {
+    const Header = refGridInput?.current?.gridInst;
+    workWeighID.current = Header.getValue(rowKey, "work_weigh_id");
+    prodCD.current = Header.getValue(rowKey, "prod_cd");
+    prodNM.current = Header.getValue(rowKey, "prod_nm");
+    storeID.current = Header.getValue(rowKey, "inv_to_store_id");
+    storeNM.current = Header.getValue(rowKey, "store_nm");
+    locationID.current = Header.getValue(rowKey, "inv_to_location_id");
+    locationNM.current = Header.getValue(rowKey, "location_nm");
+  };
+  const onClickInputSaveClose = () => {
+    setIsModalInputSaveOpen(false);
+  };
+  const handleInputSearch = async () => {
+    try {
+      const result = await restAPI.get(
+        restURI.prodWeight + `?complete_fg=INCOMPLETE`
+      );
+      setGridDataInput(result?.data?.data?.rows);
+      setIsModalInputOpen(true);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    }
+  };
+  const onClickInput = async () => {
+    if (workOrderID.current) {
+      setNowDateTime({
+        nowDate: DateTime().dateFull,
+        nowTime: DateTime().hour + ":" + DateTime().minute,
+      });
+      handleInputSearch();
     }
   };
   const onClickWeight = async () => {
@@ -236,7 +287,6 @@ function WeightPanel() {
 
   const onClickWeightClose = () => {
     resetRequire();
-    resetEmp();
     setIsModalWeightOpen(false);
   };
 
@@ -265,16 +315,29 @@ function WeightPanel() {
   };
   const onClickSelect = () => {
     setIsModalSelectOpen(true);
+    setSelectName("Emp");
+    setSelectColumn(columnsSelectEmp);
     actSelectEmp();
   };
+  const onClickSelectStore = () => {
+    setIsModalSelectOpen(true);
+    setSelectName("Store");
+    setSelectColumn(columnsSelectStore);
+    actSelectStore();
+  };
+
   const [removeToggle, setRemoveToggle] = useState(false);
   const onClickRemove = () => {
     resetEmp();
     setRemoveToggle(!removeToggle);
   };
+  const onClickRemoveStore = () => {
+    resetStore();
+    setRemoveToggle(!removeToggle);
+  };
   const onClickWeightSave = async () => {
     if (isBackDrop === false) {
-      if (empNM.current !== "") {
+      if (empNM.current) {
         refGridWeight?.current?.gridInst?.finishEditing();
         let result = [];
         for (
@@ -321,7 +384,6 @@ function WeightPanel() {
             location: "bottomRight",
           });
           resetRequire();
-          resetEmp();
           setIsModalWeightOpen(false);
         } catch (err) {
           setIsSnackOpen({
@@ -360,29 +422,70 @@ function WeightPanel() {
   };
   const onClickInputClose = () => {
     resetRequire();
-    resetEmp();
     setIsModalInputOpen(false);
   };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
   };
-  const onClickInputSave = () => {
-    if (empNM.current !== "") {
+  const onClickInputSave = async () => {
+    if (storeID.current) {
+      if (empNM.current) {
+        const raw = {
+          work_input_date: nowDateTime.nowDate,
+          work_input_time: nowDateTime.nowTime,
+          inv_to_store_id: storeID.current,
+          inv_to_location_id: locationID.current,
+          input_emp_id: empID.current,
+        };
+        try {
+          const result = await restAPI.patch(
+            restURI.prdWeightComplete.replace("{id}", workWeighID.current),
+            raw
+          );
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: result?.data?.message,
+            severity: "success",
+            location: "bottomRight",
+          });
+          resetRequire();
+          setIsModalInputSaveOpen(false);
+          handleInputSearch();
+          refGridInputDetail?.current?.gridInst?.clear();
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        }
+      } else {
+        alert("투입자 넣어라 새캬");
+      }
     } else {
-      alert("투입자 넣어라 새캬");
+      alert("창고 넣어라 새캬");
     }
   };
   const onDblClickGridSelect = (e) => {
     const data = e?.instance?.store?.data?.rawData[e?.rowKey];
-    empID.current = data.emp_id;
-    empNM.current = data.emp_nm;
+    if (selectName === "Emp") {
+      empID.current = data.emp_id;
+      empNM.current = data.emp_nm;
+    } else if (selectName === "Store") {
+      storeID.current = data.store_id;
+      storeNM.current = data.store_nm;
+      locationID.current = data.location_id;
+      locationNM.current = data.location_nm;
+    }
     setIsModalSelectOpen(false);
   };
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      // setSearchToggle(!searchToggle);
-    }
-  };
+  function onClickGridButton(rowKey) {
+    handleInputSaveInfo(rowKey);
+    setIsModalInputSaveOpen(true);
+  }
   const GridHeader = useMemo(() => {
     return (
       <GridSingle
@@ -441,7 +544,7 @@ function WeightPanel() {
               nameSize={"20px"}
               namePositionTop={"-25px"}
               nameColor={"white"}
-              value={selectInfo.orderDate}
+              value={selectInfo.orderDate || ""}
               size={"30px"}
               btn={false}
             />
@@ -452,7 +555,7 @@ function WeightPanel() {
               nameSize={"20px"}
               namePositionTop={"-25px"}
               nameColor={"white"}
-              value={selectInfo.line}
+              value={selectInfo.line || ""}
               size={"30px"}
               btn={false}
             />
@@ -463,7 +566,7 @@ function WeightPanel() {
               nameSize={"20px"}
               namePositionTop={"-25px"}
               nameColor={"white"}
-              value={selectInfo.orderQty}
+              value={selectInfo.orderQty || ""}
               size={"30px"}
               btn={false}
             />
@@ -474,7 +577,7 @@ function WeightPanel() {
               nameSize={"20px"}
               namePositionTop={"-25px"}
               nameColor={"white"}
-              value={selectInfo.prodCD}
+              value={selectInfo.prodCD || ""}
               size={"30px"}
               btn={false}
             />
@@ -485,7 +588,7 @@ function WeightPanel() {
               nameSize={"20px"}
               namePositionTop={"-25px"}
               nameColor={"white"}
-              value={selectInfo.prodNM}
+              value={selectInfo.prodNM || ""}
               size={"30px"}
               btn={false}
             />
@@ -539,14 +642,25 @@ function WeightPanel() {
             rowHeadersDetail={rowHeadersNum}
             refGridInput={refGridInput}
             refGridInputDetail={refGridInputDetail}
+            onClickGridInput={onClickGridInput}
+          />
+        ) : null}
+        {isModalInputSaveOpen ? (
+          <ModalInputSave
+            onClickModalClose={onClickInputSaveClose}
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
+            onClickSelectStore={onClickSelectStore}
+            onClickRemoveStore={onClickRemoveStore}
             onClickInputSave={onClickInputSave}
             onClickNowTime={onClickNowTime}
             onClickGridInput={onClickGridInput}
             nowDateTime={nowDateTime}
             lineNM={lineNM.current}
-            empID={empID.current}
+            prodCD={prodCD.current}
+            prodNM={prodNM.current}
+            storeNM={storeNM.current}
+            locationNM={locationNM.current}
             empNM={empNM.current}
           />
         ) : null}
@@ -555,7 +669,7 @@ function WeightPanel() {
             width={modalSelectSize.width}
             height={modalSelectSize.height}
             onClickModalSelectClose={onClickModalSelectClose}
-            columns={columnsSelectEmp}
+            columns={selectColumn}
             columnOptions={columnOptions}
             header={header}
             gridDataSelect={gridDataSelect}
