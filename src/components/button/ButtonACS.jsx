@@ -10,25 +10,27 @@ function ButtonACS(props) {
     <>
       <S.ButtonSet
         startIcon={<AddIcon />}
-        variant="text"
+        variant="contained"
         size="small"
         color="success"
         onClick={onClickAddRow}
+        width={"130px"}
       >
         ADD ROW
       </S.ButtonSet>
       <S.ButtonSet
         startIcon={<UTurnLeftIcon />}
-        variant="text"
+        variant="contained"
         size="small"
         color="error"
         onClick={onClickCancelRow}
+        width={"130px"}
       >
         CANCEL ROW
       </S.ButtonSet>
       <S.ButtonSet
         startIcon={<SaveIcon />}
-        variant="text"
+        variant="contained"
         size="small"
         color="secondary"
         onClick={onClickSave}

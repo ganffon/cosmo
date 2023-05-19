@@ -1,7 +1,8 @@
 export const MENU_TYPE = "V2";
 
 export const APP_BAR_HEIGHT = "47px";
-export const APP_BAR_COLOR = "#bacbda";
+export const APP_BAR_COLOR = "white";
+// export const APP_BAR_COLOR = "#bacbda";
 
 export const MENU_FOLD_WIDTH = "90px";
 export const MENU_FOLD_BACK_COLOR = "#003557";

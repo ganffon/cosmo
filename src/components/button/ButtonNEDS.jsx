@@ -18,7 +18,7 @@ function ButtonNEDS(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<AddIcon />}
         color="success"
@@ -28,7 +28,7 @@ function ButtonNEDS(props) {
         NEW
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<EditIcon />}
         color="secondary"
@@ -38,7 +38,7 @@ function ButtonNEDS(props) {
         EDIT
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<DeleteIcon />}
         color="error"

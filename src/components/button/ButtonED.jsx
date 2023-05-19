@@ -11,7 +11,7 @@ function ButtonED(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<EditIcon />}
         color="secondary"
@@ -21,7 +21,7 @@ function ButtonED(props) {
         EDIT
       </S.ButtonSet>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<DeleteIcon />}
         color="error"

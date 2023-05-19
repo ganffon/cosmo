@@ -541,6 +541,23 @@ class order {
     this.remark = raw.remark;
   }
 }
+class packing {
+  constructor(raw) {
+    this.work_order_id = raw.work_order_id;
+    this.line_id = raw.line_id;
+    this.line_dept_id = raw.line_dept_id;
+    this.prod_id = raw.prod_id;
+    this.lot_no = raw.lot_no;
+    this.packing_qty = String(raw.packing_qty) ? Number(raw.packing_qty) : null;
+    this.packing_cnt = String(raw.packing_cnt) ? Number(raw.packing_cnt) : null;
+    this.work_packing_date = raw.work_packing_date;
+    this.work_packing_time = raw.work_packing_time;
+    this.packing_emp_id = raw.packing_emp_id;
+    this.inv_to_store_id = raw.inv_to_store_id;
+    this.inv_to_location_id = raw.inv_to_location_id;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -703,6 +720,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "order":
         params = new order(raw);
+        break;
+      case "packing":
+        params = new packing(raw);
         break;
       default:
     }

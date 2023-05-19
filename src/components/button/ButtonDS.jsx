@@ -11,7 +11,7 @@ function ButtonDS(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<DeleteIcon />}
         color="error"

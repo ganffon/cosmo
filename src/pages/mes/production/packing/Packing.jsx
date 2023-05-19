@@ -1,15 +1,9 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
-import SubdivisionSet from "./PackingSet";
-import useInputSet from "custom/useInputSet";
-import ButtonNES from "components/button/ButtonNES";
-import ButtonNED from "components/button/ButtonNED";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonSE from "components/button/ButtonSE";
+import PackingSet from "./PackingSet";
 import GridSingle from "components/grid/GridSingle";
-import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
@@ -17,35 +11,49 @@ import BackDrop from "components/backdrop/BackDrop";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import * as uSearch from "custom/useSearch";
-import * as uSave from "custom/useSave";
-import * as uEdit from "custom/useEdit";
-import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as RE from "custom/RegularExpression";
 import * as S from "./Packing.styled";
 import InputPaper from "components/input/InputPaper";
 import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
+import DateRange from "components/datetime/DateRange";
+import InputSearch from "components/input/InputSearch";
+import ButtonModule from "components/button/ButtonModule";
+import ModalNew from "components/modal/ModalNew";
+import ModalSelectDate from "components/modal/ModalSelectDate";
+import GetPutParams from "api/GetPutParams";
+import ModalSelectMulti from "components/modal/ModalSelectMulti";
 
 function Packing() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
 
+  const prodID = useRef("");
+  const prodCD = useRef("");
+  const prodNM = useRef("");
+  const workOrderID = useRef("");
+  const workPackingID = useRef("");
+
+  const resetProd = () => {
+    prodID.current = "";
+    prodCD.current = "";
+    prodNM.current = "";
+  };
+
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
-  const [isEditModeDetail, setIsEditModeDetail] = useState(false);
-  const [isNewDetail, setIsNewDetail] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
+  const [isModalSelectDateOpen, setIsModalSelectDateOpen] = useState(false);
+  const [isModalSelectMultiOpen, setIsModalSelectMultiOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
-  const [inputInfoValue, setInputInfoValue] = useState([]);
-  const [headerClickRowID, setHeaderClickRowID] = useState(null);
-  const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
-  const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
+  // const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  // const [headerClickRowID, setHeaderClickRowID] = useState(null);
 
   const barcodePrintDetail = async (rowKey) => {
     const gridDetailId =
@@ -126,34 +134,38 @@ function Packing() {
     header,
     columnsHeader,
     columnsDetail,
-    columnsModalHeader,
-    columnsModalDetail,
+    columnsHeaderNew,
+    columnsDetailNew,
+    columnsSelectOrder,
     columnsSelectProd,
-    inputSet,
-    inputInfo,
-  } = SubdivisionSet(
-    isEditModeHeader,
-    isEditModeDetail,
-    isNewDetail,
-    barcodePrintDetail,
-    barcodePrintHeader
-  );
+    columnsSelectEmp,
+    columnsSelectWeight,
+    columnsSelectWeightDetail,
+    columnsSelectStore,
+  } = PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader);
 
-  const SWITCH_NAME_01 = "subdivision";
-  const SWITCH_NAME_02 = "subdivisionDetail";
   let modalDetailClickRowKey = null;
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
-  const refGridModalHeader = useRef(null);
-  const refGridModalDetail = useRef(null);
+  const refGridHeaderNew = useRef(null);
+  const refGridDetailNew = useRef(null);
+  const refGridSelectMultiHeader = useRef(null);
   const refGridSelect = useRef(null);
+  const refGridSelectDate = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
+  const [gridDataSelectDate, setGridDataSelectDate] = useState(null);
+  const [gridDataSelectHeader, setGridDataSelectHeader] = useState(null);
+  const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
 
   const [dateText, setDateText] = useState({
+    startDate: DateTime().dateFull,
+    endDate: DateTime(7).dateFull,
+  });
+  const [dateOrder, setDateOrder] = useState({
     startDate: DateTime().dateFull,
     endDate: DateTime(7).dateFull,
   });
@@ -161,33 +173,25 @@ function Packing() {
     width: "80%",
     height: "90%",
   });
-  const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
-  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
+  const dblClickTarget = useRef("");
+  const dblClickRowKey = useRef("");
+
   const [columnsSelect, setColumnsSelect] = useState([]);
-  const [inputSearchValue, setInputSearchValue] = useState([]);
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
-  const [comboValue, setComboValue] = useState({});
+  const [inputTextChange, setInputTextChange] = useState({});
 
   const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
     isEditModeHeader,
     refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
   );
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
     refGridDetail?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridHeader.current, refGridDetail.current]);
+  }, [isMenuSlide]);
 
   useEffect(() => {
-    actSearchHeaderDI(true, "start_date", "end_date");
+    onClickSearch();
   }, []);
 
   const [actSelectProd] = uSearch.useSearchSelect(
@@ -198,102 +202,45 @@ function Packing() {
     setIsSnackOpen,
     setGridDataSelect,
     restURI.product
-  ); //➡️ Modal Select Search Prod
-
-  const [actSave] = uSave.useSaveMulti(
-    refGridModalHeader,
-    refGridModalDetail,
-    isEditModeHeader,
+  );
+  const [actSelectOrder] = uSearch.useSearchSelect(
+    refGridSelectDate,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SWITCH_NAME_01,
-    SWITCH_NAME_02,
-    restURI.subdivision
+    setGridDataSelectDate,
+    restURI.prdOrder +
+      `?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`
   );
-  const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
-    refGridHeader,
-    refGridDetail,
-    setInputInfoValue,
+  const [actSelectEmp] = uSearch.useSearchSelect(
+    refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    inputBoxID,
-    inputSearchValue,
-    dateText,
-    setGridDataHeader,
-    disRowHeader,
-    setDisRowHeader,
-    restURI.subdivision
+    setGridDataSelect,
+    restURI.employee
   );
-
-  const [actSearchDetail] = uSearch.useSearchDetail(
-    setGridDataDetail,
-    restURI.subdivisionDetail + "?work_subdivision_id=",
-    disRowDetail,
-    setDisRowDetail
-  );
-
-  const [actDeleteDetailDateRange] = uDelete.useDeleteDetailDateRange(
-    refGridDetail,
+  const [actSelectStore] = uSearch.useSearchSelect(
+    refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    setIsDeleteAlertOpen,
-    actSearchHeaderDI,
-    actSearchDetail,
-    headerClickRowID,
-    restURI.subdivisionDetail,
-    SWITCH_NAME_02
+    setGridDataSelect,
+    restURI.storeIncludeLocation
   );
-
-  const [actSearchEditHeader] = uSearch.useSearchEditHeader(
-    isBackDrop,
-    setIsBackDrop,
-    setGridDataHeaderRowID,
-    restURI.subdivision
-  );
-  const [actEditHeader] = uEdit.useEditHeader(
-    refGridHeader,
-    isEditModeHeader,
+  const [actSelectWeight] = uSearch.useSearchSelect(
+    refGridSelectMultiHeader,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
-    SWITCH_NAME_01,
-    restURI.subdivision
+    setGridDataSelectHeader,
+    restURI.prodWeight,
+    null
   );
-  const [actEditDetail] = uEdit.useEditDetail(
-    refGridDetail,
-    isEditModeDetail,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_02,
-    restURI.subdivisionDetail
-  );
-  const [actSaveDetail] = uSave.useSaveDetail(
-    refGridModalDetail,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_02,
-    restURI.subdivisionDetail
-  );
-
-  useEffect(() => {
-    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridHeader?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridHeader.current]);
-  useEffect(() => {
-    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refGridDetail?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridDetail.current]);
 
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
@@ -301,491 +248,616 @@ function Packing() {
   const onClickNew = () => {
     setIsModalOpen(true);
   };
-  const onClickEditModalSave = () => {
-    actSaveDetail();
-  };
   const onClickEditHeader = () => {
     setIsEditModeHeader(true);
     setDisRowHeader(!disRowHeader);
   };
-  const onClickProdCancel = () => {
-    setInputSearchValue([]);
+  const [removeToggle, setRemoveToggle] = useState(false);
+  const onClickRemoveProd = () => {
+    resetProd();
+    setRemoveToggle(!removeToggle);
   };
-  const onClickProd = () => {
-    setDblClickGrid("Search");
+  const onClickSelectProd = () => {
+    dblClickTarget.current = "Search";
     setColumnsSelect(columnsSelectProd);
     setIsModalSelectOpen(true);
     actSelectProd();
   };
-  const onClickEditModeSave = () => {
-    actEditHeader();
-    setIsEditModeDetail(false);
+  const onClickEditModeSave = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridHeader?.current?.gridInst;
+      Grid?.finishEditing();
+
+      const data = Grid.getCheckedRows().map((raw) =>
+        GetPutParams("packing", raw)
+      );
+      const res = await restAPI.put(restURI.prdPacking, data);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: res?.data?.message,
+        severity: "success",
+      });
+      setIsModalOpen(false);
+      disRow.handleCheckReset(isEditModeHeader, refGridHeader);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
-    actSearchHeaderDI(false, "start_date", "end_date");
-    //actSearchDetail(headerClickRowID);
     setDisRowHeader(!disRowHeader);
+    onClickSearch();
   };
-  const onClickSearch = () => {
-    actSearchHeaderDI(true, "start_date", "end_date");
-  };
-  const onClickModalAddRow = () => {
-    const Header = refGridModalHeader?.current?.gridInst;
-    const Detail = refGridModalDetail?.current?.gridInst;
-    Header?.finishEditing();
-    Detail?.finishEditing();
-    Detail?.appendRow();
-
-    Detail?.setValue(
-      Detail.store.data.rawData.length - 1,
-      "subdivision_date",
-      DateTime().dateFull
-    );
-
-    if (isNewDetail === true) {
-      for (let i = 0; i < Detail.store.data.rawData.length; i++) {
-        Detail?.setValue(
-          Detail.store.data.rawData[i].rowKey,
-          "work_subdivision_id",
-          Header.getValue(0, "work_subdivision_id")
-        );
+  const onClickSearch = async () => {
+    try {
+      setIsBackDrop(true);
+      let conditionLine;
+      let conditionProdID;
+      inputTextChange.line_nm
+        ? (conditionLine = `&line_nm=${inputTextChange.line}`)
+        : (conditionLine = "");
+      prodID.current
+        ? (conditionProdID = `&prod_id=${prodID.current}`)
+        : (conditionProdID = "");
+      const result = await restAPI.get(
+        restURI.prdPacking +
+          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          conditionLine +
+          conditionProdID
+      );
+      setGridDataHeader(result?.data?.data?.rows);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      if (isEditModeHeader) {
+        setDisRowHeader(!disRowHeader);
       }
+      setIsBackDrop(false);
     }
   };
-  const onClickGridModalDetail = (e) => {
+  const onClickNewDetail = () => {
+    if (workOrderID.current) {
+      setIsModalDetailOpen(true);
+    } else {
+      alert("생산품목 선택해라 새캬");
+    }
+  };
+  const onClickDeleteDetail = () => {};
+  const onClickModalAddRow = () => {
+    const Grid = refGridHeaderNew?.current?.gridInst;
+    Grid?.finishEditing();
+    Grid?.appendRow();
+    Grid?.setValue(
+      Grid.getRowCount() - 1,
+      "work_packing_date",
+      DateTime().dateFull
+    );
+    Grid?.setValue(Grid.getRowCount() - 1, "packing_cnt", 1);
+  };
+  const onClickModalDetailAddRow = () => {
+    const Grid = refGridDetailNew?.current?.gridInst;
+    Grid?.finishEditing();
+    Grid?.appendRow();
+  };
+  const onClickModalGrid = (e) => {
+    modalDetailClickRowKey = e.rowKey;
+  };
+  const onClickModalDetailGrid = (e) => {
     modalDetailClickRowKey = e.rowKey;
   };
   const onClickModalCancelRow = () => {
-    const gridEvent = refGridModalDetail?.current?.gridInst;
+    const gridEvent = refGridHeaderNew?.current?.gridInst;
     gridEvent?.removeRow(modalDetailClickRowKey);
     modalDetailClickRowKey = null;
   };
-  const onClickModalSave = () => {
-    actSave();
+  const onClickModalDetailCancelRow = () => {
+    const gridEvent = refGridDetailNew?.current?.gridInst;
+    gridEvent?.removeRow(modalDetailClickRowKey);
+    modalDetailClickRowKey = null;
+  };
+  const onClickModalSave = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridHeaderNew?.current?.gridInst;
+      Grid?.finishEditing();
+      let result = [];
+      for (let i = 0; i < Grid?.getRowCount(); i++) {
+        result.push(Grid?.getRowAt(i));
+      }
+      const data = result.map((raw) => GetPostParams("packing", raw));
+      const res = await restAPI.post(restURI.prdPacking, data);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: res?.data?.message,
+        severity: "success",
+      });
+      setIsModalOpen(false);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
+  const onDblClickModalGrid = (e) => {
+    if (
+      Condition(e, [
+        "work_order_no",
+        "line_dept_nm",
+        "line_nm",
+        "prod_cd",
+        "prod_nm",
+      ])
+    ) {
+      dblClickTarget.current = "Order";
+      dblClickRowKey.current = e?.rowKey;
+      setIsModalSelectDateOpen(true);
+      actSelectOrder();
+    }
+    if (Condition(e, ["packing_emp_nm"])) {
+      dblClickTarget.current = "Emp";
+      dblClickRowKey.current = e?.rowKey;
+      setColumnsSelect(columnsSelectEmp);
+      setIsModalSelectOpen(true);
+      actSelectEmp();
+    }
+    if (Condition(e, ["store_nm", "location_nm"])) {
+      dblClickTarget.current = "Store";
+      dblClickRowKey.current = e?.rowKey;
+      setColumnsSelect(columnsSelectStore);
+      setIsModalSelectOpen(true);
+      actSelectStore();
+    }
+  };
+  const onDblClickModalDetailGrid = (e) => {
+    if (Condition(e, ["prod_cd", "prod_nm", "lot_no", "input_qty"])) {
+      dblClickTarget.current = "Weight";
+      dblClickRowKey.current = e?.rowKey;
+      setIsModalSelectMultiOpen(true);
+      actSelectWeight(
+        `?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`
+      );
+    }
   };
   const onClickModalClose = () => {
     setIsModalOpen(false);
-    setIsNewDetail(false);
     setIsEditModeHeader(false);
-    actSearchHeaderDI(true, "start_date", "end_date");
-    actSearchDetail(headerClickRowID);
   };
-  const onDblClickGridModalHeader = (e) => {
-    if (!isNewDetail) {
-      if (Condition(e, ["prod_cd", "prod_nm"])) {
-        setDblClickRowKey(e?.rowKey);
-        setDblClickGrid("ModalHeader");
-        setColumnsSelect(columnsSelectProd);
-        setIsModalSelectOpen(true);
-        actSelectProd();
-      }
-    }
+  const onClickModalDetailClose = () => {
+    workOrderID.current = "";
+    setIsModalDetailOpen(false);
   };
 
-  const onEditingFinishGridModalDetail = (e) => {
-    const Header = refGridModalHeader?.current?.gridInst;
-    const Detail = refGridModalDetail?.current?.gridInst;
-    if (Condition(e, ["subdivision_time"])) {
-      //🔸시간 정규표현식 적용
-      RE.Time(e, refGridModalDetail, "subdivision_time");
-    }
-    if (Condition(e, ["before_subdivision_qty"])) {
-      const beforeQty = e?.value;
-      const afterQty = Detail.getValue(e?.rowKey, "after_subdivision_qty");
-      if (afterQty) {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
-      }
-      //Header?.setValue(0, "total_qty", totalQty); 합계내역 보여주지 않기로 하여 주석처리
-    }
-    if (Condition(e, ["after_subdivision_qty"])) {
-      const beforeQty = Detail.getValue(e?.rowKey, "before_subdivision_qty");
-      const afterQty = e?.value;
-      if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", -e?.value);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
-      }
-      //Header?.setValue(0, "total_qty", totalQty);
-    }
-  };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
-    actSearchDetail(headerClickRowID);
+  };
+  const onClickModalSelectDateClose = () => {
+    setIsModalSelectDateOpen(false);
+  };
+  const onClickModalSelectMultiClose = () => {
+    setIsModalSelectMultiOpen(false);
+  };
+  const onClickModalSelectMulti = async (e) => {
+    const Grid = refGridSelectMultiHeader?.current?.gridInst;
+    const workWeighID = Grid?.getValue(e?.rowKey, "work_weigh_id");
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(
+        restURI.prodWeightDetail + `?work_weigh_id=${workWeighID}`
+      );
+      setGridDataSelectDetail(result?.data?.data?.rows);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
   const onDblClickGridSelect = (e) => {
-    //🔸Select Grid에서 DblClick
-    let refGrid;
-    let columnName;
-    const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
-    console.log(refGridHeader);
-    if (dblClickGrid === "Search") {
-      setInputSearchValue([]);
-      columnName = ["prod_cd", "prod_nm"];
-      for (let i = 0; i < columnName.length; i++) {
-        setInputSearchValue((prevList) => {
-          return [
-            ...prevList,
-            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]],
-          ];
-        });
-      }
-    } else {
-      if (dblClickGrid === "Header") {
-        refGrid = refGridHeader;
-        columnName = columnNameProd;
-      } else if (dblClickGrid === "ModalHeader") {
-        refGrid = refGridModalHeader;
-        columnName = columnNameProd;
-      } else if (dblClickGrid === "Detail") {
-        refGrid = refGridDetail;
-      } else if (dblClickGrid === "ModalDetail") {
-        refGrid = refGridModalDetail;
-        columnName = columnNameProd;
-      }
-      for (let i = 0; i < columnName.length; i++) {
-        refGrid?.current?.gridInst?.setValue(
-          dblClickRowKey,
-          columnName[i],
-          e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
-        );
-      }
-      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+    const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+    if (dblClickTarget.current === "Search") {
+      prodID.current = data.prod_id;
+      prodCD.current = data.prod_cd;
+      prodNM.current = data.prod_nm;
+    } else if (dblClickTarget.current === "Emp") {
+      const Grid = refGridHeaderNew?.current?.gridInst;
+      Grid?.setValue(dblClickRowKey.current, "packing_emp_id", data.emp_id);
+      Grid?.setValue(dblClickRowKey.current, "packing_emp_nm", data.emp_nm);
+    } else if (dblClickTarget.current === "Store") {
+      const Grid = refGridHeaderNew?.current?.gridInst;
+      Grid?.setValue(dblClickRowKey.current, "inv_to_store_id", data.store_id);
+      Grid?.setValue(dblClickRowKey.current, "store_nm", data.store_nm);
+      Grid?.setValue(
+        dblClickRowKey.current,
+        "inv_to_location_id",
+        data.location_id
+      );
+      Grid?.setValue(dblClickRowKey.current, "location_nm", data.location_nm);
     }
     setIsModalSelectOpen(false);
+  };
+  const onDblClickGridSelectDate = (e) => {
+    const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+    if (dblClickTarget.current === "Order") {
+      const Grid = refGridHeaderNew?.current?.gridInst;
+      Grid?.setValue(
+        dblClickRowKey.current,
+        "work_order_id",
+        data.work_order_id
+      );
+      Grid?.setValue(
+        dblClickRowKey.current,
+        "work_order_no",
+        data.work_order_no
+      );
+      Grid?.setValue(dblClickRowKey.current, "line_dept_id", data.line_dept_id);
+      Grid?.setValue(dblClickRowKey.current, "line_dept_nm", data.line_dept_nm);
+      Grid?.setValue(dblClickRowKey.current, "line_id", data.line_id);
+      Grid?.setValue(dblClickRowKey.current, "line_nm", data.line_nm);
+      Grid?.setValue(dblClickRowKey.current, "prod_id", data.prod_id);
+      Grid?.setValue(dblClickRowKey.current, "prod_cd", data.prod_cd);
+      Grid?.setValue(dblClickRowKey.current, "prod_nm", data.prod_nm);
+    }
+    setIsModalSelectDateOpen(false);
+  };
+
+  const onClickSearchSelectDate = () => {
+    actSelectOrder();
   };
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
-      const inputInfoValueList = [
-        "subdivision_date",
-        "prod_cd",
-        "prod_nm",
-        "lot_no",
-        "total_qty",
-        "remark",
-      ];
-      const rowID = e?.instance.getValue(e?.rowKey, "work_subdivision_id");
-      if (rowID !== null) {
-        setInputInfoValue([]);
-        setHeaderClickRowID(rowID);
-        setHeaderClickRowKey(e?.rowKey);
-        actSearchDetail(rowID);
-        for (let i = 0; i < inputInfoValueList.length; i++) {
-          let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
-          if (data === false) {
-            //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-            data = "false";
-          }
-          setInputInfoValue((prevList) => {
-            return [...prevList, data];
+      workOrderID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
+      workPackingID.current = e?.instance.getValue(
+        e?.rowKey,
+        "work_packing_id"
+      );
+      if (workPackingID.current) {
+        try {
+          setIsBackDrop(true);
+          const result = restAPI.get(
+            restURI.prdPackingDetail +
+              `?work_packing_id=${workPackingID.current}`
+          );
+          setGridDataDetail(result?.data?.data?.rows);
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
           });
+        } finally {
+          setIsBackDrop(false);
         }
       }
-    }
-  };
-  const onClickEditSaveDetail = () => {
-    actEditDetail();
-  };
-
-  const onDblClickGridHeader = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Header");
-      setColumnsSelect(columnsSelectProd);
-      setIsModalSelectOpen(true);
-      actSelectProd();
-    }
-  };
-
-  const onClickEditExitDetail = () => {
-    setIsEditModeDetail(false);
-    actSearchDetail(headerClickRowID);
-    setDisRowDetail(!disRowDetail);
-  };
-  const onClickEditNew = () => {
-    if (refGridDetail?.current?.gridInst?.getRowCount() !== 0) {
-      setIsNewDetail(true);
-      setIsModalOpen(true);
-      actSearchEditHeader(headerClickRowID);
-    }
-  };
-  const onClickEditDetail = () => {
-    setIsEditModeDetail(true);
-    setDisRowDetail(!disRowDetail);
-  };
-  const onClickDelete = () => {
-    const data = refGridDetail?.current?.gridInst?.getCheckedRows();
-    if (data.length !== 0) {
-      setIsDeleteAlertOpen(true);
     }
   };
   const onEditingFinishGridHeader = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
-  const onEditingFinishGridDetail = (e) => {
-    if (Condition(e, ["subdivision_time"])) {
-      //🔸시간 정규표현식 적용
-      RE.Time(e, refGridDetail, "subdivision_time");
-    }
-    disRow.handleEditingFinishGridCheck(e);
 
-    const Header = refGridHeader?.current?.gridInst;
-    const Detail = refGridDetail?.current?.gridInst;
+  const GridHeader = useMemo(() => {
+    return (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columnsHeader}
+        rowHeaders={rowHeadersNumCheck}
+        header={header}
+        data={gridDataHeader}
+        draggable={false}
+        refGrid={refGridHeader}
+        onClickGrid={onClickGridHeader}
+        // onDblClickGrid={onDblClickGridHeader}
+        onEditingFinish={onEditingFinishGridHeader}
+      />
+    );
+  }, [gridDataHeader, isEditModeHeader]);
+  const GridHeaderNew = useMemo(() => {
+    return (
+      <ModalNew
+        width={"90%"}
+        height={"90%"}
+        title={"생산품목 추가"}
+        onClickModalClose={onClickModalClose}
+        columns={columnsHeaderNew}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersNum}
+        refModalGrid={refGridHeaderNew}
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalGrid={onClickModalGrid}
+        onDblClickModalGrid={onDblClickModalGrid}
+      />
+    );
+  }, [refGridHeaderNew]);
+  const GridDetailNew = useMemo(() => {
+    return (
+      <ModalNew
+        width={"90%"}
+        height={"90%"}
+        title={"투입품목 추가"}
+        onClickModalClose={onClickModalDetailClose}
+        columns={columnsDetailNew}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersNum}
+        refModalGrid={refGridDetailNew}
+        onClickModalAddRow={onClickModalDetailAddRow}
+        onClickModalCancelRow={onClickModalDetailCancelRow}
+        onClickModalGrid={onClickModalDetailGrid}
+        onDblClickModalGrid={onDblClickModalDetailGrid}
+      />
+    );
+  }, [refGridDetailNew]);
 
-    if (Condition(e, ["before_subdivision_qty"])) {
-      const beforeQty = e?.value;
-      const afterQty = Detail.getValue(e?.rowKey, "after_subdivision_qty");
-      if (afterQty) {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
-      }
-      //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
-    }
-    if (Condition(e, ["after_subdivision_qty"])) {
-      const beforeQty = Detail.getValue(e?.rowKey, "before_subdivision_qty");
-      const afterQty = e?.value;
-      if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty - afterQty);
-      } else {
-        Detail?.setValue(e?.rowKey, "subdivision_qty", -e?.value);
-      }
-      let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
-      }
-      //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
-    }
-
-    const inputInfoValueList = [
-      "subdivision_date",
-      "prod_cd",
-      "prod_nm",
-      "lot_no",
-      "total_qty",
-      "remark",
-    ];
-    setInputInfoValue([]);
-    for (let i = 0; i < inputInfoValueList.length; i++) {
-      let data = Header.getValue(headerClickRowKey, inputInfoValueList[i]);
-      if (data === false) {
-        //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-        data = "false";
-      }
-      setInputInfoValue((prevList) => {
-        return [...prevList, data];
-      });
-    }
-  };
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      // setSearchToggle(!searchToggle);
-    }
-  };
+  const GridModalSelect = useMemo(() => {
+    return (
+      <ModalSelect
+        width={modalSelectSize.width}
+        height={modalSelectSize.height}
+        onClickModalSelectClose={onClickModalSelectClose}
+        columns={columnsSelect}
+        columnOptions={columnOptions}
+        header={header}
+        gridDataSelect={gridDataSelect}
+        rowHeaders={rowHeadersNum}
+        refGridSelect={refGridSelect}
+        onDblClickGridSelect={onDblClickGridSelect}
+      />
+    );
+  }, [gridDataSelect, columnsSelect]);
+  const GridModalSelectDate = useMemo(() => {
+    return (
+      <ModalSelectDate
+        height={"60%"}
+        onClickModalSelectDateClose={onClickModalSelectDateClose}
+        columns={columnsSelectOrder}
+        columnOptions={columnOptions}
+        header={header}
+        gridDataSelect={gridDataSelectDate}
+        rowHeaders={rowHeadersNum}
+        refGridSelect={refGridSelectDate}
+        onDblClickGridSelectDate={onDblClickGridSelectDate}
+        dateText={dateOrder}
+        setDateText={setDateOrder}
+        onClickSearch={onClickSearchSelectDate}
+      />
+    );
+  }, [gridDataSelectDate]);
+  const GridModalSelectMulti = useMemo(() => {
+    return (
+      <ModalSelectMulti
+        height={"70%"}
+        onClickModalSelectClose={onClickModalSelectMultiClose}
+        refGridSelect={refGridSelectMultiHeader}
+        columns={columnsSelectWeight}
+        columnsDetail={columnsSelectWeightDetail}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersNum}
+        gridDataSelect={gridDataSelectHeader}
+        gridDataDetail={gridDataSelectDetail}
+        onClickSelectGrid={onClickModalSelectMulti}
+      />
+    );
+  }, [gridDataSelectHeader, gridDataSelectDetail]);
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
-      <S.ContentsLeft>
-        <S.SearchLeftWrap>
+    <>
+      <S.ContentsArea isAllScreen={isAllScreen}>
+        <S.TopWrap>
           <S.SearchWrap>
-            <S.Date
-              datePickerSet={"range"}
+            <DateRange
               dateText={dateText}
               setDateText={setDateText}
+              onClickSearch={onClickSearch}
+            />
+            <InputSearch
+              id={"line_nm"}
+              name={"라인명"}
+              handleInputTextChange={handleInputTextChange}
+              onClickSearch={onClickSearch}
+            />
+            <InputPaper
+              width={"180px"}
+              name={"품번"}
+              value={prodCD.current || ""}
+              btn={false}
+            />
+            <InputPaper
+              width={"240px"}
+              name={"품목"}
+              value={prodNM.current || ""}
+              btn={true}
+              onClickSelect={onClickSelectProd}
+              onClickRemove={onClickRemoveProd}
             />
           </S.SearchWrap>
-          <S.SearchWrap>
-            {inputSet.map((v, idx) => (
-              <InputPaper
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                nameSize={"12px"}
-                width={idx === 1 ? "240px" : "180px"}
-                btn={idx === 1 ? true : false}
-                value={inputSearchValue[idx] || ""}
-                onClickSelect={onClickProd}
-                onClickRemove={onClickProdCancel}
-              />
-            ))}
-          </S.SearchWrap>
-        </S.SearchLeftWrap>
-        <S.ContentsHeader>
-          <S.TitleMid>❇️ 소분일지</S.TitleMid>
-          <S.ContentsHeaderWrap>
-            {isEditModeHeader ? (
-              <ButtonSES
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonNES
-                onClickNew={onClickNew}
-                onClickEdit={onClickEditHeader}
-                onClickSearch={onClickSearch}
-              />
-            )}
-          </S.ContentsHeaderWrap>
-        </S.ContentsHeader>
-        <S.GridHeaderWrap>
-          {isEditModeHeader ? (
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columnsHeader}
-              rowHeaders={rowHeadersNumCheck}
-              header={header}
-              data={gridDataHeader}
-              draggable={false}
-              refGrid={refGridHeader}
-              //onClickGrid={onClickGridHeader}
-              onDblClickGrid={onDblClickGridHeader}
-              onEditingFinish={onEditingFinishGridHeader}
-            />
-          ) : (
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columnsHeader}
-              rowHeaders={rowHeadersNumCheck}
-              header={header}
-              data={gridDataHeader}
-              draggable={false}
-              refGrid={refGridHeader}
-              onClickGrid={onClickGridHeader}
-              //onDblClickGrid={onDblClickGridHeader}
-              onEditingFinish={onEditingFinishGridHeader}
-            />
-          )}
-        </S.GridHeaderWrap>
-      </S.ContentsLeft>
-      <S.ContentsRight>
-        <S.SearchInfoWrap>
-          <S.SearchRightTopWrap>
-            {inputInfo.map((v, idx) => {
-              return (
-                <InputPaper
-                  key={v.id}
-                  name={v.name}
-                  value={inputInfoValue[idx] || ""}
-                />
-              );
-            })}
-          </S.SearchRightTopWrap>
-        </S.SearchInfoWrap>
-        <S.SearchRightWrap>
-          <S.TitleMid>❇️ 세부소분일지</S.TitleMid>
-          <S.SearchRightBottomWrap>
-            {isEditModeDetail ? (
-              <ButtonSE
-                onClickSave={onClickEditSaveDetail}
-                onClickExit={onClickEditExitDetail}
-              />
-            ) : (
-              <ButtonNED
-                onClickNew={onClickEditNew}
-                onClickEdit={onClickEditDetail}
-                onClickDelete={onClickDelete}
-              />
-            )}
-          </S.SearchRightBottomWrap>
-        </S.SearchRightWrap>
-        <S.GridDetailWrap isAllScreen={isAllScreen}>
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNumCheck}
-            header={header}
-            data={gridDataDetail}
-            draggable={false}
-            refGrid={refGridDetail}
-            // onClickGrid={onClickGrid}
 
-            onDblClickGrid={onDblClickGridHeader}
-            onEditingFinish={onEditingFinishGridDetail}
-          />
-        </S.GridDetailWrap>
-      </S.ContentsRight>
-      {isModalOpen ? (
-        <ModalNewDetail
-          isNewDetail={isNewDetail}
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          onClickEditModalSave={onClickEditModalSave}
-          columnsModalHeader={columnsModalHeader}
-          columnsModalDetail={columnsModalDetail}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeadersHeader={rowHeadersNum}
-          rowHeadersDetail={rowHeadersNum}
-          refGridModalHeader={refGridModalHeader}
-          refGridModalDetail={refGridModalDetail}
-          gridDataHeaderRowID={gridDataHeaderRowID}
-          onClickGridModalDetail={onClickGridModalDetail}
-          onDblClickGridModalHeader={onDblClickGridModalHeader}
-          onEditingFinishGridModalDetail={onEditingFinishGridModalDetail}
-        />
-      ) : null}
-      {isModalSelectOpen ? (
-        <ModalSelect
-          width={modalSelectSize.width}
-          height={modalSelectSize.height}
-          onClickModalSelectClose={onClickModalSelectClose}
-          columns={columnsSelect}
-          columnOptions={columnOptions}
-          header={header}
-          gridDataSelect={gridDataSelect}
-          rowHeaders={rowHeadersNum}
-          refGridSelect={refGridSelect}
-          onDblClickGridSelect={onDblClickGridSelect}
-        />
-      ) : null}
-      {isDeleteAlertOpen ? (
+          <S.ContentsHeader>
+            <S.TitleMid>❇️ 생산품목</S.TitleMid>
+            <S.ButtonWrap>
+              {isEditModeHeader ? (
+                <ButtonModule
+                  saveBtn={true}
+                  exitBtn={true}
+                  searchBtn={true}
+                  onClickSave={onClickEditModeSave}
+                  onClickExit={onClickEditModeExit}
+                  onClickSearch={onClickSearch}
+                />
+              ) : (
+                <ButtonModule
+                  newBtn={true}
+                  editBtn={true}
+                  searchBtn={true}
+                  onClickNew={onClickNew}
+                  onClickEdit={onClickEditHeader}
+                  onClickSearch={onClickSearch}
+                />
+              )}
+            </S.ButtonWrap>
+          </S.ContentsHeader>
+          <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
+        </S.TopWrap>
+        <S.BottomWrap>
+          <S.ContentsHeader>
+            <S.TitleMid>❇️ 투입품목</S.TitleMid>
+            <S.ButtonWrap>
+              <ButtonModule
+                newBtn={true}
+                deleteBtn={true}
+                onClickNew={onClickNewDetail}
+                onClickDelete={onClickDeleteDetail}
+              />
+            </S.ButtonWrap>
+          </S.ContentsHeader>
+          <S.GridDetailWrap>
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columnsDetail}
+              rowHeaders={rowHeadersNum}
+              header={header}
+              data={gridDataDetail}
+              draggable={false}
+              refGrid={refGridDetail}
+            />
+          </S.GridDetailWrap>
+        </S.BottomWrap>
+      </S.ContentsArea>
+      {/*🔸🔸🔸Header New*/}
+      {isModalOpen
+        ? // <ModalNew
+          //   width={"90%"}
+          //   height={"90%"}
+          //   title={"생산품목 추가"}
+          //   onClickModalClose={onClickModalClose}
+          //   columns={columnsHeaderNew}
+          //   columnOptions={columnOptions}
+          //   header={header}
+          //   rowHeaders={rowHeadersNum}
+          //   refModalGrid={refGridHeaderNew}
+          //   onClickModalAddRow={onClickModalAddRow}
+          //   onClickModalCancelRow={onClickModalCancelRow}
+          //   onClickModalSave={onClickModalSave}
+          //   onClickModalGrid={onClickModalGrid}
+          //   onDblClickModalGrid={onDblClickModalGrid}
+          // />
+          GridHeaderNew
+        : null}
+      {/*🔸🔸🔸Detail New*/}
+      {isModalDetailOpen
+        ? // <ModalNew
+          //   width={"90%"}
+          //   height={"90%"}
+          //   title={"투입품목 추가"}
+          //   onClickModalClose={onClickModalDetailClose}
+          //   columns={columnsDetailNew}
+          //   columnOptions={columnOptions}
+          //   header={header}
+          //   rowHeaders={rowHeadersNum}
+          //   refModalGrid={refGridDetailNew}
+          //   onClickModalAddRow={onClickModalDetailAddRow}
+          //   onClickModalCancelRow={onClickModalDetailCancelRow}
+          //   onClickModalGrid={onClickModalDetailGrid}
+          //   onDblClickModalGrid={onDblClickModalDetailGrid}
+          // />
+          GridDetailNew
+        : null}
+      {isModalSelectOpen
+        ? // <ModalSelect
+          //   width={modalSelectSize.width}
+          //   height={modalSelectSize.height}
+          //   onClickModalSelectClose={onClickModalSelectClose}
+          //   columns={columnsSelect}
+          //   columnOptions={columnOptions}
+          //   header={header}
+          //   gridDataSelect={gridDataSelect}
+          //   rowHeaders={rowHeadersNum}
+          //   refGridSelect={refGridSelect}
+          //   onDblClickGridSelect={onDblClickGridSelect}
+          // />
+          GridModalSelect
+        : null}
+      {isModalSelectDateOpen
+        ? // <ModalSelectDate
+          //   height={"60%"}
+          //   onClickModalSelectDateClose={onClickModalSelectDateClose}
+          //   columns={columnsSelect}
+          //   columnOptions={columnOptions}
+          //   header={header}
+          //   gridDataSelect={gridDataSelect}
+          //   rowHeaders={rowHeadersNum}
+          //   refGridSelect={refGridSelect}
+          //   onDblClickGridSelectDate={onDblClickGridSelectDate}
+          //   dateText={dateOrder}
+          //   setDateText={setDateOrder}
+          //   onClickSearch={onClickSearchSelectDate}
+          // />
+          GridModalSelectDate
+        : null}
+      {isModalSelectMultiOpen
+        ? // <ModalSelectMulti
+          //   height={"70%"}
+          //   onClickModalSelectClose={onClickModalSelectMultiClose}
+          //   refGridSelect={refGridSelectMultiHeader}
+          //   columns={columnsSelectWeight}
+          //   columnsDetail={columnsSelectWeightDetail}
+          //   columnOptions={columnOptions}
+          //   header={header}
+          //   rowHeaders={rowHeadersNum}
+          //   gridDataSelect={gridDataSelect}
+          //   gridDataDetail={gridDataSelectDetail}
+          //   onClickSelectGrid={onClickModalSelectMulti}
+          // />
+          GridModalSelectMulti
+        : null}
+      {/* {isDeleteAlertOpen ? (
         <AlertDeleteDetail
           headerClickRowID={headerClickRowID}
-          actSearchDetail={actSearchDetail}
-          actDeleteDetail={actDeleteDetailDateRange}
+          // actSearchDetail={actSearchDetail}
+          // actDeleteDetail={actDeleteDetailDateRange}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
-      ) : null}
+      ) : null} */}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </>
   );
 }
 

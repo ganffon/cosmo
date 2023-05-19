@@ -39,10 +39,10 @@
   "infcItem": "/std/infc-item",
   "infcMemory": "/std/infc-memory",
 
-  "equipmentLarge": "/equipment-classification",
-  "equipmentMedium": "/equipment-group",
-  "equipmentSmall": "/equipment-class",
-  "equipmentDetail": "/equipment-detail",
+  "equipmentLarge": "/eqm/equipment-classification",
+  "equipmentMedium": "/eqm/equipment-group",
+  "equipmentSmall": "/eqm/equipment-class",
+  "equipmentDetail": "/eqm/equipment-detail",
 
   "controlPlan": "/std/control-plan",
   "controlPlanDetail": "/std/control-plan-detail",
@@ -76,5 +76,9 @@
   "prdOrderInput": "/prd/order-input",
   "prdOrderDetail": "/prd/order-detail",
   "prdWeightPanel": "/prd/weigh/panel",
-  "prodWeight": "/prd/weigh"
+  "prodWeight": "/prd/weigh",
+  "prodWeightDetail": "/prd/weigh-detail",
+  "prdWeightComplete": "/prd/weigh/{id}/complete",
+  "prdPacking": "/prd/packing",
+  "prdPackingDetail": "/prd/packing-detail"
 }

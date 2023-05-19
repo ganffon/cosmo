@@ -7,7 +7,7 @@ function ButtonSave(props) {
   return (
     <>
       <S.ButtonSet
-        variant="text"
+        variant="contained"
         size="small"
         startIcon={<SaveIcon />}
         color="secondary"

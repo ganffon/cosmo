@@ -322,7 +322,7 @@
     "path": null,
     "under": [
       {
-        "name": "✴️작업지시서",
+        "name": "✅작업지시서",
         "id": "production-order",
         "path": "production-order",
         "under": null
@@ -333,19 +333,19 @@
         "path": null,
         "under": [
           {
-            "name": "✴️일일소분일지",
+            "name": "✅일일소분일지",
             "id": "subdivision",
             "path": "subdivision",
             "under": null
           },
           {
-            "name": "❌일일계량일지",
+            "name": "✴️일일계량일지",
             "id": "weight",
             "path": "weight",
             "under": null
           },
           {
-            "name": "❌일일포장일지",
+            "name": "✴️일일포장일지",
             "id": "packing",
             "path": "packing",
             "under": null
@@ -529,13 +529,13 @@
     "path": null,
     "under": [
       {
-        "name": "✴️소분일지",
+        "name": "✅소분일지",
         "id": "subdivision-panel",
         "path": "subdivision-panel",
         "under": null
       },
       {
-        "name": "❌계량일지",
+        "name": "✅계량일지",
         "id": "weight-panel",
         "path": "weight-panel",
         "under": null
