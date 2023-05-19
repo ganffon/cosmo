@@ -2,6 +2,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import * as S from "./ModalSelectMulti.styled";
 import ModalWrapMulti from "./ModalWrapMulti";
+import { useMemo } from "react";
 
 function ModalSelectMulti(props) {
   const {
@@ -19,6 +20,34 @@ function ModalSelectMulti(props) {
     onClickSelectGrid = () => {},
     onDblClickGridSelect = () => {},
   } = props;
+
+  const GridHeader = useMemo(() => {
+    return (
+      <GridModal
+        columns={columns}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeaders}
+        refGrid={refGridSelect}
+        data={gridDataSelect}
+        draggable={false}
+        onClick={onClickSelectGrid}
+        onDblClick={onDblClickGridSelect}
+      />
+    );
+  }, [gridDataSelect]);
+  const GridDetail = useMemo(() => {
+    return (
+      <GridModal
+        columns={columnsDetail}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeaders}
+        data={gridDataDetail}
+        draggable={false}
+      />
+    );
+  }, [gridDataDetail]);
   return (
     <ModalWrapMulti width={width} height={height}>
       <S.ContentsArea>
@@ -36,7 +65,7 @@ function ModalSelectMulti(props) {
           <div>🔸투입품</div>
         </S.TitleWrap>
         <S.GridBox>
-          <GridModal
+          {/* <GridModal
             columns={columns}
             columnOptions={columnOptions}
             header={header}
@@ -46,20 +75,22 @@ function ModalSelectMulti(props) {
             draggable={false}
             onClick={onClickSelectGrid}
             onDblClick={onDblClickGridSelect}
-          />
+          /> */}
+          {GridHeader}
         </S.GridBox>
         <S.TitleWrap>
           <div>🔸세부투입품</div>
         </S.TitleWrap>
         <S.GridBox>
-          <GridModal
+          {/* <GridModal
             columns={columnsDetail}
             columnOptions={columnOptions}
             header={header}
             rowHeaders={rowHeaders}
             data={gridDataDetail}
             draggable={false}
-          />
+          /> */}
+          {GridDetail}
         </S.GridBox>
       </S.ContentsArea>
     </ModalWrapMulti>

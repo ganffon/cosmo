@@ -246,6 +246,11 @@ class order {
     this.work_order_id = raw.work_order_id;
   }
 }
+class packingDetail {
+  constructor(raw) {
+    this.work_packing_detail_id = raw.work_packing_detail_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -402,6 +407,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "order":
       params = new order(raw);
+      break;
+    case "packingDetail":
+      params = new packingDetail(raw);
       break;
 
     default:

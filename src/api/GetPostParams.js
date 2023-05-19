@@ -558,6 +558,18 @@ class packing {
     this.remark = raw.remark;
   }
 }
+class packingDetail {
+  constructor(raw) {
+    this.work_packing_id = raw.work_packing_id;
+    this.work_weigh_id = raw.work_weigh_id;
+    this.prod_id = raw.prod_id;
+    this.lot_no = raw.lot_no;
+    this.input_qty = String(raw.input_qty) ? Number(raw.input_qty) : null;
+    this.inv_from_store_id = raw.inv_to_store_id;
+    this.inv_from_location_id = raw.inv_to_location_id;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -723,6 +735,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "packing":
         params = new packing(raw);
+        break;
+      case "packingDetail":
+        params = new packingDetail(raw);
         break;
       default:
     }

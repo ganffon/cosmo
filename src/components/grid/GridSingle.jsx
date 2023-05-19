@@ -19,7 +19,6 @@ function GridSingle(props) {
   useEffect(() => {
     GridTheme();
   }, []);
-
   return (
     <Grid
       scrollX={true}
