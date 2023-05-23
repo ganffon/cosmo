@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 // ⬇️ reference of page
 import Layout from "components/layout/common/Layout";
 import Factory from "pages/mes/standard/factory/Factory";
@@ -51,11 +51,16 @@ import SparepartsStoreView from "pages/mes/equipment/sparepartsStoreView/sparepa
 import SparepartsStoreTransView from "pages/mes/equipment/sparepartsStoreTransView/sparepartsStoreTransView";
 import LineDepartment from "pages/mes/standard/lineDepartment/lineDepartment";
 import ProductClass from "pages/mes/standard/productClass/productClass";
+import Weight from "pages/mes/production/weight/Weight";
+import ProductionDownTime from "pages/mes/equipment/productionDownTime/productionDownTime";
+import ProductionLotTracking from "pages/mes/production/productionLotTracking/productionLotTracking";
+import UserHistory from "pages/mes/standard/userHistory/userHistory";
 
 import SubdivisionPanel from "pages/mes/panel/subdivision/SubdivisionPanel";
 import InspResultUpload from "pages/mes/insp/inspResultInfo/inspResultUpload/InspResultUpload";
 import WeightPanel from "pages/mes/panel/weight/WeightPanel";
 import Packing from "pages/mes/production/packing/Packing";
+import PackingPanel from "pages/mes/panel/packing/PackingPanel";
 
 export default function MainRouter() {
   return (
@@ -117,9 +122,17 @@ export default function MainRouter() {
         />
         <Route path="line-dept" element={<LineDepartment />} />
         <Route path="product-class" element={<ProductClass />} />
+        <Route path="weight" element={<Weight />} />
+        <Route path="production-downtime" element={<ProductionDownTime />} />
+        <Route
+          path="production-lot-tracking"
+          element={<ProductionLotTracking />}
+        />
+        <Route path="userHistoryStatus" element={<UserHistory />} />
 
         <Route path="subdivision-panel" element={<SubdivisionPanel />} />
         <Route path="weight-panel" element={<WeightPanel />} />
+        <Route path="packing-panel" element={<PackingPanel />} />
 
         <Route path="unit" element={<Unit />} />
         <Route path="menu-manage" element={<MenuManage />} />

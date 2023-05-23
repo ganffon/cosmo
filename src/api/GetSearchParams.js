@@ -84,6 +84,27 @@ class prdOrderRequest {
     this.request_emp_nm = raw.request_emp_nm;
   }
 }
+class weightEmployee {
+  constructor(raw) {
+    this.weigh_emp_id = raw.emp_id;
+    this.weigh_emp_nm = raw.emp_nm;
+  }
+}
+
+class inputEmployee {
+  constructor(raw) {
+    this.input_emp_id = raw.emp_id;
+    this.input_emp_nm = raw.emp_nm;
+  }
+}
+class storeIncludeLocation {
+  constructor(raw) {
+    this.inv_to_store_id = raw.store_id;
+    this.store_nm = raw.store_nm;
+    this.inv_to_location_id = raw.location_id;
+    this.location_nm = raw.location_nm;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -105,6 +126,15 @@ function GetSearchParams(componentName, raw) {
         break;
       case "prdOrderRequest":
         params = new prdOrderRequest(raw);
+        break;
+      case "weightEmployee":
+        params = new weightEmployee(raw);
+        break;
+      case "inputEmployee":
+        params = new inputEmployee(raw);
+        break;
+      case "storeIncludeLocation":
+        params = new storeIncludeLocation(raw);
         break;
 
       default:

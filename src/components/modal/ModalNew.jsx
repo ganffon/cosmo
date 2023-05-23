@@ -14,6 +14,7 @@ function ModalNew(props) {
     onClickModalClose = () => {},
     onClickModalGrid = () => {},
     onDblClickModalGrid = () => {},
+    onEditingFinishModal = () => {},
     refModalGrid = null,
     columns = [],
     columnOptions = [],
@@ -71,6 +72,7 @@ function ModalNew(props) {
           draggable={false}
           onClick={onClickModalGrid}
           onDblClick={onDblClickModalGrid}
+          onEditingFinish={onEditingFinishModal}
         />
       </S.GridBox>
     </ModalWrap>

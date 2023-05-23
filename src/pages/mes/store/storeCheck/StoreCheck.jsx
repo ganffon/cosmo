@@ -49,15 +49,15 @@ function StoreCheck() {
   });
 
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
   const [dateNew, setDateNew] = useState({
     startDate: DateTime().dateFull,
   });
   const [dateModal, setDateModal] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
   const [modalSelectSize, setModalSelectSize] = useState({
     width: "80%",
@@ -269,8 +269,8 @@ function StoreCheck() {
     setIsModalDeleteOpen(false);
     setDateModal({
       ...dateModal,
-      startDate: DateTime().dateFull,
-      endDate: DateTime(7).dateFull,
+      startDate: DateTime(-7).dateFull,
+      endDate: DateTime().dateFull,
     });
     setSearchToggle(!searchToggle);
   };

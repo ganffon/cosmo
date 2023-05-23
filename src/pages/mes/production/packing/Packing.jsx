@@ -168,12 +168,12 @@ function Packing() {
   const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
 
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
   const [dateOrder, setDateOrder] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
   const [modalSelectSize, setModalSelectSize] = useState({
     width: "80%",

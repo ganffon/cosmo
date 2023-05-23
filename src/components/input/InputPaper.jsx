@@ -17,9 +17,11 @@ function InputPaper(props) {
     value = null,
     size = "15px",
     btn = false,
+    btnSingle = false,
     onKeyDown = () => {},
     onClickSelect = () => {},
     onClickRemove = () => {},
+    readOnly = true,
   } = props;
   return (
     <S.PaperBox width={width} height={height}>
@@ -31,26 +33,43 @@ function InputPaper(props) {
       >
         {name}
       </S.PaperTitle>
-      <S.Text
-        inputProps={{
-          readOnly: true,
-        }}
-        key={id}
-        id={id}
-        value={value}
-        size={size}
-        onKeyDown={onKeyDown}
-      />
-      {btn === true ? (
-        <>
-          <S.Icon onClick={onClickRemove}>
-            <HighlightOffIcon />
-          </S.Icon>
-          <Divider sx={{ height: "70%", m: 0.5 }} orientation="vertical" />
+      {readOnly ? (
+        <S.Text
+          inputProps={{
+            readOnly: true,
+          }}
+          key={id}
+          id={id}
+          value={value}
+          size={size}
+          onKeyDown={onKeyDown}
+        />
+      ) : (
+        <S.Text
+          key={id}
+          id={id}
+          value={value}
+          size={size}
+          onKeyDown={onKeyDown}
+          autoComplete={"off"}
+        />
+      )}
+      {btn ? (
+        btnSingle ? (
           <S.Icon onClick={onClickSelect}>
             <FolderIcon />
           </S.Icon>
-        </>
+        ) : (
+          <>
+            <S.Icon onClick={onClickRemove}>
+              <HighlightOffIcon />
+            </S.Icon>
+            <Divider sx={{ height: "70%", m: 0.5 }} orientation="vertical" />
+            <S.Icon onClick={onClickSelect}>
+              <FolderIcon />
+            </S.Icon>
+          </>
+        )
       ) : null}
     </S.PaperBox>
   );

@@ -101,8 +101,8 @@ function ProductionOrder() {
     open: false,
   });
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
   const [modalSelectSize, setModalSelectSize] = useState({
     width: "80%",
@@ -329,8 +329,8 @@ function ProductionOrder() {
   };
 
   const [dateModal, setDateModal] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
   const onClickEditBottom = () => {
     setDisableRowToggleBottom(!disableRowToggleBottom);

@@ -38,8 +38,8 @@ function WeightPanel() {
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
   const [nowDateTime, setNowDateTime] = useState({
     nowDate: DateTime().dateFull,
@@ -596,7 +596,7 @@ function WeightPanel() {
           <S.ButtonBox>
             <S.ButtonSet
               color={"#415c76"}
-              hoverColor={"#ffc125"}
+              hoverColor={"#e5b700"}
               onClick={onClickWeight}
             >
               계량

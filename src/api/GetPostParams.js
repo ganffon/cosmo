@@ -570,6 +570,52 @@ class packingDetail {
     this.remark = raw.remark;
   }
 }
+class weight {
+  constructor(raw) {
+    this.work_order_id = raw.work_order_id;
+    this.line_id = raw.line_id;
+    this.line_dept_id = raw.line_dept_id;
+    this.prod_id = raw.prod_id;
+    this.lot_no = raw.lot_no;
+    this.work_weigh_date = raw.work_weigh_date;
+    this.work_weigh_time = raw.work_weigh_time;
+    this.weigh_emp_id = raw.weigh_emp_id;
+    this.work_input_date = raw.work_input_date;
+    this.work_input_time = raw.work_input_time;
+    this.input_emp_id = raw.input_emp_id;
+    this.inv_to_store_id = raw.inv_to_store_id;
+    this.inv_to_location_id = raw.inv_to_location_id;
+    this.remar = raw.remark;
+  }
+}
+
+class weightDetail {
+  constructor(raw) {
+    this.work_weigh_id = raw.work_weigh_id;
+    this.work_order_input_id = raw.work_order_input_id;
+    this.prod_id = raw.prod_id;
+    this.lot_no = raw.lot_no;
+    this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
+    this.bag_qty = String(raw.bag_qty) ? Number(raw.bag_qty) : null;
+    this.input_qty = String(raw.input_qty) ? Number(raw.input_qty) : null;
+    this.remark = raw.remark;
+  }
+}
+
+class productionDownTime {
+  constructor(raw) {
+    this.work_order_id = raw.work_order_id;
+    this.line_id = raw.line_id;
+    this.proc_id = raw.proc_id;
+    this.equip_id = raw.equip_id;
+    this.downtime_id = raw.downtime_id;
+    this.downtime_start_date = raw.start_date;
+    this.downtime_start_time = raw.start_time;
+    this.downtime_end_date = raw.end_date;
+    this.downtime_end_time = raw.end_time;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -738,6 +784,16 @@ function GetPostParams(componentName, raw) {
         break;
       case "packingDetail":
         params = new packingDetail(raw);
+        break;
+      case "weight":
+        params = new weight(raw);
+        break;
+
+      case "weightDetail":
+        params = new weightDetail(raw);
+        break;
+      case "productionDownTime":
+        params = new productionDownTime(raw);
         break;
       default:
     }

@@ -371,15 +371,26 @@
   "request_dept_nm": "요청 부서",
   "request_emp_nm": "요청자",
 
-  "order_input_fg": "투입품 여부",
-
-  "work_packing_id": "포장일지ID",
   "work_packing_detail_id": "세부포장일지ID",
-  "work_packing_date": "포장일자",
-  "packing_qty": "포장중량",
-  "packing_cnt": "포장수량",
   "packing_emp_id": "포장자ID",
-  "packing_emp_nm": "포장자",
+  "order_input_fg": "투입품 여부",
+  "work_weigh_detail_id": "상세계량일지ID",
   "work_input_date": "투입일자",
-  "work_input_time": "투입시간"
+  "work_input_time": "투입시간",
+  "input_emp_id": "투입작업자ID",
+  "input_emp_nm": "투입작업자",
+
+  "start_time": "시작 시간",
+  "end_time": "종료 시간",
+  "downtime": "비가동 시간",
+  "work_downtime_id": "비가동 이력ID",
+  "downtime_date": "비가동 일자",
+  "work_packing_id": "포장 ID",
+  "work_packing_date": "포장 일자",
+  "packing_qty": "포장 중량",
+  "packing_cnt": "포장 수량",
+  "packing_emp_nm": "포장 작업자",
+  "user_action": "활동 구분",
+  "user_ip": "활동 IP",
+  "req_url": "요청 URL"
 }

@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 import CssBaseline from "@mui/material/CssBaseline";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
+import { Link } from "react-router-dom";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import NoticeSnack from "components/alert/NoticeSnack";
@@ -21,7 +22,13 @@ function subTitle(lv2Menu) {
   }
 }
 
-function subMenu(menu, upperMenuName, isMouseOver, handleClickMenu) {
+function subMenu(
+  menu,
+  upperMenuName,
+  isMouseOver,
+  handleClickMenu,
+  handleMouseDown
+) {
   let result;
 
   if (menu === null) {
@@ -30,7 +37,9 @@ function subMenu(menu, upperMenuName, isMouseOver, handleClickMenu) {
     result = (
       <S.MenuItem key={menu.id}>
         <S.MenuButton
-          onClick={() => handleClickMenu(menu, upperMenuName, isMouseOver)}
+          onMouseDown={(e) =>
+            handleClickMenu(menu, upperMenuName, isMouseOver, e)
+          }
         >
           <S.MenuText primary={menu.name} />
         </S.MenuButton>
@@ -56,7 +65,13 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
   const [alertOpen, setAlertOpen] = useState({
     open: false,
   });
-  const handleClickMenu = async (menu, upperMenuName, isMouseOver) => {
+  // const handleMouseDown = (menu, upperMenuName, isMouseOver, e) => {
+  //   if (e?.button === 0) {
+  //   } else if (e?.button === 1) {
+  //     window.open("http://61.78.123.204:13586/mes", "_blank");
+  //   }
+  // };
+  const handleClickMenu = async (menu, upperMenuName, isMouseOver, e) => {
     await restAPI
       .get(
         `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get(
@@ -100,6 +115,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
             }
             setIsModalOpen(false);
             navigate(menu.path);
+            // window.open("http://localhost:3000/", "_blank");
           }
         } else {
           setAlertOpen({
