@@ -11,7 +11,7 @@ import {
   NORMAL_BACK_COLOR,
 } from "constant/Grid.js";
 
-function SubdivisionPanelSet() {
+function SubdivisionPanelSet(onClickGridButton) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -268,6 +268,26 @@ function SubdivisionPanelSet() {
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
+      hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "select",
+      header: "선택",
+      width: WIDTH_SHORT,
+      minWidth: WIDTH_SHORT,
+      align: "center",
+      editor: false,
+      renderer: {
+        type: CustomGrid.Button,
+        options: {
+          name: "데이터 선택",
+          onClick: onClickGridButton,
+        },
+      },
       hidden: false,
       sortable: false,
       filter: false,
