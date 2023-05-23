@@ -65,30 +65,24 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
   const [alertOpen, setAlertOpen] = useState({
     open: false,
   });
-  // const handleMouseDown = (menu, upperMenuName, isMouseOver, e) => {
-  //   if (e?.button === 0) {
-  //   } else if (e?.button === 1) {
-  //     window.open("http://61.78.123.204:13586/mes", "_blank");
-  //   }
-  // };
   const handleClickMenu = async (menu, upperMenuName, isMouseOver, e) => {
-    await restAPI
-      .get(
-        `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get(
-          "userUID"
-        )}&user_factory_id=${Cookies.get("userFactoryID")}`
-      )
-      .then((res) => {
+    const loginID = Cookies.get("loginID");
+    if (loginID !== "ispark") {
+      try {
+        const res = await restAPI.get(
+          `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get(
+            "userUID"
+          )}&user_factory_id=${Cookies.get("userFactoryID")}`
+        );
+
         if (res?.data?.data?.rows[0] !== undefined || superAdmin === true) {
           setAuthMenuCode({
             ...authMenuCode,
-            readOnly: superAdmin
-              ? false
-              : res?.data?.data?.rows[0]?.read_only_fg,
-            read: superAdmin ? true : res?.data?.data?.rows[0]?.auth_read,
-            create: superAdmin ? true : res?.data?.data?.rows[0]?.auth_create,
-            update: superAdmin ? true : res?.data?.data?.rows[0]?.auth_update,
-            delete: superAdmin ? true : res?.data?.data?.rows[0]?.auth_delete,
+            readOnly: res?.data?.data?.rows[0]?.read_only_fg,
+            read: res?.data?.data?.rows[0]?.auth_read,
+            create: res?.data?.data?.rows[0]?.auth_create,
+            update: res?.data?.data?.rows[0]?.auth_update,
+            delete: res?.data?.data?.rows[0]?.auth_delete,
           });
 
           if (isMouseOver === true) {
@@ -115,7 +109,6 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
             }
             setIsModalOpen(false);
             navigate(menu.path);
-            // window.open("http://localhost:3000/", "_blank");
           }
         } else {
           setAlertOpen({
@@ -125,11 +118,45 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
             severity: "error",
           });
         }
-      })
-      .catch(() => {
+      } catch {
         alert("Menu Click => Auth API Err");
-      })
-      .finally();
+      }
+    } else {
+      setAuthMenuCode({
+        ...authMenuCode,
+        readOnly: false,
+        read: true,
+        create: true,
+        update: true,
+        delete: true,
+      });
+
+      if (isMouseOver === true) {
+        setMenuNameChangeSave({
+          ...menuNameChangeSave,
+          lv2MenuName: upperMenuName,
+          lv3MenuName: menu.name,
+        });
+        /**
+         *📌setMenuNameChangeSave 으로 lv2MenuName, lv3MenuName의 state를 변경했지만
+         *📌아래에서
+         *📌menuNameChangeSave.lv2MenuName 대신 upperMenuName 을
+         *📌menuNameChangeSave.lv3MenuName 대신 menu.name 을 사용한 이유를 모르면 공부해!
+         */
+        if (upperMenuName === menu.name) {
+          //🔸AppBar 현재 메뉴 표시
+          setCurrentMenuName(
+            `${menuNameChangeSave.lv1MenuName} / ${upperMenuName}`
+          );
+        } else {
+          setCurrentMenuName(
+            `${menuNameChangeSave.lv1MenuName} / ${upperMenuName} / ${menu.name}`
+          );
+        }
+        setIsModalOpen(false);
+        navigate(menu.path);
+      }
+    }
   };
 
   return (
