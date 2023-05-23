@@ -14,7 +14,6 @@ function ModalSubdivision(props) {
     onClickModalClose = () => {},
     onClickGridModalHeader = () => {},
     onDblClickGridModalHeader = () => {},
-    onClickPick = () => {},
     onKeyDownModalMulti = () => {},
     setGridDataHeader = () => {},
     refGridModalHeader = null,
@@ -27,6 +26,8 @@ function ModalSubdivision(props) {
     rowHeadersDetail = [],
     gridDataHeader = [],
     gridDataDetail = [],
+    setIsSnackOpen = {},
+    isSnackOpen = {},
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
   const [inputChange, setInputChange] = useState();
@@ -51,7 +52,13 @@ function ModalSubdivision(props) {
       const result = await restAPI.get(uri);
       setGridDataHeader(result?.data?.data?.rows);
     } catch (err) {
-      alert(err);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
     }
   };
   const GridHeader = useMemo(() => {
@@ -101,14 +108,6 @@ function ModalSubdivision(props) {
                 onClick={onClickSearch}
               >
                 Search
-              </S.ButtonSet>
-              <S.ButtonSet
-                width={"140px"}
-                color={"#e5a711"}
-                hoverColor={"#b2820d"}
-                onClick={onClickPick}
-              >
-                Data Select
               </S.ButtonSet>
             </S.SearchBox>
           </S.ButtonBox>

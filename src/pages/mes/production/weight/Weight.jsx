@@ -189,7 +189,7 @@ function Weight() {
     setGridDataHeader,
     disRowHeader,
     setDisRowHeader,
-    restURI.prodWeight
+    restURI.prdWeight
   );
 
   const [actSelectProd] = uSearch.useSearchSelect(
@@ -619,7 +619,7 @@ function Weight() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.prodWeight
+    restURI.prdWeight
   );
   const [actEditDetail] = uEdit.useEditDetail(
     refGridDetail,
@@ -629,7 +629,7 @@ function Weight() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.prodWeightDetail
+    restURI.prdWeightDetail
   );
 
   const [actDeleteDetail] = uDelete.useDeleteDetail(
@@ -642,7 +642,7 @@ function Weight() {
     onClickSearch,
     actSearchDetail,
     headerRowID,
-    restURI.prodWeightDetail,
+    restURI.prdWeightDetail,
     SWITCH_NAME_02
   );
 
@@ -656,7 +656,7 @@ function Weight() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.prodWeight
+    restURI.prdWeight
   );
 
   const GridTop = useMemo(() => {

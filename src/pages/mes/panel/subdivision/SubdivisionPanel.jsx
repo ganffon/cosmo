@@ -56,7 +56,7 @@ function SubdivisionPanel() {
     columnsSelectProd,
     columnsSelectLoadHeader,
     columnsSelectLoadDetail,
-  } = SubdivisionPanelSet();
+  } = SubdivisionPanelSet(onClickGridButton);
 
   const refGridSingle = useRef(null);
   const refGridSelect = useRef(null);
@@ -187,7 +187,8 @@ function SubdivisionPanel() {
       setIsModalSelectOpen(false);
     }
   };
-  const onClickPick = async () => {
+
+  async function onClickGridButton(rowKey) {
     if (prodID.current !== null) {
       try {
         const result = await restAPI.get(
@@ -217,7 +218,7 @@ function SubdivisionPanel() {
       }
     }
     refBarcode?.current?.firstChild?.focus();
-  };
+  }
   const onClickStart = async (e) => {
     if (prodID.current === "") {
       setIsSnackOpen({
@@ -601,7 +602,8 @@ function SubdivisionPanel() {
           refGridModalDetail={refGridSelectDetail}
           onClickGridModalHeader={onClickGridSelect}
           onDblClickGridModalHeader={onDblClickGridSelect}
-          onClickPick={onClickPick}
+          setIsSnackOpen={setIsSnackOpen}
+          isSnackOpen={isSnackOpen}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

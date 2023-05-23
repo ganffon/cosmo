@@ -244,7 +244,7 @@ function Packing() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelectHeader,
-    restURI.prodWeight,
+    restURI.prdWeight,
     null
   );
 
@@ -548,7 +548,7 @@ function Packing() {
       try {
         setIsBackDrop(true);
         const result = await restAPI.get(
-          restURI.prodWeightDetail + `?work_weigh_id=${workWeighID.current}`
+          restURI.prdWeightDetail + `?work_weigh_id=${workWeighID.current}`
         );
         setGridDataSelectDetail(result?.data?.data?.rows);
       } catch (err) {

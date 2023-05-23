@@ -8,7 +8,7 @@ export const ContentsArea = styled("div")`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   padding: 10px 10px;
 `;
 export const HeaderBox = styled("div")`
@@ -20,8 +20,9 @@ export const HeaderBox = styled("div")`
 `;
 export const TitleWrap = styled("div")`
   width: 100%;
-  height: 50px;
+  height: ${(props) => props.height};
   display: flex;
+  justify-content: space-between;
   align-items: center;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
@@ -30,9 +31,21 @@ export const TitleWrap = styled("div")`
   font-family: NotoSansKR_B;
   font-size: 18px;
 `;
+export const Group = styled("div")`
+  display: flex;
+`;
+export const Title = styled("div")`
+  font-size: ${(props) => props.size};
+  display: flex;
+  align-items: center;
+`;
+export const ButtonModuleWrap = styled("div")`
+  display: flex;
+  padding-top: 30px;
+`;
 export const GridBox = styled("div")`
   width: 100%;
-  height: 350px;
+  height: 300px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;

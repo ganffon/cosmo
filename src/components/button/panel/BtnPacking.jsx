@@ -1,11 +1,7 @@
 import * as S from "./BtnPacking.styled";
 
 function BtnPacking(props) {
-  const {
-    onClickNew = () => {},
-    onClickEdit = () => {},
-    onClickDelete = () => {},
-  } = props;
+  const { onClickNew = () => {}, onClickDelete = () => {} } = props;
   return (
     <>
       <S.ButtonSet
@@ -14,13 +10,6 @@ function BtnPacking(props) {
         onClick={onClickNew}
       >
         New
-      </S.ButtonSet>
-      <S.ButtonSet
-        color={"#e5b700"}
-        hoverColor={"#415c76"}
-        onClick={onClickEdit}
-      >
-        Edit
       </S.ButtonSet>
       <S.ButtonSet
         color={"#990b11"}

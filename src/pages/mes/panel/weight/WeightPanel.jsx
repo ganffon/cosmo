@@ -167,7 +167,7 @@ function WeightPanel() {
       handleInputSaveInfo(e?.rowKey);
       try {
         const result = await restAPI.get(
-          restURI.prodWeightDetail + `?work_weigh_id=${workWeighID}`
+          restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`
         );
         setGridDataInputDetail(result?.data?.data?.rows);
       } catch (err) {
@@ -197,7 +197,7 @@ function WeightPanel() {
   const handleInputSearch = async () => {
     try {
       const result = await restAPI.get(
-        restURI.prodWeight + `?complete_fg=INCOMPLETE`
+        restURI.prdWeight + `?complete_fg=INCOMPLETE`
       );
       setGridDataInput(result?.data?.data?.rows);
       setIsModalInputOpen(true);
