@@ -251,6 +251,17 @@ class packingDetail {
     this.work_packing_detail_id = raw.work_packing_detail_id;
   }
 }
+class weightDetail {
+  constructor(raw) {
+    this.work_weigh_detail_id = raw.work_weigh_detail_id;
+  }
+}
+
+class productionDownTime {
+  constructor(raw) {
+    this.work_downtime_id = raw.work_downtime_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -410,6 +421,13 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "packingDetail":
       params = new packingDetail(raw);
+      break;
+    case "weightDetail":
+      params = new weightDetail(raw);
+      break;
+
+    case "productionDownTime":
+      params = new productionDownTime(raw);
       break;
 
     default:

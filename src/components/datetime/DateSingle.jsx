@@ -12,8 +12,8 @@ function DateSingle(props) {
 
   useEffect(() => {
     setDateText({
-      startDate: DateTime().dateFull,
-      endDate: DateTime(7).dateFull,
+      startDate: DateTime(-7).dateFull,
+      endDate: DateTime().dateFull,
     });
   }, []);
 

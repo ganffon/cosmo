@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "pages/login/Login";
 import NotFound from "pages/notfound/NotFound";
 import MainRouter from "./main.router";
+import Line from "pages/mes/standard/line/Line";
 
 function Router() {
   return (

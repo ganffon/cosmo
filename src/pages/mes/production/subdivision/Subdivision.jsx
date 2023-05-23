@@ -437,7 +437,7 @@ function Subdivision() {
     let refGrid;
     let columnName;
     const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
-    console.log(refGridHeader);
+
     if (dblClickGrid === "Search") {
       setInputSearchValue([]);
       columnName = ["prod_cd", "prod_nm"];

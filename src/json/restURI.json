@@ -80,5 +80,7 @@
   "prodWeightDetail": "/prd/weigh-detail",
   "prdWeightComplete": "/prd/weigh/{id}/complete",
   "prdPacking": "/prd/packing",
-  "prdPackingDetail": "/prd/packing-detail"
+  "prdPackingDetail": "/prd/packing-detail",
+  "productionDownTime": "/prd/work-downtime",
+  "prdLotTracking": "/prd/lot-tracking"
 }

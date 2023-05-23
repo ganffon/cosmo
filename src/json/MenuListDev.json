@@ -286,7 +286,7 @@
       {
         "name": "❌사용자이력현황",
         "id": "userHistoryStatus",
-        "path": null,
+        "path": "userHistoryStatus",
         "under": null
       }
     ]
@@ -541,7 +541,7 @@
         "under": null
       },
       {
-        "name": "❌포장일지",
+        "name": "✴️포장일지",
         "id": "packing-panel",
         "path": "packing-panel",
         "under": null

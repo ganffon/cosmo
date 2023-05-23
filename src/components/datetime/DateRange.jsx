@@ -10,8 +10,8 @@ function DateRange(props) {
 
   useEffect(() => {
     setDateText({
-      startDate: DateTime().dateFull,
-      endDate: DateTime(7).dateFull,
+      startDate: DateTime(-7).dateFull,
+      endDate: DateTime().dateFull,
     });
   }, []);
 
@@ -31,7 +31,7 @@ function DateRange(props) {
         id="startDate"
         type="date"
         format="yyyy-MM-dd"
-        defaultValue={DateTime().dateFull}
+        defaultValue={DateTime(-7).dateFull}
         InputProps={{
           sx: { height: 40 },
           startAdornment: (
@@ -46,7 +46,7 @@ function DateRange(props) {
         id="endDate"
         type="date"
         format="yyyy-MM-dd"
-        defaultValue={DateTime(7).dateFull}
+        defaultValue={DateTime().dateFull}
         InputProps={{
           sx: { height: 40 },
         }}

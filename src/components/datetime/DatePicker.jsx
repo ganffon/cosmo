@@ -24,7 +24,7 @@ function DatePicker(props) {
           className="date"
           type="date"
           format="yyyy-MM-dd"
-          defaultValue={DateTime().dateFull}
+          defaultValue={DateTime(-7).dateFull}
           InputProps={{ sx: { height: 40 } }}
           label={datePickerSet === "single" ? "날짜" : "기간"}
           // InputProps={{
@@ -43,7 +43,7 @@ function DatePicker(props) {
           id="endDate"
           type="date"
           format="yyyy-MM-dd"
-          defaultValue={DateTime(7).dateFull}
+          defaultValue={DateTime().dateFull}
           InputProps={{
             sx: { height: 40 },
           }}

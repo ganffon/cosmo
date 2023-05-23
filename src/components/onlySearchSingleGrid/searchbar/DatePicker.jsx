@@ -15,8 +15,8 @@ function DatePicker(props) {
 
   useEffect(() => {
     setDateText({
-      startDate: DateTime().dateFull,
-      endDate: DateTime(7).dateFull,
+      startDate: DateTime(-7).dateFull,
+      endDate: DateTime().dateFull,
     });
   }, []);
 
@@ -31,7 +31,7 @@ function DatePicker(props) {
           id="startDate"
           type="date"
           format="yyyy-MM-dd"
-          defaultValue={DateTime().dateFull}
+          defaultValue={DateTime(-7).dateFull}
           ref={dateRef}
           InputProps={{
             sx: { height: 40 },
@@ -49,7 +49,7 @@ function DatePicker(props) {
           id="endDate"
           type="date"
           format="yyyy-MM-dd"
-          defaultValue={DateTime(7).dateFull}
+          defaultValue={DateTime().dateFull}
           InputProps={{
             sx: { height: 40 },
           }}

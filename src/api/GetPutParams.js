@@ -585,6 +585,41 @@ class packing {
     this.remark = raw.remark;
   }
 }
+class weight {
+  constructor(raw) {
+    this.work_weigh_id = raw.work_weigh_id;
+    this.work_weigh_date = raw.work_weigh_date;
+    this.work_weigh_time = raw.work_weigh_time;
+    this.weigh_emp_id = raw.weigh_emp_id;
+    this.input_emp_id = raw.input_emp_id;
+  }
+}
+
+class weightDetail {
+  constructor(raw) {
+    this.work_weigh_detail_id = raw.work_weigh_detail_id;
+    this.bag_qty = String(raw.bag_qty) ? Number(raw.bag_qty) : null;
+    this.input_qty = String(raw.input_qty) ? Number(raw.input_qty) : null;
+    this.remark = raw.remark;
+  }
+}
+
+class productionDownTime {
+  constructor(raw) {
+    this.work_downtime_id = raw.work_downtime_id;
+    this.work_order_id = raw.work_order_id;
+    this.line_id = raw.line_id;
+    this.proc_id = raw.proc_id;
+    this.equip_id = raw.equip_id;
+    this.downtime_id = raw.downtime_id;
+    this.downtime_start_date = raw.start_date;
+    this.downtime_start_time = raw.start_time;
+    this.downtime_end_date = raw.end_date;
+    this.downtime_end_time = raw.end_time;
+    this.downtime = String(raw.downtime) ? Number(raw.downtime) : null;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -741,6 +776,16 @@ function GetPutParams(componentName, raw) {
       break;
     case "packing":
       params = new packing(raw);
+      break;
+    case "weight":
+      params = new weight(raw);
+      break;
+    case "weightDetail":
+      params = new weightDetail(raw);
+      break;
+
+    case "productionDownTime":
+      params = new productionDownTime(raw);
       break;
     default:
   }

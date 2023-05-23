@@ -456,6 +456,18 @@ const usePartnerTypeList = () => {
   }, []);
   return [partnerTypeOpt, partnerTypeList];
 };
+let userActionList = [
+  { action_Name: "로그인", user_action: "LOGIN" },
+  { action_Name: "로그아웃", user_action: "LOGOUT" },
+];
+const useUserActionList = () => {
+  const [userActionOpt, setUserActionOpt] = useState([]);
+
+  useEffect(() => {
+    setUserActionOpt(userActionList);
+  }, []);
+  return [userActionOpt, userActionList];
+};
 
 export {
   useLine,
@@ -482,4 +494,5 @@ export {
   useInspTool,
   useInspFiling,
   usePartnerTypeList,
+  useUserActionList,
 };

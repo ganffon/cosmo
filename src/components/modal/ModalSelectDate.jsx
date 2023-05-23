@@ -10,7 +10,7 @@ function ModalSelectDate(props) {
     width = "80%",
     height = "90%",
     onClickModalSelectDateClose = () => {},
-    refSelectGrid = null,
+    refGridSelect = null,
     columns = [],
     columnOptions = [],
     header = [],
@@ -50,7 +50,7 @@ function ModalSelectDate(props) {
             columnOptions={columnOptions}
             header={header}
             rowHeaders={rowHeaders}
-            refGrid={refSelectGrid}
+            refGrid={refGridSelect}
             data={gridDataSelect}
             draggable={false}
             onClick={onClickSelectGrid}
