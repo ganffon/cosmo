@@ -96,7 +96,7 @@ function ModalSubdivision(props) {
             <S.SearchBox>
               <S.Input
                 id={"prod_cd"}
-                name={"품번"}
+                name={"품목코드"}
                 handleInputTextChange={handleInputChange}
                 onKeyDown={onKeyDownModalMulti}
                 onClickSearch={onClickSearch}

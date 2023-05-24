@@ -29,18 +29,12 @@ function PackingPanel() {
   const targetRowKey = useRef("");
   const currentRowKey = useRef("");
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
   });
-  const [nowDateTime, setNowDateTime] = useState({
-    nowDate: DateTime().dateFull,
-    nowTime: DateTime().hour + ":" + DateTime().minute,
-  });
 
-  const [selectInfo, setSelectInfo] = useState({});
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -61,35 +55,20 @@ function PackingPanel() {
     columnsNewDetail,
     columnsSelectHeader,
     columnsSelectDetail,
-    columnsWeight,
-    columnsSelectEmp,
-    columnsSelectStore,
-    columnsInput,
-    columnsInputDetail,
   } = PackingPanelSet(onClickGridButton);
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
-  const refGridInput = useRef(null);
   const refGridPackingHeader = useRef(null);
   const refGridNewHeader = useRef(null);
-  const refGridNewDetail = useRef(null);
   const refGridSelectHeader = useRef(null);
-  const refGridSelectDetail = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataPackingHeader, setGridDataPackingHeader] = useState(null);
-  const [gridDataNewHeader, setGridDataNewHeader] = useState(null);
   const [gridDataNewDetail, setGridDataNewDetail] = useState(null);
   const [gridDataSelectHeader, setGridDataSelectHeader] = useState(null);
   const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
-  const [gridDataInput, setGridDataInput] = useState(null);
-
-  const [modalSelectSize, setModalSelectSize] = useState({
-    width: "50%",
-    height: "60%",
-  });
 
   const [info, setInfo] = useState({
     lineNM: "",
@@ -107,10 +86,6 @@ function PackingPanel() {
     refGridHeader?.current?.gridInst?.refreshLayout();
     refGridDetail?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
-
-  useEffect(() => {
-    onClickSearch();
-  }, []);
 
   const [actSelectPackingHeader] = uSearch.useSearchSelect(
     refGridPackingHeader,
@@ -132,73 +107,6 @@ function PackingPanel() {
     restURI.prdWeight +
       `?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`
   );
-
-  const handleInputSaveInfo = (rowKey) => {
-    const Header = refGridInput?.current?.gridInst;
-    // prodCD.current = Header.getValue(rowKey, "prod_cd");
-    // prodNM.current = Header.getValue(rowKey, "prod_nm");
-  };
-  const handleInputSearch = async () => {
-    try {
-      const result = await restAPI.get(
-        restURI.prdWeight + `?complete_fg=INCOMPLETE`
-      );
-      setGridDataInput(result?.data?.data?.rows);
-      // setIsModalInputOpen(true);
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-        location: "bottomRight",
-      });
-    }
-  };
-  const onClickSearch = async () => {
-    if (isBackDrop === false) {
-      // try {
-      //   setIsBackDrop(true);
-      //   let conditionLine;
-      //   let conditionProdCD;
-      //   let conditionProdNM;
-      //   inputTextChange.line
-      //     ? (conditionLine = `&line_nm=${inputTextChange.line}`)
-      //     : (conditionLine = "");
-      //   inputTextChange.prod_cd
-      //     ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`)
-      //     : (conditionProdCD = "");
-      //   inputTextChange.prod_nm
-      //     ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`)
-      //     : (conditionProdNM = "");
-      //   const result = await restAPI.get(
-      //     restURI.prdOrder +
-      //       `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-      //       conditionLine +
-      //       conditionProdCD +
-      //       conditionProdNM
-      //   );
-      //   setGridDataHeader(result?.data?.data?.rows);
-      //   setIsSnackOpen({
-      //     ...isSnackOpen,
-      //     open: true,
-      //     message: result?.data?.message,
-      //     severity: "success",
-      //     location: "bottomRight",
-      //   });
-      // } catch (err) {
-      //   setIsSnackOpen({
-      //     ...isSnackOpen,
-      //     open: true,
-      //     message: err?.response?.data?.message,
-      //     severity: "error",
-      //     location: "bottomRight",
-      //   });
-      // } finally {
-      //   setIsBackDrop(false);
-      // }
-    }
-  };
 
   const onClickGridHeader = async (e) => {
     if (currentRowKey.current !== e?.rowKey) {
@@ -230,10 +138,6 @@ function PackingPanel() {
     }
   };
 
-  const [inputTextChange, setInputTextChange] = useState({});
-  const handleInputTextChange = (e) => {
-    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
-  };
   const onClickSelect = () => {
     setIsPackingHeaderOpen(true);
     actSelectPackingHeader();
@@ -619,7 +523,6 @@ function PackingPanel() {
           columns={columnsNewHeader}
           columnsDetail={columnsNewDetail}
           columnOptions={columnOptions}
-          gridDataSelect={gridDataNewHeader}
           gridDataDetail={gridDataNewDetail}
           rowHeaders={rowHeadersNum}
           refGridSelect={refGridNewHeader}

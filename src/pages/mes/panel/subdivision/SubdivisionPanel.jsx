@@ -224,7 +224,7 @@ function SubdivisionPanel() {
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
-        message: "품번 정보를 입력하세요!",
+        message: "품목코드 정보를 입력하세요!",
         severity: "error",
         location: "bottomLeft",
       });
@@ -461,7 +461,7 @@ function SubdivisionPanel() {
           <InputPaper
             width={"500px"}
             height={"60px"}
-            name={"품번"}
+            name={"품목코드"}
             nameSize={"20px"}
             namePositionTop={"-30px"}
             nameColor={"white"}

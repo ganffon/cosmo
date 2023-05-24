@@ -817,7 +817,7 @@ function Packing() {
             />
             <InputPaper
               width={"180px"}
-              name={"품번"}
+              name={"품목코드"}
               value={prodCD.current || ""}
               btn={false}
             />

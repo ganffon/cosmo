@@ -45,7 +45,7 @@
   "prod_type_small_nm": "품종",
 
   "prod_id": "품목ID",
-  "prod_cd": "품번",
+  "prod_cd": "품목코드",
   "prod_nm": "품목",
 
   "unit_id": "단위ID",

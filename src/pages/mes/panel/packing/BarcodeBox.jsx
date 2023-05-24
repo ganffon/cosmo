@@ -42,7 +42,7 @@ function BarcodeBox(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"120px"}>🔸품번</S.InfoTitle>
+          <S.InfoTitle width={"120px"}>🔸품목코드</S.InfoTitle>
           <InputPaper
             width={"280px"}
             height={"50px"}

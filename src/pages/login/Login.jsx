@@ -37,6 +37,8 @@ function Login() {
       });
     }
     factoryDataSetting();
+
+    window.document.title = `Cosmo MES`;
   }, []);
 
   const changeLoginInfo = (e) => {

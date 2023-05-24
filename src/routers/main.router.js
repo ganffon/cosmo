@@ -61,6 +61,7 @@ import InspResultUpload from "pages/mes/insp/inspResultInfo/inspResultUpload/Ins
 import WeightPanel from "pages/mes/panel/weight/WeightPanel";
 import Packing from "pages/mes/production/packing/Packing";
 import PackingPanel from "pages/mes/panel/packing/PackingPanel";
+import WeightReport from "pages/mes/production/weightReport/WeightReport";
 
 export default function MainRouter() {
   return (
@@ -139,6 +140,7 @@ export default function MainRouter() {
         <Route path="menu-list" element={<MenuList />} />
         <Route path="setup" element={<Setup />} />
         <Route path="insp-result-upload" element={<InspResultUpload />} />
+        <Route path="weight-report" element={<WeightReport />} />
 
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>
