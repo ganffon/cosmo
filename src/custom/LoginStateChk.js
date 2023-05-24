@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function LoginStateChk() {
+export function LoginStateChk() {
   /**
    * 🔸현재 브라우저에서 하나의 탭이라도 로그아웃을 했다면
    *    다른 탭의 이후 행동은 모두 로그인 화면으로 이동시키기 위함
@@ -14,5 +14,3 @@ function LoginStateChk() {
     navigate("/login");
   }
 }
-
-export default LoginStateChk;

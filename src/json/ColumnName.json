@@ -212,7 +212,7 @@
   "infc_memory_nm": "Memory",
   "plc_ip": "PLC IP",
   "plc_port": "PLC Port",
-  "device_addre": "Device Address",
+  "device_address": "Device Address",
   "tag_id": "Tag ID",
 
   "classification_id": "대분류ID",
