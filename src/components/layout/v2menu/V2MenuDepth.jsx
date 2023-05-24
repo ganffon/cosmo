@@ -22,13 +22,7 @@ function subTitle(lv2Menu) {
   }
 }
 
-function subMenu(
-  menu,
-  upperMenuName,
-  isMouseOver,
-  handleClickMenu,
-  handleMouseDown
-) {
+function subMenu(menu, handleClickMenu) {
   let result;
 
   if (menu === null) {
@@ -36,11 +30,7 @@ function subMenu(
   } else {
     result = (
       <S.MenuItem key={menu.id}>
-        <S.MenuButton
-          onMouseDown={(e) =>
-            handleClickMenu(menu, upperMenuName, isMouseOver, e)
-          }
-        >
+        <S.MenuButton onMouseDown={(e) => handleClickMenu(menu, e)}>
           <S.MenuText primary={menu.name} />
         </S.MenuButton>
       </S.MenuItem>
@@ -53,9 +43,6 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
   const {
     isMouseOver,
     setIsMouseOver,
-    menuNameChangeSave,
-    setMenuNameChangeSave,
-    setCurrentMenuName,
     setIsModalOpen,
     authMenuCode,
     setAuthMenuCode,
@@ -65,7 +52,9 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
   const [alertOpen, setAlertOpen] = useState({
     open: false,
   });
-  const handleClickMenu = async (menu, upperMenuName, isMouseOver, e) => {
+  const handleClickMenu = async (menu, e) => {
+    e.preventDefault();
+    console.log(e);
     const loginID = Cookies.get("loginID");
     if (loginID !== "ispark") {
       try {
@@ -84,31 +73,11 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
             update: res?.data?.data?.rows[0]?.auth_update,
             delete: res?.data?.data?.rows[0]?.auth_delete,
           });
-
-          if (isMouseOver === true) {
-            setMenuNameChangeSave({
-              ...menuNameChangeSave,
-              lv2MenuName: upperMenuName,
-              lv3MenuName: menu.name,
-            });
-            /**
-             *📌setMenuNameChangeSave 으로 lv2MenuName, lv3MenuName의 state를 변경했지만
-             *📌아래에서
-             *📌menuNameChangeSave.lv2MenuName 대신 upperMenuName 을
-             *📌menuNameChangeSave.lv3MenuName 대신 menu.name 을 사용한 이유를 모르면 공부해!
-             */
-            if (upperMenuName === menu.name) {
-              //🔸AppBar 현재 메뉴 표시
-              setCurrentMenuName(
-                `${menuNameChangeSave.lv1MenuName} / ${upperMenuName}`
-              );
-            } else {
-              setCurrentMenuName(
-                `${menuNameChangeSave.lv1MenuName} / ${upperMenuName} / ${menu.name}`
-              );
-            }
-            setIsModalOpen(false);
+          setIsModalOpen(false);
+          if (e?.button === 0) {
             navigate(menu.path);
+          } else if (e?.button === 1) {
+            window.open(`http://localhost:3000/mes/${menu.path}`, "_blank");
           }
         } else {
           setAlertOpen({
@@ -130,31 +99,11 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
         update: true,
         delete: true,
       });
-
-      if (isMouseOver === true) {
-        setMenuNameChangeSave({
-          ...menuNameChangeSave,
-          lv2MenuName: upperMenuName,
-          lv3MenuName: menu.name,
-        });
-        /**
-         *📌setMenuNameChangeSave 으로 lv2MenuName, lv3MenuName의 state를 변경했지만
-         *📌아래에서
-         *📌menuNameChangeSave.lv2MenuName 대신 upperMenuName 을
-         *📌menuNameChangeSave.lv3MenuName 대신 menu.name 을 사용한 이유를 모르면 공부해!
-         */
-        if (upperMenuName === menu.name) {
-          //🔸AppBar 현재 메뉴 표시
-          setCurrentMenuName(
-            `${menuNameChangeSave.lv1MenuName} / ${upperMenuName}`
-          );
-        } else {
-          setCurrentMenuName(
-            `${menuNameChangeSave.lv1MenuName} / ${upperMenuName} / ${menu.name}`
-          );
-        }
-        setIsModalOpen(false);
+      setIsModalOpen(false);
+      if (e?.button === 0) {
         navigate(menu.path);
+      } else if (e?.button === 1) {
+        window.open(`http://localhost:3000/mes/${menu.path}`, "_blank");
       }
     }
   };
@@ -175,19 +124,9 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
                 <S.Menu key={lv2Menu.id} subheader={subTitle(lv2Menu)}>
                   {lv2Menu.under
                     ? lv2Menu.under.map((lv3Menu) =>
-                        subMenu(
-                          lv3Menu,
-                          lv2Menu.name,
-                          isMouseOver,
-                          handleClickMenu
-                        )
+                        subMenu(lv3Menu, handleClickMenu)
                       )
-                    : subMenu(
-                        lv2Menu,
-                        lv2Menu.name,
-                        isMouseOver,
-                        handleClickMenu
-                      )}
+                    : subMenu(lv2Menu, handleClickMenu)}
 
                   <Divider />
                 </S.Menu>

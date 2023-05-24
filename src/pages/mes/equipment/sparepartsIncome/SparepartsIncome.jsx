@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import { useContext, useEffect, useRef, useState } from "react";
 import restURI from "json/restURI.json";
 import * as S from "./SparepartsIncome.styled";

@@ -1,9 +1,17 @@
-import React, { useState, createContext } from "react";
+import React, {
+  useState,
+  createContext,
+  useCallback,
+  useMemo,
+  useEffect,
+} from "react";
 // ⬇️ reference of page
 import AppBar from "./AppBar";
 import V2MenuFold from "../v2menu/V2MenuFold";
 import ExtendButton from "./ExtendButton";
 import * as S from "./Layout.styled";
+import { useLocation } from "react-router-dom";
+import MenuListDev from "json/MenuListDev.json";
 
 export const LayoutContext = createContext();
 
@@ -25,6 +33,63 @@ const Layout = ({ children }) => {
     update: "",
     delete: "",
   }); //🔸메뉴별 조회, 등록, 수정, 삭제 권한 값 저장
+
+  const findPath = (obj) => {
+    let fullPath = [];
+    let path = [];
+    let name = [];
+    let lv1Menu;
+    let lv2Menu;
+    let lv3Menu;
+    for (let i = 0; obj.length > i; i++) {
+      lv1Menu = obj[i].name;
+      for (let j = 0; obj[i].under.length > j; j++) {
+        lv2Menu = obj[i].under[j].name;
+        if (obj[i].under[j].under === null) {
+          path.push(obj[i].under[j].path);
+          name.push(obj[i].under[j].name);
+          fullPath.push(lv1Menu + "★" + lv2Menu);
+        } else {
+          for (let k = 0; obj[i].under[j].under.length > k; k++) {
+            lv3Menu = obj[i].under[j].under[k].name;
+            if (obj[i].under[j].under[k].under === null) {
+              path.push(obj[i].under[j].under[k].path);
+              name.push(obj[i].under[j].under[k].name);
+              fullPath.push(lv1Menu + "★" + lv2Menu + "★" + lv3Menu);
+            }
+          }
+        }
+      }
+    }
+    return [path, name, fullPath];
+  };
+  const location = useLocation();
+  useEffect(() => {
+    let fullMenuName;
+    for (let i = 0; findPath(MenuListDev)[0].length > i; i++) {
+      if (
+        location.pathname.split("/")[1] === "mes" &&
+        location.pathname.split("/")[2] === undefined
+      ) {
+        window.document.title = `FacdoriOn | Dashboard`;
+        break;
+      } else {
+        if (findPath(MenuListDev)[0][i] === location.pathname.split("/")[2]) {
+          window.document.title = `FacdoriOn | ` + findPath(MenuListDev)[1][i];
+          const menuName = findPath(MenuListDev)[2][i].split("★");
+
+          if (menuName.length === 2) {
+            fullMenuName = menuName[0] + `　|　` + menuName[1];
+          } else if (menuName.length === 3) {
+            fullMenuName =
+              menuName[0] + `　|　` + menuName[1] + `　|　` + menuName[2];
+          }
+          break;
+        }
+      }
+    }
+    setCurrentMenuName(fullMenuName);
+  }, [location.pathname]);
 
   return (
     <S.LayoutBox>

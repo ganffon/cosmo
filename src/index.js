@@ -17,7 +17,6 @@ root.render(
       <React.StrictMode>
         <CookiesProvider>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
             <Router />
           </ThemeProvider>
         </CookiesProvider>

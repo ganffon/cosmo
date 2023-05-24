@@ -1,4 +1,4 @@
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import * as S from "pages/mes/style/oneGrid.styled";
 import { useContext, useEffect, useRef, useState } from "react";
 import { LayoutContext } from "components/layout/common/Layout";

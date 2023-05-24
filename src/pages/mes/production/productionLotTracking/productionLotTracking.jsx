@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import { useContext, useRef, useState } from "react";
 import * as LS from "./productionLotTracking.styled";
 

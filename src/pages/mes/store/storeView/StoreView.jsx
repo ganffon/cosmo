@@ -3,7 +3,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import ButtonS from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import StoreViewSet from "./StoreViewSet";

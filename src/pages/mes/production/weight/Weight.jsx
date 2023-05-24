@@ -1,4 +1,4 @@
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import * as uSearch from "custom/useSearch";

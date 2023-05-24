@@ -5,7 +5,7 @@ import ButtonSES from "components/button/ButtonSES";
 import ButtonNEDS from "components/button/ButtonNEDS";
 import * as uSearch from "custom/useSearch";
 import ButtonSearch from "components/button/ButtonSearch";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 
 import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";

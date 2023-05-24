@@ -217,8 +217,8 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       rowSpan: false,
     },
     {
-      name: "device_addre",
-      header: CN.device_addre,
+      name: "device_address",
+      header: CN.device_address,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
@@ -464,8 +464,8 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
       rowSpan: false,
     },
     {
-      name: "device_addre",
-      header: CN.device_addre,
+      name: "device_address",
+      header: CN.device_address,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",
