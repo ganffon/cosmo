@@ -44,7 +44,7 @@ function EquipmentMediumSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "group_id",
+      // name: "equip_group_id",
       header: CN.group_id,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -56,7 +56,7 @@ function EquipmentMediumSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "group_cd",
+      // name: "equip_group_cd",
       header: CN.group_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -68,7 +68,7 @@ function EquipmentMediumSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "group_nm",
+      // name: "equip_group_nm",
       header: CN.group_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -154,7 +154,7 @@ function EquipmentMediumSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "group_cd",
+      // name: "equip_group_cd",
       header: CN.group_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -166,7 +166,7 @@ function EquipmentMediumSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "group_nm",
+      // name: "equip_group_nm",
       header: CN.group_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -200,11 +200,11 @@ function EquipmentMediumSet(isEditMode) {
 
   const inputSet = [
     {
-      id: "group_cd",
+      // id: "equip_group_cd",
       name: CN.group_cd,
     },
     {
-      id: "group_nm",
+      // id: "equip_group_nm",
       name: CN.group_nm,
     },
   ];

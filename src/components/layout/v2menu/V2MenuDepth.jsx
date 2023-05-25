@@ -57,7 +57,8 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
   const handleClickMenu = async (menu, e) => {
     e.preventDefault();
     const loginID = Cookies.get("loginID");
-    if (loginID !== "ispark") {
+    const admin = Cookies.get("admin");
+    if (loginID !== "ispark" && admin !== "true") {
       try {
         const res = await restAPI.get(
           `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get(

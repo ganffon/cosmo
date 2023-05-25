@@ -66,6 +66,7 @@ function PackingPanel() {
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataPackingHeader, setGridDataPackingHeader] = useState(null);
+  const [gridDataNewHeader, setGridDataNewHeader] = useState(null);
   const [gridDataNewDetail, setGridDataNewDetail] = useState(null);
   const [gridDataSelectHeader, setGridDataSelectHeader] = useState(null);
   const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
@@ -104,8 +105,7 @@ function PackingPanel() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelectHeader,
-    restURI.prdWeight +
-      `?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`
+    restURI.prdWeight
   );
 
   const onClickGridHeader = async (e) => {
@@ -318,7 +318,9 @@ function PackingPanel() {
     ) {
       targetRowKey.current = e?.rowKey;
       setIsModalSelectMulti(true);
-      actSelectWeightHeader();
+      actSelectWeightHeader(
+        `?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`
+      );
     }
   };
   const onClickModalSelectClose = () => {
@@ -478,6 +480,29 @@ function PackingPanel() {
       />
     );
   }, [gridDataDetail]);
+  const GridModalNew = useMemo(() => {
+    return (
+      <ModalNew
+        height={"90%"}
+        width={"90%"}
+        onClickModalSelectClose={onClickModalNewClose}
+        columns={columnsNewHeader}
+        columnsDetail={columnsNewDetail}
+        columnOptions={columnOptions}
+        gridDataSelect={gridDataNewHeader}
+        gridDataDetail={gridDataNewDetail}
+        rowHeaders={rowHeadersNum}
+        refGridSelect={refGridNewHeader}
+        info={info}
+        onClickAddRow={onClickAddRow}
+        onClickCancelRow={onClickCancelRow}
+        onClickSave={onClickSave}
+        onClickSelectGrid={onClickNewHeader}
+        onDblClickGridSelect={onDblClickNewHeader}
+        // onClickSearch={onClickSearchSelectDate}
+      />
+    );
+  }, [gridDataNewDetail]);
 
   return (
     <>
@@ -515,26 +540,7 @@ function PackingPanel() {
           // onClickSearch={onClickSearchSelectDate}
         />
       ) : null}
-      {isModalNewOpen ? (
-        <ModalNew
-          height={"90%"}
-          width={"90%"}
-          onClickModalSelectClose={onClickModalNewClose}
-          columns={columnsNewHeader}
-          columnsDetail={columnsNewDetail}
-          columnOptions={columnOptions}
-          gridDataDetail={gridDataNewDetail}
-          rowHeaders={rowHeadersNum}
-          refGridSelect={refGridNewHeader}
-          info={info}
-          onClickAddRow={onClickAddRow}
-          onClickCancelRow={onClickCancelRow}
-          onClickSave={onClickSave}
-          onClickSelectGrid={onClickNewHeader}
-          onDblClickGridSelect={onDblClickNewHeader}
-          // onClickSearch={onClickSearchSelectDate}
-        />
-      ) : null}
+      {isModalNewOpen ? GridModalNew : null}
       {isModalSelectMulti ? (
         <ModalSelectMulti
           height={"80%"}

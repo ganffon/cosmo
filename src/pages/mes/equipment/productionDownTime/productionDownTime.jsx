@@ -99,8 +99,8 @@ function ProductionDownTime() {
   const onClickGrid = (e) => {};
 
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
 
   const onClickNew = () => {

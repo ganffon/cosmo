@@ -12,7 +12,6 @@ function DatePicker(props) {
   // }, []);
 
   const datePickerChange = (e) => {
-    console.log(e.target.value);
     setDateText({ ...dateText, [e.target.id]: e.target.value });
   };
 

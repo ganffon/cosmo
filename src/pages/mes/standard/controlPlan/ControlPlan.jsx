@@ -391,7 +391,6 @@ function ControlPlan() {
     modalDetailClickRowKey = null;
   };
   const onClickModalSave = () => {
-    console.log("here");
     actSave();
   };
   const onClickModalClose = () => {

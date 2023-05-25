@@ -21,7 +21,7 @@ function GetDateParams(
     params = "?";
     params = params + `${startDateNm}=${startDate}&`;
   }
-  if (endDateNm !== "") {
+  if (endDateNm !== "" && endDateNm !== null) {
     params = params + `${endDateNm}=${endDate}&`;
   }
   params = params.slice(0, params.length - 1);

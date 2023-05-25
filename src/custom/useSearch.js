@@ -27,7 +27,6 @@ const useSearch = (
         setIsBackDrop(true);
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
         const readURI = uri + inputParams;
-        console.log(readURI);
         let gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {
@@ -68,10 +67,8 @@ const useSearchCbo = (
       try {
         setIsBackDrop(true);
         const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        console.log(inputParams);
         const cboParams = GetCboSearchParams(inputParams, comboValue);
         const readURI = uri + cboParams;
-        console.log(readURI);
         const gridData = await restAPI.get(readURI);
         await setGridData(gridData?.data?.data?.rows);
       } catch {

@@ -29,8 +29,7 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 
 function Packing() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
   const prodCD = useRef("");
@@ -309,7 +308,7 @@ function Packing() {
       let conditionLine;
       let conditionProdID;
       inputTextChange.line_nm
-        ? (conditionLine = `&line_nm=${inputTextChange.line}`)
+        ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
         : (conditionLine = "");
       prodID.current
         ? (conditionProdID = `&prod_id=${prodID.current}`)
@@ -347,7 +346,13 @@ function Packing() {
     if (workOrderID.current) {
       setIsModalDetailOpen(true);
     } else {
-      alert("생산품목 선택해라 새캬");
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "생산품목을 선택해주세요",
+        severity: "error",
+        location: "bottomRight",
+      });
     }
   };
   const handleDelete = async () => {

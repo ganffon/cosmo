@@ -342,6 +342,12 @@
             "id": "weight-report",
             "path": "weight-report",
             "under": null
+          },
+          {
+            "name": "❌포장실적 현황",
+            "id": "production-packing-view",
+            "path": "production-packing-view",
+            "under": null
           }
         ]
       }

@@ -37,8 +37,8 @@ function WeightReport() {
     line_id: null,
   });
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
 
   const { columnsHeader, columnsDetail, columnOptions, rowHeadersNum, header } =
@@ -67,13 +67,6 @@ function WeightReport() {
         ? (prodNM = `&prod_nm=${inputTextChange.prod_nm}`)
         : (prodNM = "");
 
-      console.log(
-        restURI.prdWeight +
-          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-          lineID +
-          prodCD +
-          prodNM
-      );
       //API 전송
       const result = await restAPI.get(
         restURI.prdWeight +

@@ -27,7 +27,6 @@ const Abcs = () => {
         // 데이터 추출 및 가공 후 API 호출
         const rows = getDataRows(14, data); // 몇번째 행부터 읽어올지 0부터 시작
         const columns = getDataColumns(1, data); // 몇번째 행이 Column Name인지 0부터 시작
-        console.log(columns);
         const rowsArr = await ExportJson(rows, columns, data);
         UploadInsp(JSON.stringify(rowsArr));
       })
@@ -165,10 +164,8 @@ const Abcs = () => {
   };
 
   const postInspData = async (data) => {
-    console.log(data);
     try {
       const response = await restAPI.post(restURI.inspResultUpload, data);
-      console.log(response);
     } catch (error) {
       console.error(error);
     }

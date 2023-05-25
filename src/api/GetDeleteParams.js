@@ -136,22 +136,22 @@ class infcMemory {
 }
 class equipmentLarge {
   constructor(raw) {
-    this.classification_id = raw.classification_id;
+    this.equip_classification_id = raw.equip_classification_id;
   }
 }
 class equipmentMedium {
   constructor(raw) {
-    this.group_id = raw.group_id;
+    this.equip_group_id = raw.equip_group_id;
   }
 }
 class equipmentSmall {
   constructor(raw) {
-    this.class_id = raw.class_id;
+    this.equip_class_id = raw.equip_class_id;
   }
 }
 class equipmentDetail {
   constructor(raw) {
-    this.eqm_detail_id = raw.eqm_detail_id;
+    this.equip_detail_id = raw.equip_detail_id;
   }
 }
 class setup {
@@ -260,6 +260,11 @@ class weightDetail {
 class productionDownTime {
   constructor(raw) {
     this.work_downtime_id = raw.work_downtime_id;
+  }
+}
+class equipmentResult {
+  constructor(raw) {
+    this.insp_result_id = raw.insp_result_id;
   }
 }
 
@@ -428,6 +433,9 @@ function GetDeleteParams(componentName, raw) {
 
     case "productionDownTime":
       params = new productionDownTime(raw);
+      break;
+    case "equipmentResult":
+      params = new equipmentResult(raw);
       break;
 
     default:

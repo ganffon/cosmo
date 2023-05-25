@@ -85,8 +85,8 @@ function Weight() {
   }, []);
 
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
 
   const onClickProdCancel = () => {
@@ -135,8 +135,8 @@ function Weight() {
     }
   };
   const [dateModal, setDateModal] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
 
   const actSearchDetail = async () => {

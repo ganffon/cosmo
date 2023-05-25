@@ -229,7 +229,7 @@ function SubdivisionPanel() {
         location: "bottomLeft",
       });
     } else {
-      if (workSubdivisionID.current === "") {
+      if (!workSubdivisionID.current) {
         let obj = [];
         obj.push({
           prod_id: prodID.current,
@@ -237,6 +237,8 @@ function SubdivisionPanel() {
         });
         try {
           const result = await restAPI.post(restURI.subdivisions, obj);
+          workSubdivisionID.current =
+            result?.data?.data?.rows[0]?.work_subdivision_id;
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,

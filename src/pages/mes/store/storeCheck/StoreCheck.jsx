@@ -244,8 +244,6 @@ function StoreCheck() {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
   const onClickModalSave = () => {
-    console.log(`dateNew.startDate`);
-    console.log(dateNew.startDate);
     actSaveStoreCheckNewLOT(dateNew.startDate);
   };
   const onClickModalClose = () => {

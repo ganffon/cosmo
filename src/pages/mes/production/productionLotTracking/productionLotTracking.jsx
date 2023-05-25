@@ -117,7 +117,6 @@ function ProductionLotTracking() {
       let readURI =
         restURI.prdPacking +
         `?start_date=${dateText.startDate}&end_date=${dateText.endDate}&`;
-      console.log(prodCD.current);
       if (prodCD.current !== "" && prodCD.current !== null) {
         readURI = readURI + `prod_cd=${prodCD.current}&`;
       }
@@ -154,7 +153,6 @@ function ProductionLotTracking() {
       } else {
         readURI = readURI.slice(0, readURI.length - 1);
       }
-      console.log(readURI);
       let gridData = await restAPI.get(readURI);
 
       setGridDataHeader(gridData?.data?.data?.rows);

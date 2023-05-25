@@ -119,7 +119,6 @@ function PartnerType(props) {
   };
   const onClickDelete = () => {
     const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
-    console.log(data);
     if (data.length !== 0) {
       setIsDeleteAlertOpen(true);
     }

@@ -57,7 +57,6 @@ function GetPostDateParams(componentName, raw, date) {
       default:
     }
   }
-  console.log(params);
   return params;
 }
 

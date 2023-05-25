@@ -107,6 +107,11 @@ function Login() {
               expires: 7,
               secure: false,
             });
+            Cookies.set("admin", res?.data?.data?.rows[0]?.admin_fg, {
+              path: "/",
+              expires: 7,
+              secure: false,
+            });
             navigate("/mes");
           })
           .catch((res) => {

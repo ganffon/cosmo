@@ -44,7 +44,7 @@ function EquipmentLargeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "classification_id",
+      // name: "equip_classification_id",
       header: CN.classification_id,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -56,7 +56,7 @@ function EquipmentLargeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "classification_cd",
+      // name: "equip_classification_cd",
       header: CN.classification_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -68,7 +68,7 @@ function EquipmentLargeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "classification_nm",
+      // name: "equip_classification_nm",
       header: CN.classification_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -154,7 +154,7 @@ function EquipmentLargeSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "classification_cd",
+      // name: "equip_classification_cd",
       header: CN.classification_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -166,7 +166,7 @@ function EquipmentLargeSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "classification_nm",
+      // name: "equip_classification_nm",
       header: CN.classification_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -200,11 +200,11 @@ function EquipmentLargeSet(isEditMode) {
 
   const inputSet = [
     {
-      id: "classification_cd",
+      // id: "equip_classification_cd",
       name: CN.classification_cd,
     },
     {
-      id: "classification_nm",
+      // id: "equip_classification_nm",
       name: CN.classification_nm,
     },
   ];

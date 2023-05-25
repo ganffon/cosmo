@@ -12,10 +12,7 @@ function GridModal(props) {
   const { isModalOpen } = useContext(LayoutContext);
   const [gridData, setGridData] = useState();
 
-  const onChange = (e) => {
-    console.log(e);
-    console.log(refGrid.current);
-  };
+  const onChange = (e) => {};
 
   useEffect(() => {
     GridTheme();

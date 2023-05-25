@@ -62,6 +62,10 @@ import WeightPanel from "pages/mes/panel/weight/WeightPanel";
 import Packing from "pages/mes/production/packing/Packing";
 import PackingPanel from "pages/mes/panel/packing/PackingPanel";
 import WeightReport from "pages/mes/production/weightReport/WeightReport";
+import EquipmentResult from "pages/mes/standard/equipmentResult/EquipmentResult";
+
+import ProductionPackingView from "pages/mes/production/productionPackingView/productionPackingView";
+import EquipmentRawDataView from "pages/mes/equipment/equipmentRawDataView/equipmentRawDataView";
 
 export default function MainRouter() {
   return (
@@ -105,6 +109,7 @@ export default function MainRouter() {
         <Route path="equipment-group" element={<EquipmentMedium />} />
         <Route path="equipment-class" element={<EquipmentSmall />} />
         <Route path="equipment-detail" element={<EquipmentDetail />} />
+        <Route path="equipment-result" element={<EquipmentResult />} />
 
         <Route path="store-view" element={<StoreView />} />
         <Route path="store-transfer-view" element={<StoreTransferView />} />
@@ -141,6 +146,16 @@ export default function MainRouter() {
         <Route path="setup" element={<Setup />} />
         <Route path="insp-result-upload" element={<InspResultUpload />} />
         <Route path="weight-report" element={<WeightReport />} />
+
+        <Route
+          path="equipment-rawdata-view"
+          element={<EquipmentRawDataView />}
+        />
+
+        <Route
+          path="production-packing-view"
+          element={<ProductionPackingView />}
+        />
 
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>

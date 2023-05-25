@@ -21,8 +21,10 @@ function InputPaper(props) {
     onKeyDown = () => {},
     onClickSelect = () => {},
     onClickRemove = () => {},
+    onTextChange = () => {},
     readOnly = true,
   } = props;
+
   return (
     <S.PaperBox width={width} height={height}>
       <S.PaperTitle
@@ -51,6 +53,7 @@ function InputPaper(props) {
           value={value}
           size={size}
           onKeyDown={onKeyDown}
+          onChange={onTextChange}
           autoComplete={"off"}
         />
       )}
