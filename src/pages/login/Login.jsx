@@ -37,6 +37,8 @@ function Login() {
       });
     }
     factoryDataSetting();
+
+    window.document.title = `Cosmo MES`;
   }, []);
 
   const changeLoginInfo = (e) => {
@@ -101,6 +103,11 @@ function Login() {
               }
             );
             Cookies.set("factoryID", loginInfo.loginFactoryID, {
+              path: "/",
+              expires: 7,
+              secure: false,
+            });
+            Cookies.set("admin", res?.data?.data?.rows[0]?.admin_fg, {
               path: "/",
               expires: 7,
               secure: false,

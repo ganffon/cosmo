@@ -44,7 +44,7 @@ function EquipmentSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "class_id",
+      // name: "equip_class_id",
       header: CN.class_id,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -56,7 +56,7 @@ function EquipmentSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "class_cd",
+      // name: "equip_class_cd",
       header: CN.class_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -68,7 +68,7 @@ function EquipmentSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "class_nm",
+      // name: "equip_class_nm",
       header: CN.class_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -154,7 +154,7 @@ function EquipmentSmallSet(isEditMode) {
   ];
   const columnsModal = [
     {
-      name: "class_cd",
+      // name: "equip_class_cd",
       header: CN.class_cd,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -166,7 +166,7 @@ function EquipmentSmallSet(isEditMode) {
       rowSpan: false,
     },
     {
-      name: "class_nm",
+      // name: "equip_class_nm",
       header: CN.class_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -200,11 +200,11 @@ function EquipmentSmallSet(isEditMode) {
 
   const inputSet = [
     {
-      id: "class_cd",
+      // id: "equip_class_cd",
       name: CN.class_cd,
     },
     {
-      id: "class_nm",
+      // id: "equip_class_nm",
       name: CN.class_nm,
     },
   ];

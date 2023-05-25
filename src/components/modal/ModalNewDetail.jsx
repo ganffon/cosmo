@@ -19,6 +19,7 @@ function ModalNewDetail(props) {
     onDblClickGridModalDetail = () => {},
     onEditingFinishGridModalHeader = () => {},
     onEditingFinishGridModalDetail = () => {},
+    onClickGridModalHeader = () => {},
     refGridModalHeader,
     refGridModalDetail,
     isNewDetail,
@@ -69,6 +70,7 @@ function ModalNewDetail(props) {
           rowHeaders={rowHeadersHeader}
           refGrid={refGridModalHeader}
           draggable={false}
+          onClick={onClickGridModalHeader}
           onDblClick={onDblClickGridModalHeader}
           onEditingFinish={onEditingFinishGridModalHeader}
         />

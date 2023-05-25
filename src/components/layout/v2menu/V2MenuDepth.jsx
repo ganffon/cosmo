@@ -12,6 +12,8 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import Cookies from "js-cookie";
 import * as S from "./V2MenuDepth.styled";
 
+const NEW_TAB_URL = process.env.REACT_APP_NEW_TAB_URL;
+
 function subTitle(lv2Menu) {
   let result;
   if (lv2Menu.under === null) {
@@ -54,9 +56,9 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
   });
   const handleClickMenu = async (menu, e) => {
     e.preventDefault();
-    console.log(e);
     const loginID = Cookies.get("loginID");
-    if (loginID !== "ispark") {
+    const admin = Cookies.get("admin");
+    if (loginID !== "ispark" && admin !== "true") {
       try {
         const res = await restAPI.get(
           `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get(
@@ -77,7 +79,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
           if (e?.button === 0) {
             navigate(menu.path);
           } else if (e?.button === 1) {
-            window.open(`http://localhost:3000/mes/${menu.path}`, "_blank");
+            window.open(NEW_TAB_URL + menu.path, "_blank");
           }
         } else {
           setAlertOpen({
@@ -103,7 +105,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
       if (e?.button === 0) {
         navigate(menu.path);
       } else if (e?.button === 1) {
-        window.open(`http://localhost:3000/mes/${menu.path}`, "_blank");
+        window.open(NEW_TAB_URL + menu.path, "_blank");
       }
     }
   };

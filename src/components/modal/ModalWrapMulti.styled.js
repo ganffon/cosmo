@@ -14,6 +14,8 @@ const Overlay = styled("div")`
   align-items: center;
 `;
 const Inner = styled("div")`
+  display: flex;
+  flex-direction: column;
   width: ${(props) => props.width};
   min-width: ${(props) => props.width};
   height: ${(props) => props.height};

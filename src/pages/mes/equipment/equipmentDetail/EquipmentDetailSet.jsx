@@ -45,37 +45,6 @@ function EquipmentDetailSet(
     },
     isEditMode
       ? {
-          name: "proc_id",
-          header: CN.proc_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          formatter: "listItemText",
-          editor: {
-            type: "select",
-            options: {
-              listItems: processList,
-            },
-          },
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        }
-      : {
-          name: "proc_nm",
-          header: CN.proc_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          editor: false,
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        },
-    isEditMode
-      ? {
           name: "equip_id",
           header: CN.equip_nm,
           minWidth: WIDTH_SHORT,
@@ -107,7 +76,7 @@ function EquipmentDetailSet(
         },
     isEditMode
       ? {
-          name: "classification_id",
+          // name: "equip_classification_id",
           header: CN.classification_nm,
           minWidth: WIDTH_SHORT,
           align: "left",
@@ -125,7 +94,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         }
       : {
-          name: "classification_nm",
+          // name: "equip_classification_nm",
           header: CN.classification_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
@@ -138,7 +107,7 @@ function EquipmentDetailSet(
         },
     isEditMode
       ? {
-          name: "group_id",
+          // name: "equip_group_id",
           header: CN.group_nm,
           minWidth: WIDTH_SHORT,
           align: "left",
@@ -156,7 +125,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         }
       : {
-          name: "group_nm",
+          // name: "equip_group_nm",
           header: CN.group_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
@@ -169,7 +138,7 @@ function EquipmentDetailSet(
         },
     isEditMode
       ? {
-          name: "class_id",
+          // name: "equip_class_id",
           header: CN.class_nm,
           minWidth: WIDTH_SHORT,
           align: "left",
@@ -187,7 +156,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         }
       : {
-          name: "class_nm",
+          // name: "equip_class_nm",
           header: CN.class_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
@@ -199,7 +168,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         },
     {
-      name: "eqm_detail_cd",
+      // name: "equip_detail_cd",
       header: CN.eqm_detail_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -211,7 +180,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "eqm_detail_nm",
+      // name: "equip_detail_nm",
       header: CN.eqm_detail_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -540,24 +509,6 @@ function EquipmentDetailSet(
   ];
   const columnsModal = [
     {
-      name: "proc_id",
-      header: CN.proc_nm,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      formatter: "listItemText",
-      editor: {
-        type: "select",
-        options: {
-          listItems: processList,
-        },
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
       name: "equip_id",
       header: CN.equip_nm,
       minWidth: WIDTH_SHORT,
@@ -576,7 +527,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "classification_id",
+      // name: "equip_classification_id",
       header: CN.classification_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -594,7 +545,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "group_id",
+      // name: "equip_group_id",
       header: CN.group_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -612,7 +563,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "class_id",
+      // name: "equip_class_id",
       header: CN.class_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -630,7 +581,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "eqm_detail_cd",
+      // name: "equip_detail_cd",
       header: CN.eqm_detail_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -642,7 +593,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      name: "eqm_detail_nm",
+      // name: "equip_detail_nm",
       header: CN.eqm_detail_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -703,7 +654,7 @@ function EquipmentDetailSet(
     },
     {
       name: "equip_grade",
-      header: CN.equip_no,
+      header: CN.equip_grade,
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
@@ -887,10 +838,7 @@ function EquipmentDetailSet(
    * 🔸inputSet id 값이 ✨ BE : query params
    */
   const inputSet = [
-    {
-      id: "proc_nm",
-      name: CN.proc_nm,
-    },
+    
     {
       id: "equip_nm",
       name: CN.equip_nm,

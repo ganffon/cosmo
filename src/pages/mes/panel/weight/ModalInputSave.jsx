@@ -61,7 +61,7 @@ function ModalInputSave(props) {
               size={"30px"}
               btn={false}
             />
-            <S.InfoTitle>🔸품번</S.InfoTitle>
+            <S.InfoTitle>🔸품목코드</S.InfoTitle>
             <InputPaper
               width={"300px"}
               height={"60px"}

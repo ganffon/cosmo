@@ -518,7 +518,7 @@ function WeightPanel() {
               />
               <InputSearch
                 id={"prod_cd"}
-                name={"품번"}
+                name={"품목코드"}
                 handleInputTextChange={handleInputTextChange}
                 onClickSearch={onClickSearch}
               />
@@ -573,7 +573,7 @@ function WeightPanel() {
             <S.SelectInfo
               width={"400px"}
               height={"60px"}
-              name={"품번"}
+              name={"품목코드"}
               nameSize={"20px"}
               namePositionTop={"-25px"}
               nameColor={"white"}

@@ -72,7 +72,6 @@ function SparepartIncome() {
     currentMenuName,
     inputSet
   );
-  console.log(inputBoxID);
 
   const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
     isEditModeHeader,
@@ -179,7 +178,6 @@ function SparepartIncome() {
 
   const onClickDelete = () => {
     const data = refGridHeader?.current?.gridInst?.getCheckedRows();
-    console.log(data);
     if (data.length !== 0) {
       setIsDeleteAlertOpen(true);
     }

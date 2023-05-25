@@ -3,7 +3,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import ButtonS from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { LoginStateChk } from "custom/LoginStateChk";
+import LoginStateChk from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import StoreViewSet from "./StoreViewSet";
@@ -17,6 +17,8 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./StoreView.styled";
 import restURI from "json/restURI.json";
+import DatePicker from "components/datetime/DatePicker";
+import DateTime from "components/datetime/DateTime";
 
 function StoreView() {
   LoginStateChk();
@@ -35,18 +37,28 @@ function StoreView() {
     prod_type_id: null,
     prod_type_small_id: null,
   });
+  const [dateText, setDateText] = useState({
+    startDate: DateTime().dateFull,
+    endDate: DateTime().dateFull,
+  });
 
   const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const { rowHeadersNum, header, columns, columnOptions, inputSet } =
-    StoreViewSet(
-      productGbnList,
-      productModelList,
-      productTypeList,
-      productTypeSmallList
-    );
+  const {
+    rowHeadersNum,
+    header,
+    columns,
+    columnOptions,
+    inputSet,
+    datePickerSet,
+  } = StoreViewSet(
+    productGbnList,
+    productModelList,
+    productTypeList,
+    productTypeSmallList
+  );
   const SWITCH_NAME_01 = "storeView";
 
   useEffect(() => {
@@ -66,7 +78,7 @@ function StoreView() {
     onClickSearch();
   }, [searchToggle]);
 
-  const [actSearch] = uSearch.useSearchOnlyCbo(
+  const [actSearch] = uSearch.useSearchOnlyCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -76,13 +88,14 @@ function StoreView() {
     inputTextChange,
     setGridData,
     comboValue,
+    dateText,
     restURI.storeView
   );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickSearch = () => {
-    actSearch();
+    actSearch("tran_reg_date");
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -183,6 +196,11 @@ function StoreView() {
               />
             </S.ComboWrap>
             <S.InputWrap>
+              <DatePicker
+                datePickerSet={datePickerSet}
+                dateText={dateText}
+                setDateText={setDateText}
+              />
               {inputSet.map((v) => (
                 <InputSearch
                   key={v.id}

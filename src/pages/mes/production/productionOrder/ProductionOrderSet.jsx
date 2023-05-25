@@ -240,15 +240,17 @@ function ProductionOrderSet(
       name: "complete_fg",
       header: CN.complete_fg,
       minWidth: C.WIDTH_SHORT,
-      align: "left",
-      editor: false,
+
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
           name: "complete_fg",
-          disabled: true,
+          disabled: isEditModeHeader ? false : true,
         },
       },
+
+      align: "center",
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -260,7 +262,15 @@ function ProductionOrderSet(
       header: CN.complete_date,
       minWidth: C.WIDTH_SHORT,
       align: "left",
-      editor: false,
+      editor: isEditModeHeader
+        ? {
+            type: "datePicker",
+            options: {
+              language: "ko",
+              format: "yyyy-MM-dd",
+            },
+          }
+        : false,
       hidden: false,
       sortable: false,
       filter: false,

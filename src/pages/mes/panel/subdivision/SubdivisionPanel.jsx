@@ -224,12 +224,12 @@ function SubdivisionPanel() {
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
-        message: "품번 정보를 입력하세요!",
+        message: "품목코드 정보를 입력하세요!",
         severity: "error",
         location: "bottomLeft",
       });
     } else {
-      if (workSubdivisionID.current === "") {
+      if (!workSubdivisionID.current) {
         let obj = [];
         obj.push({
           prod_id: prodID.current,
@@ -237,6 +237,8 @@ function SubdivisionPanel() {
         });
         try {
           const result = await restAPI.post(restURI.subdivisions, obj);
+          workSubdivisionID.current =
+            result?.data?.data?.rows[0]?.work_subdivision_id;
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -461,7 +463,7 @@ function SubdivisionPanel() {
           <InputPaper
             width={"500px"}
             height={"60px"}
-            name={"품번"}
+            name={"품목코드"}
             nameSize={"20px"}
             namePositionTop={"-30px"}
             nameColor={"white"}

@@ -86,7 +86,7 @@
 //       <SearchBar
 //         input={[
 //           {
-//             name: "품번",
+//             name: "품목코드",
 //             id: "pumbun",
 //           },
 //           {

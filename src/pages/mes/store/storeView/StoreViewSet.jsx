@@ -29,6 +29,7 @@ function StoreViewSet(
    * align: "left"||"center"||"right"
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
+
   const columns = [
     {
       name: "prod_id",
@@ -252,7 +253,7 @@ function StoreViewSet(
    * 🔸날짜기간조회 - "range"
    * 🔸날짜안쓰는경우 - null
    */
-  const datePickerSet = null;
+  const datePickerSet = "single";
 
   /**
    * 🔸inputSet id 값이 ✨ BE : query params

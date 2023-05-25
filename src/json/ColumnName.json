@@ -45,7 +45,7 @@
   "prod_type_small_nm": "품종",
 
   "prod_id": "품목ID",
-  "prod_cd": "품번",
+  "prod_cd": "품목코드",
   "prod_nm": "품목",
 
   "unit_id": "단위ID",
@@ -392,5 +392,28 @@
   "packing_emp_nm": "포장 작업자",
   "user_action": "활동 구분",
   "user_ip": "활동 IP",
-  "req_url": "요청 URL"
+  "req_url": "요청 URL",
+
+  "insp_result_detail_id": "세부운전점검일지ID",
+  "insp_result_id": "운전점검일지ID",
+  "work_order_detail_id": "세부작업지시ID",
+  "insp_result_date": "점검일자",
+  "mng_emp_id": "오전작업자ID",
+  "mng_emp_nm": "오전작업자",
+  "aft_emp_id": "오후작업자ID",
+  "aft_emp_nm": "오후작업자",
+  "nig_emp_id": "야간작업자ID",
+  "nig_emp_nm": "야간작업자",
+  "mng_insp_value": "오전검사값",
+  "aft_insp_value": "오후검사값",
+  "nig_insp_value": "야간검사값",
+  "insp_result_fg": "판정",
+  "input_report": "투입일지",
+  "outgo_date": "출고일자",
+  "outgo_store_nm": "출고 창고",
+  "release_qty": "출고 수량",
+  "release_date": "출고 일자",
+  "equip_detail_nm": "상세설비명",
+  "inv_from_store_nm": "출고 창고명",
+  "inv_from_location_nm": "출고 위치명"
 }

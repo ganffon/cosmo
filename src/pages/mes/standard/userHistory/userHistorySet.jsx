@@ -6,7 +6,6 @@ import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import {
   WIDTH_SUPER_SHORT,
-  WIDTH_SHORT,
   WIDTH_MIDDLE,
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
@@ -28,7 +27,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "user_log_id",
       header: CN.user_log_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -40,7 +39,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "user_action",
       header: CN.user_action,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -52,7 +51,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "factory_id",
       header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -64,7 +63,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "factory_nm",
       header: CN.factory_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -76,7 +75,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "uid",
       header: CN.uid,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -88,7 +87,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "id",
       header: CN.id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -100,7 +99,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "user_nm",
       header: CN.user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -112,7 +111,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "user_ip",
       header: CN.user_ip,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -124,7 +123,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "req_url",
       header: CN.req_url,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -136,7 +135,7 @@ function UserHistorySet(isEditMode) {
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,

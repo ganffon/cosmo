@@ -331,6 +331,25 @@
             "under": null
           }
         ]
+      },
+      {
+        "name": "⬇️생산현황",
+        "id": "production-dayreport",
+        "path": null,
+        "under": [
+          {
+            "name": "✴️계량현황",
+            "id": "weight-report",
+            "path": "weight-report",
+            "under": null
+          },
+          {
+            "name": "❌포장실적 현황",
+            "id": "production-packing-view",
+            "path": "production-packing-view",
+            "under": null
+          }
+        ]
       }
     ]
   },

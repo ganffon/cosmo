@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+import LoginStateChk from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import ProductionOrderSet from "./ProductionOrderSet";
@@ -198,6 +198,8 @@ function ProductionOrder() {
   };
   const onClickEditModeSaveHeader = () => {
     actEditHeader();
+    setIsEditModeHeader(false);
+    setDisRowTop(!disRowTop);
   };
   const onClickEditModeExitHeader = () => {
     setIsEditModeHeader(false);
@@ -683,7 +685,6 @@ function ProductionOrder() {
             columnOptions={columnOptions}
             header={header}
             rowHeaders={rowHeadersNum}
-            refModalGrid={refGridSelect}
             gridDataSelect={gridDataSelect}
             refGridSelect={refGridSelect}
             onDblClickGridSelect={onDblClickGridSelect}

@@ -39,10 +39,10 @@
   "infcItem": "/std/infc-item",
   "infcMemory": "/std/infc-memory",
 
-  "equipmentLarge": "/eqm/equipment-classification",
-  "equipmentMedium": "/eqm/equipment-group",
-  "equipmentSmall": "/eqm/equipment-class",
-  "equipmentDetail": "/eqm/equipment-detail",
+  "equipmentLarge": "/eqm/equip-classification",
+  "equipmentMedium": "/eqm/equip-group",
+  "equipmentSmall": "/eqm/equip-class",
+  "equipmentDetail": "/eqm/equip-detail",
 
   "controlPlan": "/std/control-plan",
   "controlPlanDetail": "/std/control-plan-detail",
@@ -50,10 +50,10 @@
   "spareReceive": "/sparereceive",
   "spareReceiveDetail": "/sparereceivedetail",
   "sparepartsIncome": "/spareparts-income",
-  "sparepartsoutgo": "/spareparts-release",
-  "sparepartsStoreView": "/spareparts-store-view",
+  "sparepartsOutgo": "/eqm/spare-release",
+  "sparepartsStoreView": "/inv/stock/sparepart",
 
-  "storeView": "/store-view",
+  "storeView": "/inv/stock",
   "storeTransferView": "/store-view/tran",
   "storeCheck": "/inv/store",
   "storeCheckHistory": "/inv/store/check-history",
@@ -82,5 +82,8 @@
   "prdPacking": "/prd/packing",
   "prdPackingDetail": "/prd/packing-detail",
   "productionDownTime": "/prd/work-downtime",
-  "prdLotTracking": "/prd/lot-tracking"
+  "prdLotTracking": "/prd/lot-tracking",
+  "qmsInspResult": "/qms/insp-result",
+  "qmsInspResultInclude": "/qms/insp-result/{id}/include-details",
+  "qmsInspResultDetail": "/qms/insp-result-detail"
 }

@@ -5,7 +5,7 @@ import ButtonSES from "components/button/ButtonSES";
 import ButtonNEDS from "components/button/ButtonNEDS";
 import * as uSearch from "custom/useSearch";
 import ButtonSearch from "components/button/ButtonSearch";
-import { LoginStateChk } from "custom/LoginStateChk";
+import LoginStateChk from "custom/LoginStateChk";
 import SparepartsStoreViewSet from "./sparepartsStoreViewSet";
 import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";
@@ -16,6 +16,7 @@ import GridSingle from "components/grid/GridSingle";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
 import * as LS from "./sparepartsStoreView.styled";
+import DatePicker from "components/datetime/DatePicker";
 
 import * as Cbo from "custom/useCboSet";
 
@@ -28,17 +29,13 @@ function SparepartsStoreView() {
     useContext(LayoutContext);
   const {
     rowHeaders,
-    rowHeadersModal,
+
     header,
     columns,
-    columnsModal,
+
     columnOptions,
     inputSet,
-    columnsModalHeader,
-    columnsModalSelectProduct,
-    columnsModalSelectEquipDetail,
-    columnsModalSelectStore,
-    columnsModalSelectReleaseUser,
+    datePickerSet,
   } = SparepartsStoreViewSet(
     productGbnList,
     productModelList,
@@ -76,11 +73,16 @@ function SparepartsStoreView() {
     disRow.handleClickGridCheck(e, isEditMode, []);
   };
 
+  const [dateText, setDateText] = useState({
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
+  });
+
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   // 검색 시작
-  const [actSearch] = uSearch.useSearchOnlyCbo(
+  const [actSearch] = uSearch.useSearchOnlyCboDate(
     refSingleGrid,
     isBackDrop,
     setIsBackDrop,
@@ -90,11 +92,12 @@ function SparepartsStoreView() {
     inputTextChange,
     setGridData,
     comboValue,
+    dateText,
     restURI.sparepartsStoreView
   );
 
   const onClickSearch = () => {
-    actSearch();
+    actSearch("tran_reg_date");
   };
   useEffect(() => {
     onClickSearch();
@@ -110,6 +113,11 @@ function SparepartsStoreView() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
+            <DatePicker
+              datePickerSet={datePickerSet}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             <LS.ComboWrap>
               <LS.ComboBox
                 disablePortal

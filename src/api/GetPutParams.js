@@ -288,25 +288,25 @@ class infcMemory {
 class equipmentLarge {
   constructor(raw) {
     this.factory_id = raw.factory_id;
-    this.classification_id = raw.classification_id;
-    this.classification_cd = raw.classification_cd;
-    this.classification_nm = raw.classification_nm;
+    this.equip_classification_id = raw.equip_classification_id;
+    this.equip_classification_cd = raw.equip_classification_cd;
+    this.equip_classification_nm = raw.equip_classification_nm;
   }
 }
 class equipmentMedium {
   constructor(raw) {
     this.factory_id = raw.factory_id;
-    this.group_id = raw.group_id;
-    this.group_cd = raw.group_cd;
-    this.group_nm = raw.group_nm;
+    this.equip_group_id = raw.equip_group_id;
+    this.equip_group_cd = raw.equip_group_cd;
+    this.equip_group_nm = raw.equip_group_nm;
   }
 }
 class equipmentSmall {
   constructor(raw) {
     this.factory_id = raw.factory_id;
-    this.class_id = raw.class_id;
-    this.class_cd = raw.class_cd;
-    this.class_nm = raw.class_nm;
+    this.equip_class_id = raw.equip_class_id;
+    this.equip_class_cd = raw.equip_class_cd;
+    this.equip_class_nm = raw.equip_class_nm;
   }
 }
 class equipmentDetail {
@@ -315,11 +315,11 @@ class equipmentDetail {
     this.factory_id = raw.factory_id;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
-    this.eqm_detail_cd = raw.eqm_detail_cd;
-    this.eqm_detail_nm = raw.eqm_detail_nm;
-    this.classification_id = raw.classification_id;
-    this.group_id = raw.group_id;
-    this.class_id = raw.class_id;
+    this.equip_detail_cd = raw.equip_detail_cd;
+    this.equip_detail_nm = raw.equip_detail_nm;
+    this.equip_classification_id = raw.equip_classification_id;
+    this.equip_group_id = raw.equip_group_id;
+    this.equip_class_id = raw.equip_class_id;
     this.manager_emp_id = raw.manager_emp_id;
     this.sub_manager_emp_id = raw.sub_manager_emp_id;
     this.equip_no = raw.equip_no;
@@ -519,16 +519,11 @@ class partner {
 class sparepartsOutgo {
   constructor(raw) {
     this.spare_release_id = raw.spare_release_id;
-    this.prod_id = raw.prod_id;
-    this.reg_date = raw.reg_date;
-    this.lot_no = raw.lot_no;
-    this.qty = String(raw.qty) ? Number(raw.qty) : null;
-    this.eqm_detail_id = raw.eqm_detail_id;
-    this.from_store_id = raw.from_store_id;
-    this.from_location_id = raw.from_location_id;
-    this.release_uid = raw.release_uid;
+    this.line_id = raw.line_id;
+    this.equip_detail_id = raw.equip_detail_id;
+    this.release_qty = String(raw.release_qty) ? Number(raw.release_qty) : null;
+    this.release_emp_id = raw.release_uid;
     this.remark = raw.remark;
-    this.barcode = raw.barcode;
   }
 }
 class lineDepartment {
@@ -552,6 +547,14 @@ class order {
   constructor(raw) {
     this.work_order_id = raw.work_order_id;
     this.work_order_date = raw.work_order_date;
+    this.work_start_date = raw.work_start_date;
+    this.work_end_date = raw.work_end_date;
+    this.work_order_qty = String(raw.work_order_qty)
+      ? Number(raw.work_order_qty)
+      : null;
+    this.complete_fg = raw.complete_fg ? true : false;
+    this.complete_date = raw.complete_date;
+    this.remark = raw.remark;
   }
 }
 
