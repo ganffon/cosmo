@@ -104,15 +104,16 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
       rowSpan: false,
     },
     {
-      name: "eqm_failure_fg",
-      header: CN.eqm_failure_fg,
+      name: "scheduled_shutdown_fg",
+      header: CN.scheduled_shutdown_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
-          name: "eqm_failure_fg",
+          name: "scheduled_shutdown_fg",
           disabled: isEditMode ? false : true,
         },
       },
+
       minWidth: WIDTH_SHORT,
       width: WIDTH_SHORT,
       align: "center",
@@ -123,6 +124,7 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "create_at",
       header: CN.create_at,

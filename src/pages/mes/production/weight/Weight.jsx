@@ -172,7 +172,6 @@ function Weight() {
   const onClickModalClose = () => {
     setgridDataModalDetail(null);
     setIsModalOpen(false);
-    onClickSearch();
   };
 
   const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
@@ -536,7 +535,7 @@ function Weight() {
         i < refGridModalDetail?.current?.gridInst?.getRowCount();
         i++
       ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "total_qty"));
+        totalQty = Number(totalQty) - Number(Detail.getValue(i, "total_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
@@ -547,7 +546,7 @@ function Weight() {
         Detail?.setValue(
           e?.rowKey,
           "total_qty",
-          Number(beforeQty) + Number(afterQty)
+          Number(beforeQty) - Number(afterQty)
         );
       } else {
         Detail?.setValue(e?.rowKey, "total_qty", e?.value);
@@ -558,7 +557,7 @@ function Weight() {
         i < refGridModalDetail?.current?.gridInst?.getRowCount();
         i++
       ) {
-        totalQty = Number(totalQty) + Number(Detail.getValue(i, "total_qty"));
+        totalQty = Number(totalQty) - Number(Detail.getValue(i, "total_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
@@ -569,6 +568,7 @@ function Weight() {
   };
   const onClickModalSave = () => {
     actSave();
+    onClickSearch();
   };
 
   const onClickEditModeSaveHeader = () => {

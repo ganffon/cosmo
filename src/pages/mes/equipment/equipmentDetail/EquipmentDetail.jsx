@@ -180,7 +180,7 @@ function EquipmentDetail() {
     setSearchToggle(!searchToggle);
   };
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, []);
+    disRow.handleClickGridCheck(e, isEditMode, ["use_fg"]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);

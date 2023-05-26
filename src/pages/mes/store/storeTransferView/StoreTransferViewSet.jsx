@@ -45,7 +45,7 @@ function StoreTransferViewSet(
     {
       name: "prod_gbn_id",
       header: CN.prod_gbn_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -57,7 +57,7 @@ function StoreTransferViewSet(
     {
       name: "prod_gbn_nm",
       header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -69,7 +69,7 @@ function StoreTransferViewSet(
     {
       name: "model_id",
       header: CN.model_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -81,7 +81,7 @@ function StoreTransferViewSet(
     {
       name: "model_nm",
       header: CN.model_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -93,7 +93,7 @@ function StoreTransferViewSet(
     {
       name: "prod_type_id",
       header: CN.prod_type_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -105,7 +105,7 @@ function StoreTransferViewSet(
     {
       name: "prod_type_nm",
       header: CN.prod_type_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -117,7 +117,7 @@ function StoreTransferViewSet(
     {
       name: "prod_type_small_id",
       header: CN.prod_type_small_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -129,7 +129,7 @@ function StoreTransferViewSet(
     {
       name: "prod_type_small_nm",
       header: CN.prod_type_small_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -163,9 +163,9 @@ function StoreTransferViewSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
-      minWidth: WIDTH_SHORT,
+      name: "tran_reg_date",
+      header: CN.tran_reg_date,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -177,7 +177,7 @@ function StoreTransferViewSet(
     {
       name: "store_id",
       header: CN.store_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -189,7 +189,7 @@ function StoreTransferViewSet(
     {
       name: "store_nm",
       header: CN.store_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -201,7 +201,7 @@ function StoreTransferViewSet(
     {
       name: "location_id",
       header: CN.location_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -213,7 +213,7 @@ function StoreTransferViewSet(
     {
       name: "location_nm",
       header: CN.location_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -225,7 +225,7 @@ function StoreTransferViewSet(
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -237,7 +237,7 @@ function StoreTransferViewSet(
     {
       name: "tran_type_id",
       header: CN.tran_type_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -249,7 +249,7 @@ function StoreTransferViewSet(
     {
       name: "tran_type_nm",
       header: CN.tran_type_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -261,7 +261,7 @@ function StoreTransferViewSet(
     {
       name: "income_qty",
       header: CN.income_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -276,7 +276,7 @@ function StoreTransferViewSet(
     {
       name: "outgo_qty",
       header: CN.outgo_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -291,7 +291,7 @@ function StoreTransferViewSet(
     {
       name: "inventory_qty",
       header: CN.inventory_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -306,7 +306,7 @@ function StoreTransferViewSet(
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_SUPER_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -318,7 +318,7 @@ function StoreTransferViewSet(
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -330,7 +330,7 @@ function StoreTransferViewSet(
     {
       name: "create_user_nm",
       header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -342,7 +342,7 @@ function StoreTransferViewSet(
     {
       name: "update_at",
       header: CN.update_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -354,7 +354,7 @@ function StoreTransferViewSet(
     {
       name: "update_user_nm",
       header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -366,7 +366,7 @@ function StoreTransferViewSet(
     {
       name: "delete_at",
       header: CN.delete_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -378,7 +378,7 @@ function StoreTransferViewSet(
     {
       name: "delete_user_nm",
       header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -392,7 +392,6 @@ function StoreTransferViewSet(
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
-    minWidth: "100",
   };
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];

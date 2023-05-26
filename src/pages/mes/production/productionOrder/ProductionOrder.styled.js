@@ -90,7 +90,7 @@ export const GridTopWrap = styled("div")`
   padding: 10px 10px 10px 10px;
 `;
 export const GridMidWrap = styled("div")`
-  height: 400px;
+  height: 250px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);

@@ -80,6 +80,7 @@ function Document() {
     columnsModalDetail,
     columnsSelectProd,
     columnsSelectInsp,
+    columnsSelectEquipProc,
     columnOptions,
     rowHeadersNumCheck,
     rowHeadersNum,
@@ -142,6 +143,17 @@ function Document() {
     setGridDataSelect,
     restURI.inspItem
   ); //➡️ Modal Select Search Insp
+
+  const [actSelectEquipProc] = uSearch.useSearchSelect(
+    refGridSelect,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridDataSelect,
+    restURI.equipment
+  ); //➡️ Modal Select Search EquipProc
+
   const [actSave] = uSave.useSaveMulti(
     refGridModalHeader,
     refGridModalDetail,
@@ -241,6 +253,14 @@ function Document() {
       setIsNewDetail(true);
       setIsModalOpen(true);
       actSearchEditHeader(headerClickRowID.current);
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "검사기준서를 먼저 선택하세요",
+        severity: "warning",
+        location: "BottomRight",
+      });
     }
   };
   const onClickEditDetail = () => {
@@ -339,6 +359,14 @@ function Document() {
       setIsModalSelectOpen(true);
       actSelectInsp();
     }
+
+    if (Condition(e, ["proc_nm", "equip_nm"])) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("DetailEquip");
+      setColumnsSelect(columnsSelectEquipProc);
+      setIsModalSelectOpen(true);
+      actSelectEquipProc();
+    }
   };
   const onEditingFinishGridHeader = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -399,6 +427,13 @@ function Document() {
       setIsModalSelectOpen(true);
       actSelectInsp();
     }
+    if (Condition(e, ["proc_nm", "equip_nm"])) {
+      setDblClickRowKey(e?.rowKey);
+      setDblClickGrid("ModalDetailEquip");
+      setColumnsSelect(columnsSelectEquipProc);
+      setIsModalSelectOpen(true);
+      actSelectEquipProc();
+    }
   };
 
   const onClickModalSelectClose = () => {
@@ -415,6 +450,8 @@ function Document() {
       "insp_item_id",
       "insp_item_nm",
     ];
+
+    const columnNameEquipProc = ["proc_nm", "equip_nm", "proc_id", "equip_id"];
 
     if (dblClickGrid === "Search") {
       setInputSearchValue([]);
@@ -437,6 +474,12 @@ function Document() {
       } else if (dblClickGrid === "Detail") {
         refGrid = refGridDetail;
         columnName = columnNameInspItem;
+      } else if (dblClickGrid === "DetailEquip") {
+        refGrid = refGridDetail;
+        columnName = columnNameEquipProc;
+      } else if (dblClickGrid === "ModalDetailEquip") {
+        refGrid = refGridModalDetail;
+        columnName = columnNameEquipProc;
       } else if (dblClickGrid === "ModalDetail") {
         refGrid = refGridModalDetail;
         columnName = columnNameInspItem;
@@ -477,6 +520,31 @@ function Document() {
       />
     );
   }, [gridDataHeader, isEditModeHeader]);
+
+  const GridModal = useMemo(() => {
+    return (
+      <ModalNewDetail
+        isNewDetail={isNewDetail}
+        gridDataHeaderRowID={gridDataHeaderRowID}
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        onClickEditModalSave={onClickEditModalSave}
+        columnsModalHeader={columnsModalHeader}
+        columnsModalDetail={columnsModalDetail}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeadersHeader={rowHeadersNum}
+        rowHeadersDetail={rowHeadersNum}
+        refGridModalHeader={refGridModalHeader}
+        refGridModalDetail={refGridModalDetail}
+        onClickGridModalDetail={onClickGridModalDetail}
+        onDblClickGridModalHeader={onDblClickGridModalHeader}
+        onDblClickGridModalDetail={onDblClickGridModalDetail}
+      />
+    );
+  }, [isNewDetail, refGridModalHeader, gridDataHeaderRowID, lineOpt]);
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -570,40 +638,33 @@ function Document() {
         </S.ButtonWrap>
       </S.ShadowBoxButtonDetail>
       <S.GridDetailWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsDetail}
-          rowHeaders={rowHeadersNumCheck}
-          header={header}
-          data={gridDataDetail}
-          draggable={false}
-          refGrid={refGridDetail}
-          onDblClickGrid={onDblClickGridDetail}
-          onEditingFinish={onEditingFinishGridDetail}
-        />
+        {isEditModeDetail ? (
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsDetail}
+            rowHeaders={rowHeadersNumCheck}
+            header={header}
+            data={gridDataDetail}
+            draggable={false}
+            refGrid={refGridDetail}
+            onDblClickGrid={onDblClickGridDetail}
+            onEditingFinish={onEditingFinishGridDetail}
+          />
+        ) : (
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsDetail}
+            rowHeaders={rowHeadersNumCheck}
+            header={header}
+            data={gridDataDetail}
+            draggable={false}
+            refGrid={refGridDetail}
+            //onDblClickGrid={onDblClickGridDetail}
+            onEditingFinish={onEditingFinishGridDetail}
+          />
+        )}
       </S.GridDetailWrap>
-      {isModalOpen ? (
-        <ModalNewDetail
-          isNewDetail={isNewDetail}
-          gridDataHeaderRowID={gridDataHeaderRowID}
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          onClickEditModalSave={onClickEditModalSave}
-          columnsModalHeader={columnsModalHeader}
-          columnsModalDetail={columnsModalDetail}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeadersHeader={rowHeadersNum}
-          rowHeadersDetail={rowHeadersNum}
-          refGridModalHeader={refGridModalHeader}
-          refGridModalDetail={refGridModalDetail}
-          onClickGridModalDetail={onClickGridModalDetail}
-          onDblClickGridModalHeader={onDblClickGridModalHeader}
-          onDblClickGridModalDetail={onDblClickGridModalDetail}
-        />
-      ) : null}
+      {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
         <ModalSelect
           width={modalSelectSize.width}

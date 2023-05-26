@@ -314,14 +314,7 @@ function MenuListSet(isEditMode) {
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
 
-  const header = {
-    // columns: [
-    //   {
-    //     name: "line_cd",
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
-  };
+  const header = {};
   // const header = {
   //   height: "60",
   //   complexColumns: [

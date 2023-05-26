@@ -28,10 +28,10 @@ function UserSet(isEditMode) {
     {
       name: "uid",
       header: CN.uid,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -40,7 +40,7 @@ function UserSet(isEditMode) {
     {
       name: "id",
       header: CN.id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -52,7 +52,7 @@ function UserSet(isEditMode) {
     {
       name: "user_nm",
       header: CN.user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -98,8 +98,7 @@ function UserSet(isEditMode) {
           disabled: true,
         },
       },
-      minWidth: WIDTH_SHORT,
-      width: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -118,8 +117,7 @@ function UserSet(isEditMode) {
           disabled: isEditMode ? false : true,
         },
       },
-      minWidth: WIDTH_SHORT,
-      width: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -138,8 +136,7 @@ function UserSet(isEditMode) {
           disabled: true,
         },
       },
-      minWidth: WIDTH_SHORT,
-      width: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -166,7 +163,7 @@ function UserSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -190,7 +187,7 @@ function UserSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -202,7 +199,7 @@ function UserSet(isEditMode) {
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -214,7 +211,7 @@ function UserSet(isEditMode) {
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -225,7 +222,7 @@ function UserSet(isEditMode) {
     {
       name: "id",
       header: CN.id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -282,8 +279,7 @@ function UserSet(isEditMode) {
           name: "admin_fg",
         },
       },
-      minWidth: WIDTH_SHORT,
-      width: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -300,7 +296,22 @@ function UserSet(isEditMode) {
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "pwd_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "admin_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "super_admin_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"

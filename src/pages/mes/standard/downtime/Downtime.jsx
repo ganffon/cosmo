@@ -167,7 +167,7 @@ function Downtime() {
   };
 
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, ["eqm_failure_fg"]);
+    disRow.handleClickGridCheck(e, isEditMode, ["scheduled_shutdown_fg"]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);

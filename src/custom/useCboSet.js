@@ -303,10 +303,14 @@ const useEquipmentLarge = () => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.equipmentLarge).then((res) => {
         setEquipmentLargeOpt(
-          cboMUISort(res?.data?.data?.rows, "classification_nm")
+          cboMUISort(res?.data?.data?.rows, "equip_classification_nm")
         );
         equipmentLargeList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams(data, "classification_id", "classification_nm");
+          return GetCboParams(
+            data,
+            "equip_classification_id",
+            "equip_classification_nm"
+          );
         });
         equipmentLargeList = cboGridSort(equipmentLargeList);
       });
@@ -321,9 +325,11 @@ const useEquipmentMedium = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.equipmentMedium).then((res) => {
-        setEquipmentMediumOpt(cboMUISort(res?.data?.data?.rows, "group_nm"));
+        setEquipmentMediumOpt(
+          cboMUISort(res?.data?.data?.rows, "equip_group_nm")
+        );
         equipmentMediumList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams(data, "group_id", "group_nm");
+          return GetCboParams(data, "equip_group_id", "equip_group_nm");
         });
         equipmentMediumList = cboGridSort(equipmentMediumList);
       });
@@ -338,9 +344,11 @@ const useEquipmentSmall = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.equipmentSmall).then((res) => {
-        setEquipmentSmallOpt(cboMUISort(res?.data?.data?.rows, "class_nm"));
+        setEquipmentSmallOpt(
+          cboMUISort(res?.data?.data?.rows, "equip_class_nm")
+        );
         equipmentSmallList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams(data, "class_id", "class_nm");
+          return GetCboParams(data, "equip_class_id", "equip_class_nm");
         });
         equipmentSmallList = cboGridSort(equipmentSmallList);
       });

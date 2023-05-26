@@ -56,7 +56,7 @@ function StoreCheckSet(
     {
       name: "prod_gbn_nm",
       header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -80,7 +80,7 @@ function StoreCheckSet(
     {
       name: "model_nm",
       header: CN.model_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -104,7 +104,7 @@ function StoreCheckSet(
     {
       name: "prod_type_nm",
       header: CN.prod_type_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -128,7 +128,7 @@ function StoreCheckSet(
     {
       name: "prod_type_small_nm",
       header: CN.prod_type_small_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -222,8 +222,8 @@ function StoreCheckSet(
       rowSpan: false,
     },
     {
-      name: "qty",
-      header: CN.qty,
+      name: "stock",
+      header: CN.stock,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -258,7 +258,7 @@ function StoreCheckSet(
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_LONG,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -302,7 +302,7 @@ function StoreCheckSet(
     {
       name: "prod_gbn_nm",
       header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -317,7 +317,7 @@ function StoreCheckSet(
     {
       name: "model_id",
       header: CN.model_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -332,7 +332,7 @@ function StoreCheckSet(
     {
       name: "model_nm",
       header: CN.model_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -347,7 +347,7 @@ function StoreCheckSet(
     {
       name: "prod_type_id",
       header: CN.prod_type_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -362,7 +362,7 @@ function StoreCheckSet(
     {
       name: "prod_type_nm",
       header: CN.prod_type_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -377,7 +377,7 @@ function StoreCheckSet(
     {
       name: "prod_type_small_id",
       header: CN.prod_type_small_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -392,7 +392,7 @@ function StoreCheckSet(
     {
       name: "prod_type_small_nm",
       header: CN.prod_type_small_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -437,7 +437,7 @@ function StoreCheckSet(
     {
       name: "store_id",
       header: CN.store_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -464,7 +464,7 @@ function StoreCheckSet(
     {
       name: "location_id",
       header: CN.location_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -503,7 +503,7 @@ function StoreCheckSet(
     {
       name: "qty",
       header: CN.stock_inspection,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "right",
       editor: "text",
       formatter: function (value) {
@@ -518,7 +518,7 @@ function StoreCheckSet(
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_LONG,
       align: "left",
       editor: "text",
       hidden: false,
@@ -535,7 +535,7 @@ function StoreCheckSet(
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -568,7 +568,7 @@ function StoreCheckSet(
     {
       name: "prod_gbn_nm",
       header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -580,7 +580,7 @@ function StoreCheckSet(
     {
       name: "model_id",
       header: CN.model_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -592,7 +592,7 @@ function StoreCheckSet(
     {
       name: "model_nm",
       header: CN.model_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -604,7 +604,7 @@ function StoreCheckSet(
     {
       name: "prod_type_id",
       header: CN.prod_type_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -616,7 +616,7 @@ function StoreCheckSet(
     {
       name: "prod_type_nm",
       header: CN.prod_type_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -628,7 +628,7 @@ function StoreCheckSet(
     {
       name: "prod_type_small_id",
       header: CN.prod_type_small_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -640,7 +640,7 @@ function StoreCheckSet(
     {
       name: "prod_type_small_nm",
       header: CN.prod_type_small_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -674,8 +674,8 @@ function StoreCheckSet(
       rowSpan: false,
     },
     {
-      name: "reg_date",
-      header: CN.reg_date,
+      name: "tran_reg_date",
+      header: CN.tran_reg_date,
       minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
@@ -688,7 +688,7 @@ function StoreCheckSet(
     {
       name: "store_id",
       header: CN.store_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -712,7 +712,7 @@ function StoreCheckSet(
     {
       name: "location_id",
       header: CN.location_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -736,7 +736,7 @@ function StoreCheckSet(
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -746,23 +746,8 @@ function StoreCheckSet(
       rowSpan: false,
     },
     {
-      name: "income_qty",
-      header: CN.income_qty,
-      minWidth: WIDTH_SHORT,
-      align: "right",
-      editor: false,
-      formatter: function (value) {
-        return CustomGrid.NumComma(value);
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "outgo_qty",
-      header: CN.outgo_qty,
+      name: "qty",
+      header: CN.qty,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -816,19 +801,19 @@ function StoreCheckSet(
     {
       name: "prod_gbn_nm",
       header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
     {
       name: "model_id",
       header: CN.model_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -840,19 +825,19 @@ function StoreCheckSet(
     {
       name: "model_nm",
       header: CN.model_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
     {
       name: "prod_type_id",
       header: CN.prod_type_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -864,19 +849,19 @@ function StoreCheckSet(
     {
       name: "prod_type_nm",
       header: CN.prod_type_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
     {
       name: "prod_type_small_id",
       header: CN.prod_type_small_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -888,12 +873,12 @@ function StoreCheckSet(
     {
       name: "prod_type_small_nm",
       header: CN.prod_type_small_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
@@ -904,8 +889,8 @@ function StoreCheckSet(
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
@@ -916,8 +901,8 @@ function StoreCheckSet(
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
@@ -926,7 +911,7 @@ function StoreCheckSet(
     {
       name: "store_id",
       header: CN.store_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -938,19 +923,19 @@ function StoreCheckSet(
     {
       name: "store_nm",
       header: CN.store_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
     {
       name: "location_id",
       header: CN.location_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -962,12 +947,12 @@ function StoreCheckSet(
     {
       name: "location_nm",
       header: CN.location_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
-      sortable: false,
-      filter: false,
+      sortable: true,
+      filter: "select",
       whiteSpace: false,
       rowSpan: false,
     },
@@ -976,7 +961,6 @@ function StoreCheckSet(
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
-    minWidth: "100",
   };
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];

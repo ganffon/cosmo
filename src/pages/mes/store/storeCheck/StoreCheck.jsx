@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import ButtonNEDS from "components/button/ButtonNEDS";
 import ButtonSES from "components/button/ButtonSES";
@@ -49,8 +49,7 @@ function StoreCheck() {
   });
 
   const [dateText, setDateText] = useState({
-    startDate: DateTime(-7).dateFull,
-    endDate: DateTime().dateFull,
+    startDate: DateTime().dateFull,
   });
   const [dateNew, setDateNew] = useState({
     startDate: DateTime().dateFull,
@@ -155,7 +154,7 @@ function StoreCheck() {
     setDisableRowToggle,
     comboValue,
     dateText,
-    restURI.storeCheck
+    restURI.invStock
   );
   const [actSaveStoreCheck] = uSave.useSaveStoreCheck(
     refSingleGrid,
@@ -164,7 +163,7 @@ function StoreCheck() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.storeCheck,
+    restURI.invStoreCheck,
     searchToggle,
     setSearchToggle
   );
@@ -175,7 +174,8 @@ function StoreCheck() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.storeCheck
+    restURI.invStoreCheck,
+    onClickSearch
   );
 
   const [actSearchOnlyDate] = uSearch.useSearchOnlyDate(
@@ -199,7 +199,7 @@ function StoreCheck() {
     setIsDeleteAlertOpen,
     searchModalToggle,
     setSearchModalToggle,
-    restURI.storeView,
+    restURI.invStore,
     SWITCH_NAME_01
   );
 
@@ -218,9 +218,11 @@ function StoreCheck() {
     setIsModalDeleteOpen(true);
     actSearchOnlyDate("start_date", "end_date");
   };
-  const onClickSearch = () => {
-    actSearchCboDate("reg_date", "");
-  };
+  function onClickSearch() {
+    actSearchCboDate("tran_reg_date", "");
+    console.log("??");
+    setIsModalOpen(false);
+  }
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -229,7 +231,7 @@ function StoreCheck() {
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
-    actSearchCboDate("reg_date", "");
+    actSearchCboDate("tran_reg_date", "");
     setDisableRowToggle(!disableRowToggle);
   };
 
@@ -286,7 +288,7 @@ function StoreCheck() {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalProd");
       setColumnsSelect(columnsSelectProd);
-      setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
+      setModalSelectSize({ ...modalSelectSize, width: "45%", height: "90%" });
       setIsModalSelectOpen(true);
       actSelectProd();
     }
@@ -294,7 +296,7 @@ function StoreCheck() {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalStore");
       setColumnsSelect(columnsSelectStore);
-      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
+      setModalSelectSize({ ...modalSelectSize, width: "20%", height: "80%" });
       setIsModalSelectOpen(true);
       actSelectStore();
     }
@@ -347,6 +349,47 @@ function StoreCheck() {
       setSearchToggle(!searchToggle);
     }
   };
+
+  const ModalNew = useMemo(() => {
+    return (
+      <ModalDate
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalGrid={onClickModalGrid}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        onDblClickModalGrid={onDblClickModalGrid}
+        columns={columnsModal}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersNum}
+        refModalGrid={refModalGrid}
+        dateText={dateNew}
+        setDateText={setDateNew}
+        datePickerSet={"single"}
+        buttonType={"ACS"}
+      />
+    );
+  }, []);
+  const ModalDelete = useMemo(() => {
+    return (
+      <ModalDate
+        onClickModalSearch={onClickStockSearch}
+        onClickModalDelete={onClickStockDelete}
+        onClickModalClose={onClickStockClose}
+        columns={columnsModalStockInspection}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersNumCheck}
+        data={gridModalData}
+        refModalGrid={refModalGrid}
+        dateText={dateModal}
+        setDateText={setDateModal}
+        datePickerSet={"range"}
+        buttonType={"DS"}
+      />
+    );
+  }, [gridModalData]);
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -490,25 +533,7 @@ function StoreCheck() {
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>
-      {isModalOpen ? (
-        <ModalDate
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalGrid={onClickModalGrid}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          onDblClickModalGrid={onDblClickModalGrid}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersNum}
-          refModalGrid={refModalGrid}
-          dateText={dateNew}
-          setDateText={setDateNew}
-          datePickerSet={"single"}
-          buttonType={"ACS"}
-        />
-      ) : null}
+      {isModalOpen ? ModalNew : null}
       {isModalSelectOpen ? (
         <ModalSelect
           width={modalSelectSize.width}
@@ -523,23 +548,7 @@ function StoreCheck() {
           onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
-      {isModalDeleteOpen ? (
-        <ModalDate
-          onClickModalSearch={onClickStockSearch}
-          onClickModalDelete={onClickStockDelete}
-          onClickModalClose={onClickStockClose}
-          columns={columnsModalStockInspection}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersNumCheck}
-          data={gridModalData}
-          refModalGrid={refModalGrid}
-          dateText={dateModal}
-          setDateText={setDateModal}
-          datePickerSet={"range"}
-          buttonType={"DS"}
-        />
-      ) : null}
+      {isModalDeleteOpen ? ModalDelete : null}
       {isDeleteAlertOpen ? (
         <AlertDelete
           handleDelete={handleDelete}

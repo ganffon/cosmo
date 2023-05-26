@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LoginStateChk } from "custom/LoginStateChk";
 import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
@@ -423,6 +423,8 @@ function ControlPlan() {
         "insp_item_desc",
         "spec_std",
         "spec_min",
+        "proc_id",
+        "proc_nm",
         "spec_max",
         "spec_lcl",
         "spec_ucl",
@@ -459,6 +461,8 @@ function ControlPlan() {
       "prod_id",
       "prod_cd",
       "prod_nm",
+      "proc_id",
+      "proc_nm",
       "equip_id",
       "equip_nm",
       "insp_proc_gbn",
@@ -529,6 +533,35 @@ function ControlPlan() {
     if (e.key === "Enter") {
       actSearchHeaderIC(true);
     }
+  };
+
+  const GridModal = useMemo(() => {
+    return (
+      <ModalNewDetail
+        isNewDetail={isNewDetail}
+        gridDataHeaderRowID={gridDataHeaderRowID}
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        onClickEditModalSave={onClickEditModalSave}
+        columnsModalHeader={columnsModalHeader}
+        columnsModalDetail={columnsModalDetail}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeadersHeader={rowHeadersNum}
+        rowHeadersDetail={rowHeadersNum}
+        refGridModalHeader={refGridModalHeader}
+        refGridModalDetail={refGridModalDetail}
+        onClickGridModalDetail={onClickGridModalDetail}
+        onDblClickGridModalHeader={onDblClickGridModalHeader}
+        onDblClickGridModalDetail={onDblClickGridModalDetail}
+      />
+    );
+  }, [isNewDetail, refGridModalHeader, gridDataHeaderRowID, lineOpt]);
+
+  const onClickGridDetail = (e) => {
+    disRow.handleClickGridCheck(e, isEditModeDetail, ["order_input_fg"]);
   };
 
   return (
@@ -644,32 +677,12 @@ function ControlPlan() {
           data={gridDataDetail}
           draggable={false}
           refGrid={refGridDetail}
+          onClickGrid={onClickGridDetail}
           onDblClickGrid={onDblClickGridDetail}
           onEditingFinish={onEditingFinishGridDetail}
         />
       </S.GridDetailWrap>
-      {isModalOpen ? (
-        <ModalNewDetail
-          isNewDetail={isNewDetail}
-          gridDataHeaderRowID={gridDataHeaderRowID}
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          onClickEditModalSave={onClickEditModalSave}
-          columnsModalHeader={columnsModalHeader}
-          columnsModalDetail={columnsModalDetail}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeadersHeader={rowHeadersNum}
-          rowHeadersDetail={rowHeadersNum}
-          refGridModalHeader={refGridModalHeader}
-          refGridModalDetail={refGridModalDetail}
-          onClickGridModalDetail={onClickGridModalDetail}
-          onDblClickGridModalHeader={onDblClickGridModalHeader}
-          onDblClickGridModalDetail={onDblClickGridModalDetail}
-        />
-      ) : null}
+      {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
         <ModalSelect
           width={modalSelectSize.width}

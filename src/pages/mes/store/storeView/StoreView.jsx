@@ -12,9 +12,6 @@ import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
 import * as uSearch from "custom/useSearch";
-import * as uEdit from "custom/useEdit";
-import * as uDelete from "custom/useDelete";
-import * as uSave from "custom/useSave";
 import * as S from "./StoreView.styled";
 import restURI from "json/restURI.json";
 import DatePicker from "components/datetime/DatePicker";
@@ -89,7 +86,7 @@ function StoreView() {
     setGridData,
     comboValue,
     dateText,
-    restURI.storeView
+    restURI.invStock
   );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
