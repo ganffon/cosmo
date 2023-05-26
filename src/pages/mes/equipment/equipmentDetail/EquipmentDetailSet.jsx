@@ -76,7 +76,7 @@ function EquipmentDetailSet(
         },
     isEditMode
       ? {
-          // name: "equip_classification_id",
+          name: "equip_classification_id",
           header: CN.classification_nm,
           minWidth: WIDTH_SHORT,
           align: "left",
@@ -94,7 +94,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         }
       : {
-          // name: "equip_classification_nm",
+          name: "equip_classification_nm",
           header: CN.classification_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
@@ -107,7 +107,7 @@ function EquipmentDetailSet(
         },
     isEditMode
       ? {
-          // name: "equip_group_id",
+          name: "equip_group_id",
           header: CN.group_nm,
           minWidth: WIDTH_SHORT,
           align: "left",
@@ -125,7 +125,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         }
       : {
-          // name: "equip_group_nm",
+          name: "equip_group_nm",
           header: CN.group_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
@@ -138,7 +138,7 @@ function EquipmentDetailSet(
         },
     isEditMode
       ? {
-          // name: "equip_class_id",
+          name: "equip_class_id",
           header: CN.class_nm,
           minWidth: WIDTH_SHORT,
           align: "left",
@@ -156,7 +156,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         }
       : {
-          // name: "equip_class_nm",
+          name: "equip_class_nm",
           header: CN.class_nm,
           minWidth: WIDTH_MIDDLE,
           align: "left",
@@ -168,7 +168,7 @@ function EquipmentDetailSet(
           rowSpan: false,
         },
     {
-      // name: "equip_detail_cd",
+      name: "equip_detail_cd",
       header: CN.eqm_detail_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -180,7 +180,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      // name: "equip_detail_nm",
+      name: "equip_detail_nm",
       header: CN.eqm_detail_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -527,7 +527,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      // name: "equip_classification_id",
+      name: "equip_classification_id",
       header: CN.classification_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -545,7 +545,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      // name: "equip_group_id",
+      name: "equip_group_id",
       header: CN.group_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -563,7 +563,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      // name: "equip_class_id",
+      name: "equip_class_id",
       header: CN.class_nm,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -581,7 +581,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      // name: "equip_detail_cd",
+      name: "equip_detail_cd",
       header: CN.eqm_detail_cd,
       minWidth: WIDTH_SHORT,
       align: "left",
@@ -593,7 +593,7 @@ function EquipmentDetailSet(
       rowSpan: false,
     },
     {
-      // name: "equip_detail_nm",
+      name: "equip_detail_nm",
       header: CN.eqm_detail_nm,
       minWidth: WIDTH_MIDDLE,
       align: "left",
@@ -838,7 +838,6 @@ function EquipmentDetailSet(
    * 🔸inputSet id 값이 ✨ BE : query params
    */
   const inputSet = [
-    
     {
       id: "equip_nm",
       name: CN.equip_nm,

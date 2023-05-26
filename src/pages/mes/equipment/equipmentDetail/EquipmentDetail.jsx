@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import EquipmentDetailSet from "pages/mes/equipment/equipmentDetail/EquipmentDetailSet";
@@ -201,16 +201,18 @@ function EquipmentDetail() {
                 disablePortal
                 id="equipmentLargeCbo"
                 size="small"
-                // key={(option) => option?.equip_classification_id}
+                key={(option) => option?.equip_classification_id}
                 options={equipmentLargeOpt || null}
-                // getOptionLabel={(option) => option?.equip_classification_nm || ""}
+                getOptionLabel={(option) =>
+                  option?.equip_classification_nm || ""
+                }
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    // equip_classification_id:
-                      // newValue?.equip_classification_id === undefined
+                    equip_classification_id:
+                      newValue?.equip_classification_id === undefined
                         ? null
-                        // : newValue?.equip_classification_id,
+                        : newValue?.equip_classification_id,
                   });
                 }}
                 renderInput={(params) => (
@@ -226,16 +228,16 @@ function EquipmentDetail() {
                 disablePortal
                 id="equipmentMediumCbo"
                 size="small"
-                // key={(option) => option?.equip_group_id}
+                key={(option) => option?.equip_group_id}
                 options={equipmentMediumOpt || null}
-                // getOptionLabel={(option) => option?.equip_group_nm || ""}
+                getOptionLabel={(option) => option?.equip_group_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    // equip_group_id:
-                    //   newValue?.equip_group_id === undefined
+                    equip_group_id:
+                      newValue?.equip_group_id === undefined
                         ? null
-                        // : newValue?.equip_group_id,
+                        : newValue?.equip_group_id,
                   });
                 }}
                 renderInput={(params) => (
@@ -247,16 +249,16 @@ function EquipmentDetail() {
                 disablePortal
                 id="equipmentSmallCbo"
                 size="small"
-                // key={(option) => option?.equip_class_id}
+                key={(option) => option?.equip_class_id}
                 options={equipmentSmallOpt || null}
-                // getOptionLabel={(option) => option?.equip_class_nm || ""}
+                getOptionLabel={(option) => option?.equip_class_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    // equip_class_id:
-                    //   newValue?.equip_class_id === undefined
+                    equip_class_id:
+                      newValue?.equip_class_id === undefined
                         ? null
-                        // : newValue?.equip_class_id,
+                        : newValue?.equip_class_id,
                   });
                 }}
                 renderInput={(params) => (

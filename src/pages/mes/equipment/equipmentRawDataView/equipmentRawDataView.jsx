@@ -1,7 +1,7 @@
 import * as S from "pages/mes/style/oneGrid.styled";
 
 import { LayoutContext } from "components/layout/common/Layout";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import { useContext, useRef, useState } from "react";
 import * as LS from "./equipmentRawDataView.styled";
 import CN from "json/ColumnName.json";
