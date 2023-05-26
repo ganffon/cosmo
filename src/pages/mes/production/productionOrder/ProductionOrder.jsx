@@ -165,10 +165,10 @@ function ProductionOrder() {
   const onClickNewHeader = () => {
     setIsModalHeaderOpen(true);
   };
-  const onClickModalCloseHeader = () => {
+  function onClickModalCloseHeader() {
     setIsModalHeaderOpen(false);
     onClickSearch();
-  };
+  }
   const onDblClickModalHeader = (e) => {
     if (Condition(e, ["request_no", "prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
@@ -456,7 +456,8 @@ function ProductionOrder() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.prdOrder
+    restURI.prdOrder,
+    onClickModalCloseHeader
   );
 
   const [actEditHeader] = uEdit.useEditHeader(

@@ -33,7 +33,11 @@ const Message = styled(Typography)`
   font-weight: 500;
 `;
 
-const ButtonBox = styled("div")``;
+const ButtonBox = styled("div")`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ButtonYes = styled(Button)`
   margin-right: 15px;

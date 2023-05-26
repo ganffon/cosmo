@@ -530,10 +530,10 @@ function Packing() {
       );
     }
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setIsEditModeHeader(false);
-  };
+  }
   const onClickModalDetailClose = () => {
     workOrderID.current = "";
     setIsModalDetailOpen(false);

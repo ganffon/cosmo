@@ -10,6 +10,7 @@ function AlertDelete(props) {
     setIsDeleteAlertOpen,
     title = "DELETE",
     message = "정말로 삭제하시겠습니까?",
+    onlyYes = false,
   } = props;
 
   return (
@@ -29,15 +30,17 @@ function AlertDelete(props) {
           >
             예 (Yes)
           </S.ButtonYes>
-          <S.ButtonNo
-            variant="contained"
-            size="small"
-            startIcon={<CloseIcon />}
-            color="error"
-            onClick={() => setIsDeleteAlertOpen(false)}
-          >
-            아니오 (No)
-          </S.ButtonNo>
+          {onlyYes ? null : (
+            <S.ButtonNo
+              variant="contained"
+              size="small"
+              startIcon={<CloseIcon />}
+              color="error"
+              onClick={() => setIsDeleteAlertOpen(false)}
+            >
+              아니오 (No)
+            </S.ButtonNo>
+          )}
         </S.ButtonBox>
       </S.ContentsBox>
     </ModalWrap>

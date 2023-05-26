@@ -210,10 +210,10 @@ function MenuManage(props) {
         });
     }
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     onClickSearch();
-  };
+  }
   const onDblClickModalGrid = () => {};
   const onClickGrid = () => {};
   const onDblClickGrid = () => {};

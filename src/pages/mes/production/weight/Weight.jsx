@@ -169,10 +169,10 @@ function Weight() {
     //actSearchDetail(headerClickRowID);
   };
 
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setgridDataModalDetail(null);
     setIsModalOpen(false);
-  };
+  }
 
   const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
     refGridHeader,

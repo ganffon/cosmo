@@ -3,7 +3,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalSubdivision.styled";
-import InputPaper from "components/input/InputPaper";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 
@@ -79,7 +78,7 @@ function ModalSubdivision(props) {
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
-        <S.TitleBox>${currentMenuName}</S.TitleBox>
+        <S.TitleBox>{currentMenuName}</S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"

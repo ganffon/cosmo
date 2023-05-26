@@ -68,10 +68,10 @@
   "store_cd": "창고코드",
   "store_nm": "창고",
   "reject_store_fg": "부적합\n창고여부",
-  "return_store_fg": "반출\n창고여부",
-  "outgo_store_fg": "출하\n창고여부",
+  "return_store_fg": "반출창고\n여부",
+  "outgo_store_fg": "출하창고\n여부",
   "final_insp_store_fg": "최종검사\n창고여부",
-  "outsourcing_store_fg": "외주\n창고여부",
+  "outsourcing_store_fg": "외주창고\n여부",
   "available_store_fg": "가용재고\n창고여부",
   "position_type": "창고위치유형",
 
@@ -86,7 +86,7 @@
   "downtime_id": "비가동ID",
   "downtime_cd": "비가동코드",
   "downtime_nm": "비가동",
-  "equip_failure_fg": "설비\n고장여부",
+  "equip_failure_fg": "설비고장\n여부",
 
   "partner_type_id": "거래처유형ID",
   "partner_type_cd": "거래처유형코드",
@@ -109,7 +109,7 @@
 
   "rev": "리비전",
   "bom_type_id": "BOM유형ID",
-  "is_spareparts": "SpareParts",
+  "is_spareparts": "SpareParts\n여부",
 
   "prod_std": "규격",
   "width": "폭",
@@ -121,7 +121,7 @@
   "weight": "중량",
 
   "mat_unit_id": "구매단위ID",
-  "mat_order_min_qty": "발주최소단위수량",
+  "mat_order_min_qty": "발주최소\n단위수량",
   "mat_supply_days": "발주소요일",
   "inv_unit_qty": "단위수량",
   "inv_safe_qty": "안전재고수량",
@@ -130,8 +130,8 @@
   "inv_to_location_id": "품목입고위치ID",
   "inv_to_location_nm": "품목입고위치",
   "prd_plan_type_id": "계획유형ID(MPS/MRP)",
-  "prd_min": "생산계획최소값",
-  "prd_max": "생산계획최대값",
+  "prd_min": "생산계획\n최소값",
+  "prd_max": "생산계획\n최대값",
 
   "equip_id": "설비ID",
   "equip_cd": "설비코드",
@@ -417,7 +417,7 @@
   "inv_from_store_nm": "출고 창고명",
   "inv_from_location_nm": "출고 위치명",
   "actual_weight": "실중량",
-  "scheduled_shutdown_fg": "계획정지여부",
+  "scheduled_shutdown_fg": "계획정지\n여부",
   "constant_value": "상수",
   "weight_amount": "가중치"
 }

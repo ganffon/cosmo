@@ -33,10 +33,10 @@ function ProductSet(
     {
       name: "prod_id",
       header: CN.prod_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -45,10 +45,10 @@ function ProductSet(
     {
       name: "factory_id",
       header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -58,7 +58,7 @@ function ProductSet(
       ? {
           name: "prod_gbn_id",
           header: CN.prod_gbn_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: WIDTH_SHORT,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -76,7 +76,7 @@ function ProductSet(
       : {
           name: "prod_gbn_nm",
           header: CN.prod_gbn_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -107,7 +107,7 @@ function ProductSet(
       : {
           name: "model_nm",
           header: CN.model_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -138,7 +138,7 @@ function ProductSet(
       : {
           name: "prod_type_nm",
           header: CN.prod_type_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -169,7 +169,7 @@ function ProductSet(
       : {
           name: "prod_type_small_nm",
           header: CN.prod_type_small_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -181,7 +181,7 @@ function ProductSet(
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -230,7 +230,7 @@ function ProductSet(
       ? {
           name: "unit_id",
           header: CN.unit_nm,
-          minWidth: WIDTH_SHORT,
+          minWidth: WIDTH_SUPER_SHORT,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -248,7 +248,7 @@ function ProductSet(
       : {
           name: "unit_nm",
           header: CN.unit_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: WIDTH_SUPER_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -267,8 +267,14 @@ function ProductSet(
           disabled: isEditMode ? false : true,
         },
       },
-      minWidth: "60",
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
       name: "use_fg",
@@ -312,10 +318,10 @@ function ProductSet(
     {
       name: "bom_type_id",
       header: CN.bom_type_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -451,7 +457,7 @@ function ProductSet(
           disabled: isEditMode ? false : true,
         },
       },
-      minWidth: WIDTH_SUPER_SHORT,
+      minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -482,10 +488,10 @@ function ProductSet(
     {
       name: "mat_unit_id",
       header: CN.mat_unit_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -608,10 +614,10 @@ function ProductSet(
     {
       name: "inv_to_store_id",
       header: CN.inv_to_store_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -632,10 +638,10 @@ function ProductSet(
     {
       name: "inv_to_location_id",
       header: CN.inv_to_location_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -713,10 +719,10 @@ function ProductSet(
     {
       name: "prd_plan_type_id",
       header: CN.prd_plan_type_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -928,7 +934,7 @@ function ProductSet(
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
       hidden: false,
@@ -976,7 +982,7 @@ function ProductSet(
     {
       name: "unit_id",
       header: CN.unit_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -1001,8 +1007,14 @@ function ProductSet(
           disabled: false,
         },
       },
-      minWidth: "60",
+      minWidth: WIDTH_SUPER_SHORT,
+      align: "center",
+      editor: false,
       hidden: false,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
     },
     {
       name: "use_fg",
@@ -1162,7 +1174,7 @@ function ProductSet(
           disabled: false,
         },
       },
-      minWidth: WIDTH_SUPER_SHORT,
+      minWidth: WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -1411,11 +1423,69 @@ function ProductSet(
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
-    minWidth: "100",
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "lot_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "use_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "active_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "mat_order_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "sal_order_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "inv_use_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "qms_receive_insp_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "qms_proc_insp_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "qms_final_insp_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "prd_active_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "mat_order_min_qty",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "prd_min",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "prd_max",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "is_spareparts",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"

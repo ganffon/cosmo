@@ -2050,7 +2050,18 @@ function ControlPlanSet(
   };
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "apply_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "order_input_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   // const header = {
   //   height: "60",
   //   complexColumns: [

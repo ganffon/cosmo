@@ -116,7 +116,8 @@ function InterfaceItem(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.infcItem
+    restURI.infcItem,
+    onClickModalClose
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -161,10 +162,10 @@ function InterfaceItem(props) {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
   };

@@ -646,7 +646,18 @@ function EmployeeSet(isEditMode, deptList, gradeList, workerGroupList) {
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "worker_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "use_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"

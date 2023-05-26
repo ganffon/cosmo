@@ -448,7 +448,34 @@ function StoreSet(isEditMode) {
     frozenCount: 0, // frozenColumn은 여기 값만 수정
   };
 
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "reject_store_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "return_store_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "outgo_store_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "final_insp_store_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "outsourcing_store_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "available_store_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   // const header = {
   //   height: "60",
   //   complexColumns: [

@@ -248,11 +248,11 @@ function StoreCheck() {
   const onClickModalSave = () => {
     actSaveStoreCheckNewLOT(dateNew.startDate);
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setDateNew({ ...dateNew, startDate: DateTime.dateFull });
     setSearchToggle(!searchToggle);
-  };
+  }
   const onClickStockSearch = () => {
     actSearchOnlyDate("start_date", "end_date");
   };

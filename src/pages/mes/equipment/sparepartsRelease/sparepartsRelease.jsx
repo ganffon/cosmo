@@ -111,10 +111,10 @@ function SparepartsRelease() {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
 
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
@@ -139,7 +139,8 @@ function SparepartsRelease() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.sparepartsoutgo
+    restURI.sparepartsOutgo,
+    onClickModalClose
   );
 
   const [actSearchSelect] = uSearch.useSearchSelect(

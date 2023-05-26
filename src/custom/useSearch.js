@@ -331,7 +331,6 @@ const useSearchSelect = (
         } else {
           gridData = await restAPI.get(uri);
         }
-        console.log(gridData);
         if (componentName !== null) {
           gridData = gridData?.data?.data?.rows.map((raw) =>
             GetSearchParams(componentName, raw)

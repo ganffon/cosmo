@@ -134,7 +134,8 @@ function SparepartIncome() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.sparepartsIncome
+    restURI.sparepartsIncome,
+    onClickModalClose
   );
 
   const [actDelete] = uDelete.useDelete(
@@ -194,10 +195,10 @@ function SparepartIncome() {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
 
   const onClickModalGrid = (e) => {
     rowKey = e.rowKey;

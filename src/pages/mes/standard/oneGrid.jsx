@@ -215,10 +215,10 @@ function OneGrid(props) {
         });
     }
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     onClickSearch();
-  };
+  }
   const onClickGrid = () => {};
   const onDblClickGrid = () => {};
   const onEditingFinishGrid = () => {};

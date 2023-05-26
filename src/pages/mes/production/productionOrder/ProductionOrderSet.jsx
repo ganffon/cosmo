@@ -21,7 +21,14 @@ function ProductionOrderSet(
   };
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "complete_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   const datePickerSet = null;
 
   const columnsHeader = [

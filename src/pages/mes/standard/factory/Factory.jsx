@@ -108,7 +108,8 @@ function Factory(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.factory
+    restURI.factory,
+    onClickModalClose
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -153,10 +154,10 @@ function Factory(props) {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
 
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);

@@ -130,7 +130,8 @@ function Product() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.product
+    restURI.product,
+    onClickModalClose
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -174,10 +175,10 @@ function Product() {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, [
       "lot_fg",

@@ -368,13 +368,13 @@ function Subdivision() {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
     // actSearchHeaderDI(true, "start_date", "end_date");
     actSearchDetail(headerClickRowID);
-  };
+  }
   const onDblClickGridModalHeader = (e) => {
     if (!isNewDetail) {
       if (Condition(e, ["prod_cd", "prod_nm"])) {

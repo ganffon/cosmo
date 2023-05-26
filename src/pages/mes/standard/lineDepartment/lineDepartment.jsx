@@ -128,10 +128,10 @@ function LineDepartment(props) {
       setIsDeleteAlertOpen(true);
     }
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
   const onClickModalSave = () => {
     actSave();
   };
@@ -236,7 +236,8 @@ function LineDepartment(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.lineDepartment
+    restURI.lineDepartment,
+    onClickModalClose
   );
 
   const [actSearch] = uSearch.useSearchCbo(
