@@ -2,16 +2,14 @@
 
 class storeCheck {
   constructor(raw, date) {
-    this.reg_date = date;
-    this.tran_type_id = null;
+    this.tran_reg_date = date;
     this.store_id = raw.store_id;
     this.location_id = raw.location_id;
     this.prod_id = raw.prod_id;
     this.reject_id = raw.reject_id;
     this.partner_id = raw.partner_id;
     this.lot_no = raw.lot_no;
-    this.Existing_qty = String(raw.qty) ? Number(raw.qty) : null;
-    this.Modify_qty = String(raw.stock_inspection)
+    this.qty = String(raw.stock_inspection)
       ? Number(raw.stock_inspection)
       : null;
     this.remark = raw.remark;
@@ -19,16 +17,14 @@ class storeCheck {
 }
 class storeCheckNewLOT {
   constructor(raw, date) {
-    this.reg_date = date;
-    this.tran_type_id = null;
+    this.tran_reg_date = date;
     this.store_id = raw.store_id;
     this.location_id = raw.location_id;
     this.prod_id = raw.prod_id;
     this.reject_id = raw.reject_id;
     this.partner_id = raw.partner_id;
     this.lot_no = raw.lot_no;
-    this.Existing_qty = 0;
-    this.Modify_qty = String(raw.qty) ? Number(raw.qty) : null;
+    this.qty = String(raw.qty) ? Number(raw.qty) : null;
     this.remark = raw.remark;
   }
 }

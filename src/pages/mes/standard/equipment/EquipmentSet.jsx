@@ -533,7 +533,14 @@ function EquipmentSet(isEditMode, processList) {
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "prd_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"

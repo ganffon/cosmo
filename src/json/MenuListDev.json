@@ -284,7 +284,7 @@
         "under": null
       },
       {
-        "name": "❌사용자이력현황",
+        "name": "✅사용자이력현황",
         "id": "userHistoryStatus",
         "path": "userHistoryStatus",
         "under": null
@@ -300,12 +300,6 @@
         "name": "✅재고현황",
         "id": "store-view",
         "path": "store-view",
-        "under": null
-      },
-      {
-        "name": "✅재고수불현황",
-        "id": "store-transfer-view",
-        "path": "store-transfer-view",
         "under": null
       },
       {

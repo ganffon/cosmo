@@ -10,7 +10,8 @@ const useSave = (
   isSnackOpen,
   setIsSnackOpen,
   componentName,
-  uri
+  uri,
+  onClickModalClose = () => {}
 ) => {
   const actSave = async () => {
     if (isBackDrop === false) {
@@ -33,6 +34,7 @@ const useSave = (
                 severity: "success",
               });
               refGrid?.current?.gridInst?.clear();
+              onClickModalClose();
             })
             .catch((res) => {
               setIsSnackOpen({
@@ -241,7 +243,8 @@ const useSaveStoreCheckNewLOT = (
   isSnackOpen,
   setIsSnackOpen,
   componentName,
-  uri
+  uri,
+  onClickSearch = () => {}
 ) => {
   const actSaveStoreCheckNewLOT = async (startDate) => {
     refGrid?.current?.gridInst?.finishEditing();
@@ -265,6 +268,7 @@ const useSaveStoreCheckNewLOT = (
             severity: "success",
           });
           disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+          onClickSearch();
         })
         .catch((res) => {
           setIsSnackOpen({

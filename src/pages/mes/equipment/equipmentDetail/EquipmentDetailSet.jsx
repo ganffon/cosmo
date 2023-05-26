@@ -2,13 +2,7 @@ import restURI from "json/restURI.json";
 import "components/grid/setting/GridStyle.css";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
-import {
-  WIDTH_SUPER_SHORT,
-  WIDTH_SHORT,
-  WIDTH_MIDDLE,
-  WIDTH_LONG,
-  WIDTH_SUPER_LONG,
-} from "constant/Grid.js";
+import * as C from "constant/Grid.js";
 
 function EquipmentDetailSet(
   isEditMode,
@@ -34,10 +28,10 @@ function EquipmentDetailSet(
     {
       name: "factory_id",
       header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -47,7 +41,7 @@ function EquipmentDetailSet(
       ? {
           name: "equip_id",
           header: CN.equip_nm,
-          minWidth: WIDTH_SHORT,
+          minWidth: C.WIDTH_MIDDLE,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -65,7 +59,7 @@ function EquipmentDetailSet(
       : {
           name: "equip_nm",
           header: CN.equip_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: C.WIDTH_MIDDLE,
           align: "left",
           editor: false,
           hidden: false,
@@ -78,7 +72,7 @@ function EquipmentDetailSet(
       ? {
           name: "equip_classification_id",
           header: CN.classification_nm,
-          minWidth: WIDTH_SHORT,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -96,7 +90,7 @@ function EquipmentDetailSet(
       : {
           name: "equip_classification_nm",
           header: CN.classification_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -109,7 +103,7 @@ function EquipmentDetailSet(
       ? {
           name: "equip_group_id",
           header: CN.group_nm,
-          minWidth: WIDTH_SHORT,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -127,7 +121,7 @@ function EquipmentDetailSet(
       : {
           name: "equip_group_nm",
           header: CN.group_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -140,7 +134,7 @@ function EquipmentDetailSet(
       ? {
           name: "equip_class_id",
           header: CN.class_nm,
-          minWidth: WIDTH_SHORT,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -158,7 +152,7 @@ function EquipmentDetailSet(
       : {
           name: "equip_class_nm",
           header: CN.class_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -168,12 +162,24 @@ function EquipmentDetailSet(
           rowSpan: false,
         },
     {
-      name: "equip_detail_cd",
-      header: CN.eqm_detail_cd,
-      minWidth: WIDTH_SHORT,
+      name: "equip_detail_id",
+      header: CN.equip_detail_cd,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
+      sortable: false,
+      filter: false,
+      whiteSpace: false,
+      rowSpan: false,
+    },
+    {
+      name: "equip_detail_cd",
+      header: CN.equip_detail_cd,
+      minWidth: C.WIDTH_MIDDLE,
+      align: "left",
+      editor: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -181,8 +187,8 @@ function EquipmentDetailSet(
     },
     {
       name: "equip_detail_nm",
-      header: CN.eqm_detail_nm,
-      minWidth: WIDTH_SHORT,
+      header: CN.equip_detail_nm,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -195,7 +201,7 @@ function EquipmentDetailSet(
       ? {
           name: "manager_emp_id",
           header: CN.manager_emp_nm,
-          minWidth: WIDTH_SHORT,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -213,7 +219,7 @@ function EquipmentDetailSet(
       : {
           name: "manager_emp_nm",
           header: CN.manager_emp_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -226,7 +232,7 @@ function EquipmentDetailSet(
       ? {
           name: "sub_manager_emp_id",
           header: CN.sub_manager_emp_nm,
-          minWidth: WIDTH_SHORT,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           formatter: "listItemText",
           editor: {
@@ -244,7 +250,7 @@ function EquipmentDetailSet(
       : {
           name: "sub_manager_emp_nm",
           header: CN.sub_manager_emp_nm,
-          minWidth: WIDTH_MIDDLE,
+          minWidth: C.WIDTH_SHORT,
           align: "left",
           editor: false,
           hidden: false,
@@ -256,7 +262,7 @@ function EquipmentDetailSet(
     {
       name: "equip_no",
       header: CN.equip_no,
-      minWidth: WIDTH_SUPER_SHORT,
+      minWidth: C.WIDTH_MIDDLE,
       align: "center",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -268,7 +274,7 @@ function EquipmentDetailSet(
     {
       name: "equip_grade",
       header: CN.equip_grade,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -280,7 +286,7 @@ function EquipmentDetailSet(
     {
       name: "equip_model",
       header: CN.equip_model,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -292,7 +298,7 @@ function EquipmentDetailSet(
     {
       name: "equip_std",
       header: CN.equip_std,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -304,7 +310,7 @@ function EquipmentDetailSet(
     {
       name: "equip_spec",
       header: CN.equip_spec,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -316,7 +322,7 @@ function EquipmentDetailSet(
     {
       name: "voltage",
       header: CN.voltage,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -328,7 +334,7 @@ function EquipmentDetailSet(
     {
       name: "manufacturer",
       header: CN.manufacturer,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -340,7 +346,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_partner",
       header: CN.purchase_partner,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -352,7 +358,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_date",
       header: CN.purchase_date,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: isEditMode
         ? {
@@ -375,7 +381,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_tel",
       header: CN.purchase_tel,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -387,7 +393,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_price",
       header: CN.purchase_price,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: isEditMode
         ? {
@@ -413,7 +419,7 @@ function EquipmentDetailSet(
           disabled: isEditMode ? false : true,
         },
       },
-      minWidth: WIDTH_SUPER_SHORT,
+      minWidth: C.WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -425,7 +431,7 @@ function EquipmentDetailSet(
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SUPER_LONG,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -437,7 +443,7 @@ function EquipmentDetailSet(
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_MIDDLE,
       align: "center",
       editor: false,
       hidden: false,
@@ -449,7 +455,7 @@ function EquipmentDetailSet(
     {
       name: "create_user_nm",
       header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -461,7 +467,7 @@ function EquipmentDetailSet(
     {
       name: "update_at",
       header: CN.update_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_MIDDLE,
       align: "center",
       editor: false,
       hidden: false,
@@ -473,7 +479,7 @@ function EquipmentDetailSet(
     {
       name: "update_user_nm",
       header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -485,7 +491,7 @@ function EquipmentDetailSet(
     {
       name: "delete_at",
       header: CN.delete_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_MIDDLE,
       align: "center",
       editor: false,
       hidden: true,
@@ -497,7 +503,7 @@ function EquipmentDetailSet(
     {
       name: "delete_user_nm",
       header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -511,7 +517,7 @@ function EquipmentDetailSet(
     {
       name: "equip_id",
       header: CN.equip_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -529,7 +535,7 @@ function EquipmentDetailSet(
     {
       name: "equip_classification_id",
       header: CN.classification_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -547,7 +553,7 @@ function EquipmentDetailSet(
     {
       name: "equip_group_id",
       header: CN.group_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -565,7 +571,7 @@ function EquipmentDetailSet(
     {
       name: "equip_class_id",
       header: CN.class_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -582,8 +588,8 @@ function EquipmentDetailSet(
     },
     {
       name: "equip_detail_cd",
-      header: CN.eqm_detail_cd,
-      minWidth: WIDTH_SHORT,
+      header: CN.equip_detail_cd,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -594,8 +600,8 @@ function EquipmentDetailSet(
     },
     {
       name: "equip_detail_nm",
-      header: CN.eqm_detail_nm,
-      minWidth: WIDTH_MIDDLE,
+      header: CN.equip_detail_nm,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: "text",
       hidden: false,
@@ -607,7 +613,7 @@ function EquipmentDetailSet(
     {
       name: "manager_emp_id",
       header: CN.manager_emp_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -625,7 +631,7 @@ function EquipmentDetailSet(
     {
       name: "sub_manager_emp_id",
       header: CN.sub_manager_emp_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -643,7 +649,7 @@ function EquipmentDetailSet(
     {
       name: "equip_no",
       header: CN.equip_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: "text",
       hidden: false,
@@ -655,7 +661,7 @@ function EquipmentDetailSet(
     {
       name: "equip_grade",
       header: CN.equip_grade,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -667,7 +673,7 @@ function EquipmentDetailSet(
     {
       name: "equip_model",
       header: CN.equip_model,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -679,7 +685,7 @@ function EquipmentDetailSet(
     {
       name: "equip_std",
       header: CN.equip_std,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -691,7 +697,7 @@ function EquipmentDetailSet(
     {
       name: "equip_spec",
       header: CN.equip_spec,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -703,7 +709,7 @@ function EquipmentDetailSet(
     {
       name: "voltage",
       header: CN.voltage,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -715,7 +721,7 @@ function EquipmentDetailSet(
     {
       name: "manufacturer",
       header: CN.manufacturer,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -727,7 +733,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_partner",
       header: CN.purchase_partner,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -739,7 +745,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_date",
       header: CN.purchase_date,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: {
         type: "datePicker",
@@ -760,7 +766,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_tel",
       header: CN.purchase_tel,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -772,7 +778,7 @@ function EquipmentDetailSet(
     {
       name: "purchase_price",
       header: CN.purchase_price,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: {
         type: CustomGrid.EditorFloat2,
@@ -796,7 +802,7 @@ function EquipmentDetailSet(
           disabled: false,
         },
       },
-      minWidth: WIDTH_SUPER_SHORT,
+      minWidth: C.WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -808,7 +814,7 @@ function EquipmentDetailSet(
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_SUPER_LONG,
       align: "left",
       editor: "text",
       hidden: false,
@@ -822,11 +828,17 @@ function EquipmentDetailSet(
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
-    minWidth: "100",
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "use_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"

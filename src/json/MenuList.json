@@ -277,12 +277,6 @@
         "under": null
       },
       {
-        "name": "재고수불현황",
-        "id": "store-transfer-view",
-        "path": "store-transfer-view",
-        "under": null
-      },
-      {
         "name": "재고실사",
         "id": "store-check",
         "path": "store-check",

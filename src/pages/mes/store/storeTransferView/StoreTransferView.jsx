@@ -85,7 +85,7 @@ function StoreTransferView() {
     setGridData,
     comboValue,
     dateText,
-    restURI.storeTransferView
+    restURI.invStore
   );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });

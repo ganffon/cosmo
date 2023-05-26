@@ -262,8 +262,13 @@ class infcMemory {
     this.equip_id = raw.equip_id;
     this.plc_ip = raw.plc_ip;
     this.plc_port = String(raw.plc_port) ? Number(raw.plc_port) : null;
-    this.device_addre = raw.device_addre;
+    this.device_address = raw.device_address;
     this.tag_id = raw.tag_id;
+    this.unit_nm = raw.unit_nm;
+    this.weight = String(raw.weight) ? Number(raw.weight) : null;
+    this.constant_value = String(raw.constant_value)
+      ? Number(raw.constant_value)
+      : null;
     this.infc_memory_nm = raw.infc_memory_nm;
     this.remark = raw.remark;
   }
@@ -532,12 +537,18 @@ class order {
     this.prod_cd = raw.prod_cd;
     this.prod_nm = raw.prod_nm;
     this.work_start_date = raw.work_start_date;
-    this.work_end_date = raw.work_end_date;
+    this.work_end_date =
+      raw.work_end_date === "" || raw.work_end_date === null
+        ? "2099-12-31"
+        : raw.work_end_date;
     this.work_order_qty = String(raw.work_order_qty)
       ? Number(raw.work_order_qty)
       : null;
     this.complete_fg = raw.complete_fg;
-    this.complete_date = raw.complete_date;
+    this.complete_date =
+      raw.work_end_date === "" || raw.work_end_date === null
+        ? null
+        : raw.complete_date;
     this.remark = raw.remark;
   }
 }
@@ -585,7 +596,7 @@ class weight {
     this.input_emp_id = raw.input_emp_id;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
-    this.remar = raw.remark;
+    this.remark = raw.remark;
   }
 }
 

@@ -37,6 +37,7 @@ function Packing() {
   const workOrderID = useRef("");
   const workWeighID = useRef("");
   const workPackingID = useRef("");
+  const currentRow = useRef("");
 
   const resetProd = () => {
     prodID.current = "";
@@ -320,6 +321,8 @@ function Packing() {
           conditionProdID
       );
       setGridDataHeader(result?.data?.data?.rows);
+      setGridDataDetail([]);
+      currentRow.current = "";
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
@@ -350,7 +353,7 @@ function Packing() {
         ...isSnackOpen,
         open: true,
         message: "생산품목을 선택해주세요",
-        severity: "error",
+        severity: "warning",
         location: "bottomRight",
       });
     }
@@ -639,6 +642,18 @@ function Packing() {
       Grid?.setValue(dblClickRowKey.current, "prod_id", data.prod_id);
       Grid?.setValue(dblClickRowKey.current, "prod_cd", data.prod_cd);
       Grid?.setValue(dblClickRowKey.current, "prod_nm", data.prod_nm);
+      Grid?.setValue(
+        dblClickRowKey.current,
+        "inv_to_store_id",
+        data.inv_to_store_id
+      );
+      Grid?.setValue(dblClickRowKey.current, "store_nm", data.store_nm);
+      Grid?.setValue(
+        dblClickRowKey.current,
+        "inv_to_location_id",
+        data.inv_to_location_id
+      );
+      Grid?.setValue(dblClickRowKey.current, "location_nm", data.location_nm);
     }
     setIsModalSelectDateOpen(false);
   };
@@ -669,12 +684,15 @@ function Packing() {
   };
   const onClickGridHeader = async (e) => {
     if (!isEditModeHeader) {
-      workOrderID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
-      workPackingID.current = e?.instance.getValue(
-        e?.rowKey,
-        "work_packing_id"
-      );
-      handleGridHeaderClick();
+      if (currentRow.current !== e?.rowKey) {
+        currentRow.current = e?.rowKey;
+        workOrderID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
+        workPackingID.current = e?.instance.getValue(
+          e?.rowKey,
+          "work_packing_id"
+        );
+        handleGridHeaderClick();
+      }
     }
   };
   const onEditingFinishGridHeader = (e) => {

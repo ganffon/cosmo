@@ -341,6 +341,11 @@ function Subdivision() {
       "subdivision_date",
       DateTime().dateFull
     );
+    Detail?.setValue(
+      Detail.store.data.rawData.length - 1,
+      "subdivision_time",
+      DateTime().hour + ":" + DateTime().minute
+    );
 
     if (isNewDetail === true) {
       for (let i = 0; i < Detail.store.data.rawData.length; i++) {
@@ -367,7 +372,7 @@ function Subdivision() {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
-    actSearchHeaderDI(true, "start_date", "end_date");
+    // actSearchHeaderDI(true, "start_date", "end_date");
     actSearchDetail(headerClickRowID);
   };
   const onDblClickGridModalHeader = (e) => {

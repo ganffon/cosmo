@@ -1,6 +1,6 @@
 {
   "authMenuCheck": "/menuinvest/auth",
-  "user": "/user",
+  "user": "/aut/user",
   "employee": "/std/emp",
   "login": "/login",
   "loginFactory": "/std/factory/sign-in",
@@ -53,9 +53,9 @@
   "sparepartsOutgo": "/eqm/spare-release",
   "sparepartsStoreView": "/inv/stock/sparepart",
 
-  "storeView": "/inv/stock",
-  "storeTransferView": "/store-view/tran",
-  "storeCheck": "/inv/store",
+  "invStock": "/inv/stock",
+  "invStore": "/inv/store",
+  "invStoreCheck": "/inv/store/check",
   "storeCheckHistory": "/inv/store/check-history",
 
   "subdivision": "/prd/subdivision",

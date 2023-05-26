@@ -205,7 +205,7 @@ class downtime {
     this.downtime_id = raw.downtime_id;
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
-    this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
+    this.scheduled_shutdown_fg = raw.scheduled_shutdown_fg ? true : false;
   }
 }
 class inspFiling {
@@ -278,8 +278,13 @@ class infcMemory {
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.plc_ip = raw.plc_ip;
+    this.unit_nm = raw.unit_nm;
+    this.weight = String(raw.weight) ? Number(raw.weight) : null;
+    this.constant_value = String(raw.constant_value)
+      ? Number(raw.constant_value)
+      : null;
     this.plc_port = String(raw.plc_port) ? Number(raw.plc_port) : null;
-    this.device_addre = raw.device_addre;
+    this.device_address = raw.device_address;
     this.tag_id = raw.tag_id;
     this.infc_memory_nm = raw.infc_memory_nm;
     this.remark = raw.remark;
@@ -311,7 +316,7 @@ class equipmentSmall {
 }
 class equipmentDetail {
   constructor(raw) {
-    this.eqm_detail_id = raw.eqm_detail_id;
+    this.equip_detail_id = raw.equip_detail_id;
     this.factory_id = raw.factory_id;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
@@ -450,6 +455,7 @@ class controlPlanDetail {
   constructor(raw) {
     this.control_plan_detail_id = raw.control_plan_detail_id;
     this.control_plan_id = raw.control_plan_id;
+    this.order_input_fg = raw.order_input_fg ? true : false;
     this.proc_no = String(raw.proc_no) ? Number(raw.proc_no) : null;
     this.insp_document_detail_id = raw.insp_document_detail_id;
     this.insp_document_id = raw.insp_document_id;

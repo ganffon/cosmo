@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import ButtonNEDS from "components/button/ButtonNEDS";
 import ButtonSES from "components/button/ButtonSES";
@@ -245,6 +245,24 @@ function InterfaceMemory(props) {
     }
   };
 
+  const GridModal = useMemo(() => {
+    return (
+      <ModalNew
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        columns={columnsModal}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersModal}
+        refModalGrid={refModalGrid}
+        onClickModalGrid={onClickModalGrid}
+        onDblClickModalGrid={onDblClickModalGrid}
+      />
+    );
+  }, [lineOpt]);
+
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
@@ -327,21 +345,7 @@ function InterfaceMemory(props) {
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}
-      {isModalOpen ? (
-        <ModalNew
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersModal}
-          refModalGrid={refModalGrid}
-          onClickModalGrid={onClickModalGrid}
-          onDblClickModalGrid={onDblClickModalGrid}
-        />
-      ) : null}
+      {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
         <ModalSelect
           width={modalSelectSize.width}

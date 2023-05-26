@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
@@ -30,6 +30,7 @@ function ModalNewDetail(props) {
     rowHeadersHeader,
     rowHeadersDetail,
     gridDataHeaderRowID,
+    gridDataDetail,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
@@ -43,6 +44,23 @@ function ModalNewDetail(props) {
       );
     }
   }, []);
+
+  const GridDetail = useMemo(() => {
+    return (
+      <GridModal
+        data={gridDataDetail}
+        columns={columnsModalDetail}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersDetail}
+        refGrid={refGridModalDetail}
+        draggable={false}
+        onClick={onClickGridModalDetail}
+        onDblClick={onDblClickGridModalDetail}
+        onEditingFinish={onEditingFinishGridModalDetail}
+      />
+    );
+  }, [gridDataDetail, onDblClickGridModalDetail]);
 
   return (
     <ModalWrap width={"95%"} height={"95%"}>
@@ -83,7 +101,7 @@ function ModalNewDetail(props) {
         />
       </S.ButtonBox>
       <S.GridBoxBottom>
-        <GridModal
+        {/* <GridModal
           columns={columnsModalDetail}
           columnOptions={columnOptions}
           header={header}
@@ -93,7 +111,8 @@ function ModalNewDetail(props) {
           onClick={onClickGridModalDetail}
           onDblClick={onDblClickGridModalDetail}
           onEditingFinish={onEditingFinishGridModalDetail}
-        />
+        /> */}
+        {GridDetail}
       </S.GridBoxBottom>
     </ModalWrap>
   );

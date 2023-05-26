@@ -157,6 +157,8 @@ function ProductionOrder() {
         actSearchMidDI();
         actSearchBottomDI();
       }
+    } else {
+      disRow.handleClickGridCheck(e, isEditModeHeader, ["complete_fg"]);
     }
   };
 
@@ -548,6 +550,25 @@ function ProductionOrder() {
     );
   }, [gridDataHeader, isEditModeHeader]);
 
+  const GridModal = useMemo(() => {
+    return (
+      <ModalNew
+        title={"01. 생산품목"}
+        height={"30%"}
+        onClickModalSave={onClickModalSaveHeader}
+        onClickModalClose={onClickModalCloseHeader}
+        onDblClickModalGrid={onDblClickModalHeader}
+        columns={columnsModalHeader}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersNum}
+        refModalGrid={refGridModalHeader}
+        isAddOneRow={true}
+        buttonType={"Save"}
+      />
+    );
+  }, [gridDataHeader, isEditModeHeader]);
+
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.SearchCondition>
@@ -644,22 +665,7 @@ function ProductionOrder() {
           onEditingFinish={onEditingFinishGridBottom}
         />
       </S.GridBottomWrap>
-      {isModalHeaderOpen ? (
-        <ModalNew
-          title={"01. 생산품목"}
-          height={"30%"}
-          onClickModalSave={onClickModalSaveHeader}
-          onClickModalClose={onClickModalCloseHeader}
-          onDblClickModalGrid={onDblClickModalHeader}
-          columns={columnsModalHeader}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersNum}
-          refModalGrid={refGridModalHeader}
-          isAddOneRow={true}
-          buttonType={"Save"}
-        />
-      ) : null}
+      {isModalHeaderOpen ? GridModal : null}
       {isModalSelectOpen ? (
         headerModalControl === "request" ? (
           <ModalDate

@@ -296,7 +296,7 @@ function ProductionDownTimeSet(
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_LONG,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -619,7 +619,7 @@ function ProductionDownTimeSet(
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_LONG,
       align: "left",
       editor: "text",
       hidden: false,
