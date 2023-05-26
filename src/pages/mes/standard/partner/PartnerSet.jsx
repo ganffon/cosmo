@@ -369,17 +369,22 @@ function PartnerSet(isEditMode, partnerTypeList) {
     frozenCount: 0, // frozenColumn은 여기 값만 수정
   };
 
-  const header = {};
-  // const header = {
-  //   height: "60",
-  //   complexColumns: [
-  //     {
-  //       header: "ID + Name",
-  //       name: "parent1",
-  //       childNames: ["id", "name"],
-  //     },
-  //   ],
-  // };
+  const header = {
+    columns: [
+      {
+        name: "vendor_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "use_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "customer_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
 
   const rowHeadersModal = ["rowNum"];
 

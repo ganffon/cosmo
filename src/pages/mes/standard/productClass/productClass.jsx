@@ -96,10 +96,10 @@ function ProductClass() {
   const onClickModalCancelRow = () => {
     refModalGrid?.current?.gridInst?.removeRow(rowKey);
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
   const onClickEdit = () => {
     setIsEditMode(true);
     setDisableRowToggle(!disableRowToggle);
@@ -129,7 +129,8 @@ function ProductClass() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.productClass
+    restURI.productClass,
+    onClickModalClose
   );
 
   useEffect(() => {

@@ -108,7 +108,8 @@ function ProductTypeSmall() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.productTypeSmall
+    restURI.productTypeSmall,
+    onClickModalClose
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -153,10 +154,10 @@ function ProductTypeSmall() {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
 
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);

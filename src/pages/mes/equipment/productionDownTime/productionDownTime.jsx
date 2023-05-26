@@ -166,7 +166,8 @@ function ProductionDownTime() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.productionDownTime
+    restURI.productionDownTime,
+    onClickModalClose
   );
 
   const [actDelete] = uDelete.useDelete(
@@ -195,10 +196,10 @@ function ProductionDownTime() {
     disRow.handleEditingFinishGridCheck(e);
   };
 
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     onClickSearch();
-  };
+  }
 
   const onClickEdit = () => {
     setIsEditMode(true);

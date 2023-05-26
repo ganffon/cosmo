@@ -35,8 +35,7 @@ function WeightPanel() {
   const empID = useRef("");
   const empNM = useRef("");
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
@@ -197,7 +196,8 @@ function WeightPanel() {
   const handleInputSearch = async () => {
     try {
       const result = await restAPI.get(
-        restURI.prdWeight + `?complete_fg=INCOMPLETE`
+        restURI.prdWeight +
+          `?complete_fg=INCOMPLETE&work_order_id=${workOrderID.current}`
       );
       setGridDataInput(result?.data?.data?.rows);
       setIsModalInputOpen(true);
@@ -212,6 +212,7 @@ function WeightPanel() {
     }
   };
   const onClickInput = async () => {
+    console.log(workOrderID.current);
     if (workOrderID.current) {
       setNowDateTime({
         nowDate: DateTime().dateFull,
@@ -298,6 +299,8 @@ function WeightPanel() {
       lineNM.current = Header.getValue(e?.rowKey, "line_nm");
       lineDeptID.current = Header.getValue(e?.rowKey, "line_dept_id");
       workOrderID.current = Header.getValue(e?.rowKey, "work_order_id");
+      storeID.current = Header.getValue(e?.rowKey, "inv_to_store_id");
+      locationID.current = Header.getValue(e?.rowKey, "inv_to_location_id");
       setSelectInfo({
         ...selectInfo,
         orderDate: Header.getValue(e?.rowKey, "work_order_date"),
@@ -368,6 +371,8 @@ function WeightPanel() {
           work_weigh_date: DateTime().dateFull,
           work_weigh_time: DateTime().hour + ":" + DateTime().minute,
           weigh_emp_id: empID.current,
+          inv_to_store_id: storeID.current,
+          inv_to_location_id: locationID.current,
         };
 
         const query = {

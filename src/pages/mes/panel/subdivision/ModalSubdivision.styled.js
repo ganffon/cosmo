@@ -83,12 +83,12 @@ export const Content = styled("div")`
   padding: 0px 10px;
 `;
 export const ContentTop = styled("div")`
-  height: 370px;
+  height: 500px;
   display: flex;
   flex-direction: column;
 `;
 export const ContentBottom = styled("div")`
-  height: calc(100% - 380px);
+  height: calc(100% - 510px);
   display: flex;
   flex-direction: column;
 `;

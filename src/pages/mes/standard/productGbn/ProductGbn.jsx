@@ -108,7 +108,8 @@ function ProductGbn(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.productGbn
+    restURI.productGbn,
+    onClickModalClose
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -153,10 +154,10 @@ function ProductGbn(props) {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
 
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);

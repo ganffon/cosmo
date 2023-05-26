@@ -185,7 +185,7 @@ class downtime {
     this.downtime_type_id = raw.downtime_type_id;
     this.downtime_cd = raw.downtime_cd;
     this.downtime_nm = raw.downtime_nm;
-    this.eqm_failure_fg = raw.eqm_failure_fg ? true : false;
+    this.scheduled_shutdown_fg = raw.scheduled_shutdown_fg ? true : false;
   }
 }
 class productModel {

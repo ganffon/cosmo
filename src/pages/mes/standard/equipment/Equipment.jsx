@@ -136,7 +136,8 @@ function Equipment() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.equipment
+    restURI.equipment,
+    onClickModalClose
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -187,10 +188,10 @@ function Equipment() {
 
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
   const onDblClickModalGrid = (e) => {
     if (Condition(e, ["manager_emp_nm"])) {
       setDblClickRowKey(e?.rowKey);

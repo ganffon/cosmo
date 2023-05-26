@@ -393,12 +393,12 @@ function ControlPlan() {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
     actSearchHeaderIC(true);
-  };
+  }
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const onDblClickGridModalHeader = (e) => {

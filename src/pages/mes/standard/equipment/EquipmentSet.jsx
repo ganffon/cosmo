@@ -539,6 +539,10 @@ function EquipmentSet(isEditMode, processList) {
         name: "prd_fg",
         renderer: CustomGrid.ColumnHeaderMultiLine,
       },
+      {
+        name: "use_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
     ],
   };
   /**

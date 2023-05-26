@@ -108,7 +108,8 @@ function Line(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.line
+    restURI.line,
+    onClickModalClose
   );
 
   const onClickNew = () => {
@@ -155,10 +156,10 @@ function Line(props) {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
   };

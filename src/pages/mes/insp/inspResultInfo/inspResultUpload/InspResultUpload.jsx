@@ -154,10 +154,10 @@ function InspResultUpload(props) {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
 
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);

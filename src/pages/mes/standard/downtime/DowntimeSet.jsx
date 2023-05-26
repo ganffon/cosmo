@@ -242,12 +242,12 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
       rowSpan: false,
     },
     {
-      name: "eqm_failure_fg",
-      header: CN.eqm_failure_fg,
+      name: "scheduled_shutdown_fg",
+      header: CN.scheduled_shutdown_fg,
       renderer: {
         type: CustomGrid.CheckBox,
         options: {
-          name: "eqm_failure_fg",
+          name: "scheduled_shutdown_fg",
         },
       },
       minWidth: WIDTH_SHORT,
@@ -268,7 +268,14 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
-  const header = {};
+  const header = {
+    columns: [
+      {
+        name: "scheduled_shutdown_fg",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
+  };
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"

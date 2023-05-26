@@ -21,8 +21,7 @@ import BtnSubdivisionDHE from "components/button/panel/BtnSubdivisionDHE";
 
 function SubdivisionPanel() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
   const prodCD = useRef("");
@@ -47,6 +46,12 @@ function SubdivisionPanel() {
   });
 
   const [isLockScale, setIsLockScale] = useState(true);
+
+  const [isWarning, setIsWarning] = useState({
+    open: false,
+    title: "",
+    message: "",
+  });
 
   const {
     columnOptions,
@@ -169,8 +174,11 @@ function SubdivisionPanel() {
         lot.current = Header.getValue(e?.rowKey, "lot_no");
         totalQty.current = Header.getValue(e?.rowKey, "total_qty");
         workSubdivisionID.current = rowID;
-
-        actSelectLoadDetail(params);
+        if (e?.columnName === "select") {
+          onClickGridButton(e?.rowKey);
+        } else {
+          actSelectLoadDetail(params);
+        }
       }
     }
   };
@@ -182,18 +190,23 @@ function SubdivisionPanel() {
       prodCD.current = data.prod_cd;
       date.current = DateTime().dateFull;
       totalQty.current = 0;
-      lot.current = null;
-      workSubdivisionID.current = null;
+      lot.current = "";
+      workSubdivisionID.current = "";
       setIsModalSelectOpen(false);
     }
   };
 
   async function onClickGridButton(rowKey) {
-    if (prodID.current !== null) {
+    if (prodID.current) {
       try {
+        const Header = refGridSelect?.current?.gridInst;
+        const workSubdivisionID = Header.getValue(
+          rowKey,
+          "work_subdivision_id"
+        );
         const result = await restAPI.get(
           restURI.subdivisionDetail +
-            `?work_subdivision_id=${workSubdivisionID.current}`
+            `?work_subdivision_id=${workSubdivisionID}`
         );
         setGridDataHeader(result?.data?.data?.rows);
 
@@ -204,7 +217,6 @@ function SubdivisionPanel() {
           severity: "success",
           location: "bottomRight",
         });
-
         setIsModalSubdivisionOpen(false);
         setIsLockScale(false);
       } catch (err) {
@@ -221,12 +233,11 @@ function SubdivisionPanel() {
   }
   const onClickStart = async (e) => {
     if (prodID.current === "") {
-      setIsSnackOpen({
-        ...isSnackOpen,
+      setIsWarning({
+        ...isWarning,
         open: true,
-        message: "품목코드 정보를 입력하세요!",
-        severity: "error",
-        location: "bottomLeft",
+        title: "Warning",
+        message: "품목코드를 입력하세요!",
       });
     } else {
       if (!workSubdivisionID.current) {
@@ -339,6 +350,12 @@ function SubdivisionPanel() {
       });
     }
   };
+  const handleWarning = () => {
+    setIsWarning({
+      ...isWarning,
+      open: false,
+    });
+  };
   const onClickSelect = (e) => {
     if (isLockScale) {
       setDblClickGrid("Search");
@@ -362,38 +379,28 @@ function SubdivisionPanel() {
     setScaleInfo({ ...scaleInfo, after: "465" });
   };
   const onClickNext = async () => {
-    if (
-      scaleInfo.inputLot !== "" ||
-      scaleInfo.before !== "" ||
-      scaleInfo.after !== ""
-    ) {
-      const raw = [
-        {
-          work_subdivision_id: workSubdivisionID.current,
-          subdivision_date: date.current,
-          subdivision_time: `${DateTime().hour}:${DateTime().minute}`,
-          lot_no: scaleInfo.inputLot,
-          before_qty: String(scaleInfo.before)
-            ? Number(scaleInfo.before)
-            : null,
-          after_qty: String(scaleInfo.after) ? Number(scaleInfo.after) : null,
-          qty: String(scaleInfo.qty) ? Number(scaleInfo.qty) : null,
-        },
-      ];
-      try {
-        const result = await restAPI.post(restURI.subdivisionDetail, raw);
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: result?.data?.message,
-          severity: "success",
-          location: "bottomRight",
-        });
+    console.log(scaleInfo.inputLot);
+    if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
+      if (
+        scaleInfo.inputLot !== "" &&
+        scaleInfo.before !== "" &&
+        scaleInfo.after !== ""
+      ) {
+        const raw = [
+          {
+            work_subdivision_id: workSubdivisionID.current,
+            subdivision_date: date.current,
+            subdivision_time: `${DateTime().hour}:${DateTime().minute}`,
+            lot_no: scaleInfo.inputLot,
+            before_qty: String(scaleInfo.before)
+              ? Number(scaleInfo.before)
+              : null,
+            after_qty: String(scaleInfo.after) ? Number(scaleInfo.after) : null,
+            qty: String(scaleInfo.qty) ? Number(scaleInfo.qty) : null,
+          },
+        ];
         try {
-          const result = await restAPI.get(
-            restURI.subdivisionDetail +
-              `?work_subdivision_id=${workSubdivisionID.current}`
-          );
+          const result = await restAPI.post(restURI.subdivisionDetail, raw);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -401,7 +408,28 @@ function SubdivisionPanel() {
             severity: "success",
             location: "bottomRight",
           });
-          setGridDataHeader(result?.data?.data?.rows);
+          try {
+            const result = await restAPI.get(
+              restURI.subdivisionDetail +
+                `?work_subdivision_id=${workSubdivisionID.current}`
+            );
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: result?.data?.message,
+              severity: "success",
+              location: "bottomRight",
+            });
+            setGridDataHeader(result?.data?.data?.rows);
+          } catch (err) {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: err?.response?.data?.message,
+              severity: "error",
+              location: "bottomRight",
+            });
+          }
         } catch (err) {
           setIsSnackOpen({
             ...isSnackOpen,
@@ -411,22 +439,20 @@ function SubdivisionPanel() {
             location: "bottomRight",
           });
         }
-      } catch (err) {
-        setIsSnackOpen({
-          ...isSnackOpen,
+      } else {
+        setIsWarning({
+          ...isWarning,
           open: true,
-          message: err?.response?.data?.message,
-          severity: "error",
-          location: "bottomRight",
+          title: "Warning",
+          message: "투입LOT와 소분 전, 후 중량을 입력하세요!",
         });
       }
     } else {
-      setIsSnackOpen({
-        ...isSnackOpen,
+      setIsWarning({
+        ...isWarning,
         open: true,
-        message: "투입LOT와 소분 전, 후 중량을 모두 입력하세요!",
-        severity: "error",
-        location: "bottomLeft",
+        title: "Warning",
+        message: "소분 전/후 중량을 다시 확인하세요!",
       });
     }
     refBarcode?.current?.firstChild?.focus();
@@ -590,6 +616,7 @@ function SubdivisionPanel() {
       ) : null}
       {isModalSubdivisionOpen ? (
         <ModalSubdivision
+          width={"60%"}
           onClickModalClose={onClickModalSubdivisionClose}
           columnsModalHeader={columnsSelectLoadHeader}
           columnsModalDetail={columnsSelectLoadDetail}
@@ -603,7 +630,7 @@ function SubdivisionPanel() {
           refGridModalHeader={refGridSelect}
           refGridModalDetail={refGridSelectDetail}
           onClickGridModalHeader={onClickGridSelect}
-          onDblClickGridModalHeader={onDblClickGridSelect}
+          // onDblClickGridModalHeader={onDblClickGridSelect}
           setIsSnackOpen={setIsSnackOpen}
           isSnackOpen={isSnackOpen}
         />
@@ -632,6 +659,15 @@ function SubdivisionPanel() {
           handleDelete={handleEnd}
           title={"End"}
           message={"모든 작업을 완료하고 마감하시겠습니까?"}
+        />
+      ) : null}
+      {isWarning.open ? (
+        <AlertDelete
+          setIsDeleteAlertOpen={setIsEnd}
+          handleDelete={handleWarning}
+          title={isWarning.title}
+          message={isWarning.message}
+          onlyYes={true}
         />
       ) : null}
     </S.ContentsArea>

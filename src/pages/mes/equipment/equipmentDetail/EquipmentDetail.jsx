@@ -131,7 +131,8 @@ function EquipmentDetail() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.equipmentDetail
+    restURI.equipmentDetail,
+    onClickModalClose
   );
   const onClickNew = () => {
     setIsModalOpen(true);
@@ -175,10 +176,10 @@ function EquipmentDetail() {
   const onClickModalSave = () => {
     actSave();
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
-  };
+  }
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, ["use_fg"]);
   };

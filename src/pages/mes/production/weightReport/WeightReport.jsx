@@ -80,22 +80,6 @@ function WeightReport() {
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
 
-      //Search버튼 클릭시 DetailGrid에 Default로 출력하기 위한 HeaderGrid 변수 세팅
-      const Header = refGridHeader?.current?.gridInst;
-      //가장 첫번째 Row의 ID 변수 세팅
-      weighID.current = Header.getValue(0, "work_weigh_id");
-      //API 전송
-      if (weighID.current !== null) {
-        const resultDetail = await restAPI.get(
-          restURI.prdWeightDetail + `?work_weigh_id=${weighID.current}`
-        );
-        //Response된 Data를 DetailGrid 출력
-        setGridDataDetail(resultDetail?.data?.data?.rows);
-      } else {
-        //DetailGrid 초기화
-        setGridDataDetail([]);
-      }
-
       //조회성공시 우측하단 메세지 출력
       setIsSnackOpen({
         ...isSnackOpen,
