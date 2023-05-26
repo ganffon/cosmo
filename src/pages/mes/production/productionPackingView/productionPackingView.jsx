@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as S from "./productionPackingView.styled";
 import * as MS from "./productionPackingModel.styled";

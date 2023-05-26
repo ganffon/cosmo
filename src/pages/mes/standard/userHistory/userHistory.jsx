@@ -1,7 +1,7 @@
 import ButtonSearch from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import { LayoutContext } from "components/layout/common/Layout";
-import LoginStateChk from "custom/LoginStateChk";
+import { LoginStateChk } from "custom/LoginStateChk";
 import * as S from "pages/mes/style/oneGrid.styled";
 import { useContext, useEffect, useRef, useState } from "react";
 import UserHistorySet from "./userHistorySet";
