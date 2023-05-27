@@ -200,7 +200,7 @@ function ProductionOrder() {
   };
   const onClickEditModeSaveHeader = () => {
     actEditHeader();
-    setIsEditModeHeader(false);
+    setDisableRowToggleTop(disableRowToggleTop);
     setDisRowTop(!disRowTop);
   };
   const onClickEditModeExitHeader = () => {

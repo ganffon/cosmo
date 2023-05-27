@@ -27,10 +27,10 @@ function FactorySet(isEditMode) {
     {
       name: "factory_id",
       header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -39,7 +39,7 @@ function FactorySet(isEditMode) {
     {
       name: "factory_cd",
       header: CN.factory_cd,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -51,7 +51,7 @@ function FactorySet(isEditMode) {
     {
       name: "factory_nm",
       header: CN.factory_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -63,7 +63,7 @@ function FactorySet(isEditMode) {
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -75,7 +75,7 @@ function FactorySet(isEditMode) {
     {
       name: "create_user_nm",
       header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -87,7 +87,7 @@ function FactorySet(isEditMode) {
     {
       name: "update_at",
       header: CN.update_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -99,7 +99,7 @@ function FactorySet(isEditMode) {
     {
       name: "update_user_nm",
       header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -111,7 +111,7 @@ function FactorySet(isEditMode) {
     {
       name: "delete_at",
       header: CN.delete_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -123,7 +123,7 @@ function FactorySet(isEditMode) {
     {
       name: "delete_user_nm",
       header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -137,7 +137,7 @@ function FactorySet(isEditMode) {
     {
       name: "factory_cd",
       header: CN.factory_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -149,7 +149,7 @@ function FactorySet(isEditMode) {
     {
       name: "factory_nm",
       header: CN.factory_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: "text",
       hidden: false,

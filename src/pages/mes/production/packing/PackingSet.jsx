@@ -1448,7 +1448,7 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,

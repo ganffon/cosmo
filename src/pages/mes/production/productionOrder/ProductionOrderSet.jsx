@@ -1195,7 +1195,7 @@ function ProductionOrderSet(
       name: "complete_fg",
       header: CN.complete_fg,
       minWidth: C.WIDTH_SHORT,
-      align: "left",
+      align: "center",
       editor: false,
       renderer: {
         type: CustomGrid.CheckBox,

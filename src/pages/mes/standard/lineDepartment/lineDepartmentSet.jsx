@@ -16,10 +16,10 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "line_dept_id",
       header: CN.line_dept_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -52,10 +52,10 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "factory_id",
       header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -88,7 +88,7 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "line_id",
       header: CN.line_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       validation: isEditMode
         ? {
@@ -96,7 +96,7 @@ function lineDepartmentSet(isEditMode) {
           }
         : null,
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -139,10 +139,10 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "dept_id",
       header: CN.dept_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       validation: isEditMode
         ? {
             required: true,
@@ -288,13 +288,13 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "line_id",
       header: CN.line_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       validation: {
         required: true,
       },
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -333,10 +333,10 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "dept_id",
       header: CN.dept_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       validation: {
         required: true,
       },
@@ -384,7 +384,7 @@ function lineDepartmentSet(isEditMode) {
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: "select",
       whiteSpace: false,
@@ -393,7 +393,7 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "line_cd",
       header: CN.line_cd,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -405,7 +405,7 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "line_nm",
       header: CN.line_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -422,7 +422,7 @@ function lineDepartmentSet(isEditMode) {
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: "select",
       whiteSpace: false,
@@ -431,7 +431,7 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "dept_cd",
       header: CN.dept_cd,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -443,7 +443,7 @@ function lineDepartmentSet(isEditMode) {
     {
       name: "dept_nm",
       header: CN.dept_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,

@@ -53,7 +53,8 @@ function Packing() {
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalSelectDateOpen, setIsModalSelectDateOpen] = useState(false);
   const [isModalSelectMultiOpen, setIsModalSelectMultiOpen] = useState(false);
-  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [isDeleteHeaderAlertOpen, setIsDeleteHeaderAlertOpen] = useState(false);
+  const [isDeleteDetailAlertOpen, setIsDeleteDetailAlertOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -226,8 +227,7 @@ function Packing() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelectDate,
-    restURI.prdOrder +
-      `?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`
+    restURI.prdOrder
   );
   const [actSelectEmp] = uSearch.useSearchSelect(
     refGridSelect,
@@ -367,6 +367,35 @@ function Packing() {
       });
     }
   };
+  const handleDeleteHeader = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridHeader?.current?.gridInst;
+      Grid?.finishEditing();
+
+      const data = Grid.getCheckedRows().map((raw) =>
+        GetDeleteParams("packing", raw)
+      );
+      const res = await restAPI.delete(restURI.prdPacking, { data });
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: res?.data?.message,
+        severity: "success",
+      });
+      onClickSearch();
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+      });
+    } finally {
+      setIsDeleteHeaderAlertOpen(false);
+      setIsBackDrop(false);
+    }
+  };
   const handleDelete = async () => {
     try {
       setIsBackDrop(true);
@@ -392,14 +421,20 @@ function Packing() {
         severity: "error",
       });
     } finally {
-      setIsDeleteAlertOpen(false);
+      setIsDeleteDetailAlertOpen(false);
       setIsBackDrop(false);
+    }
+  };
+  const onClickDeleteHeader = () => {
+    const Grid = refGridHeader?.current?.gridInst;
+    if (Grid.getCheckedRows().length !== 0) {
+      setIsDeleteHeaderAlertOpen(true);
     }
   };
   const onClickDeleteDetail = () => {
     const Grid = refGridDetail?.current?.gridInst;
     if (Grid.getCheckedRows().length !== 0) {
-      setIsDeleteAlertOpen(true);
+      setIsDeleteDetailAlertOpen(true);
     }
   };
   const onClickModalAddRow = () => {
@@ -513,7 +548,9 @@ function Packing() {
       targetGrid.current = "Order";
       targetRowKey.current = e?.rowKey;
       setIsModalSelectDateOpen(true);
-      actSelectOrder();
+      actSelectOrder(
+        `?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`
+      );
     }
     if (Condition(e, ["packing_emp_nm"])) {
       targetGrid.current = "Emp";
@@ -591,7 +628,7 @@ function Packing() {
     Grid?.setValue(targetRowKey.current, "prod_cd", data.prod_cd);
     Grid?.setValue(targetRowKey.current, "prod_nm", data.prod_nm);
     Grid?.setValue(targetRowKey.current, "lot_no", data.lot_no);
-    Grid?.setValue(targetRowKey.current, "input_qty", data.total_qty);
+    // Grid?.setValue(targetRowKey.current, "input_qty", data.total_qty);
     Grid?.setValue(
       targetRowKey.current,
       "inv_to_store_id",
@@ -667,7 +704,9 @@ function Packing() {
   };
 
   const onClickSearchSelectDate = () => {
-    actSelectOrder();
+    actSelectOrder(
+      `?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`
+    );
   };
   const handleGridHeaderClick = async () => {
     if (workPackingID.current) {
@@ -819,7 +858,7 @@ function Packing() {
         onClickSearch={onClickSearchSelectDate}
       />
     );
-  }, [gridDataSelectDate]);
+  }, [gridDataSelectDate, dateOrder]);
   const GridModalSelectMulti = useMemo(() => {
     return (
       <ModalSelectMulti
@@ -888,9 +927,11 @@ function Packing() {
                   newBtn={true}
                   editBtn={true}
                   searchBtn={true}
+                  deleteBtn={true}
                   onClickNew={onClickNew}
                   onClickEdit={onClickEditHeader}
                   onClickSearch={onClickSearch}
+                  onClickDelete={onClickDeleteHeader}
                 />
               )}
             </S.ButtonWrap>
@@ -919,10 +960,16 @@ function Packing() {
       {isModalSelectOpen ? GridModalSelect : null}
       {isModalSelectDateOpen ? GridModalSelectDate : null}
       {isModalSelectMultiOpen ? GridModalSelectMulti : null}
-      {isDeleteAlertOpen ? (
+      {isDeleteHeaderAlertOpen ? (
+        <AlertDelete
+          handleDelete={handleDeleteHeader}
+          setIsDeleteAlertOpen={setIsDeleteHeaderAlertOpen}
+        />
+      ) : null}
+      {isDeleteDetailAlertOpen ? (
         <AlertDelete
           handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+          setIsDeleteAlertOpen={setIsDeleteDetailAlertOpen}
         />
       ) : null}
       {isWarning.open ? (

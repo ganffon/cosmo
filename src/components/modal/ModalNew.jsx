@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
@@ -25,12 +25,30 @@ function ModalNew(props) {
     buttonType = "ACS",
     title = null,
     isAddOneRow = false,
+    data = [],
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
   useEffect(() => {
     isAddOneRow && refModalGrid?.current?.gridInst?.appendRow();
   }, []);
+
+  const Grid = useMemo(() => {
+    return (
+      <GridModal
+        columns={columns}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeaders}
+        refGrid={refModalGrid}
+        draggable={false}
+        onClick={onClickModalGrid}
+        onDblClick={onDblClickModalGrid}
+        onEditingFinish={onEditingFinishModal}
+        data={data}
+      />
+    );
+  }, [data]);
 
   return (
     <ModalWrap width={width} height={height}>
@@ -62,19 +80,7 @@ function ModalNew(props) {
           ) : null}
         </S.ButtonWrap>
       </S.ButtonBox>
-      <S.GridBox>
-        <GridModal
-          columns={columns}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeaders}
-          refGrid={refModalGrid}
-          draggable={false}
-          onClick={onClickModalGrid}
-          onDblClick={onDblClickModalGrid}
-          onEditingFinish={onEditingFinishModal}
-        />
-      </S.GridBox>
+      <S.GridBox>{Grid}</S.GridBox>
     </ModalWrap>
   );
 }

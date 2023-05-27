@@ -261,7 +261,7 @@ function StoreCheckSet(
       minWidth: WIDTH_SUPER_LONG,
       align: "left",
       editor: isEditMode ? "text" : false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,

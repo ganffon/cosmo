@@ -415,7 +415,7 @@ function ControlPlanSet(
       name: "order_input_fg",
       header: CN.order_input_fg,
       minWidth: WIDTH_MIDDLE,
-      align: "left",
+      align: "center",
       editor: false,
       renderer: {
         type: CustomGrid.CheckBox,

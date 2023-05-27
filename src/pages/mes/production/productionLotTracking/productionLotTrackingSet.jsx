@@ -14,7 +14,7 @@ import {
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
 
-function ProductionLotTrackingSet() {
+function ProductionLotTrackingSet(onClickGridButton) {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -176,11 +176,19 @@ function ProductionLotTrackingSet() {
       rowSpan: false,
     },
     {
-      name: "remark1",
-      header: CN.remark1,
+      name: "button1",
+      header: "운전점검일지",
+      width: WIDTH_SHORT,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "center",
       editor: false,
+      renderer: {
+        type: CustomGrid.Button,
+        options: {
+          name: "열기",
+          onClick: onClickGridButton,
+        },
+      },
       hidden: false,
       sortable: false,
       filter: false,
@@ -188,11 +196,19 @@ function ProductionLotTrackingSet() {
       rowSpan: false,
     },
     {
-      name: "remark2",
-      header: CN.remark2,
+      name: "button2",
+      header: "제품검사일지",
+      width: WIDTH_SHORT,
       minWidth: WIDTH_SHORT,
-      align: "left",
+      align: "center",
       editor: false,
+      renderer: {
+        type: CustomGrid.Button,
+        options: {
+          name: "열기",
+          onClick: onClickGridButton,
+        },
+      },
       hidden: false,
       sortable: false,
       filter: false,
