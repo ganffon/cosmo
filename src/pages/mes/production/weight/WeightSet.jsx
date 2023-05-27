@@ -297,7 +297,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
     },
     {
       name: "total_qty",
-      header: CN.actual_weight,
+      header: CN.total_qty2,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -494,8 +494,8 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       rowSpan: false,
     },
     {
-      name: "input_qty",
-      header: CN.input_qty,
+      name: "total_qty",
+      header: CN.total_qty2,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -519,8 +519,8 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       rowSpan: false,
     },
     {
-      name: "total_qty",
-      header: CN.actual_weight,
+      name: "input_qty",
+      header: CN.input_qty,
       minWidth: WIDTH_LONG,
       align: "center",
       editor: false,
@@ -530,6 +530,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "remark",
       header: CN.remark,
@@ -1324,16 +1325,11 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       rowSpan: false,
     },
     {
-      name: "input_qty",
-      header: CN.input_qty,
+      name: "total_qty",
+      header: CN.total_qty2,
       minWidth: WIDTH_LONG,
       align: "center",
-      editor: {
-        type: CustomGrid.EditorNumber,
-      },
-      formatter: function (value) {
-        return CustomGrid.NumComma(value);
-      },
+      editor: false,
       hidden: false,
       sortable: false,
       filter: false,
@@ -1357,19 +1353,24 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       whiteSpace: false,
       rowSpan: false,
     },
-
     {
-      name: "total_qty",
-      header: CN.actual_weight,
+      name: "input_qty",
+      header: CN.input_qty,
       minWidth: WIDTH_LONG,
       align: "center",
-      editor: false,
+      editor: {
+        type: CustomGrid.EditorNumber,
+      },
+      formatter: function (value) {
+        return CustomGrid.NumComma(value);
+      },
       hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
       rowSpan: false,
     },
+
     {
       name: "remark",
       header: CN.remark,

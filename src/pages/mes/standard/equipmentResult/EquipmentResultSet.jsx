@@ -1209,6 +1209,10 @@ function EquipmentResultSet() {
       id: "nigEmpNm",
       name: CN.nig_emp_nm,
     },
+    {
+      id: "remark",
+      name: CN.remark,
+    },
   ];
 
   return {

@@ -246,6 +246,11 @@ class order {
     this.work_order_id = raw.work_order_id;
   }
 }
+class packing {
+  constructor(raw) {
+    this.work_packing_id = raw.work_packing_id;
+  }
+}
 class packingDetail {
   constructor(raw) {
     this.work_packing_detail_id = raw.work_packing_detail_id;
@@ -423,6 +428,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "order":
       params = new order(raw);
+      break;
+    case "packing":
+      params = new packing(raw);
       break;
     case "packingDetail":
       params = new packingDetail(raw);

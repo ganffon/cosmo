@@ -209,7 +209,8 @@ function Subdivision() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.subdivision
+    restURI.subdivision,
+    onClickModalClose
   );
   const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
     refGridHeader,
@@ -282,17 +283,18 @@ function Subdivision() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.subdivisionDetail
+    restURI.subdivisionDetail,
+    onClickModalClose
   );
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridHeader.current]);
+  }, [isMenuSlide]);
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridDetail?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridDetail.current]);
+  }, [isMenuSlide]);
 
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
@@ -367,13 +369,16 @@ function Subdivision() {
   };
   const onClickModalSave = () => {
     actSave();
+    // setIsModalOpen(false);
+    // onClickSearch();
   };
   function onClickModalClose() {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
-    // actSearchHeaderDI(true, "start_date", "end_date");
-    actSearchDetail(headerClickRowID);
+    isNewDetail
+      ? actSearchDetail(headerClickRowID)
+      : actSearchHeaderDI(true, "start_date", "end_date");
   }
   const onDblClickGridModalHeader = (e) => {
     if (!isNewDetail) {
@@ -551,7 +556,6 @@ function Subdivision() {
     }
     disRow.handleEditingFinishGridCheck(e);
 
-    const Header = refGridHeader?.current?.gridInst;
     const Detail = refGridDetail?.current?.gridInst;
 
     if (Condition(e, ["before_subdivision_qty"])) {
@@ -591,31 +595,6 @@ function Subdivision() {
           Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
-    }
-
-    const inputInfoValueList = [
-      "subdivision_date",
-      "prod_cd",
-      "prod_nm",
-      "lot_no",
-      "total_qty",
-      "remark",
-    ];
-    setInputInfoValue([]);
-    for (let i = 0; i < inputInfoValueList.length; i++) {
-      let data = Header.getValue(headerClickRowKey, inputInfoValueList[i]);
-      if (data === false) {
-        //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-        data = "false";
-      }
-      setInputInfoValue((prevList) => {
-        return [...prevList, data];
-      });
-    }
-  };
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      // setSearchToggle(!searchToggle);
     }
   };
 
@@ -714,7 +693,7 @@ function Subdivision() {
             )}
           </S.SearchRightBottomWrap>
         </S.SearchRightWrap>
-        <S.GridDetailWrap isAllScreen={isAllScreen}>
+        <S.GridDetailWrap>
           <GridSingle
             columnOptions={columnOptions}
             columns={columnsDetail}

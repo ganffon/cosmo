@@ -31,6 +31,8 @@ function ProductionDownTime() {
 
   const SWITCH_NAME_01 = "productionDownTime";
 
+  const rowKey = useRef("");
+
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refGridSelect = useRef(null);
@@ -40,6 +42,7 @@ function ProductionDownTime() {
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [columnsSelect, setColumnsSelect] = useState([]);
   const [gridData, setGridData] = useState(null);
+  const [gridDataModalNew, setGridDataModalNew] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
@@ -132,9 +135,8 @@ function ProductionDownTime() {
     onClickSearch();
   };
 
-  let rowKey;
   const onClickModalGrid = (e) => {
-    rowKey = e.rowKey;
+    rowKey.current = e.rowKey;
   };
   const onClickModalAddRow = () => {
     const mainGrid = refModalGrid?.current?.gridInst;
@@ -153,7 +155,7 @@ function ProductionDownTime() {
   };
 
   const onClickModalCancelRow = () => {
-    refModalGrid?.current?.gridInst?.removeRow(rowKey);
+    refModalGrid?.current?.gridInst?.removeRow(rowKey.current);
   };
   const onClickModalSave = () => {
     actSave();
@@ -449,6 +451,7 @@ function ProductionDownTime() {
           onClickModalGrid={onClickModalGrid}
           onDblClickModalGrid={onDblClickGridModal}
           onEditingFinishModal={onEditingFinishModal}
+          data={gridDataModalNew}
         />
       ) : null}
       {isModalSelectOpen ? (

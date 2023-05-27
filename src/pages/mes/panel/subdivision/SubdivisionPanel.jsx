@@ -27,8 +27,9 @@ function SubdivisionPanel() {
   const prodCD = useRef("");
   const date = useRef("");
   const lot = useRef("");
-  const totalQty = useRef("");
   const workSubdivisionID = useRef("");
+
+  const [totalQty, setTotalQty] = useState();
 
   const [scaleInfo, setScaleInfo] = useState({
     barcode: "",
@@ -93,8 +94,8 @@ function SubdivisionPanel() {
     prodCD.current = "";
     date.current = "";
     lot.current = "";
-    totalQty.current = "";
     workSubdivisionID.current = "";
+    setTotalQty("");
 
     setGridDataHeader([]);
   };
@@ -172,7 +173,7 @@ function SubdivisionPanel() {
         prodCD.current = Header.getValue(e?.rowKey, "prod_cd");
         date.current = Header.getValue(e?.rowKey, "subdivision_date");
         lot.current = Header.getValue(e?.rowKey, "lot_no");
-        totalQty.current = Header.getValue(e?.rowKey, "total_qty");
+        setTotalQty(Header.getValue(e?.rowKey, "total_qty"));
         workSubdivisionID.current = rowID;
         if (e?.columnName === "select") {
           onClickGridButton(e?.rowKey);
@@ -189,7 +190,7 @@ function SubdivisionPanel() {
       prodID.current = data.prod_id;
       prodCD.current = data.prod_cd;
       date.current = DateTime().dateFull;
-      totalQty.current = 0;
+      setTotalQty(0);
       lot.current = "";
       workSubdivisionID.current = "";
       setIsModalSelectOpen(false);
@@ -379,7 +380,6 @@ function SubdivisionPanel() {
     setScaleInfo({ ...scaleInfo, after: "465" });
   };
   const onClickNext = async () => {
-    console.log(scaleInfo.inputLot);
     if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
       if (
         scaleInfo.inputLot !== "" &&
@@ -421,6 +421,13 @@ function SubdivisionPanel() {
               location: "bottomRight",
             });
             setGridDataHeader(result?.data?.data?.rows);
+            resetScaleInfo();
+            const resultData = result?.data?.data?.rows;
+            let totalQty = 0;
+            for (let i = 0; resultData.length > i; i++) {
+              totalQty = totalQty + resultData[i].subdivision_qty;
+            }
+            setTotalQty(totalQty);
           } catch (err) {
             setIsSnackOpen({
               ...isSnackOpen,
@@ -516,7 +523,7 @@ function SubdivisionPanel() {
             nameSize={"20px"}
             namePositionTop={"-30px"}
             nameColor={"white"}
-            value={totalQty.current || ""}
+            value={totalQty || ""}
             size={"22px"}
           />
         </S.ItemInfoBox>

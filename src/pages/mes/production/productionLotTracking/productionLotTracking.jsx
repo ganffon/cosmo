@@ -1,6 +1,6 @@
 import { LayoutContext } from "components/layout/common/Layout";
 import { LoginStateChk } from "custom/LoginStateChk";
-import { useContext, useRef, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import * as LS from "./productionLotTracking.styled";
 
 import { InputSet } from "components/input/InputSearch.styled";
@@ -17,6 +17,8 @@ import * as uSearch from "custom/useSearch";
 import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
 import ModalSelect from "components/modal/ModalSelect";
+import NoticeSnack from "components/alert/NoticeSnack";
+import { BackDrop } from "components/backdrop/BackDrop.styled";
 
 function ProductionLotTracking() {
   LoginStateChk();
@@ -57,7 +59,7 @@ function ProductionLotTracking() {
     columnsBottomRight,
     columnsSelectProd,
     inputSet,
-  } = ProductionLotTrackingSet();
+  } = ProductionLotTrackingSet(onClickGridButton);
 
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
@@ -84,6 +86,15 @@ function ProductionLotTracking() {
     false,
     refMainleGrid
   );
+
+  function onClickGridButton() {
+    setIsSnackOpen({
+      ...isSnackOpen,
+      open: true,
+      message: "버튼 기능은 준비중입니다.",
+      severity: "warning",
+    });
+  }
 
   const [gridData, setGridData] = useState(null);
   const handleInputTextChange = (e) => {
@@ -170,7 +181,9 @@ function ProductionLotTracking() {
   };
 
   const onClickGrid = (e) => {
-    actSearchGrid(e);
+    if (e?.columnName !== "button1" && e?.columnName !== "button2") {
+      actSearchGrid(e);
+    }
   };
 
   const onDblClickGridSelect = (e) => {
@@ -263,6 +276,21 @@ function ProductionLotTracking() {
     setInputSearchValue([(prodCD.current = ""), (prodNM.current = "")]);
   };
 
+  const Grid = useMemo(() => {
+    return (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columns}
+        rowHeaders={rowHeaders}
+        header={header}
+        data={gridDataHeader}
+        draggable={false}
+        refGrid={refMainleGrid}
+        onClickGrid={onClickGrid}
+      />
+    );
+  }, [gridDataHeader]);
+
   return (
     <LS.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
@@ -304,18 +332,7 @@ function ProductionLotTracking() {
         <LS.TitleMid>❇️ 생산품목</LS.TitleMid>
       </LS.ContentTop>
       <LS.TopGridWrap>
-        <S.GridWrap>
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columns}
-            rowHeaders={rowHeaders}
-            header={header}
-            data={gridDataHeader}
-            draggable={false}
-            refGrid={refMainleGrid}
-            onClickGrid={onClickGrid}
-          />
-        </S.GridWrap>
+        <S.GridWrap>{Grid}</S.GridWrap>
       </LS.TopGridWrap>
       <LS.ContentTop>
         <LS.TitleMid>❇️ 계량 / 투입 현황</LS.TitleMid>
@@ -390,6 +407,8 @@ function ProductionLotTracking() {
           onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
+      <BackDrop isBackDrop={isBackDrop} />
     </LS.ContentsArea>
   );
 }

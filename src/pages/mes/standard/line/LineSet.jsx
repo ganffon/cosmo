@@ -30,10 +30,10 @@ function LineSet(isEditMode) {
     {
       name: "factory_id",
       header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -42,7 +42,7 @@ function LineSet(isEditMode) {
     {
       name: "line_id",
       header: CN.line_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -54,7 +54,7 @@ function LineSet(isEditMode) {
     {
       name: "line_cd",
       header: CN.line_cd,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -72,7 +72,7 @@ function LineSet(isEditMode) {
     {
       name: "line_nm",
       header: CN.line_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: isEditMode ? "text" : false,
       hidden: false,
@@ -85,7 +85,7 @@ function LineSet(isEditMode) {
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -97,7 +97,7 @@ function LineSet(isEditMode) {
     {
       name: "create_user_nm",
       header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -109,7 +109,7 @@ function LineSet(isEditMode) {
     {
       name: "update_at",
       header: CN.update_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -121,7 +121,7 @@ function LineSet(isEditMode) {
     {
       name: "update_user_nm",
       header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -133,7 +133,7 @@ function LineSet(isEditMode) {
     {
       name: "delete_at",
       header: CN.delete_at,
-      minWidth: WIDTH_LONG,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -145,7 +145,7 @@ function LineSet(isEditMode) {
     {
       name: "delete_user_nm",
       header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -159,7 +159,7 @@ function LineSet(isEditMode) {
     {
       name: "line_cd",
       header: CN.line_cd,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: "text",
       hidden: false,
@@ -171,7 +171,7 @@ function LineSet(isEditMode) {
     {
       name: "line_nm",
       header: CN.line_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: "text",
       hidden: false,

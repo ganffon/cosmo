@@ -68,7 +68,8 @@ const useSaveMulti = (
   setIsSnackOpen,
   componentName01,
   componentName02,
-  uri
+  uri,
+  onClickClose = () => {}
 ) => {
   const actSaveMulti = async () => {
     refGrid01?.current?.gridInst?.finishEditing();
@@ -103,6 +104,7 @@ const useSaveMulti = (
               message: res?.data?.message,
               severity: "success",
             });
+            onClickClose();
           })
           .catch((res) => {
             setIsSnackOpen({
@@ -132,7 +134,8 @@ const useSaveDetail = (
   isSnackOpen,
   setIsSnackOpen,
   componentName,
-  uri
+  uri,
+  onClickClose = () => {}
 ) => {
   const actSaveDetail = async () => {
     refGrid?.current?.gridInst?.finishEditing();
@@ -155,6 +158,7 @@ const useSaveDetail = (
                 severity: "success",
               });
               disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+              onClickClose();
             })
             .catch((res) => {
               setIsSnackOpen({
