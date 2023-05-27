@@ -474,7 +474,7 @@ function WeightPanelSet(onClickGridButton) {
     },
     {
       name: "total_qty",
-      header: CN.total_qty,
+      header: CN.total_qty2,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: {
@@ -859,7 +859,7 @@ function WeightPanelSet(onClickGridButton) {
     },
     {
       name: "total_qty",
-      header: CN.total_qty,
+      header: CN.total_qty2,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -1055,7 +1055,7 @@ function WeightPanelSet(onClickGridButton) {
     },
     {
       id: "total_qty",
-      name: CN.total_qty,
+      name: CN.total_qty2,
     },
     {
       id: "remark",

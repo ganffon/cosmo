@@ -67,6 +67,12 @@ import EquipmentResult from "pages/mes/standard/equipmentResult/EquipmentResult"
 import ProductionPackingView from "pages/mes/production/productionPackingView/productionPackingView";
 import EquipmentRawDataView from "pages/mes/equipment/equipmentRawDataView/equipmentRawDataView";
 
+import MonthlyLineCapa from "pages/mes/managementInfo/monthlyLineCapa/MonthlyLineCapa";
+import DailyLineCapa from "pages/mes/managementInfo/dailyLineCapa/DailyLineCapa";
+import MonthlyPartCapa from "pages/mes/managementInfo/monthlyPartCapa/MonthlyPartCapa";
+import PerformanceRate from "pages/mes/managementInfo/performanceRate/PerformancRate";
+import TimeRate from "pages/mes/managementInfo/timeRate/TimeRate";
+
 export default function MainRouter() {
   return (
     <Layout>
@@ -156,6 +162,12 @@ export default function MainRouter() {
           path="production-packing-view"
           element={<ProductionPackingView />}
         />
+
+        <Route path="monthlyLineCapa" element={<MonthlyLineCapa />} />
+        <Route path="dailyLineCapa" element={<DailyLineCapa />} />
+        <Route path="monthlyPartCapa" element={<MonthlyPartCapa />} />
+        <Route path="timeRate" element={<TimeRate />} />
+        <Route path="performanceRate" element={<PerformanceRate />} />
 
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>

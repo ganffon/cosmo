@@ -663,7 +663,6 @@ function SubdivisionPanel() {
       ) : null}
       {isWarning.open ? (
         <AlertDelete
-          setIsDeleteAlertOpen={setIsEnd}
           handleDelete={handleWarning}
           title={isWarning.title}
           message={isWarning.message}

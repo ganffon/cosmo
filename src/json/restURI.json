@@ -85,5 +85,9 @@
   "prdLotTracking": "/prd/lot-tracking",
   "qmsInspResult": "/qms/insp-result",
   "qmsInspResultInclude": "/qms/insp-result/{id}/include-details",
-  "qmsInspResultDetail": "/qms/insp-result-detail"
+  "qmsInspResultDetail": "/qms/insp-result-detail",
+
+  "monthlyLine": "/kpi/production/monthly-by-line",
+  "dailyLine": "/kpi/production/daily-by-line",
+  "dashboard": "/dashboard/main"
 }

@@ -10,9 +10,6 @@ import restURI from "json/restURI.json";
 import * as uSearch from "custom/useSearch";
 import * as S from "./PackingPanel.styled";
 import restAPI from "api/restAPI";
-import DateRange from "components/datetime/DateRange";
-import InputSearch from "components/input/InputSearch";
-import BtnWeight from "components/button/panel/BtnWeight";
 import Condition from "custom/Condition";
 import ModalSelectDate from "components/modal/ModalSelectDate";
 import BarcodeBox from "./BarcodeBox";
@@ -21,6 +18,7 @@ import ModalNew from "./ModalNew";
 import ModalSelectMulti from "./ModalSelectMulti";
 import GetPostParams from "api/GetPostParams";
 import GetDeleteParams from "api/GetDeleteParams";
+import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 
 function PackingPanel() {
   const workPackingID = useRef("");
@@ -81,6 +79,18 @@ function PackingPanel() {
     empNM: "",
     remark: "",
   });
+  const [isWarning, setIsWarning] = useState({
+    open: false,
+    title: "",
+    message: "",
+  });
+
+  const handleWarning = () => {
+    setIsWarning({
+      ...isWarning,
+      open: false,
+    });
+  };
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -192,6 +202,13 @@ function PackingPanel() {
   const onClickNew = () => {
     if (info.lineNM) {
       setIsModalNewOpen(true);
+    } else {
+      setIsWarning({
+        ...isWarning,
+        open: true,
+        title: "Warning",
+        message: "바코드 스캔 먼저 진행하세요!",
+      });
     }
   };
   const onClickModalNewClose = () => {
@@ -554,6 +571,14 @@ function PackingPanel() {
           gridDataSelect={gridDataSelectHeader}
           gridDataDetail={gridDataSelectDetail}
           refGridSelect={refGridSelectHeader}
+        />
+      ) : null}
+      {isWarning.open ? (
+        <AlertDelete
+          handleDelete={handleWarning}
+          title={isWarning.title}
+          message={isWarning.message}
+          onlyYes={true}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

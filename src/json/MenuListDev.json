@@ -533,6 +533,36 @@
         "id": "lineOperationStatus",
         "path": null,
         "under": null
+      },
+      {
+        "name": "월별라인별생산량",
+        "id": "monthlyLineCapa",
+        "path": "monthlyLineCapa",
+        "under": null
+      },
+      {
+        "name": "일별라인별생산량",
+        "id": "dailyLineCapa",
+        "path": "dailyLineCapa",
+        "under": null
+      },
+      {
+        "name": "월별품번별생산량",
+        "id": "monthlyPartCapa",
+        "path": "monthlyPartCapa",
+        "under": null
+      },
+      {
+        "name": "시간가동률",
+        "id": "timeRate",
+        "path": "timeRate",
+        "under": null
+      },
+      {
+        "name": "성능가동률",
+        "id": "performanceRate",
+        "path": "performanceRate",
+        "under": null
       }
     ]
   },
