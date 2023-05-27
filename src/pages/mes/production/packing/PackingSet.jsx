@@ -212,6 +212,11 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
       width: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : null,
       hidden: true,
       sortable: false,
       filter: false,
@@ -225,6 +230,11 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
       width: WIDTH_SHORT,
       align: "left",
       editor: false,
+      validation: isEditModeHeader
+        ? {
+            required: true,
+          }
+        : null,
       hidden: false,
       sortable: false,
       filter: false,
@@ -1434,7 +1444,7 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
     },
     {
       name: "total_qty",
-      header: CN.total_qty,
+      header: CN.actual_weight,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -1568,7 +1578,7 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
     },
     {
       name: "total_qty",
-      header: CN.total_qty,
+      header: CN.actual_weight,
       minWidth: WIDTH_SHORT,
       align: "right",
       editor: false,
@@ -1628,7 +1638,7 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
     },
     {
       id: "total_qty",
-      name: CN.total_qty,
+      name: CN.actual_weight,
     },
     {
       id: "remark",

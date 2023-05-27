@@ -38,6 +38,8 @@ function Packing() {
   const workWeighID = useRef("");
   const workPackingID = useRef("");
   const currentRow = useRef("");
+  const targetGrid = useRef("");
+  const targetRowKey = useRef("");
 
   const resetProd = () => {
     prodID.current = "";
@@ -56,8 +58,18 @@ function Packing() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  // const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
-  // const [headerClickRowID, setHeaderClickRowID] = useState(null);
+  const [isWarning, setIsWarning] = useState({
+    open: false,
+    title: "",
+    message: "",
+  });
+
+  const handleWarning = () => {
+    setIsWarning({
+      ...isWarning,
+      open: false,
+    });
+  };
 
   const barcodePrintDetail = async (rowKey) => {
     const gridDetailId =
@@ -179,8 +191,6 @@ function Packing() {
     width: "80%",
     height: "90%",
   });
-  const dblClickTarget = useRef("");
-  const dblClickRowKey = useRef("");
 
   const [columnsSelect, setColumnsSelect] = useState([]);
   const [inputTextChange, setInputTextChange] = useState({});
@@ -264,7 +274,7 @@ function Packing() {
     setRemoveToggle(!removeToggle);
   };
   const onClickSelectProd = () => {
-    dblClickTarget.current = "Search";
+    targetGrid.current = "Search";
     setColumnsSelect(columnsSelectProd);
     setIsModalSelectOpen(true);
     actSelectProd();
@@ -349,12 +359,11 @@ function Packing() {
     if (workOrderID.current) {
       setIsModalDetailOpen(true);
     } else {
-      setIsSnackOpen({
-        ...isSnackOpen,
+      setIsWarning({
+        ...isWarning,
         open: true,
-        message: "생산품목을 선택해주세요",
-        severity: "warning",
-        location: "bottomRight",
+        title: "Warning",
+        message: "생산품목을 선택해주세요!",
       });
     }
   };
@@ -447,6 +456,8 @@ function Packing() {
         message: res?.data?.message,
         severity: "success",
       });
+      workOrderID.current = "";
+      currentRow.current = "";
       setIsModalDetailOpen(false);
     } catch (err) {
       setIsSnackOpen({
@@ -477,6 +488,7 @@ function Packing() {
         severity: "success",
       });
       setIsModalOpen(false);
+      onClickSearch();
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -498,21 +510,21 @@ function Packing() {
         "prod_nm",
       ])
     ) {
-      dblClickTarget.current = "Order";
-      dblClickRowKey.current = e?.rowKey;
+      targetGrid.current = "Order";
+      targetRowKey.current = e?.rowKey;
       setIsModalSelectDateOpen(true);
       actSelectOrder();
     }
     if (Condition(e, ["packing_emp_nm"])) {
-      dblClickTarget.current = "Emp";
-      dblClickRowKey.current = e?.rowKey;
+      targetGrid.current = "Emp";
+      targetRowKey.current = e?.rowKey;
       setColumnsSelect(columnsSelectEmp);
       setIsModalSelectOpen(true);
       actSelectEmp();
     }
     if (Condition(e, ["store_nm", "location_nm"])) {
-      dblClickTarget.current = "Store";
-      dblClickRowKey.current = e?.rowKey;
+      targetGrid.current = "Store";
+      targetRowKey.current = e?.rowKey;
       setColumnsSelect(columnsSelectStore);
       setIsModalSelectOpen(true);
       actSelectStore();
@@ -522,8 +534,8 @@ function Packing() {
     if (
       Condition(e, ["prod_cd", "prod_nm", "lot_no", "store_nm", "location_nm"])
     ) {
-      dblClickTarget.current = "Weight";
-      dblClickRowKey.current = e?.rowKey;
+      targetGrid.current = "Weight";
+      targetRowKey.current = e?.rowKey;
       setIsModalSelectMultiOpen(true);
       actSelectWeight(
         `?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`
@@ -535,7 +547,6 @@ function Packing() {
     setIsEditModeHeader(false);
   }
   const onClickModalDetailClose = () => {
-    workOrderID.current = "";
     setIsModalDetailOpen(false);
   };
 
@@ -575,85 +586,82 @@ function Packing() {
   const onDblClickSelectMulti = (e) => {
     const data = e?.instance?.store?.data?.rawData[e?.rowKey];
     const Grid = refGridDetailNew?.current?.gridInst;
-    Grid?.setValue(dblClickRowKey.current, "work_weigh_id", data.work_weigh_id);
-    Grid?.setValue(dblClickRowKey.current, "prod_id", data.prod_id);
-    Grid?.setValue(dblClickRowKey.current, "prod_cd", data.prod_cd);
-    Grid?.setValue(dblClickRowKey.current, "prod_nm", data.prod_nm);
-    Grid?.setValue(dblClickRowKey.current, "lot_no", data.lot_no);
-    Grid?.setValue(dblClickRowKey.current, "input_qty", data.total_qty);
+    Grid?.setValue(targetRowKey.current, "work_weigh_id", data.work_weigh_id);
+    Grid?.setValue(targetRowKey.current, "prod_id", data.prod_id);
+    Grid?.setValue(targetRowKey.current, "prod_cd", data.prod_cd);
+    Grid?.setValue(targetRowKey.current, "prod_nm", data.prod_nm);
+    Grid?.setValue(targetRowKey.current, "lot_no", data.lot_no);
+    Grid?.setValue(targetRowKey.current, "input_qty", data.total_qty);
     Grid?.setValue(
-      dblClickRowKey.current,
+      targetRowKey.current,
       "inv_to_store_id",
       data.inv_to_store_id
     );
-    Grid?.setValue(dblClickRowKey.current, "store_nm", data.store_nm);
+    Grid?.setValue(targetRowKey.current, "store_nm", data.store_nm);
     Grid?.setValue(
-      dblClickRowKey.current,
+      targetRowKey.current,
       "inv_to_location_id",
       data.inv_to_location_id
     );
-    Grid?.setValue(dblClickRowKey.current, "location_nm", data.location_nm);
+    Grid?.setValue(targetRowKey.current, "location_nm", data.location_nm);
     workWeighID.current = "";
-    dblClickRowKey.current = "";
+    targetRowKey.current = "";
     refGridSelectMultiDetail?.current?.gridInst?.clear();
     setIsModalSelectMultiOpen(false);
   };
   const onDblClickGridSelect = (e) => {
     const data = e?.instance?.store?.data?.rawData[e?.rowKey];
-    if (dblClickTarget.current === "Search") {
+    if (targetGrid.current === "Search") {
       prodID.current = data.prod_id;
       prodCD.current = data.prod_cd;
       prodNM.current = data.prod_nm;
-    } else if (dblClickTarget.current === "Emp") {
+    } else if (targetGrid.current === "Emp") {
       const Grid = refGridHeaderNew?.current?.gridInst;
-      Grid?.setValue(dblClickRowKey.current, "packing_emp_id", data.emp_id);
-      Grid?.setValue(dblClickRowKey.current, "packing_emp_nm", data.emp_nm);
-    } else if (dblClickTarget.current === "Store") {
+      Grid?.setValue(targetRowKey.current, "packing_emp_id", data.emp_id);
+      Grid?.setValue(targetRowKey.current, "packing_emp_nm", data.emp_nm);
+    } else if (targetGrid.current === "GridHeader") {
+      const Grid = refGridHeader?.current?.gridInst;
+      Grid?.setValue(targetRowKey.current, "packing_emp_id", data.emp_id);
+      Grid?.setValue(targetRowKey.current, "packing_emp_nm", data.emp_nm);
+      disRow.handleGridSelectCheck(refGridHeader, targetRowKey.current);
+    } else if (targetGrid.current === "Store") {
       const Grid = refGridHeaderNew?.current?.gridInst;
-      Grid?.setValue(dblClickRowKey.current, "inv_to_store_id", data.store_id);
-      Grid?.setValue(dblClickRowKey.current, "store_nm", data.store_nm);
+      Grid?.setValue(targetRowKey.current, "inv_to_store_id", data.store_id);
+      Grid?.setValue(targetRowKey.current, "store_nm", data.store_nm);
       Grid?.setValue(
-        dblClickRowKey.current,
+        targetRowKey.current,
         "inv_to_location_id",
         data.location_id
       );
-      Grid?.setValue(dblClickRowKey.current, "location_nm", data.location_nm);
+      Grid?.setValue(targetRowKey.current, "location_nm", data.location_nm);
     }
     setIsModalSelectOpen(false);
   };
   const onDblClickGridSelectDate = (e) => {
     const data = e?.instance?.store?.data?.rawData[e?.rowKey];
-    if (dblClickTarget.current === "Order") {
+    if (targetGrid.current === "Order") {
       const Grid = refGridHeaderNew?.current?.gridInst;
+      Grid?.setValue(targetRowKey.current, "work_order_id", data.work_order_id);
+      Grid?.setValue(targetRowKey.current, "work_order_no", data.work_order_no);
+      Grid?.setValue(targetRowKey.current, "line_dept_id", data.line_dept_id);
+      Grid?.setValue(targetRowKey.current, "line_dept_nm", data.line_dept_nm);
+      Grid?.setValue(targetRowKey.current, "line_id", data.line_id);
+      Grid?.setValue(targetRowKey.current, "line_nm", data.line_nm);
+      Grid?.setValue(targetRowKey.current, "prod_id", data.prod_id);
+      Grid?.setValue(targetRowKey.current, "prod_cd", data.prod_cd);
+      Grid?.setValue(targetRowKey.current, "prod_nm", data.prod_nm);
       Grid?.setValue(
-        dblClickRowKey.current,
-        "work_order_id",
-        data.work_order_id
-      );
-      Grid?.setValue(
-        dblClickRowKey.current,
-        "work_order_no",
-        data.work_order_no
-      );
-      Grid?.setValue(dblClickRowKey.current, "line_dept_id", data.line_dept_id);
-      Grid?.setValue(dblClickRowKey.current, "line_dept_nm", data.line_dept_nm);
-      Grid?.setValue(dblClickRowKey.current, "line_id", data.line_id);
-      Grid?.setValue(dblClickRowKey.current, "line_nm", data.line_nm);
-      Grid?.setValue(dblClickRowKey.current, "prod_id", data.prod_id);
-      Grid?.setValue(dblClickRowKey.current, "prod_cd", data.prod_cd);
-      Grid?.setValue(dblClickRowKey.current, "prod_nm", data.prod_nm);
-      Grid?.setValue(
-        dblClickRowKey.current,
+        targetRowKey.current,
         "inv_to_store_id",
         data.inv_to_store_id
       );
-      Grid?.setValue(dblClickRowKey.current, "store_nm", data.store_nm);
+      Grid?.setValue(targetRowKey.current, "store_nm", data.store_nm);
       Grid?.setValue(
-        dblClickRowKey.current,
+        targetRowKey.current,
         "inv_to_location_id",
         data.inv_to_location_id
       );
-      Grid?.setValue(dblClickRowKey.current, "location_nm", data.location_nm);
+      Grid?.setValue(targetRowKey.current, "location_nm", data.location_nm);
     }
     setIsModalSelectDateOpen(false);
   };
@@ -695,6 +703,15 @@ function Packing() {
       }
     }
   };
+  const onDblClickGridHeader = (e) => {
+    if (Condition(e, ["packing_emp_nm"])) {
+      targetGrid.current = "GridHeader";
+      targetRowKey.current = e?.rowKey;
+      setColumnsSelect(columnsSelectEmp);
+      setIsModalSelectOpen(true);
+      actSelectEmp();
+    }
+  };
   const onEditingFinishGridHeader = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -710,7 +727,7 @@ function Packing() {
         draggable={false}
         refGrid={refGridHeader}
         onClickGrid={onClickGridHeader}
-        // onDblClickGrid={onDblClickGridHeader}
+        onDblClickGrid={onDblClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
       />
     );
@@ -906,6 +923,14 @@ function Packing() {
         <AlertDelete
           handleDelete={handleDelete}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        />
+      ) : null}
+      {isWarning.open ? (
+        <AlertDelete
+          handleDelete={handleWarning}
+          title={isWarning.title}
+          message={isWarning.message}
+          onlyYes={true}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

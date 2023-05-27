@@ -284,6 +284,7 @@
   "work_subdivision_id": "소분일지ID",
   "work_subdivision_detail_id": "세부소분일지ID",
   "total_qty": "소분총량",
+  "total_qty2": "총 중량",
   "before_qty": "전 중량",
   "after_qty": "후 중량",
   "subdivision_date": "소분일자",

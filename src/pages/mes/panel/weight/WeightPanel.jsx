@@ -18,6 +18,7 @@ import ModalWeight from "./ModalWeight";
 import Condition from "custom/Condition";
 import ModalInput from "./ModalInput";
 import ModalInputSave from "./ModalInputSave";
+import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 
 function WeightPanel() {
   const prodID = useRef("");
@@ -54,6 +55,19 @@ function WeightPanel() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+
+  const [isWarning, setIsWarning] = useState({
+    open: false,
+    title: "",
+    message: "",
+  });
+
+  const handleWarning = () => {
+    setIsWarning({
+      ...isWarning,
+      open: false,
+    });
+  };
 
   const {
     columnOptions,
@@ -212,12 +226,12 @@ function WeightPanel() {
     }
   };
   const onClickInput = async () => {
-    console.log(workOrderID.current);
     if (workOrderID.current) {
       setNowDateTime({
         nowDate: DateTime().dateFull,
         nowTime: DateTime().hour + ":" + DateTime().minute,
       });
+      setGridDataInputDetail([]);
       handleInputSearch();
     }
   };
@@ -400,7 +414,12 @@ function WeightPanel() {
           });
         }
       } else {
-        alert("계량자 입력 모달창 개발");
+        setIsWarning({
+          ...isWarning,
+          open: true,
+          title: "Warning",
+          message: "계량자를 입력하세요!",
+        });
       }
     }
   };
@@ -433,6 +452,7 @@ function WeightPanel() {
     setIsModalSelectOpen(false);
   };
   const onClickInputSave = async () => {
+    console.log(`onClickInputSave : ${workOrderID.current}`);
     if (storeID.current) {
       if (empNM.current) {
         const raw = {
@@ -454,9 +474,9 @@ function WeightPanel() {
             severity: "success",
             location: "bottomRight",
           });
-          resetRequire();
           setIsModalInputSaveOpen(false);
           handleInputSearch();
+          resetRequire();
           refGridInputDetail?.current?.gridInst?.clear();
         } catch (err) {
           setIsSnackOpen({
@@ -468,10 +488,20 @@ function WeightPanel() {
           });
         }
       } else {
-        alert("투입자 입력 모달창 개발");
+        setIsWarning({
+          ...isWarning,
+          open: true,
+          title: "Warning",
+          message: "투입자를 입력하세요!",
+        });
       }
     } else {
-      alert("창고 입력 모달창 개발");
+      setIsWarning({
+        ...isWarning,
+        open: true,
+        title: "Warning",
+        message: "창고/위치를 입력하세요!",
+      });
     }
   };
   const onDblClickGridSelect = (e) => {
@@ -488,6 +518,7 @@ function WeightPanel() {
     setIsModalSelectOpen(false);
   };
   function onClickGridButton(rowKey) {
+    console.log(workOrderID.current);
     handleInputSaveInfo(rowKey);
     setIsModalInputSaveOpen(true);
   }
@@ -681,6 +712,14 @@ function WeightPanel() {
             rowHeaders={rowHeadersNum}
             refSelectGrid={refGridSelect}
             onDblClickGridSelect={onDblClickGridSelect}
+          />
+        ) : null}
+        {isWarning.open ? (
+          <AlertDelete
+            handleDelete={handleWarning}
+            title={isWarning.title}
+            message={isWarning.message}
+            onlyYes={true}
           />
         ) : null}
       </S.ContentsArea>
