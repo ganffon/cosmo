@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import * as S from "./AvatarButton.styled";
+import { Version } from "Version";
 
 const avatarCharacter = (loginID) => {
   return loginID.charAt(0).toUpperCase();
@@ -53,6 +54,7 @@ function AvatarButton() {
         }}
       >
         <MenuItem onClick={onClickLogout}>📴 Logout</MenuItem>
+        <S.Version>Ver.{Version}</S.Version>
       </Menu>
     </div>
   );

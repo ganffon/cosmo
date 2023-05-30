@@ -14,42 +14,40 @@ const useSave = (
   onClickModalClose = () => {}
 ) => {
   const actSave = async () => {
-    if (isBackDrop === false) {
-      refGrid?.current?.gridInst?.finishEditing();
-      let result = [];
-      for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
-        result.push(refGrid?.current?.gridInst?.getRowAt(i));
-      }
-      const data = result.map((raw) => GetPostParams(componentName, raw));
-      if (data !== undefined) {
-        if (data.length !== 0) {
-          setIsBackDrop(true);
-          await restAPI
-            .post(uri, data)
-            .then((res) => {
-              setIsSnackOpen({
-                ...isSnackOpen,
-                open: true,
-                message: res?.data?.message,
-                severity: "success",
-              });
-              refGrid?.current?.gridInst?.clear();
-              onClickModalClose();
-            })
-            .catch((res) => {
-              setIsSnackOpen({
-                ...isSnackOpen,
-                open: true,
-                message: res?.message
-                  ? res?.message
-                  : res?.response?.data?.message,
-                severity: "error",
-              });
-            })
-            .finally(() => {
-              setIsBackDrop(false);
+    refGrid?.current?.gridInst?.finishEditing();
+    let result = [];
+    for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
+      result.push(refGrid?.current?.gridInst?.getRowAt(i));
+    }
+    const data = result.map((raw) => GetPostParams(componentName, raw));
+    if (data !== undefined) {
+      if (data.length !== 0) {
+        setIsBackDrop(true);
+        await restAPI
+          .post(uri, data)
+          .then((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.data?.message,
+              severity: "success",
             });
-        }
+            refGrid?.current?.gridInst?.clear();
+            onClickModalClose();
+          })
+          .catch((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.message
+                ? res?.message
+                : res?.response?.data?.message,
+              severity: "error",
+            });
+          })
+          .finally(() => {
+            setIsBackDrop(false);
+          });
       }
     }
   };
@@ -93,7 +91,7 @@ const useSaveMulti = (
         details: dataBottom,
       };
 
-      if (query.details !== undefined && isBackDrop === false) {
+      if (query.details !== undefined) {
         setIsBackDrop(true);
         await restAPI
           .post(uri, query)
@@ -139,41 +137,39 @@ const useSaveDetail = (
 ) => {
   const actSaveDetail = async () => {
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      let result = [];
-      for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
-        result.push(refGrid?.current?.gridInst?.getRowAt(i));
-      }
-      const data = result.map((raw) => GetPostParams(componentName, raw));
-      if (data !== undefined) {
-        if (data.length !== 0) {
-          setIsBackDrop(true);
-          await restAPI
-            .post(uri, data)
-            .then((res) => {
-              setIsSnackOpen({
-                ...isSnackOpen,
-                open: true,
-                message: res?.data?.message,
-                severity: "success",
-              });
-              disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
-              onClickClose();
-            })
-            .catch((res) => {
-              setIsSnackOpen({
-                ...isSnackOpen,
-                open: true,
-                message: res?.message
-                  ? res?.message
-                  : res?.response?.data?.message,
-                severity: "error",
-              });
-            })
-            .finally(() => {
-              setIsBackDrop(false);
+    let result = [];
+    for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
+      result.push(refGrid?.current?.gridInst?.getRowAt(i));
+    }
+    const data = result.map((raw) => GetPostParams(componentName, raw));
+    if (data !== undefined) {
+      if (data.length !== 0) {
+        setIsBackDrop(true);
+        await restAPI
+          .post(uri, data)
+          .then((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.data?.message,
+              severity: "success",
             });
-        }
+            disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+            onClickClose();
+          })
+          .catch((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.message
+                ? res?.message
+                : res?.response?.data?.message,
+              severity: "error",
+            });
+          })
+          .finally(() => {
+            setIsBackDrop(false);
+          });
       }
     }
   };
@@ -203,7 +199,7 @@ const useSaveStoreCheck = (
       const data = filtered?.map((raw) =>
         GetPostDateParams(componentName, raw, startDate)
       );
-      if (data !== undefined && isBackDrop === false) {
+      if (data !== undefined) {
         setIsBackDrop(true);
         await restAPI
           .post(uri, data)
@@ -260,7 +256,7 @@ const useSaveStoreCheckNewLOT = (
     const data = result.map((raw) =>
       GetPostDateParams(componentName, raw, startDate)
     );
-    if (data !== undefined && isBackDrop === false) {
+    if (data !== undefined) {
       setIsBackDrop(true);
       await restAPI
         .post(uri, data)

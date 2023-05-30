@@ -1,6 +1,6 @@
 import { LayoutContext } from "components/layout/common/Layout";
 import { LoginStateChk } from "custom/LoginStateChk";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as S from "pages/mes/style/oneGrid.styled";
 import * as disRow from "custom/useDisableRowCheck";
 import GridSingle from "components/grid/GridSingle";
@@ -297,6 +297,24 @@ function LineDepartment(props) {
     restURI.department
   );
 
+  const GridModal = useMemo(() => {
+    return (
+      <ModalNew
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        columns={columnsModal}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersModal}
+        refModalGrid={refModalGrid}
+        onClickModalGrid={onClickModalGrid}
+        onDblClickModalGrid={onDblClickModalGrid}
+      />
+    );
+  }, []);
+
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
@@ -398,21 +416,7 @@ function LineDepartment(props) {
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}
-      {isModalOpen ? (
-        <ModalNew
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersModal}
-          refModalGrid={refModalGrid}
-          onClickModalGrid={onClickModalGrid}
-          onDblClickModalGrid={onDblClickModalGrid}
-        />
-      ) : null}
+      {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
         <ModalSelect
           onClickModalSelectClose={onClickModalSelectClose}

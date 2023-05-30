@@ -219,8 +219,8 @@ function SparepartSstoreViewSet() {
       rowSpan: false,
     },
     {
-      name: "qty",
-      header: CN.qty,
+      name: "stock",
+      header: CN.stock,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,

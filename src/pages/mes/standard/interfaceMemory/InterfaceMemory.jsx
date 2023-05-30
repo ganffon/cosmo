@@ -37,6 +37,7 @@ function InterfaceMemory(props) {
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [gridData, setGridData] = useState(null);
+  const [gridModalData, setGridModalData] = useState(null);
   const [gridModalSelectData, setGridModalSelectData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -49,8 +50,8 @@ function InterfaceMemory(props) {
     width: "80%",
     height: "90%",
   });
-  const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
-  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Grid" or "Modal"
+  const targetRowKey = useRef("");
+  const targetGrid = useRef("");
 
   const [lineOpt, lineList] = Cbo.useLine();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
@@ -188,8 +189,8 @@ function InterfaceMemory(props) {
 
   const onDblClickModalGrid = (e) => {
     if (Condition(e, ["infc_item_nm", "infc_item_type_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Modal");
+      targetRowKey.current = e?.rowKey;
+      targetGrid.current = "Modal";
       setIsModalSelectOpen(true);
       actSearchSelect();
     }
@@ -209,8 +210,8 @@ function InterfaceMemory(props) {
   const onDblClickGrid = (e) => {
     if (isEditMode) {
       if (Condition(e, ["infc_item_nm", "infc_item_type_nm"])) {
-        setDblClickRowKey(e?.rowKey);
-        setDblClickGrid("Grid");
+        targetRowKey.current = e?.rowKey;
+        targetGrid.current = "Grid";
         setIsModalSelectOpen(true);
         actSearchSelect();
       }
@@ -224,16 +225,16 @@ function InterfaceMemory(props) {
   };
   const onDblClickModalSelectGrid = (e) => {
     let refGrid;
-    if (dblClickGrid === "Grid") {
+    if (targetGrid.current === "Grid") {
       refGrid = refSingleGrid;
-      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
-    } else if (dblClickGrid === "Modal") {
+      disRow.handleGridSelectCheck(refGrid, targetRowKey.current);
+    } else if (targetGrid.current === "Modal") {
       refGrid = refModalGrid;
     }
     const columnName = ["infc_item_type_nm", "infc_item_id", "infc_item_nm"];
     for (let i = 0; i < columnName.length; i++) {
       refGrid?.current?.gridInst?.setValue(
-        dblClickRowKey,
+        targetRowKey.current,
         columnName[i],
         e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
       );
@@ -260,9 +261,10 @@ function InterfaceMemory(props) {
         refModalGrid={refModalGrid}
         onClickModalGrid={onClickModalGrid}
         onDblClickModalGrid={onDblClickModalGrid}
+        data={gridModalData}
       />
     );
-  }, [lineOpt]);
+  }, [gridModalData]);
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -339,13 +341,6 @@ function InterfaceMemory(props) {
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>
-      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
-      {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
-      ) : null}
       {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
         <ModalSelect
@@ -359,6 +354,13 @@ function InterfaceMemory(props) {
           rowHeaders={rowHeadersModal}
           refSelectGrid={refModalSelectGrid}
           onDblClickGridSelect={onDblClickModalSelectGrid}
+        />
+      ) : null}
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
+      {isDeleteAlertOpen ? (
+        <AlertDelete
+          handleDelete={handleDelete}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

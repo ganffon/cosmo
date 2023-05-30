@@ -521,13 +521,13 @@ function Weight() {
 
   const onEditingFinishGridModalDetail = (e) => {
     const Detail = refGridModalDetail?.current?.gridInst;
-    if (Condition(e, ["input_qty"])) {
+    if (Condition(e, ["total_qty"])) {
       const beforeQty = e?.value;
       const afterQty = Detail.getValue(e?.rowKey, "bag_qty");
       if (afterQty) {
-        Detail?.setValue(e?.rowKey, "total_qty", beforeQty - afterQty);
+        Detail?.setValue(e?.rowKey, "input_qty", beforeQty - afterQty);
       } else {
-        Detail?.setValue(e?.rowKey, "total_qty", beforeQty);
+        Detail?.setValue(e?.rowKey, "input_qty", beforeQty);
       }
       let totalQty = 0;
       for (
@@ -540,16 +540,16 @@ function Weight() {
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
     if (Condition(e, ["bag_qty"])) {
-      const beforeQty = Detail.getValue(e?.rowKey, "input_qty");
+      const beforeQty = Detail.getValue(e?.rowKey, "total_qty");
       const afterQty = e?.value;
       if (beforeQty) {
         Detail?.setValue(
           e?.rowKey,
-          "total_qty",
+          "input_qty",
           Number(beforeQty) - Number(afterQty)
         );
       } else {
-        Detail?.setValue(e?.rowKey, "total_qty", e?.value);
+        Detail?.setValue(e?.rowKey, "input_qty", e?.value);
       }
       let totalQty = 0;
       for (

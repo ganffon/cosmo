@@ -67,7 +67,7 @@ const useDeleteDetail = (
     const data = refGrid?.current?.gridInst
       ?.getCheckedRows()
       ?.map((raw) => GetDeleteParams(componentName, raw));
-    if (data !== undefined && isBackDrop === false) {
+    if (data !== undefined) {
       setIsBackDrop(true);
       await restAPI
         .delete(uri, { data })

@@ -1329,7 +1329,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       header: CN.total_qty2,
       minWidth: WIDTH_LONG,
       align: "center",
-      editor: false,
+      editor: "text",
       hidden: false,
       sortable: false,
       filter: false,
@@ -1358,9 +1358,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       header: CN.input_qty,
       minWidth: WIDTH_LONG,
       align: "center",
-      editor: {
-        type: CustomGrid.EditorNumber,
-      },
+      editor: false,
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },

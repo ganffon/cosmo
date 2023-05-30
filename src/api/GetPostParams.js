@@ -367,7 +367,7 @@ class documentDetail {
       ? Number(raw.inspector_sample_cnt)
       : null;
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
-    this.infc_memory_id = raw.infc_memory_id;
+    this.infc_memory_id = raw.infc_memory_id === "" ? null : raw.infc_memory_id;
     this.remark = raw.remark;
   }
 }

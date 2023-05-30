@@ -1,4 +1,11 @@
-import { useContext, useState, useEffect, useRef, useMemo } from "react";
+import {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { LoginStateChk } from "custom/LoginStateChk";
 import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
@@ -25,11 +32,16 @@ import * as Cbo from "custom/useCboSet";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
+import restAPI from "api/restAPI";
+import GetDeleteParams from "api/GetDeleteParams";
 
 function Document() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
+
+  const targetRowKey = useRef(null);
+  const targetGrid = useRef(null);
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
@@ -63,7 +75,10 @@ function Document() {
     height: "90%",
   });
   const [columnsSelect, setColumnsSelect] = useState([]);
-  const [inputSearchValue, setInputSearchValue] = useState([]);
+  const [inputSearchValue, setInputSearchValue] = useState({
+    prod_cd: "",
+    prod_nm: "",
+  });
   const [inputInfoValue, setInputInfoValue] = useState([]);
 
   const [lineOpt, lineList] = Cbo.useLine();
@@ -108,9 +123,10 @@ function Document() {
     refGridDetail?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
 
+  const [searchToggle, setSearchToggle] = useState(false);
   useEffect(() => {
-    actSearchHeaderIC();
-  }, []);
+    onClickSearch();
+  }, [searchToggle]);
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
     currentMenuName,
@@ -164,7 +180,8 @@ function Document() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.inspDocument
+    restURI.inspDocument,
+    onClickModalClose
   );
   const [actEditHeader] = uEdit.useEditHeader(
     refGridHeader,
@@ -193,24 +210,8 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.inspDocumentDetail
-  );
-
-  const [actSearchHeaderIC] = uSearch.useSearchHeaderIC(
-    refGridHeader,
-    refGridDetail,
-    setInputInfoValue,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    inputBoxID,
-    inputSearchValue,
-    comboValue,
-    setGridDataHeader,
-    disRowHeader,
-    setDisRowHeader,
-    restURI.inspDocument
+    restURI.inspDocumentDetail,
+    onClickModalDetailClose
   );
   const [actSearchDetail] = uSearch.useSearchDetail(
     setGridDataDetail,
@@ -224,19 +225,35 @@ function Document() {
     setGridDataHeaderRowID,
     restURI.inspDocument
   );
-  const [actDeleteDetail] = uDelete.useDeleteDetail(
-    refGridDetail,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setIsDeleteAlertOpen,
-    actSearchHeaderIC,
-    actSearchDetail,
-    headerClickRowID.current,
-    restURI.inspDocumentDetail,
-    SWITCH_NAME_02
-  );
+  const onDeleteDetail = async () => {
+    const data = refGridDetail?.current?.gridInst
+      ?.getCheckedRows()
+      ?.map((raw) => GetDeleteParams(SWITCH_NAME_02, raw));
+
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.delete(restURI.inspDocumentDetail, { data });
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+      handleInputInfo();
+      setIsDeleteAlertOpen(false);
+    }
+  };
   /**
    * 🔥Header Screen Button Event
    */
@@ -245,7 +262,6 @@ function Document() {
   };
   const onClickEditHeader = () => {
     setIsEditModeHeader(true);
-    headerClickRowID.current = "";
     setDisRowHeader(!disRowHeader);
   };
   const onClickEditNew = () => {
@@ -274,24 +290,75 @@ function Document() {
     }
   };
   const onClickProd = () => {
-    setDblClickGrid("Search");
+    targetGrid.current = "Search";
     setColumnsSelect(columnsSelectProd);
     setIsModalSelectOpen(true);
     actSelectProd();
   };
   const onClickProdRemove = () => {
-    setInputSearchValue([]);
+    setInputSearchValue({
+      ...inputSearchValue,
+      prod_cd: "",
+      prod_nm: "",
+    });
   };
-  const onClickSearch = () => {
-    actSearchHeaderIC();
-  };
+  async function onClickSearch() {
+    try {
+      setIsBackDrop(true);
+      let conditionLine;
+      let conditionProd;
+      let condition;
+
+      comboValue.line_id
+        ? (conditionLine = `line_id=${comboValue.line_id}`)
+        : (conditionLine = "");
+      inputSearchValue.prod_cd
+        ? (conditionProd = `prod_cd=${inputSearchValue.prod_cd}&prod_nm=${inputSearchValue.prod_nm}`)
+        : (conditionProd = "");
+
+      if (conditionLine !== "" && conditionProd !== "") {
+        condition =
+          restURI.inspDocument + "?" + conditionLine + "&" + conditionProd;
+      } else if (conditionLine !== "" && conditionProd === "") {
+        condition = restURI.inspDocument + "?" + conditionLine;
+      } else if (conditionLine === "" && conditionProd !== "") {
+        condition = restURI.inspDocument + "?" + conditionProd;
+      } else {
+        condition = restURI.inspDocument;
+      }
+
+      const result = await restAPI.get(condition);
+      setGridDataHeader(result?.data?.data?.rows);
+      setGridDataDetail([]);
+      setInputInfoValue([]);
+
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  }
+
   const onClickEditModeSave = () => {
     actEditHeader();
     setIsEditModeDetail(false);
   };
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
-    actSearchHeaderIC(true);
+    setSearchToggle(!searchToggle);
     setDisRowHeader(!disRowHeader);
   };
   const onClickEditSaveDetail = () => {
@@ -303,6 +370,33 @@ function Document() {
     setDisRowDetail(!disRowDetail);
   };
 
+  function handleInputInfo() {
+    const inputInfoValueList = [
+      "insp_document_no",
+      "line_nm",
+      "prod_cd",
+      "prod_nm",
+      "insp_document_reg_date",
+      "apply_date",
+      "apply_fg",
+      "contents",
+      "remark",
+    ];
+    actSearchDetail(headerClickRowID.current);
+    for (let i = 0; i < inputInfoValueList.length; i++) {
+      let data = refGridHeader?.current?.gridInst?.getValue(
+        targetRowKey.current,
+        inputInfoValueList[i]
+      );
+      if (data === false) {
+        //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
+        data = "false";
+      }
+      setInputInfoValue((prevList) => {
+        return [...prevList, data];
+      });
+    }
+  }
   const onClickGridHeader = async (e) => {
     if (isEditModeHeader === false) {
       const inputInfoValueList = [
@@ -322,8 +416,8 @@ function Document() {
       ) {
         const rowID = e?.instance.getValue(e?.rowKey, "insp_document_id");
         if (rowID !== null) {
-          // handleHeaderRowID(rowID);
           headerClickRowID.current = rowID;
+          targetRowKey.current = e?.rowKey;
           setInputInfoValue([]);
           actSearchDetail(rowID);
           for (let i = 0; i < inputInfoValueList.length; i++) {
@@ -344,28 +438,31 @@ function Document() {
   };
   const onDblClickGridHeader = (e) => {
     if (Condition(e, ["prod_cd", "prod_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Header");
+      targetRowKey.current = e?.rowKey;
+      targetGrid.current = "Header";
+      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
       setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
     }
   };
   const onDblClickGridDetail = (e) => {
-    if (Condition(e, ["insp_item_type_nm", "insp_item_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Detail");
-      setColumnsSelect(columnsSelectInsp);
-      setIsModalSelectOpen(true);
-      actSelectInsp();
-    }
+    if (isEditModeDetail) {
+      if (Condition(e, ["insp_item_type_nm", "insp_item_nm"])) {
+        targetRowKey.current = e?.rowKey;
+        targetGrid.current = "Detail";
+        setColumnsSelect(columnsSelectInsp);
+        setIsModalSelectOpen(true);
+        actSelectInsp();
+      }
 
-    if (Condition(e, ["proc_nm", "equip_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("DetailEquip");
-      setColumnsSelect(columnsSelectEquipProc);
-      setIsModalSelectOpen(true);
-      actSelectEquipProc();
+      if (Condition(e, ["proc_nm", "equip_nm"])) {
+        targetRowKey.current = e?.rowKey;
+        targetGrid.current = "DetailEquip";
+        setColumnsSelect(columnsSelectEquipProc);
+        setIsModalSelectOpen(true);
+        actSelectEquipProc();
+      }
     }
   };
   const onEditingFinishGridHeader = (e) => {
@@ -404,16 +501,20 @@ function Document() {
   function onClickModalClose() {
     headerClickRowID.current = "";
     setIsModalOpen(false);
-    setIsNewDetail(false);
     setIsEditModeHeader(false);
-    actSearchHeaderIC(true);
+    setSearchToggle(!searchToggle);
   }
-  const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
-  const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
+  function onClickModalDetailClose() {
+    setIsModalOpen(false);
+    setIsNewDetail(false);
+    actSearchDetail(headerClickRowID.current);
+  }
+
   const onDblClickGridModalHeader = (e) => {
     if (Condition(e, ["prod_cd", "prod_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalHeader");
+      targetRowKey.current = e?.rowKey;
+      targetGrid.current = "ModalHeader";
+      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
       setColumnsSelect(columnsSelectProd);
       setIsModalSelectOpen(true);
       actSelectProd();
@@ -421,15 +522,15 @@ function Document() {
   };
   const onDblClickGridModalDetail = (e) => {
     if (Condition(e, ["insp_item_type_nm", "insp_item_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalDetail");
+      targetRowKey.current = e?.rowKey;
+      targetGrid.current = "ModalDetail";
       setColumnsSelect(columnsSelectInsp);
       setIsModalSelectOpen(true);
       actSelectInsp();
     }
     if (Condition(e, ["proc_nm", "equip_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("ModalDetailEquip");
+      targetRowKey.current = e?.rowKey;
+      targetGrid.current = "ModalDetailEquip";
       setColumnsSelect(columnsSelectEquipProc);
       setIsModalSelectOpen(true);
       actSelectEquipProc();
@@ -453,45 +554,41 @@ function Document() {
 
     const columnNameEquipProc = ["proc_nm", "equip_nm", "proc_id", "equip_id"];
 
-    if (dblClickGrid === "Search") {
-      setInputSearchValue([]);
+    if (targetGrid.current === "Search") {
       columnName = ["prod_cd", "prod_nm"];
-      for (let i = 0; i < columnName.length; i++) {
-        setInputSearchValue((prevList) => {
-          return [
-            ...prevList,
-            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]],
-          ];
-        });
-      }
+      setInputSearchValue({
+        ...inputSearchValue,
+        prod_cd: e?.instance?.store?.data?.rawData[e?.rowKey][columnName[0]],
+        prod_nm: e?.instance?.store?.data?.rawData[e?.rowKey][columnName[1]],
+      });
     } else {
-      if (dblClickGrid === "Header") {
+      if (targetGrid.current === "Header") {
         refGrid = refGridHeader;
         columnName = columnNameProd;
-      } else if (dblClickGrid === "ModalHeader") {
+      } else if (targetGrid.current === "ModalHeader") {
         refGrid = refGridModalHeader;
         columnName = columnNameProd;
-      } else if (dblClickGrid === "Detail") {
+      } else if (targetGrid.current === "Detail") {
         refGrid = refGridDetail;
         columnName = columnNameInspItem;
-      } else if (dblClickGrid === "DetailEquip") {
+      } else if (targetGrid.current === "DetailEquip") {
         refGrid = refGridDetail;
         columnName = columnNameEquipProc;
-      } else if (dblClickGrid === "ModalDetailEquip") {
+      } else if (targetGrid.current === "ModalDetailEquip") {
         refGrid = refGridModalDetail;
         columnName = columnNameEquipProc;
-      } else if (dblClickGrid === "ModalDetail") {
+      } else if (targetGrid.current === "ModalDetail") {
         refGrid = refGridModalDetail;
         columnName = columnNameInspItem;
       }
       for (let i = 0; i < columnName.length; i++) {
         refGrid?.current?.gridInst?.setValue(
-          dblClickRowKey,
+          targetRowKey.current,
           columnName[i],
           e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
         );
       }
-      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      disRow.handleGridSelectCheck(refGrid, targetRowKey.current);
     }
     setIsModalSelectOpen(false);
   };
@@ -501,7 +598,7 @@ function Document() {
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
-      actSearchHeaderIC(true);
+      setSearchToggle(!searchToggle);
     }
   };
   const GridHeader = useMemo(() => {
@@ -531,6 +628,7 @@ function Document() {
         onClickModalSave={onClickModalSave}
         onClickModalClose={onClickModalClose}
         onClickEditModalSave={onClickEditModalSave}
+        onClickModalDetailClose={onClickModalDetailClose}
         columnsModalHeader={columnsModalHeader}
         columnsModalDetail={columnsModalDetail}
         columnOptions={columnOptions}
@@ -544,7 +642,20 @@ function Document() {
         onDblClickGridModalDetail={onDblClickGridModalDetail}
       />
     );
-  }, [isNewDetail, refGridModalHeader, gridDataHeaderRowID, lineOpt]);
+  }, [isNewDetail, lineList, onClickModalClose]);
+
+  const InputInfo = useMemo(() => {
+    return inputInfo.map((v, idx) => {
+      return (
+        <InputPaper
+          key={v.id}
+          id={v.id}
+          name={v.name}
+          value={inputInfoValue[idx] || ""}
+        />
+      );
+    });
+  }, [inputInfoValue]);
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -578,7 +689,7 @@ function Document() {
               key={v.id}
               id={v.id}
               name={v.name}
-              value={inputSearchValue[idx] || ""}
+              value={inputSearchValue[v.id] || ""}
               onKeyDown={onKeyDown}
               width={idx === 1 ? "220px" : "180px"}
               btn={idx === 1 ? true : false}
@@ -605,18 +716,7 @@ function Document() {
       </S.ShadowBoxButtonHeader>
       <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
       <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.SearchWrap>
-          {inputInfo.map((v, idx) => {
-            return (
-              <InputPaper
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                value={inputInfoValue[idx] || ""}
-              />
-            );
-          })}
-        </S.SearchWrap>
+        <S.SearchWrap>{InputInfo}</S.SearchWrap>
       </S.ShadowBoxInputInfo>
       <S.ShadowBoxButtonDetail
         isMenuSlide={isMenuSlide}
@@ -638,31 +738,17 @@ function Document() {
         </S.ButtonWrap>
       </S.ShadowBoxButtonDetail>
       <S.GridDetailWrap>
-        {isEditModeDetail ? (
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNumCheck}
-            header={header}
-            data={gridDataDetail}
-            draggable={false}
-            refGrid={refGridDetail}
-            onDblClickGrid={onDblClickGridDetail}
-            onEditingFinish={onEditingFinishGridDetail}
-          />
-        ) : (
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNumCheck}
-            header={header}
-            data={gridDataDetail}
-            draggable={false}
-            refGrid={refGridDetail}
-            //onDblClickGrid={onDblClickGridDetail}
-            onEditingFinish={onEditingFinishGridDetail}
-          />
-        )}
+        <GridSingle
+          columnOptions={columnOptions}
+          columns={columnsDetail}
+          rowHeaders={rowHeadersNumCheck}
+          header={header}
+          data={gridDataDetail}
+          draggable={false}
+          refGrid={refGridDetail}
+          onDblClickGrid={onDblClickGridDetail}
+          onEditingFinish={onEditingFinishGridDetail}
+        />
       </S.GridDetailWrap>
       {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
@@ -681,9 +767,8 @@ function Document() {
       ) : null}
       {isDeleteAlertOpen ? (
         <AlertDeleteDetail
-          headerClickRowID={headerClickRowID.current}
-          actSearchDetail={actSearchDetail}
-          actDeleteDetail={actDeleteDetail}
+          handleInputInfo={handleInputInfo}
+          actDeleteDetail={onDeleteDetail}
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}

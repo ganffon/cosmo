@@ -28,10 +28,11 @@ const Layout = ({ children }) => {
   }); //🔸메뉴를 선택하기 까지의 레벨별 메뉴이름 저장
   const [currentMenuName, setCurrentMenuName] = useState("Dashboard"); //🔸현재 선택한 메뉴 이름 표시
   const [authMenuCode, setAuthMenuCode] = useState({
-    read: "",
-    create: "",
-    update: "",
-    delete: "",
+    readOnly: false,
+    read: true,
+    create: true,
+    update: true,
+    delete: true,
   }); //🔸메뉴별 조회, 등록, 수정, 삭제 권한 값 저장
 
   const findPath = (obj) => {

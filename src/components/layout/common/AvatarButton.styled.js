@@ -9,5 +9,10 @@ const AvatarButton = styled(Avatar)`
   cursor: pointer;
   margin-left: 10px;
 `;
+const Version = styled("div")`
+  margin-right: 10px;
+  font-size: 12px;
+  text-align: right;
+`;
 
-export { AvatarButton };
+export { AvatarButton, Version };

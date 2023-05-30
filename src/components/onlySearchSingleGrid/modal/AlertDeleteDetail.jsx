@@ -5,12 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import * as S from "./AlertDelete.styled";
 
 function AlertDelete(props) {
-  const {
-    headerClickRowKey,
-    actSearchDetail,
-    actDeleteDetail,
-    setIsDeleteAlertOpen,
-  } = props;
+  const { handleInputInfo, actDeleteDetail, setIsDeleteAlertOpen } = props;
   return (
     <ModalWrap width={"400px"} height={"200px"}>
       <S.HeaderBox>
@@ -24,7 +19,9 @@ function AlertDelete(props) {
             size="small"
             startIcon={<DoneIcon />}
             color="success"
-            onClick={() => actDeleteDetail()}
+            onClick={() => {
+              actDeleteDetail();
+            }}
           >
             예 (Yes)
           </S.ButtonYes>
@@ -34,7 +31,7 @@ function AlertDelete(props) {
             startIcon={<CloseIcon />}
             color="error"
             onClick={() => {
-              actSearchDetail(headerClickRowKey);
+              handleInputInfo();
               setIsDeleteAlertOpen(false);
             }}
           >
