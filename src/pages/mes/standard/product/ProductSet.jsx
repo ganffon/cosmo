@@ -9,6 +9,7 @@ import {
   WIDTH_LONG,
   WIDTH_SUPER_LONG,
 } from "constant/Grid.js";
+import * as col from "custom/GridColumnSet";
 
 function ProductSet(
   isEditMode,
@@ -365,25 +366,7 @@ function ProductSet(
       whiteSpace: false,
       rowSpan: false,
     },
-    {
-      name: "height",
-      header: CN.height,
-      minWidth: WIDTH_SHORT,
-      align: "right",
-      editor: isEditMode
-        ? {
-            type: CustomGrid.EditorNumber,
-          }
-        : false,
-      formatter: function (value) {
-        return CustomGrid.NumComma(value);
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    col.number("height", CN.height, isEditMode),
 
     {
       name: "material",

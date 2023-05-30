@@ -66,38 +66,36 @@ const useEditHeader = (
   const actEditHeader = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isEditMode === true) {
-      if (isBackDrop === false) {
-        const data = refGrid?.current?.gridInst
-          ?.getCheckedRows()
-          ?.map((raw) => GetPutParams(componentName, raw));
-        if (data !== undefined) {
-          if (data.length !== 0) {
-            setIsBackDrop(true);
-            await restAPI
-              .put(uri, data)
-              .then((res) => {
-                setIsSnackOpen({
-                  ...isSnackOpen,
-                  open: true,
-                  message: res?.data?.message,
-                  severity: "success",
-                });
-                disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
-              })
-              .catch((res) => {
-                setIsSnackOpen({
-                  ...isSnackOpen,
-                  open: true,
-                  message: res?.message
-                    ? res?.message
-                    : res?.response?.data?.message,
-                  severity: "error",
-                });
-              })
-              .finally(() => {
-                setIsBackDrop(false);
+      const data = refGrid?.current?.gridInst
+        ?.getCheckedRows()
+        ?.map((raw) => GetPutParams(componentName, raw));
+      if (data !== undefined) {
+        if (data.length !== 0) {
+          setIsBackDrop(true);
+          await restAPI
+            .put(uri, data)
+            .then((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.data?.message,
+                severity: "success",
               });
-          }
+              disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+            })
+            .catch((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.message
+                  ? res?.message
+                  : res?.response?.data?.message,
+                severity: "error",
+              });
+            })
+            .finally(() => {
+              setIsBackDrop(false);
+            });
         }
       }
     }
@@ -120,38 +118,36 @@ const useEditDetail = (
   const actEditDetail = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isEditMode === true) {
-      if (isBackDrop === false) {
-        const data = refGrid?.current?.gridInst
-          ?.getCheckedRows()
-          ?.map((raw) => GetPutParams(componentName, raw));
-        if (data !== undefined) {
-          if (data.length !== 0) {
-            setIsBackDrop(true);
-            await restAPI
-              .put(uriDetail, data)
-              .then((res) => {
-                setIsSnackOpen({
-                  ...isSnackOpen,
-                  open: true,
-                  message: res?.data?.message,
-                  severity: "success",
-                });
-                disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
-              })
-              .catch((res) => {
-                setIsSnackOpen({
-                  ...isSnackOpen,
-                  open: true,
-                  message: res?.message
-                    ? res?.message
-                    : res?.response?.data?.message,
-                  severity: "error",
-                });
-              })
-              .finally(() => {
-                setIsBackDrop(false);
+      const data = refGrid?.current?.gridInst
+        ?.getCheckedRows()
+        ?.map((raw) => GetPutParams(componentName, raw));
+      if (data !== undefined) {
+        if (data.length !== 0) {
+          setIsBackDrop(true);
+          await restAPI
+            .put(uriDetail, data)
+            .then((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.data?.message,
+                severity: "success",
               });
-          }
+              disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+            })
+            .catch((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.message
+                  ? res?.message
+                  : res?.response?.data?.message,
+                severity: "error",
+              });
+            })
+            .finally(() => {
+              setIsBackDrop(false);
+            });
         }
       }
     }

@@ -34,9 +34,9 @@ function Process(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const barcodePrint = (rowKey) => {
-    console.log(`rowKey : ${rowKey}`);
-  };
+  // const barcodePrint = (rowKey) => {
+  //   console.log(`rowKey : ${rowKey}`);
+  // };
   const {
     rowHeaders,
     rowHeadersModal,
@@ -45,7 +45,7 @@ function Process(props) {
     columnsModal,
     columnOptions,
     inputSet,
-  } = ProcessSet(isEditMode, barcodePrint);
+  } = ProcessSet(isEditMode);
 
   const SWITCH_NAME_01 = "process";
 

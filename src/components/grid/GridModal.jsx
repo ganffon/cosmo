@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "tui-grid/dist/tui-grid.css";
-import Grid from "@toast-ui/react-grid";
+import Grid, { useDataApi } from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 
 function GridModal(props) {
@@ -16,9 +16,30 @@ function GridModal(props) {
     onDblClick = () => {},
     onEditingFinish = () => {},
   } = props;
+
   useEffect(() => {
     GridTheme();
   }, []);
+
+  // const [pasteData] = useDataApi({});
+
+  // const handleClipboard = (event) => {
+  //   if (event.clipboardData) {
+  //     event.preventDefault();
+  //     const clipboardData = event.clipboardData.getData("text");
+  //     const rows = clipboardData.split("\n").map((row) => row.split("\t"));
+  //     const dataRows = rows.map((row) => {
+  //       const newRow = {};
+  //       row.forEach((value, index) => {
+  //         const columnName = pasteData.columns[index].name;
+  //         newRow[columnName] = value;
+  //       });
+  //       return newRow;
+  //     });
+  //     pasteData.setRows(dataRows);
+  //   }
+  // };
+
   return (
     <Grid
       scrollX={true}
@@ -36,6 +57,7 @@ function GridModal(props) {
       onClick={onClick}
       onDblclick={onDblClick}
       onEditingFinish={onEditingFinish}
+      // onClipboard={handleClipboard}
     />
   );
 }

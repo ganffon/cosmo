@@ -4,10 +4,11 @@ import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import ButtonACS from "components/button/ButtonACS";
 import DateTime from "components/datetime/DateTime";
+import GetAppIcon from "@mui/icons-material/GetApp";
 import { LayoutContext } from "components/layout/common/Layout";
-import * as S from "./ModalNewDetail.styled";
+import * as S from "./ModalControlPlan.styled";
 
-function ModalNewDetail(props) {
+function ModalControlPlan(props) {
   const {
     onClickModalAddRow = () => {},
     onClickModalCancelRow = () => {},
@@ -21,6 +22,7 @@ function ModalNewDetail(props) {
     onEditingFinishGridModalHeader = () => {},
     onEditingFinishGridModalDetail = () => {},
     onClickGridModalHeader = () => {},
+    onDataLoad = () => {},
     refGridModalHeader,
     refGridModalDetail,
     isNewDetail,
@@ -95,6 +97,18 @@ function ModalNewDetail(props) {
         />
       </S.GridBoxTop>
       <S.ButtonBox>
+        {isNewDetail ? null : (
+          <S.ButtonSet
+            startIcon={<GetAppIcon />}
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={onDataLoad}
+            width={"130px"}
+          >
+            Data Load
+          </S.ButtonSet>
+        )}
         <ButtonACS
           onClickAddRow={onClickModalAddRow}
           onClickCancelRow={onClickModalCancelRow}
@@ -106,4 +120,4 @@ function ModalNewDetail(props) {
   );
 }
 
-export default ModalNewDetail;
+export default ModalControlPlan;

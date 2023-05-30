@@ -66,7 +66,10 @@ class documentDetailIncludeHeader {
 }
 class releaseUser {
   constructor(raw) {
+    this.dept_nm = raw.dept_nm;
+    this.grade_nm = raw.grade_nm;
     this.release_uid = raw.emp_id;
+    this.emp_cd = raw.emp_cd;
     this.release_nm = raw.emp_nm;
   }
 }

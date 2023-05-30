@@ -339,7 +339,7 @@ function DocumentSet(
     {
       name: "sortby",
       header: CN.sortby,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: isEditModeDetail
         ? {
@@ -359,7 +359,7 @@ function DocumentSet(
     {
       name: "proc_id",
       header: CN.proc_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -376,7 +376,7 @@ function DocumentSet(
     {
       name: "proc_nm",
       header: CN.proc_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -393,7 +393,7 @@ function DocumentSet(
     {
       name: "equip_id",
       header: CN.equip_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -410,7 +410,7 @@ function DocumentSet(
     {
       name: "equip_nm",
       header: CN.equip_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -428,7 +428,7 @@ function DocumentSet(
     {
       name: "insp_proc_gbn",
       header: CN.insp_proc_gbn,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       formatter: isEditModeDetail ? "listItemText" : null,
       editor: isEditModeDetail
@@ -535,7 +535,7 @@ function DocumentSet(
     {
       name: "spec_min",
       header: CN.spec_min,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeDetail
         ? {
@@ -551,7 +551,7 @@ function DocumentSet(
     {
       name: "spec_max",
       header: CN.spec_max,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeDetail
         ? {
@@ -567,7 +567,7 @@ function DocumentSet(
     {
       name: "spec_lcl",
       header: CN.spec_lcl,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeDetail
         ? {
@@ -583,7 +583,7 @@ function DocumentSet(
     {
       name: "spec_ucl",
       header: CN.spec_ucl,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: isEditModeDetail
         ? {
@@ -599,7 +599,7 @@ function DocumentSet(
     {
       name: isEditModeDetail ? "insp_method_id" : "insp_method_nm",
       header: CN.insp_method_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       formatter: isEditModeDetail ? "listItemText" : null,
       editor: isEditModeDetail
@@ -662,7 +662,7 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditModeDetail ? "text" : false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -681,7 +681,7 @@ function DocumentSet(
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -693,7 +693,7 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditModeDetail ? "text" : false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -712,7 +712,7 @@ function DocumentSet(
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -724,7 +724,7 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: isEditModeDetail ? "text" : false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1024,7 +1024,7 @@ function DocumentSet(
     {
       name: "sortby",
       header: CN.sortby,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_SUPER_SHORT,
       align: "left",
       editor: {
         type: CustomGrid.EditorNumber,
@@ -1041,7 +1041,7 @@ function DocumentSet(
     {
       name: "proc_id",
       header: CN.proc_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1056,7 +1056,7 @@ function DocumentSet(
     {
       name: "proc_nm",
       header: CN.proc_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1071,7 +1071,7 @@ function DocumentSet(
     {
       name: "equip_id",
       header: CN.equip_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1086,7 +1086,7 @@ function DocumentSet(
     {
       name: "equip_nm",
       header: CN.equip_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1102,7 +1102,7 @@ function DocumentSet(
     {
       name: "insp_proc_gbn",
       header: CN.insp_proc_gbn,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -1207,7 +1207,7 @@ function DocumentSet(
     {
       name: "spec_min",
       header: CN.spec_min,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: {
         type: CustomGrid.EditorFloat2,
@@ -1221,7 +1221,7 @@ function DocumentSet(
     {
       name: "spec_max",
       header: CN.spec_max,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: {
         type: CustomGrid.EditorFloat2,
@@ -1235,7 +1235,7 @@ function DocumentSet(
     {
       name: "spec_lcl",
       header: CN.spec_lcl,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: {
         type: CustomGrid.EditorFloat2,
@@ -1249,7 +1249,7 @@ function DocumentSet(
     {
       name: "spec_ucl",
       header: CN.spec_ucl,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: {
         type: CustomGrid.EditorFloat2,
@@ -1263,7 +1263,7 @@ function DocumentSet(
     {
       name: "insp_method_id",
       header: CN.insp_method_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -1272,7 +1272,7 @@ function DocumentSet(
           listItems: inspMethodList,
         },
       },
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1290,7 +1290,7 @@ function DocumentSet(
           listItems: inspToolList,
         },
       },
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1299,7 +1299,7 @@ function DocumentSet(
     {
       name: "insp_filing_id",
       header: CN.insp_filing_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: WIDTH_MIDDLE,
       align: "left",
       formatter: "listItemText",
       editor: {
@@ -1308,7 +1308,7 @@ function DocumentSet(
           listItems: inspFilingList,
         },
       },
-      hidden: true,
+      hidden: false,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1320,7 +1320,7 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1337,7 +1337,7 @@ function DocumentSet(
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1349,7 +1349,7 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1366,7 +1366,7 @@ function DocumentSet(
       formatter: function (value) {
         return CustomGrid.NumComma(value);
       },
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1378,7 +1378,7 @@ function DocumentSet(
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: "text",
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,
@@ -1502,7 +1502,7 @@ function DocumentSet(
     {
       name: "proc_id",
       header: CN.proc_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1514,7 +1514,7 @@ function DocumentSet(
     {
       name: "proc_nm",
       header: CN.proc_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1526,7 +1526,7 @@ function DocumentSet(
     {
       name: "equip_id",
       header: CN.equip_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1538,7 +1538,7 @@ function DocumentSet(
     {
       name: "equip_nm",
       header: CN.equip_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,

@@ -149,7 +149,17 @@ class EditorFloat3 {
  */
 function NumComma(value) {
   if (value.value !== null) {
-    return value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // 소수점 이하 자리 수를 구함
+    const decimalLength = value.value.toString().includes(".")
+      ? value.value.toString().split(".")[1].length
+      : 0;
+    const int = value.value.toString().split(".")[0];
+    const decimal = value.value.toString().split(".")[1];
+    const formattedValue =
+      decimalLength > 0
+        ? int.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." + decimal
+        : value.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return formattedValue;
   } else {
     return null;
   }

@@ -21,6 +21,8 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./Product.styled";
 import restURI from "json/restURI.json";
+import * as RE from "custom/RegularExpression";
+import Condition from "custom/Condition";
 
 function Product() {
   LoginStateChk();
@@ -196,6 +198,9 @@ function Product() {
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
+    if (Condition(e, ["height"])) {
+      RE.NumComma(e, refSingleGrid, "height");
+    }
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {

@@ -5,7 +5,6 @@ import ButtonNED from "components/button/ButtonNED";
 import ButtonSES from "components/button/ButtonSES";
 import ButtonSE from "components/button/ButtonSE";
 import GridSingle from "components/grid/GridSingle";
-import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
@@ -25,6 +24,8 @@ import * as uSave from "custom/useSave";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
+import ModalControlPlan from "./ModalControlPlan";
+import restAPI from "api/restAPI";
 
 function ControlPlan() {
   LoginStateChk();
@@ -49,6 +50,7 @@ function ControlPlan() {
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
+  const [gridDataModalDetail, setGridDataModalDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
   const [headerClickRowID, setHeaderClickRowID] = useState(null);
 
@@ -398,6 +400,7 @@ function ControlPlan() {
     setIsNewDetail(false);
     setIsEditModeHeader(false);
     actSearchHeaderIC(true);
+    setGridDataModalDetail([]);
   }
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
@@ -525,6 +528,59 @@ function ControlPlan() {
     }
     setIsModalSelectOpen(false);
   };
+  const onDataLoad = async () => {
+    const Grid = refGridModalHeader?.current?.gridInst;
+    Grid?.finishEditing();
+    const lineId = Grid.getValue(0, "line_id");
+    const prodCd = Grid.getValue(0, "prod_cd");
+    const prodNm = Grid.getValue(0, "prod_nm");
+    if (lineId && prodCd) {
+      try {
+        setIsBackDrop(true);
+        const header = await restAPI.get(
+          restURI.inspDocument +
+            `?line_id=${lineId}&prod_cd=${prodCd}&prod_nm=${prodNm}`
+        );
+        if (header?.data?.data?.count !== 0) {
+          const documentId = header?.data?.data?.rows[0].insp_document_id;
+
+          try {
+            const detail = await restAPI.get(
+              restURI.inspDocumentDetail + `?insp_document_id=${documentId}`
+            );
+
+            setGridDataModalDetail(detail?.data?.data?.rows);
+          } catch (err) {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: err?.response?.data?.message,
+              severity: "error",
+              location: "bottomRight",
+            });
+          }
+        }
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "상단에서 라인과 품목을 선택하세요!",
+        severity: "warning",
+        location: "bottomRight",
+      });
+    }
+  };
 
   const onClickEditModalSave = () => {
     actSaveDetail();
@@ -534,17 +590,35 @@ function ControlPlan() {
       actSearchHeaderIC(true);
     }
   };
+  const GridHeader = useMemo(() => {
+    return (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columnsHeader}
+        rowHeaders={rowHeadersNumCheck}
+        header={header}
+        data={gridDataHeader}
+        draggable={false}
+        refGrid={refGridHeader}
+        onClickGrid={onClickGridHeader}
+        onDblClickGrid={onDblClickGridHeader}
+        onEditingFinish={onEditingFinishGridHeader}
+      />
+    );
+  }, [gridDataHeader, isEditModeHeader]);
 
   const GridModal = useMemo(() => {
     return (
-      <ModalNewDetail
+      <ModalControlPlan
         isNewDetail={isNewDetail}
         gridDataHeaderRowID={gridDataHeaderRowID}
+        gridDataDetail={gridDataModalDetail}
         onClickModalAddRow={onClickModalAddRow}
         onClickModalCancelRow={onClickModalCancelRow}
         onClickModalSave={onClickModalSave}
         onClickModalClose={onClickModalClose}
         onClickEditModalSave={onClickEditModalSave}
+        onDataLoad={onDataLoad}
         columnsModalHeader={columnsModalHeader}
         columnsModalDetail={columnsModalDetail}
         columnOptions={columnOptions}
@@ -558,7 +632,7 @@ function ControlPlan() {
         onDblClickGridModalDetail={onDblClickGridModalDetail}
       />
     );
-  }, [isNewDetail, refGridModalHeader, gridDataHeaderRowID, lineOpt]);
+  }, [isNewDetail, gridDataHeaderRowID, gridDataModalDetail, lineList]);
 
   const onClickGridDetail = (e) => {
     disRow.handleClickGridCheck(e, isEditModeDetail, ["order_input_fg"]);
@@ -621,20 +695,7 @@ function ControlPlan() {
           )}
         </S.ButtonWrap>
       </S.ShadowBoxButtonHeader>
-      <S.GridHeaderWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsHeader}
-          rowHeaders={rowHeadersNumCheck}
-          header={header}
-          data={gridDataHeader}
-          draggable={false}
-          refGrid={refGridHeader}
-          onClickGrid={onClickGridHeader}
-          onDblClickGrid={onDblClickGridHeader}
-          onEditingFinish={onEditingFinishGridHeader}
-        />
-      </S.GridHeaderWrap>
+      <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
       <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.SearchWrap>
           {inputInfo.map((v, idx) => {

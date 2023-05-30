@@ -323,32 +323,30 @@ const useSearchSelect = (
   const actSearchSelect = async (params = null) => {
     let gridData;
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        if (params) {
-          gridData = await restAPI.get(uri + params);
-        } else {
-          gridData = await restAPI.get(uri);
-        }
-        if (componentName !== null) {
-          gridData = gridData?.data?.data?.rows.map((raw) =>
-            GetSearchParams(componentName, raw)
-          );
-          await setGridModalSelectData(gridData);
-        } else {
-          await setGridModalSelectData(gridData?.data?.data?.rows);
-        }
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
+    try {
+      setIsBackDrop(true);
+      if (params) {
+        gridData = await restAPI.get(uri + params);
+      } else {
+        gridData = await restAPI.get(uri);
       }
+      if (componentName !== null) {
+        gridData = gridData?.data?.data?.rows.map((raw) =>
+          GetSearchParams(componentName, raw)
+        );
+        setGridModalSelectData(gridData);
+      } else {
+        setGridModalSelectData(gridData?.data?.data?.rows);
+      }
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
   return [actSearchSelect];
@@ -375,28 +373,25 @@ const useSearchHeaderIC = (
   const actSearchHeaderIC = async (inputReset = true) => {
     inputReset && setInputInfoValue([]); //🔸Header 조회 시 InputBox 초기화
     refGrid02?.current?.gridInst.clear();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchReadOnly(
-          inputBoxID,
-          inputSearchValue
-        );
-        const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const readURI = uri + cboParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
-        setDisRowHeader(!disRowHeader);
-      }
+
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchReadOnly(inputBoxID, inputSearchValue);
+      const cboParams = GetCboSearchParams(inputParams, comboValue);
+      const readURI = uri + cboParams;
+      console.log(readURI);
+      const gridData = await restAPI.get(readURI);
+      setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
+      setDisRowHeader(!disRowHeader);
     }
   };
   return [actSearchHeaderIC];

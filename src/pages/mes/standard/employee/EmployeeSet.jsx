@@ -150,7 +150,7 @@ function EmployeeSet(isEditMode, deptList, gradeList, workerGroupList) {
           minWidth: WIDTH_MIDDLE,
           align: "left",
           editor: false,
-          hidden: false,
+          hidden: true,
           sortable: false,
           filter: false,
           whiteSpace: false,

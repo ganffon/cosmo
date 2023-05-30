@@ -384,7 +384,7 @@
 
   "start_time": "시작 시간",
   "end_time": "종료 시간",
-  "downtime": "비가동 시간",
+  "downtime": "비가동 시간(분)",
   "work_downtime_id": "비가동 이력ID",
   "downtime_date": "비가동 일자",
   "work_packing_id": "포장 ID",

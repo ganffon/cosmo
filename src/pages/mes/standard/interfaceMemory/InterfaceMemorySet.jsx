@@ -568,7 +568,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
     },
     {
       name: "weight",
-      header: CN.weight,
+      header: CN.weight_amount,
       minWidth: WIDTH_SHORT,
       align: "left",
       editor: "text",

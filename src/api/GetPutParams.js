@@ -103,7 +103,9 @@ class product {
     this.bom_type_id = raw.bom_type_id;
     this.width = String(raw.width) ? Number(raw.width) : null;
     this.length = String(raw.length) ? Number(raw.length) : null;
-    this.height = String(raw.height) ? Number(raw.height) : null;
+    this.height = String(raw.height)
+      ? Number(raw.height.replace(/,/g, ""))
+      : null;
     this.material = raw.material;
     this.color = raw.color;
     this.weight = String(raw.weight) ? Number(raw.weight) : null;

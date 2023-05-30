@@ -62,7 +62,6 @@ function SparepartsRelease() {
     columnOptions,
     inputSet,
     columnsModalHeader,
-    rowHeadersNum,
     columnsModalSelectProduct,
     columnsModalSelectEquipDetail,
     columnsModalSelectLine,
@@ -129,7 +128,7 @@ function SparepartsRelease() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.sparepartsoutgo
+    restURI.sparepartsOutgo
   );
 
   const [actSave] = uSave.useSave(
@@ -141,16 +140,6 @@ function SparepartsRelease() {
     SWITCH_NAME_01,
     restURI.sparepartsOutgo,
     onClickModalClose
-  );
-
-  const [actSearchSelect] = uSearch.useSearchSelect(
-    refModalSelectGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridModalSelectData,
-    restURI.product
   );
 
   const [actSearchSelectEquipDetail] = uSearch.useSearchSelect(
@@ -183,16 +172,6 @@ function SparepartsRelease() {
     setGridModalSelectData,
     restURI.employee,
     "releaseUser"
-  );
-
-  const [actSearchGridUpdate] = uSearch.useSearchSelect(
-    refSingleGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridModalSelectData,
-    restURI.product
   );
 
   const [actSearchGridUpdateEquipDetail] = uSearch.useSearchSelect(
@@ -239,12 +218,13 @@ function SparepartsRelease() {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.sparepartsoutgo
+    restURI.sparepartsOutgo
   );
 
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
+
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
     isBackDrop,
@@ -255,7 +235,7 @@ function SparepartsRelease() {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.sparepartsoutgo,
+    restURI.sparepartsOutgo,
     SWITCH_NAME_01
   );
   const onClickEditModeSave = () => {
@@ -275,9 +255,6 @@ function SparepartsRelease() {
   const onClickSearch = () => {
     actSearch("start_date", "end_date");
   };
-  useEffect(() => {
-    onClickSearch();
-  }, []);
 
   // 검색 끝
 
@@ -438,6 +415,7 @@ function SparepartsRelease() {
       searchSelectProdList();
     }
     if (Condition(e, ["line_id", "line_nm"])) {
+      setHeaderModalControl("line");
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalLine");
       setColumnsSelect(columnsModalSelectLine);
@@ -446,6 +424,7 @@ function SparepartsRelease() {
       searchSelectLineList();
     }
     if (Condition(e, ["equip_detail_nm", "equip_detail_id"])) {
+      setHeaderModalControl("equip");
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalEquip");
       setColumnsSelect(columnsModalSelectEquipDetail);
@@ -454,6 +433,7 @@ function SparepartsRelease() {
     }
 
     if (Condition(e, ["release_uid", "release_nm"])) {
+      setHeaderModalControl("emp");
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalEmployee");
       setColumnsSelect(columnsModalSelectReleaseUser);
@@ -648,7 +628,7 @@ function SparepartsRelease() {
             columns={columnsSelect}
             columnOptions={columnOptions}
             header={header}
-            rowHeaders={rowHeadersNum}
+            rowHeaders={rowHeadersModal}
             refModalGrid={refModalSelectGrid}
             dateText={dateModal}
             setDateText={setDateModal}

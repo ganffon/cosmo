@@ -1141,7 +1141,7 @@ function EquipmentResultSet() {
       minWidth: WIDTH_MIDDLE,
       align: "left",
       editor: false,
-      hidden: false,
+      hidden: true,
       sortable: false,
       filter: false,
       whiteSpace: false,

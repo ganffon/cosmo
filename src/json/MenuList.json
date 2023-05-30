@@ -1,5 +1,31 @@
 [
   {
+    "name": "관리자",
+    "id": "admin",
+    "path": null,
+    "under": [
+      {
+        "name": "메뉴",
+        "id": "menu",
+        "path": null,
+        "under": [
+          {
+            "name": "메뉴관리",
+            "id": "menu-manage",
+            "path": "menu-manage",
+            "under": null
+          },
+          {
+            "name": "메뉴리스트관리",
+            "id": "menu-list",
+            "path": "menu-list",
+            "under": null
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "기준정보",
     "id": "standard",
     "path": null,
@@ -35,6 +61,12 @@
         "under": null
       },
       {
+        "name": "단위관리",
+        "id": "unit",
+        "path": "unit",
+        "under": null
+      },
+      {
         "name": "제품정보",
         "id": "product-info",
         "path": null,
@@ -64,7 +96,7 @@
             "under": null
           },
           {
-            "name": "제품분류",
+            "name": "제품분류관리",
             "id": "product-class",
             "path": "product-class",
             "under": null
@@ -73,31 +105,6 @@
             "name": "품목관리",
             "id": "product",
             "path": "product",
-            "under": null
-          }
-        ]
-      },
-      {
-        "name": "단위관리",
-        "id": "unit",
-        "path": "unit",
-        "under": null
-      },
-      {
-        "name": "거래처정보",
-        "id": "partner-info",
-        "path": null,
-        "under": [
-          {
-            "name": "거래처유형관리",
-            "id": "partner-type",
-            "path": "partner-type",
-            "under": null
-          },
-          {
-            "name": "거래처관리",
-            "id": "partner",
-            "path": "partner",
             "under": null
           }
         ]
@@ -120,13 +127,7 @@
             "under": null
           },
           {
-            "name": "작업조관리",
-            "id": "worker-group",
-            "path": "worker-group",
-            "under": null
-          },
-          {
-            "name": "작업자관리",
+            "name": "사원관리",
             "id": "employee",
             "path": "employee",
             "under": null
@@ -135,6 +136,12 @@
             "name": "사용자관리",
             "id": "user",
             "path": "user",
+            "under": null
+          },
+          {
+            "name": "사용자공장관리",
+            "id": null,
+            "path": null,
             "under": null
           }
         ]
@@ -170,7 +177,7 @@
             "under": null
           },
           {
-            "name": "비가동코드관리",
+            "name": "비가동관리",
             "id": "downtime",
             "path": "downtime",
             "under": null
@@ -319,31 +326,55 @@
             "under": null
           },
           {
-            "name": "Lot추적일지",
-            "id": "production-lot-tracking",
-            "path": "production-lot-tracking",
+            "name": "일일운전점검일지",
+            "id": "equipment-result",
+            "path": "equipment-result",
             "under": null
           }
         ]
       },
       {
-        "name": "⬇️생산현황",
+        "name": "생산현황",
         "id": "production-dayreport",
         "path": null,
         "under": [
           {
-            "name": "✴️계량현황",
+            "name": "일일소분실적현황",
+            "id": null,
+            "path": null,
+            "under": null
+          },
+          {
+            "name": "일일계량실적현황",
             "id": "weight-report",
             "path": "weight-report",
             "under": null
           },
           {
-            "name": "❌포장실적 현황",
+            "name": "포장실적현황",
             "id": "production-packing-view",
             "path": "production-packing-view",
             "under": null
+          },
+          {
+            "name": "일일운전점검현황",
+            "id": "equipment-result-view",
+            "path": "equipment-result-view",
+            "under": null
           }
         ]
+      },
+      {
+        "name": "비가동관리",
+        "id": "production-downtime",
+        "path": "production-downtime",
+        "under": null
+      },
+      {
+        "name": "Lot추적일지",
+        "id": "production-lot-tracking",
+        "path": "production-lot-tracking",
+        "under": null
       }
     ]
   },
@@ -352,25 +383,6 @@
     "id": "equipment",
     "path": null,
     "under": [
-      {
-        "name": "설비운전점검정보",
-        "id": "equipment-result-info",
-        "path": null,
-        "under": [
-          {
-            "name": "점검성적서관리",
-            "id": "equipment-result",
-            "path": "equipment-result",
-            "under": null
-          },
-          {
-            "name": "점검결과현황",
-            "id": "equipment-result-view",
-            "path": "equipment-result-view",
-            "under": null
-          }
-        ]
-      },
       {
         "name": "상세제원정보",
         "id": "equipment-spec-info",
@@ -408,12 +420,6 @@
         "path": null,
         "under": [
           {
-            "name": "SpareParts입고관리",
-            "id": "spareparts-income",
-            "path": "spareparts-income",
-            "under": null
-          },
-          {
             "name": "SpareParts출고관리",
             "id": "spareparts-outgo",
             "path": "spareparts-outgo",
@@ -423,12 +429,6 @@
             "name": "SpareParts재고현황",
             "id": "spareparts-store-view",
             "path": "spareparts-store-view",
-            "under": null
-          },
-          {
-            "name": "SpareParts수불현황",
-            "id": "spareparts-store-transfer-view",
-            "path": "spareparts-store-transfer-view",
             "under": null
           }
         ]
@@ -443,12 +443,6 @@
         "name": "설비알람이력현황",
         "id": "equipment-alarm-view",
         "path": "equipment-alarm-view",
-        "under": null
-      },
-      {
-        "name": "비가동관리",
-        "id": "production-downtime",
-        "path": "production-downtime",
         "under": null
       }
     ]
@@ -491,31 +485,19 @@
     "path": null,
     "under": [
       {
-        "name": "지시대비실적",
-        "id": "performanceComparedToInstructions",
-        "path": null,
-        "under": null
-      },
-      {
-        "name": "라인가동현황",
-        "id": "lineOperationStatus",
-        "path": null,
-        "under": null
-      },
-      {
-        "name": "월별라인별생산량",
-        "id": "monthlyLineCapa",
-        "path": "monthlyLineCapa",
-        "under": null
-      },
-      {
-        "name": "일별라인별생산량",
+        "name": "라인별생산량(일)",
         "id": "dailyLineCapa",
         "path": "dailyLineCapa",
         "under": null
       },
       {
-        "name": "월별품번별생산량",
+        "name": "라인별생산량(월)",
+        "id": "monthlyLineCapa",
+        "path": "monthlyLineCapa",
+        "under": null
+      },
+      {
+        "name": "품목별생산량",
         "id": "monthlyPartCapa",
         "path": "monthlyPartCapa",
         "under": null
@@ -555,6 +537,12 @@
         "name": "포장일지",
         "id": "packing-panel",
         "path": "packing-panel",
+        "under": null
+      },
+      {
+        "name": "일일운전점검일지",
+        "id": "equipment-result",
+        "path": "equipment-result",
         "under": null
       }
     ]

@@ -112,6 +112,14 @@ function ProductionDownTime() {
 
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
+    if (Condition(e, ["start_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refSingleGrid, "start_time");
+    }
+    if (Condition(e, ["end_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refSingleGrid, "end_time");
+    }
   };
   useEffect(() => {
     onClickSearch();
@@ -243,26 +251,28 @@ function ProductionDownTime() {
   };
 
   const onDblClickGrid = (e) => {
-    if (Condition(e, ["line_id", "line_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("GridSelectLine");
-      setColumnsSelect(columnLineSelect);
-      setIsModalSelectOpen(true);
-      actSelectLine();
-    } else if (Condition(e, ["proc_id", "proc_nm", "equip_id", "equip_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("GridSelectProcEquip");
-      setColumnsSelect(columnProcEquipSelect);
-      setIsModalSelectOpen(true);
-      actSelectEquipProc();
-    } else if (
-      Condition(e, ["downtime_id", "downtime_type_nm", "downtime_nm"])
-    ) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("GridSelectDownTime");
-      setColumnsSelect(columnDownTimeSelect);
-      setIsModalSelectOpen(true);
-      actSelectDownTime();
+    if (isEditMode) {
+      if (Condition(e, ["line_id", "line_nm"])) {
+        setDblClickRowKey(e?.rowKey);
+        setDblClickGrid("GridSelectLine");
+        setColumnsSelect(columnLineSelect);
+        setIsModalSelectOpen(true);
+        actSelectLine();
+      } else if (Condition(e, ["proc_id", "proc_nm", "equip_id", "equip_nm"])) {
+        setDblClickRowKey(e?.rowKey);
+        setDblClickGrid("GridSelectProcEquip");
+        setColumnsSelect(columnProcEquipSelect);
+        setIsModalSelectOpen(true);
+        actSelectEquipProc();
+      } else if (
+        Condition(e, ["downtime_id", "downtime_type_nm", "downtime_nm"])
+      ) {
+        setDblClickRowKey(e?.rowKey);
+        setDblClickGrid("GridSelectDownTime");
+        setColumnsSelect(columnDownTimeSelect);
+        setIsModalSelectOpen(true);
+        actSelectDownTime();
+      }
     }
   };
 
@@ -403,31 +413,18 @@ function ProductionDownTime() {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.GridWrap>
-          {isEditMode ? (
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columns}
-              rowHeaders={rowHeaders}
-              header={header}
-              data={gridData}
-              draggable={false}
-              refGrid={refSingleGrid}
-              onClickGrid={onClickGrid}
-              onDblClickGrid={onDblClickGrid}
-              onEditingFinish={onEditingFinishGrid}
-            />
-          ) : (
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columns}
-              rowHeaders={rowHeaders}
-              header={header}
-              data={gridData}
-              draggable={false}
-              refGrid={refSingleGrid}
-              onClickGrid={onClickGrid}
-            />
-          )}
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columns}
+            rowHeaders={rowHeaders}
+            header={header}
+            data={gridData}
+            draggable={false}
+            refGrid={refSingleGrid}
+            onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
+            onEditingFinish={onEditingFinishGrid}
+          />
         </S.GridWrap>
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

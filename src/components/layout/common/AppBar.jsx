@@ -25,6 +25,10 @@ function AppBar() {
     setCurrentMenuName("Dashboard");
   }, []);
 
+  const VERSION = process.env.REACT_APP_VERSION;
+  const BASEURI = process.env.REACT_APP_BASE_URL;
+  const NEWTAB = process.env.REACT_APP_NEW_TAB_URL;
+
   return (
     <S.AppBarBox isAllScreen={isAllScreen}>
       <S.LeftBox>
@@ -43,7 +47,17 @@ function AppBar() {
         <S.MenuTitle>{currentMenuName}</S.MenuTitle>
       </S.LeftBox>
       <S.RightBox>
-        <S.UserText>{Cookies.get("userName")}님 환영합니다.</S.UserText>
+        <S.UserText>
+          {
+            // BASEURI +
+            //   " ｜ " +
+            //   NEWTAB +
+            //   " ｜ " +
+            //   (VERSION === undefined ? "" : VERSION) +
+            Cookies.get("userName")
+          }
+          님 환영합니다.
+        </S.UserText>
         <AvatarButton />
       </S.RightBox>
     </S.AppBarBox>

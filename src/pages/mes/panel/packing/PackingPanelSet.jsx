@@ -1,15 +1,8 @@
 import restURI from "json/restURI.json";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
-import {
-  WIDTH_SUPER_SHORT,
-  WIDTH_SHORT,
-  WIDTH_MIDDLE,
-  WIDTH_LONG,
-  WIDTH_SUPER_LONG,
-  MODAL_BACK_COLOR,
-  NORMAL_BACK_COLOR,
-} from "constant/Grid.js";
+import * as C from "constant/Grid.js";
+import * as col from "custom/GridColumnSet";
 
 function PackingPanelSet(onClickGridButton) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
@@ -24,7 +17,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_id",
       header: CN.work_packing_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -36,7 +29,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_detail_id",
       header: CN.work_packing_detail_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -48,7 +41,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_weigh_id",
       header: CN.work_weigh_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -60,7 +53,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_id",
       header: CN.prod_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -72,7 +65,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -84,7 +77,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_nm",
       header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -96,7 +89,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -108,7 +101,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_qty",
       header: CN.input_qty,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -123,7 +116,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -135,7 +128,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: false,
@@ -147,7 +140,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "create_user_nm",
       header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -159,7 +152,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "update_at",
       header: CN.update_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: false,
@@ -171,7 +164,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "update_user_nm",
       header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -183,7 +176,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "delete_at",
       header: CN.delete_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: true,
@@ -195,7 +188,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "delete_user_nm",
       header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -209,7 +202,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_class_nm",
       header: CN.prod_class_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -221,7 +214,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -233,7 +226,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_nm",
       header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -245,7 +238,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -257,7 +250,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "total_qty",
       header: CN.total_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -272,7 +265,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "bag_qty",
       header: CN.bag_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -287,7 +280,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_qty",
       header: CN.input_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -302,7 +295,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -314,7 +307,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: false,
@@ -326,7 +319,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "create_user_nm",
       header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -338,7 +331,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "update_at",
       header: CN.update_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: false,
@@ -350,7 +343,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "update_user_nm",
       header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -362,7 +355,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "delete_at",
       header: CN.delete_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: true,
@@ -374,7 +367,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "delete_user_nm",
       header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -388,7 +381,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_id",
       header: CN.work_packing_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -400,7 +393,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_order_id",
       header: CN.work_order_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -412,7 +405,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_order_no",
       header: CN.work_order_no,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -424,7 +417,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "line_dept_id",
       header: CN.line_dept_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -436,7 +429,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "line_dept_nm",
       header: CN.line_dept_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -448,7 +441,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "line_id",
       header: CN.line_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -460,7 +453,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "line_nm",
       header: CN.line_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -472,7 +465,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_id",
       header: CN.prod_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -484,7 +477,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -496,7 +489,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_nm",
       header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -508,7 +501,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_date",
       header: CN.work_packing_date,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "center",
       editor: false,
       hidden: false,
@@ -520,7 +513,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -532,7 +525,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "packing_qty",
       header: CN.packing_qty,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -547,7 +540,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "packing_cnt",
       header: CN.packing_cnt,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -562,7 +555,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "packing_emp_id",
       header: CN.packing_emp_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -574,7 +567,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "packing_emp_nm",
       header: CN.packing_emp_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -586,7 +579,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "inv_to_store_id",
       header: CN.inv_to_store_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -598,7 +591,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "store_nm",
       header: CN.store_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -610,7 +603,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "inv_to_location_id",
       header: CN.inv_to_location_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -622,7 +615,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "location_nm",
       header: CN.location_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -634,7 +627,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -646,7 +639,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "create_at",
       header: CN.create_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: false,
@@ -658,7 +651,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "create_user_nm",
       header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -670,7 +663,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "update_at",
       header: CN.update_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: false,
@@ -682,7 +675,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "update_user_nm",
       header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -694,7 +687,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "delete_at",
       header: CN.delete_at,
-      minWidth: WIDTH_LONG,
+      minWidth: C.WIDTH_LONG,
       align: "center",
       editor: false,
       hidden: true,
@@ -706,7 +699,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "delete_user_nm",
       header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: true,
@@ -720,7 +713,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_id",
       header: CN.work_packing_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -732,7 +725,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_detail_id",
       header: CN.work_packing_detail_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -744,7 +737,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_weigh_id",
       header: CN.work_weigh_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -759,7 +752,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_id",
       header: CN.prod_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -774,7 +767,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -789,7 +782,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_nm",
       header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -804,7 +797,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       validation: {
@@ -819,7 +812,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_weigh_time",
       header: CN.work_weigh_time,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       validation: {
@@ -834,7 +827,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "weigh_emp_id",
       header: CN.weigh_emp_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -849,7 +842,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "weigh_emp_nm",
       header: CN.weigh_emp_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -864,7 +857,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_input_time",
       header: CN.work_input_time,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       validation: {
@@ -879,7 +872,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_emp_id",
       header: CN.input_emp_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -894,7 +887,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_emp_nm",
       header: CN.input_emp_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       validation: {
@@ -909,7 +902,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "inv_to_store_id",
       header: CN.inv_to_store_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -921,7 +914,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "store_nm",
       header: CN.store_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -933,7 +926,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "inv_to_location_id",
       header: CN.inv_to_location_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -945,7 +938,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "location_nm",
       header: CN.location_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -957,7 +950,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_qty",
       header: CN.input_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: {
         type: CustomGrid.EditorFloat1,
@@ -974,7 +967,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: "text",
       hidden: false,
@@ -988,7 +981,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_class_nm",
       header: CN.prod_class_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1000,7 +993,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1012,7 +1005,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_nm",
       header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1024,7 +1017,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -1036,7 +1029,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "total_qty",
       header: CN.total_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -1051,7 +1044,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "bag_qty",
       header: CN.bag_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -1066,7 +1059,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_qty",
       header: CN.input_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -1081,7 +1074,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -1095,7 +1088,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_id",
       header: CN.work_packing_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1107,7 +1100,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_packing_detail_id",
       header: CN.work_packing_detail_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1119,7 +1112,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_weigh_id",
       header: CN.work_weigh_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1131,7 +1124,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_id",
       header: CN.prod_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1143,7 +1136,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1155,7 +1148,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_nm",
       header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1167,7 +1160,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -1180,7 +1173,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_weigh_time",
       header: CN.work_weigh_time,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -1192,7 +1185,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "weigh_emp_id",
       header: CN.weigh_emp_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1204,7 +1197,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "weigh_emp_nm",
       header: CN.weigh_emp_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1216,7 +1209,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "work_input_time",
       header: CN.work_input_time,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "center",
       editor: false,
       hidden: false,
@@ -1228,7 +1221,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_emp_id",
       header: CN.input_emp_id,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: true,
@@ -1240,7 +1233,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_emp_nm",
       header: CN.input_emp_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1252,7 +1245,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "inv_to_store_id",
       header: CN.inv_to_store_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -1264,7 +1257,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "store_nm",
       header: CN.store_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -1276,7 +1269,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "inv_to_location_id",
       header: CN.inv_to_location_id,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -1288,7 +1281,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "location_nm",
       header: CN.location_nm,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: true,
@@ -1300,7 +1293,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "total_qty",
       header: CN.total_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -1312,30 +1305,11 @@ function PackingPanelSet(onClickGridButton) {
       whiteSpace: false,
       rowSpan: false,
     },
-    {
-      name: "select",
-      header: "선택",
-      width: WIDTH_SHORT,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      renderer: {
-        type: CustomGrid.Button,
-        options: {
-          name: "데이터 선택",
-          onClick: onClickGridButton,
-        },
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    col.button("select", "선택", "데이터 선택", onClickGridButton),
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -1349,7 +1323,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_class_nm",
       header: CN.prod_class_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1361,7 +1335,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_cd",
       header: CN.prod_cd,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1373,7 +1347,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "prod_nm",
       header: CN.prod_nm,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "left",
       editor: false,
       hidden: false,
@@ -1385,7 +1359,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "lot_no",
       header: CN.lot_no,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
@@ -1397,7 +1371,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "total_qty",
       header: CN.total_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -1412,7 +1386,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "bag_qty",
       header: CN.bag_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -1427,7 +1401,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "input_qty",
       header: CN.input_qty,
-      minWidth: WIDTH_SHORT,
+      minWidth: C.WIDTH_SHORT,
       align: "right",
       editor: false,
       formatter: function (value) {
@@ -1442,7 +1416,7 @@ function PackingPanelSet(onClickGridButton) {
     {
       name: "remark",
       header: CN.remark,
-      minWidth: WIDTH_MIDDLE,
+      minWidth: C.WIDTH_MIDDLE,
       align: "left",
       editor: false,
       hidden: false,
