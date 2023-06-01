@@ -47,6 +47,7 @@ function ProductionLotTracking() {
   const [gridDataMiddleLeft, setGridDataMiddleLeft] = useState(null);
   const [gridDataMiddleRight, setGridDataMiddleRight] = useState(null);
   const [gridDataBottomLeft, setGridDataBottomLeft] = useState(null);
+  const [gridDataBottomRight, setGridDataBottomRight] = useState(null);
   const {
     rowHeaders,
     rowHeadersNum,
@@ -62,8 +63,8 @@ function ProductionLotTracking() {
   } = ProductionLotTrackingSet(onClickGridButton);
 
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
-    endDate: DateTime(7).dateFull,
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
   });
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
@@ -179,7 +180,27 @@ function ProductionLotTracking() {
       setIsBackDrop(false);
     }
   };
+  const findLotInfo = async (e) => {
+    try {
+      const lotNo = e?.instance?.store?.data?.rawData[e?.rowKey].lot_no;
+      setIsBackDrop(true);
+      let readURI = `/std/income/erp?lot_no=${lotNo}`;
 
+      let gridData = await restAPI.get(readURI);
+
+      setGridDataBottomRight(gridData?.data?.data.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+      setIsBackDrop(false);
+    }
+  };
   const onClickGrid = (e) => {
     if (e?.columnName !== "button1" && e?.columnName !== "button2") {
       actSearchGrid(e);
@@ -291,6 +312,19 @@ function ProductionLotTracking() {
     );
   }, [gridDataHeader]);
 
+  const onClickGridForIncome = async (e) => {
+    const lotNo = e?.instance?.store?.data?.rawData[e?.rowKey].lot_no;
+    let readURI = restURI.erpIncome + `?lot_no=${lotNo}`;
+    let gridData;
+    try {
+      gridData = await restAPI.get(readURI);
+    } catch {
+      setGridDataBottomRight([]);
+    }
+
+    setGridDataBottomRight(gridData?.data?.data?.rows);
+  };
+
   return (
     <LS.ContentsArea isAllScreen={isAllScreen}>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
@@ -347,6 +381,7 @@ function ProductionLotTracking() {
             data={gridDataMiddleLeft}
             draggable={false}
             refGrid={refMiddleRightGrid}
+            onClickGrid={findLotInfo}
           />
         </S.GridWrap>
         <S.GridWrap>
@@ -358,6 +393,7 @@ function ProductionLotTracking() {
             data={gridDataMiddleRight}
             draggable={false}
             refGrid={refMiddleLeftGrid}
+            onClickGrid={findLotInfo}
           />
         </S.GridWrap>
       </LS.ModdleGridWrap>
@@ -387,7 +423,7 @@ function ProductionLotTracking() {
             columns={columnsBottomRight}
             rowHeaders={rowHeaders}
             header={header}
-            data={gridData}
+            data={gridDataBottomRight}
             draggable={false}
             refGrid={refBottomRightGrid}
           />

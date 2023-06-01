@@ -3,13 +3,8 @@ import restURI from "json/restURI.json";
 import "components/grid/setting/GridStyle.css";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
-import {
-  WIDTH_SUPER_SHORT,
-  WIDTH_SHORT,
-  WIDTH_MIDDLE,
-  WIDTH_LONG,
-  WIDTH_SUPER_LONG,
-} from "constant/Grid.js";
+import * as C from "constant/Grid.js";
+import * as col from "custom/GridColumnSet";
 
 function DowntimeSet(isEditMode, downtimeTypeList) {
   const data = [];
@@ -24,242 +19,34 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const columns = [
-    {
-      name: "factory_id",
-      header: CN.factory_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    isEditMode
-      ? {
-          name: "downtime_type_id",
-          header: CN.downtime_type_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          formatter: "listItemText",
-          editor: {
-            type: "select",
-            options: {
-              listItems: downtimeTypeList,
-            },
-          },
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        }
-      : {
-          name: "downtime_type_nm",
-          header: CN.downtime_type_nm,
-          minWidth: WIDTH_MIDDLE,
-          align: "left",
-          editor: false,
-          hidden: false,
-          sortable: false,
-          filter: false,
-          whiteSpace: false,
-          rowSpan: false,
-        },
-    {
-      name: "downtime_id",
-      header: CN.downtime_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "downtime_cd",
-      header: CN.downtime_cd,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "downtime_nm",
-      header: CN.downtime_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "scheduled_shutdown_fg",
-      header: CN.scheduled_shutdown_fg,
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "scheduled_shutdown_fg",
-          disabled: isEditMode ? false : true,
-        },
-      },
-
-      minWidth: WIDTH_SHORT,
-      width: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-
-    {
-      name: "create_at",
-      header: CN.create_at,
-      minWidth: WIDTH_LONG,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "create_user_nm",
-      header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "update_at",
-      header: CN.update_at,
-      minWidth: WIDTH_LONG,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "update_user_nm",
-      header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "delete_at",
-      header: CN.delete_at,
-      minWidth: WIDTH_LONG,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "delete_user_nm",
-      header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
+    col.list(
+      "downtime_type_id",
+      "downtime_type_nm",
+      CN.downtime_type_nm,
+      downtimeTypeList,
+      isEditMode
+    ),
+    col.id("downtime_id", CN.downtime_id, C.HIDDEN_ID),
+    col.text("downtime_cd", CN.downtime_cd),
+    col.text("downtime_nm", CN.downtime_nm, isEditMode),
+    col.check("scheduled_shutdown_fg", CN.scheduled_shutdown_fg, isEditMode),
+    col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
+    col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
+    col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
+    col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    {
-      name: "downtime_type_id",
-      header: CN.downtime_type_nm,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      formatter: "listItemText",
-      editor: {
-        type: "select",
-        options: {
-          listItems: downtimeTypeList,
-        },
-      },
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "downtime_cd",
-      header: CN.downtime_cd,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "downtime_nm",
-      header: CN.downtime_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "scheduled_shutdown_fg",
-      header: CN.scheduled_shutdown_fg,
-      renderer: {
-        type: CustomGrid.CheckBox,
-        options: {
-          name: "scheduled_shutdown_fg",
-        },
-      },
-      minWidth: WIDTH_SHORT,
-      width: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    col.list(
+      "downtime_type_id",
+      "downtime_type_nm",
+      CN.downtime_type_nm,
+      downtimeTypeList,
+      true
+    ),
+    col.text("downtime_cd", CN.downtime_cd, true),
+    col.text("downtime_nm", CN.downtime_nm, true),
+    col.check("scheduled_shutdown_fg", CN.scheduled_shutdown_fg, true),
   ];
   const columnOptions = {
     resizable: true,
@@ -268,14 +55,7 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
-  const header = {
-    columns: [
-      {
-        name: "scheduled_shutdown_fg",
-        renderer: CustomGrid.ColumnHeaderMultiLine,
-      },
-    ],
-  };
+  const header = col.multi(["scheduled_shutdown_fg"]);
   /**
    * 🔸날짜단일조회 - "single"
    * 🔸날짜기간조회 - "range"

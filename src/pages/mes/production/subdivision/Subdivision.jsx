@@ -209,8 +209,7 @@ function Subdivision() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.subdivision,
-    onClickModalClose
+    restURI.subdivision
   );
   const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
     refGridHeader,
@@ -283,18 +282,17 @@ function Subdivision() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.subdivisionDetail,
-    onClickModalClose
+    restURI.subdivisionDetail
   );
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide]);
+  }, [isMenuSlide, refGridHeader.current]);
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridDetail?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide]);
+  }, [isMenuSlide, refGridDetail.current]);
 
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
@@ -369,17 +367,16 @@ function Subdivision() {
   };
   const onClickModalSave = () => {
     actSave();
-    // setIsModalOpen(false);
-    // onClickSearch();
+    setIsModalOpen(false);
+    onClickSearch();
   };
-  function onClickModalClose() {
+  const onClickModalClose = () => {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
-    isNewDetail
-      ? actSearchDetail(headerClickRowID)
-      : actSearchHeaderDI(true, "start_date", "end_date");
-  }
+    // actSearchHeaderDI(true, "start_date", "end_date");
+    actSearchDetail(headerClickRowID);
+  };
   const onDblClickGridModalHeader = (e) => {
     if (!isNewDetail) {
       if (Condition(e, ["prod_cd", "prod_nm"])) {
@@ -532,9 +529,11 @@ function Subdivision() {
     setDisRowDetail(!disRowDetail);
   };
   const onClickEditNew = () => {
-    setIsNewDetail(true);
-    setIsModalOpen(true);
-    actSearchEditHeader(headerClickRowID);
+    if (headerClickRowID) {
+      setIsNewDetail(true);
+      setIsModalOpen(true);
+      actSearchEditHeader(headerClickRowID);
+    }
   };
   const onClickEditDetail = () => {
     setIsEditModeDetail(true);
@@ -556,6 +555,7 @@ function Subdivision() {
     }
     disRow.handleEditingFinishGridCheck(e);
 
+    const Header = refGridHeader?.current?.gridInst;
     const Detail = refGridDetail?.current?.gridInst;
 
     if (Condition(e, ["before_subdivision_qty"])) {
@@ -596,10 +596,35 @@ function Subdivision() {
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
+
+    const inputInfoValueList = [
+      "subdivision_date",
+      "prod_cd",
+      "prod_nm",
+      "lot_no",
+      "total_qty",
+      "remark",
+    ];
+    setInputInfoValue([]);
+    for (let i = 0; i < inputInfoValueList.length; i++) {
+      let data = Header.getValue(headerClickRowKey, inputInfoValueList[i]);
+      if (data === false) {
+        //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
+        data = "false";
+      }
+      setInputInfoValue((prevList) => {
+        return [...prevList, data];
+      });
+    }
+  };
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      // setSearchToggle(!searchToggle);
+    }
   };
 
   const GridHeader = useMemo(() => {
-    return (
+    return isEditModeHeader ? (
       <GridSingle
         columnOptions={columnOptions}
         columns={columnsHeader}
@@ -610,6 +635,19 @@ function Subdivision() {
         refGrid={refGridHeader}
         onClickGrid={onClickGridHeader}
         onDblClickGrid={onDblClickGridHeader}
+        onEditingFinish={onEditingFinishGridHeader}
+      />
+    ) : (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columnsHeader}
+        rowHeaders={rowHeadersNumCheck}
+        header={header}
+        data={gridDataHeader}
+        draggable={false}
+        refGrid={refGridHeader}
+        onClickGrid={onClickGridHeader}
+        // onDblClickGrid={onDblClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
       />
     );
@@ -693,7 +731,7 @@ function Subdivision() {
             )}
           </S.SearchRightBottomWrap>
         </S.SearchRightWrap>
-        <S.GridDetailWrap>
+        <S.GridDetailWrap isAllScreen={isAllScreen}>
           <GridSingle
             columnOptions={columnOptions}
             columns={columnsDetail}
@@ -714,6 +752,7 @@ function Subdivision() {
           onClickModalCancelRow={onClickModalCancelRow}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
+          onClickModalDetailClose={onClickModalClose}
           onClickEditModalSave={onClickEditModalSave}
           columnsModalHeader={columnsModalHeader}
           columnsModalDetail={columnsModalDetail}
@@ -727,6 +766,7 @@ function Subdivision() {
           onClickGridModalDetail={onClickGridModalDetail}
           onDblClickGridModalHeader={onDblClickGridModalHeader}
           onEditingFinishGridModalDetail={onEditingFinishGridModalDetail}
+          modalTitle={"소분일지"}
         />
       ) : null}
       {isModalSelectOpen ? (

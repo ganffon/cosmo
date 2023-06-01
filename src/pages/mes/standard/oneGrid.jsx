@@ -81,7 +81,7 @@ function OneGrid(props) {
     const data = refSingleGrid?.current?.gridInst
       ?.getCheckedRows()
       ?.map((raw) => GetDeleteParams(COMPONENT_NAME, raw));
-    if (data.length !== 0 && isBackDrop === false) {
+    if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
         .delete(COMPONENT().uri, { data })
@@ -113,31 +113,28 @@ function OneGrid(props) {
   };
   const onClickSearch = async (props) => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    //🔸검색버튼을 이미 눌러서 Loading ProgressBar가 돌고있다면 API 호출 못함
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const params = GetInputSearchParams(inputBoxID, inputTextChange);
-        const readURI = COMPONENT().uri + params;
-        const gridData = await restAPI.get(readURI);
-        setGridData(gridData?.data?.data?.rows);
-        props &&
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: gridData?.data?.message,
-            severity: "success",
-          });
-      } catch {
+    try {
+      setIsBackDrop(true);
+      const params = GetInputSearchParams(inputBoxID, inputTextChange);
+      const readURI = COMPONENT().uri + params;
+      const gridData = await restAPI.get(readURI);
+      setGridData(gridData?.data?.data?.rows);
+      props &&
         setIsSnackOpen({
           ...isSnackOpen,
           open: true,
-          message: "조회 실패",
-          severity: "error",
+          message: gridData?.data?.message,
+          severity: "success",
         });
-      } finally {
-        setIsBackDrop(false);
-      }
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
   const onClickEditModeSave = async () => {
@@ -145,7 +142,7 @@ function OneGrid(props) {
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.updatedRows?.map((raw) => GetPutParams(COMPONENT_NAME, raw));
-    if (data.length !== 0 && isBackDrop === false) {
+    if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
         .put(COMPONENT().uri, data)
@@ -189,7 +186,7 @@ function OneGrid(props) {
     const data = refModalGrid?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => GetPostParams(COMPONENT_NAME, raw));
-    if (data.length !== 0 && isBackDrop === false) {
+    if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
         .post(COMPONENT().uri, data)

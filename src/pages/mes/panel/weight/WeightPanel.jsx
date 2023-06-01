@@ -21,20 +21,20 @@ import ModalInputSave from "./ModalInputSave";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 
 function WeightPanel() {
-  const prodID = useRef("");
-  const prodCD = useRef("");
-  const prodNM = useRef("");
-  const storeID = useRef("");
-  const storeNM = useRef("");
-  const locationID = useRef("");
-  const locationNM = useRef("");
-  const workWeighID = useRef("");
-  const lineDeptID = useRef("");
-  const lineID = useRef("");
-  const lineNM = useRef("");
-  const workOrderID = useRef("");
-  const empID = useRef("");
-  const empNM = useRef("");
+  // const prodID = useRef("");
+  // const prodCD = useRef("");
+  // const prodNM = useRef("");
+  // const storeID = useRef("");
+  // const storeNM = useRef("");
+  // const locationID = useRef("");
+  // const locationNM = useRef("");
+  // const workWeighID = useRef("");
+  // const lineDeptID = useRef("");
+  // const lineID = useRef("");
+  // const lineNM = useRef("");
+  // const workOrderID = useRef("");
+  // const empID = useRef("");
+  // const empNM = useRef("");
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -47,6 +47,7 @@ function WeightPanel() {
   });
 
   const [selectInfo, setSelectInfo] = useState({});
+  const [selectInputInfo, setSelectInputInfo] = useState({});
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalWeightOpen, setIsModalWeightOpen] = useState(false);
   const [isModalInputOpen, setIsModalInputOpen] = useState(false);
@@ -82,20 +83,6 @@ function WeightPanel() {
   } = WeightPanelSet(onClickGridButton);
 
   const resetRequire = () => {
-    prodID.current = "";
-    lineDeptID.current = "";
-    lineID.current = "";
-    lineNM.current = "";
-    workOrderID.current = "";
-    workWeighID.current = "";
-    prodCD.current = "";
-    prodNM.current = "";
-    storeID.current = "";
-    storeNM.current = "";
-    locationID.current = "";
-    locationNM.current = "";
-    empID.current = "";
-    empNM.current = "";
     setSelectInfo({
       ...selectInfo,
       orderDate: "",
@@ -106,14 +93,20 @@ function WeightPanel() {
     });
   };
   const resetEmp = () => {
-    empID.current = "";
-    empNM.current = "";
+    setSelectInputInfo({
+      ...selectInputInfo,
+      empID: "",
+      empNM: "",
+    });
   };
   const resetStore = () => {
-    storeID.current = "";
-    storeNM.current = "";
-    locationID.current = "";
-    locationNM.current = "";
+    setSelectInputInfo({
+      ...selectInputInfo,
+      storeID: "",
+      storeNM: "",
+      locationID: "",
+      locationNM: "",
+    });
   };
 
   const refGridHeader = useRef(null);
@@ -196,22 +189,36 @@ function WeightPanel() {
   };
   const handleInputSaveInfo = (rowKey) => {
     const Header = refGridInput?.current?.gridInst;
-    workWeighID.current = Header.getValue(rowKey, "work_weigh_id");
-    prodCD.current = Header.getValue(rowKey, "prod_cd");
-    prodNM.current = Header.getValue(rowKey, "prod_nm");
-    storeID.current = Header.getValue(rowKey, "inv_to_store_id");
-    storeNM.current = Header.getValue(rowKey, "store_nm");
-    locationID.current = Header.getValue(rowKey, "inv_to_location_id");
-    locationNM.current = Header.getValue(rowKey, "location_nm");
+
+    setSelectInputInfo({
+      ...selectInputInfo,
+      workWeighID: Header.getValue(rowKey, "work_weigh_id"),
+      prodCD: Header.getValue(rowKey, "prod_cd"),
+      prodNM: Header.getValue(rowKey, "prod_nm"),
+      storeID: Header.getValue(rowKey, "inv_to_store_id"),
+      storeNM: Header.getValue(rowKey, "store_nm"),
+      locationID: Header.getValue(rowKey, "inv_to_location_id"),
+      locationNM: Header.getValue(rowKey, "location_nm"),
+      empID: "",
+      empNM: "",
+    });
+
+    setNowDateTime({
+      ...nowDateTime,
+      nowDate: DateTime().dateFull,
+      nowTime: DateTime().hour + ":" + DateTime().minute,
+    });
   };
   const onClickInputSaveClose = () => {
     setIsModalInputSaveOpen(false);
+    resetEmp();
+    resetStore();
   };
   const handleInputSearch = async () => {
     try {
       const result = await restAPI.get(
         restURI.prdWeight +
-          `?complete_fg=INCOMPLETE&work_order_id=${workOrderID.current}`
+          `?complete_fg=INCOMPLETE&work_order_id=${selectInputInfo.workOrderID}`
       );
       setGridDataInput(result?.data?.data?.rows);
       setIsModalInputOpen(true);
@@ -226,8 +233,9 @@ function WeightPanel() {
     }
   };
   const onClickInput = async () => {
-    if (workOrderID.current) {
+    if (selectInputInfo.workOrderID) {
       setNowDateTime({
+        ...nowDateTime,
         nowDate: DateTime().dateFull,
         nowTime: DateTime().hour + ":" + DateTime().minute,
       });
@@ -236,10 +244,11 @@ function WeightPanel() {
     }
   };
   const onClickWeight = async () => {
-    if (workOrderID.current !== "") {
+    if (selectInputInfo.workOrderID !== "") {
       try {
         const result = await restAPI.get(
-          restURI.prdOrderInput + `?work_order_id=${workOrderID.current}`
+          restURI.prdOrderInput +
+            `?work_order_id=${selectInputInfo.workOrderID}`
         );
         setGridDataWeight(result?.data?.data?.rows);
         setIsModalWeightOpen(true);
@@ -255,48 +264,46 @@ function WeightPanel() {
     }
   };
   const onClickSearch = async () => {
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        let conditionLine;
-        let conditionProdCD;
-        let conditionProdNM;
-        inputTextChange.line
-          ? (conditionLine = `&line_nm=${inputTextChange.line}`)
-          : (conditionLine = "");
-        inputTextChange.prod_cd
-          ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`)
-          : (conditionProdCD = "");
-        inputTextChange.prod_nm
-          ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`)
-          : (conditionProdNM = "");
-        const result = await restAPI.get(
-          restURI.prdOrder +
-            `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-            conditionLine +
-            conditionProdCD +
-            conditionProdNM
-        );
-        setGridDataHeader(result?.data?.data?.rows);
+    try {
+      setIsBackDrop(true);
+      let conditionLine;
+      let conditionProdCD;
+      let conditionProdNM;
+      inputTextChange.line
+        ? (conditionLine = `&line_nm=${inputTextChange.line}`)
+        : (conditionLine = "");
+      inputTextChange.prod_cd
+        ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`)
+        : (conditionProdCD = "");
+      inputTextChange.prod_nm
+        ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`)
+        : (conditionProdNM = "");
+      const result = await restAPI.get(
+        restURI.prdOrder +
+          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          conditionLine +
+          conditionProdCD +
+          conditionProdNM
+      );
+      setGridDataHeader(result?.data?.data?.rows);
 
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: result?.data?.message,
-          severity: "success",
-          location: "bottomRight",
-        });
-      } catch (err) {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: err?.response?.data?.message,
-          severity: "error",
-          location: "bottomRight",
-        });
-      } finally {
-        setIsBackDrop(false);
-      }
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
 
@@ -308,13 +315,18 @@ function WeightPanel() {
   const onClickGridHeader = async (e) => {
     if (e?.rowKey !== undefined) {
       const Header = refGridHeader?.current?.gridInst;
-      prodID.current = Header.getValue(e?.rowKey, "prod_id");
-      lineID.current = Header.getValue(e?.rowKey, "line_id");
-      lineNM.current = Header.getValue(e?.rowKey, "line_nm");
-      lineDeptID.current = Header.getValue(e?.rowKey, "line_dept_id");
-      workOrderID.current = Header.getValue(e?.rowKey, "work_order_id");
-      storeID.current = Header.getValue(e?.rowKey, "inv_to_store_id");
-      locationID.current = Header.getValue(e?.rowKey, "inv_to_location_id");
+      setSelectInputInfo({
+        ...selectInputInfo,
+        prodID: Header.getValue(e?.rowKey, "prod_id"),
+        lineID: Header.getValue(e?.rowKey, "line_id"),
+        lineNM: Header.getValue(e?.rowKey, "line_nm"),
+        lineDeptID: Header.getValue(e?.rowKey, "line_dept_id"),
+        workOrderID: Header.getValue(e?.rowKey, "work_order_id"),
+        storeID: Header.getValue(e?.rowKey, "inv_to_store_id"),
+        locationID: Header.getValue(e?.rowKey, "inv_to_location_id"),
+        empID: "",
+        empNM: "",
+      });
       setSelectInfo({
         ...selectInfo,
         orderDate: Header.getValue(e?.rowKey, "work_order_date"),
@@ -353,74 +365,74 @@ function WeightPanel() {
     setRemoveToggle(!removeToggle);
   };
   const onClickWeightSave = async () => {
-    if (isBackDrop === false) {
-      if (empNM.current) {
-        refGridWeight?.current?.gridInst?.finishEditing();
-        let result = [];
-        for (
-          let i = 0;
-          i < refGridWeight?.current?.gridInst?.getRowCount();
-          i++
-        ) {
-          result.push(refGridWeight?.current?.gridInst?.getRowAt(i));
-        }
+    if (selectInputInfo.empNM) {
+      refGridWeight?.current?.gridInst?.finishEditing();
+      let result = [];
+      for (
+        let i = 0;
+        i < refGridWeight?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        result.push(refGridWeight?.current?.gridInst?.getRowAt(i));
+      }
 
-        const dataBottom = result.map((raw) => {
-          return {
-            work_order_input_id: raw.work_order_input_id,
-            prod_id: raw.prod_id,
-            lot_no: raw.lot_no,
-            total_qty: String(raw.total_qty) ? Number(raw.total_qty) : null,
-            bag_qty: String(raw.bag_qty) ? Number(raw.bag_qty) : null,
-            input_qty: String(raw.input_qty) ? Number(raw.input_qty) : null,
-            remark: raw.remark,
-          };
-        });
-
-        const dataTop = {
-          work_order_id: workOrderID.current,
-          line_id: lineID.current,
-          line_dept_id: lineDeptID.current,
-          prod_id: prodID.current,
-          work_weigh_date: DateTime().dateFull,
-          work_weigh_time: DateTime().hour + ":" + DateTime().minute,
-          weigh_emp_id: empID.current,
-          inv_to_store_id: storeID.current,
-          inv_to_location_id: locationID.current,
+      const dataBottom = result.map((raw) => {
+        return {
+          work_order_input_id: raw.work_order_input_id,
+          prod_id: raw.prod_id,
+          lot_no: raw.lot_no,
+          total_qty: String(raw.total_qty) ? Number(raw.total_qty) : null,
+          bag_qty: String(raw.bag_qty) ? Number(raw.bag_qty) : null,
+          input_qty: String(raw.input_qty) ? Number(raw.input_qty) : null,
+          remark: raw.remark,
         };
+      });
 
-        const query = {
-          header: dataTop,
-          details: dataBottom,
-        };
-        try {
-          const result = await restAPI.post(restURI.prdWeightPanel, query);
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: result?.data?.message,
-            severity: "success",
-            location: "bottomRight",
-          });
-          resetRequire();
-          setIsModalWeightOpen(false);
-        } catch (err) {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: err?.response?.data?.message,
-            severity: "error",
-            location: "bottomRight",
-          });
-        }
-      } else {
-        setIsWarning({
-          ...isWarning,
+      const dataTop = {
+        work_order_id: selectInputInfo.workOrderID,
+        line_id: selectInputInfo.lineID,
+        line_dept_id: selectInputInfo.lineDeptID,
+        prod_id: selectInputInfo.prodID,
+        work_weigh_date: DateTime().dateFull,
+        work_weigh_time: DateTime().hour + ":" + DateTime().minute,
+        weigh_emp_id: selectInputInfo.empID,
+        inv_to_store_id: selectInputInfo.storeID,
+        inv_to_location_id: selectInputInfo.locationID,
+      };
+
+      const query = {
+        header: dataTop,
+        details: dataBottom,
+      };
+      try {
+        const result = await restAPI.post(restURI.prdWeightPanel, query);
+        setIsSnackOpen({
+          ...isSnackOpen,
           open: true,
-          title: "Warning",
-          message: "계량자를 입력하세요!",
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
+        resetRequire();
+        resetEmp();
+        resetStore();
+        setIsModalWeightOpen(false);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
         });
       }
+    } else {
+      setIsWarning({
+        ...isWarning,
+        open: true,
+        title: "Warning",
+        message: "계량자를 입력하세요!",
+      });
     }
   };
   const onEditingFinishWeight = (e) => {
@@ -452,19 +464,24 @@ function WeightPanel() {
     setIsModalSelectOpen(false);
   };
   const onClickInputSave = async () => {
-    console.log(`onClickInputSave : ${workOrderID.current}`);
-    if (storeID.current) {
-      if (empNM.current) {
+    if (selectInputInfo.storeID) {
+      if (selectInputInfo.empNM) {
         const raw = {
           work_input_date: nowDateTime.nowDate,
           work_input_time: nowDateTime.nowTime,
-          inv_to_store_id: storeID.current,
-          inv_to_location_id: locationID.current,
-          input_emp_id: empID.current,
+          inv_to_store_id: selectInputInfo.storeID,
+          inv_to_location_id: selectInputInfo.locationID,
+          input_emp_id: selectInputInfo.empID,
         };
         try {
+          console.log(
+            `selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`
+          );
           const result = await restAPI.patch(
-            restURI.prdWeightComplete.replace("{id}", workWeighID.current),
+            restURI.prdWeightComplete.replace(
+              "{id}",
+              selectInputInfo.workWeighID
+            ),
             raw
           );
           setIsSnackOpen({
@@ -475,8 +492,11 @@ function WeightPanel() {
             location: "bottomRight",
           });
           setIsModalInputSaveOpen(false);
-          handleInputSearch();
           resetRequire();
+          resetEmp();
+          resetStore();
+          handleInputSearch();
+
           refGridInputDetail?.current?.gridInst?.clear();
         } catch (err) {
           setIsSnackOpen({
@@ -507,18 +527,17 @@ function WeightPanel() {
   const onDblClickGridSelect = (e) => {
     const data = e?.instance?.store?.data?.rawData[e?.rowKey];
     if (selectName === "Emp") {
-      empID.current = data.emp_id;
-      empNM.current = data.emp_nm;
+      selectInputInfo.empID = data.emp_id;
+      selectInputInfo.empNM = data.emp_nm;
     } else if (selectName === "Store") {
-      storeID.current = data.store_id;
-      storeNM.current = data.store_nm;
-      locationID.current = data.location_id;
-      locationNM.current = data.location_nm;
+      selectInputInfo.storeID = data.store_id;
+      selectInputInfo.storeNM = data.store_nm;
+      selectInputInfo.locationID = data.location_id;
+      selectInputInfo.locationNM = data.location_nm;
     }
     setIsModalSelectOpen(false);
   };
   function onClickGridButton(rowKey) {
-    console.log(workOrderID.current);
     handleInputSaveInfo(rowKey);
     setIsModalInputSaveOpen(true);
   }
@@ -660,9 +679,7 @@ function WeightPanel() {
             onClickRemove={onClickRemove}
             onClickWeightSave={onClickWeightSave}
             onEditingFinishWeight={onEditingFinishWeight}
-            lineNM={lineNM.current}
-            empID={empID.current}
-            empNM={empNM.current}
+            selectInputInfo={selectInputInfo}
           />
         ) : null}
         {isModalInputOpen ? (
@@ -692,12 +709,7 @@ function WeightPanel() {
             onClickNowTime={onClickNowTime}
             onClickGridInput={onClickGridInput}
             nowDateTime={nowDateTime}
-            lineNM={lineNM.current}
-            prodCD={prodCD.current}
-            prodNM={prodNM.current}
-            storeNM={storeNM.current}
-            locationNM={locationNM.current}
-            empNM={empNM.current}
+            selectInputInfo={selectInputInfo}
           />
         ) : null}
         {isModalSelectOpen ? (

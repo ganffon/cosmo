@@ -187,10 +187,8 @@ function ProductionOrder() {
     }
   };
   const onClickEditHeader = () => {
-    if (headerRowID.current.length > 0) {
-      setDisableRowToggleTop(!disableRowToggleTop);
-      setIsEditModeHeader(true);
-    }
+    setDisableRowToggleTop(!disableRowToggleTop);
+    setIsEditModeHeader(true);
   };
   const onClickDeleteHeader = () => {
     const data = refGridHeader?.current?.gridInst?.getCheckedRows();

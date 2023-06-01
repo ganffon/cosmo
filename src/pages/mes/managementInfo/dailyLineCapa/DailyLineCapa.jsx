@@ -8,7 +8,7 @@ import GetTestValAndCreateAt, {
   GetDateDay,
   GetDateMonth,
 } from "pages/mes/dashboard/asdb";
-import * as S from "pages/mes/dashboard/Dashboard.styled";
+import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
@@ -45,7 +45,7 @@ const DailyLineCapa = () => {
   const GetMonthlyLineCapaData = (endDate) => {
     restAPI
       .get(restURI.dailyLine, {
-        params: { reg_date: endDate.slice(0, 4), line_nm: textInput },
+        params: { reg_date: endDate, line_nm: textInput },
       })
       .then((response) => {
         // API 응답 데이터 처리 로직

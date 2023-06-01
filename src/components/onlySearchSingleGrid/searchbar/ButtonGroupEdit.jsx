@@ -25,7 +25,7 @@ function ButtonGroupEdit(props) {
     const data = refSingleGrid?.current?.gridInst
       ?.getModifiedRows()
       .updatedRows?.map((raw) => GetPutParams(componentName, raw));
-    if (data.length !== 0 && isBackDrop === false) {
+    if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
         .put(uri, data)

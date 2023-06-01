@@ -22,6 +22,7 @@ import * as uSave from "custom/useSave";
 import * as S from "./Product.styled";
 import restURI from "json/restURI.json";
 import * as RE from "custom/RegularExpression";
+import * as col from "custom/GridColumnSet";
 import Condition from "custom/Condition";
 
 function Product() {
@@ -196,11 +197,25 @@ function Product() {
       "prd_active_fg",
     ]);
   };
+  const handleRE = (e, refGrid) => {
+    col.RENumComma(e, refGrid, "width");
+    col.RENumComma(e, refGrid, "length");
+    col.RENumComma(e, refGrid, "height");
+    col.RENumComma(e, refGrid, "weight");
+    col.RENumComma(e, refGrid, "thickness");
+    col.RENumComma(e, refGrid, "mat_order_min_qty");
+    col.RENumComma(e, refGrid, "mat_supply_days");
+    col.RENumComma(e, refGrid, "inv_unit_qty");
+    col.RENumComma(e, refGrid, "inv_safe_qty");
+    col.RENumComma(e, refGrid, "prd_min");
+    col.RENumComma(e, refGrid, "prd_max");
+  };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
-    if (Condition(e, ["height"])) {
-      RE.NumComma(e, refSingleGrid, "height");
-    }
+    handleRE(e, refSingleGrid);
+  };
+  const onEditingFinishModal = (e) => {
+    handleRE(e, refModalGrid);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -368,6 +383,7 @@ function Product() {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
+          onEditingFinishModal={onEditingFinishModal}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

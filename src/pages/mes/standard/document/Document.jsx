@@ -29,6 +29,7 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
+import * as col from "custom/GridColumnSet";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
@@ -82,8 +83,6 @@ function Document() {
   const [inputInfoValue, setInputInfoValue] = useState([]);
 
   const [lineOpt, lineList] = Cbo.useLine();
-  const [processOpt, processList] = Cbo.useProcess();
-  const [equipmentOpt, equipmentList] = Cbo.useEquipment();
   const [inspMethodOpt, inspMethodList] = Cbo.useInspMethod();
   const [inspToolOpt, inspToolList] = Cbo.useInspTool();
   const [inspFilingOpt, inspFilingList] = Cbo.useInspFiling();
@@ -107,8 +106,6 @@ function Document() {
     isEditModeDetail,
     isNewDetail,
     lineList,
-    processList,
-    equipmentList,
     inspMethodList,
     inspToolList,
     inspFilingList
@@ -225,6 +222,15 @@ function Document() {
     setGridDataHeaderRowID,
     restURI.inspDocument
   );
+  const handleRE = (e, refGrid) => {
+    col.RENumComma(e, refGrid, "sortby");
+    col.RENumComma(e, refGrid, "spec_min");
+    col.RENumComma(e, refGrid, "spec_max");
+    col.RENumComma(e, refGrid, "spec_lcl");
+    col.RENumComma(e, refGrid, "spec_ucl");
+    col.RENumComma(e, refGrid, "worker_sample_cnt");
+    col.RENumComma(e, refGrid, "inspector_sample_cnt");
+  };
   const onDeleteDetail = async () => {
     const data = refGridDetail?.current?.gridInst
       ?.getCheckedRows()
@@ -470,6 +476,7 @@ function Document() {
   };
   const onEditingFinishGridDetail = (e) => {
     disRow.handleEditingFinishGridCheck(e);
+    handleRE(e, refGridDetail);
   };
   const onClickModalAddRow = () => {
     const Header = refGridModalHeader?.current?.gridInst;
@@ -535,6 +542,9 @@ function Document() {
       setIsModalSelectOpen(true);
       actSelectEquipProc();
     }
+  };
+  const onEditingFinishGridModalDetail = (e) => {
+    handleRE(e, refGridModalDetail);
   };
 
   const onClickModalSelectClose = () => {
@@ -640,6 +650,7 @@ function Document() {
         onClickGridModalDetail={onClickGridModalDetail}
         onDblClickGridModalHeader={onDblClickGridModalHeader}
         onDblClickGridModalDetail={onDblClickGridModalDetail}
+        onEditingFinishGridModalDetail={onEditingFinishGridModalDetail}
       />
     );
   }, [isNewDetail, lineList, onClickModalClose]);

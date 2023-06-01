@@ -17,12 +17,7 @@ function ModalInputSave(props) {
     onClickInputSave = () => {},
     onClickNowTime = () => {},
     nowDateTime = {},
-    lineNM = "",
-    prodCD = "",
-    prodNM = "",
-    storeNM = "",
-    locationNM = "",
-    empNM = "",
+    selectInputInfo = {},
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
@@ -57,7 +52,7 @@ function ModalInputSave(props) {
               width={"150px"}
               height={"60px"}
               nameColor={"black"}
-              value={lineNM || ""}
+              value={selectInputInfo.lineNM || ""}
               size={"30px"}
               btn={false}
             />
@@ -66,7 +61,7 @@ function ModalInputSave(props) {
               width={"300px"}
               height={"60px"}
               nameColor={"black"}
-              value={prodCD || ""}
+              value={selectInputInfo.prodCD || ""}
               size={"30px"}
               btn={false}
             />
@@ -75,7 +70,7 @@ function ModalInputSave(props) {
               width={"300px"}
               height={"60px"}
               nameColor={"black"}
-              value={prodNM || ""}
+              value={selectInputInfo.prodNM || ""}
               size={"30px"}
               btn={false}
             />
@@ -86,7 +81,7 @@ function ModalInputSave(props) {
               width={"250px"}
               height={"60px"}
               nameColor={"black"}
-              value={storeNM || ""}
+              value={selectInputInfo.storeNM || ""}
               size={"30px"}
               btn={false}
             />
@@ -94,7 +89,7 @@ function ModalInputSave(props) {
               width={"250px"}
               height={"60px"}
               nameColor={"black"}
-              value={locationNM || ""}
+              value={selectInputInfo.locationNM || ""}
               size={"30px"}
               btn={true}
               onClickSelect={onClickSelectStore}
@@ -107,7 +102,7 @@ function ModalInputSave(props) {
               width={"250px"}
               height={"60px"}
               nameColor={"black"}
-              value={empNM || ""}
+              value={selectInputInfo.empNM || ""}
               size={"30px"}
               btn={true}
               onClickSelect={onClickSelect}

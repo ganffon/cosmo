@@ -19,6 +19,15 @@ function GridSingle(props) {
   useEffect(() => {
     GridTheme();
   }, []);
+
+  const handleFocus = () => {
+    const Grid = refGrid?.current?.gridInst;
+    const coords = Grid.getFocusedCell();
+    if (coords) {
+      Grid.startEditing(coords.rowKey, coords.columnName);
+    }
+  };
+
   return (
     <Grid
       scrollX={true}
@@ -33,7 +42,10 @@ function GridSingle(props) {
       header={header}
       draggable={draggable}
       ref={refGrid}
-      onClick={onClickGrid}
+      onClick={() => {
+        onClickGrid();
+        handleFocus();
+      }}
       onDblclick={onDblClickGrid}
       onEditingFinish={onEditingFinish}
     />

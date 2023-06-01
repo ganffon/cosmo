@@ -39,7 +39,7 @@ function InsertModal(props) {
     const data = refGridModal?.current?.gridInst
       ?.getModifiedRows()
       ?.createdRows.map((raw) => GetPostParams(componentName, raw));
-    if (data.length !== 0 && isBackDrop === false) {
+    if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
         .post(uri, data)

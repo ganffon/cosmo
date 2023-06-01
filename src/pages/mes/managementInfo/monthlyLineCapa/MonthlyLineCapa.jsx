@@ -8,13 +8,12 @@ import GetTestValAndCreateAt, {
   GetDateDay,
   GetDateMonth,
 } from "pages/mes/dashboard/asdb";
-import * as S from "pages/mes/dashboard/Dashboard.styled";
+import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
-import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
@@ -29,12 +28,11 @@ const MonthlyLineCapa = () => {
   const [dateText, setDateText] = useState({
     endDate: DateTime().dateFull,
   });
+  const [year, setYear] = useState(new Date().getFullYear());
   const [textInput, setTextInput] = useState("");
-  const [result, setResult] = useState([]);
   const [responseData, setResponseData] = useState(null);
-
+  
   useEffect(() => {
-    setResult(GetDateMonth(strGridJson, dateText.endDate));
     handleSearchButtonClick();
   }, []);
   const handleSearchButtonClick = () => {
@@ -44,11 +42,16 @@ const MonthlyLineCapa = () => {
   const handleTextChange = (event) => {
     setTextInput(event.target.value);
   };
-
+  const handleChange = (event) => {
+    setYear(event.target.value);
+  };
   const GetMonthlyLineCapaData = (endDate, textInput) => {
     restAPI
       .get(restURI.monthlyLine, {
-        params: { reg_date: endDate.slice(0, 4), line_nm: textInput },
+        params: { 
+          reg_date: year//endDate.slice(0, 4)
+          , line_nm: textInput 
+        },
       })
       .then((response) => {
         // API 응답 데이터 처리 로직
@@ -97,12 +100,6 @@ const MonthlyLineCapa = () => {
     }),
     { header: "합계", name: "total" },
   ];
-  if (responseData) {
-    console.log(cOptions);
-    console.log(responseData.data.rows[0].graph);
-    // console.log(responseData.data.rows[0].grid)
-    // responseData.data.rows[0].graph[5].data[0].y = 5000
-  }
 
   return (
     <S.ContentsArea>
@@ -110,11 +107,15 @@ const MonthlyLineCapa = () => {
         <S.ToolWrap>
           <S.ContentsHeader>
             <S.ContentsHeaderWrap>
-              <S.Date
-                datePickerSet={"single"}
-                dateText={dateText}
-                setDateText={setDateText}
-              />
+              <TextField 
+                id="outlined-number"
+                label="년도"
+                type="number"
+                onChange={handleChange}
+                defaultValue={year}
+                InputLabelProps={{
+                shrink: true,
+                }}/>
               <InputSearch
                 key={"line_nm"}
                 id={"line_nm"}

@@ -162,6 +162,11 @@ function Line(props) {
   }
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
+    // const Grid = refSingleGrid?.current?.gridInst;
+    // const coords = Grid.getFocusedCell();
+    // if (coords) {
+    //   Grid.startEditing(coords.rowKey, coords.columnName);
+    // }
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);

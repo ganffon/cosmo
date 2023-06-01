@@ -530,7 +530,6 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
       whiteSpace: false,
       rowSpan: false,
     },
-
     {
       name: "remark",
       header: CN.remark,

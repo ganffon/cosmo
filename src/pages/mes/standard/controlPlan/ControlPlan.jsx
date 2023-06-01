@@ -69,11 +69,6 @@ function ControlPlan() {
   const [inputInfoValue, setInputInfoValue] = useState([]);
 
   const [lineOpt, lineList] = Cbo.useLine();
-  const [processOpt, processList] = Cbo.useProcess();
-  const [equipmentOpt, equipmentList] = Cbo.useEquipment();
-  const [inspMethodOpt, inspMethodList] = Cbo.useInspMethod();
-  const [inspToolOpt, inspToolList] = Cbo.useInspTool();
-  const [inspFilingOpt, inspFilingList] = Cbo.useInspFiling();
 
   const {
     columnsHeader,
@@ -88,17 +83,7 @@ function ControlPlan() {
     header,
     inputSet,
     inputInfo,
-  } = ControlPlanSet(
-    isEditModeHeader,
-    isEditModeDetail,
-    isNewDetail,
-    lineList,
-    processList,
-    equipmentList,
-    inspMethodList,
-    inspToolList,
-    inspFilingList
-  );
+  } = ControlPlanSet(isEditModeHeader, isEditModeDetail, isNewDetail, lineList);
   const SWITCH_NAME_01 = "controlPlan";
   const SWITCH_NAME_02 = "controlPlanDetail";
   let modalDetailClickRowKey = null;

@@ -12,39 +12,39 @@ const useEdit = (
   uri
 ) => {
   const actEdit = async () => {
-    if (isBackDrop === false) {
-      refGrid?.current?.gridInst?.finishEditing();
-      const data = refGrid?.current?.gridInst
-        ?.getCheckedRows()
-        ?.map((raw) => GetPutParams(componentName, raw));
-      if (data !== undefined) {
-        if (data.length !== 0) {
-          setIsBackDrop(true);
-          await restAPI
-            .put(uri, data)
-            .then((res) => {
-              setIsSnackOpen({
-                ...isSnackOpen,
-                open: true,
-                message: res?.data?.message,
-                severity: "success",
-              });
-              disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
-            })
-            .catch((res) => {
-              setIsSnackOpen({
-                ...isSnackOpen,
-                open: true,
-                message: res?.message
-                  ? res?.message
-                  : res?.response?.data?.message,
-                severity: "error",
-              });
-            })
-            .finally(() => {
-              setIsBackDrop(false);
+    refGrid?.current?.gridInst?.finishEditing();
+    console.log(refGrid?.current?.gridInst?.getCheckedRows());
+    const data = refGrid?.current?.gridInst
+      ?.getCheckedRows()
+      ?.map((raw) => GetPutParams(componentName, raw));
+    console.log(data);
+    if (data !== undefined) {
+      if (data.length !== 0) {
+        setIsBackDrop(true);
+        await restAPI
+          .put(uri, data)
+          .then((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.data?.message,
+              severity: "success",
             });
-        }
+            disRow.handleCheckReset(true, refGrid); //🔸저장 후 refGrid rowCheck 초기화
+          })
+          .catch((res) => {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: res?.message
+                ? res?.message
+                : res?.response?.data?.message,
+              severity: "error",
+            });
+          })
+          .finally(() => {
+            setIsBackDrop(false);
+          });
       }
     }
   };

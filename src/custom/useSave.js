@@ -32,7 +32,7 @@ const useSave = (
               message: res?.data?.message,
               severity: "success",
             });
-            refGrid?.current?.gridInst?.clear();
+            // refGrid?.current?.gridInst?.clear();
             onClickModalClose();
           })
           .catch((res) => {
