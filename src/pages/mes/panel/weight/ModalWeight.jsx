@@ -24,8 +24,9 @@ function ModalWeight(props) {
     header = [],
     rowHeadersDetail = [],
     gridDataWeight = [],
-    lineNM = "",
-    empNM = "",
+    selectInputInfo = {},
+    // lineNM = "",
+    // empNM = "",
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
   const [inputChange, setInputChange] = useState();
@@ -85,7 +86,7 @@ function ModalWeight(props) {
             width={"150px"}
             height={"60px"}
             nameColor={"black"}
-            value={lineNM}
+            value={selectInputInfo.lineNM}
             size={"30px"}
             btn={false}
           />
@@ -103,7 +104,7 @@ function ModalWeight(props) {
             width={"250px"}
             height={"60px"}
             nameColor={"black"}
-            value={empNM}
+            value={selectInputInfo.empNM}
             size={"30px"}
             btn={true}
             onClickSelect={onClickSelect}

@@ -114,30 +114,29 @@ function SearchBarBox(props) {
   const onClickSearch = async (props) => {
     refSingleGrid?.current?.gridInst?.finishEditing();
     //🔸검색버튼을 이미 눌러서 Loading ProgressBar가 돌고있다면 API 호출 못함
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const params = makeSearchParams();
-        const readURI = uri + params;
-        const gridData = await restAPI.get(readURI);
-        setSingleGridData(gridData?.data?.data?.rows);
-        props &&
-          setAlertOpen({
-            ...alertOpen,
-            open: true,
-            message: "조회 성공",
-            severity: "success",
-          });
-      } catch {
+
+    try {
+      setIsBackDrop(true);
+      const params = makeSearchParams();
+      const readURI = uri + params;
+      const gridData = await restAPI.get(readURI);
+      setSingleGridData(gridData?.data?.data?.rows);
+      props &&
         setAlertOpen({
           ...alertOpen,
           open: true,
-          message: "조회 실패",
-          severity: "error",
+          message: "조회 성공",
+          severity: "success",
         });
-      } finally {
-        setIsBackDrop(false);
-      }
+    } catch {
+      setAlertOpen({
+        ...alertOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
 
@@ -163,7 +162,7 @@ function SearchBarBox(props) {
       ?.map((v) => ({
         line_id: v.line_id,
       }));
-    if (data.length !== 0 && isBackDrop === false) {
+    if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
         .delete(uri, { data })

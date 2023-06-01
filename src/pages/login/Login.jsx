@@ -73,72 +73,70 @@ function Login() {
   };
   const goLogin = async () => {
     if (nullCheck() === true) {
-      if (isBackDrop === false) {
-        setIsBackDrop(true);
-        await restAPI
-          .get(
-            restURI.login +
-              `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`
-          )
-          .then((res) => {
-            // const expiresTime = new Date();
-            // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-            Cookies.set("userName", res?.data?.data?.rows[0]?.user_nm, {
-              path: "/",
-              expires: 7,
-              secure: false,
-            });
-            Cookies.set("userUID", res?.data?.data?.rows[0]?.uid, {
-              path: "/",
-              expires: 7,
-              secure: false,
-            });
-            Cookies.set(
-              "userFactoryID",
-              res?.data?.data?.rows[0]?.user_factory_id,
-              {
-                path: "/",
-                expires: 7,
-                secure: false,
-              }
-            );
-            Cookies.set("factoryID", loginInfo.loginFactoryID, {
-              path: "/",
-              expires: 7,
-              secure: false,
-            });
-            Cookies.set("admin", res?.data?.data?.rows[0]?.admin_fg, {
-              path: "/",
-              expires: 7,
-              secure: false,
-            });
-            navigate("/mes");
-          })
-          .catch((res) => {
-            setAlertOpen({
-              ...alertOpen,
-              open: true,
-              message: res?.response?.data?.message,
-            });
-          })
-          .finally(() => {
-            // const expiresTime = new Date();
-            // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-            Cookies.set("loginID", loginInfo.loginID, {
-              path: "/",
-              expires: 7,
-              secure: false,
-            });
-            // restAPI 헤더 값 추가
-            restAPI.defaults.headers = {
-              "Content-Type": "application/json; charset=utf-8",
-              factory: Cookies.get("factoryID"),
-              user: Cookies.get("userUID"),
-            };
-            localStorage.setItem("loginState", true);
-            setIsBackDrop(false);
+      setIsBackDrop(true);
+      await restAPI
+        .get(
+          restURI.login +
+            `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`
+        )
+        .then((res) => {
+          // const expiresTime = new Date();
+          // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
+          Cookies.set("userName", res?.data?.data?.rows[0]?.user_nm, {
+            path: "/",
+            expires: 7,
+            secure: false,
           });
-      }
+          Cookies.set("userUID", res?.data?.data?.rows[0]?.uid, {
+            path: "/",
+            expires: 7,
+            secure: false,
+          });
+          Cookies.set(
+            "userFactoryID",
+            res?.data?.data?.rows[0]?.user_factory_id,
+            {
+              path: "/",
+              expires: 7,
+              secure: false,
+            }
+          );
+          Cookies.set("factoryID", loginInfo.loginFactoryID, {
+            path: "/",
+            expires: 7,
+            secure: false,
+          });
+          Cookies.set("admin", res?.data?.data?.rows[0]?.admin_fg, {
+            path: "/",
+            expires: 7,
+            secure: false,
+          });
+          navigate("/mes");
+        })
+        .catch((res) => {
+          setAlertOpen({
+            ...alertOpen,
+            open: true,
+            message: res?.response?.data?.message,
+          });
+        })
+        .finally(() => {
+          // const expiresTime = new Date();
+          // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
+          Cookies.set("loginID", loginInfo.loginID, {
+            path: "/",
+            expires: 7,
+            secure: false,
+          });
+          // restAPI 헤더 값 추가
+          restAPI.defaults.headers = {
+            "Content-Type": "application/json; charset=utf-8",
+            factory: Cookies.get("factoryID"),
+            user: Cookies.get("userUID"),
+          };
+          localStorage.setItem("loginState", true);
+          setIsBackDrop(false);
+        });
     }
   };
 

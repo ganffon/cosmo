@@ -25,7 +25,7 @@ function EquipmentRawDataView() {
   const [procOpt, procList] = Cbo.useProcess();
   const [gridData, setGridData] = useState(null);
   const [dateText, setDateText] = useState({
-    startDate: DateTime(7).dateFull,
+    startDate: DateTime().dateFull,
   });
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -66,6 +66,7 @@ function EquipmentRawDataView() {
       comboValue.line_id !== undefined
     ) {
       const gridData = await restAPI.get(readURI);
+
       const columnsArr = gridData.data.data.rows;
       const finalArr = columnsArr.map((row) => {
         if (row["header"].length <= 5) {

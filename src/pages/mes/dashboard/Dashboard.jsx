@@ -24,10 +24,8 @@ const Dashboard = () => {
     setLeftWidth(size.width); // 왼쪽 패널의 너비 업데이트
   };
   const [lineState, setLineState] = useState([]);
-  const [e1Status, setE1Status] = useState(true);
-  const [e2Status, setE2Status] = useState(false);
-  const [e3Status, setE3Status] = useState(false);
   const [downtime, setDowntime] = useState([]);
+  const [equipState, setState] = useState([]);
   const [responseData, setResponseData] = useState(null);
 
   useEffect(() => {
@@ -96,7 +94,16 @@ const Dashboard = () => {
             no: ++index,
           })
         );
+
+        const stateData = response.data.data.rows[0].line_state.map(
+          (item) => ({
+            ...item,
+            eq_state: (item.state===1) ? true : false 
+          })
+        );
+
         setDowntime(modifiedData);
+        setState(stateData)
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -119,6 +126,37 @@ const Dashboard = () => {
       enabled: true,
     },
   };
+
+  const renderLine = (index) => (
+    <div
+      style={{
+        position: "absolute",
+        top: "40%",
+        left: `${20 + (index * 25)}%`,
+        transform: "translate(-50%, -50%)",
+        height: "50px",
+      }}
+    >
+      E{index + 1} Line
+    </div>
+  );
+
+  const renderImage = (index) => (
+    equipState && equipState[index] ? (
+      <img
+        src={equipState[index].eq_state ? doriGreenImg : doriRedImg}
+        alt={equipState[index].eq_state ? "Dori Green" : "Dori Red"}
+        style={{
+          position: "absolute",
+          top: "60%",
+          left: `${20 + (index * 25)}%`,
+          transform: "translate(-50%, -50%)",
+          width: "50px",
+          height: "50px",
+        }}
+      />
+    ) : null
+  );
 
   const complexColumns = getTimeHeader();
   // setResult(GetTestValAndCreateAt(strJson));
@@ -146,125 +184,16 @@ const Dashboard = () => {
           >
             라인 가동 상태
           </div>
-          <div
-            style={{
-              position: "absolute",
-              top: "40%",
-              left: "20%",
-              transform: "translate(-50%, -50%)",
-              height: "50px",
-            }}
-          >
-            E1 Line
-          </div>
-          {e1Status && (
-            <img
-              src={doriGreenImg}
-              alt="Dori Green"
-              style={{
-                position: "absolute",
-                top: "60%",
-                left: "20%",
-                transform: "translate(-50%, -50%)",
-                width: "50px",
-                height: "50px",
-              }}
-            />
-          )}
-          {!e1Status && (
-            <img
-              src={doriRedImg}
-              alt="Dori red"
-              style={{
-                position: "absolute",
-                top: "60%",
-                left: "20%",
-                transform: "translate(-50%, -50%)",
-                width: "50px",
-                height: "50px",
-              }}
-            />
-          )}
-
-          <div
-            style={{
-              position: "absolute",
-              top: "40%",
-              left: "45%",
-              transform: "translate(-50%, -50%)",
-              height: "50px",
-            }}
-          >
-            E2 Line
-          </div>
-          {e2Status && (
-            <img
-              src={doriGreenImg}
-              alt="Dori Green"
-              style={{
-                position: "absolute",
-                top: "60%",
-                left: "45%",
-                transform: "translate(-50%, -50%)",
-                width: "50px",
-                height: "50px",
-              }}
-            />
-          )}
-          {!e2Status && (
-            <img
-              src={doriRedImg}
-              alt="Dori red"
-              style={{
-                position: "absolute",
-                top: "60%",
-                left: "45%",
-                transform: "translate(-50%, -50%)",
-                width: "50px",
-                height: "50px",
-              }}
-            />
-          )}
-
-          <div
-            style={{
-              position: "absolute",
-              top: "40%",
-              left: "75%",
-              transform: "translate(-50%, -50%)",
-              height: "50px",
-            }}
-          >
-            E3 Line
-          </div>
-          {e3Status && (
-            <img
-              src={doriGreenImg}
-              alt="Dori Green"
-              style={{
-                position: "absolute",
-                top: "60%",
-                left: "75%",
-                transform: "translate(-50%, -50%)",
-                width: "50px",
-                height: "50px",
-              }}
-            />
-          )}
-          {!e3Status && (
-            <img
-              src={doriRedImg}
-              alt="Dori red"
-              style={{
-                position: "absolute",
-                top: "60%",
-                left: "75%",
-                transform: "translate(-50%, -50%)",
-                width: "50px",
-                height: "50px",
-              }}
-            />
-          )}
+          {equipState && <div>
+            {renderLine(0)}
+            {renderImage(0)}
+            
+            {renderLine(1)}
+            {renderImage(1)}
+            
+            {renderLine(2)}
+            {renderImage(2)}
+          </div>}
         </div>
         <Bottom>
           {responseData && (

@@ -78,29 +78,37 @@ class product {
     this.use_fg = raw.use_fg ? true : false;
     this.active_fg = raw.active_fg ? true : false;
     this.bom_type_id = raw.bom_type_id;
-    this.width = String(raw.width) ? Number(raw.width) : null;
-    this.length = String(raw.length) ? Number(raw.length) : null;
-    this.height = String(raw.height) ? Number(raw.height) : null;
+    this.width = String(raw.width) ? Number(raw.width.replace(/,/g, "")) : null;
+    this.length = String(raw.length)
+      ? Number(raw.length.replace(/,/g, ""))
+      : null;
+    this.height = String(raw.height)
+      ? Number(raw.height.replace(/,/g, ""))
+      : null;
     this.material = raw.material;
     this.color = raw.color;
-    this.weight = String(raw.weight) ? Number(raw.weight) : null;
-    this.thickness = String(raw.thickness) ? Number(raw.thickness) : null;
+    this.weight = String(raw.weight)
+      ? Number(raw.weight.replace(/,/g, ""))
+      : null;
+    this.thickness = String(raw.thickness)
+      ? Number(raw.thickness.replace(/,/g, ""))
+      : null;
     this.is_spareparts = raw.is_spareparts ? true : false;
     this.mat_order_fg = raw.mat_order_fg ? true : false;
     this.mat_unit_id = raw.mat_unit_id;
     this.mat_order_min_qty = String(raw.mat_order_min_qty)
-      ? Number(raw.mat_order_min_qty)
+      ? Number(raw.mat_order_min_qty.replace(/,/g, ""))
       : null;
     this.mat_supply_days = String(raw.mat_supply_days)
-      ? Number(raw.mat_supply_days)
+      ? Number(raw.mat_supply_days.replace(/,/g, ""))
       : null;
     this.sal_order_fg = raw.sal_order_fg ? true : false;
     this.inv_use_fg = raw.inv_use_fg ? true : false;
     this.inv_unit_qty = String(raw.inv_unit_qty)
-      ? Number(raw.inv_unit_qty)
+      ? Number(raw.inv_unit_qty.replace(/,/g, ""))
       : null;
     this.inv_safe_qty = String(raw.inv_safe_qty)
-      ? Number(raw.inv_safe_qty)
+      ? Number(raw.inv_safe_qty.replace(/,/g, ""))
       : null;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
@@ -109,8 +117,12 @@ class product {
     this.qms_final_insp_fg = raw.qms_final_insp_fg ? true : false;
     this.prd_plan_type_id = raw.prd_plan_type_id;
     this.prd_active_fg = raw.prd_active_fg ? true : false;
-    this.prd_min = String(raw.prd_min) ? Number(raw.prd_min) : null;
-    this.prd_max = String(raw.prd_max) ? Number(raw.prd_max) : null;
+    this.prd_min = String(raw.prd_min)
+      ? Number(raw.prd_min.replace(/,/g, ""))
+      : null;
+    this.prd_max = String(raw.prd_max)
+      ? Number(raw.prd_max.replace(/,/g, ""))
+      : null;
   }
 }
 class productGbn {
@@ -310,10 +322,10 @@ class equipmentDetail {
     this.voltage = raw.voltage;
     this.manufacturer = raw.manufacturer;
     this.purchase_partner = raw.purchase_partner;
-    this.purchase_date = raw.purchase_date;
+    this.purchase_date = raw.purchase_date === "" ? null : raw.purchase_date;
     this.purchase_tel = raw.purchase_tel;
-    this.purchase_price = String(raw.purchase_price)
-      ? Number(raw.purchase_price)
+    this.purchase_price = !isNaN(parseFloat(raw.purchase_price))
+      ? Number(raw.purchase_price.toString().replace(/,/g, ""))
       : null;
     this.use_fg = raw.use_fg ? true : false;
     this.remark = raw.remark;
@@ -344,27 +356,37 @@ class document {
 class documentDetail {
   constructor(raw) {
     this.insp_document_id = raw.insp_document_id;
-    this.sortby = String(raw.sortby) ? Number(raw.sortby) : null;
+    this.sortby = String(raw.sortby)
+      ? Number(raw.sortby.replace(/,/g, ""))
+      : null;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.insp_proc_gbn = raw.insp_proc_gbn;
     this.insp_item_id = raw.insp_item_id;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = String(raw.spec_min) ? Number(raw.spec_min) : null;
-    this.spec_max = String(raw.spec_max) ? Number(raw.spec_max) : null;
-    this.spec_lcl = String(raw.spec_lcl) ? Number(raw.spec_lcl) : null;
-    this.spec_ucl = String(raw.spec_ucl) ? Number(raw.spec_ucl) : null;
+    this.spec_min = String(raw.spec_min)
+      ? Number(raw.spec_min.replace(/,/g, ""))
+      : null;
+    this.spec_max = String(raw.spec_max)
+      ? Number(raw.spec_max.replace(/,/g, ""))
+      : null;
+    this.spec_lcl = String(raw.spec_lcl)
+      ? Number(raw.spec_lcl.replace(/,/g, ""))
+      : null;
+    this.spec_ucl = String(raw.spec_ucl)
+      ? Number(raw.spec_ucl.replace(/,/g, ""))
+      : null;
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_tool_id = raw.insp_tool_id;
     this.insp_method_id = raw.insp_method_id;
     this.special_property = raw.special_property;
     this.worker_sample_cnt = String(raw.worker_sample_cnt)
-      ? Number(raw.worker_sample_cnt)
+      ? Number(raw.worker_sample_cnt.replace(/,/g, ""))
       : null;
     this.worker_insp_cycle = raw.worker_insp_cycle;
     this.inspector_sample_cnt = String(raw.inspector_sample_cnt)
-      ? Number(raw.inspector_sample_cnt)
+      ? Number(raw.inspector_sample_cnt.replace(/,/g, ""))
       : null;
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id === "" ? null : raw.infc_memory_id;

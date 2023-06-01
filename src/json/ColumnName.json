@@ -1,4 +1,5 @@
 {
+  "rq": "✔️",
   "factory_id": "공장ID",
   "factory_cd": "공장코드",
   "factory_nm": "공장",
@@ -246,7 +247,7 @@
   "insp_document_no": "검사기준서번호",
   "reg_date": "기준일자",
   "apply_date": "적용일자",
-  "apply_fg": "적용여부",
+  "apply_fg": "적용\n여부",
   "contents": "개정내역",
 
   "insp_document_reg_date": "개정일자",
@@ -269,7 +270,7 @@
   "control_plan_id": "관리계획서ID",
   "control_plan_detail_id": "세부관리계획서ID",
   "control_plan_no": "관리계획서번호",
-  "proc_no": "공정번호",
+  "proc_no": "공정\n번호",
 
   "lot_no": "LOT NO",
   "qty": "중량",
@@ -420,5 +421,7 @@
   "actual_weight": "실중량",
   "scheduled_shutdown_fg": "계획정지\n여부",
   "constant_value": "상수",
-  "weight_amount": "가중치"
+  "weight_amount": "가중치",
+  "income_date": "입고 일자",
+  "income_type": "입고 유형"
 }

@@ -89,5 +89,6 @@
 
   "monthlyLine": "/kpi/production/monthly-by-line",
   "dailyLine": "/kpi/production/daily-by-line",
-  "dashboard": "/dashboard/main"
+  "dashboard": "/dashboard/main",
+  "erpIncome": "/std/income/erp"
 }

@@ -11,6 +11,7 @@ import InputSearch from "components/input/InputSearch";
 import EquipmentResultSet from "pages/mes/standard/equipmentResult/EquipmentResultSet";
 import * as uSearch from "custom/useSearch";
 import * as S from "./EquipmentResult.styled";
+import * as col from "custom/GridColumnSet";
 import restURI from "json/restURI.json";
 import DateRange from "components/datetime/DateRange";
 import DateTime from "components/datetime/DateTime";

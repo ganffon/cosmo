@@ -8,18 +8,18 @@ function lineDepartmentSet(isEditMode) {
   const rowHeadersModal = ["rowNum"];
 
   const columns = [
-    col.text("line_dept_id", CN.line_dept_id, C.U, C.HIDDEN_ID),
+    col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
     col.text("line_dept_cd", CN.line_dept_cd),
     col.text("line_dept_nm", CN.line_dept_nm, isEditMode),
-    col.text("factory_id", CN.factory_id, C.U, C.HIDDEN_ID),
-    col.text("factory_cd", CN.factory_cd, C.U, C.HIDDEN_ID),
+    col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
+    col.text("factory_cd", CN.factory_cd, C.U, true),
     col.text("factory_nm", CN.factory_nm, C.U, C.U, C.WIDTH_MIDDLE),
-    col.text("line_id", CN.line_id, C.U, C.HIDDEN_ID),
-    col.text("line_cd", CN.line_cd, C.U, C.HIDDEN_ID),
+    col.id("line_id", CN.line_id, C.HIDDEN_ID),
+    col.text("line_cd", CN.line_cd, C.U, true),
     col.select("line_nm", CN.line_nm, isEditMode),
-    col.text("dept_id", CN.dept_id, C.U, C.HIDDEN_ID),
-    col.text("dept_cd", CN.dept_cd, C.U, C.HIDDEN_ID),
-    col.select("dept_nm", CN.dept_nm, isEditMode, C.WIDTH_MIDDLE),
+    col.id("dept_id", CN.dept_id, C.HIDDEN_ID),
+    col.text("dept_cd", CN.dept_cd, C.U, true),
+    col.select("dept_nm", CN.dept_nm, isEditMode, C.WIDTH_LONG),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text(
       "create_user_nm",
@@ -42,23 +42,23 @@ function lineDepartmentSet(isEditMode) {
   const columnsModal = [
     col.text("line_dept_cd", CN.line_dept_cd, true),
     col.text("line_dept_nm", CN.line_dept_nm, true),
-    col.text("line_id", CN.line_id, C.U, C.HIDDEN_ID),
-    col.text("line_cd", CN.line_cd, C.U, C.HIDDEN_ID),
+    col.id("line_id", CN.line_id, C.HIDDEN_ID),
+    col.text("line_cd", CN.line_cd, C.U, true),
     col.select("line_nm", CN.line_nm, true),
-    col.text("dept_id", CN.dept_id, C.U, C.HIDDEN_ID),
-    col.text("dept_cd", CN.dept_cd, C.U, C.HIDDEN_ID),
-    col.select("dept_nm", CN.dept_nm, true, C.WIDTH_MIDDLE),
+    col.id("dept_id", CN.dept_id, C.HIDDEN_ID),
+    col.text("dept_cd", CN.dept_cd, C.U, true),
+    col.select("dept_nm", CN.dept_nm, true, C.WIDTH_LONG),
   ];
 
   const columnsModalSelectLine = [
-    col.text("line_id", CN.line_id, C.U, C.HIDDEN_ID),
+    col.id("line_id", CN.line_id, C.HIDDEN_ID),
     col.text("line_cd", CN.line_cd),
     col.text("line_nm", CN.line_nm),
   ];
   const columnsModalSelectDept = [
-    col.text("dept_id", CN.dept_id, C.U, C.HIDDEN_ID),
+    col.id("dept_id", CN.dept_id, C.HIDDEN_ID),
     col.text("dept_cd", CN.dept_cd),
-    col.text("dept_nm", CN.dept_nm),
+    col.text("dept_nm", CN.dept_nm, C.U, C.U, C.WIDTH_LONG),
   ];
 
   const columnOptions = {

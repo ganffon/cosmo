@@ -2,13 +2,8 @@
 //🔍 OnlySearchSingleGrid.jsx 에서 사용
 import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
-import {
-  WIDTH_SUPER_SHORT,
-  WIDTH_SHORT,
-  WIDTH_MIDDLE,
-  WIDTH_LONG,
-  WIDTH_SUPER_LONG,
-} from "constant/Grid.js";
+import * as C from "constant/Grid.js";
+import * as col from "custom/GridColumnSet";
 
 function ProductGbnSet(isEditMode) {
   const data = [];
@@ -23,147 +18,23 @@ function ProductGbnSet(isEditMode) {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const columns = [
-    {
-      name: "prod_gbn_id",
-      header: CN.prod_gbn_id,
-      minWidth: WIDTH_SHORT,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_gbn_cd",
-      header: CN.prod_gbn_cd,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_gbn_nm",
-      header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: isEditMode ? "text" : false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "create_at",
-      header: CN.create_at,
-      minWidth: WIDTH_LONG,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "create_user_nm",
-      header: CN.create_user_nm,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "update_at",
-      header: CN.update_at,
-      minWidth: WIDTH_LONG,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "update_user_nm",
-      header: CN.update_user_nm,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "delete_at",
-      header: CN.delete_at,
-      minWidth: WIDTH_LONG,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "delete_user_nm",
-      header: CN.delete_user_nm,
-      minWidth: WIDTH_SHORT,
-      align: "center",
-      editor: false,
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    col.id("prod_gbn_id", CN.prod_gbn_id, C.HIDDEN_ID),
+    col.text("prod_gbn_cd", CN.prod_gbn_cd, C.U, C.U, C.WIDTH_MIDDLE),
+    col.text("prod_gbn_nm", CN.prod_gbn_nm, isEditMode, C.U, C.WIDTH_MIDDLE),
+    col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
+    col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
+    col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
+    col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    {
-      name: "prod_gbn_cd",
-      header: CN.prod_gbn_cd,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
-    {
-      name: "prod_gbn_nm",
-      header: CN.prod_gbn_nm,
-      minWidth: WIDTH_MIDDLE,
-      align: "left",
-      editor: "text",
-      hidden: false,
-      sortable: false,
-      filter: false,
-      whiteSpace: false,
-      rowSpan: false,
-    },
+    col.text("prod_gbn_cd", CN.prod_gbn_cd, true),
+    col.text("prod_gbn_nm", CN.prod_gbn_nm, true),
   ];
 
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
-    minWidth: "100",
   };
   const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];

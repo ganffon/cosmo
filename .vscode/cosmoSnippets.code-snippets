@@ -1,0 +1,235 @@
+{
+  "colimport": {
+    "prefix": "colimport",
+    "body": [
+      "import CN from 'json/ColumnName.json';",
+      "import 'components/grid/setting/GridStyle.css';",
+      "import * as C from 'constant/Grid.js';",
+      "import * as col from 'custom/GridColumnSet';"
+    ],
+    "description": "Import in Grid ColumnSet Script"
+  },
+  "colid": {
+    "prefix": "colid",
+    "body": ["col.id('${1:DB컬럼명}', ${2:한글컬럼명}, C.HIDDEN_ID),"],
+    "description": "ID Column Setting"
+  },
+  "coltext": {
+    "prefix": "coltext",
+    "body": [
+      "col.text('${1:DB컬럼명}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:align}, ${6:sortable}, ${7:filter}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "collist": {
+    "prefix": "collist",
+    "body": [
+      "col.list('${1:DB컬럼명ID}', ${2:DB컬럼명NM}, ${3:한글컬럼명}, ${4:listArray}, ${5:입력모드}, ${6:minWidth}, ${7:hidden}, ${8:align}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "collistgbn": {
+    "prefix": "collistgbn",
+    "body": [
+      "col.listGbn('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:hidden}, ${6:align}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "colcheck": {
+    "prefix": "colcheck",
+    "body": [
+      "col.check('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:hidden}, ${5:minWidth}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "colbutton": {
+    "prefix": "colbutton",
+    "body": [
+      "col.button('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:버튼이름}, ${4:버튼함수}, ${5:disabled}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "colnumber": {
+    "prefix": "colnumber",
+    "body": [
+      "col.number('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:hidden}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "colselect": {
+    "prefix": "colselect",
+    "body": [
+      "col.select('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "coldate": {
+    "prefix": "coldate",
+    "body": [
+      "col.date('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}),"
+    ],
+    "description": "ID Column Setting"
+  },
+  "colmulti": {
+    "prefix": "colmulti",
+    "body": ["col.multi(['${1:DB컬럼명ID}']),"],
+    "description": "ID Column Setting"
+  },
+  "restAPI Basic": {
+    "prefix": "rapi",
+    "body": [
+      "try {",
+      "   setIsBackDrop(true)",
+      "   const result = await restAPI.${1:CRUD}(${2:restURI조건});",
+      "",
+      "   ${3:setGridData함수명}(result?.data?.data?.rows);",
+      "",
+      "   setIsSnackOpen({",
+      "     ...isSnackOpen,",
+      "     open: true,",
+      "     message: result?.data?.message,",
+      "     severity: 'success',",
+      "     location: 'bottomRight',",
+      "   });",
+      "} catch (err) {",
+      "   setIsSnackOpen({",
+      "     ...isSnackOpen,",
+      "     open: true,",
+      "     message: err?.response?.data?.message,",
+      "     severity: 'error',",
+      "     location: 'bottomRight',",
+      "   });",
+      "} finally {",
+      "setIsBackDrop(false);",
+      "}"
+    ],
+    "description": "REST API Basic"
+  },
+  "restAPI Grid Post": {
+    "prefix": "gpost",
+    "body": [
+      "try {",
+      "   setIsBackDrop(true)",
+      "   const Grid = ${1:refGrid명}?.current?.gridInst;",
+      "   Grid?.finishEditing();",
+      "",
+      "   let data = [];",
+      "   for (let i = 0; i < Grid?.getRowCount(); i++) {",
+      "     data.push(Grid?.getRowAt(i));",
+      "   }",
+      "   const resultData = data.map((raw) => GetPostParams('${TM_FILENAME_BASE}', raw));",
+      "   if (resultData) {",
+      "     const result = await restAPI.post(${2:restURI조건}, resultData);",
+      "",
+      "     setIsSnackOpen({",
+      "       ...isSnackOpen,",
+      "       open: true,",
+      "       message: result?.data?.message,",
+      "       severity: 'success',",
+      "       location: 'bottomRight',",
+      "     });",
+      "   }",
+      "} catch (err) {",
+      "   setIsSnackOpen({",
+      "     ...isSnackOpen,",
+      "     open: true,",
+      "     message: err?.response?.data?.message,",
+      "     severity: 'error',",
+      "     location: 'bottomRight',",
+      "   });",
+      "} finally {",
+      "   setIsBackDrop(false);",
+      "}"
+    ],
+    "description": "REST API Basic"
+  },
+  "restAPI Grid Put": {
+    "prefix": "gput",
+    "body": [
+      "try {",
+      "   setIsBackDrop(true)",
+      "   const Grid = ${1:refGrid명}?.current?.gridInst;",
+      "   Grid?.finishEditing();",
+      "",
+      "   const resultData = Grid?.getCheckedRows()?.map((raw) => GetPutParams('${TM_FILENAME_BASE}', raw));",
+      "",
+      "   if (resultData) {",
+      "     const result = await restAPI.put(${2:restURI조건}, resultData);",
+      "",
+      "     setIsSnackOpen({",
+      "       ...isSnackOpen,",
+      "       open: true,",
+      "       message: result?.data?.message,",
+      "       severity: 'success',",
+      "       location: 'bottomRight',",
+      "     });",
+      "   }",
+      "} catch (err) {",
+      "   setIsSnackOpen({",
+      "     ...isSnackOpen,",
+      "     open: true,",
+      "     message: err?.response?.data?.message,",
+      "     severity: 'error',",
+      "     location: 'bottomRight',",
+      "   });",
+      "} finally {",
+      "   setIsBackDrop(false);",
+      "}"
+    ],
+    "description": "REST API Basic"
+  },
+  "restAPI Grid Delete": {
+    "prefix": "gdelete",
+    "body": [
+      "try {",
+      "   setIsBackDrop(true)",
+      "   const Grid = ${1:refGrid명}?.current?.gridInst;",
+      "   Grid?.finishEditing();",
+      "",
+      "   const resultData = Grid?.getCheckedRows()?.map((raw) => GetDeleteParams('${TM_FILENAME_BASE}', raw));",
+      "",
+      "   if (resultData) {",
+      "     const result = await restAPI.delete(${2:restURI조건}, { resultData });",
+      "",
+      "     setIsSnackOpen({",
+      "       ...isSnackOpen,",
+      "       open: true,",
+      "       message: result?.data?.message,",
+      "       severity: 'success',",
+      "       location: 'bottomRight',",
+      "     });",
+      "   }",
+      "} catch (err) {",
+      "   setIsSnackOpen({",
+      "     ...isSnackOpen,",
+      "     open: true,",
+      "     message: err?.response?.data?.message,",
+      "     severity: 'error',",
+      "     location: 'bottomRight',",
+      "   });",
+      "} finally {",
+      "   setIsBackDrop(false);",
+      "}"
+    ],
+    "description": "REST API Basic"
+  },
+  "Snippet Setting": {
+    "prefix": "snip",
+    "body": [
+      "TM_SELECTED_TEXT : ${TM_SELECTED_TEXT}",
+      "TM_CURRENT_LINE : ${TM_CURRENT_LINE}",
+      "TM_CURRENT_WORD : ${TM_CURRENT_WORD}",
+      "TM_LINE_INDEX : ${TM_LINE_INDEX}",
+      "TM_LINE_NUMBER : ${TM_LINE_NUMBER}",
+      "TM_FILENAME : ${TM_FILENAME}",
+      "TM_FILENAME_BASE : ${TM_FILENAME_BASE}",
+      "TM_DIRECTORY : ${TM_DIRECTORY}",
+      "TM_FILEPATH : ${TM_FILEPATH}",
+      "RELATIVE_FILEPATH : ${RELATIVE_FILEPATH}",
+      "CLIPBOARD : ${CLIPBOARD}",
+      "WORKSPACE_NAME : ${WORKSPACE_NAME}",
+      "WORKSPACE_FOLDER : ${WORKSPACE_FOLDER}"
+    ],
+    "description": "REST API Basic"
+  }
+}

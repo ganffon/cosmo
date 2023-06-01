@@ -1,6 +1,22 @@
 import * as C from "constant/Grid";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
+import * as RE from "custom/RegularExpression";
+import Condition from "./Condition";
 
+const id = (name = "", header = "", hidden = false) => {
+  return {
+    name: name,
+    header: header,
+    minWidth: C.WIDTH_SHORT,
+    editor: false,
+    align: "left",
+    hidden: hidden,
+    sortable: false,
+    filter: false,
+    whiteSpace: false,
+    rowSpan: false,
+  };
+};
 const text = (
   name = "",
   header = "",
@@ -62,12 +78,48 @@ const list = (
     rowSpan: rowSpan,
   };
 };
+const listGbn = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  hidden = false,
+  align = "left",
+  sortable = false,
+  filter = false,
+  whiteSpace = false,
+  rowSpan = false
+) => {
+  return {
+    name: name,
+    header: header,
+    minWidth: minWidth,
+    formatter: isEditMode ? "listItemText" : null,
+    editor: isEditMode
+      ? {
+          type: "select",
+          options: {
+            listItems: [
+              { text: "제품", value: "제품" },
+              { text: "공정", value: "공정" },
+            ],
+          },
+        }
+      : false,
+    align: align,
+    hidden: hidden,
+    sortable: sortable,
+    filter: filter,
+    whiteSpace: whiteSpace,
+    rowSpan: rowSpan,
+  };
+};
 const check = (
   name = "",
   header = "",
   isEditMode = false,
-  hidden = false,
   minWidth = C.WIDTH_SUPER_SHORT,
+  hidden = false,
   sortable = false,
   filter = false,
   whiteSpace = false,
@@ -137,7 +189,8 @@ const number = (
   name = "",
   header = "",
   isEditMode = false,
-  minWidth = C.WIDTH_SHORT
+  minWidth = C.WIDTH_SHORT,
+  hidden = false
 ) => {
   return {
     name: name,
@@ -148,13 +201,14 @@ const number = (
     formatter: function (value) {
       return CustomGrid.NumComma(value);
     },
-    hidden: false,
+    hidden: hidden,
     sortable: false,
     filter: false,
     whiteSpace: false,
     rowSpan: false,
   };
 };
+
 const select = (
   name = "",
   header = "",
@@ -180,14 +234,82 @@ const select = (
   };
 };
 
-// editor: isEditModeHeader
-//         ? {
-//             type: "datePicker",
-//             options: {
-//               language: "ko",
-//               format: "yyyy-MM-dd",
-//             },
-//           }
-//         : false,
+const date = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT
+) => {
+  return {
+    name: name,
+    header: header,
+    minWidth: minWidth,
+    align: "center",
+    editor: isEditMode
+      ? {
+          type: "datePicker",
+          options: {
+            language: "ko",
+            format: "yyyy-MM-dd",
+          },
+        }
+      : false,
+    hidden: false,
+    sortable: false,
+    filter: false,
+    whiteSpace: false,
+    rowSpan: false,
+  };
+};
 
-export { text, list, check, button, number, select };
+const password = (name = "", header = "", isEditMode = false) => {
+  return {
+    name: name,
+    header: header,
+    minWidth: C.WIDTH_MIDDLE,
+    align: "left",
+    editor: isEditMode ? "password" : false,
+    formatter: function (value) {
+      return CustomGrid.Password(value, false);
+    },
+    hidden: false,
+    sortable: false,
+    filter: false,
+    whiteSpace: false,
+    rowSpan: false,
+  };
+};
+
+const multi = (names = []) => {
+  const columns = names.map((name) => {
+    return {
+      name: name,
+      renderer: CustomGrid.ColumnHeaderMultiLine,
+    };
+  });
+
+  return {
+    columns,
+  };
+};
+
+const RENumComma = (e, refGrid, columnName) => {
+  if (Condition(e, [columnName])) {
+    RE.NumComma(e, refGrid, columnName);
+  }
+};
+
+export {
+  id,
+  text,
+  list,
+  listGbn,
+  check,
+  button,
+  number,
+  select,
+  date,
+  password,
+  multi,
+  RENumComma,
+};

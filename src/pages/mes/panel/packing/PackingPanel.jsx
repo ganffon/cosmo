@@ -519,7 +519,7 @@ function PackingPanel() {
         // onClickSearch={onClickSearchSelectDate}
       />
     );
-  }, [gridDataNewDetail]);
+  }, [gridDataNewDetail, info.lineNM]);
 
   return (
     <>

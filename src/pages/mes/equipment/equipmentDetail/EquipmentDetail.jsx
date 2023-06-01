@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import ButtonNEDS from "components/button/ButtonNEDS";
 import ButtonSES from "components/button/ButtonSES";
@@ -20,6 +20,7 @@ import * as uSearch from "custom/useSearch";
 import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
+import * as col from "custom/GridColumnSet";
 import restURI from "json/restURI.json";
 
 function EquipmentDetail() {
@@ -183,14 +184,45 @@ function EquipmentDetail() {
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, ["use_fg"]);
   };
+  const handleRE = (e, refGrid) => {
+    col.RENumComma(e, refGrid, "purchase_price");
+  };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
+    handleRE(e, refSingleGrid);
+  };
+  const onEditingFinishModal = (e) => {
+    handleRE(e, refModalGrid);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       setSearchToggle(!searchToggle);
     }
   };
+
+  const GridModal = useMemo(() => {
+    return (
+      <ModalNew
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        columns={columnsModal}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersModal}
+        refModalGrid={refModalGrid}
+        onClickModalGrid={onClickModalGrid}
+        onEditingFinishModal={onEditingFinishModal}
+      />
+    );
+  }, [
+    employeeList,
+    equipmentList,
+    equipmentLargeList,
+    equipmentMediumList,
+    equipmentSmallList,
+  ]);
 
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
@@ -321,20 +353,22 @@ function EquipmentDetail() {
           setIsDeleteAlertOpen={setIsDeleteAlertOpen}
         />
       ) : null}
-      {isModalOpen ? (
-        <ModalNew
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersModal}
-          refModalGrid={refModalGrid}
-          onClickModalGrid={onClickModalGrid}
-        />
-      ) : null}
+      {isModalOpen
+        ? // <ModalNew
+          //   onClickModalAddRow={onClickModalAddRow}
+          //   onClickModalCancelRow={onClickModalCancelRow}
+          //   onClickModalSave={onClickModalSave}
+          //   onClickModalClose={onClickModalClose}
+          //   columns={columnsModal}
+          //   columnOptions={columnOptions}
+          //   header={header}
+          //   rowHeaders={rowHeadersModal}
+          //   refModalGrid={refModalGrid}
+          //   onClickModalGrid={onClickModalGrid}
+          //   onEditingFinishModal={onEditingFinishModal}
+          // />
+          GridModal
+        : null}
       <BackDrop isBackDrop={isBackDrop} />
     </S.ContentsArea>
   );

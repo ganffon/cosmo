@@ -27,8 +27,8 @@ function ProcessSet(isEditMode) {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const columns = [
-    col.text("factory_id", CN.factory_id, C.U, C.HIDDEN_ID),
-    col.text("proc_id", CN.proc_id, C.U, C.HIDDEN_ID),
+    col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
+    col.id("proc_id", CN.proc_id, C.HIDDEN_ID),
     col.text("proc_cd", CN.proc_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("proc_nm", CN.proc_nm, isEditMode, C.U, C.WIDTH_MIDDLE),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),

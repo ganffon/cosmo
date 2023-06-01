@@ -22,24 +22,22 @@ const useSearch = (
 ) => {
   const actSearch = async () => {
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        const readURI = uri + inputParams;
-        let gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setDisableRowToggle(!disableRowToggle);
-        setIsBackDrop(false);
-      }
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+      const readURI = uri + inputParams;
+      let gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+      setIsBackDrop(false);
     }
   };
   return [actSearch];
@@ -63,25 +61,23 @@ const useSearchCbo = (
 ) => {
   const actSearchCbo = async () => {
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const readURI = uri + cboParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setDisableRowToggle(!disableRowToggle);
-        setIsBackDrop(false);
-      }
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+      const cboParams = GetCboSearchParams(inputParams, comboValue);
+      const readURI = uri + cboParams;
+      const gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+      setIsBackDrop(false);
     }
   };
   return [actSearchCbo];
@@ -106,31 +102,29 @@ const useSearchCboDate = (
 ) => {
   const actSearchCboDate = async (startDateNm, endDateNm) => {
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const dateParams = GetDateParams(
-          cboParams,
-          dateText,
-          startDateNm,
-          endDateNm
-        );
-        const readURI = uri + dateParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setDisableRowToggle(!disableRowToggle);
-        setIsBackDrop(false);
-      }
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+      const cboParams = GetCboSearchParams(inputParams, comboValue);
+      const dateParams = GetDateParams(
+        cboParams,
+        dateText,
+        startDateNm,
+        endDateNm
+      );
+      const readURI = uri + dateParams;
+      const gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+      setIsBackDrop(false);
     }
   };
   return [actSearchCboDate];
@@ -149,30 +143,28 @@ const useSearchDI = (
   uri
 ) => {
   const actSearchDI = async (startDateNm, endDateNm) => {
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        const dateParams = GetDateParams(
-          inputParams,
-          dateText,
-          startDateNm,
-          endDateNm
-        );
-        const readURI = uri + dateParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
-        setDisRowHeader(!disRowHeader);
-      }
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+      const dateParams = GetDateParams(
+        inputParams,
+        dateText,
+        startDateNm,
+        endDateNm
+      );
+      const readURI = uri + dateParams;
+      const gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
+      setDisRowHeader(!disRowHeader);
     }
   };
   return [actSearchDI];
@@ -194,24 +186,22 @@ const useSearchOnlyCbo = (
 ) => {
   const actSearchOnlyCbo = async () => {
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const readURI = uri + cboParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
-      }
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+      const cboParams = GetCboSearchParams(inputParams, comboValue);
+      const readURI = uri + cboParams;
+      const gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
   return [actSearchOnlyCbo];
@@ -234,30 +224,28 @@ const useSearchOnlyCboDate = (
 ) => {
   const actSearchOnlyCboDate = async (startDateNm, endDateNm) => {
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        const cboParams = GetCboSearchParams(inputParams, comboValue);
-        const dateParams = GetDateParams(
-          cboParams,
-          dateText,
-          startDateNm,
-          endDateNm
-        );
-        const readURI = uri + dateParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
-      }
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+      const cboParams = GetCboSearchParams(inputParams, comboValue);
+      const dateParams = GetDateParams(
+        cboParams,
+        dateText,
+        startDateNm,
+        endDateNm
+      );
+      const readURI = uri + dateParams;
+      const gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
   return [actSearchOnlyCboDate];
@@ -278,31 +266,29 @@ const useSearchOnlyDate = (
 ) => {
   const actSearchOnlyDate = async (startDateNm, endDateNm) => {
     refGrid?.current?.gridInst?.finishEditing();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const dateParams = GetDateParams("", dateText, startDateNm, endDateNm);
-        const readURI = uri + dateParams;
-        let gridData = await restAPI.get(readURI);
-        if (componentName !== null) {
-          gridData = gridData?.data?.data?.rows.map((raw) =>
-            GetSearchParams(componentName, raw)
-          );
+    try {
+      setIsBackDrop(true);
+      const dateParams = GetDateParams("", dateText, startDateNm, endDateNm);
+      const readURI = uri + dateParams;
+      let gridData = await restAPI.get(readURI);
+      if (componentName !== null) {
+        gridData = gridData?.data?.data?.rows.map((raw) =>
+          GetSearchParams(componentName, raw)
+        );
 
-          await setGridData(gridData);
-        } else {
-          await setGridData(gridData?.data?.data?.rows);
-        }
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
+        await setGridData(gridData);
+      } else {
+        await setGridData(gridData?.data?.data?.rows);
       }
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
   return [actSearchOnlyDate];
@@ -422,31 +408,29 @@ const useSearchHeaderDI = (
   ) => {
     inputReset && setInputInfoValue([]); //🔸Header 조회 시 InputBox 초기화
     refGrid02?.current?.gridInst.clear();
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        // const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-        const inputParams = GetInputSearchReadOnly(inputBoxID, inputTextChange);
-        const dateParams = GetDateParams(
-          inputParams,
-          dateText,
-          startDateNm,
-          endDateNm
-        );
-        const readURI = uri + dateParams;
-        const gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setIsBackDrop(false);
-        setDisRowHeader(!disRowHeader);
-      }
+    try {
+      setIsBackDrop(true);
+      // const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
+      const inputParams = GetInputSearchReadOnly(inputBoxID, inputTextChange);
+      const dateParams = GetDateParams(
+        inputParams,
+        dateText,
+        startDateNm,
+        endDateNm
+      );
+      const readURI = uri + dateParams;
+      const gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
+      setDisRowHeader(!disRowHeader);
     }
   };
   return [actSearchHeaderDI];
@@ -519,26 +503,23 @@ const useSearchIndex = (
 ) => {
   const actSearchIndex = async () => {
     refGrid?.current?.gridInst?.finishEditing();
+    try {
+      setIsBackDrop(true);
+      const inputParams = GetInputSearchReadOnly(inputBoxID, inputTextChange);
 
-    if (isBackDrop === false) {
-      try {
-        setIsBackDrop(true);
-        const inputParams = GetInputSearchReadOnly(inputBoxID, inputTextChange);
-
-        const readURI = uri + inputParams;
-        let gridData = await restAPI.get(readURI);
-        await setGridData(gridData?.data?.data?.rows);
-      } catch {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: "조회 실패",
-          severity: "error",
-        });
-      } finally {
-        setDisableRowToggle(!disableRowToggle);
-        setIsBackDrop(false);
-      }
+      const readURI = uri + inputParams;
+      let gridData = await restAPI.get(readURI);
+      await setGridData(gridData?.data?.data?.rows);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+      setIsBackDrop(false);
     }
   };
   return [actSearchIndex];

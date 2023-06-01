@@ -8,7 +8,7 @@ import GetTestValAndCreateAt, {
   GetDateDay,
   GetDateMonth,
 } from "pages/mes/dashboard/asdb";
-import * as S from "pages/mes/dashboard/Dashboard.styled";
+import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
