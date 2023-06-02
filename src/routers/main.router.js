@@ -72,102 +72,96 @@ import DailyLineCapa from "pages/mes/managementInfo/dailyLineCapa/DailyLineCapa"
 import MonthlyPartCapa from "pages/mes/managementInfo/monthlyPartCapa/MonthlyPartCapa";
 import PerformanceRate from "pages/mes/managementInfo/performanceRate/PerformancRate";
 import TimeRate from "pages/mes/managementInfo/timeRate/TimeRate";
+import DownTimePanel from "pages/mes/panel/downTime/DownTimePanel";
 
 export default function MainRouter() {
+  const pages = [
+    { path: "", component: Dashboard },
+    { path: "factory", component: Factory },
+    { path: "line", component: Line },
+    { path: "user", component: User },
+    { path: "process", component: Process },
+    { path: "equipment", component: Equipment },
+    { path: "product-gbn", component: ProductGbn },
+    { path: "product-model", component: ProductModel },
+    { path: "product-type", component: ProductType },
+    { path: "product", component: Product },
+    { path: "product-type-small", component: ProductTypeSmall },
+    { path: "partner-type", component: PartnerType },
+    { path: "partner", component: Partner },
+    { path: "department", component: Department },
+    { path: "grade", component: Grade },
+    { path: "store", component: Store },
+    { path: "store-location", component: StoreLocation },
+    { path: "worker-group", component: WorkerGroup },
+    { path: "downtime-type", component: DowntimeType },
+    { path: "downtime", component: Downtime },
+    { path: "filing", component: InspectFiling },
+    { path: "method", component: InspectMethod },
+    { path: "tool", component: InspectTool },
+    { path: "inspection-item-type", component: InspectType },
+    { path: "inspection-item", component: InspectItem },
+    { path: "document", component: Document },
+    { path: "control-plan", component: ControlPlan },
+    { path: "interface-item-type", component: InterfaceItemType },
+    { path: "interface-item", component: InterfaceItem },
+    { path: "interface-memory", component: InterfaceMemory },
+    { path: "equipment-classification", component: EquipmentLarge },
+    { path: "equipment-group", component: EquipmentMedium },
+    { path: "equipment-class", component: EquipmentSmall },
+    { path: "equipment-detail", component: EquipmentDetail },
+    { path: "equipment-result", component: EquipmentResult },
+    { path: "equipment", component: EquipmentMedium },
+    { path: "equipment", component: EquipmentMedium },
+    { path: "store-view", component: StoreView },
+    { path: "store-transfer-view", component: StoreTransferView },
+    { path: "store-check", component: StoreCheck },
+
+    { path: "subdivision", component: Subdivision },
+    { path: "production-order", component: ProductionOrder },
+    { path: "packing", component: Packing },
+
+    { path: "spareparts-income", component: SparepartIncome },
+    { path: "spareparts-outgo", component: SparepartsRelease },
+    { path: "spareparts-store-view", component: SparepartsStoreView },
+    {
+      path: "spareparts-store-transfer-view",
+      component: SparepartsStoreTransView,
+    },
+    { path: "line-dept", component: LineDepartment },
+    { path: "product-class", component: ProductClass },
+    { path: "weight", component: Weight },
+    { path: "production-downtime", component: ProductionDownTime },
+    { path: "production-lot-tracking", component: ProductionLotTracking },
+    { path: "userHistoryStatus", component: UserHistory },
+
+    { path: "subdivision-panel", component: SubdivisionPanel },
+    { path: "weight-panel", component: WeightPanel },
+    { path: "packing-panel", component: PackingPanel },
+
+    { path: "unit", component: Unit },
+    { path: "menu-manage", component: MenuManage },
+    { path: "menu-list", component: MenuList },
+    { path: "setup", component: Setup },
+    { path: "insp-result-upload", component: InspResultUpload },
+    { path: "weight-report", component: WeightReport },
+    { path: "equipment-rawdata-view", component: EquipmentRawDataView },
+
+    { path: "production-packing-view", component: ProductionPackingView },
+
+    { path: "monthlyLineCapa", component: MonthlyLineCapa },
+    { path: "dailyLineCapa", component: DailyLineCapa },
+    { path: "monthlyPartCapa", component: MonthlyPartCapa },
+    { path: "timeRate", component: TimeRate },
+    { path: "performanceRate", component: PerformanceRate },
+    { path: "downtime-panel", component: DownTimePanel },
+  ];
   return (
     <Layout>
       <Routes>
-        <Route path="" element={<Dashboard />} />
-
-        <Route path="factory" element={<Factory />} />
-        <Route path="line" element={<Line />} />
-        <Route path="user" element={<User />} />
-        <Route path="employee" element={<Employee />} />
-        <Route path="process" element={<Process />} />
-        <Route path="equipment" element={<Equipment />} />
-        <Route path="product-gbn" element={<ProductGbn />} />
-        <Route path="product-model" element={<ProductModel />} />
-        <Route path="product-type" element={<ProductType />} />
-        <Route path="product" element={<Product />} />
-        <Route path="product-type-small" element={<ProductTypeSmall />} />
-        <Route path="partner-type" element={<PartnerType />} />
-        <Route path="partner" element={<Partner />} />
-        <Route path="department" element={<Department />} />
-        <Route path="grade" element={<Grade />} />
-        <Route path="store" element={<Store />} />
-        <Route path="store-location" element={<StoreLocation />} />
-        <Route path="worker-group" element={<WorkerGroup />} />
-        <Route path="downtime-type" element={<DowntimeType />} />
-        <Route path="downtime" element={<Downtime />} />
-        <Route path="filing" element={<InspectFiling />} />
-        <Route path="method" element={<InspectMethod />} />
-        <Route path="tool" element={<InspectTool />} />
-        <Route path="inspection-item-type" element={<InspectType />} />
-        <Route path="inspection-item" element={<InspectItem />} />
-        <Route path="document" element={<Document />} />
-        <Route path="control-plan" element={<ControlPlan />} />
-
-        <Route path="interface-item-type" element={<InterfaceItemType />} />
-        <Route path="interface-item" element={<InterfaceItem />} />
-        <Route path="interface-memory" element={<InterfaceMemory />} />
-
-        <Route path="equipment-classification" element={<EquipmentLarge />} />
-        <Route path="equipment-group" element={<EquipmentMedium />} />
-        <Route path="equipment-class" element={<EquipmentSmall />} />
-        <Route path="equipment-detail" element={<EquipmentDetail />} />
-        <Route path="equipment-result" element={<EquipmentResult />} />
-
-        <Route path="store-view" element={<StoreView />} />
-        <Route path="store-transfer-view" element={<StoreTransferView />} />
-        <Route path="store-check" element={<StoreCheck />} />
-
-        <Route path="subdivision" element={<Subdivision />} />
-        <Route path="production-order" element={<ProductionOrder />} />
-        <Route path="packing" element={<Packing />} />
-
-        <Route path="spareparts-income" element={<SparepartIncome />} />
-        <Route path="spareparts-outgo" element={<SparepartsRelease />} />
-        <Route path="spareparts-store-view" element={<SparepartsStoreView />} />
-        <Route
-          path="spareparts-store-transfer-view"
-          element={<SparepartsStoreTransView />}
-        />
-        <Route path="line-dept" element={<LineDepartment />} />
-        <Route path="product-class" element={<ProductClass />} />
-        <Route path="weight" element={<Weight />} />
-        <Route path="production-downtime" element={<ProductionDownTime />} />
-        <Route
-          path="production-lot-tracking"
-          element={<ProductionLotTracking />}
-        />
-        <Route path="userHistoryStatus" element={<UserHistory />} />
-
-        <Route path="subdivision-panel" element={<SubdivisionPanel />} />
-        <Route path="weight-panel" element={<WeightPanel />} />
-        <Route path="packing-panel" element={<PackingPanel />} />
-
-        <Route path="unit" element={<Unit />} />
-        <Route path="menu-manage" element={<MenuManage />} />
-        <Route path="menu-list" element={<MenuList />} />
-        <Route path="setup" element={<Setup />} />
-        <Route path="insp-result-upload" element={<InspResultUpload />} />
-        <Route path="weight-report" element={<WeightReport />} />
-
-        <Route
-          path="equipment-rawdata-view"
-          element={<EquipmentRawDataView />}
-        />
-
-        <Route
-          path="production-packing-view"
-          element={<ProductionPackingView />}
-        />
-
-        <Route path="monthlyLineCapa" element={<MonthlyLineCapa />} />
-        <Route path="dailyLineCapa" element={<DailyLineCapa />} />
-        <Route path="monthlyPartCapa" element={<MonthlyPartCapa />} />
-        <Route path="timeRate" element={<TimeRate />} />
-        <Route path="performanceRate" element={<PerformanceRate />} />
+        {pages.map((page, index) => (
+          <Route key={index} path={page.path} element={<page.component />} />
+        ))}
 
         <Route path="*" element={<Navigate replace to="/not-found" />} />
       </Routes>

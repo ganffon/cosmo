@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -60,12 +60,6 @@ export const RightBox = styled("div")`
   justify-content: center;
   align-items: flex-start;
 `;
-export const Dori = styled("img")`
-  height: 150px;
-  position: absolute;
-  top: -80px;
-  left: 30px;
-`;
 
 export const LoginForm = styled("form")`
   width: 410px;
@@ -106,4 +100,32 @@ export const LoginButton = styled(Button)`
 export const FactoryCombo = styled(Autocomplete)`
   margin-bottom: 20px;
   width: 100%;
+`;
+
+export const shakeAnimation = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(-5px) rotate(5deg);
+  }
+  75% {
+    transform: translateX(5px) rotate(-5deg);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}`;
+
+export const Dori = styled("img")`
+  height: 150px;
+  position: absolute;
+  top: -80px;
+  left: 30px;
+  animation: ${shakeAnimation} 1s ease-in-out;
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
 `;

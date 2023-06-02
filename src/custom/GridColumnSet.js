@@ -145,13 +145,7 @@ const check = (
     rowSpan: rowSpan,
   };
 };
-const button = (
-  name = "",
-  header = "",
-  btnName = "",
-  func = () => {},
-  disabled = false
-) => {
+const button = (name = "", header = "", btnName = "", func = () => {}, disabled = false) => {
   return {
     name: name,
     header: header,
@@ -185,13 +179,7 @@ const button = (
  * }
  * @returns
  */
-const number = (
-  name = "",
-  header = "",
-  isEditMode = false,
-  minWidth = C.WIDTH_SHORT,
-  hidden = false
-) => {
+const number = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, hidden = false) => {
   return {
     name: name,
     header: header,
@@ -209,12 +197,7 @@ const number = (
   };
 };
 
-const select = (
-  name = "",
-  header = "",
-  isEditMode = false,
-  minWidth = C.WIDTH_SHORT
-) => {
+const select = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT) => {
   return {
     name: name,
     header: header,
@@ -234,12 +217,7 @@ const select = (
   };
 };
 
-const date = (
-  name = "",
-  header = "",
-  isEditMode = false,
-  minWidth = C.WIDTH_SHORT
-) => {
+const date = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT) => {
   return {
     name: name,
     header: header,
@@ -299,17 +277,4 @@ const RENumComma = (e, refGrid, columnName) => {
   }
 };
 
-export {
-  id,
-  text,
-  list,
-  listGbn,
-  check,
-  button,
-  number,
-  select,
-  date,
-  password,
-  multi,
-  RENumComma,
-};
+export { id, text, list, listGbn, check, button, number, select, date, password, multi, RENumComma };

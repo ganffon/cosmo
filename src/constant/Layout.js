@@ -7,7 +7,7 @@ export const APP_BAR_COLOR = "white";
 export const MENU_FOLD_WIDTH = "90px";
 export const MENU_FOLD_BACK_COLOR = "#003557";
 
-export const MENU_DEPTH_WIDTH = "200px";
+export const MENU_DEPTH_WIDTH = "250px";
 export const MENU_DEPTH_BACK_COLOR = "#004775";
 
 export const SEARCH_BAR_HEIGHT = "60px";

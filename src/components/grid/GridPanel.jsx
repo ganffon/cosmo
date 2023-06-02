@@ -3,7 +3,7 @@ import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 
-function GridSingle(props) {
+function GridPanel(props) {
   const {
     columnOptions = [],
     columns = [],
@@ -16,25 +16,23 @@ function GridSingle(props) {
     onDblClickGrid = () => {},
     onEditingFinish = () => {},
   } = props;
-
   useEffect(() => {
     GridTheme();
   }, []);
 
   const handleFocus = () => {
-    const Grid = refGrid?.current?.getInstance();
+    const Grid = refGrid?.current?.gridInst;
     const coords = Grid.getFocusedCell();
     if (coords) {
       Grid.startEditing(coords.rowKey, coords.columnName);
     }
   };
-
   return (
     <Grid
       scrollX={true}
       scrollY={true}
       rowHeaders={rowHeaders} // index 컬럼 생성 "rowNum", "checkbox", "radio"
-      rowHeight={"auto"} // index 컬럼 자동 높이 조절
+      rowHeight={60} // index 컬럼 자동 높이 조절
       bodyHeight={"fitToParent"}
       heightResizable={false}
       columnOptions={columnOptions}
@@ -43,8 +41,8 @@ function GridSingle(props) {
       header={header}
       draggable={draggable}
       ref={refGrid}
-      onClick={(e) => {
-        onClickGrid(e);
+      onClick={() => {
+        onClickGrid();
         handleFocus();
       }}
       onDblclick={onDblClickGrid}
@@ -53,4 +51,4 @@ function GridSingle(props) {
   );
 }
 
-export default GridSingle;
+export default GridPanel;

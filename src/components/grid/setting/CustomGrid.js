@@ -9,12 +9,8 @@ class CheckBox {
     el.addEventListener("click", (ev) => {
       const rowKey = el.parentElement.__preactattr_["data-row-key"];
       el.checked
-        ? (el.parentElement._component.context.store.data.rawData[rowKey][
-            elName
-          ] = true)
-        : (el.parentElement._component.context.store.data.rawData[rowKey][
-            elName
-          ] = false);
+        ? (el.parentElement._component.context.store.data.rawData[rowKey][elName] = true)
+        : (el.parentElement._component.context.store.data.rawData[rowKey][elName] = false);
     });
 
     this.el = el;
@@ -150,9 +146,7 @@ class EditorFloat3 {
 function NumComma(value) {
   if (value.value !== null) {
     // 소수점 이하 자리 수를 구함
-    const decimalLength = value.value.toString().includes(".")
-      ? value.value.toString().split(".")[1].length
-      : 0;
+    const decimalLength = value.value.toString().includes(".") ? value.value.toString().split(".")[1].length : 0;
     const int = value.value.toString().split(".")[0];
     const decimal = value.value.toString().split(".")[1];
     const formattedValue =

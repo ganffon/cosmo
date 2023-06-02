@@ -11,6 +11,8 @@ export const PaperBox = styled(Paper)`
   height: ${(props) => props.height};
   position: relative;
   margin: 6px 0px 0px 10px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 `;
 export const PaperTitle = styled("div")`
   padding: 2px 4px;

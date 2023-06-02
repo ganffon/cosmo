@@ -7,6 +7,7 @@ function ModalSelect(props) {
   const {
     width = "80%",
     height = "90%",
+    title = "[데이터 선택]",
     onClickModalSelectClose = () => {},
     refSelectGrid = null,
     columns = [],
@@ -21,12 +22,8 @@ function ModalSelect(props) {
   return (
     <ModalWrap width={width} height={height}>
       <S.HeaderBox>
-        <S.TitleBox>{`[데이터 선택]`}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalSelectClose}
-        >
+        <S.TitleBox>{title}</S.TitleBox>
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalSelectClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>

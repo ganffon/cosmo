@@ -544,6 +544,12 @@
         "id": "equipment-result",
         "path": "equipment-result",
         "under": null
+      },
+      {
+        "name": "✴️비가동관리",
+        "id": "downtime-panel",
+        "path": "downtime-panel",
+        "under": null
       }
     ]
   }
