@@ -42,14 +42,8 @@ function subMenu(menu, handleClickMenu) {
 }
 
 function V2MenuDepth({ lv2Menu, setLv2Menu }) {
-  const {
-    isMouseOver,
-    setIsMouseOver,
-    setIsModalOpen,
-    authMenuCode,
-    setAuthMenuCode,
-    superAdmin,
-  } = useContext(LayoutContext);
+  const { isMouseOver, setIsMouseOver, setIsModalOpen, authMenuCode, setAuthMenuCode, superAdmin } =
+    useContext(LayoutContext);
   const navigate = useNavigate();
   const [alertOpen, setAlertOpen] = useState({
     open: false,
@@ -61,9 +55,9 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
     if (loginID !== "ispark" && admin !== "true") {
       try {
         const res = await restAPI.get(
-          `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get(
-            "userUID"
-          )}&user_factory_id=${Cookies.get("userFactoryID")}`
+          `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get("userUID")}&user_factory_id=${Cookies.get(
+            "userFactoryID"
+          )}`
         );
 
         if (res?.data?.data?.rows[0] !== undefined || superAdmin === true) {
@@ -125,9 +119,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
               {lv2Menu.map((lv2Menu) => (
                 <S.Menu key={lv2Menu.id} subheader={subTitle(lv2Menu)}>
                   {lv2Menu.under
-                    ? lv2Menu.under.map((lv3Menu) =>
-                        subMenu(lv3Menu, handleClickMenu)
-                      )
+                    ? lv2Menu.under.map((lv3Menu) => subMenu(lv3Menu, handleClickMenu))
                     : subMenu(lv2Menu, handleClickMenu)}
 
                   <Divider />

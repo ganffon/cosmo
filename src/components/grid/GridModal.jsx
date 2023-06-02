@@ -21,24 +21,13 @@ function GridModal(props) {
     GridTheme();
   }, []);
 
-  // const [pasteData] = useDataApi({});
-
-  // const handleClipboard = (event) => {
-  //   if (event.clipboardData) {
-  //     event.preventDefault();
-  //     const clipboardData = event.clipboardData.getData("text");
-  //     const rows = clipboardData.split("\n").map((row) => row.split("\t"));
-  //     const dataRows = rows.map((row) => {
-  //       const newRow = {};
-  //       row.forEach((value, index) => {
-  //         const columnName = pasteData.columns[index].name;
-  //         newRow[columnName] = value;
-  //       });
-  //       return newRow;
-  //     });
-  //     pasteData.setRows(dataRows);
-  //   }
-  // };
+  const handleFocus = () => {
+    const Grid = refGrid?.current?.gridInst;
+    const coords = Grid.getFocusedCell();
+    if (coords) {
+      Grid.startEditing(coords.rowKey, coords.columnName);
+    }
+  };
 
   return (
     <Grid
@@ -54,7 +43,10 @@ function GridModal(props) {
       header={header}
       draggable={draggable}
       ref={refGrid}
-      onClick={onClick}
+      onClick={() => {
+        onClick();
+        handleFocus();
+      }}
       onDblclick={onDblClick}
       onEditingFinish={onEditingFinish}
       // onClipboard={handleClipboard}

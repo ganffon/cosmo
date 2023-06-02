@@ -30,16 +30,35 @@ function Login() {
     severity: "error",
   });
   const [factoryDataOption, setFactoryDataOption] = useState([]);
+  const [selectedFactory, setSelectedFactory] = useState([]);
+
   useEffect(() => {
     async function factoryDataSetting() {
       await restAPI.get(restURI.loginFactory).then((res) => {
         setFactoryDataOption(res?.data?.data?.rows);
+        if (Cookies.get("factoryID")) {
+          const result = res?.data?.data?.rows.find((factory) => factory.factory_id === Cookies.get("factoryID"));
+          setSelectedFactory(result);
+          if (result) {
+            setLoginInfo({
+              ...loginInfo,
+              loginFactoryID: result?.factory_id,
+              loginFactoryName: result?.factory_nm,
+            });
+          }
+        }
       });
     }
     factoryDataSetting();
 
     window.document.title = `Cosmo MES`;
   }, []);
+
+  const setLoginCookie = (cookieID, cookieData, days) => {
+    const expires = new Date(); // 현재 시간
+    expires.setDate(expires.getDate() + days); // days일 후의 시간을 설정
+    Cookies.set(cookieID, cookieData, { expires }); // 쿠키 설정
+  };
 
   const changeLoginInfo = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.id]: e.target.value });
@@ -75,45 +94,18 @@ function Login() {
     if (nullCheck() === true) {
       setIsBackDrop(true);
       await restAPI
-        .get(
-          restURI.login +
-            `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`
-        )
+        .get(restURI.login + `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`)
         .then((res) => {
-          // const expiresTime = new Date();
-          // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-          Cookies.set("userName", res?.data?.data?.rows[0]?.user_nm, {
-            path: "/",
-            expires: 7,
-            secure: false,
-          });
-          Cookies.set("userUID", res?.data?.data?.rows[0]?.uid, {
-            path: "/",
-            expires: 7,
-            secure: false,
-          });
-          Cookies.set(
-            "userFactoryID",
-            res?.data?.data?.rows[0]?.user_factory_id,
-            {
-              path: "/",
-              expires: 7,
-              secure: false,
-            }
-          );
-          Cookies.set("factoryID", loginInfo.loginFactoryID, {
-            path: "/",
-            expires: 7,
-            secure: false,
-          });
-          Cookies.set("admin", res?.data?.data?.rows[0]?.admin_fg, {
-            path: "/",
-            expires: 7,
-            secure: false,
-          });
+          setLoginCookie("userName", res?.data?.data?.rows[0]?.user_nm, 7);
+          setLoginCookie("userUID", res?.data?.data?.rows[0]?.uid, 7);
+          setLoginCookie("userFactoryID", res?.data?.data?.rows[0]?.user_factory_id, 7);
+          setLoginCookie("factoryID", loginInfo.loginFactoryID, 7);
+          setLoginCookie("admin", res?.data?.data?.rows[0]?.admin_fg, 7);
+          localStorage.setItem("loginState", true);
           navigate("/mes");
         })
         .catch((res) => {
+          localStorage.setItem("loginState", false);
           setAlertOpen({
             ...alertOpen,
             open: true,
@@ -121,20 +113,13 @@ function Login() {
           });
         })
         .finally(() => {
-          // const expiresTime = new Date();
-          // expiresTime.setFullYear(expiresTime.getFullYear() + 1); //🔸쿠키 만료일 로그인 할 때 마다 +1년 해줘서 무제한
-          Cookies.set("loginID", loginInfo.loginID, {
-            path: "/",
-            expires: 7,
-            secure: false,
-          });
+          setLoginCookie("loginID", loginInfo.loginID, 7);
           // restAPI 헤더 값 추가
           restAPI.defaults.headers = {
             "Content-Type": "application/json; charset=utf-8",
             factory: Cookies.get("factoryID"),
             user: Cookies.get("userUID"),
           };
-          localStorage.setItem("loginState", true);
           setIsBackDrop(false);
         });
     }
@@ -145,7 +130,6 @@ function Login() {
       goLogin();
     }
   };
-
   useEffect(() => {
     const state = localStorage.getItem("loginState");
     if (state === "true") {
@@ -186,19 +170,20 @@ function Login() {
                 disableClearable
                 id="factoryCombo"
                 size="small"
+                value={selectedFactory}
                 key={(option) => option?.factory_id}
                 options={factoryDataOption || null}
                 getOptionLabel={(option) => option?.factory_nm || ""}
                 onChange={(_, newValue) => {
+                  const result = factoryDataOption?.find((factory) => factory.factory_id === newValue?.factory_id);
+                  setSelectedFactory(result);
                   setLoginInfo({
                     ...loginInfo,
                     loginFactoryID: newValue?.factory_id,
                     loginFactoryName: newValue?.factory_nm,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={"사업부"} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={"사업부"} size="small" />}
               />
               <S.LoginInput
                 id="loginID"
@@ -220,12 +205,7 @@ function Login() {
                 onChange={changeLoginInfo}
               />
             </S.LoginInputBox>
-            <S.LoginButton
-              id="loginBtn"
-              variant="contained"
-              size="small"
-              onClick={goLogin}
-            >
+            <S.LoginButton id="loginBtn" variant="contained" size="small" onClick={goLogin}>
               로그인
             </S.LoginButton>
           </S.LoginForm>

@@ -34,6 +34,10 @@ function NoticeSnack({ state, setState }) {
       vertical = "top";
       horizontal = "right";
       break;
+    case "topCenter":
+      vertical = "top";
+      horizontal = "center";
+      break;
     default:
       vertical = "bottom";
       horizontal = "right";
@@ -60,13 +64,9 @@ function NoticeSnack({ state, setState }) {
       open={state.open}
       autoHideDuration={duration}
       onClose={handleClose}
-      anchorOrigin={{ vertical, horizontal }}
+      anchorOrigin={{ vertical: vertical, horizontal: horizontal }}
     >
-      <Alert
-        onClose={handleClose}
-        severity={state.severity}
-        sx={{ width: "100%" }}
-      >
+      <Alert onClose={handleClose} severity={state.severity} sx={{ width: "100%" }}>
         {state.message}
       </Alert>
     </Snackbar>

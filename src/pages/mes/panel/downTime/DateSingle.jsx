@@ -3,19 +3,12 @@ import React, { useEffect, createRef } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 // ⬇️ reference of page
 import DateTime from "components/datetime/DateTime";
-import * as S from "./Date.styled";
+import * as S from "./DownTimeInput.styled";
 
 function DateSingle(props) {
-  const { dateText, setDateText } = props;
+  const { dateText = {}, setDateText = () => {}, id } = props;
 
-  const dateRef = createRef();
-
-  useEffect(() => {
-    setDateText({
-      startDate: DateTime(-7).dateFull,
-      endDate: DateTime().dateFull,
-    });
-  }, []);
+  const refDate = createRef();
 
   const dateSingleChange = (e) => {
     setDateText({ ...dateText, [e.target.id]: e.target.value });
@@ -24,14 +17,13 @@ function DateSingle(props) {
   return (
     <S.DateBox>
       <S.DateSingle
-        // id="startDate"
+        id={id}
         type="date"
         format="yyyy-MM-dd"
         defaultValue={DateTime().dateFull}
-        ref={dateRef}
+        ref={refDate}
         InputProps={{
-          sx: { height: 40 },
-          startAdornment: <InputAdornment position="start">"날짜"</InputAdornment>,
+          sx: { height: 90, fontSize: "35px", fontFamily: "NotoSansKR_B" },
         }}
         onChange={dateSingleChange}
       />

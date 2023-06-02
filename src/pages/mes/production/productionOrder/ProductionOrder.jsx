@@ -28,8 +28,7 @@ import restAPI from "api/restAPI";
 
 function ProductionOrder() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refGridHeader = useRef(null);
   const refGridMid = useRef(null);
@@ -68,34 +67,22 @@ function ProductionOrder() {
   const SWITCH_NAME_02 = "orderInput";
   const SWITCH_NAME_03 = "orderDetail";
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditModeMid,
-    refGridMid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
 
-  const [disableRowToggleMid, setDisableRowToggleMid] =
-    disRow.useDisableRowCheck(isEditModeMid, refGridMid);
+  const [disableRowToggleMid, setDisableRowToggleMid] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
 
-  const [disableRowToggleTop, setDisableRowToggleTop] =
-    disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disableRowToggleTop, setDisableRowToggleTop] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
 
-  const [disableRowToggleBottom, setDisableRowToggleBottom] =
-    disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
-
-  const [disRowTop, setDisRowTop] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeMid,
-    refGridMid
-  );
-
-  const [disRowTopBottom, setDisRowBottom] = disRow.useDisableRowCheck(
+  const [disableRowToggleBottom, setDisableRowToggleBottom] = disRow.useDisableRowCheck(
     isEditModeBottom,
     refGridBottom
   );
+
+  const [disRowTop, setDisRowTop] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
+
+  const [disRowTopBottom, setDisRowBottom] = disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -131,10 +118,7 @@ function ProductionOrder() {
     refGridBottom?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
@@ -150,6 +134,7 @@ function ProductionOrder() {
     actSelectRequestOnlyDate("start_date", "end_date");
   };
   const onClickGridHeader = (e) => {
+    console.log(e);
     if (!isEditModeHeader) {
       headerRowID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
 
@@ -241,12 +226,7 @@ function ProductionOrder() {
                 readURI = "?";
                 cnt++;
               }
-              readURI =
-                readURI +
-                inputBoxID[i] +
-                "=" +
-                inputTextChange[inputBoxID[i]] +
-                "&";
+              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -362,22 +342,11 @@ function ProductionOrder() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameRequest = [
-      "request_id",
-      "request_no",
-      "prod_id",
-      "prod_cd",
-      "prod_nm",
-    ];
+    const columnNameRequest = ["request_id", "request_no", "prod_id", "prod_cd", "prod_nm"];
 
     const columnNameLineDept = ["line_dept_id", "line_dept_nm", "line_id"];
 
-    const columnNameInspItem = [
-      "insp_item_type_id",
-      "insp_item_type_nm",
-      "insp_item_id",
-      "insp_item_nm",
-    ];
+    const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
     const prodCode = e?.instance?.store?.data?.rawData[e?.rowKey].prod_cd;
     let prodId;
     if (prodCode && headerModalControl === "request") {
@@ -571,11 +540,7 @@ function ProductionOrder() {
   return (
     <S.ContentsArea isAllScreen={isAllScreen}>
       <S.SearchCondition>
-        <S.Date
-          datePickerSet={"range"}
-          dateText={dateText}
-          setDateText={setDateText}
-        />
+        <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
         {inputSet.map((v) => (
           <S.InputS
             key={v.id}
@@ -612,15 +577,9 @@ function ProductionOrder() {
         <S.TitleMid>❇️ 투입품목</S.TitleMid>
         <S.ButtonMid>
           {isEditModeMid ? (
-            <ButtonSE
-              onClickSave={onClickEditModeSaveMid}
-              onClickExit={onClickEditModeExitMid}
-            />
+            <ButtonSE onClickSave={onClickEditModeSaveMid} onClickExit={onClickEditModeExitMid} />
           ) : (
-            <ButtonED
-              onClickEdit={onClickEditMid}
-              onClickDelete={onClickMidDelete}
-            />
+            <ButtonED onClickEdit={onClickEditMid} onClickDelete={onClickMidDelete} />
           )}
         </S.ButtonMid>
       </S.ContentMid>
@@ -640,15 +599,9 @@ function ProductionOrder() {
         <S.TitleBottom>❇️ 점검기준서</S.TitleBottom>
         <S.ButtonBottom>
           {isEditModeBottom ? (
-            <ButtonSE
-              onClickSave={onClickEditModeSaveBottom}
-              onClickExit={onClickEditModeExitBottom}
-            />
+            <ButtonSE onClickSave={onClickEditModeSaveBottom} onClickExit={onClickEditModeExitBottom} />
           ) : (
-            <ButtonED
-              onClickEdit={onClickEditBottom}
-              onClickDelete={onClickDeleteBottom}
-            />
+            <ButtonED onClickEdit={onClickEditBottom} onClickDelete={onClickDeleteBottom} />
           )}
         </S.ButtonBottom>
       </S.ContentBottom>

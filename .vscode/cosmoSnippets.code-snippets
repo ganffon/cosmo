@@ -17,7 +17,7 @@
   "coltext": {
     "prefix": "coltext",
     "body": [
-      "col.text('${1:DB컬럼명}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:align}, ${6:sortable}, ${7:filter}),"
+      "col.text('${1:DB컬럼명}', ${2:한글컬럼명}, ${3:입력모드}, ${4:hidden}, ${5:minWidth}, ${6:align}, ${7:sortable}, ${8:filter}),"
     ],
     "description": "ID Column Setting"
   },
@@ -30,44 +30,32 @@
   },
   "collistgbn": {
     "prefix": "collistgbn",
-    "body": [
-      "col.listGbn('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:hidden}, ${6:align}),"
-    ],
+    "body": ["col.listGbn('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:hidden}, ${6:align}),"],
     "description": "ID Column Setting"
   },
   "colcheck": {
     "prefix": "colcheck",
-    "body": [
-      "col.check('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:hidden}, ${5:minWidth}),"
-    ],
+    "body": ["col.check('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:hidden}, ${5:minWidth}),"],
     "description": "ID Column Setting"
   },
   "colbutton": {
     "prefix": "colbutton",
-    "body": [
-      "col.button('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:버튼이름}, ${4:버튼함수}, ${5:disabled}),"
-    ],
+    "body": ["col.button('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:버튼이름}, ${4:버튼함수}, ${5:disabled}),"],
     "description": "ID Column Setting"
   },
   "colnumber": {
     "prefix": "colnumber",
-    "body": [
-      "col.number('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:hidden}),"
-    ],
+    "body": ["col.number('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}, ${5:hidden}),"],
     "description": "ID Column Setting"
   },
   "colselect": {
     "prefix": "colselect",
-    "body": [
-      "col.select('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}),"
-    ],
+    "body": ["col.select('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}),"],
     "description": "ID Column Setting"
   },
   "coldate": {
     "prefix": "coldate",
-    "body": [
-      "col.date('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}),"
-    ],
+    "body": ["col.date('${1:DB컬럼명ID}', ${2:한글컬럼명}, ${3:입력모드}, ${4:minWidth}),"],
     "description": "ID Column Setting"
   },
   "colmulti": {
