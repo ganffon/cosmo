@@ -26,11 +26,11 @@ import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 import ModalControlPlan from "./ModalControlPlan";
 import restAPI from "api/restAPI";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function ControlPlan() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
@@ -98,18 +98,9 @@ function ControlPlan() {
     actSearchHeaderIC();
   }, []);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
@@ -482,10 +473,7 @@ function ControlPlan() {
       columnName = ["prod_cd", "prod_nm"];
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
-          return [
-            ...prevList,
-            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]],
-          ];
+          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
         });
       }
     } else {
@@ -523,16 +511,13 @@ function ControlPlan() {
       try {
         setIsBackDrop(true);
         const header = await restAPI.get(
-          restURI.inspDocument +
-            `?line_id=${lineId}&prod_cd=${prodCd}&prod_nm=${prodNm}`
+          restURI.inspDocument + `?line_id=${lineId}&prod_cd=${prodCd}&prod_nm=${prodNm}`
         );
         if (header?.data?.data?.count !== 0) {
           const documentId = header?.data?.data?.rows[0].insp_document_id;
 
           try {
-            const detail = await restAPI.get(
-              restURI.inspDocumentDetail + `?insp_document_id=${documentId}`
-            );
+            const detail = await restAPI.get(restURI.inspDocumentDetail + `?insp_document_id=${documentId}`);
 
             setGridDataModalDetail(detail?.data?.data?.rows);
           } catch (err) {
@@ -585,6 +570,7 @@ function ControlPlan() {
         data={gridDataHeader}
         draggable={false}
         refGrid={refGridHeader}
+        isEditMode={isEditModeHeader}
         onClickGrid={onClickGridHeader}
         onDblClickGrid={onDblClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
@@ -624,11 +610,8 @@ function ControlPlan() {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
-      <S.ShadowBoxButtonHeader
-        isMenuSlide={isMenuSlide}
-        isAllScreen={isAllScreen}
-      >
+    <ContentsArea>
+      <S.ShadowBoxButtonHeader isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ComboWrap>
           <S.ComboBox
             disablePortal
@@ -640,13 +623,10 @@ function ControlPlan() {
             onChange={(_, newValue) => {
               setComboValue({
                 ...comboValue,
-                line_id:
-                  newValue?.line_id === undefined ? null : newValue?.line_id,
+                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
               });
             }}
-            renderInput={(params) => (
-              <TextField {...params} label={CN.line_nm} size="small" />
-            )}
+            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
             onKeyDown={onKeyDown}
           />
 
@@ -672,11 +652,7 @@ function ControlPlan() {
               onClickSearch={onClickSearch}
             />
           ) : (
-            <ButtonNES
-              onClickNew={onClickNew}
-              onClickEdit={onClickEditHeader}
-              onClickSearch={onClickSearch}
-            />
+            <ButtonNES onClickNew={onClickNew} onClickEdit={onClickEditHeader} onClickSearch={onClickSearch} />
           )}
         </S.ButtonWrap>
       </S.ShadowBoxButtonHeader>
@@ -684,33 +660,16 @@ function ControlPlan() {
       <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.SearchWrap>
           {inputInfo.map((v, idx) => {
-            return (
-              <InputPaper
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                value={inputInfoValue[idx] || ""}
-              />
-            );
+            return <InputPaper key={v.id} id={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
           })}
         </S.SearchWrap>
       </S.ShadowBoxInputInfo>
-      <S.ShadowBoxButtonDetail
-        isMenuSlide={isMenuSlide}
-        isAllScreen={isAllScreen}
-      >
+      <S.ShadowBoxButtonDetail isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ButtonWrap>
           {isEditModeDetail ? (
-            <ButtonSE
-              onClickSave={onClickEditSaveDetail}
-              onClickExit={onClickEditExitDetail}
-            />
+            <ButtonSE onClickSave={onClickEditSaveDetail} onClickExit={onClickEditExitDetail} />
           ) : (
-            <ButtonNED
-              onClickNew={onClickEditNew}
-              onClickEdit={onClickEditDetail}
-              onClickDelete={onClickDelete}
-            />
+            <ButtonNED onClickNew={onClickEditNew} onClickEdit={onClickEditDetail} onClickDelete={onClickDelete} />
           )}
         </S.ButtonWrap>
       </S.ShadowBoxButtonDetail>
@@ -723,6 +682,7 @@ function ControlPlan() {
           data={gridDataDetail}
           draggable={false}
           refGrid={refGridDetail}
+          isEditMode={isEditModeDetail}
           onClickGrid={onClickGridDetail}
           onDblClickGrid={onDblClickGridDetail}
           onEditingFinish={onEditingFinishGridDetail}
@@ -753,7 +713,7 @@ function ControlPlan() {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

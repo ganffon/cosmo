@@ -86,24 +86,20 @@ const Dashboard = () => {
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
         let index = 0;
-        const modifiedData = response.data.data.rows[0].downtime.map(
-          (item) => ({
-            ...item,
-            start_dt: `${item.start_date} ${item.start_time}`,
-            end_dt: `${item.end_date} ${item.end_time}`,
-            no: ++index,
-          })
-        );
+        const modifiedData = response.data.data.rows[0].downtime.map((item) => ({
+          ...item,
+          start_dt: `${item.start_date} ${item.start_time}`,
+          end_dt: `${item.end_date} ${item.end_time}`,
+          no: ++index,
+        }));
 
-        const stateData = response.data.data.rows[0].line_state.map(
-          (item) => ({
-            ...item,
-            eq_state: (item.state===1) ? true : false 
-          })
-        );
+        const stateData = response.data.data.rows[0].line_state.map((item) => ({
+          ...item,
+          eq_state: item.state === 1 ? true : false,
+        }));
 
         setDowntime(modifiedData);
-        setState(stateData)
+        setState(stateData);
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -132,7 +128,7 @@ const Dashboard = () => {
       style={{
         position: "absolute",
         top: "40%",
-        left: `${20 + (index * 25)}%`,
+        left: `${20 + index * 25}%`,
         transform: "translate(-50%, -50%)",
         height: "50px",
       }}
@@ -141,7 +137,7 @@ const Dashboard = () => {
     </div>
   );
 
-  const renderImage = (index) => (
+  const renderImage = (index) =>
     equipState && equipState[index] ? (
       <img
         src={equipState[index].eq_state ? doriGreenImg : doriRedImg}
@@ -149,29 +145,19 @@ const Dashboard = () => {
         style={{
           position: "absolute",
           top: "60%",
-          left: `${20 + (index * 25)}%`,
+          left: `${20 + index * 25}%`,
           transform: "translate(-50%, -50%)",
           width: "50px",
           height: "50px",
         }}
       />
-    ) : null
-  );
+    ) : null;
 
   const complexColumns = getTimeHeader();
   // setResult(GetTestValAndCreateAt(strJson));
   return (
-    <SplitterLayout
-      customClassName="my-splitter-layout"
-      percentage={true}
-      secondaryInitialSize={70}
-    >
-      <SplitterLayout
-        customClassName="my-splitter-layout"
-        vertical={true}
-        percentage={true}
-        secondaryInitialSize={70}
-      >
+    <SplitterLayout customClassName="my-splitter-layout" percentage={true} secondaryInitialSize={70}>
+      <SplitterLayout customClassName="my-splitter-layout" vertical={true} percentage={true} secondaryInitialSize={70}>
         <div>
           <div
             style={{
@@ -184,43 +170,33 @@ const Dashboard = () => {
           >
             라인 가동 상태
           </div>
-          {equipState && <div>
-            {renderLine(0)}
-            {renderImage(0)}
-            
-            {renderLine(1)}
-            {renderImage(1)}
-            
-            {renderLine(2)}
-            {renderImage(2)}
-          </div>}
-        </div>
-        <Bottom>
-          {responseData && (
-            <Grid
-              columns={columnsEmp}
-              data={responseData.data.rows[0].worker}
-            />
+          {equipState && (
+            <div>
+              {renderLine(0)}
+              {renderImage(0)}
+
+              {renderLine(1)}
+              {renderImage(1)}
+
+              {renderLine(2)}
+              {renderImage(2)}
+            </div>
           )}
-        </Bottom>
+        </div>
+        <Bottom>{responseData && <Grid columns={columnsEmp} data={responseData.data.rows[0].worker} />}</Bottom>
       </SplitterLayout>
       <SplitterLayout vertical percentage={true} secondaryInitialSize={60}>
         <Top>
           <ToolWrap>
-            <div style={{ position: "absolute", left: "40%" }}>
-              최근 라인 비가동 정보
-            </div>
+            <div style={{ position: "absolute", left: "40%" }}>최근 라인 비가동 정보</div>
           </ToolWrap>
           {/* {responseData && <Grid columns={columnsDownTime} data={responseData.data.rows[0].downtime}/>} */}
           {downtime && <Grid columns={columnsDownTime} data={downtime} />}
         </Top>
         <Bottom>
           <ToolWrap>
-            <div
-              style={{ position: "absolute", left: "30%", fontSize: "1.2em" }}
-            >
-              EV 라인 금일 생산량 / 목표량 (KG){" "}
-              <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+            <div style={{ position: "absolute", left: "30%", fontSize: "1.2em" }}>
+              EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
             </div>
           </ToolWrap>
           {responseData && (
@@ -236,6 +212,7 @@ const Dashboard = () => {
               header={complexColumns}
               columns={columnsGoal}
               data={responseData.data.rows[0].line_work_status.grid}
+              isEditMode={true}
             />
           )}
         </Bottom>

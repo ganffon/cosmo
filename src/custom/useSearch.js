@@ -106,12 +106,7 @@ const useSearchCboDate = (
       setIsBackDrop(true);
       const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
       const cboParams = GetCboSearchParams(inputParams, comboValue);
-      const dateParams = GetDateParams(
-        cboParams,
-        dateText,
-        startDateNm,
-        endDateNm
-      );
+      const dateParams = GetDateParams(cboParams, dateText, startDateNm, endDateNm);
       const readURI = uri + dateParams;
       const gridData = await restAPI.get(readURI);
       await setGridData(gridData?.data?.data?.rows);
@@ -146,12 +141,7 @@ const useSearchDI = (
     try {
       setIsBackDrop(true);
       const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
-      const dateParams = GetDateParams(
-        inputParams,
-        dateText,
-        startDateNm,
-        endDateNm
-      );
+      const dateParams = GetDateParams(inputParams, dateText, startDateNm, endDateNm);
       const readURI = uri + dateParams;
       const gridData = await restAPI.get(readURI);
       await setGridData(gridData?.data?.data?.rows);
@@ -228,12 +218,7 @@ const useSearchOnlyCboDate = (
       setIsBackDrop(true);
       const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
       const cboParams = GetCboSearchParams(inputParams, comboValue);
-      const dateParams = GetDateParams(
-        cboParams,
-        dateText,
-        startDateNm,
-        endDateNm
-      );
+      const dateParams = GetDateParams(cboParams, dateText, startDateNm, endDateNm);
       const readURI = uri + dateParams;
       const gridData = await restAPI.get(readURI);
       await setGridData(gridData?.data?.data?.rows);
@@ -272,9 +257,7 @@ const useSearchOnlyDate = (
       const readURI = uri + dateParams;
       let gridData = await restAPI.get(readURI);
       if (componentName !== null) {
-        gridData = gridData?.data?.data?.rows.map((raw) =>
-          GetSearchParams(componentName, raw)
-        );
+        gridData = gridData?.data?.data?.rows.map((raw) => GetSearchParams(componentName, raw));
 
         await setGridData(gridData);
       } else {
@@ -317,9 +300,7 @@ const useSearchSelect = (
         gridData = await restAPI.get(uri);
       }
       if (componentName !== null) {
-        gridData = gridData?.data?.data?.rows.map((raw) =>
-          GetSearchParams(componentName, raw)
-        );
+        gridData = gridData?.data?.data?.rows.map((raw) => GetSearchParams(componentName, raw));
         setGridModalSelectData(gridData);
       } else {
         setGridModalSelectData(gridData?.data?.data?.rows);
@@ -401,23 +382,14 @@ const useSearchHeaderDI = (
   setDisRowHeader,
   uri
 ) => {
-  const actSearchHeaderDI = async (
-    inputReset = true,
-    startDateNm,
-    endDateNm
-  ) => {
+  const actSearchHeaderDI = async (inputReset = true, startDateNm, endDateNm) => {
     inputReset && setInputInfoValue([]); //🔸Header 조회 시 InputBox 초기화
     refGrid02?.current?.gridInst.clear();
     try {
       setIsBackDrop(true);
       // const inputParams = GetInputSearchParams(inputBoxID, inputTextChange);
       const inputParams = GetInputSearchReadOnly(inputBoxID, inputTextChange);
-      const dateParams = GetDateParams(
-        inputParams,
-        dateText,
-        startDateNm,
-        endDateNm
-      );
+      const dateParams = GetDateParams(inputParams, dateText, startDateNm, endDateNm);
       const readURI = uri + dateParams;
       const gridData = await restAPI.get(readURI);
       await setGridData(gridData?.data?.data?.rows);
@@ -468,12 +440,7 @@ const useSearchDetail = (setGridData, uri) => {
 /**
  * 🔸 Detail 추가 위해 수정화면 진입 시 메인화면에서 선택했던 Header의 정보출력
  */
-const useSearchEditHeader = (
-  isBackDrop,
-  setIsBackDrop,
-  setGridDataHeaderRowID,
-  uri
-) => {
+const useSearchEditHeader = (isBackDrop, setIsBackDrop, setGridDataHeaderRowID, uri) => {
   const actSearchEditHeader = async (headerClickRowID) => {
     if (isBackDrop === false && headerClickRowID !== null) {
       try {

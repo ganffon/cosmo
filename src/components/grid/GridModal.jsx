@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "tui-grid/dist/tui-grid.css";
 import Grid, { useDataApi } from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
@@ -43,8 +43,8 @@ function GridModal(props) {
       header={header}
       draggable={draggable}
       ref={refGrid}
-      onClick={() => {
-        onClick();
+      onClick={(e) => {
+        onClick(e);
         handleFocus();
       }}
       onDblclick={onDblClick}

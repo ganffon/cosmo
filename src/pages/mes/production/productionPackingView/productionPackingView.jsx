@@ -18,14 +18,13 @@ import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
 import ModalSelect from "components/modal/ModalSelect";
-import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalWrap from "components/modal/ModalWrap";
 import GridModal from "components/grid/GridModal";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function ProductionPackingView() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
   const refGridSelect = useRef(null);
@@ -62,8 +61,7 @@ function ProductionPackingView() {
   const [columnsSelect, setColumnsSelect] = useState([]);
 
   const onClickDetailInputButton = async (rowKey) => {
-    const gridDetailId =
-      refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_weigh_id;
+    const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_weigh_id;
     setIsBackDrop(true);
     let readURI = `/prd/weigh/${gridDetailId}`;
     console.log(readURI);
@@ -85,10 +83,7 @@ function ProductionPackingView() {
     inputSet,
     columnsSelectProd,
   } = ProductionPackingViewSet(onClickDetailInputButton);
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   const onClickSearch = () => {
     actSearchHeader();
   };
@@ -106,12 +101,10 @@ function ProductionPackingView() {
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
           if (columnName[i] === "prod_cd") {
-            prodCD.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
           if (columnName[i] === "prod_nm") {
-            prodNM.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
         });
       }
@@ -140,10 +133,7 @@ function ProductionPackingView() {
   };
 
   const onClickModalGridSelectGridHeader = (e) => {
-    modalSelectHeaderRowID.current = e?.instance.getValue(
-      e?.rowKey,
-      "work_weigh_id"
-    );
+    modalSelectHeaderRowID.current = e?.instance.getValue(e?.rowKey, "work_weigh_id");
 
     if (modalSelectHeaderRowID.current !== null) {
       actSearchModalSelectGridDetail();
@@ -165,11 +155,7 @@ function ProductionPackingView() {
       if (prodNM.current !== "" && prodNM.current !== null) {
         readURI = readURI + `prod_nm=${prodNM.current}&`;
       }
-      if (
-        inputTextChange.line_nm !== "" &&
-        inputTextChange.line_nm !== null &&
-        inputTextChange.line_nm !== undefined
-      ) {
+      if (inputTextChange.line_nm !== "" && inputTextChange.line_nm !== null && inputTextChange.line_nm !== undefined) {
         readURI = readURI + `line_nm=${inputTextChange.line_nm}&`;
       }
 
@@ -264,25 +250,16 @@ function ProductionPackingView() {
   ); //➡️ Modal Select Search Prod
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.SearchCondition>
-        <S.Date
-          datePickerSet={"range"}
-          dateText={dateText}
-          setDateText={setDateText}
-        />
+        <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
         <InputSearch
           id={"line_nm"}
           name={"라인명"}
           handleInputTextChange={handleInputTextChange}
           onClickSearch={onClickSearch}
         />
-        <InputPaper
-          width={"180px"}
-          name={"품번"}
-          value={prodCD.current || ""}
-          btn={false}
-        />
+        <InputPaper width={"180px"} name={"품번"} value={prodCD.current || ""} btn={false} />
         <InputPaper
           width={"240px"}
           name={"품목"}
@@ -332,11 +309,7 @@ function ProductionPackingView() {
         <ModalWrap width={"95%"} height={"95%"}>
           <MS.HeaderBox>
             <MS.TitleBox>✳️ 투입일지</MS.TitleBox>
-            <MS.ButtonClose
-              color="primary"
-              aria-label="close"
-              onClick={onClickInputSelectClose}
-            >
+            <MS.ButtonClose color="primary" aria-label="close" onClick={onClickInputSelectClose}>
               <CloseIcon />
             </MS.ButtonClose>
           </MS.HeaderBox>
@@ -363,7 +336,7 @@ function ProductionPackingView() {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

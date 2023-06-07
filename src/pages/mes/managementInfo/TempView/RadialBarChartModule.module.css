@@ -1,0 +1,35 @@
+.chartModule {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 변경된 부분: 왼쪽 정렬로 수정 */
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  .container {
+    display: flex;
+    align-items: flex-start; /* 변경된 부분: 왼쪽 정렬로 수정 */
+  }
+  
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2px; /* 변경된 부분: 텍스트 컨테이너의 왼쪽 여백 추가 */
+    margin-top: 100px;
+  }
+  
+  .textWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* 변경된 부분: 텍스트 요소들 사이의 간격 조정 */
+  }
+  
+  .label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .value {
+    font-style: italic;
+  }
+  

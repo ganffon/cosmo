@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
@@ -15,7 +15,9 @@ function GridPanel(props) {
     onClickGrid = () => {},
     onDblClickGrid = () => {},
     onEditingFinish = () => {},
+    isEditMode = false,
   } = props;
+
   useEffect(() => {
     GridTheme();
   }, []);
@@ -27,6 +29,23 @@ function GridPanel(props) {
       Grid.startEditing(coords.rowKey, coords.columnName);
     }
   };
+  const beforeSelectedRow = useRef("");
+  const selectedRow = (e) => {
+    if (refGrid) {
+      const Grid = refGrid?.current?.gridInst;
+      if (beforeSelectedRow.current) {
+        Grid.getColumns().map((col) => Grid.removeCellClassName(beforeSelectedRow.current, col.name, "selectedBack"));
+      }
+      if (!isEditMode) {
+        Grid.getColumns().map((col) => Grid.addCellClassName(e?.rowKey, col.name, "selectedBack"));
+        beforeSelectedRow.current = e?.rowKey;
+      }
+    }
+  };
+
+  useEffect(() => {
+    selectedRow();
+  }, [isEditMode]);
   return (
     <Grid
       scrollX={true}
@@ -41,9 +60,10 @@ function GridPanel(props) {
       header={header}
       draggable={draggable}
       ref={refGrid}
-      onClick={() => {
-        onClickGrid();
+      onClick={(e) => {
+        onClickGrid(e);
         handleFocus();
+        selectedRow(e);
       }}
       onDblclick={onDblClickGrid}
       onEditingFinish={onEditingFinish}

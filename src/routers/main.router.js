@@ -73,6 +73,9 @@ import MonthlyPartCapa from "pages/mes/managementInfo/monthlyPartCapa/MonthlyPar
 import PerformanceRate from "pages/mes/managementInfo/performanceRate/PerformancRate";
 import TimeRate from "pages/mes/managementInfo/timeRate/TimeRate";
 import DownTimePanel from "pages/mes/panel/downTime/DownTimePanel";
+import ManagementAll from "pages/mes/managementInfo/managementAll/managementAll";
+import EquipStatus from "pages/mes/managementInfo/EquipStatus/EquipStatus";
+import TempView from "pages/mes/managementInfo/TempView/TempView";
 
 export default function MainRouter() {
   const pages = [
@@ -155,6 +158,9 @@ export default function MainRouter() {
     { path: "timeRate", component: TimeRate },
     { path: "performanceRate", component: PerformanceRate },
     { path: "downtime-panel", component: DownTimePanel },
+    { path: "managementAll", component: ManagementAll },
+    { path: "tempView", component: TempView },
+    { path: "equipStatus", component: EquipStatus },
   ];
   return (
     <Layout>

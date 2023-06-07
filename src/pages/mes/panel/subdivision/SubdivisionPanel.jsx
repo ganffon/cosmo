@@ -7,7 +7,6 @@ import BtnSubdivisionScale from "components/button/panel/BtnSubdivisionScale";
 import BtnSubdivisionSL from "components/button/panel/BtnSubdivisionSL";
 import InputPaper from "components/input/InputPaper";
 import InputText from "components/input/InputText";
-import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
@@ -18,6 +17,8 @@ import restAPI from "api/restAPI";
 import ModalSubdivision from "./ModalSubdivision";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import BtnSubdivisionDHE from "components/button/panel/BtnSubdivisionDHE";
+import GridPanel from "components/grid/GridPanel";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function SubdivisionPanel() {
   LoginStateChk();
@@ -201,14 +202,8 @@ function SubdivisionPanel() {
     if (prodID.current) {
       try {
         const Header = refGridSelect?.current?.gridInst;
-        const workSubdivisionID = Header.getValue(
-          rowKey,
-          "work_subdivision_id"
-        );
-        const result = await restAPI.get(
-          restURI.subdivisionDetail +
-            `?work_subdivision_id=${workSubdivisionID}`
-        );
+        const workSubdivisionID = Header.getValue(rowKey, "work_subdivision_id");
+        const result = await restAPI.get(restURI.subdivisionDetail + `?work_subdivision_id=${workSubdivisionID}`);
         setGridDataHeader(result?.data?.data?.rows);
 
         setIsSnackOpen({
@@ -249,8 +244,7 @@ function SubdivisionPanel() {
         });
         try {
           const result = await restAPI.post(restURI.subdivisions, obj);
-          workSubdivisionID.current =
-            result?.data?.data?.rows[0]?.work_subdivision_id;
+          workSubdivisionID.current = result?.data?.data?.rows[0]?.work_subdivision_id;
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -277,9 +271,7 @@ function SubdivisionPanel() {
   };
   const handleDelete = async () => {
     try {
-      const result = await restAPI.delete(
-        restURI.subdivision + `/${workSubdivisionID.current}`
-      );
+      const result = await restAPI.delete(restURI.subdivision + `/${workSubdivisionID.current}`);
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
@@ -327,9 +319,7 @@ function SubdivisionPanel() {
   };
   const handleEnd = async () => {
     try {
-      const result = await restAPI.patch(
-        restURI.subdivision + `/${workSubdivisionID.current}/complete`
-      );
+      const result = await restAPI.patch(restURI.subdivision + `/${workSubdivisionID.current}/complete`);
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
@@ -381,20 +371,14 @@ function SubdivisionPanel() {
   };
   const onClickNext = async () => {
     if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
-      if (
-        scaleInfo.inputLot !== "" &&
-        scaleInfo.before !== "" &&
-        scaleInfo.after !== ""
-      ) {
+      if (scaleInfo.inputLot !== "" && scaleInfo.before !== "" && scaleInfo.after !== "") {
         const raw = [
           {
             work_subdivision_id: workSubdivisionID.current,
             subdivision_date: date.current,
             subdivision_time: `${DateTime().hour}:${DateTime().minute}`,
             lot_no: scaleInfo.inputLot,
-            before_qty: String(scaleInfo.before)
-              ? Number(scaleInfo.before)
-              : null,
+            before_qty: String(scaleInfo.before) ? Number(scaleInfo.before) : null,
             after_qty: String(scaleInfo.after) ? Number(scaleInfo.after) : null,
             qty: String(scaleInfo.qty) ? Number(scaleInfo.qty) : null,
           },
@@ -410,8 +394,7 @@ function SubdivisionPanel() {
           });
           try {
             const result = await restAPI.get(
-              restURI.subdivisionDetail +
-                `?work_subdivision_id=${workSubdivisionID.current}`
+              restURI.subdivisionDetail + `?work_subdivision_id=${workSubdivisionID.current}`
             );
             setIsSnackOpen({
               ...isSnackOpen,
@@ -468,9 +451,7 @@ function SubdivisionPanel() {
   const handleBarcodeEnter = async (e) => {
     if (e.key === "Enter") {
       try {
-        const result = await restAPI.get(
-          restURI.barcodeERP + `?lot_no=${e?.target?.value}`
-        );
+        const result = await restAPI.get(restURI.barcodeERP + `?lot_no=${e?.target?.value}`);
         setScaleInfo({ ...scaleInfo, inputLot: "MTM1804130002" });
       } catch (err) {
         alert(`Err : ${err}`);
@@ -482,14 +463,8 @@ function SubdivisionPanel() {
     setScaleInfo({ ...scaleInfo, [e.target.id]: e.target.value });
   };
 
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      // setSearchToggle(!searchToggle);
-    }
-  };
-
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea flex={true}>
       <S.ContentsLeft>
         <S.ScreenTitleBox>❇️ 일일소분일지</S.ScreenTitleBox>
         <S.ItemInfoBox>
@@ -598,7 +573,7 @@ function SubdivisionPanel() {
           )}
         </S.ButtonBox>
         <S.DataHandleBox>
-          <GridSingle
+          <GridPanel
             data={gridDataHeader}
             columnOptions={columnOptions}
             columns={columns}
@@ -669,14 +644,9 @@ function SubdivisionPanel() {
         />
       ) : null}
       {isWarning.open ? (
-        <AlertDelete
-          handleDelete={handleWarning}
-          title={isWarning.title}
-          message={isWarning.message}
-          onlyYes={true}
-        />
+        <AlertDelete handleDelete={handleWarning} title={isWarning.title} message={isWarning.message} onlyYes={true} />
       ) : null}
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

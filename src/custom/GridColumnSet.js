@@ -197,12 +197,12 @@ const number = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_S
   };
 };
 
-const select = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT) => {
+const select = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, align = "left") => {
   return {
     name: name,
     header: header,
     minWidth: minWidth,
-    align: "left",
+    align: align,
     editor: false,
     validation: isEditMode
       ? {

@@ -5,8 +5,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -99,6 +98,12 @@ export const DataHandleBox = styled("div")`
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 10px 10px 10px 10px;
+  & .tui-grid-cell-header {
+    font-size: 20px;
+  }
+  & .tui-grid-cell-content {
+    font-size: 25px;
+  }
 `;
 export const InputSelectBox = styled("div")`
   width: 370px;

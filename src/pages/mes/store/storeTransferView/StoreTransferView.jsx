@@ -14,16 +14,13 @@ import DateTime from "components/datetime/DateTime";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
 import * as uSearch from "custom/useSearch";
-import * as uEdit from "custom/useEdit";
-import * as uDelete from "custom/useDelete";
-import * as uSave from "custom/useSave";
 import * as S from "./StoreTransferView.styled";
 import restURI from "json/restURI.json";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function StoreTransferView() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);
@@ -46,14 +43,7 @@ function StoreTransferView() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const {
-    rowHeadersNum,
-    header,
-    columns,
-    columnOptions,
-    inputSet,
-    datePickerSet,
-  } = StoreTransferViewSet(
+  const { rowHeadersNum, header, columns, columnOptions, inputSet, datePickerSet } = StoreTransferViewSet(
     productGbnList,
     productModelList,
     productTypeList,
@@ -66,10 +56,7 @@ function StoreTransferView() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
@@ -100,7 +87,7 @@ function StoreTransferView() {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
@@ -114,15 +101,10 @@ function StoreTransferView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id:
-                      newValue?.prod_gbn_id === undefined
-                        ? null
-                        : newValue?.prod_gbn_id,
+                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -134,15 +116,10 @@ function StoreTransferView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id:
-                      newValue?.model_id === undefined
-                        ? null
-                        : newValue?.model_id,
+                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.model_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -154,15 +131,10 @@ function StoreTransferView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id:
-                      newValue?.prod_type_id === undefined
-                        ? null
-                        : newValue?.prod_type_id,
+                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_type_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -176,27 +148,15 @@ function StoreTransferView() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined
-                        ? null
-                        : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.prod_type_small_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
             <S.InputWrap>
-              <DatePicker
-                datePickerSet={datePickerSet}
-                dateText={dateText}
-                setDateText={setDateText}
-              />
+              <DatePicker datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
               {inputSet.map((v) => (
                 <InputSearch
                   key={v.id}
@@ -229,7 +189,7 @@ function StoreTransferView() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 export default StoreTransferView;

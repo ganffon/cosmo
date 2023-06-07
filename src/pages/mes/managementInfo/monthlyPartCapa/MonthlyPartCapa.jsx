@@ -143,7 +143,7 @@ const MonthlyPartCapa = () => {
       data: [myValWithGoals[i]],
     });
   }
-
+console.log(cWithHorizontal.series)
   const cWithMark = {
     series: [
       // 차트의 데이터를 담는 배열

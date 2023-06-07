@@ -3,35 +3,7 @@ import styled from 'styled-components';
 import * as C from "constant/Layout";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
-import { Resizable } from 'react-resizable';
-import SplitterLayout from 'react-splitter-layout';
-import 'react-splitter-layout/lib/index.css';
 
-export const SplitPanel = () => {
-  const [leftWidth, setLeftWidth] = useState(200); // 왼쪽 패널의 초기 너비
-
-  const onResize = (event, { size }) => {
-    setLeftWidth(size.width); // 왼쪽 패널의 너비 업데이트
-  };
-
-  return (
-    <div className="split-panel">
-      <Resizable
-        className="left-panel"
-        width={leftWidth}
-        height={window.innerHeight}
-        onResize={onResize}
-        minConstraints={[100, window.innerHeight]}
-        maxConstraints={[500, window.innerHeight]}
-      >
-        Left Panel
-      </Resizable>
-      <div className="right-panel" style={{ flex: `1 1 calc(100% - ${leftWidth}px)` }}>
-        Right Panel
-      </div>
-    </div>
-  );
-};
 
 export const Container = styled.div`
   display: flex;
@@ -123,4 +95,40 @@ export const ToolWrap = styled("div")`
 export const SearchWrap = styled("div")`
   display: flex;
   flex-direction: column;
+`;
+export const Left = styled("div")`
+  flex: 4; 
+  borderRight: '3px solid #ccc'
+`
+export const Right = styled("div")`
+  flex: 6; 
+  borderRight: '1px solid #ccc'
+`
+export const LeftBottom = styled("div")`
+  flex: 6; 
+  borderRight: '1px solid #ccc'
+`
+export const RightBottom = styled("div")`
+  flex: 4; 
+  borderRight: '1px solid #ccc'
+`
+export const FlexTop = styled.div`
+  display: flex;
+  height: 45%;
+  padding: 10px 10px 10px 10px;
+`;
+export const FlexBottom = styled.div`
+  display: flex;
+  height: 45%;
+  padding: 10px 10px 10px 10px;
+`;
+export const SearchCondition = styled("div")`
+  height: 60px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 8px;
+  padding: 5px 5px 5px 5px;
+  display: flex;
 `;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
@@ -15,6 +15,7 @@ function GridSingle(props) {
     onClickGrid = () => {},
     onDblClickGrid = () => {},
     onEditingFinish = () => {},
+    isEditMode = false,
   } = props;
 
   useEffect(() => {
@@ -28,6 +29,23 @@ function GridSingle(props) {
       Grid.startEditing(coords.rowKey, coords.columnName);
     }
   };
+  const beforeSelectedRow = useRef("");
+  const selectedRow = (e) => {
+    if (refGrid) {
+      const Grid = refGrid?.current?.gridInst;
+      if (beforeSelectedRow.current) {
+        Grid.getColumns().map((col) => Grid.removeCellClassName(beforeSelectedRow.current, col.name, "selectedBack"));
+      }
+      if (!isEditMode) {
+        Grid.getColumns().map((col) => Grid.addCellClassName(e?.rowKey, col.name, "selectedBack"));
+        beforeSelectedRow.current = e?.rowKey;
+      }
+    }
+  };
+
+  useEffect(() => {
+    selectedRow();
+  }, [isEditMode]);
 
   return (
     <Grid
@@ -46,6 +64,7 @@ function GridSingle(props) {
       onClick={(e) => {
         onClickGrid(e);
         handleFocus();
+        selectedRow(e);
       }}
       onDblclick={onDblClickGrid}
       onEditingFinish={onEditingFinish}

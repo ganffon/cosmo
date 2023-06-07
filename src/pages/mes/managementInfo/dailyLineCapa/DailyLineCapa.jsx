@@ -73,7 +73,7 @@ const DailyLineCapa = () => {
       enabled: true,
     },
     title: {
-      text: "생산포장 라인 별 생산량(월)",
+      text: "생산포장 라인 별 생산량(일)",
       floating: true,
       offsetY: 0,
       align: "top",

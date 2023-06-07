@@ -9,7 +9,6 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import FactorySet from "pages/mes/standard/factory/FactorySet";
 import * as disRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
@@ -24,12 +23,12 @@ import DateTime from "components/datetime/DateTime";
 import ModalSelect from "components/modal/ModalSelect";
 import Condition from "custom/Condition";
 import ModalDate from "components/modal/ModalDate";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 import restAPI from "api/restAPI";
 
 function SparepartsRelease() {
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
@@ -68,10 +67,7 @@ function SparepartsRelease() {
     columnsModalSelectStore,
     columnsModalSelectReleaseUser,
   } = SparePartReleaseSet(isEditMode);
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   //===============================================
   const onClickGrid = (e) => {
@@ -80,10 +76,7 @@ function SparepartsRelease() {
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -292,12 +285,7 @@ function SparepartsRelease() {
     ];
     let columnNameEquip = ["equip_detail_nm", "equip_detail_id"];
     let columnNameLine = ["line_id", "line_nm"];
-    let columnNameStore = [
-      "from_store_id",
-      "from_store_nm",
-      "from_location_id",
-      "from_location_nm",
-    ];
+    let columnNameStore = ["from_store_id", "from_store_nm", "from_location_id", "from_location_nm"];
     let columnNameEmployee = ["release_uid", "release_nm"];
     if (dblClickGrid === "Grid") {
       refGrid = refSingleGrid;
@@ -339,11 +327,7 @@ function SparepartsRelease() {
       );
     }
     if (dblClickGrid === "ModalProd") {
-      refGrid?.current?.gridInst?.setValue(
-        dblClickRowKey,
-        "outgo_date",
-        dateModal.startDate
-      );
+      refGrid?.current?.gridInst?.setValue(dblClickRowKey, "outgo_date", dateModal.startDate);
     }
 
     setIsModalSelectOpen(false);
@@ -351,8 +335,7 @@ function SparepartsRelease() {
 
   const searchSelectProdList = async () => {
     try {
-      let readURI =
-        restURI.sparepartsStoreView + `?tran_reg_date=${dateModal.startDate}&`;
+      let readURI = restURI.sparepartsStoreView + `?tran_reg_date=${dateModal.startDate}&`;
 
       setIsBackDrop(true);
 
@@ -395,17 +378,7 @@ function SparepartsRelease() {
   };
 
   const onDblClickModalGrid = (e) => {
-    if (
-      Condition(e, [
-        "prod_id",
-        "prod_cd",
-        "prod_nm",
-        "store_id",
-        "store_nm",
-        "location_id",
-        "location_nm",
-      ])
-    ) {
+    if (Condition(e, ["prod_id", "prod_cd", "prod_nm", "store_id", "store_nm", "location_id", "location_nm"])) {
       setHeaderModalControl("prodSelect");
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalProd");
@@ -441,56 +414,6 @@ function SparepartsRelease() {
       actSearchSelectReleaseUser();
     }
   };
-  /*
-  const onDblClickGrid = (e) => {
-    if (
-      Condition(e, [
-        "prod_id",
-        "prod_cd",
-        "prod_nm",
-        "store_id",
-        "store_nm",
-        "location_id",
-        "location_nm",
-      ])
-    ) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("GridProd");
-      setColumnsSelect(columnsModalSelectProduct);
-      setIsModalSelectOpen(true);
-      actSearchGridUpdate();
-    }
-
-    if (Condition(e, ["eqm_detail_id", "eqm_detail_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("GridEquip");
-      setColumnsSelect(columnsModalSelectEquipDetail);
-      setIsModalSelectOpen(true);
-      actSearchGridUpdateEquipDetail();
-    }
-    if (
-      Condition(e, [
-        "from_store_id",
-        "from_store_nm",
-        "from_location_id",
-        "from_location_nm",
-      ])
-    ) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("GridStore");
-      setColumnsSelect(columnsModalSelectStore);
-      setIsModalSelectOpen(true);
-      actSearchGridUpdateStore();
-    }
-    if (Condition(e, ["release_uid", "release_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("GridEmployee");
-      setColumnsSelect(columnsModalSelectReleaseUser);
-      setIsModalSelectOpen(true);
-      actSearchGridUpdateReleaseUser();
-    }
-  };
-  */
 
   const onDblClickGrid = (e) => {
     if (Condition(e, ["line_id", "line_nm"])) {
@@ -542,15 +465,11 @@ function SparepartsRelease() {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <L.Date
-              datePickerSet={"range"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <L.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
             {inputSet.map((v) => (
               <InputSearch
                 key={v.id}
@@ -586,10 +505,7 @@ function SparepartsRelease() {
         <S.GridWrap>
           <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
           {isDeleteAlertOpen ? (
-            <AlertDelete
-              handleDelete={handleDelete}
-              setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-            />
+            <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
           ) : null}
           {isModalOpen ? ModalNews : null}
           {isEditMode ? (
@@ -601,6 +517,7 @@ function SparepartsRelease() {
               data={gridData}
               draggable={false}
               refGrid={refSingleGrid}
+              isEditMode={isEditMode}
               onClickGrid={onClickGrid}
               onDblClickGrid={onDblClickGrid}
               onEditingFinish={onEditingFinishGrid}
@@ -614,6 +531,7 @@ function SparepartsRelease() {
               data={gridData}
               draggable={false}
               refGrid={refSingleGrid}
+              isEditMode={isEditMode}
               onClickGrid={onClickGrid}
               onEditingFinish={onEditingFinishGrid}
             />
@@ -653,7 +571,7 @@ function SparepartsRelease() {
       ) : null}
 
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 export default SparepartsRelease;

@@ -26,6 +26,8 @@ import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDelete
 import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
 import ButtonNES from "components/button/ButtonNES";
+import ContentsArea from "components/layout/common/ContentsArea";
+
 function Weight() {
   LoginStateChk();
   const SWITCH_NAME_01 = "weight";
@@ -71,14 +73,8 @@ function Weight() {
     disRow.handleEditingFinishGridCheck(e);
   };
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   useEffect(() => {
     actSearchHeaderDI(true, "start_date", "end_date");
@@ -120,10 +116,7 @@ function Weight() {
 
   const [inputBoxID] = useInputSet(currentMenuName, inputSet);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
@@ -280,21 +273,13 @@ function Weight() {
     ];
     const columnNameWeightEmployee = ["weigh_emp_id", "weigh_emp_nm"];
     const columnNameInputEmployee = ["input_emp_id", "input_emp_nm"];
-    const columnNameStoreLocation = [
-      "inv_to_store_id",
-      "store_nm",
-      "inv_to_location_id",
-      "location_nm",
-    ];
+    const columnNameStoreLocation = ["inv_to_store_id", "store_nm", "inv_to_location_id", "location_nm"];
     if (dblClickGrid === "Search") {
       setInputSearchValue([]);
       columnName = ["prod_cd", "prod_nm"];
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
-          return [
-            ...prevList,
-            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]],
-          ];
+          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
         });
       }
     } else {
@@ -305,8 +290,7 @@ function Weight() {
       if (dblClickGrid === "ModalHeader") {
         refGrid = refGridModalHeader;
         columnName = columnNameModalHeader;
-        refGridModalHeaderKey.current =
-          e?.instance?.store?.data?.rawData[e?.rowKey]["work_order_id"];
+        refGridModalHeaderKey.current = e?.instance?.store?.data?.rawData[e?.rowKey]["work_order_id"];
         onClickGetModalBottomData();
       }
       if (dblClickGrid === "ModalHeaderWeightEmployee") {
@@ -379,11 +363,7 @@ function Weight() {
     Detail?.finishEditing();
     Detail?.appendRow();
 
-    Detail?.setValue(
-      Detail.store.data.rawData.length - 1,
-      "subdivision_date",
-      DateTime().dateFull
-    );
+    Detail?.setValue(Detail.store.data.rawData.length - 1, "subdivision_date", DateTime().dateFull);
 
     if (isNewDetail === true) {
       for (let i = 0; i < Detail.store.data.rawData.length; i++) {
@@ -451,14 +431,7 @@ function Weight() {
         setHeaderModalControl("-");
         setIsModalSelectOpen(true);
         actSelectInputEmployee();
-      } else if (
-        Condition(e, [
-          "inv_to_store_id",
-          "store_nm",
-          "inv_to_location_id",
-          "location_nm",
-        ])
-      ) {
+      } else if (Condition(e, ["inv_to_store_id", "store_nm", "inv_to_location_id", "location_nm"])) {
         setDblClickRowKey(e?.rowKey);
         setDblClickGrid("ModalHeaderStoreLocation");
         setColumnsSelect(columnsSelectStoreLocation);
@@ -499,20 +472,12 @@ function Weight() {
       const beforeQty = Detail.getValue(e?.rowKey, "total_qty");
       const afterQty = e?.value;
       if (beforeQty) {
-        Detail?.setValue(
-          e?.rowKey,
-          "input_qty",
-          Number(beforeQty) - Number(afterQty)
-        );
+        Detail?.setValue(e?.rowKey, "input_qty", Number(beforeQty) - Number(afterQty));
       } else {
         Detail?.setValue(e?.rowKey, "input_qty", e?.value);
       }
       let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
+      for (let i = 0; i < refGridDetail?.current?.gridInst?.getRowCount(); i++) {
         totalQty = Number(totalQty) + Number(Detail.getValue(i, "input_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
@@ -530,11 +495,7 @@ function Weight() {
         Detail?.setValue(e?.rowKey, "input_qty", beforeQty);
       }
       let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
+      for (let i = 0; i < refGridModalDetail?.current?.gridInst?.getRowCount(); i++) {
         totalQty = Number(totalQty) - Number(Detail.getValue(i, "total_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
@@ -543,20 +504,12 @@ function Weight() {
       const beforeQty = Detail.getValue(e?.rowKey, "total_qty");
       const afterQty = e?.value;
       if (beforeQty) {
-        Detail?.setValue(
-          e?.rowKey,
-          "input_qty",
-          Number(beforeQty) - Number(afterQty)
-        );
+        Detail?.setValue(e?.rowKey, "input_qty", Number(beforeQty) - Number(afterQty));
       } else {
         Detail?.setValue(e?.rowKey, "input_qty", e?.value);
       }
       let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
+      for (let i = 0; i < refGridModalDetail?.current?.gridInst?.getRowCount(); i++) {
         totalQty = Number(totalQty) - Number(Detail.getValue(i, "total_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
@@ -669,6 +622,7 @@ function Weight() {
         data={gridDataHeader}
         draggable={false}
         refGrid={refGridHeader}
+        isEditMode={isEditModeHeader}
         onDblClickGrid={onDblClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
       />
@@ -681,6 +635,7 @@ function Weight() {
         data={gridDataHeader}
         draggable={false}
         refGrid={refGridHeader}
+        isEditMode={isEditModeHeader}
         onClickGrid={onClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
       />
@@ -688,13 +643,9 @@ function Weight() {
   }, [gridDataHeader, isEditModeHeader]);
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.SearchCondition>
-        <S.Date
-          datePickerSet={"range"}
-          dateText={dateText}
-          setDateText={setDateText}
-        />
+        <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
         {inputSet.map((v, idx) => (
           <InputPaper
             key={v.id}
@@ -734,10 +685,7 @@ function Weight() {
         <S.TitleBottom>❇️ 계량 / 투입 상세</S.TitleBottom>
         <S.ButtonTop>
           {isEditModeDetail ? (
-            <ButtonSE
-              onClickSave={onClickEditModeSaveDetail}
-              onClickExit={onClickEditModeExitDetail}
-            />
+            <ButtonSE onClickSave={onClickEditModeSaveDetail} onClickExit={onClickEditModeExitDetail} />
           ) : (
             <ButtonED
               onClickEdit={onClickEditDetail}
@@ -756,6 +704,7 @@ function Weight() {
           data={gridDataDetail}
           draggable={false}
           refGrid={refGridDetail}
+          isEditMode={isEditModeDetail}
           onEditingFinish={onEditingFinishGridBottom}
         />
       </S.GridBottomWrap>
@@ -826,7 +775,7 @@ function Weight() {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

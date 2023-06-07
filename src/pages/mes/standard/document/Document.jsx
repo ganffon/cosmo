@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useCallback,
-} from "react";
+import { useContext, useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { LoginStateChk } from "custom/LoginStateChk";
 import ButtonNES from "components/button/ButtonNES";
 import ButtonNED from "components/button/ButtonNED";
@@ -25,7 +18,6 @@ import * as S from "./Document.styled";
 import CN from "json/ColumnName.json";
 import * as uSearch from "custom/useSearch";
 import * as uEdit from "custom/useEdit";
-import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
@@ -35,11 +27,11 @@ import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 import restAPI from "api/restAPI";
 import GetDeleteParams from "api/GetDeleteParams";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function Document() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const targetRowKey = useRef(null);
   const targetGrid = useRef(null);
@@ -125,18 +117,9 @@ function Document() {
     onClickSearch();
   }, [searchToggle]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
@@ -222,19 +205,8 @@ function Document() {
     setGridDataHeaderRowID,
     restURI.inspDocument
   );
-  const handleRE = (e, refGrid) => {
-    col.RENumComma(e, refGrid, "sortby");
-    col.RENumComma(e, refGrid, "spec_min");
-    col.RENumComma(e, refGrid, "spec_max");
-    col.RENumComma(e, refGrid, "spec_lcl");
-    col.RENumComma(e, refGrid, "spec_ucl");
-    col.RENumComma(e, refGrid, "worker_sample_cnt");
-    col.RENumComma(e, refGrid, "inspector_sample_cnt");
-  };
   const onDeleteDetail = async () => {
-    const data = refGridDetail?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetDeleteParams(SWITCH_NAME_02, raw));
+    const data = refGridDetail?.current?.gridInst?.getCheckedRows()?.map((raw) => GetDeleteParams(SWITCH_NAME_02, raw));
 
     try {
       setIsBackDrop(true);
@@ -315,16 +287,13 @@ function Document() {
       let conditionProd;
       let condition;
 
-      comboValue.line_id
-        ? (conditionLine = `line_id=${comboValue.line_id}`)
-        : (conditionLine = "");
+      comboValue.line_id ? (conditionLine = `line_id=${comboValue.line_id}`) : (conditionLine = "");
       inputSearchValue.prod_cd
         ? (conditionProd = `prod_cd=${inputSearchValue.prod_cd}&prod_nm=${inputSearchValue.prod_nm}`)
         : (conditionProd = "");
 
       if (conditionLine !== "" && conditionProd !== "") {
-        condition =
-          restURI.inspDocument + "?" + conditionLine + "&" + conditionProd;
+        condition = restURI.inspDocument + "?" + conditionLine + "&" + conditionProd;
       } else if (conditionLine !== "" && conditionProd === "") {
         condition = restURI.inspDocument + "?" + conditionLine;
       } else if (conditionLine === "" && conditionProd !== "") {
@@ -390,10 +359,7 @@ function Document() {
     ];
     actSearchDetail(headerClickRowID.current);
     for (let i = 0; i < inputInfoValueList.length; i++) {
-      let data = refGridHeader?.current?.gridInst?.getValue(
-        targetRowKey.current,
-        inputInfoValueList[i]
-      );
+      let data = refGridHeader?.current?.gridInst?.getValue(targetRowKey.current, inputInfoValueList[i]);
       if (data === false) {
         //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
         data = "false";
@@ -416,10 +382,7 @@ function Document() {
         "contents",
         "remark",
       ];
-      if (
-        headerClickRowID.current !==
-        e?.instance.getValue(e?.rowKey, "insp_document_id")
-      ) {
+      if (headerClickRowID.current !== e?.instance.getValue(e?.rowKey, "insp_document_id")) {
         const rowID = e?.instance.getValue(e?.rowKey, "insp_document_id");
         if (rowID !== null) {
           headerClickRowID.current = rowID;
@@ -476,7 +439,6 @@ function Document() {
   };
   const onEditingFinishGridDetail = (e) => {
     disRow.handleEditingFinishGridCheck(e);
-    handleRE(e, refGridDetail);
   };
   const onClickModalAddRow = () => {
     const Header = refGridModalHeader?.current?.gridInst;
@@ -543,9 +505,6 @@ function Document() {
       actSelectEquipProc();
     }
   };
-  const onEditingFinishGridModalDetail = (e) => {
-    handleRE(e, refGridModalDetail);
-  };
 
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
@@ -555,12 +514,7 @@ function Document() {
     let refGrid;
     let columnName;
     const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
-    const columnNameInspItem = [
-      "insp_item_type_id",
-      "insp_item_type_nm",
-      "insp_item_id",
-      "insp_item_nm",
-    ];
+    const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
 
     const columnNameEquipProc = ["proc_nm", "equip_nm", "proc_id", "equip_id"];
 
@@ -621,6 +575,7 @@ function Document() {
         data={gridDataHeader}
         draggable={false}
         refGrid={refGridHeader}
+        isEditMode={isEditModeHeader}
         onClickGrid={onClickGridHeader}
         onDblClickGrid={onDblClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
@@ -650,30 +605,19 @@ function Document() {
         onClickGridModalDetail={onClickGridModalDetail}
         onDblClickGridModalHeader={onDblClickGridModalHeader}
         onDblClickGridModalDetail={onDblClickGridModalDetail}
-        onEditingFinishGridModalDetail={onEditingFinishGridModalDetail}
       />
     );
   }, [isNewDetail, lineList, onClickModalClose]);
 
   const InputInfo = useMemo(() => {
     return inputInfo.map((v, idx) => {
-      return (
-        <InputPaper
-          key={v.id}
-          id={v.id}
-          name={v.name}
-          value={inputInfoValue[idx] || ""}
-        />
-      );
+      return <InputPaper key={v.id} id={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
     });
   }, [inputInfoValue]);
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
-      <S.ShadowBoxButtonHeader
-        isMenuSlide={isMenuSlide}
-        isAllScreen={isAllScreen}
-      >
+    <ContentsArea>
+      <S.ShadowBoxButtonHeader isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ComboWrap>
           <S.ComboBox
             disablePortal
@@ -685,13 +629,10 @@ function Document() {
             onChange={(_, newValue) => {
               setComboValue({
                 ...comboValue,
-                line_id:
-                  newValue?.line_id === undefined ? null : newValue?.line_id,
+                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
               });
             }}
-            renderInput={(params) => (
-              <TextField {...params} label={CN.line_nm} size="small" />
-            )}
+            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
             onKeyDown={onKeyDown}
           />
 
@@ -717,11 +658,7 @@ function Document() {
               onClickSearch={onClickSearch}
             />
           ) : (
-            <ButtonNES
-              onClickNew={onClickNew}
-              onClickEdit={onClickEditHeader}
-              onClickSearch={onClickSearch}
-            />
+            <ButtonNES onClickNew={onClickNew} onClickEdit={onClickEditHeader} onClickSearch={onClickSearch} />
           )}
         </S.ButtonWrap>
       </S.ShadowBoxButtonHeader>
@@ -729,22 +666,12 @@ function Document() {
       <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.SearchWrap>{InputInfo}</S.SearchWrap>
       </S.ShadowBoxInputInfo>
-      <S.ShadowBoxButtonDetail
-        isMenuSlide={isMenuSlide}
-        isAllScreen={isAllScreen}
-      >
+      <S.ShadowBoxButtonDetail isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ButtonWrap>
           {isEditModeDetail ? (
-            <ButtonSE
-              onClickSave={onClickEditSaveDetail}
-              onClickExit={onClickEditExitDetail}
-            />
+            <ButtonSE onClickSave={onClickEditSaveDetail} onClickExit={onClickEditExitDetail} />
           ) : (
-            <ButtonNED
-              onClickNew={onClickEditNew}
-              onClickEdit={onClickEditDetail}
-              onClickDelete={onClickDelete}
-            />
+            <ButtonNED onClickNew={onClickEditNew} onClickEdit={onClickEditDetail} onClickDelete={onClickDelete} />
           )}
         </S.ButtonWrap>
       </S.ShadowBoxButtonDetail>
@@ -757,6 +684,7 @@ function Document() {
           data={gridDataDetail}
           draggable={false}
           refGrid={refGridDetail}
+          isEditMode={isEditModeDetail}
           onDblClickGrid={onDblClickGridDetail}
           onEditingFinish={onEditingFinishGridDetail}
         />
@@ -785,7 +713,7 @@ function Document() {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

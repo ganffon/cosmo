@@ -1,21 +1,17 @@
-import React, {
-  useState,
-  createContext,
-  useCallback,
-  useMemo,
-  useEffect,
-} from "react";
+import React, { useState, createContext, useCallback, useMemo, useEffect } from "react";
 // ⬇️ reference of page
 import AppBar from "./AppBar";
 import V2MenuFold from "../v2menu/V2MenuFold";
 import ExtendButton from "./ExtendButton";
 import * as S from "./Layout.styled";
 import { useLocation } from "react-router-dom";
+import MenuList from "json/MenuList.json";
 import MenuListDev from "json/MenuListDev.json";
 
 export const LayoutContext = createContext();
 
 const Layout = ({ children }) => {
+  const isRealMenu = JSON.parse(process.env.REACT_APP_MENU);
   const [superAdmin, setSuperAdmin] = useState(true); //🔸false로 바꾸면 메뉴 권한에 따라 동작하게 됨 ➡️ 개발자 모드는 true 초기값 할당
   const [isMenuSlide, setIsMenuSlide] = useState(true); //🔸메뉴 확장, 축소 Flag
   const [isMouseOver, setIsMouseOver] = useState(false); //🔸V2MenuDepth On/Off 상태 Flag
@@ -67,23 +63,20 @@ const Layout = ({ children }) => {
   const location = useLocation();
   useEffect(() => {
     let fullMenuName;
-    for (let i = 0; findPath(MenuListDev)[0].length > i; i++) {
-      if (
-        location.pathname.split("/")[1] === "mes" &&
-        location.pathname.split("/")[2] === undefined
-      ) {
+    const MenuJSON = isRealMenu ? MenuList : MenuListDev;
+    for (let i = 0; findPath(MenuJSON)[0].length > i; i++) {
+      if (location.pathname.split("/")[1] === "mes" && location.pathname.split("/")[2] === undefined) {
         window.document.title = `FacdoriOn | Dashboard`;
         break;
       } else {
-        if (findPath(MenuListDev)[0][i] === location.pathname.split("/")[2]) {
-          window.document.title = `FacdoriOn | ` + findPath(MenuListDev)[1][i];
-          const menuName = findPath(MenuListDev)[2][i].split("★");
+        if (findPath(MenuJSON)[0][i] === location.pathname.split("/")[2]) {
+          window.document.title = `FacdoriOn | ` + findPath(MenuJSON)[1][i];
+          const menuName = findPath(MenuJSON)[2][i].split("★");
 
           if (menuName.length === 2) {
             fullMenuName = menuName[0] + `　|　` + menuName[1];
           } else if (menuName.length === 3) {
-            fullMenuName =
-              menuName[0] + `　|　` + menuName[1] + `　|　` + menuName[2];
+            fullMenuName = menuName[0] + `　|　` + menuName[1] + `　|　` + menuName[2];
           }
           break;
         }
@@ -119,10 +112,7 @@ const Layout = ({ children }) => {
             {children}
           </S.ContentsBox>
         </S.MainBox>
-        <ExtendButton
-          isAllScreen={isAllScreen}
-          setIsAllScreen={setIsAllScreen}
-        />
+        <ExtendButton isAllScreen={isAllScreen} setIsAllScreen={setIsAllScreen} />
       </LayoutContext.Provider>
     </S.LayoutBox>
   );

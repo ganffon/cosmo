@@ -90,5 +90,8 @@
   "monthlyLine": "/kpi/production/monthly-by-line",
   "dailyLine": "/kpi/production/daily-by-line",
   "dashboard": "/dashboard/main",
-  "erpIncome": "/std/income/erp"
+  "erpIncome": "/std/income/erp",
+
+  "downtimeShare": "/kpi/downtime/share",
+  "sysDowntimeShare": "/kpi/sys-downtime/share"
 }

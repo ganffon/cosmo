@@ -20,6 +20,7 @@ import ModalResultNew from "./ModalResultNew";
 import ModalSelectDate from "components/modal/ModalSelectDate";
 import restAPI from "api/restAPI";
 import GetDeleteParams from "api/GetDeleteParams";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function EquipmentResult() {
   LoginStateChk();
@@ -260,10 +261,7 @@ function EquipmentResult() {
       setIsResultNewOpen(true);
       try {
         setIsBackDrop(true);
-        const result = await restAPI.get(
-          restURI.qmsInspResultDetail +
-            `?insp_result_id=${mainInfo.inspResultId}`
-        );
+        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${mainInfo.inspResultId}`);
         setGridDataNew(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
@@ -322,15 +320,9 @@ function EquipmentResult() {
       try {
         setIsBackDrop(true);
         let conditionLine, conditionProdCd, conditionProdNm;
-        inputTextChange.line_nm
-          ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
-          : (conditionLine = "");
-        inputTextChange.prod_cd
-          ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`)
-          : (conditionProdCd = "");
-        inputTextChange.prod_nm
-          ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`)
-          : (conditionProdNm = "");
+        inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
+        inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
+        inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -387,9 +379,7 @@ function EquipmentResult() {
         const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
         try {
           setIsBackDrop(true);
-          const result = await restAPI.get(
-            restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`
-          );
+          const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
           setGridDataDetail(result?.data?.data?.rows);
         } catch (err) {
           setIsSnackOpen({
@@ -416,9 +406,7 @@ function EquipmentResult() {
 
   const onSelectOrder = () => {
     setIsSelectOrderOpen(true);
-    actSelectOrder(
-      `?complete_fg=INCOMPLETE&start_date=${dateText.startDate}&end_date=${dateText.endDate}`
-    );
+    actSelectOrder(`?complete_fg=INCOMPLETE&start_date=${dateText.startDate}&end_date=${dateText.endDate}`);
   };
   const onRemoveOrder = () => {
     resetInfo();
@@ -544,8 +532,7 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrderDetail +
-          `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
+        restURI.prdOrderDetail + `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
       );
       setGridDataNew(result?.data?.data?.rows);
     } catch (err) {
@@ -659,10 +646,7 @@ function EquipmentResult() {
           details: dataDetail,
         };
         try {
-          const result = await restAPI.put(
-            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
-            query
-          );
+          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -708,14 +692,10 @@ function EquipmentResult() {
   }, [gridDataHeader]);
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
-          <DateRange
-            dateText={dateText}
-            setDateText={setDateText}
-            onClickSearch={onClickSearch}
-          />
+          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
           <InputSearch
             id={"line_nm"}
             name={"라인명"}
@@ -754,15 +734,7 @@ function EquipmentResult() {
         <S.ContentRight>
           <S.InfoWrap>
             {inputInfo.map((v, idx) => {
-              return (
-                <InputPaper
-                  key={v.id}
-                  id={v.id}
-                  name={v.name}
-                  width={"220px"}
-                  value={mainInfo[v.id] || ""}
-                />
-              );
+              return <InputPaper key={v.id} id={v.id} name={v.name} width={"220px"} value={mainInfo[v.id] || ""} />;
             })}
           </S.InfoWrap>
           <S.TitleWrap>
@@ -843,14 +815,11 @@ function EquipmentResult() {
         />
       ) : null}
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

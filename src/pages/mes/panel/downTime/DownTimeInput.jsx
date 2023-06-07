@@ -90,7 +90,11 @@ function DownTimeInput(props) {
     <S.Wrap width={width} height={height}>
       <S.CloseWrap>
         <S.TitleDowntime>
-          {downtimeInfo.workDowntimeID ? `비가동 ${hours}시간 ${minutes}분 ${seconds}초 경과` : ""}
+          {downtimeInfo.workDowntimeID
+            ? hours === 0
+              ? `비가동 경과 시간 계산중...`
+              : `비가동 ${hours}시간 ${minutes}분 ${seconds}초 경과`
+            : ""}
         </S.TitleDowntime>
         <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />

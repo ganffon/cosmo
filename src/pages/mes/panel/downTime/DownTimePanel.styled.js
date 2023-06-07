@@ -64,6 +64,19 @@ export const DowntimeAfter = styled("div")`
 export const GridWrap = styled("div")`
   height: 100%;
   width: 100%;
+
+  & .tui-grid-cell-header {
+    font-size: 20px;
+  }
+  & .tui-grid-cell-content {
+    font-size: 25px;
+  }
+  & .customButton {
+    width: 95%;
+    height: 40px;
+    font-family: "NotoSansKR";
+    font-size: 20px;
+  }
 `;
 
 export const ButtonSet = styled("button")`

@@ -25,6 +25,7 @@ import * as S from "./ProductionOrder.styled";
 import ModalNew from "components/modal/ModalNew";
 import ModalDate from "components/modal/ModalDate";
 import restAPI from "api/restAPI";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function ProductionOrder() {
   LoginStateChk();
@@ -512,6 +513,7 @@ function ProductionOrder() {
         data={gridDataHeader}
         draggable={false}
         refGrid={refGridHeader}
+        isEditMode={isEditModeHeader}
         onClickGrid={onClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
       />
@@ -538,7 +540,7 @@ function ProductionOrder() {
   }, [gridDataHeader, isEditModeHeader]);
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.SearchCondition>
         <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
         {inputSet.map((v) => (
@@ -592,6 +594,7 @@ function ProductionOrder() {
           data={gridDataMid}
           draggable={false}
           refGrid={refGridMid}
+          isEditMode={isEditModeMid}
           onEditingFinish={onEditingFinishGridMid}
         />
       </S.GridMidWrap>
@@ -614,6 +617,7 @@ function ProductionOrder() {
           data={gridDataBottom}
           draggable={false}
           refGrid={refGridBottom}
+          isEditMode={isEditModeBottom}
           onEditingFinish={onEditingFinishGridBottom}
         />
       </S.GridBottomWrap>
@@ -675,7 +679,7 @@ function ProductionOrder() {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

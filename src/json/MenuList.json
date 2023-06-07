@@ -513,6 +513,12 @@
         "id": "performanceRate",
         "path": "performanceRate",
         "under": null
+      },
+      {
+        "name": "비가동 대시보드",
+        "id": "equipStatus",
+        "path": "equipStatus",
+        "under": null
       }
     ]
   },

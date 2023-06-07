@@ -513,6 +513,24 @@
         "id": "performanceRate",
         "path": "performanceRate",
         "under": null
+      },
+      {
+        "name": "✴️(미배포)",
+        "id": "managementAll",
+        "path": "managementAll",
+        "under": null
+      },
+      {
+        "name": "✴️온습도 대시보드",
+        "id": "tempView",
+        "path": "tempView",
+        "under": null
+      },
+      {
+        "name": "✴️비가동 대시보드",
+        "id": "equipStatus",
+        "path": "equipStatus",
+        "under": null
       }
     ]
   },
