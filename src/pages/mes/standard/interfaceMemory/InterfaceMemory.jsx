@@ -23,11 +23,11 @@ import * as uSave from "custom/useSave";
 import * as S from "./InterfaceMemory.styled";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function InterfaceMemory(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
@@ -57,16 +57,8 @@ function InterfaceMemory(props) {
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
   const [processOpt, processList] = Cbo.useProcess();
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnsModalSelect,
-    columnOptions,
-    inputSet,
-  } = InterfaceMemorySet(isEditMode, lineList, processList, equipmentList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnsModalSelect, columnOptions, inputSet } =
+    InterfaceMemorySet(isEditMode, lineList, processList, equipmentList);
 
   const SWITCH_NAME_01 = "infcMemory";
 
@@ -75,19 +67,13 @@ function InterfaceMemory(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -267,7 +253,7 @@ function InterfaceMemory(props) {
   }, [gridModalData]);
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
@@ -282,15 +268,10 @@ function InterfaceMemory(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    line_id:
-                      newValue?.line_id === undefined
-                        ? null
-                        : newValue?.line_id,
+                    line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.line_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
@@ -335,6 +316,7 @@ function InterfaceMemory(props) {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
             onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
@@ -358,13 +340,10 @@ function InterfaceMemory(props) {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

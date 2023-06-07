@@ -14,6 +14,7 @@ import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
 import EquipmentRawDataViewSet from "./equipmentRawDataViewSet";
 import BackDrop from "components/backdrop/BackDrop";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function EquipmentRawDataView() {
   LoginStateChk();
@@ -35,24 +36,15 @@ function EquipmentRawDataView() {
     line_id: null,
   });
 
-  const { rowHeaders, columnOptions, header, columns } =
-    EquipmentRawDataViewSet(tmpColumns);
+  const { rowHeaders, columnOptions, header, columns } = EquipmentRawDataViewSet(tmpColumns);
 
   const setGridcolumns = async () => {
     let readURI = `/eqm/raws/columns?reg_date=${dateText.startDate}&`;
-    if (
-      comboValue.proc_id !== "" &&
-      comboValue.proc_id !== null &&
-      comboValue.proc_id !== undefined
-    ) {
+    if (comboValue.proc_id !== "" && comboValue.proc_id !== null && comboValue.proc_id !== undefined) {
       readURI = readURI + `proc_id=${comboValue.proc_id}&`;
     }
 
-    if (
-      comboValue.line_id !== "" &&
-      comboValue.line_id !== null &&
-      comboValue.line_id !== undefined
-    ) {
+    if (comboValue.line_id !== "" && comboValue.line_id !== null && comboValue.line_id !== undefined) {
       readURI = readURI + `line_id=${comboValue.line_id}&`;
     }
     readURI = readURI.slice(0, readURI.length - 1);
@@ -101,19 +93,11 @@ function EquipmentRawDataView() {
     try {
       let readURI = `/eqm/raws?reg_date=${dateText.startDate}&`;
 
-      if (
-        comboValue.proc_id !== "" &&
-        comboValue.proc_id !== null &&
-        comboValue.proc_id !== undefined
-      ) {
+      if (comboValue.proc_id !== "" && comboValue.proc_id !== null && comboValue.proc_id !== undefined) {
         readURI = readURI + `proc_id=${comboValue.proc_id}&`;
       }
 
-      if (
-        comboValue.line_id !== "" &&
-        comboValue.line_id !== null &&
-        comboValue.line_id !== undefined
-      ) {
+      if (comboValue.line_id !== "" && comboValue.line_id !== null && comboValue.line_id !== undefined) {
         readURI = readURI + `line_id=${comboValue.line_id}&`;
       }
       readURI = readURI.slice(0, readURI.length - 1);
@@ -144,15 +128,11 @@ function EquipmentRawDataView() {
     setGridcolumns();
   };
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <DatePicker
-              datePickerSet={"single"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <DatePicker datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
             <LS.ComboWrap>
               <LS.ComboBox
                 disablePortal
@@ -164,15 +144,10 @@ function EquipmentRawDataView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    line_id:
-                      newValue?.line_id === undefined
-                        ? null
-                        : newValue?.line_id,
+                    line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.line_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
               />
               <LS.ComboBox
                 disablePortal
@@ -184,15 +159,10 @@ function EquipmentRawDataView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    proc_id:
-                      newValue?.proc_id === undefined
-                        ? null
-                        : newValue?.proc_id,
+                    proc_id: newValue?.proc_id === undefined ? null : newValue?.proc_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.proc_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.proc_nm} size="small" />}
               />
             </LS.ComboWrap>
           </S.SearchWrap>
@@ -214,7 +184,7 @@ function EquipmentRawDataView() {
         </S.GridWrap>
       </S.ShadowBoxGrid>
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

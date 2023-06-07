@@ -18,28 +18,15 @@ import CN from "json/ColumnName.json";
 import * as LS from "./sparepartsStoreTransView.styled";
 import * as Cbo from "custom/useCboSet";
 import SparepartsStoreTransViewSet from "./sparepartsStoreTransViewSet";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function SparepartsStoreTransView() {
   const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-    columnsModalHeader,
-    columnsModalSelectProduct,
-    columnsModalSelectEquipDetail,
-    columnsModalSelectStore,
-    columnsModalSelectReleaseUser,
-  } = SparepartsStoreTransViewSet(
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { rowHeaders, header, columns, columnOptions, inputSet } = SparepartsStoreTransViewSet(
     productGbnList,
     productModelList,
     productTypeList,
@@ -67,15 +54,9 @@ function SparepartsStoreTransView() {
     prod_type_small_id: null,
   });
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   const refSingleGrid = useRef(null);
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   //===============================================
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
@@ -112,15 +93,11 @@ function SparepartsStoreTransView() {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <LS.Date
-              datePickerSet={"range"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
             <LS.ComboWrap>
               <LS.ComboBox
                 disablePortal
@@ -132,15 +109,10 @@ function SparepartsStoreTransView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id:
-                      newValue?.prod_gbn_id === undefined
-                        ? null
-                        : newValue?.prod_gbn_id,
+                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -153,15 +125,10 @@ function SparepartsStoreTransView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id:
-                      newValue?.model_id === undefined
-                        ? null
-                        : newValue?.model_id,
+                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.model_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -174,15 +141,10 @@ function SparepartsStoreTransView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id:
-                      newValue?.prod_type_id === undefined
-                        ? null
-                        : newValue?.prod_type_id,
+                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_type_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -196,18 +158,10 @@ function SparepartsStoreTransView() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined
-                        ? null
-                        : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.prod_type_small_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
@@ -238,11 +192,12 @@ function SparepartsStoreTransView() {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 export default SparepartsStoreTransView;

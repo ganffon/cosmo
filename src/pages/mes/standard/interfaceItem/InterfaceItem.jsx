@@ -21,11 +21,11 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "./InterfaceItem.styled";
 import restURI from "json/restURI.json";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function InterfaceItem(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -41,15 +41,10 @@ function InterfaceItem(props) {
     infc_item_type_id: null,
   });
   const [infcItemTypeOpt, infcItemTypeList] = Cbo.useInfcItemType();
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = InterfaceItemSet(isEditMode, infcItemTypeList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = InterfaceItemSet(
+    isEditMode,
+    infcItemTypeList
+  );
 
   const SWITCH_NAME_01 = "infcItem";
 
@@ -58,18 +53,12 @@ function InterfaceItem(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -179,7 +168,7 @@ function InterfaceItem(props) {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
@@ -194,19 +183,10 @@ function InterfaceItem(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    infc_item_type_id:
-                      newValue?.infc_item_type_id === undefined
-                        ? null
-                        : newValue?.infc_item_type_id,
+                    infc_item_type_id: newValue?.infc_item_type_id === undefined ? null : newValue?.infc_item_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.infc_item_type_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.infc_item_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
@@ -251,6 +231,7 @@ function InterfaceItem(props) {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
@@ -258,10 +239,7 @@ function InterfaceItem(props) {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew
@@ -278,7 +256,7 @@ function InterfaceItem(props) {
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

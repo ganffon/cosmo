@@ -17,8 +17,7 @@ import * as S from "./MenuList.styled";
 import MenuListSet from "pages/admin/menuList/MenuListSet";
 
 function MenuList(props) {
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -73,9 +72,7 @@ function MenuList(props) {
   };
   const handleDelete = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    const data = refSingleGrid?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetDeleteParams(COMPONENT_NAME, raw));
+    const data = refSingleGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetDeleteParams(COMPONENT_NAME, raw));
     if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
@@ -259,6 +256,7 @@ function MenuList(props) {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
             onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
@@ -267,10 +265,7 @@ function MenuList(props) {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew

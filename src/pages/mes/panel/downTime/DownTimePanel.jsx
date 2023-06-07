@@ -18,7 +18,7 @@ import BtnWeight from "components/button/panel/BtnWeight";
 import Condition from "custom/Condition";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import DownTimeInput from "./DownTimeInput";
-import GridSingle from "components/grid/GridSingle";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function DownTimePanel() {
   LoginStateChk();
@@ -392,7 +392,7 @@ function DownTimePanel() {
     }
   };
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ScreenTitleBox>
         <S.TitleBefore>❇️ 비가동 등록</S.TitleBefore>
         <S.TitleAfter>❇️ 비가동 진행중</S.TitleAfter>
@@ -464,7 +464,7 @@ function DownTimePanel() {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

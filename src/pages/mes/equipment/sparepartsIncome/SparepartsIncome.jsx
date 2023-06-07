@@ -4,7 +4,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import restURI from "json/restURI.json";
 import * as S from "./SparepartsIncome.styled";
 import DateTime from "components/datetime/DateTime";
-import { InputSet } from "components/input/InputSearch.styled";
 import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
 import * as disRow from "custom/useDisableRowCheck";
@@ -20,11 +19,11 @@ import * as uSave from "custom/useSave";
 import * as uDelete from "custom/useDelete";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function SparepartIncome() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen } = useContext(LayoutContext);
 
   /* 변수 선언 영역 시작 */
   const refSingleGrid = useRef(null);
@@ -68,19 +67,10 @@ function SparepartIncome() {
     onClickGridHeader,
     inputSet,
   } = SparepartsIncomeSet();
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   const onClickEditModeHeaderSave = () => {
     actEdit();
@@ -90,10 +80,7 @@ function SparepartIncome() {
     setIsEditModeHeader(false);
     setSearchToggle(!searchToggle);
   };
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeHeader, refSingleGrid);
 
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
@@ -215,14 +202,10 @@ function SparepartIncome() {
   };
   //  onClickDelete={onClickDelete}
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ContentsLeft>
         <S.SearchLeftWrap>
-          <S.Date
-            datePickerSet={"range"}
-            dateText={dateText}
-            setDateText={setDateText}
-          />
+          <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
           <S.SearchLeftTopWrap>
             {isEditModeHeader ? (
               <ButtonSES
@@ -249,8 +232,8 @@ function SparepartIncome() {
             data={gridDataHeader}
             draggable={false}
             refGrid={refGridHeader}
+            isEditMode={isEditModeHeader}
             onClickGrid={onClickGridHeader}
-            // onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGridHeader}
           />
         </S.GridHeaderWrap>
@@ -270,17 +253,13 @@ function SparepartIncome() {
             data={gridDataDetail}
             draggable={false}
             refGrid={refGridDetail}
-            // onClickGrid={onClickGrid}
-            // onDblClickGrid={onDblClickGrid}
+            isEditMode={isEditModeDetail}
           />
         </S.GridDetailWrap>
       </S.ContentsRight>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew
@@ -297,7 +276,7 @@ function SparepartIncome() {
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 export default SparepartIncome;

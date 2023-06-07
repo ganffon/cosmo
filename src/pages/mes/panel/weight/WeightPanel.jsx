@@ -19,22 +19,9 @@ import Condition from "custom/Condition";
 import ModalInput from "./ModalInput";
 import ModalInputSave from "./ModalInputSave";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function WeightPanel() {
-  // const prodID = useRef("");
-  // const prodCD = useRef("");
-  // const prodNM = useRef("");
-  // const storeID = useRef("");
-  // const storeNM = useRef("");
-  // const locationID = useRef("");
-  // const locationNM = useRef("");
-  // const workWeighID = useRef("");
-  // const lineDeptID = useRef("");
-  // const lineID = useRef("");
-  // const lineNM = useRef("");
-  // const workOrderID = useRef("");
-  // const empID = useRef("");
-  // const empNM = useRef("");
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -172,9 +159,7 @@ function WeightPanel() {
       const workWeighID = Header.getValue(e?.rowKey, "work_weigh_id");
       handleInputSaveInfo(e?.rowKey);
       try {
-        const result = await restAPI.get(
-          restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`
-        );
+        const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`);
         setGridDataInputDetail(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
@@ -217,8 +202,7 @@ function WeightPanel() {
   const handleInputSearch = async () => {
     try {
       const result = await restAPI.get(
-        restURI.prdWeight +
-          `?complete_fg=INCOMPLETE&work_order_id=${selectInputInfo.workOrderID}`
+        restURI.prdWeight + `?complete_fg=INCOMPLETE&work_order_id=${selectInputInfo.workOrderID}`
       );
       setGridDataInput(result?.data?.data?.rows);
       setIsModalInputOpen(true);
@@ -246,10 +230,7 @@ function WeightPanel() {
   const onClickWeight = async () => {
     if (selectInputInfo.workOrderID !== "") {
       try {
-        const result = await restAPI.get(
-          restURI.prdOrderInput +
-            `?work_order_id=${selectInputInfo.workOrderID}`
-        );
+        const result = await restAPI.get(restURI.prdOrderInput + `?work_order_id=${selectInputInfo.workOrderID}`);
         setGridDataWeight(result?.data?.data?.rows);
         setIsModalWeightOpen(true);
       } catch (err) {
@@ -269,15 +250,9 @@ function WeightPanel() {
       let conditionLine;
       let conditionProdCD;
       let conditionProdNM;
-      inputTextChange.line
-        ? (conditionLine = `&line_nm=${inputTextChange.line}`)
-        : (conditionLine = "");
-      inputTextChange.prod_cd
-        ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`)
-        : (conditionProdCD = "");
-      inputTextChange.prod_nm
-        ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`)
-        : (conditionProdNM = "");
+      inputTextChange.line ? (conditionLine = `&line_nm=${inputTextChange.line}`) : (conditionLine = "");
+      inputTextChange.prod_cd ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCD = "");
+      inputTextChange.prod_nm ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNM = "");
       const result = await restAPI.get(
         restURI.prdOrder +
           `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -368,11 +343,7 @@ function WeightPanel() {
     if (selectInputInfo.empNM) {
       refGridWeight?.current?.gridInst?.finishEditing();
       let result = [];
-      for (
-        let i = 0;
-        i < refGridWeight?.current?.gridInst?.getRowCount();
-        i++
-      ) {
+      for (let i = 0; i < refGridWeight?.current?.gridInst?.getRowCount(); i++) {
         result.push(refGridWeight?.current?.gridInst?.getRowAt(i));
       }
 
@@ -474,14 +445,9 @@ function WeightPanel() {
           input_emp_id: selectInputInfo.empID,
         };
         try {
-          console.log(
-            `selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`
-          );
+          console.log(`selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`);
           const result = await restAPI.patch(
-            restURI.prdWeightComplete.replace(
-              "{id}",
-              selectInputInfo.workWeighID
-            ),
+            restURI.prdWeightComplete.replace("{id}", selectInputInfo.workWeighID),
             raw
           );
           setIsSnackOpen({
@@ -554,190 +520,171 @@ function WeightPanel() {
     );
   }, [gridDataHeader]);
   return (
-    <>
-      <S.ContentsArea isAllScreen={isAllScreen}>
-        <S.TopWrap>
-          <S.ScreenTitleBox>❇️ 작업지시 List</S.ScreenTitleBox>
-          <S.SearchBox>
-            <S.SearchCondition>
-              <DateRange
-                dateText={dateText}
-                setDateText={setDateText}
-                onClickSearch={onClickSearch}
-              />
-              <InputSearch
-                id={"line"}
-                name={"라인명"}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
-              />
-              <InputSearch
-                id={"prod_cd"}
-                name={"품목코드"}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
-              />
-              <InputSearch
-                id={"prod_nm"}
-                name={"품목"}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
-              />
-            </S.SearchCondition>
-            <S.SearchButton>
-              <BtnWeight onClickSearch={onClickSearch} />
-            </S.SearchButton>
-          </S.SearchBox>
-          <S.GridHeader>{GridHeader}</S.GridHeader>
-        </S.TopWrap>
-        <S.BottomWrap>
-          <S.ContentBottomLeft>
-            <S.SelectInfo
-              width={"180px"}
-              height={"60px"}
-              name={"지시일자"}
-              nameSize={"20px"}
-              namePositionTop={"-25px"}
-              nameColor={"white"}
-              value={selectInfo.orderDate || ""}
-              size={"30px"}
-              btn={false}
+    <ContentsArea>
+      <S.TopWrap>
+        <S.ScreenTitleBox>❇️ 작업지시 List</S.ScreenTitleBox>
+        <S.SearchBox>
+          <S.SearchCondition>
+            <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+            <InputSearch
+              id={"line"}
+              name={"라인명"}
+              handleInputTextChange={handleInputTextChange}
+              onClickSearch={onClickSearch}
             />
-            <S.SelectInfo
-              width={"150px"}
-              height={"60px"}
-              name={"라인"}
-              nameSize={"20px"}
-              namePositionTop={"-25px"}
-              nameColor={"white"}
-              value={selectInfo.line || ""}
-              size={"30px"}
-              btn={false}
-            />
-            <S.SelectInfo
-              width={"150px"}
-              height={"60px"}
-              name={"지시수량"}
-              nameSize={"20px"}
-              namePositionTop={"-25px"}
-              nameColor={"white"}
-              value={selectInfo.orderQty || ""}
-              size={"30px"}
-              btn={false}
-            />
-            <S.SelectInfo
-              width={"400px"}
-              height={"60px"}
+            <InputSearch
+              id={"prod_cd"}
               name={"품목코드"}
-              nameSize={"20px"}
-              namePositionTop={"-25px"}
-              nameColor={"white"}
-              value={selectInfo.prodCD || ""}
-              size={"30px"}
-              btn={false}
+              handleInputTextChange={handleInputTextChange}
+              onClickSearch={onClickSearch}
             />
-            <S.SelectInfo
-              width={"400px"}
-              height={"60px"}
+            <InputSearch
+              id={"prod_nm"}
               name={"품목"}
-              nameSize={"20px"}
-              namePositionTop={"-25px"}
-              nameColor={"white"}
-              value={selectInfo.prodNM || ""}
-              size={"30px"}
-              btn={false}
+              handleInputTextChange={handleInputTextChange}
+              onClickSearch={onClickSearch}
             />
-          </S.ContentBottomLeft>
-          <S.ButtonBox>
-            <S.ButtonSet
-              color={"#415c76"}
-              hoverColor={"#e5b700"}
-              onClick={onClickWeight}
-            >
-              계량
-            </S.ButtonSet>
-            <S.ButtonSet
-              color={"#415c76"}
-              hoverColor={"#990b11"}
-              onClick={onClickInput}
-            >
-              투입
-            </S.ButtonSet>
-          </S.ButtonBox>
-        </S.BottomWrap>
-        {isModalWeightOpen ? (
-          <ModalWeight
-            onClickModalClose={onClickWeightClose}
-            columnsWeight={columnsWeight}
-            columnOptions={columnOptions}
-            header={header}
-            gridDataWeight={gridDataWeight}
-            rowHeadersHeader={rowHeadersNum}
-            rowHeadersDetail={rowHeadersNum}
-            refGridWeight={refGridWeight}
-            onClickSelect={onClickSelect}
-            onClickRemove={onClickRemove}
-            onClickWeightSave={onClickWeightSave}
-            onEditingFinishWeight={onEditingFinishWeight}
-            selectInputInfo={selectInputInfo}
+          </S.SearchCondition>
+          <S.SearchButton>
+            <BtnWeight onClickSearch={onClickSearch} />
+          </S.SearchButton>
+        </S.SearchBox>
+        <S.GridHeader>{GridHeader}</S.GridHeader>
+      </S.TopWrap>
+      <S.BottomWrap>
+        <S.ContentBottomLeft>
+          <S.SelectInfo
+            width={"180px"}
+            height={"60px"}
+            name={"지시일자"}
+            nameSize={"20px"}
+            namePositionTop={"-25px"}
+            nameColor={"white"}
+            value={selectInfo.orderDate || ""}
+            size={"30px"}
+            btn={false}
           />
-        ) : null}
-        {isModalInputOpen ? (
-          <ModalInput
-            onClickModalClose={onClickInputClose}
-            columnsInput={columnsInput}
-            columnsInputDetail={columnsInputDetail}
-            columnOptions={columnOptions}
-            header={header}
-            gridDataInput={gridDataInput}
-            gridDataInputDetail={gridDataInputDetail}
-            rowHeadersHeader={rowHeadersNum}
-            rowHeadersDetail={rowHeadersNum}
-            refGridInput={refGridInput}
-            refGridInputDetail={refGridInputDetail}
-            onClickGridInput={onClickGridInput}
+          <S.SelectInfo
+            width={"150px"}
+            height={"60px"}
+            name={"라인"}
+            nameSize={"20px"}
+            namePositionTop={"-25px"}
+            nameColor={"white"}
+            value={selectInfo.line || ""}
+            size={"30px"}
+            btn={false}
           />
-        ) : null}
-        {isModalInputSaveOpen ? (
-          <ModalInputSave
-            onClickModalClose={onClickInputSaveClose}
-            onClickSelect={onClickSelect}
-            onClickRemove={onClickRemove}
-            onClickSelectStore={onClickSelectStore}
-            onClickRemoveStore={onClickRemoveStore}
-            onClickInputSave={onClickInputSave}
-            onClickNowTime={onClickNowTime}
-            onClickGridInput={onClickGridInput}
-            nowDateTime={nowDateTime}
-            selectInputInfo={selectInputInfo}
+          <S.SelectInfo
+            width={"150px"}
+            height={"60px"}
+            name={"지시수량"}
+            nameSize={"20px"}
+            namePositionTop={"-25px"}
+            nameColor={"white"}
+            value={selectInfo.orderQty || ""}
+            size={"30px"}
+            btn={false}
           />
-        ) : null}
-        {isModalSelectOpen ? (
-          <ModalSelect
-            width={modalSelectSize.width}
-            height={modalSelectSize.height}
-            onClickModalSelectClose={onClickModalSelectClose}
-            columns={selectColumn}
-            columnOptions={columnOptions}
-            header={header}
-            gridDataSelect={gridDataSelect}
-            rowHeaders={rowHeadersNum}
-            refSelectGrid={refGridSelect}
-            onDblClickGridSelect={onDblClickGridSelect}
+          <S.SelectInfo
+            width={"400px"}
+            height={"60px"}
+            name={"품목코드"}
+            nameSize={"20px"}
+            namePositionTop={"-25px"}
+            nameColor={"white"}
+            value={selectInfo.prodCD || ""}
+            size={"30px"}
+            btn={false}
           />
-        ) : null}
-        {isWarning.open ? (
-          <AlertDelete
-            handleDelete={handleWarning}
-            title={isWarning.title}
-            message={isWarning.message}
-            onlyYes={true}
+          <S.SelectInfo
+            width={"400px"}
+            height={"60px"}
+            name={"품목"}
+            nameSize={"20px"}
+            namePositionTop={"-25px"}
+            nameColor={"white"}
+            value={selectInfo.prodNM || ""}
+            size={"30px"}
+            btn={false}
           />
-        ) : null}
-      </S.ContentsArea>
+        </S.ContentBottomLeft>
+        <S.ButtonBox>
+          <S.ButtonSet color={"#415c76"} hoverColor={"#e5b700"} onClick={onClickWeight}>
+            계량
+          </S.ButtonSet>
+          <S.ButtonSet color={"#415c76"} hoverColor={"#990b11"} onClick={onClickInput}>
+            투입
+          </S.ButtonSet>
+        </S.ButtonBox>
+      </S.BottomWrap>
+      {isModalWeightOpen ? (
+        <ModalWeight
+          onClickModalClose={onClickWeightClose}
+          columnsWeight={columnsWeight}
+          columnOptions={columnOptions}
+          header={header}
+          gridDataWeight={gridDataWeight}
+          rowHeadersHeader={rowHeadersNum}
+          rowHeadersDetail={rowHeadersNum}
+          refGridWeight={refGridWeight}
+          onClickSelect={onClickSelect}
+          onClickRemove={onClickRemove}
+          onClickWeightSave={onClickWeightSave}
+          onEditingFinishWeight={onEditingFinishWeight}
+          selectInputInfo={selectInputInfo}
+        />
+      ) : null}
+      {isModalInputOpen ? (
+        <ModalInput
+          onClickModalClose={onClickInputClose}
+          columnsInput={columnsInput}
+          columnsInputDetail={columnsInputDetail}
+          columnOptions={columnOptions}
+          header={header}
+          gridDataInput={gridDataInput}
+          gridDataInputDetail={gridDataInputDetail}
+          rowHeadersHeader={rowHeadersNum}
+          rowHeadersDetail={rowHeadersNum}
+          refGridInput={refGridInput}
+          refGridInputDetail={refGridInputDetail}
+          onClickGridInput={onClickGridInput}
+        />
+      ) : null}
+      {isModalInputSaveOpen ? (
+        <ModalInputSave
+          onClickModalClose={onClickInputSaveClose}
+          onClickSelect={onClickSelect}
+          onClickRemove={onClickRemove}
+          onClickSelectStore={onClickSelectStore}
+          onClickRemoveStore={onClickRemoveStore}
+          onClickInputSave={onClickInputSave}
+          onClickNowTime={onClickNowTime}
+          onClickGridInput={onClickGridInput}
+          nowDateTime={nowDateTime}
+          selectInputInfo={selectInputInfo}
+        />
+      ) : null}
+      {isModalSelectOpen ? (
+        <ModalSelect
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
+          onClickModalSelectClose={onClickModalSelectClose}
+          columns={selectColumn}
+          columnOptions={columnOptions}
+          header={header}
+          gridDataSelect={gridDataSelect}
+          rowHeaders={rowHeadersNum}
+          refSelectGrid={refGridSelect}
+          onDblClickGridSelect={onDblClickGridSelect}
+        />
+      ) : null}
+      {isWarning.open ? (
+        <AlertDelete handleDelete={handleWarning} title={isWarning.title} message={isWarning.message} onlyYes={true} />
+      ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </>
+    </ContentsArea>
   );
 }
 

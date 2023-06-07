@@ -3,23 +3,22 @@ import GridSingle from "components/grid/GridSingle";
 import { LayoutContext } from "components/layout/common/Layout";
 import { LoginStateChk } from "custom/LoginStateChk";
 import * as S from "pages/mes/style/oneGrid.styled";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import UserHistorySet from "./userHistorySet";
 import DateTime from "components/datetime/DateTime";
 import * as LS from "./userHistory.styled";
 import * as Cbo from "custom/useCboSet";
 import useInputSet from "custom/useInputSet";
-import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
 import * as disRow from "custom/useDisableRowCheck";
 import InputSearch from "components/input/InputSearch";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
 import BackDrop from "components/backdrop/BackDrop";
+import ContentsArea from "components/layout/common/ContentsArea";
 function UserHistory() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [userActionOpt, userActionList] = Cbo.useUserActionList();
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -43,10 +42,7 @@ function UserHistory() {
   const loginID = useRef("");
   const userName = useRef("");
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -54,10 +50,7 @@ function UserHistory() {
     open: false,
   });
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    false,
-    gridData
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(false, gridData);
 
   const onClickSearch = () => {
     actSearchGrid();
@@ -102,15 +95,11 @@ function UserHistory() {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <LS.Date
-              datePickerSet={"range"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
             <LS.ComboWrap>
               <LS.ComboBox
                 disablePortal
@@ -122,15 +111,10 @@ function UserHistory() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    user_action:
-                      newValue?.user_action === undefined
-                        ? null
-                        : newValue?.user_action,
+                    user_action: newValue?.user_action === undefined ? null : newValue?.user_action,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.user_action} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.user_action} size="small" />}
                 //onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
@@ -166,7 +150,7 @@ function UserHistory() {
         </S.GridWrap>
       </S.ShadowBoxGrid>
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

@@ -19,12 +19,12 @@ import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import * as Cbo from "custom/useCboSet";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function Partner(props) {
   LoginStateChk();
   const [partnerTypeOpt, partnerTypeList] = Cbo.usePartnerTypeList();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -36,15 +36,10 @@ function Partner(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = PartnerSet(isEditMode, partnerTypeList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = PartnerSet(
+    isEditMode,
+    partnerTypeList
+  );
 
   const SWITCH_NAME_01 = "partner";
 
@@ -53,18 +48,12 @@ function Partner(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -162,11 +151,7 @@ function Partner(props) {
   }
 
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, [
-      "use_fg",
-      "vendor_fg",
-      "customer_fg",
-    ]);
+    disRow.handleClickGridCheck(e, isEditMode, ["use_fg", "vendor_fg", "customer_fg"]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -178,7 +163,7 @@ function Partner(props) {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
@@ -221,6 +206,7 @@ function Partner(props) {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
@@ -228,10 +214,7 @@ function Partner(props) {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew
@@ -248,7 +231,7 @@ function Partner(props) {
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

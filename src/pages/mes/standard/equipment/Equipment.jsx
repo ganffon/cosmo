@@ -21,11 +21,11 @@ import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function Equipment() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
@@ -52,16 +52,8 @@ function Equipment() {
   const [searchToggle, setSearchToggle] = useState(false);
   const [processOpt, processList] = Cbo.useProcess();
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnsModalSelect,
-    columnOptions,
-    inputSet,
-  } = EquipmentSet(isEditMode, processList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnsModalSelect, columnOptions, inputSet } =
+    EquipmentSet(isEditMode, processList);
   const SWITCH_NAME_01 = "equipment";
 
   useEffect(() => {
@@ -69,19 +61,13 @@ function Equipment() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const [actSearchSelect] = uSearch.useSearchSelect(
     refModalSelectGrid,
     isBackDrop,
@@ -278,7 +264,7 @@ function Equipment() {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
@@ -321,6 +307,7 @@ function Equipment() {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
             onEditingFinish={onEditingFinishGrid}
             onDblClickGrid={onDblClickGrid}
@@ -329,10 +316,7 @@ function Equipment() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew
@@ -364,7 +348,7 @@ function Equipment() {
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

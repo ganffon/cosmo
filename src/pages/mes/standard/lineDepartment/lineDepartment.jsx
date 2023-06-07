@@ -24,13 +24,13 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ModalNew from "components/modal/ModalNew";
 import ModalSelect from "components/modal/ModalSelect";
 import Condition from "custom/Condition";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function LineDepartment(props) {
   LoginStateChk();
   const [lineOpt, lineList] = Cbo.useLine();
   const [departmentOpt, departmentList] = Cbo.useDept();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const SWITCH_NAME_01 = "lineDepartment";
   const [isEditMode, setIsEditMode] = useState(false);
@@ -81,14 +81,8 @@ function LineDepartment(props) {
   } = lineDepartmentSet(isEditMode, lineList, departmentList);
   const refSingleGrid = useRef(null);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -316,7 +310,7 @@ function LineDepartment(props) {
   }, []);
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
@@ -331,15 +325,10 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    line_id:
-                      newValue?.line_id === undefined
-                        ? null
-                        : newValue?.line_id,
+                    line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.line_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -352,15 +341,10 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    dept_id:
-                      newValue?.dept_id === undefined
-                        ? null
-                        : newValue?.dept_id,
+                    dept_id: newValue?.dept_id === undefined ? null : newValue?.dept_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.dept_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.dept_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
@@ -403,6 +387,7 @@ function LineDepartment(props) {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
             onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
@@ -411,10 +396,7 @@ function LineDepartment(props) {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
@@ -430,7 +412,7 @@ function LineDepartment(props) {
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 export default LineDepartment;

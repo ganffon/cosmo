@@ -23,12 +23,11 @@ import * as S from "./Product.styled";
 import restURI from "json/restURI.json";
 import * as RE from "custom/RegularExpression";
 import * as col from "custom/GridColumnSet";
-import Condition from "custom/Condition";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function Product() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -52,15 +51,7 @@ function Product() {
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
   const [unitOpt, unitList] = Cbo.useUnit();
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = ProductSet(
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = ProductSet(
     isEditMode,
     productGbnList,
     productModelList,
@@ -75,18 +66,12 @@ function Product() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -197,25 +182,8 @@ function Product() {
       "prd_active_fg",
     ]);
   };
-  const handleRE = (e, refGrid) => {
-    col.RENumComma(e, refGrid, "width");
-    col.RENumComma(e, refGrid, "length");
-    col.RENumComma(e, refGrid, "height");
-    col.RENumComma(e, refGrid, "weight");
-    col.RENumComma(e, refGrid, "thickness");
-    col.RENumComma(e, refGrid, "mat_order_min_qty");
-    col.RENumComma(e, refGrid, "mat_supply_days");
-    col.RENumComma(e, refGrid, "inv_unit_qty");
-    col.RENumComma(e, refGrid, "inv_safe_qty");
-    col.RENumComma(e, refGrid, "prd_min");
-    col.RENumComma(e, refGrid, "prd_max");
-  };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
-    handleRE(e, refSingleGrid);
-  };
-  const onEditingFinishModal = (e) => {
-    handleRE(e, refModalGrid);
   };
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -224,7 +192,7 @@ function Product() {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
@@ -239,15 +207,10 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id:
-                      newValue?.prod_gbn_id === undefined
-                        ? null
-                        : newValue?.prod_gbn_id,
+                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -260,15 +223,10 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id:
-                      newValue?.model_id === undefined
-                        ? null
-                        : newValue?.model_id,
+                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.model_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -281,15 +239,10 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id:
-                      newValue?.prod_type_id === undefined
-                        ? null
-                        : newValue?.prod_type_id,
+                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_type_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -303,18 +256,10 @@ function Product() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined
-                        ? null
-                        : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.prod_type_small_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
@@ -359,6 +304,7 @@ function Product() {
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
+            isEditMode={isEditMode}
             onClickGrid={onClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
@@ -366,10 +312,7 @@ function Product() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew
@@ -383,11 +326,10 @@ function Product() {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          onEditingFinishModal={onEditingFinishModal}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 export default Product;
