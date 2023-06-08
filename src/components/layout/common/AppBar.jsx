@@ -29,6 +29,11 @@ function AppBar() {
   const BASEURI = process.env.REACT_APP_BASE_URL;
   const NEWTAB = process.env.REACT_APP_NEW_TAB_URL;
 
+  let menuLists = [];
+  if (currentMenuName) {
+    menuLists = currentMenuName.split("|");
+  }
+
   return (
     <S.AppBarBox isAllScreen={isAllScreen}>
       <S.LeftBox>
@@ -44,20 +49,32 @@ function AppBar() {
           <MenuIcon />
         </IconButton>
         <S.Logo id="mainLogo" src={Logo} onClick={gotoDashboard} />
-        <S.MenuTitle>{currentMenuName}</S.MenuTitle>
+        <S.MenuTitleBox>
+          {menuLists.map((page, index) =>
+            index + 1 === menuLists.length ? (
+              <S.MenuTitle>{page}</S.MenuTitle>
+            ) : (
+              <S.MenuTitle>
+                {page} <S.Arrow>▶</S.Arrow>
+              </S.MenuTitle>
+            )
+          )}
+        </S.MenuTitleBox>
       </S.LeftBox>
       <S.RightBox>
-        <S.UserText>
-          {
-            // BASEURI +
-            //   " ｜ " +
-            //   NEWTAB +
-            //   " ｜ " +
-            //   (VERSION === undefined ? "" : VERSION) +
-            Cookies.get("userName")
-          }
-          님 환영합니다.
-        </S.UserText>
+        <S.UserTextBackground>
+          <S.UserText>
+            {
+              // BASEURI +
+              //   " ｜ " +
+              //   NEWTAB +
+              //   " ｜ " +
+              //   (VERSION === undefined ? "" : VERSION) +
+              Cookies.get("userName")
+            }
+            님 환영합니다.
+          </S.UserText>
+        </S.UserTextBackground>
         <AvatarButton />
       </S.RightBox>
     </S.AppBarBox>

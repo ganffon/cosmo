@@ -162,7 +162,7 @@ function Login() {
         <S.RightBox>
           <S.LoginForm>
             <S.Dori src={Dori}></S.Dori>
-            <S.LoginTitle1>Login to Facdori ON</S.LoginTitle1>
+            <S.LoginTitle1>Login to FacdoriON</S.LoginTitle1>
             <S.LoginTitle2>반갑습니다.</S.LoginTitle2>
             <S.LoginInputBox>
               <S.FactoryCombo

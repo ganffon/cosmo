@@ -29,6 +29,7 @@ const Logo = styled("img")`
   cursor: pointer;
 `;
 
+/*
 const MenuTitle = styled(Typography)`
   color: black;
 `;
@@ -38,4 +39,69 @@ const UserText = styled(Typography)`
   color: black;
   margin-top: 5px;
 `;
-export { AppBarBox, LeftBox, RightBox, Logo, MenuTitle, UserText };
+*/
+
+const MenuTitleBox = styled(Typography)`
+  display: flex;
+  & > :last-child {
+    font-family: "NotoSansKR";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+  }
+`;
+
+const Arrow = styled(Typography)`
+  display: flex;
+  height: 20px;
+  font-family: "NotoSansKR";
+  font-style: normal;
+
+  font-size: 10px;
+  line-height: 20px;
+  color: #777777;
+`;
+
+const MenuTitle = styled(Typography)`
+  height: 20px;
+  display: flex;
+  font-family: "NotoSansKR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #777777;
+`;
+
+const UserTextBackground = styled(Typography)`
+  height: 60%;
+  background: #d6f1ff;
+  border-radius: 5px 0px 5px 5px;
+  margin-top: 10px;
+  padding-top: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+const UserText = styled(Typography)`
+  height: 10px;
+  left: 1712px;
+  font-family: "NotoSansKR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+
+  color: #333333;
+`;
+export {
+  AppBarBox,
+  LeftBox,
+  RightBox,
+  Logo,
+  MenuTitle,
+  UserText,
+  UserTextBackground,
+  MenuTitleBox,
+  Arrow,
+};
