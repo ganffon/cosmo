@@ -19,6 +19,7 @@ import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 function Line(props) {
   LoginStateChk();
@@ -179,6 +180,8 @@ function Line(props) {
               />
             ))}
           </S.SearchWrap>
+          <BtnComponent btnName={"Search"} />
+          <BtnComponent btnName={"Mapping"} />
           <S.ButtonWrap>
             {isEditMode ? (
               <ButtonSES

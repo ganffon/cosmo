@@ -33,7 +33,7 @@ function GridSingle(props) {
   const selectedRow = (e) => {
     if (refGrid) {
       const Grid = refGrid?.current?.gridInst;
-      if (beforeSelectedRow.current) {
+      if (String(beforeSelectedRow.current)) {
         Grid.getColumns().map((col) => Grid.removeCellClassName(beforeSelectedRow.current, col.name, "selectedBack"));
       }
       if (!isEditMode) {

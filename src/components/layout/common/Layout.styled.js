@@ -15,11 +15,11 @@ const MainBox = styled("section")`
 `;
 
 const ContentsBox = styled("section")`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: ${(props) =>
-    props.isMenuSlide ? `calc(100vw - ${MENU_FOLD_WIDTH})` : "100vw"};
+  width: ${(props) => (props.isMenuSlide ? `calc(100vw - ${MENU_FOLD_WIDTH})` : "100vw")};
 `;
 
 export { LayoutBox, MainBox, ContentsBox };
