@@ -20,6 +20,7 @@ import ModalInput from "./ModalInput";
 import ModalInputSave from "./ModalInputSave";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnPanel from "components/button/BtnPanel";
 
 function WeightPanel() {
   LoginStateChk();
@@ -159,7 +160,9 @@ function WeightPanel() {
       const workWeighID = Header.getValue(e?.rowKey, "work_weigh_id");
       handleInputSaveInfo(e?.rowKey);
       try {
-        const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`);
+        const result = await restAPI.get(
+          restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`
+        );
         setGridDataInputDetail(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
@@ -202,7 +205,8 @@ function WeightPanel() {
   const handleInputSearch = async () => {
     try {
       const result = await restAPI.get(
-        restURI.prdWeight + `?complete_fg=INCOMPLETE&work_order_id=${selectInputInfo.workOrderID}`
+        restURI.prdWeight +
+          `?complete_fg=INCOMPLETE&work_order_id=${selectInputInfo.workOrderID}`
       );
       setGridDataInput(result?.data?.data?.rows);
       setIsModalInputOpen(true);
@@ -230,7 +234,10 @@ function WeightPanel() {
   const onClickWeight = async () => {
     if (selectInputInfo.workOrderID !== "") {
       try {
-        const result = await restAPI.get(restURI.prdOrderInput + `?work_order_id=${selectInputInfo.workOrderID}`);
+        const result = await restAPI.get(
+          restURI.prdOrderInput +
+            `?work_order_id=${selectInputInfo.workOrderID}`
+        );
         setGridDataWeight(result?.data?.data?.rows);
         setIsModalWeightOpen(true);
       } catch (err) {
@@ -250,9 +257,15 @@ function WeightPanel() {
       let conditionLine;
       let conditionProdCD;
       let conditionProdNM;
-      inputTextChange.line ? (conditionLine = `&line_nm=${inputTextChange.line}`) : (conditionLine = "");
-      inputTextChange.prod_cd ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCD = "");
-      inputTextChange.prod_nm ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNM = "");
+      inputTextChange.line
+        ? (conditionLine = `&line_nm=${inputTextChange.line}`)
+        : (conditionLine = "");
+      inputTextChange.prod_cd
+        ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`)
+        : (conditionProdCD = "");
+      inputTextChange.prod_nm
+        ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`)
+        : (conditionProdNM = "");
       const result = await restAPI.get(
         restURI.prdOrder +
           `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -343,7 +356,11 @@ function WeightPanel() {
     if (selectInputInfo.empNM) {
       refGridWeight?.current?.gridInst?.finishEditing();
       let result = [];
-      for (let i = 0; i < refGridWeight?.current?.gridInst?.getRowCount(); i++) {
+      for (
+        let i = 0;
+        i < refGridWeight?.current?.gridInst?.getRowCount();
+        i++
+      ) {
         result.push(refGridWeight?.current?.gridInst?.getRowAt(i));
       }
 
@@ -445,9 +462,14 @@ function WeightPanel() {
           input_emp_id: selectInputInfo.empID,
         };
         try {
-          console.log(`selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`);
+          console.log(
+            `selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`
+          );
           const result = await restAPI.patch(
-            restURI.prdWeightComplete.replace("{id}", selectInputInfo.workWeighID),
+            restURI.prdWeightComplete.replace(
+              "{id}",
+              selectInputInfo.workWeighID
+            ),
             raw
           );
           setIsSnackOpen({
@@ -522,10 +544,13 @@ function WeightPanel() {
   return (
     <ContentsArea>
       <S.TopWrap>
-        <S.ScreenTitleBox>❇️ 작업지시 List</S.ScreenTitleBox>
         <S.SearchBox>
           <S.SearchCondition>
-            <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+            <DateRange
+              dateText={dateText}
+              setDateText={setDateText}
+              onClickSearch={onClickSearch}
+            />
             <InputSearch
               id={"line"}
               name={"라인명"}
@@ -546,74 +571,94 @@ function WeightPanel() {
             />
           </S.SearchCondition>
           <S.SearchButton>
-            <BtnWeight onClickSearch={onClickSearch} />
+            <BtnPanel
+              btnName={"Search"}
+              height={"50px"}
+              width={"150px"}
+              color={"#1491CE"}
+              fontSize={"26px"}
+              fontColor={"#ffffff"}
+              onClick={onClickSearch}
+            />
           </S.SearchButton>
         </S.SearchBox>
-        <S.GridHeader>{GridHeader}</S.GridHeader>
+        <S.GridWrap>
+          <S.ScreenTitleBox>작업지시 리스트</S.ScreenTitleBox>
+          <S.GridHeader>{GridHeader}</S.GridHeader>
+        </S.GridWrap>
       </S.TopWrap>
       <S.BottomWrap>
         <S.ContentBottomLeft>
+          <S.ScreenBottomTitleBox>상세정보</S.ScreenBottomTitleBox>
           <S.SelectInfo
+            namePositionLeft={"0px"}
             width={"180px"}
             height={"60px"}
             name={"지시일자"}
             nameSize={"20px"}
             namePositionTop={"-25px"}
-            nameColor={"white"}
             value={selectInfo.orderDate || ""}
             size={"30px"}
             btn={false}
           />
           <S.SelectInfo
-            width={"150px"}
+            namePositionLeft={"0px"}
+            width={"170px"}
             height={"60px"}
             name={"라인"}
             nameSize={"20px"}
             namePositionTop={"-25px"}
-            nameColor={"white"}
             value={selectInfo.line || ""}
             size={"30px"}
             btn={false}
           />
           <S.SelectInfo
+            namePositionLeft={"0px"}
             width={"150px"}
             height={"60px"}
             name={"지시수량"}
             nameSize={"20px"}
             namePositionTop={"-25px"}
-            nameColor={"white"}
             value={selectInfo.orderQty || ""}
             size={"30px"}
             btn={false}
           />
           <S.SelectInfo
-            width={"400px"}
+            namePositionLeft={"0px"}
+            width={"540px"}
             height={"60px"}
             name={"품목코드"}
             nameSize={"20px"}
             namePositionTop={"-25px"}
-            nameColor={"white"}
             value={selectInfo.prodCD || ""}
             size={"30px"}
             btn={false}
           />
           <S.SelectInfo
-            width={"400px"}
+            namePositionLeft={"0px"}
+            width={"540px"}
             height={"60px"}
             name={"품목"}
             nameSize={"20px"}
             namePositionTop={"-25px"}
-            nameColor={"white"}
             value={selectInfo.prodNM || ""}
             size={"30px"}
             btn={false}
           />
         </S.ContentBottomLeft>
         <S.ButtonBox>
-          <S.ButtonSet color={"#415c76"} hoverColor={"#e5b700"} onClick={onClickWeight}>
+          <S.ButtonSet
+            color={"#555555"}
+            hoverColor={"#e5b700"}
+            onClick={onClickWeight}
+          >
             계량
           </S.ButtonSet>
-          <S.ButtonSet color={"#415c76"} hoverColor={"#990b11"} onClick={onClickInput}>
+          <S.ButtonSet
+            color={"#1491CE"}
+            hoverColor={"#990b11"}
+            onClick={onClickInput}
+          >
             투입
           </S.ButtonSet>
         </S.ButtonBox>
@@ -680,7 +725,12 @@ function WeightPanel() {
         />
       ) : null}
       {isWarning.open ? (
-        <AlertDelete handleDelete={handleWarning} title={isWarning.title} message={isWarning.message} onlyYes={true} />
+        <AlertDelete
+          handleDelete={handleWarning}
+          title={isWarning.title}
+          message={isWarning.message}
+          onlyYes={true}
+        />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />

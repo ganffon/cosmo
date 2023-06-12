@@ -5,8 +5,8 @@ export const ButtonSet = styled("button")`
   -moz-appearance: none;
   appearance: none;
 
-  width: 120px;
-  height: 40px;
+  width: 100%;
+  height: 50%;
   padding: 0rem 1rem;
   margin: 5px 0px 0px 10px;
 
@@ -20,8 +20,7 @@ export const ButtonSet = styled("button")`
   border-radius: 10px;
   cursor: pointer;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   transition: 0.5s;
 
@@ -30,4 +29,12 @@ export const ButtonSet = styled("button")`
   &:hover {
     background: ${(props) => props.hoverColor};
   }
+`;
+export const ButtonSetWrap = styled("div")`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
 `;

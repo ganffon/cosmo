@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import * as S from "./AvatarButton.styled";
 import { Version } from "Version";
+import doriFace from "img/Component/doriFace.svg";
 
 const avatarCharacter = (loginID) => {
   return loginID.charAt(0).toUpperCase();
@@ -34,9 +35,10 @@ function AvatarButton() {
         aria-controls={open ? "avatarMenu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
+        src={doriFace}
         onClick={onClickAvatar}
       >
-        {avatarCharacter(Cookies.get("loginID") ? Cookies.get("loginID") : "A")}
+        {/* {avatarCharacter(Cookies.get("loginID") ? Cookies.get("loginID") : "A")} */}
       </S.AvatarButton>
       <Menu
         id="avatarMenu"

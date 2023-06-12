@@ -1,47 +1,51 @@
 import styled, { keyframes } from "styled-components";
 
-export const BtnComponent = styled("button")`
+export const ButtonPanel = styled("button")`
+-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   height: ${(props) => props.height};
   width: ${(props) => props.width};
-  border-radius: 6px;
-  padding: 5px 20px 5px 20px;
-  background: rgba(20, 145, 206, 1);
-  border: 1px solid rgba(20, 145, 206, 1);
-  gap: 4px;
-  cursor: pointer;
-  display: flex;
+  background: ${(props) => props.background};
+  border: 1px solid ${(props) => props.borderColor}};
+  border-radius: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display:flex;
   justify-content: center;
   align-items: center;
 
-  &:hover {
-    background: rgba(20, 145, 206, 0.9);
-  }
-  &.clicked {
-    animation: clickEffect 0.3s;
-
-    @keyframes clickEffect {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(0.97);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-  }
 `;
+
+export const Title = styled("div")`
+  width: 100%;
+  height: 28px;
+  font-family: "NotoSansKR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: ${(props) => props.fontSize};
+  line-height: 28px;
+  /* identical to box height, or 108% */
+  text-align: center;
+  letter-spacing: 0em;
+  color: ${(props) => props.fontColor};
+`;
+
 export const SearchTitle = styled("div")`
   font-family: NotoSansKR;
-  font-size: 14px;
+  font-size: ${(props) => props.fontSize};
+  padding-left: 15px;
   font-weight: 400;
   line-height: 16px;
   letter-spacing: 0em;
   text-align: center;
-  color: rgba(255, 255, 255, 1);
+  color: ${(props) => props.fontColor};
 `;
-export const Icon = styled("img")``;
+export const Icon = styled("img")`
+  padding-left: 15px;
+`;
+
+export const SearchIcon = styled("img")``;
 
 export const BtnBack = styled("button")`
   height: ${(props) => props.height};
@@ -68,21 +72,11 @@ export const BtnBack = styled("button")`
         transform: scale(1);
       }
       50% {
-        transform: scale(0.97);
+        transform: scale(0.9);
       }
       100% {
         transform: scale(1);
       }
     }
   }
-`;
-
-export const Title = styled("div")`
-  font-family: NotoSansKR;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #1491ce;
 `;

@@ -1,32 +1,21 @@
 import styled from "styled-components";
 import Autocomplete from "@mui/material/Autocomplete";
-import {
-  APP_BAR_HEIGHT,
-  SEARCH_BAR_HEIGHT,
-  HEIGHT_MARGIN,
-} from "constant/Layout";
+import DatePicker from "components/datetime/DatePicker";
+import { APP_BAR_HEIGHT, SEARCH_BAR_HEIGHT, HEIGHT_MARGIN } from "constant/Layout";
 
-export const ContentsArea = styled("div")`
-  width: 100%;
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${APP_BAR_HEIGHT})`};
-  overflow: hidden auto;
-  background-color: #efefef;
-  padding: 0px 10px 0px 10px;
-`;
 export const ShadowBoxButton = styled("div")`
-  background-color: rgb(255, 255, 255);
-  width: calc(100% - 0.5rem);
+  background-color: #ffffff;
+  width: 100%;
   height: ${SEARCH_BAR_HEIGHT};
+  padding: 0px 10px;
   border-radius: 10px;
-  margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ToolWrap = styled("div")`
   display: flex;
   justify-content: space-between;
-  align-items: end;
-  padding: 5px 5px 5px 0px;
+  align-items: center;
+  padding: 5px 5px;
 `;
 export const SearchWrap = styled("div")`
   display: flex;
@@ -36,22 +25,41 @@ export const InputWrap = styled("div")`
 `;
 export const ButtonWrap = styled("div")`
   display: flex;
-  height: 30px;
+  justify-content: end;
+  align-items: end;
+  gap: 10px;
+  height: 40px;
 `;
 export const ShadowBoxGrid = styled("div")`
-  background-color: rgb(255, 255, 255);
-  width: calc(100% - 0.5rem);
+  background-color: #ffffff;
+  width: 100%;
   height: ${(props) =>
     props.isAllScreen
-      ? `calc(100vh - ${APP_BAR_HEIGHT} - ${HEIGHT_MARGIN})`
-      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - ${HEIGHT_MARGIN})`};
+      ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)`
+      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
   border-radius: 10px;
   border-color: rgb(255, 255, 255);
-  margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: 100%;
-  padding: 10px 10px 10px 10px;
+  height: calc(100% - 50px);
+`;
+
+export const ComboWrap = styled("div")`
+  display: flex;
+  margin-left: 10px;
+  margin-top: 5px;
+  gap: 10px;
+`;
+export const ComboBox = styled(Autocomplete)`
+  width: 180px;
+`;
+
+export const Date = styled(DatePicker)`
+  height: 40px;
 `;

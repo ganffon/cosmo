@@ -51,20 +51,24 @@ export const Wrap5 = styled("div")`
   height: calc(100% - 560px);
   width: 100%;
   display: flex;
+
   border-radius: 0px 0px 10px 10px;
 `;
 export const WrapLeft = styled("div")`
+  align-items: center;
   height: 100%;
   width: 50%;
   display: flex;
   padding: 20px;
+  justify-content: center;
 `;
 export const WrapRight = styled("div")`
+  align-items: center;
   height: 100%;
   width: 50%;
   display: flex;
   padding: 20px;
-  flex-direction: column;
+  justify-content: center;
 `;
 export const Box = styled("div")`
   display: flex;
@@ -115,7 +119,8 @@ export const BtnSet = styled("button")`
   border-radius: 10px;
   cursor: pointer;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   transition: 0.5s;
 

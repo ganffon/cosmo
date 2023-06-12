@@ -19,11 +19,11 @@ import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import Abcs from "./ExcelUpload";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 function InspResultUpload(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -35,15 +35,8 @@ function InspResultUpload(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = InspResultUploadSet(isEditMode);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
+    InspResultUploadSet(isEditMode);
 
   const SWITCH_NAME_01 = "inspResultUpload";
 
@@ -52,18 +45,12 @@ function InspResultUpload(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -172,9 +159,9 @@ function InspResultUpload(props) {
   };
 
   return (
-    <S.ContentsArea isAllScreen={isAllScreen}>
+    <ContentsArea isAllScreen={isAllScreen}>
       <Abcs />
-    </S.ContentsArea>
+    </ContentsArea>
   );
 }
 

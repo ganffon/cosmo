@@ -19,6 +19,7 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ModalNew from "components/modal/ModalNew";
 import * as uSave from "custom/useSave";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 function ProductClass() {
   LoginStateChk();
@@ -34,18 +35,13 @@ function ProductClass() {
     open: false,
   });
   const SWITCH_NAME_01 = "productClass";
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnsModalSelectLine,
-    columnsModalSelectDept,
-    columnOptions,
-    inputSet,
-  } = productClassSet(isEditMode);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
+    productClassSet(isEditMode);
   const refSingleGrid = useRef(null);
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide, refSingleGrid.current]);
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
@@ -167,7 +163,7 @@ function ProductClass() {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      <S.ShadowBoxButton>
         <S.ToolWrap>
           <S.SearchWrap>
             {inputSet.map((v) => (
@@ -182,24 +178,25 @@ function ProductClass() {
             ))}
           </S.SearchWrap>
           <S.ButtonWrap>
-            {isEditMode ? (
-              <ButtonSES
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonNEDS
-                onClickNew={onClickNew}
-                onClickEdit={onClickEdit}
-                onClickDelete={onClickDelete}
-                onClickSearch={onClickSearch}
-              />
-            )}
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <S.ButtonWrap>
+          {isEditMode ? (
+            <>
+              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+            </>
+          ) : (
+            <>
+              <BtnComponent btnName={"New"} onClick={onClickNew} />
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            </>
+          )}
+        </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}

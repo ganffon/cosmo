@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
 
 const AvatarButton = styled(Avatar)`
-  background-color: ${deepOrange[500]};
+  // background-color: ${deepOrange[500]};
   width: 30px;
   height: 30px;
   cursor: pointer;

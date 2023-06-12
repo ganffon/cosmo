@@ -15,5 +15,5 @@ export const SEARCH_BAR_HEIGHT2 = "105px";
 
 export const FIXED_LEFT = "100px";
 
-export const HEIGHT_MARGIN = "20px";
+export const HEIGHT_MARGIN = "50px";
 export const HEIGHT_MARGIN2 = "80px";

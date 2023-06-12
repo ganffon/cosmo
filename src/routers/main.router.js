@@ -83,6 +83,7 @@ export default function MainRouter() {
     { path: "factory", component: Factory },
     { path: "line", component: Line },
     { path: "user", component: User },
+    { path: "employee", component: Employee },
     { path: "process", component: Process },
     { path: "equipment", component: Equipment },
     { path: "product-gbn", component: ProductGbn },

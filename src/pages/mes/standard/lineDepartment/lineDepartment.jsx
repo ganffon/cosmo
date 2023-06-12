@@ -25,6 +25,7 @@ import ModalNew from "components/modal/ModalNew";
 import ModalSelect from "components/modal/ModalSelect";
 import Condition from "custom/Condition";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 function LineDepartment(props) {
   LoginStateChk();
@@ -36,6 +37,7 @@ function LineDepartment(props) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [searchToggle, setSearchToggle] = useState(false);
   const [gridData, setGridData] = useState(null);
+  const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
@@ -68,6 +70,12 @@ function LineDepartment(props) {
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
+
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide, refSingleGrid.current]);
+
   const {
     rowHeaders,
     rowHeadersModal,
@@ -79,7 +87,6 @@ function LineDepartment(props) {
     columnOptions,
     inputSet,
   } = lineDepartmentSet(isEditMode, lineList, departmentList);
-  const refSingleGrid = useRef(null);
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
@@ -311,7 +318,7 @@ function LineDepartment(props) {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      <S.ShadowBoxButton>
         <S.ToolWrap>
           <S.SearchWrap>
             <LS.ComboWrap>
@@ -360,24 +367,25 @@ function LineDepartment(props) {
             ))}
           </S.SearchWrap>
           <S.ButtonWrap>
-            {isEditMode ? (
-              <ButtonSES
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonNEDS
-                onClickNew={onClickNew}
-                onClickEdit={onClickEdit}
-                onClickDelete={onClickDelete}
-                onClickSearch={onClickSearch}
-              />
-            )}
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <S.ButtonWrap>
+          {isEditMode ? (
+            <>
+              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+            </>
+          ) : (
+            <>
+              <BtnComponent btnName={"New"} onClick={onClickNew} />
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            </>
+          )}
+        </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}

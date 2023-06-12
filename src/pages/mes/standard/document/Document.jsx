@@ -1,9 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { LoginStateChk } from "custom/LoginStateChk";
-import ButtonNES from "components/button/ButtonNES";
-import ButtonNED from "components/button/ButtonNED";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonSE from "components/button/ButtonSE";
 import InputPaper from "components/input/InputPaper";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
@@ -21,17 +17,17 @@ import * as uEdit from "custom/useEdit";
 import * as uSave from "custom/useSave";
 import * as disRow from "custom/useDisableRowCheck";
 import * as Cbo from "custom/useCboSet";
-import * as col from "custom/GridColumnSet";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import { LayoutContext } from "components/layout/common/Layout";
 import restAPI from "api/restAPI";
 import GetDeleteParams from "api/GetDeleteParams";
-import ContentsArea from "components/layout/common/ContentsArea";
+import ContentsAreaHidden from "components/layout/common/ContentsAreaHidden";
+import BtnComponent from "components/button/BtnComponent";
 
 function Document() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const targetRowKey = useRef(null);
   const targetGrid = useRef(null);
@@ -69,8 +65,8 @@ function Document() {
   });
   const [columnsSelect, setColumnsSelect] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState({
-    prod_cd: "",
-    prod_nm: "",
+    prod_cd: "품목코드",
+    prod_nm: "품목",
   });
   const [inputInfoValue, setInputInfoValue] = useState([]);
 
@@ -276,8 +272,8 @@ function Document() {
   const onClickProdRemove = () => {
     setInputSearchValue({
       ...inputSearchValue,
-      prod_cd: "",
-      prod_nm: "",
+      prod_cd: "품목코드",
+      prod_nm: "품목",
     });
   };
   async function onClickSearch() {
@@ -616,28 +612,29 @@ function Document() {
   }, [inputInfoValue]);
 
   return (
-    <ContentsArea>
-      <S.ShadowBoxButtonHeader isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.ComboWrap>
-          <S.ComboBox
-            disablePortal
-            id="lineCbo"
-            size="small"
-            key={(option) => option?.line_id}
-            options={lineOpt || null}
-            getOptionLabel={(option) => option?.line_nm || ""}
-            onChange={(_, newValue) => {
-              setComboValue({
-                ...comboValue,
-                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
-              });
-            }}
-            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
-            onKeyDown={onKeyDown}
-          />
-
+    <ContentsAreaHidden>
+      <S.ShadowBoxButton>
+        <S.SearchWrap>
+          <S.ComboWrap>
+            <S.ComboBox
+              disablePortal
+              id="lineCbo"
+              size="small"
+              key={(option) => option?.line_id}
+              options={lineOpt || null}
+              getOptionLabel={(option) => option?.line_nm || ""}
+              onChange={(_, newValue) => {
+                setComboValue({
+                  ...comboValue,
+                  line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+              onKeyDown={onKeyDown}
+            />
+          </S.ComboWrap>
           {inputSet.map((v, idx) => (
-            <InputPaper
+            <S.InputPaperBox
               key={v.id}
               id={v.id}
               name={v.name}
@@ -649,46 +646,67 @@ function Document() {
               onClickRemove={onClickProdRemove}
             />
           ))}
-        </S.ComboWrap>
+        </S.SearchWrap>
         <S.ButtonWrap>
-          {isEditModeHeader ? (
-            <ButtonSES
-              onClickEditModeSave={onClickEditModeSave}
-              onClickEditModeExit={onClickEditModeExit}
-              onClickSearch={onClickSearch}
-            />
-          ) : (
-            <ButtonNES onClickNew={onClickNew} onClickEdit={onClickEditHeader} onClickSearch={onClickSearch} />
-          )}
+          <BtnComponent btnName={"Search"} onClick={onClickSearch} />
         </S.ButtonWrap>
-      </S.ShadowBoxButtonHeader>
-      <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
-      <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.SearchWrap>{InputInfo}</S.SearchWrap>
-      </S.ShadowBoxInputInfo>
-      <S.ShadowBoxButtonDetail isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.ButtonWrap>
-          {isEditModeDetail ? (
-            <ButtonSE onClickSave={onClickEditSaveDetail} onClickExit={onClickEditExitDetail} />
-          ) : (
-            <ButtonNED onClickNew={onClickEditNew} onClickEdit={onClickEditDetail} onClickDelete={onClickDelete} />
-          )}
-        </S.ButtonWrap>
-      </S.ShadowBoxButtonDetail>
-      <S.GridDetailWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsDetail}
-          rowHeaders={rowHeadersNumCheck}
-          header={header}
-          data={gridDataDetail}
-          draggable={false}
-          refGrid={refGridDetail}
-          isEditMode={isEditModeDetail}
-          onDblClickGrid={onDblClickGridDetail}
-          onEditingFinish={onEditingFinishGridDetail}
-        />
-      </S.GridDetailWrap>
+      </S.ShadowBoxButton>
+      <S.ShadowBoxHeader>
+        <S.ShadowBoxButtonHeader>
+          <S.Title>검사기준서</S.Title>
+          <S.ButtonWrap>
+            {isEditModeHeader ? (
+              <>
+                <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+                <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+              </>
+            ) : (
+              <>
+                <BtnComponent btnName={"New"} onClick={onClickNew} />
+                <BtnComponent btnName={"Edit"} onClick={onClickEditHeader} />
+              </>
+            )}
+          </S.ButtonWrap>
+        </S.ShadowBoxButtonHeader>
+        <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
+      </S.ShadowBoxHeader>
+      <S.ShadowBoxDetail>
+        <S.ShadowBoxInputInfo>
+          <S.SearchWrap>{InputInfo}</S.SearchWrap>
+        </S.ShadowBoxInputInfo>
+        <S.ShadowBoxButtonDetail>
+          <S.Title>검사기준서 세부내용</S.Title>
+          <S.ButtonWrap>
+            {isEditModeHeader ? (
+              <>
+                <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
+                <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />
+              </>
+            ) : (
+              <>
+                <BtnComponent btnName={"New"} onClick={onClickEditNew} />
+                <BtnComponent btnName={"Edit"} onClick={onClickEditDetail} />
+                <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+              </>
+            )}
+          </S.ButtonWrap>
+        </S.ShadowBoxButtonDetail>
+
+        <S.GridDetailWrap>
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsDetail}
+            rowHeaders={rowHeadersNumCheck}
+            header={header}
+            data={gridDataDetail}
+            draggable={false}
+            refGrid={refGridDetail}
+            isEditMode={isEditModeDetail}
+            onDblClickGrid={onDblClickGridDetail}
+            onEditingFinish={onEditingFinishGridDetail}
+          />
+        </S.GridDetailWrap>
+      </S.ShadowBoxDetail>
       {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (
         <ModalSelect
@@ -713,7 +731,7 @@ function Document() {
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-    </ContentsArea>
+    </ContentsAreaHidden>
   );
 }
 

@@ -6,25 +6,29 @@ function BarcodeBox(props) {
   const { onClickSelect = () => {}, info = {} } = props;
   return (
     <S.Wrap>
-      <S.InputWrap>
-        <S.InfoTitleBarcode>🔸바코드 스캔</S.InfoTitleBarcode>
-        <InputPaper
-          width={"1080px"}
-          height={"60px"}
-          nameColor={"black"}
-          value={""}
-          size={"30px"}
-          readOnly={false}
-          btn={true}
-          btnSingle={true}
-          onClickSelect={onClickSelect}
-        />
-      </S.InputWrap>
       <S.InputWrapDivide>
         <S.InputWrap>
-          <S.InfoTitle width={"160px"}>🔸라인</S.InfoTitle>
           <InputPaper
-            width={"240px"}
+            name={"바코드 스캔"}
+            namePositionTop={"-24px"}
+            width={"95%"}
+            height={"50px"}
+            nameColor={"black"}
+            nameSize={"16px"}
+            value={""}
+            size={"30px"}
+            readOnly={false}
+            btn={true}
+            btnSingle={true}
+            onClickSelect={onClickSelect}
+          />
+        </S.InputWrap>
+        <S.InputWrap>
+          <InputPaper
+            name={"라인"}
+            namePositionTop={"-24px"}
+            width={"95%"}
+            nameSize={"16px"}
             height={"50px"}
             nameColor={"black"}
             value={info.lineNM || ""}
@@ -32,41 +36,49 @@ function BarcodeBox(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"160px"}>🔸포장일자</S.InfoTitle>
           <InputPaper
-            width={"240px"}
+            name={"포장일자"}
+            namePositionTop={"-24px"}
+            width={"95%"}
             height={"50px"}
+            nameSize={"16px"}
             nameColor={"black"}
             value={info.packingDate || ""}
             size={"30px"}
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"160px"}>🔸품목코드</S.InfoTitle>
           <InputPaper
-            width={"240px"}
+            name={"품목코드"}
+            namePositionTop={"-24px"}
+            width={"95%"}
+            nameSize={"16px"}
             height={"50px"}
             nameColor={"black"}
             value={info.prodCD || ""}
             size={"25px"}
           />
         </S.InputWrap>
+      </S.InputWrapDivide>
+      <S.InputWrapDivideBottom>
         <S.InputWrap>
-          <S.InfoTitle width={"120px"}>🔸품목</S.InfoTitle>
           <InputPaper
-            width={"280px"}
+            name={"품목"}
+            namePositionTop={"-24px"}
+            width={"90%"}
+            nameSize={"16px"}
             height={"50px"}
             nameColor={"black"}
             value={info.prodNM || ""}
             size={"30px"}
           />
         </S.InputWrap>
-      </S.InputWrapDivide>
-      <S.InputWrapDivide>
         <S.InputWrap>
-          <S.InfoTitle width={"160px"}>🔸Lot No</S.InfoTitle>
           <InputPaper
-            width={"240px"}
+            name={"Lot No"}
+            namePositionTop={"-24px"}
+            width={"90%"}
+            nameSize={"16px"}
             height={"50px"}
             nameColor={"black"}
             value={info.lotNo || ""}
@@ -74,9 +86,11 @@ function BarcodeBox(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"160px"}>🔸포장중량</S.InfoTitle>
           <InputPaper
-            width={"240px"}
+            name={"포장중량"}
+            namePositionTop={"-24px"}
+            width={"90%"}
+            nameSize={"16px"}
             height={"50px"}
             nameColor={"black"}
             value={info.weight || ""}
@@ -84,9 +98,11 @@ function BarcodeBox(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"160px"}>🔸작업자</S.InfoTitle>
           <InputPaper
-            width={"240px"}
+            name={"작업자"}
+            namePositionTop={"-24px"}
+            width={"90%"}
+            nameSize={"16px"}
             height={"50px"}
             nameColor={"black"}
             value={info.empNM || ""}
@@ -94,16 +110,18 @@ function BarcodeBox(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"120px"}>🔸비고</S.InfoTitle>
           <InputPaper
-            width={"280px"}
+            name={"비고"}
+            namePositionTop={"-24px"}
+            width={"90%"}
+            nameSize={"16px"}
             height={"50px"}
             nameColor={"black"}
             value={info.remark || ""}
             size={"25px"}
           />
         </S.InputWrap>
-      </S.InputWrapDivide>
+      </S.InputWrapDivideBottom>
     </S.Wrap>
   );
 }

@@ -4,15 +4,6 @@ import TextField from "@mui/material/TextField";
 import LockIcon from "@mui/icons-material/Lock";
 import * as C from "constant/Layout";
 
-export const ContentsArea = styled("div")`
-  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
-  width: 100%;
-  background-color: rgb(255, 255, 255);
-  display: flex;
-  gap: 10px 10px;
-  padding: 10px 20px 10px 10px;
-  overflow: hidden auto;
-`;
 export const ContentsLeft = styled("div")`
   height: 100%;
   width: 530px;
@@ -37,6 +28,13 @@ export const ScreenTitleBox = styled("div")`
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
+
+export const ScreenTopTitleBox = styled("div")`
+  width: 100%;
+  padding-left: 10px;
+  font-family: NotoSansKR_B;
+  font-size: 22px;
+`;
 export const ItemInfoBox = styled("div")`
   height: auto;
   width: 100%;
@@ -48,9 +46,10 @@ export const ItemInfoBox = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 8% 5% 8% 5%;
-  background: #415c76;
+  padding: 4% 5% 8% 5%;
+  background: #ffffff;
 `;
+/*
 export const DataInterfaceBox = styled("div")`
   height: 100%;
   width: 100%;
@@ -62,6 +61,19 @@ export const DataInterfaceBox = styled("div")`
   padding: 5% 3% 3% 3%;
   background: #83bef4;
 `;
+*/
+export const DataInterfaceBox = styled("div")`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 5% 3% 3% 3%;
+  background: #ffffff;
+`;
+
 export const DataInterfaceWrap = styled("div")`
   height: auto;
   width: 100%;
@@ -74,30 +86,42 @@ export const DataInterfaceWrap = styled("div")`
 export const MadeButtonWrap = styled("div")`
   height: 90px;
   width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 40px;
+  margin-top: 30px;
+`;
+/*
+export const MadeButtonWrap = styled("div")`
+  height: 90px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px 40px;
   margin-top: 30px;
 `;
+*/
+
 export const ButtonBox = styled("div")`
   height: 80px;
   width: 100%;
   display: flex;
   justify-content: end;
   align-items: center;
-  border-radius: 10px;
+`;
+/*  border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 1% 0%;
-`;
+  padding: 1% 0%; */
 export const DataHandleBox = styled("div")`
-  height: calc(100% - 90px);
+  height: 100%;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
+  box-shadow: rgb(255 255 255 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 15px;
+  background: white;
   & .tui-grid-cell-header {
     font-size: 20px;
   }

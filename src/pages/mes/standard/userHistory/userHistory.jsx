@@ -1,12 +1,11 @@
-import ButtonSearch from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import { LayoutContext } from "components/layout/common/Layout";
 import { LoginStateChk } from "custom/LoginStateChk";
 import * as S from "pages/mes/style/oneGrid.styled";
-import { useContext, useRef, useState } from "react";
+import * as US from "./userHistory.styled";
+import { useContext, useEffect, useRef, useState } from "react";
 import UserHistorySet from "./userHistorySet";
 import DateTime from "components/datetime/DateTime";
-import * as LS from "./userHistory.styled";
 import * as Cbo from "custom/useCboSet";
 import useInputSet from "custom/useInputSet";
 import restAPI from "api/restAPI";
@@ -16,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
 import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 function UserHistory() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -23,22 +23,17 @@ function UserHistory() {
   const [userActionOpt, userActionList] = Cbo.useUserActionList();
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnsModalSelectLine,
-    columnsModalSelectDept,
-    columnOptions,
-    inputSet,
-  } = UserHistorySet(userActionList);
+  const { rowHeadersNum, header, columns, columnOptions, inputSet } = UserHistorySet(userActionList);
+
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
   });
 
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide, refSingleGrid.current]);
   const loginID = useRef("");
   const userName = useRef("");
 
@@ -76,8 +71,6 @@ function UserHistory() {
       }
 
       readURI = readURI.slice(0, readURI.length - 1);
-
-      console.log(readURI);
       let gridData = await restAPI.get(readURI);
 
       setGridData(gridData?.data?.data?.rows);
@@ -96,12 +89,12 @@ function UserHistory() {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      <S.ShadowBoxButton>
         <S.ToolWrap>
           <S.SearchWrap>
-            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-            <LS.ComboWrap>
-              <LS.ComboBox
+            <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+            <S.ComboWrap>
+              <S.ComboBox
                 disablePortal
                 id="actionCombo"
                 size="small"
@@ -115,9 +108,8 @@ function UserHistory() {
                   });
                 }}
                 renderInput={(params) => <TextField {...params} label={CN.user_action} size="small" />}
-                //onKeyDown={onKeyDown}
               />
-            </LS.ComboWrap>
+            </S.ComboWrap>
             <InputSearch
               id={"id"}
               name={"로그인 ID"}
@@ -132,22 +124,22 @@ function UserHistory() {
             />
           </S.SearchWrap>
           <S.ButtonWrap>
-            <ButtonSearch onClickSearch={onClickSearch} />
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        <S.GridWrap>
+        <US.GridWrap>
           <GridSingle
             columnOptions={columnOptions}
             columns={columns}
-            rowHeaders={rowHeaders}
+            rowHeaders={rowHeadersNum}
             header={header}
             data={gridData}
             draggable={false}
             refGrid={refSingleGrid}
           />
-        </S.GridWrap>
+        </US.GridWrap>
       </S.ShadowBoxGrid>
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

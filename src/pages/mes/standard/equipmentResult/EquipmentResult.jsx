@@ -21,6 +21,7 @@ import ModalSelectDate from "components/modal/ModalSelectDate";
 import restAPI from "api/restAPI";
 import GetDeleteParams from "api/GetDeleteParams";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnPanel from "components/button/BtnPanel";
 
 function EquipmentResult() {
   LoginStateChk();
@@ -220,7 +221,9 @@ function EquipmentResult() {
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refGridHeader.current]);
+
+    refGridDetail?.current?.gridInst.refreshLayout();
+  }, [isMenuSlide]);
 
   useEffect(() => {
     onClickSearch();
@@ -261,7 +264,10 @@ function EquipmentResult() {
       setIsResultNewOpen(true);
       try {
         setIsBackDrop(true);
-        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${mainInfo.inspResultId}`);
+        const result = await restAPI.get(
+          restURI.qmsInspResultDetail +
+            `?insp_result_id=${mainInfo.inspResultId}`
+        );
         setGridDataNew(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
@@ -320,9 +326,15 @@ function EquipmentResult() {
       try {
         setIsBackDrop(true);
         let conditionLine, conditionProdCd, conditionProdNm;
-        inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
-        inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
-        inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
+        inputTextChange.line_nm
+          ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
+          : (conditionLine = "");
+        inputTextChange.prod_cd
+          ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`)
+          : (conditionProdCd = "");
+        inputTextChange.prod_nm
+          ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`)
+          : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -352,7 +364,7 @@ function EquipmentResult() {
     }
   };
   const onClickGrid = async (e) => {
-    if (e?.targetType !== "rowHeader") {
+    if (e?.targetType !== "rowHeader" && e?.targetType === "cell") {
       if (!isBackDrop) {
         const Grid = refGridHeader?.current?.gridInst;
         setMainInfo({
@@ -379,7 +391,9 @@ function EquipmentResult() {
         const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
         try {
           setIsBackDrop(true);
-          const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
+          const result = await restAPI.get(
+            restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`
+          );
           setGridDataDetail(result?.data?.data?.rows);
         } catch (err) {
           setIsSnackOpen({
@@ -406,7 +420,9 @@ function EquipmentResult() {
 
   const onSelectOrder = () => {
     setIsSelectOrderOpen(true);
-    actSelectOrder(`?complete_fg=INCOMPLETE&start_date=${dateText.startDate}&end_date=${dateText.endDate}`);
+    actSelectOrder(
+      `?complete_fg=INCOMPLETE&start_date=${dateText.startDate}&end_date=${dateText.endDate}`
+    );
   };
   const onRemoveOrder = () => {
     resetInfo();
@@ -532,7 +548,8 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrderDetail + `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
+        restURI.prdOrderDetail +
+          `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
       );
       setGridDataNew(result?.data?.data?.rows);
     } catch (err) {
@@ -646,7 +663,10 @@ function EquipmentResult() {
           details: dataDetail,
         };
         try {
-          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
+          const result = await restAPI.put(
+            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
+            query
+          );
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -691,11 +711,29 @@ function EquipmentResult() {
     );
   }, [gridDataHeader]);
 
+  const GridDetail = useMemo(() => {
+    return (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columnsDetail}
+        rowHeaders={rowHeadersNum}
+        header={header}
+        data={gridDataDetail}
+        draggable={false}
+        refGrid={refGridDetail}
+      />
+    );
+  }, [gridDataDetail]);
+
   return (
     <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
-          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+          <DateRange
+            dateText={dateText}
+            setDateText={setDateText}
+            onClickSearch={onClickSearch}
+          />
           <InputSearch
             id={"line_nm"}
             name={"라인명"}
@@ -716,40 +754,79 @@ function EquipmentResult() {
           />
         </S.SearchWrap>
         <S.ButtonWrap>
-          <ButtonNEDS
-            onClickNew={onClickNew}
-            onClickEdit={onClickEdit}
-            onClickDelete={onClickDelete}
-            onClickSearch={onClickSearch}
+          <BtnPanel
+            btnName={"Search"}
+            title={"등록"}
+            height={"40px"}
+            width={"110px"}
+            color={"#1491CE"}
+            fontSize={"14px"}
+            fontColor={"#ffffff"}
+            onClick={onClickSearch}
           />
         </S.ButtonWrap>
       </S.ContentTop>
       <S.ContentBottom>
         <S.ContentLeft>
-          <S.TitleWrap>
-            <S.Title>🔸운전점검일지</S.Title>
-          </S.TitleWrap>
-          <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
+          <S.GridHeaderWrap>
+            <S.TitleButtonWrap>
+              <S.Title>운전점검일지</S.Title>
+              <S.TitleButton>
+                <BtnPanel
+                  title={"등록"}
+                  height={"40px"}
+                  width={"100%"}
+                  color={"#ffffff"}
+                  fontSize={"16px"}
+                  fontColor={"#1491CE"}
+                  bordercolor={"#1491CE"}
+                  iconParam={"New"}
+                  onClick={onClickNew}
+                />
+                <BtnPanel
+                  title={"수정"}
+                  height={"40px"}
+                  width={"100%"}
+                  color={"#ffffff"}
+                  fontSize={"16px"}
+                  fontColor={"#1491CE"}
+                  bordercolor={"#1491CE"}
+                  iconParam={"Edit"}
+                  onClick={onClickEdit}
+                />
+                <BtnPanel
+                  title={"삭제"}
+                  height={"40px"}
+                  width={"100%"}
+                  color={"#ffffff"}
+                  fontSize={"16px"}
+                  fontColor={"#1491CE"}
+                  bordercolor={"#1491CE"}
+                  iconParam={"Delete"}
+                  onClick={onClickDelete}
+                />
+              </S.TitleButton>
+            </S.TitleButtonWrap>
+            {GridHeader}
+          </S.GridHeaderWrap>
         </S.ContentLeft>
         <S.ContentRight>
-          <S.InfoWrap>
-            {inputInfo.map((v, idx) => {
-              return <InputPaper key={v.id} id={v.id} name={v.name} width={"220px"} value={mainInfo[v.id] || ""} />;
-            })}
-          </S.InfoWrap>
-          <S.TitleWrap>
-            <S.Title>🔸세부운전점검일지</S.Title>
-          </S.TitleWrap>
           <S.GridDetailWrap>
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columnsDetail}
-              rowHeaders={rowHeadersNum}
-              header={header}
-              data={gridDataDetail}
-              draggable={false}
-              refGrid={refGridDetail}
-            />
+            <S.Title>세부운전점검일지</S.Title>
+            <S.InfoWrap>
+              {inputInfo.map((v, idx) => {
+                return (
+                  <InputPaper
+                    key={v.id}
+                    id={v.id}
+                    name={v.name}
+                    width={"220px"}
+                    value={mainInfo[v.id] || ""}
+                  />
+                );
+              })}
+            </S.InfoWrap>
+            {GridDetail}
           </S.GridDetailWrap>
         </S.ContentRight>
       </S.ContentBottom>
@@ -815,7 +892,10 @@ function EquipmentResult() {
         />
       ) : null}
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <AlertDelete
+          handleDelete={handleDelete}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />

@@ -1,24 +1,30 @@
 import * as S from "./BtnPacking.styled";
+import BtnPanel from "components/button/BtnPanel";
 
 function BtnPacking(props) {
   const { onClickNew = () => {}, onClickDelete = () => {} } = props;
   return (
-    <>
-      <S.ButtonSet
-        color={"#218838"}
-        hoverColor={"#415c76"}
+    <S.ButtonSetWrap>
+      <BtnPanel
+        title={"등록"}
+        height={"45%"}
+        width={"80%"}
+        color={"#1491CE"}
+        fontSize={"26px"}
+        fontColor={"#ffffff"}
         onClick={onClickNew}
-      >
-        New
-      </S.ButtonSet>
-      <S.ButtonSet
-        color={"#990b11"}
-        hoverColor={"#415c76"}
+      />
+      <BtnPanel
+        title={"삭제"}
+        height={"45%"}
+        width={"80%"}
+        color={"#ffffff"}
+        fontSize={"26px"}
+        fontColor={"#1491CE"}
+        bordercolor={"#1491CE"}
         onClick={onClickDelete}
-      >
-        Delete
-      </S.ButtonSet>
-    </>
+      />
+    </S.ButtonSetWrap>
   );
 }
 

@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import DateSingle from "./DateSingle";
 import * as RE from "custom/RegularExpression";
 import DateTime from "components/datetime/DateTime";
-
+import BtnPanel from "components/button/BtnPanel";
 function DownTimeInput(props) {
   const {
     onClickModalClose = () => {},
@@ -96,7 +96,11 @@ function DownTimeInput(props) {
               : `비가동 ${hours}시간 ${minutes}분 ${seconds}초 경과`
             : ""}
         </S.TitleDowntime>
-        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
+        <S.ButtonClose
+          color="primary"
+          aria-label="close"
+          onClick={onClickModalClose}
+        >
           <CloseIcon />
         </S.ButtonClose>
       </S.CloseWrap>
@@ -169,7 +173,11 @@ function DownTimeInput(props) {
       <S.Wrap4>
         <S.Box>
           <S.Title>시작일자</S.Title>
-          <DateSingle id={"startDate"} setDateText={setDowntimeInfo} dateText={downtimeInfo} />
+          <DateSingle
+            id={"startDate"}
+            setDateText={setDowntimeInfo}
+            dateText={downtimeInfo}
+          />
         </S.Box>
         <S.Box>
           <S.Title onClick={inputStartTime}>시간</S.Title>
@@ -184,7 +192,11 @@ function DownTimeInput(props) {
         </S.Box>
         <S.Box>
           <S.Title>종료일자</S.Title>
-          <DateSingle id={"endDate"} setDateText={setDowntimeInfo} dateText={downtimeInfo} />
+          <DateSingle
+            id={"endDate"}
+            setDateText={setDowntimeInfo}
+            dateText={downtimeInfo}
+          />
         </S.Box>
         <S.Box>
           <S.Title onClick={inputEndTime}>시간</S.Title>
@@ -200,14 +212,26 @@ function DownTimeInput(props) {
       </S.Wrap4>
       <S.Wrap5>
         <S.WrapLeft>
-          <S.BtnSet color="gray" onClick={onStart}>
-            {"비가동\n시　작"}
-          </S.BtnSet>
+          <BtnPanel
+            title={"비가동 시작"}
+            height={"80%"}
+            width={"80%"}
+            color={"#1491CE"}
+            fontSize={"100px"}
+            fontColor={"#ffffff"}
+            onClick={onStart}
+          />
         </S.WrapLeft>
         <S.WrapRight>
-          <S.BtnSet color="gray" onClick={onEnd}>
-            {"비가동\n종　료"}
-          </S.BtnSet>
+          <BtnPanel
+            title={"비가동 시작"}
+            height={"80%"}
+            width={"80%"}
+            color={"#555555"}
+            fontSize={"100px"}
+            fontColor={"#ffffff"}
+            onClick={onEnd}
+          />
         </S.WrapRight>
       </S.Wrap5>
     </S.Wrap>
