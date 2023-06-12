@@ -4,7 +4,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionPanelSet from "./SubdivisionPanelSet";
 import BtnSubdivisionScale from "components/button/panel/BtnSubdivisionScale";
-import BtnSubdivisionSL from "components/button/panel/BtnSubdivisionSL";
+//import BtnSubdivisionSL from "components/button/panel/BtnSubdivisionSL";
 import InputPaper from "components/input/InputPaper";
 import InputText from "components/input/InputText";
 import ModalSelect from "components/modal/ModalSelect";
@@ -19,6 +19,8 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import BtnSubdivisionDHE from "components/button/panel/BtnSubdivisionDHE";
 import GridPanel from "components/grid/GridPanel";
 import ContentsArea from "components/layout/common/ContentsArea";
+
+import BtnPanel from "components/button/BtnPanel";
 
 function SubdivisionPanel() {
   LoginStateChk();
@@ -464,17 +466,16 @@ function SubdivisionPanel() {
   };
 
   return (
-    <ContentsArea flex={true}>
+    <ContentsArea flexColumn={false}>
       <S.ContentsLeft>
-        <S.ScreenTitleBox>❇️ 일일소분일지</S.ScreenTitleBox>
         <S.ItemInfoBox>
+          <S.ScreenTopTitleBox>일일소분일지</S.ScreenTopTitleBox>
           <InputPaper
             width={"500px"}
             height={"60px"}
             name={"품목코드"}
             nameSize={"20px"}
             namePositionTop={"-30px"}
-            nameColor={"white"}
             value={prodCD.current || ""}
             size={"22px"}
             btn={true}
@@ -482,26 +483,83 @@ function SubdivisionPanel() {
             onClickRemove={onClickRemove}
           />
           <InputPaper
-            width={"220px"}
+            width={"230px"}
             height={"60px"}
             name={"소분일자"}
             nameSize={"20px"}
             namePositionTop={"-30px"}
-            nameColor={"white"}
             value={date.current || ""}
             size={"22px"}
           />
           <InputPaper
-            width={"220px"}
+            width={"230px"}
             height={"60px"}
             name={"소분총량"}
             nameSize={"20px"}
             namePositionTop={"-30px"}
-            nameColor={"white"}
             value={totalQty || ""}
             size={"22px"}
           />
         </S.ItemInfoBox>
+
+        {isLockScale ? (
+          <S.ButtonBox>
+            <BtnPanel
+              title={"시작하기"}
+              height={"70px"}
+              width={"48%"}
+              color={"#1491CE"}
+              fontSize={"26px"}
+              fontColor={"#FFFFFF"}
+              onClick={onClickStart}
+              startDisable={isLockScale ? false : true}
+            />
+            <BtnPanel
+              title={"불러오기"}
+              height={"70px"}
+              width={"48%"}
+              color={"#FFFFFF"}
+              fontSize={"26px"}
+              fontColor={"#1491CE"}
+              onClick={onClickLoad}
+              loadDisable={isLockScale ? false : true}
+            />
+          </S.ButtonBox>
+        ) : (
+          <S.ButtonBox>
+            <BtnPanel
+              title={"작업취소"}
+              height={"70px"}
+              width={"30%"}
+              color={"#DD3640"}
+              fontSize={"26px"}
+              fontColor={"#FFFFFF"}
+              onClick={onClickDelete}
+              startDisable={isLockScale ? false : true}
+            />
+            <BtnPanel
+              title={"작업보류"}
+              height={"70px"}
+              width={"30%"}
+              color={"#555555"}
+              fontSize={"26px"}
+              fontColor={"#FFFFFF"}
+              onClick={onClickHold}
+              loadDisable={isLockScale ? false : true}
+            />
+            <BtnPanel
+              title={"작업종료"}
+              height={"70px"}
+              width={"30%"}
+              color={"#1491CE"}
+              fontSize={"26px"}
+              fontColor={"#FFFFFF"}
+              onClick={onClickEnd}
+              loadDisable={isLockScale ? false : true}
+            />
+          </S.ButtonBox>
+        )}
+
         <S.DataInterfaceBox>
           {isLockScale === false ? (
             <>
@@ -538,11 +596,39 @@ function SubdivisionPanel() {
                 />
               </S.DataInterfaceWrap>
               <S.MadeButtonWrap>
-                <BtnSubdivisionScale
-                  onClickBefore={onClickBefore}
-                  onClickAfter={onClickAfter}
-                  onClickNext={onClickNext}
-                />
+                <S.ButtonBox>
+                  <BtnPanel
+                    title={"소분 전 무게"}
+                    height={"70px"}
+                    width={"50%"}
+                    color={"#FFFFFF"}
+                    fontSize={"26px"}
+                    fontColor={"#1491CE"}
+                    bordercolor={"#1491CE"}
+                    onClick={onClickBefore}
+                  />
+                  <BtnPanel
+                    title={"소분 후 무게"}
+                    height={"70px"}
+                    width={"50%"}
+                    color={"#FFFFFF"}
+                    fontSize={"26px"}
+                    fontColor={"#1491CE"}
+                    bordercolor={"#1491CE"}
+                    onClick={onClickAfter}
+                  />
+                </S.ButtonBox>
+                <S.ButtonBox>
+                  <BtnPanel
+                    title={"다음"}
+                    height={"70px"}
+                    width={"100%"}
+                    color={"#1491CE"}
+                    fontSize={"26px"}
+                    fontColor={"#FFFFFF"}
+                    onClick={onClickNext}
+                  />
+                </S.ButtonBox>
               </S.MadeButtonWrap>
             </>
           ) : (
@@ -553,25 +639,6 @@ function SubdivisionPanel() {
         </S.DataInterfaceBox>
       </S.ContentsLeft>
       <S.ContentsRight>
-        <S.ButtonBox>
-          {isLockScale ? (
-            <BtnSubdivisionSL
-              onClickStart={onClickStart}
-              startDisable={isLockScale ? false : true}
-              onClickLoad={onClickLoad}
-              loadDisable={isLockScale ? false : true}
-            />
-          ) : (
-            <BtnSubdivisionDHE
-              onClickDelete={onClickDelete}
-              deleteDisable={isLockScale}
-              onClickHold={onClickHold}
-              holdDisable={isLockScale}
-              onClickEnd={onClickEnd}
-              endDisable={isLockScale}
-            />
-          )}
-        </S.ButtonBox>
         <S.DataHandleBox>
           <GridPanel
             data={gridDataHeader}

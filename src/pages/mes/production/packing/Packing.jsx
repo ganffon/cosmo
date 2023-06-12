@@ -30,11 +30,11 @@ import ContentsArea from "components/layout/common/ContentsArea";
 
 function Packing() {
   LoginStateChk();
-  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
-  const prodCD = useRef("");
-  const prodNM = useRef("");
+  const prodCD = useRef("품목코드");
+  const prodNM = useRef("품목");
   const workOrderID = useRef("");
   const workWeighID = useRef("");
   const workPackingID = useRef("");
@@ -44,8 +44,8 @@ function Packing() {
 
   const resetProd = () => {
     prodID.current = "";
-    prodCD.current = "";
-    prodNM.current = "";
+    prodCD.current = "품목코드";
+    prodNM.current = "품목";
   };
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
@@ -818,10 +818,17 @@ function Packing() {
             handleInputTextChange={handleInputTextChange}
             onClickSearch={onClickSearch}
           />
-          <InputPaper width={"180px"} name={"품목코드"} value={prodCD.current || ""} btn={false} />
+          <InputPaper
+            width={"180px"}
+            name={"품목코드"}
+            namePositionTop={"-12px"}
+            value={prodCD.current || ""}
+            btn={false}
+          />
           <InputPaper
             width={"240px"}
             name={"품목"}
+            namePositionTop={"-12px"}
             value={prodNM.current || ""}
             btn={true}
             onClickSelect={onClickSelectProd}

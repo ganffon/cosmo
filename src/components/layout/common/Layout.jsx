@@ -108,7 +108,7 @@ const Layout = ({ children }) => {
         <AppBar />
         <S.MainBox>
           <V2MenuFold />
-          <S.ContentsBox id="ContentsBox" isMenuSlide={isMenuSlide}>
+          <S.ContentsBox id="ContentsBox" isAllScreen={isAllScreen} isMenuSlide={isMenuSlide}>
             {children}
           </S.ContentsBox>
         </S.MainBox>

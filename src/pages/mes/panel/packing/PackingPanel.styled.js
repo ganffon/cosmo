@@ -16,10 +16,9 @@ export const TopWrap = styled("div")`
   height: 40%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 `;
 export const MidWrap = styled("div")`
-  height: 30%;
+  height: 35%;
   display: flex;
   flex-direction: column;
 `;
@@ -28,6 +27,7 @@ export const BottomWrap = styled("div")`
   display: flex;
   flex-direction: column;
 `;
+/*
 export const ScreenTitleBox = styled("div")`
   height: 40px;
   width: 100%;
@@ -38,8 +38,29 @@ export const ScreenTitleBox = styled("div")`
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
+*/
+
+export const LeftWrap = styled("div")`
+  width: 90%;
+  font-family: NotoSansKR_B;
+  font-size: 20px;
+`;
+
+export const RightWrap = styled("div")`
+  width: 20%;
+  display: flex;
+  font-family: NotoSansKR_B;
+  font-size: 20px;
+`;
+export const ScreenTitleBox = styled("div")`
+  height: 40px;
+  width: 80%;
+
+  font-family: NotoSansKR_B;
+  font-size: 20px;
+`;
 export const SearchBox = styled("div")`
-  height: 250px;
+  height: 99%;
   width: 100%;
   background-color: #a0adba;
   display: flex;
@@ -47,31 +68,26 @@ export const SearchBox = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: #ffffff;
   padding: 10px 20px 10px 10px;
 `;
-export const ButtonWrap = styled("div")`
-  height: 60px;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 20px 10px 10px;
-`;
+//  display: flex;
+export const ButtonWrap = styled("div")``;
 export const GridHeader = styled("div")`
-  height: calc(100% - 10px);
+  height: 99%;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: #ffffff;
   padding: 10px 10px 10px 10px;
 `;
 export const GridDetail = styled("div")`
-  height: calc(100% - 5px);
+  height: 98%;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: #ffffff;
   padding: 10px 10px 10px 10px;
 `;

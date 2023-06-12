@@ -19,9 +19,10 @@ import * as uSearch from "custom/useSearch";
 import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
-import * as S from "./Downtime.styled";
+import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 function Downtime() {
   LoginStateChk();
@@ -170,7 +171,7 @@ function Downtime() {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      <S.ShadowBoxButton>
         <S.ToolWrap>
           <S.SearchWrap>
             <S.ComboWrap>
@@ -205,24 +206,25 @@ function Downtime() {
             </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
-            {isEditMode ? (
-              <ButtonSES
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonNEDS
-                onClickNew={onClickNew}
-                onClickEdit={onClickEdit}
-                onClickDelete={onClickDelete}
-                onClickSearch={onClickSearch}
-              />
-            )}
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <S.ButtonWrap>
+          {isEditMode ? (
+            <>
+              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+            </>
+          ) : (
+            <>
+              <BtnComponent btnName={"New"} onClick={onClickNew} />
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            </>
+          )}
+        </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}

@@ -13,7 +13,7 @@ function InputPaper(props) {
     nameSize = "13px",
     namePositionTop = "-10px",
     namePositionLeft = "10px",
-    nameColor = "gray",
+    nameColor = "rgba(0, 0, 0, 0.6)",
     value = null,
     size = "15px",
     btn = false,
@@ -33,7 +33,7 @@ function InputPaper(props) {
         namePositionLeft={namePositionLeft}
         nameColor={nameColor}
       >
-        {name}
+        {name === value ? null : name}
       </S.PaperTitle>
       {readOnly ? (
         <S.Text

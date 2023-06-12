@@ -19,7 +19,7 @@ import Condition from "custom/Condition";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import DownTimeInput from "./DownTimeInput";
 import ContentsArea from "components/layout/common/ContentsArea";
-
+import BtnPanel from "components/button/BtnPanel";
 function DownTimePanel() {
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -105,11 +105,19 @@ function DownTimePanel() {
     const currentDate = new Date();
 
     // 1년 전 날짜 계산
-    const oneYearAgo = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
+    const oneYearAgo = new Date(
+      currentDate.getFullYear() - 1,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
     const formattedOneYearAgo = formatDate(oneYearAgo);
 
     // 1년 후 날짜 계산
-    const oneYearLater = new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), currentDate.getDate());
+    const oneYearLater = new Date(
+      currentDate.getFullYear() + 1,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
     const formattedOneYearLater = formatDate(oneYearLater);
 
     // 날짜를 yyyy-MM-dd 형식으로 포맷하는 함수
@@ -125,7 +133,10 @@ function DownTimePanel() {
   const handleSearch = async () => {
     try {
       const result = await restAPI.get(
-        restURI.productionDownTime + `?start_date=${SearchDate()[0]}&end_date=${SearchDate()[1]}&complete_fg=INCOMPLETE`
+        restURI.productionDownTime +
+          `?start_date=${SearchDate()[0]}&end_date=${
+            SearchDate()[1]
+          }&complete_fg=INCOMPLETE`
       );
 
       setGdMain(result?.data?.data?.rows);
@@ -347,7 +358,10 @@ function DownTimePanel() {
           location: "topCenter",
         });
         return;
-      } else if (downtimeInfo.startDate === downtimeInfo.endDate && downtimeInfo.startTime > downtimeInfo.endTime) {
+      } else if (
+        downtimeInfo.startDate === downtimeInfo.endDate &&
+        downtimeInfo.startTime > downtimeInfo.endTime
+      ) {
         setIsSnackOpen({
           ...isSnackOpen,
           open: true,
@@ -393,38 +407,40 @@ function DownTimePanel() {
   };
   return (
     <ContentsArea>
-      <S.ScreenTitleBox>
-        <S.TitleBefore>❇️ 비가동 등록</S.TitleBefore>
-        <S.TitleAfter>❇️ 비가동 진행중</S.TitleAfter>
-      </S.ScreenTitleBox>
       <S.ContentsBottom>
         <S.DowntimeBefore>
+          <S.TitleBefore>비가동 등록</S.TitleBefore>
           {lineData
             ? lineData.map((line) => {
                 return (
-                  <S.ButtonSet
-                    key={line.line_id}
-                    color={"darkblue"}
-                    hoverColor={"blue"}
+                  <BtnPanel
+                    title={line.line_nm}
+                    height={"10%"}
+                    width={"45%"}
+                    color={"#ffffff"}
+                    fontSize={"26px"}
+                    fontColor={"#1491CE"}
+                    bordercolor={"#1491CE"}
                     onClick={() => onSelectLine(line.line_id, line.line_nm)}
-                  >
-                    {line.line_nm}
-                  </S.ButtonSet>
+                  />
                 );
               })
             : null}
         </S.DowntimeBefore>
         <S.DowntimeAfter>
-          <S.GridWrap>
-            <GridPanel
-              columnOptions={Setting.columnOptions}
-              rowHeaders={Setting.rowHeadersNum}
-              header={Setting.header}
-              columns={Setting.columns}
-              data={gdMain}
-              refGrid={refGridMain}
-            />
-          </S.GridWrap>
+          <S.TitleGridWrap>
+            <S.TitleAfter>비가동 진행중</S.TitleAfter>
+            <S.GridWrap>
+              <GridPanel
+                columnOptions={Setting.columnOptions}
+                rowHeaders={Setting.rowHeadersNum}
+                header={Setting.header}
+                columns={Setting.columns}
+                data={gdMain}
+                refGrid={refGridMain}
+              />
+            </S.GridWrap>
+          </S.TitleGridWrap>
         </S.DowntimeAfter>
       </S.ContentsBottom>
       {isDowntimeOpen ? (
@@ -444,7 +460,11 @@ function DownTimePanel() {
       {isSelectOpen ? (
         <ModalSelect
           width={"50%"}
-          title={refSelectType?.current === "equip" ? "[ 공정/설비 선택 ]" : "[ 비가동 유형/항목 선택 ]"}
+          title={
+            refSelectType?.current === "equip"
+              ? "[ 공정/설비 선택 ]"
+              : "[ 비가동 유형/항목 선택 ]"
+          }
           columns={selectColumn}
           columnsOptions={Setting.columnOptions}
           rowHeaders={Setting.rowHeadersNum}
@@ -460,7 +480,12 @@ function DownTimePanel() {
       ) : null}
 
       {isWarning.open ? (
-        <AlertDelete handleDelete={handleWarning} title={isWarning.title} message={isWarning.message} onlyYes={true} />
+        <AlertDelete
+          handleDelete={handleWarning}
+          title={isWarning.title}
+          message={isWarning.message}
+          onlyYes={true}
+        />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />

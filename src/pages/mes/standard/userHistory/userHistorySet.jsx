@@ -1,8 +1,5 @@
 //사용자관리✨
-import { useEffect } from "react";
-import restURI from "json/restURI.json";
 import "components/grid/setting/GridStyle.css";
-import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
@@ -31,6 +28,13 @@ function UserHistorySet(isEditMode) {
     col.text("req_url", CN.req_url, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
   ];
+  const columnOptions = {
+    resizable: true,
+    frozenBorderWidth: 3,
+    frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
+  };
+  const rowHeadersCheck = ["checkbox", "rowNum"];
+  const rowHeadersNum = ["rowNum"];
   const inputSet = [
     {
       id: "user_action",
@@ -48,6 +52,9 @@ function UserHistorySet(isEditMode) {
   return {
     data,
     columns,
+    columnOptions,
+    rowHeadersCheck,
+    rowHeadersNum,
     inputSet,
   };
 }

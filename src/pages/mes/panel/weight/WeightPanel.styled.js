@@ -18,12 +18,14 @@ export const ContentsArea = styled("div")`
 `;
 export const TopWrap = styled("div")`
   height: 50%;
+  margin-bottom: 5px;
 `;
 export const BottomWrap = styled("div")`
   height: 50%;
   display: flex;
   gap: 5px;
 `;
+/*
 export const ScreenTitleBox = styled("div")`
   height: 40px;
   width: 100%;
@@ -34,6 +36,22 @@ export const ScreenTitleBox = styled("div")`
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
+*/
+export const ScreenTitleBox = styled("div")`
+  height: 30px;
+  width: 100%;
+  margin-bottom: 10px;
+  font-family: NotoSansKR_B;
+  font-size: 20px;
+`;
+export const ScreenBottomTitleBox = styled("div")`
+  height: 30px;
+  width: 100%;
+  padding-left: 10px;
+  font-family: NotoSansKR_B;
+  font-size: 20px;
+`;
+
 export const SearchBox = styled("div")`
   height: 60px;
   width: 100%;
@@ -42,6 +60,7 @@ export const SearchBox = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: white;
   padding: 5px 20px 5px 10px;
 `;
 export const SearchCondition = styled("div")`
@@ -49,38 +68,47 @@ export const SearchCondition = styled("div")`
   width: auto;
   display: flex;
 `;
+export const GridWrap = styled("div")`
+  margin-top: 10px;
+  height: 85%;
+  width: 100%;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: white;
+  padding: 20px;
+`;
+
 export const SearchButton = styled("div")`
   height: auto;
   width: auto;
   display: flex;
 `;
 export const GridHeader = styled("div")`
-  height: calc(100% - 100px);
+  height: 90%;
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
 `;
 export const ContentBottomLeft = styled("div")`
   width: 600px;
   height: 100%;
   display: flex;
   flex-flow: row wrap;
+
   gap: 20px;
-  background-color: #415c76;
+  background-color: #ffffff;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 40px 10px 10px 10px;
+  padding: 20px 10px 10px 10px;
 `;
 export const SelectInfo = styled(InputPaper)``;
 export const ButtonBox = styled("div")`
   height: 100%;
   width: calc(100% - 600px);
-  background-color: #a0adba;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-around;
+  margin-left: 5px;
   align-items: center;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
@@ -104,7 +132,7 @@ export const ButtonSet = styled("button")`
   text-decoration: none;
 
   border: none;
-  border-radius: 10px;
+  border-radius: 36px;
   cursor: pointer;
 
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),

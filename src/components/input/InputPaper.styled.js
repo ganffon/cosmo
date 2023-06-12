@@ -10,7 +10,10 @@ export const PaperBox = styled(Paper)`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: relative;
-  margin: 6px 0px 0px 10px;
+  // margin: 5px 0px 0px 10px;
+  background: #f7f7f7;
+  border: 1px solid rgba(217, 217, 217, 1);
+  box-shadow: none;
 `;
 export const PaperTitle = styled("div")`
   padding: 2px 4px;

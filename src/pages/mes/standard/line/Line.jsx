@@ -1,7 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNEDS from "components/button/ButtonNEDS";
-import ButtonSES from "components/button/ButtonSES";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
@@ -149,11 +147,6 @@ function Line(props) {
   }
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
-    // const Grid = refSingleGrid?.current?.gridInst;
-    // const coords = Grid.getFocusedCell();
-    // if (coords) {
-    //   Grid.startEditing(coords.rowKey, coords.columnName);
-    // }
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -166,7 +159,7 @@ function Line(props) {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      <S.ShadowBoxButton>
         <S.ToolWrap>
           <S.SearchWrap>
             {inputSet.map((v) => (
@@ -180,27 +173,26 @@ function Line(props) {
               />
             ))}
           </S.SearchWrap>
-          <BtnComponent btnName={"Search"} />
-          <BtnComponent btnName={"Mapping"} />
           <S.ButtonWrap>
-            {isEditMode ? (
-              <ButtonSES
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonNEDS
-                onClickNew={onClickNew}
-                onClickEdit={onClickEdit}
-                onClickDelete={onClickDelete}
-                onClickSearch={onClickSearch}
-              />
-            )}
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <S.ButtonWrap>
+          {isEditMode ? (
+            <>
+              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+            </>
+          ) : (
+            <>
+              <BtnComponent btnName={"New"} onClick={onClickNew} />
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            </>
+          )}
+        </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}

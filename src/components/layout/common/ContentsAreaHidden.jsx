@@ -1,15 +1,11 @@
 import React, { useContext } from "react";
-import * as S from "./ContentsArea.styled";
+import * as S from "./ContentsAreaHidden.styled";
 import { LayoutContext } from "components/layout/common/Layout";
 
 function ContentsArea(props) {
-  const { children, flexColumn = true } = props;
+  const { children } = props;
   const { isAllScreen } = useContext(LayoutContext);
-  return (
-    <S.ContentsArea isAllScreen={isAllScreen} flexColumn={flexColumn}>
-      {children}
-    </S.ContentsArea>
-  );
+  return <S.ContentsArea isAllScreen={isAllScreen}>{children}</S.ContentsArea>;
 }
 
 export default ContentsArea;
