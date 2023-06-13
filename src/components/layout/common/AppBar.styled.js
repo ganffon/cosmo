@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import { APP_BAR_HEIGHT, APP_BAR_COLOR } from "constant/Layout";
 
-const AppBarBox = styled("header")`
+export const AppBarBox = styled("header")`
   height: ${APP_BAR_HEIGHT};
   width: 100%;
   background: ${APP_BAR_COLOR};
@@ -12,19 +12,19 @@ const AppBarBox = styled("header")`
   box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.2);
 `;
 
-const LeftBox = styled("div")`
+export const LeftBox = styled("div")`
   display: flex;
   margin-left: 20px;
   align-items: center;
 `;
 
-const RightBox = styled("div")`
+export const RightBox = styled("div")`
   display: flex;
   margin-right: 10px;
   align-items: center;
 `;
 
-const Logo = styled("img")`
+export const Logo = styled("img")`
   margin-bottom: 4px;
   cursor: pointer;
 `;
@@ -41,7 +41,7 @@ const UserText = styled(Typography)`
 `;
 */
 
-const MenuTitleBox = styled(Typography)`
+export const MenuTitleBox = styled(Typography)`
   display: flex;
   & > :last-child {
     font-family: "NotoSansKR";
@@ -53,18 +53,21 @@ const MenuTitleBox = styled(Typography)`
   }
 `;
 
-const Arrow = styled(Typography)`
+export const Arrow = styled("span")`
   display: flex;
   height: 20px;
   font-family: "NotoSansKR";
   font-style: normal;
-
   font-size: 10px;
   line-height: 20px;
   color: #777777;
 `;
 
-const MenuTitle = styled(Typography)`
+export const MenuBox = styled("span")`
+  display: flex;
+`;
+
+export const MenuTitle = styled("span")`
   height: 20px;
   display: flex;
   font-family: "NotoSansKR";
@@ -75,7 +78,7 @@ const MenuTitle = styled(Typography)`
   color: #777777;
 `;
 
-const UserTextBackground = styled(Typography)`
+export const UserTextBackground = styled("div")`
   height: 60%;
   background: #d6f1ff;
   border-radius: 5px 0px 5px 5px;
@@ -84,7 +87,7 @@ const UserTextBackground = styled(Typography)`
   padding-left: 10px;
   padding-right: 10px;
 `;
-const UserText = styled(Typography)`
+export const UserText = styled("div")`
   height: 10px;
   left: 1712px;
   font-family: "NotoSansKR";
@@ -94,14 +97,3 @@ const UserText = styled(Typography)`
 
   color: #333333;
 `;
-export {
-  AppBarBox,
-  LeftBox,
-  RightBox,
-  Logo,
-  MenuTitle,
-  UserText,
-  UserTextBackground,
-  MenuTitleBox,
-  Arrow,
-};

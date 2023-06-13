@@ -21,6 +21,7 @@ import ModalInputSave from "./ModalInputSave";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnPanel from "components/button/BtnPanel";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function WeightPanel() {
   LoginStateChk();
@@ -725,11 +726,15 @@ function WeightPanel() {
         />
       ) : null}
       {isWarning.open ? (
-        <AlertDelete
-          handleDelete={handleWarning}
-          title={isWarning.title}
-          message={isWarning.message}
-          onlyYes={true}
+        <NoticeAlertModal
+          textContent={isWarning.message}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isConfirm={true}
+          onConfirm={() => {
+            setIsWarning(false);
+          }}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

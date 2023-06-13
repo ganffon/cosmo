@@ -2,7 +2,7 @@ import * as S from "pages/mes/style/oneGrid.styled";
 
 import { LayoutContext } from "components/layout/common/Layout";
 import { LoginStateChk } from "custom/LoginStateChk";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import * as LS from "./equipmentRawDataView.styled";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
@@ -15,13 +15,13 @@ import ButtonSearch from "components/button/ButtonSearch";
 import EquipmentRawDataViewSet from "./equipmentRawDataViewSet";
 import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
-
+import TempRawsModal from "./TempRawsModal";
 function EquipmentRawDataView() {
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
-
+  const [isDataIn, setIsDataIn] = useState(false);
   const [lineOpt, lineList] = Cbo.useLine();
   const [procOpt, procList] = Cbo.useProcess();
   const [gridData, setGridData] = useState(null);
@@ -37,7 +37,14 @@ function EquipmentRawDataView() {
   });
 
   const { rowHeaders, columnOptions, header, columns } = EquipmentRawDataViewSet(tmpColumns);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const openModal = () => {
+  //   setIsModalOpen(true);
+  // };
 
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
   const setGridcolumns = async () => {
     let readURI = `/eqm/raws/columns?reg_date=${dateText.startDate}&`;
     if (comboValue.proc_id !== "" && comboValue.proc_id !== null && comboValue.proc_id !== undefined) {
@@ -87,7 +94,10 @@ function EquipmentRawDataView() {
     }
     getGridData();
   };
-
+  // useEffect(() => {
+  //   //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+  //   refSingleGrid?.current?.gridInst?.refreshLayout();
+  // }, [isMenuSlide]);
   const getGridData = async () => {
     setIsBackDrop(true);
     try {
@@ -110,7 +120,8 @@ function EquipmentRawDataView() {
         comboValue.line_id !== undefined
       ) {
         const gridData = await restAPI.get(readURI);
-        setGridData(gridData?.data?.data?.rows);
+        setGridData(gridData?.data?.data?.rows[0].grid);
+        setIsDataIn(true);
       }
     } catch {
       setIsSnackOpen({
@@ -165,6 +176,7 @@ function EquipmentRawDataView() {
                 renderInput={(params) => <TextField {...params} label={CN.proc_nm} size="small" />}
               />
             </LS.ComboWrap>
+            {/* {isDataIn&&<button onClick={openModal}>모달 열기</button>}{isModalOpen && <TempRawsModal columnsDetail={columns.slice(1)} data={gridData} onClose={closeModal} />} */}
           </S.SearchWrap>
           <S.ButtonWrap>
             <ButtonSearch onClickSearch={onClickSearch} />

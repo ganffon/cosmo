@@ -26,12 +26,14 @@ import ModalSelect from "components/modal/ModalSelect";
 import Condition from "custom/Condition";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function LineDepartment(props) {
   LoginStateChk();
   const [lineOpt, lineList] = Cbo.useLine();
   const [departmentOpt, departmentList] = Cbo.useDept();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const SWITCH_NAME_01 = "lineDepartment";
   const [isEditMode, setIsEditMode] = useState(false);
@@ -88,8 +90,14 @@ function LineDepartment(props) {
     inputSet,
   } = lineDepartmentSet(isEditMode, lineList, departmentList);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -332,10 +340,15 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                    line_id:
+                      newValue?.line_id === undefined
+                        ? null
+                        : newValue?.line_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.line_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -348,10 +361,15 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    dept_id: newValue?.dept_id === undefined ? null : newValue?.dept_id,
+                    dept_id:
+                      newValue?.dept_id === undefined
+                        ? null
+                        : newValue?.dept_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.dept_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.dept_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
@@ -404,7 +422,18 @@ function LineDepartment(props) {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
+        />
       ) : null}
       {isModalOpen ? GridModal : null}
       {isModalSelectOpen ? (

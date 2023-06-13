@@ -4,22 +4,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import * as C from "constant/Layout";
 import InputPaper from "components/input/InputPaper";
 
-export const ContentsArea = styled("div")`
-  width: 100%;
-  height: 100vh;
-  overflow: hidden auto;
-  background-color: #efefef;
-  padding: 20px;
-
-  & .redText {
-    color: red;
-  }
-
-  & .selectedBack {
-    background-color: #fdf0f6;
-  }
-`;
-
 export const ShadowBoxButton = styled("div")`
   background-color: #ffffff;
   width: 100%;

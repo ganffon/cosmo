@@ -19,14 +19,17 @@ function InputPaper(props) {
     btn = false,
     btnSingle = false,
     onKeyDown = () => {},
+    onClickReadOnly = () => {},
     onClickSelect = () => {},
     onClickRemove = () => {},
     onTextChange = () => {},
     readOnly = true,
+    ref = null,
+    placeHolder = "",
   } = props;
 
   return (
-    <S.PaperBox width={width} height={height}>
+    <S.PaperBox width={width} height={height} readOnly={readOnly}>
       <S.PaperTitle
         nameSize={nameSize}
         namePositionTop={namePositionTop}
@@ -45,6 +48,9 @@ function InputPaper(props) {
           value={value}
           size={size}
           onKeyDown={onKeyDown}
+          onClick={onClickReadOnly}
+          placeholder={placeHolder}
+          ref={ref}
         />
       ) : (
         <S.Text
@@ -55,6 +61,8 @@ function InputPaper(props) {
           onKeyDown={onKeyDown}
           onChange={onTextChange}
           autoComplete={"off"}
+          ref={ref}
+          placeholder={placeHolder}
         />
       )}
       {btn ? (

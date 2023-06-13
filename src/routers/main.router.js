@@ -76,6 +76,11 @@ import DownTimePanel from "pages/mes/panel/downTime/DownTimePanel";
 import ManagementAll from "pages/mes/managementInfo/managementAll/managementAll";
 import EquipStatus from "pages/mes/managementInfo/EquipStatus/EquipStatus";
 import TempView from "pages/mes/managementInfo/TempView/TempView";
+import TempRaws from "pages/mes/production/tempRaws/TempRaws";
+import CountRaws from "pages/mes/production/countRaws/CountRaws";
+import MonthlyTempHumidChart from "pages/mes/managementInfo/monthlyTempHumidChart/MonthlyTempHumidChart";
+
+import DowntimeReport from "pages/mes/production/downtimeReport/DowntimeReport";
 
 export default function MainRouter() {
   const pages = [
@@ -153,15 +158,19 @@ export default function MainRouter() {
 
     { path: "production-packing-view", component: ProductionPackingView },
 
-    { path: "monthlyLineCapa", component: MonthlyLineCapa },
-    { path: "dailyLineCapa", component: DailyLineCapa },
-    { path: "monthlyPartCapa", component: MonthlyPartCapa },
-    { path: "timeRate", component: TimeRate },
-    { path: "performanceRate", component: PerformanceRate },
+    { path: "monthly-line-capa", component: MonthlyLineCapa },
+    { path: "daily-line-capa", component: DailyLineCapa },
+    { path: "monthly-part-capa", component: MonthlyPartCapa },
+    { path: "time-rate", component: TimeRate },
+    { path: "performance-rate", component: PerformanceRate },
     { path: "downtime-panel", component: DownTimePanel },
     { path: "managementAll", component: ManagementAll },
-    { path: "tempView", component: TempView },
-    { path: "equipStatus", component: EquipStatus },
+    { path: "temp-view", component: TempView },
+    { path: "equip-status", component: EquipStatus },
+    { path: "downtime-report", component: DowntimeReport },
+    { path: "temp-raws", component: TempRaws },
+    { path: "count-raws", component: CountRaws },
+    { path: "monthly-temp-humid-chart", component: MonthlyTempHumidChart },
   ];
   return (
     <Layout>

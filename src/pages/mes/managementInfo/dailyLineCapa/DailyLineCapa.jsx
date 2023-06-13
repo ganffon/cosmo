@@ -72,15 +72,6 @@ const DailyLineCapa = () => {
       },
       enabled: true,
     },
-    title: {
-      text: "생산포장 라인 별 생산량(일)",
-      floating: true,
-      offsetY: 0,
-      align: "top",
-      style: {
-        color: "#444",
-      },
-    },
   };
   const tmpDate = new Date(dateText.endDate);
   tmpDate.setDate(tmpDate.getDate() - 12);
@@ -137,7 +128,9 @@ const DailyLineCapa = () => {
           </S.ContentsHeader>
         </S.ToolWrap>
       </S.ShadowBoxButton>
-      <S.Top>
+      <S.TopWrap>
+        <S.LineCapaTop>
+        <S.Title>생산포장 라인 별 생산량(일)</S.Title>
         {responseData && (
           <Chart
             options={cOptions}
@@ -147,13 +140,16 @@ const DailyLineCapa = () => {
           />
         )}
         {/* {!responseData && <Chart type="line" series={tmpSeries} height={350} />} */}
-      </S.Top>
-      <S.Bottom>
+        </S.LineCapaTop>
+        <S.LineCapaBottom>
+          <S.GridWrap>
         {responseData && (
           <GridSingle columns={columns} data={responseData.data.rows[0].grid} />
         )}
         {!responseData && <GridSingle columns={columns} />}
-      </S.Bottom>
+        </S.GridWrap>
+        </S.LineCapaBottom>
+      </S.TopWrap>
       {/* <SplitterLayout vertical></SplitterLayout> */}
     </S.ContentsArea>
   );

@@ -371,10 +371,35 @@
         "under": null
       },
       {
+        "name": "✅비가동현황(충진)",
+        "id": "downtime-report",
+        "path": "downtime-report",
+        "under": null
+      },
+      {
         "name": "✅Lot추적일지",
         "id": "production-lot-tracking",
         "path": "production-lot-tracking",
         "under": null
+      },
+      {
+        "name": "⬇️로우데이터",
+        "id": "raw-datas",
+        "path": null,
+        "under": [
+          {
+            "name": "온습도 Raw 데이터",
+            "id": "temp-raws",
+            "path": "temp-raws",
+            "under": null
+          },
+          {
+            "name": "충진기 생산 count Raw 데이터",
+            "id": "count-raws",
+            "path": "count-raws",
+            "under": null
+          }
+        ]
       }
     ]
   },
@@ -486,32 +511,32 @@
     "under": [
       {
         "name": "✴️라인별생산량(일)",
-        "id": "dailyLineCapa",
-        "path": "dailyLineCapa",
+        "id": "daily-line-capa",
+        "path": "daily-line-capa",
         "under": null
       },
       {
         "name": "✴️라인별생산량(월)",
-        "id": "monthlyLineCapa",
-        "path": "monthlyLineCapa",
+        "id": "monthly-line-capa",
+        "path": "monthly-line-capa",
         "under": null
       },
       {
         "name": "✴️품목별생산량",
-        "id": "monthlyPartCapa",
-        "path": "monthlyPartCapa",
+        "id": "monthly-part-capa",
+        "path": "monthly-part-capa",
         "under": null
       },
       {
         "name": "✴️시간가동률",
-        "id": "timeRate",
-        "path": "timeRate",
+        "id": "time-rate",
+        "path": "time-rate",
         "under": null
       },
       {
         "name": "✴️성능가동률",
-        "id": "performanceRate",
-        "path": "performanceRate",
+        "id": "performance-rate",
+        "path": "performance-rate",
         "under": null
       },
       {
@@ -522,14 +547,20 @@
       },
       {
         "name": "✴️온습도 대시보드",
-        "id": "tempView",
-        "path": "tempView",
+        "id": "temp-view",
+        "path": "temp-view",
         "under": null
       },
       {
         "name": "✴️비가동 대시보드",
-        "id": "equipStatus",
-        "path": "equipStatus",
+        "id": "equip-status",
+        "path": "equip-status",
+        "under": null
+      },
+      {
+        "name": "✴️공장 온습도 월별 추이 현황",
+        "id": "monthly-temp-humid-chart",
+        "path": "monthly-temp-humid-chart",
         "under": null
       }
     ]

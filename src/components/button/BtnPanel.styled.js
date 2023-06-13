@@ -9,6 +9,7 @@ export const ButtonPanel = styled("button")`
   background: ${(props) => props.background};
   border: 1px solid ${(props) => props.borderColor}};
   border-radius: 12px;
+  cursor: pointer;
   margin-left: 5px;
   margin-right: 5px;
   display:flex;

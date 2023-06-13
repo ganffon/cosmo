@@ -11,14 +11,8 @@ import { LayoutContext } from "./Layout";
 import * as S from "./AppBar.styled";
 
 function AppBar() {
-  const {
-    isMenuSlide,
-    setIsMenuSlide,
-    setIsMouseOver,
-    currentMenuName,
-    setCurrentMenuName,
-    isAllScreen,
-  } = useContext(LayoutContext);
+  const { isMenuSlide, setIsMenuSlide, setIsMouseOver, currentMenuName, setCurrentMenuName, isAllScreen } =
+    useContext(LayoutContext);
   const navigate = useNavigate();
   const gotoDashboard = useCallback(() => {
     navigate("/mes");
@@ -52,11 +46,12 @@ function AppBar() {
         <S.MenuTitleBox>
           {menuLists.map((page, index) =>
             index + 1 === menuLists.length ? (
-              <S.MenuTitle>{page}</S.MenuTitle>
+              <S.MenuTitle key={index}>{page}</S.MenuTitle>
             ) : (
-              <S.MenuTitle>
-                {page} <S.Arrow>▶</S.Arrow>
-              </S.MenuTitle>
+              <S.MenuBox key={index}>
+                <S.MenuTitle>{page}</S.MenuTitle>
+                <S.Arrow>▶</S.Arrow>
+              </S.MenuBox>
             )
           )}
         </S.MenuTitleBox>
