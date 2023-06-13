@@ -591,7 +591,7 @@ function Subdivision() {
   }, [gridDataHeader, isEditModeHeader]);
 
   return (
-    <ContentsArea>
+    <ContentsArea flexColumn={false}>
       <S.ContentsLeft>
         <S.SearchLeftWrap>
           <S.SearchWrap>

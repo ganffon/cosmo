@@ -29,7 +29,7 @@ function DowntimeReportSet() {
     col.text("downtime", CN.downtime, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
     col.text("downtime_status", CN.downtime_status, C.U, C.U, C.WIDTH_SUPER_SHORT, "center", C.U, true),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
-    col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
+    col.text("update_at", CN.update_at, C.U, true, C.WIDTH_LONG, "center"),
   ];
 
   const columnOptions = {
