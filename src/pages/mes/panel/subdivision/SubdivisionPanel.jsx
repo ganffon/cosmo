@@ -3,7 +3,6 @@ import { LoginStateChk } from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionPanelSet from "./SubdivisionPanelSet";
-import BtnSubdivisionScale from "components/button/panel/BtnSubdivisionScale";
 //import BtnSubdivisionSL from "components/button/panel/BtnSubdivisionSL";
 import InputPaper from "components/input/InputPaper";
 import InputText from "components/input/InputText";
@@ -16,15 +15,15 @@ import * as S from "./SubdivisionPanel.styled";
 import restAPI from "api/restAPI";
 import ModalSubdivision from "./ModalSubdivision";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import BtnSubdivisionDHE from "components/button/panel/BtnSubdivisionDHE";
 import GridPanel from "components/grid/GridPanel";
 import ContentsArea from "components/layout/common/ContentsArea";
-
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import BtnPanel from "components/button/BtnPanel";
+import BarcodeScan from "./BarcodeScan";
 
 function SubdivisionPanel() {
   LoginStateChk();
-  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
   const prodCD = useRef("");
@@ -42,6 +41,7 @@ function SubdivisionPanel() {
     qty: "",
   });
 
+  const [isBarcodeScanOpen, setIsBarcodeScanOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalSubdivisionOpen, setIsModalSubdivisionOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -465,9 +465,51 @@ function SubdivisionPanel() {
     setScaleInfo({ ...scaleInfo, [e.target.id]: e.target.value });
   };
 
+  const [barcodeScan, setBarcodeScan] = useState({});
+  const refBarcodeScan = useRef(null);
+
+  useEffect(() => {
+    let barcodeNo = "";
+    const onBarcodeScan = (e) => {
+      console.log(e);
+      // e?.Key 가 "Process"는 한글인 경우
+      if (e?.key === "Process") {
+        // e?.Key 가 "Process" 이면서 e?.code 가 "Digit" 숫자로 들어오는 경우가 있는데 무시해야 함
+        if (e?.code.includes("Key")) {
+          barcodeNo = barcodeNo + e?.code.replace("Key", "");
+        }
+      } else if (e?.key !== "Shift") {
+        if (e?.code.includes("Digit")) {
+          barcodeNo = barcodeNo + e?.code.replace("Digit", "");
+        }
+        if (e?.code.includes("Key")) {
+          barcodeNo = barcodeNo + e?.code.replace("Key", "");
+        }
+        if (e?.code.includes("Minus")) {
+          barcodeNo = barcodeNo + e?.key;
+        }
+      }
+
+      if (e?.key === "Enter") {
+        console.log(barcodeNo);
+        barcodeNo = "";
+      }
+    };
+    window.addEventListener("keydown", onBarcodeScan);
+
+    const interval = setInterval(() => {
+      barcodeNo = "";
+    }, 1000);
+
+    return () => {
+      window.removeEventListener("keydown", onBarcodeScan);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <ContentsArea flexColumn={false}>
-      <S.ContentsLeft>
+      <S.ContentsLeft ref={refBarcodeScan}>
         <S.ItemInfoBox>
           <S.ScreenTopTitleBox>일일소분일지</S.ScreenTopTitleBox>
           <InputPaper
@@ -512,7 +554,6 @@ function SubdivisionPanel() {
               fontSize={"26px"}
               fontColor={"#FFFFFF"}
               onClick={onClickStart}
-              startDisable={isLockScale ? false : true}
             />
             <BtnPanel
               title={"불러오기"}
@@ -522,7 +563,6 @@ function SubdivisionPanel() {
               fontSize={"26px"}
               fontColor={"#1491CE"}
               onClick={onClickLoad}
-              loadDisable={isLockScale ? false : true}
             />
           </S.ButtonBox>
         ) : (
@@ -535,7 +575,6 @@ function SubdivisionPanel() {
               fontSize={"26px"}
               fontColor={"#FFFFFF"}
               onClick={onClickDelete}
-              startDisable={isLockScale ? false : true}
             />
             <BtnPanel
               title={"작업보류"}
@@ -545,7 +584,6 @@ function SubdivisionPanel() {
               fontSize={"26px"}
               fontColor={"#FFFFFF"}
               onClick={onClickHold}
-              loadDisable={isLockScale ? false : true}
             />
             <BtnPanel
               title={"작업종료"}
@@ -555,7 +593,6 @@ function SubdivisionPanel() {
               fontSize={"26px"}
               fontColor={"#FFFFFF"}
               onClick={onClickEnd}
-              loadDisable={isLockScale ? false : true}
             />
           </S.ButtonBox>
         )}
@@ -564,35 +601,43 @@ function SubdivisionPanel() {
           {isLockScale === false ? (
             <>
               <S.DataInterfaceWrap>
-                <InputText
-                  id={"barcode"}
-                  name={"Barcode"}
-                  nameColor={"black"}
-                  value={scaleInfo.barcode}
-                  refInput={refBarcode}
-                  handleEnter={handleBarcodeEnter}
-                  onChange={handleChange}
-                />
-                <InputText
+                <InputPaper
+                  width={"470px"}
+                  height={"60px"}
                   id={"inputLot"}
                   name={"투입LOT"}
                   nameColor={"black"}
+                  nameSize={"20px"}
+                  namePositionTop={"-30px"}
+                  placeHolder={"바코드 혹은 투입LOT를 입력하시려면 클릭하세요."}
+                  size={"20px"}
+                  onClickReadOnly={() => setIsBarcodeScanOpen(true)}
                   value={scaleInfo.inputLot}
                   onChange={handleChange}
                 />
-                <InputText
+                <InputPaper
+                  width={"230px"}
+                  height={"60px"}
                   id={"before"}
                   name={"소분 전"}
                   nameColor={"black"}
+                  nameSize={"20px"}
+                  namePositionTop={"-30px"}
                   value={scaleInfo.before}
-                  onChange={handleChange}
+                  onTextChange={handleChange}
+                  readOnly={false}
                 />
-                <InputText
+                <InputPaper
+                  width={"230px"}
+                  height={"60px"}
                   id={"after"}
                   name={"소분 후"}
                   nameColor={"black"}
+                  nameSize={"20px"}
+                  namePositionTop={"-30px"}
                   value={scaleInfo.after}
-                  onChange={handleChange}
+                  onTextChange={handleChange}
+                  readOnly={false}
                 />
               </S.DataInterfaceWrap>
               <S.MadeButtonWrap>
@@ -649,6 +694,9 @@ function SubdivisionPanel() {
           />
         </S.DataHandleBox>
       </S.ContentsRight>
+      {isBarcodeScanOpen ? (
+        <BarcodeScan width={"700px"} height={"300px"} onClose={() => setIsBarcodeScanOpen(false)} />
+      ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
           width={modalSelectSize.width}
@@ -679,7 +727,6 @@ function SubdivisionPanel() {
           refGridModalHeader={refGridSelect}
           refGridModalDetail={refGridSelectDetail}
           onClickGridModalHeader={onClickGridSelect}
-          // onDblClickGridModalHeader={onDblClickGridSelect}
           setIsSnackOpen={setIsSnackOpen}
           isSnackOpen={isSnackOpen}
         />
@@ -687,31 +734,60 @@ function SubdivisionPanel() {
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
       {isDelete ? (
-        <AlertDelete
-          setIsDeleteAlertOpen={setIsDelete}
-          handleDelete={handleDelete}
-          title={"Delete"}
-          message={"모든 작업을 취소하고 삭제하시겠습니까?"}
+        <NoticeAlertModal
+          textContent={"모든 작업을 취소하고 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDelete(false);
+          }}
         />
       ) : null}
       {isHold ? (
-        <AlertDelete
-          setIsDeleteAlertOpen={setIsHold}
-          handleDelete={handleHold}
-          title={"Hold"}
-          message={"모든 작업을 보류시키겠습니까?"}
+        <NoticeAlertModal
+          textContent={"모든 작업을 보류시키겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isConfirm={true}
+          isCancle={true}
+          cancelColor={"#DD3640"}
+          onConfirm={handleHold}
+          onCancel={() => {
+            setIsHold(false);
+          }}
         />
       ) : null}
       {isEnd ? (
-        <AlertDelete
-          setIsDeleteAlertOpen={setIsEnd}
-          handleDelete={handleEnd}
-          title={"End"}
-          message={"모든 작업을 완료하고 마감하시겠습니까?"}
+        <NoticeAlertModal
+          textContent={"모든 작업을 완료하고 마감하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isConfirm={true}
+          cancelColor={"#DD3640"}
+          isCancle={true}
+          onConfirm={handleEnd}
+          onCancel={() => {
+            setIsEnd(false);
+          }}
         />
       ) : null}
       {isWarning.open ? (
-        <AlertDelete handleDelete={handleWarning} title={isWarning.title} message={isWarning.message} onlyYes={true} />
+        <NoticeAlertModal
+          textContent={isWarning.message}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isConfirm={true}
+          onConfirm={() => {
+            setIsWarning(false);
+          }}
+        />
       ) : null}
     </ContentsArea>
   );

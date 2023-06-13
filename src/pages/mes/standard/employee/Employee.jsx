@@ -21,10 +21,12 @@ import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Employee() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -40,12 +42,15 @@ function Employee() {
   const [gradeOpt, gradeList] = Cbo.useGrade();
   const [workerGroupOpt, workerGroupList] = Cbo.useWorkerGroup();
 
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = EmployeeSet(
-    isEditMode,
-    deptList,
-    gradeList,
-    workerGroupList
-  );
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = EmployeeSet(isEditMode, deptList, gradeList, workerGroupList);
   const SWITCH_NAME_01 = "employee";
 
   useEffect(() => {
@@ -53,13 +58,19 @@ function Employee() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -221,7 +232,18 @@ function Employee() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
+        />
       ) : null}
       {isModalOpen ? (
         <ModalNew

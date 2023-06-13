@@ -20,6 +20,7 @@ import GetPostParams from "api/GetPostParams";
 import GetDeleteParams from "api/GetDeleteParams";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function PackingPanel() {
   const workPackingID = useRef("");
@@ -576,11 +577,15 @@ function PackingPanel() {
         />
       ) : null}
       {isWarning.open ? (
-        <AlertDelete
-          handleDelete={handleWarning}
-          title={isWarning.title}
-          message={isWarning.message}
-          onlyYes={true}
+        <NoticeAlertModal
+          textContent={isWarning.message}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isConfirm={true}
+          onConfirm={() => {
+            setIsWarning(false);
+          }}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

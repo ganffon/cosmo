@@ -20,10 +20,12 @@ import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Grade(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -35,7 +37,15 @@ function Grade(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = GradeSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = GradeSet(isEditMode);
 
   const SWITCH_NAME_01 = "grade";
 
@@ -44,13 +54,19 @@ function Grade(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -212,7 +228,18 @@ function Grade(props) {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
+        />
       ) : null}
       {isModalOpen ? (
         <ModalNew

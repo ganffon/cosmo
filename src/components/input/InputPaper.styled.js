@@ -10,8 +10,7 @@ export const PaperBox = styled(Paper)`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   position: relative;
-  // margin: 5px 0px 0px 10px;
-  background: #f7f7f7;
+  background: ${(props) => (props.readOnly ? "#f7f7f7" : "#ffffff")};
   border: 1px solid rgba(217, 217, 217, 1);
   box-shadow: none;
 `;

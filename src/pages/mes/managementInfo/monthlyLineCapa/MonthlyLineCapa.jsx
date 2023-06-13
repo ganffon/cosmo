@@ -55,12 +55,14 @@ const MonthlyLineCapa = () => {
       })
       .then((response) => {
         // API 응답 데이터 처리 로직
+        console.log(response.data)
         setResponseData(response.data);
       })
       .catch((error) => {
         // 오류 처리 로직
         // console.error('API 호출 중 오류 발생:', error);
       });
+      
   };
 
   // GetMonthlyLineCapaData(dateText.endDate, textInput);
@@ -78,15 +80,6 @@ const MonthlyLineCapa = () => {
         colors: ["black"],
       },
       enabled: true,
-    },
-    title: {
-      text: "생산포장 라인 별 생산량(월)",
-      floating: true,
-      offsetY: 0,
-      align: "top",
-      style: {
-        color: "#444",
-      },
     },
   };
   const dateHeaders = [];
@@ -113,38 +106,44 @@ const MonthlyLineCapa = () => {
                 type="number"
                 onChange={handleChange}
                 defaultValue={year}
-                InputLabelProps={{
-                shrink: true,
-                }}/>
-              <InputSearch
+                size="small"
+                style={{marginLeft:'5px'}}/>
+              <TextField
                 key={"line_nm"}
                 id={"line_nm"}
-                name={"라인"}
+                label={"라인"}
+                size="small"
                 handleInputTextChange={handleTextChange}
                 onClickSearch={handleSearchButtonClick}
+                style={{marginLeft:'5px'}}
               />
             </S.ContentsHeaderWrap>
             <ButtonSearch onClickSearch={handleSearchButtonClick} />
           </S.ContentsHeader>
         </S.ToolWrap>
       </S.ShadowBoxButton>
-      <S.Top>
-        {responseData && (
-          <Chart
-            id={"chart"}
-            options={cOptions}
-            series={responseData.data.rows[0].graph}
-            type="line"
-            height={350}
-          />
-        )}
-      </S.Top>
-      <S.Bottom>
-        {responseData && (
-          <GridSingle columns={columns} data={responseData.data.rows[0].grid} />
-        )}
-      </S.Bottom>
-      {/* <SplitterLayout vertical></SplitterLayout> */}
+      <S.TopWrap>
+        <S.LineCapaTop>
+          <S.Title>라인별 생산량(월)</S.Title>
+          {responseData && (
+            <Chart
+              id={"chart"}
+              options={cOptions}
+              series={responseData.data.rows[0].graph}
+              type="line"
+              height={350}
+            />
+          )}
+        </S.LineCapaTop>
+        <S.LineCapaBottom>
+          <S.GridWrap>
+            {responseData && (
+              <GridSingle columns={columns} data={responseData.data.rows[0].grid} />
+            )}
+          </S.GridWrap>
+        </S.LineCapaBottom>
+      </S.TopWrap>
+      
     </S.ContentsArea>
   );
 };

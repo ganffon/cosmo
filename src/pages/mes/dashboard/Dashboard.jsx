@@ -1,15 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
-import { Bottom, Top, ToolWrap } from "./Dashboard.styled";
-import doriRedImg from "../../../img/Menu/dori_red.svg";
-import doriGreenImg from "../../../img/Menu/dori_green.svg";
-import Grid from "@toast-ui/react-grid";
+import { Bottom, Top, ToolWrap, Left, Right, LeftTop, RightTop, LeftBottom, RightBottom, LineState } from "./Dashboard.styled";
+import * as S from "./Dashboard.styled";
+import doriRedImg from "../../../img/Menu/bad.svg";
+import doriGreenImg from "../../../img/Menu/good.svg";
+import doriFace from "../../../img/Menu/doriFace.svg";
+import badFont from "../../../img/Menu/BadFont.svg";
+import goodFont from "../../../img/Menu/GoodFont.svg";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import GridSingle from "components/grid/GridSingle";
+import Grid from "@toast-ui/react-grid";
+import GridTheme from "components/grid/setting/GridTheme";
 import Chart from "react-apexcharts";
+// import { useSpring, animated, config  } from 'react-spring';
 
 const Dashboard = () => {
   const [result, setResult] = useState([]);
@@ -27,9 +32,13 @@ const Dashboard = () => {
   const [downtime, setDowntime] = useState([]);
   const [equipState, setState] = useState([]);
   const [responseData, setResponseData] = useState(null);
+  const [workerData, setWorkerData] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     GetDashboardData();
+    setIsClicked(!isClicked);
+    GridTheme();
   }, []);
   const columnsEmp = [
     { header: "실시간 생산 담당자", name: "emp_nm", align: "center" },
@@ -85,21 +94,26 @@ const Dashboard = () => {
       .then((response) => {
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
+        setWorkerData(response?.data?.data?.rows[0].worker);
         let index = 0;
-        const modifiedData = response.data.data.rows[0].downtime.map((item) => ({
-          ...item,
-          start_dt: `${item.start_date} ${item.start_time}`,
-          end_dt: `${item.end_date} ${item.end_time}`,
-          no: ++index,
-        }));
-
-        const stateData = response.data.data.rows[0].line_state.map((item) => ({
-          ...item,
-          eq_state: item.state === 1 ? true : false,
-        }));
-
+        const modifiedData = response.data.data.rows[0].downtime.map(
+          (item) => ({
+            ...item,
+            start_dt: `${item.start_date} ${item.start_time}`,
+            end_dt: `${item.end_date} ${item.end_time}`,
+            no: ++index,
+          })
+        );
+        const stateData = response.data.data.rows[0].line_state.map(
+          (item) => ({
+            ...item,
+            eq_state: (item.state===1) ? true : false 
+          })
+        );
+        
+        
         setDowntime(modifiedData);
-        setState(stateData);
+        setState(stateData)
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -124,100 +138,158 @@ const Dashboard = () => {
   };
 
   const renderLine = (index) => (
-    <div
-      style={{
-        position: "absolute",
-        top: "40%",
-        left: `${20 + index * 25}%`,
-        transform: "translate(-50%, -50%)",
-        height: "50px",
-      }}
-    >
+    <S.LineStateHeader>
       E{index + 1} Line
-    </div>
+    </S.LineStateHeader>
   );
+  const handleImgClick = () => {
+    setIsClicked(!isClicked);
+  };
+  const RenderImage = (index) => {  
+    return (
+      equipState && equipState[index] ? (
+        <S.LineStateBorder backgroundColor={equipState[index].eq_state ? '#F4FFF8' : "#FFF2F2"} borderColor={equipState[index].eq_state ? '#9AEBB7' : "#FF9494"}>
+          {renderLine(index)}
+            <img
+            src={equipState[index].eq_state ? doriGreenImg : doriRedImg}
+            alt={equipState[index].eq_state ? "Dori Green" : "Dori Red"}
+            style={{
+              // display: 'flex',
+              display: 'block',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 'none',
+              margin: '0 auto',
+              width: '75px',
+              height: '75px',
+            }}
+            onClick={handleImgClick} />
+            <img
+            src={equipState[index].eq_state ? goodFont : badFont}
+            alt={equipState[index].eq_state ? "goodFont" : "badFont"}
+            style={{
+              // display: 'flex',
+              display: 'block',
+              justifyContent: 'center',
+              margin: '0 auto',
+              marginTop: '20px',
+              width: '75px',
+              height: '25px',
+            }}
+            />
+          {/* <LineState>
+            {equipState[index].eq_state ? 'GOOD!' : 'BAD!'}
+          </LineState> */}
+          {/* </> */}
+          </S.LineStateBorder>
+      ) : null
+    );
+  };
 
-  const renderImage = (index) =>
-    equipState && equipState[index] ? (
-      <img
-        src={equipState[index].eq_state ? doriGreenImg : doriRedImg}
-        alt={equipState[index].eq_state ? "Dori Green" : "Dori Red"}
-        style={{
-          position: "absolute",
-          top: "60%",
-          left: `${20 + index * 25}%`,
-          transform: "translate(-50%, -50%)",
-          width: "50px",
-          height: "50px",
-        }}
-      />
-    ) : null;
+  const RadialBarChart = ({ data }) => {
+    const options = {
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            size: '70%',
+          },
+        },
+      },
+    };
+  
+    return (
+      <div>
+        <Chart
+          options={options}
+          series={data}
+          type="radialBar"
+          height={350}
+        />
+      </div>
+    );
+  };
+
+  const RenderWorker = (name) => {
+    return (
+      <S.WorkerBorder backgroundColor={"#FCFCFC"} borderColor={"#D9D9D9"}>
+        <img
+          src={doriFace}
+          alt={"doriFace"}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flex: 'none',
+            margin: '0 auto',
+            width: '80px',
+            height: '80px',
+          }}
+        />
+        <LineState>
+          {name}
+        </LineState>
+      </S.WorkerBorder>
+    );
+  };
+
+  const gridOptions = {
+    theme: "default",
+  };
 
   const complexColumns = getTimeHeader();
   // setResult(GetTestValAndCreateAt(strJson));
   return (
-    <SplitterLayout customClassName="my-splitter-layout" percentage={true} secondaryInitialSize={70}>
-      <SplitterLayout customClassName="my-splitter-layout" vertical={true} percentage={true} secondaryInitialSize={70}>
-        <div>
-          <div
-            style={{
-              position: "absolute",
-              top: "20%",
-              left: "45%",
-              transform: "translate(-50%, -50%)",
-              height: "50px",
-            }}
-          >
-            라인 가동 상태
-          </div>
+    <div style={{ display: 'flex', height: '100%', backgroundColor:'#EFEFEF'}}>
+      <Left>
+        <LeftTop> 
+          <S.Title>라인 가동 상태</S.Title>
           {equipState && (
-            <div>
-              {renderLine(0)}
-              {renderImage(0)}
-
-              {renderLine(1)}
-              {renderImage(1)}
-
-              {renderLine(2)}
-              {renderImage(2)}
+            <div style={{ flex: '1', display: 'flex',  margin: 10}}>
+                  {RenderImage(0)}
+                  {RenderImage(1)}
+                  {RenderImage(2)}
             </div>
           )}
-        </div>
-        <Bottom>{responseData && <Grid columns={columnsEmp} data={responseData.data.rows[0].worker} />}</Bottom>
-      </SplitterLayout>
-      <SplitterLayout vertical percentage={true} secondaryInitialSize={60}>
-        <Top>
-          <ToolWrap>
-            <div style={{ position: "absolute", left: "40%" }}>최근 라인 비가동 정보</div>
-          </ToolWrap>
-          {/* {responseData && <Grid columns={columnsDownTime} data={responseData.data.rows[0].downtime}/>} */}
-          {downtime && <Grid columns={columnsDownTime} data={downtime} />}
-        </Top>
-        <Bottom>
-          <ToolWrap>
-            <div style={{ position: "absolute", left: "30%", fontSize: "1.2em" }}>
-              EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
-            </div>
-          </ToolWrap>
+        </LeftTop>
+        <LeftBottom>
+          <S.BottomTitle>
+            실시간 생산 담당자
+          </S.BottomTitle>
+          <S.GridContainer>
+            {workerData &&
+              workerData.map((worker, index) => (
+                <React.Fragment key={index}>
+                  {RenderWorker(worker.emp_nm)}
+                </React.Fragment>
+              ))}
+          </S.GridContainer>
+        </LeftBottom>
+      </Left>
+      <Right>
+        <RightTop>
+          <S.Title>최근 라인 비가동 정보</S.Title>
+          <S.GridWrap>
+            {downtime && <Grid columns={columnsDownTime} data={downtime} options={gridOptions}/>}
+          </S.GridWrap>
+        </RightTop>
+        <RightBottom> 
+          <S.Title>
+            EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: '0.8em' }}>[기준 06:00 ~ 05:59]</span>
+          </S.Title>
+          <S.GridWrap>
           {responseData && (
-            <Chart
-              options={cOptions}
-              type="bar"
-              height={200}
-              series={responseData.data.rows[0].line_work_status.graph}
-            />
+            <Chart options={cOptions} type="bar" height={200} series={responseData.data.rows[0].line_work_status.graph} />
           )}
-          {responseData && (
-            <GridSingle
-              header={complexColumns}
-              columns={columnsGoal}
-              data={responseData.data.rows[0].line_work_status.grid}
-              isEditMode={true}
-            />
-          )}
-        </Bottom>
-      </SplitterLayout>
-    </SplitterLayout>
+            {responseData && (
+              <Grid
+                header={complexColumns}
+                columns={columnsGoal}
+                data={responseData.data.rows[0].line_work_status.grid}
+              />
+            )}
+          </S.GridWrap>
+        </RightBottom>
+      </Right>
+    </div>
   );
 };
 

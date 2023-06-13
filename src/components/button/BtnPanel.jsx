@@ -15,7 +15,7 @@ function BtnPanel(props) {
     color = null,
     fontSize = null,
     fontColor = null,
-    bordercolor = null,
+    borderColor = null,
     iconParam = null,
     onClick = () => {},
   } = props;
@@ -29,14 +29,14 @@ function BtnPanel(props) {
     }, 300);
   };
 
-  let btntitle;
+  let btnTitle;
   let icon;
   let btnHeight;
   let btnWidth;
   let btnBackground;
   let btnFontSize;
   let btnFontColor;
-  let btnBordercolor;
+  let btnBorderColor;
   let btnIconParm;
 
   if (iconParam === "New") {
@@ -63,17 +63,17 @@ function BtnPanel(props) {
       btnBackground = color ? color : "blue";
       btnFontSize = fontSize ? fontSize : "10px";
       btnFontColor = fontColor ? fontColor : "white";
-      btnBordercolor = bordercolor ? color : "white";
+      btnBorderColor = borderColor ? color : "white";
       break;
 
     default:
-      btntitle = title ? title : "버튼이름 입력하세요";
+      btnTitle = title ? title : "버튼이름 입력하세요";
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "84px";
       btnBackground = color ? color : "blue";
       btnFontSize = fontSize ? fontSize : "10px";
       btnFontColor = fontColor ? fontColor : "white";
-      btnBordercolor = bordercolor ? bordercolor : "white";
+      btnBorderColor = borderColor ? borderColor : "white";
       break;
   }
 
@@ -82,7 +82,7 @@ function BtnPanel(props) {
       height={btnHeight}
       width={btnWidth}
       background={btnBackground}
-      borderColor={btnBordercolor}
+      borderColor={btnBorderColor}
       onClick={() => {
         handleClick();
         onClick();
@@ -99,7 +99,7 @@ function BtnPanel(props) {
       height={btnHeight}
       width={btnWidth}
       background={btnBackground}
-      borderColor={btnBordercolor}
+      borderColor={btnBorderColor}
       onClick={() => {
         handleClick();
         onClick();
@@ -108,7 +108,7 @@ function BtnPanel(props) {
     >
       <S.Icon src={btnIconParm} />
       <S.Title fontSize={btnFontSize} fontColor={btnFontColor}>
-        {btntitle}
+        {btnTitle}
       </S.Title>
     </S.ButtonPanel>
   ) : (
@@ -116,7 +116,7 @@ function BtnPanel(props) {
       height={btnHeight}
       width={btnWidth}
       background={btnBackground}
-      borderColor={btnBordercolor}
+      borderColor={btnBorderColor}
       onClick={() => {
         handleClick();
         onClick();
@@ -124,7 +124,7 @@ function BtnPanel(props) {
       className={isClicked ? "clicked" : ""}
     >
       <S.Title fontSize={btnFontSize} fontColor={btnFontColor}>
-        {btntitle}
+        {btnTitle}
       </S.Title>
     </S.ButtonPanel>
   );

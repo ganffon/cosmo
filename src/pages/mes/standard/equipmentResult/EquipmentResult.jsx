@@ -22,6 +22,8 @@ import restAPI from "api/restAPI";
 import GetDeleteParams from "api/GetDeleteParams";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnPanel from "components/button/BtnPanel";
+import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function EquipmentResult() {
   LoginStateChk();
@@ -772,42 +774,12 @@ function EquipmentResult() {
             <S.TitleButtonWrap>
               <S.Title>운전점검일지</S.Title>
               <S.TitleButton>
-                <BtnPanel
-                  title={"등록"}
-                  height={"40px"}
-                  width={"100%"}
-                  color={"#ffffff"}
-                  fontSize={"16px"}
-                  fontColor={"#1491CE"}
-                  bordercolor={"#1491CE"}
-                  iconParam={"New"}
-                  onClick={onClickNew}
-                />
-                <BtnPanel
-                  title={"수정"}
-                  height={"40px"}
-                  width={"100%"}
-                  color={"#ffffff"}
-                  fontSize={"16px"}
-                  fontColor={"#1491CE"}
-                  bordercolor={"#1491CE"}
-                  iconParam={"Edit"}
-                  onClick={onClickEdit}
-                />
-                <BtnPanel
-                  title={"삭제"}
-                  height={"40px"}
-                  width={"100%"}
-                  color={"#ffffff"}
-                  fontSize={"16px"}
-                  fontColor={"#1491CE"}
-                  bordercolor={"#1491CE"}
-                  iconParam={"Delete"}
-                  onClick={onClickDelete}
-                />
+                <BtnComponent btnName={"New"} onClick={onClickNew} />
+                <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+                <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
               </S.TitleButton>
             </S.TitleButtonWrap>
-            {GridHeader}
+            <S.TopGridWrap>{GridHeader}</S.TopGridWrap>
           </S.GridHeaderWrap>
         </S.ContentLeft>
         <S.ContentRight>
@@ -826,7 +798,7 @@ function EquipmentResult() {
                 );
               })}
             </S.InfoWrap>
-            {GridDetail}
+            <S.BottomGridWrap>{GridDetail}</S.BottomGridWrap>
           </S.GridDetailWrap>
         </S.ContentRight>
       </S.ContentBottom>
@@ -892,9 +864,17 @@ function EquipmentResult() {
         />
       ) : null}
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        <NoticeAlertModal
+          textContent={"정말로 삭제 하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

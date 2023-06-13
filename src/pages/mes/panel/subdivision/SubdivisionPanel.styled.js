@@ -4,19 +4,25 @@ import TextField from "@mui/material/TextField";
 import LockIcon from "@mui/icons-material/Lock";
 import * as C from "constant/Layout";
 
+export const BarcodeArea = styled("div")`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+`;
 export const ContentsLeft = styled("div")`
   height: 100%;
   width: 530px;
   display: flex;
   flex-direction: column;
-  gap: 10px 10px;
+  gap: 10px;
 `;
 export const ContentsRight = styled("div")`
   height: 100%;
   width: calc(100% - 540px);
   display: flex;
   flex-direction: column;
-  gap: 10px 10px;
+  gap: 10px;
 `;
 export const ScreenTitleBox = styled("div")`
   height: auto;

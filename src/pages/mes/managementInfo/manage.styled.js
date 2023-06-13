@@ -11,7 +11,7 @@ export const Container = styled.div`
   height: 90vh;
 `;
 export const ContentsHeader = styled("div")`
-  height: 40px;
+  height: 50px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -29,10 +29,23 @@ export const ContentsHeaderWrap = styled("div")`
   justify-content: end;
   align-items: center;
 `;
+export const TopWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  width: calc(100% - 0.5rem);
+  margin-top: 20px;
+  background-color: #EFEFEF;
+`;
 export const Top = styled.div`
-  
-  height: 50%;
-  padding: 10px 10px 10px 10px;
+  display: 'flex'; 
+  flexDirection: 'column';  
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+  margin-left:10px;
+  padding: 3px 5px 10px 0px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 `;
 export const InputS = styled(InputSearch)`
   height: 40px;
@@ -52,9 +65,13 @@ export const ShadowBoxGrid = styled("div")`
 export const ChartDiv = styled.div`
   width: 50%;
 `;
+export const ChartWrap = styled("div")`
+  padding: 10px 10px 10px 10px;
+  margin: 10px;
+  background-color: #FFFFFF;
+  border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
+`;
 export const GridWrap = styled("div")`
-  width: 100%;
-  height: 100%;
   padding: 10px 10px 10px 10px;
 `;
 export const OtherContent = styled.div`
@@ -62,8 +79,8 @@ export const OtherContent = styled.div`
 `;
 
 export const Bottom = styled.div`
-  height:100%;
-  padding: 10px 10px 10px 10px;
+  height:50%;
+  padding: 80px 10px 10px 10px;
 `;
 
 export const Footer = styled.div`
@@ -73,9 +90,8 @@ export const Footer = styled.div`
 `;
 export const ContentsArea = styled("div")`
   width: 100%;
-  height:100vh;
-  overflow: hidden auto;
-  background-color: white;
+  height:100%;
+  background-color: #EFEFEF;
 `;
 export const ShadowBoxButton = styled("div")`
   background-color: rgb(255, 255, 255);
@@ -96,25 +112,10 @@ export const SearchWrap = styled("div")`
   display: flex;
   flex-direction: column;
 `;
-export const Left = styled("div")`
-  flex: 4; 
-  borderRight: '3px solid #ccc'
-`
-export const Right = styled("div")`
-  flex: 6; 
-  borderRight: '1px solid #ccc'
-`
-export const LeftBottom = styled("div")`
-  flex: 6; 
-  borderRight: '1px solid #ccc'
-`
-export const RightBottom = styled("div")`
-  flex: 4; 
-  borderRight: '1px solid #ccc'
-`
+
 export const FlexTop = styled.div`
   display: flex;
-  height: 45%;
+  height: 60%;
   padding: 10px 10px 10px 10px;
 `;
 export const FlexBottom = styled.div`
@@ -132,3 +133,126 @@ export const SearchCondition = styled("div")`
   padding: 5px 5px 5px 5px;
   display: flex;
 `;
+export const Title = styled("div")`
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  margin-top: 15px;
+  margin-left: 25px;
+`;
+export const BottomTitle = styled("div")`
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
+export const RightBottom = styled("div")`
+  height:55%;
+  display: 'flex'; 
+  flexDirection: 'column';  
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+  margin-left:10px;
+  padding: 3px 5px 10px 0px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+`
+export const Left = styled("div")`
+  width: 50%;
+  height:100%;
+  background-color: #EFEFEF;
+`
+export const Right = styled("div")`
+  width: 50%;
+  height:100%;
+  background-color: #EFEFEF;
+  margin-Right:10px;
+`
+export const LeftTop = styled("div")`
+  height:90%;
+  display: 'flex'; 
+  flexDirection: 'column';  
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-left:10px;
+  margin-Right:10px;
+  padding: 3px 5px 10px 0px;
+  margin-top: 10px;
+  margin-bottom:20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+`
+export const RightTop = styled("div")`
+  height:90%;
+  display: 'flex'; 
+  flexDirection: 'column';  
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-left:10px;
+  padding: 3px 5px 10px 0px;
+  margin-top: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+`
+export const LineCapaTop = styled.div`
+  display: 'flex'; 
+  height: 60%;
+  flexDirection: 'column';  
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+  margin-left:10px;
+  padding: 3px 5px 10px 0px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+`;
+export const LineCapaBottom = styled.div`
+  display: 'flex'; 
+  height: 25%;
+  flexDirection: 'column';  
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+  margin-left:10px;
+  padding: 3px 5px 10px 0px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+`;
+
+export const PartCapaTop = styled.div`
+  display: 'flex'; 
+  height: 60%;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+  margin-left:10px;
+  padding: 3px 5px 10px 0px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+`;
+export const PartCapaBottom = styled.div`
+  display: 'flex'; 
+  height: 25%;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+  margin-left:10px;
+  padding: 3px 5px 10px 0px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+`;
+export const PartCapaLeft = styled("div")`
+  width: 70%;
+  height:100%;
+  background-color: #FFFFFF;
+`
+export const PartCapaRight = styled("div")`
+  width: 30%;
+  height:100%;
+  background-color: #FFFFFF;
+  margin-Right:10px;
+`

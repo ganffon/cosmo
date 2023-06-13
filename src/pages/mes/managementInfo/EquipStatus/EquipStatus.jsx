@@ -5,13 +5,16 @@ import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
+import Grid from "@toast-ui/react-grid";
+import GridTheme from "components/grid/setting/GridTheme";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import ButtonSearch from "components/button/ButtonSearch";
 
-let isFirst = true;
+
 const EquipStatus = () => {
   LoginStateChk();
+  let isFirst = true;
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -20,19 +23,19 @@ const EquipStatus = () => {
   });
   const [year, setYear] = useState(new Date().getFullYear());
   const [responseData, setResponseData] = useState(null);
-  const [dataIndex, setDataIndex] = useState(0);
+  
   const [sDonutChartData, setSDonutChartData] = useState(null);
   const [barGrid, setBarGrid] = useState(null);
   const [sBarChartData, setSBarChartData] = useState(null);
-  const [cOptions, setCOptions] = useState(null);
-  const [chartType, setChartType] = useState('line');
   const handleChange = (event) => {
     setYear(event.target.value);
   };
   const handleSearchButtonClick = () => {
     // setSearchButtonClicked();
+    
     GetMonthlyLineCapaData();
     GetDailyLineCapaData();
+    
   };
   const GetMonthlyLineCapaData = () => {
     restAPI
@@ -71,13 +74,9 @@ const EquipStatus = () => {
       });
   };
   
-  const dataFunctions = [
-    GetMonthlyLineCapaData,
-  ];  
   useEffect(() => {
-    GetMonthlyLineCapaData();
-    GetDailyLineCapaData();
-  }, [dataIndex]);
+    handleSearchButtonClick()
+  }, []);
 
 
   const monthlyColumns = [
@@ -120,10 +119,6 @@ const EquipStatus = () => {
         },
         enabled: true,
       },
-      title: {
-        text: "라인별 비가동 ",
-        align: "top",
-      },
     };
   
     return (
@@ -132,7 +127,7 @@ const EquipStatus = () => {
           options={cWithHorizontal}
           series={data}
           type="bar"
-          height={250}
+          height={300}
         />
       </div>
     );
@@ -155,10 +150,6 @@ const EquipStatus = () => {
         },
         enabled: true,
       },
-      title: {
-        text: '비가동 유형별',
-        align: 'center',
-      },
       legend: {
         position: 'bottom',
       },
@@ -172,6 +163,7 @@ const EquipStatus = () => {
   
   return (
     <S.ContentsArea>
+      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
       <S.SearchCondition>
         <S.ContentsHeader>
         <S.ContentsHeaderWrap>
@@ -184,27 +176,34 @@ const EquipStatus = () => {
         <ButtonSearch onClickSearch={handleSearchButtonClick} />
         </S.ContentsHeader>
       </S.SearchCondition>
-      <S.FlexTop>
-        <S.Left>
-          {sDonutChartData && <DonutChart data={sDonutChartData} />}
-        </S.Left>
-        <S.Right>
-        {responseData && (
-          <GridSingle columns={monthlyColumns} data={responseData.data.rows[0].grid} />
-        )}
-        </S.Right>
-      </S.FlexTop>
-      <S.FlexBottom>
-      <S.LeftBottom>
+      </S.ShadowBoxButton>
+
+      <div style={{ display: 'flex', height: '100%', backgroundColor:'#EFEFEF'}}>
+      <S.Left>
+        <S.LeftTop> 
+        
+          <S.Title>비가동 유형별</S.Title>
+          <S.ChartWrap>
+            {sDonutChartData && <DonutChart data={sDonutChartData} />}
+          </S.ChartWrap>
+          <S.GridWrap>
+            {responseData && (<Grid columns={monthlyColumns} data={responseData.data.rows[0].grid} />)}    
+          </S.GridWrap>
+          </S.LeftTop>
+      </S.Left>
+      <S.Right>
+        <S.RightTop>
+          <S.Title>라인별 비가동</S.Title>
+          <S.ChartWrap>
             {sBarChartData && <BarChart data={sBarChartData} />}
-        </S.LeftBottom>
-        <S.RightBottom>
-        {barGrid && (
-          <GridSingle columns={sysColumns} data={barGrid.data.rows[0].grid} />
-        )}
-        </S.RightBottom>
-      </S.FlexBottom>
-      
+          </S.ChartWrap>
+          <S.GridWrap>
+            {barGrid && (<GridSingle columns={sysColumns} data={barGrid.data.rows[0].grid} />)}
+          </S.GridWrap>
+        </S.RightTop>
+      </S.Right>
+    </div>
+     
     </S.ContentsArea>
   );
 };

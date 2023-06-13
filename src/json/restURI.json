@@ -93,5 +93,10 @@
   "erpIncome": "/std/income/erp",
 
   "downtimeShare": "/kpi/downtime/share",
-  "sysDowntimeShare": "/kpi/sys-downtime/share"
+  "sysDowntimeShare": "/kpi/sys-downtime/share",
+  "sysDowntimeReport": "/prd/sys-downtime",
+  "tempRaws": "/prd/temp/raws",
+  "countRaws": "/prd/count/raws",
+  "monthlyChangeChart": "/prd/temp/change-by-monthly",
+  "monthlyProd": "/kpi/production/monthly-by-prod"
 }

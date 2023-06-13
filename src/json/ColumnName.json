@@ -423,5 +423,6 @@
   "constant_value": "상수",
   "weight_amount": "가중치",
   "income_date": "입고 일자",
-  "income_type": "입고 유형"
+  "income_type": "입고 유형",
+  "downtime_status": "상태"
 }

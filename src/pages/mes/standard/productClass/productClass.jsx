@@ -20,10 +20,12 @@ import ModalNew from "components/modal/ModalNew";
 import * as uSave from "custom/useSave";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function ProductClass() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const refModalGrid = useRef(null);
   const [searchToggle, setSearchToggle] = useState(false);
@@ -35,20 +37,33 @@ function ProductClass() {
     open: false,
   });
   const SWITCH_NAME_01 = "productClass";
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
-    productClassSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = productClassSet(isEditMode);
   const refSingleGrid = useRef(null);
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
   };
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -214,7 +229,18 @@ function ProductClass() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
+        />
       ) : null}
       {isModalOpen ? (
         <ModalNew

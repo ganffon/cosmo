@@ -224,7 +224,7 @@ function DownTimeInput(props) {
         </S.WrapLeft>
         <S.WrapRight>
           <BtnPanel
-            title={"비가동 시작"}
+            title={"비가동 종료"}
             height={"80%"}
             width={"80%"}
             color={"#555555"}
