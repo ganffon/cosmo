@@ -339,9 +339,9 @@
         "path": null,
         "under": [
           {
-            "name": "❌일일소분실적현황",
-            "id": null,
-            "path": null,
+            "name": "✅일일소분실적현황",
+            "id": "subdivision-report",
+            "path": "subdivision-report",
             "under": null
           },
           {
