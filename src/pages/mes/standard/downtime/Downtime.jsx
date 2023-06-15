@@ -27,8 +27,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Downtime() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -45,15 +44,10 @@ function Downtime() {
   });
   const [downtimeTypeOpt, downtimeTypeList] = Cbo.useDowntimeType();
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = DowntimeSet(isEditMode, downtimeTypeList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = DowntimeSet(
+    isEditMode,
+    downtimeTypeList
+  );
   const SWITCH_NAME_01 = "downtime";
 
   useEffect(() => {
@@ -61,18 +55,12 @@ function Downtime() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -198,19 +186,10 @@ function Downtime() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    downtime_type_id:
-                      newValue?.downtime_type_id === undefined
-                        ? null
-                        : newValue?.downtime_type_id,
+                    downtime_type_id: newValue?.downtime_type_id === undefined ? null : newValue?.downtime_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.downtime_type_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.downtime_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
@@ -266,11 +245,11 @@ function Downtime() {
       {isDeleteAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={handleDelete}
           onCancel={() => {
             setIsDeleteAlertOpen(false);

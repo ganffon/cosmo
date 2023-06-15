@@ -9,7 +9,8 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import ButtonSearch from "components/button/ButtonSearch";
 import TempRawsSet from "./TempRawsSet";
-import TempRawsModal from './TempRawsModal';
+import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 const TempRaws = () => {
   LoginStateChk();
@@ -53,6 +54,7 @@ const TempRaws = () => {
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
         setGridDataDetail(response?.data?.data?.rows);
+        console.log(response?.data?.data?.rows)
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -64,57 +66,48 @@ const TempRaws = () => {
   }, []);
 
   const { columnsHeader, columnsDetail, columnOptions, rowHeadersNum, header } = TempRawsSet();
-
+  console.log(columnsDetail)
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
     refGridDetail?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
 
-
-  const onClickGridHeader = async (e) => {
-    if (e?.rowKey !== undefined) {
-      const Header = refGridHeader?.current?.gridInst;
-      if (weighID.current !== Header.getValue(e?.rowKey, "work_weigh_id")) {
-        weighID.current = Header.getValue(e?.rowKey, "work_weigh_id");
-        const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${weighID.current}`);
-
-        setGridDataDetail(result?.data?.data?.rows);
-      }
-    }
-  };
-
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   
   return (
-    <S.ContentsArea>
-      <S.SearchCondition>
-        <S.ContentsHeader>
-        <S.ContentsHeaderWrap>
+    <ContentsArea>
+      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+        <S.ToolWrap>
+          <S.SearchWrap>
           <S.Date
             datePickerSet={"single"}
             dateText={dateText.startDate}
             setDateText={setDateText}
           />  
-        </S.ContentsHeaderWrap>
-        <button onClick={openModal}>모달 열기</button>{isModalOpen && <TempRawsModal columnsDetail={columnsDetail.slice(1)} data={gridDataDetail} onClose={closeModal} />}
-        <ButtonSearch onClickSearch={handleSearchButtonClick} />
-        </S.ContentsHeader>
-      </S.SearchCondition>
-      
-        {responseData && (
-          <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsDetail}
-          rowHeaders={rowHeadersNum}
-          header={columnsHeader}
-          data={gridDataDetail}
-          refGrid={refGridDetail}
-        />
-        )}
-    </S.ContentsArea>
+        </S.SearchWrap>
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
+          </S.ButtonWrap>
+        </S.ToolWrap>
+      </S.ShadowBoxButton>
+      <S.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <S.GridWrap>
+          {responseData && (
+            <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsDetail}
+            rowHeaders={rowHeadersNum}
+            header={columnsHeader}
+            data={gridDataDetail}
+            refGrid={refGridDetail}
+          />
+          )}
+        </S.GridWrap>
+      </S.ShadowBoxGrid>
+    </ContentsArea>
   );
 };
 

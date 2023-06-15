@@ -54,9 +54,21 @@ export const ChartDiv = styled.div`
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: 100%;
-  padding: 10px 10px 10px 20px;
+  height: 80%;
+  padding: 5px 0px 10px 20px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
 `;
+export const EmpStatusWrap = styled("div")`
+  width: 100%;
+  height: 65%;
+  margin-top: 10px;
+  padding: 5px 0px 15px 20px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
+
 export const OtherContent = styled.div`
   width: 50%;
 `;
@@ -98,39 +110,30 @@ export const SearchWrap = styled("div")`
 `;
 
 export const LeftTop = styled("div")`
+  height: 35%;
   display: 'flex'; 
   flexDirection: 'column';  
   border-radius: 10px;
   background-color: #FFFFFF;
-  margin-left:10px;
-  margin-Right:10px;
   padding: 3px 5px 10px 0px;
-  margin-top: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const RightTop = styled("div")`
+  height: 40%;
   display: 'flex'; 
   flexDirection: 'column';  
   border-radius: 10px;
   background-color: #FFFFFF;
   margin-left:10px;
-  padding: 3px 5px 10px 0px;
-  margin-top: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 5px 5px 0px 0px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const LeftBottom = styled("div")`
-  height: 60%;
-  border-radius: 10px;
+  height: calc(95% - 20px);
   background-color: #FFFFFF;
-  margin-left: 10px;
-  margin-Right:10px;
-  margin-top: 20px;
-  padding: 0px 15px 15px 15px;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  
   ::-webkit-scrollbar {
     width: 8px; /* 스크롤바 너비 */
   }
@@ -148,84 +151,79 @@ export const LeftBottom = styled("div")`
 
 export const GridContainer = styled("div")`
   display: grid;
+  height: 100%;
+  margin-right: 10px;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 `;
 export const RightBottom = styled("div")`
-  height:55%;
+  height: 60%;
   display: 'flex'; 
   flexDirection: 'column';  
   border-radius: 10px;
   background-color: #FFFFFF;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left:10px;
-  padding: 3px 5px 10px 0px;
-  margin-bottom: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 3px 5px 0px 0px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const Left = styled("div")`
   width: 30%;
-  height:100%;
+  height: 100%;
   background-color: #EFEFEF;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const Right = styled("div")`
   width: 70%;
-  height:100%;
+  height: 100%;
   background-color: #EFEFEF;
-  margin-Right:10px;
 `
 
 export const LineState = styled("div")`
   font-family: Noto Sans KR;
-  font-size: 26px;
+  height: 40px;
+  width: 100%;
+  font-size: 23px;
   font-weight: 700;
-  line-height: 38px;
-  letter-spacing: 0em;
+  line-height: 40px;
   text-align: center;
-  margin-top: 10px;
 `
 
 export const LineStateHeader = styled("div")`
   font-family: Noto Sans KR;
   font-size: 20px;
   font-weight: 700;
-  line-height: 29px;
-  letter-spacing: 0em;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 15px;
 `
 
 export const LineStateBorder = styled("div")`
   box-sizing: border-box;
-  width: 140px;
-  height: 212px;
-  left: 134px;
-  top: 142px;
+  width: 30%;
+  height: 90%;
   flex-direction: column;
   background: ${(props) => props.backgroundColor || "#F4FFF8"};
   border: 1px solid ${(props) => props.borderColor || "#9AEBB7"};
   border-radius: 10px;
-  margin-top: 5px;
   margin-left: 15px;
 `;
 
 export const WorkerBorder = styled("div")`
-  height: 180px;
-  width: 220px;
-  left: 0px;
-  top: 0px;
+  height: 100%;
+  width: 100%;
   border-radius: 10px;
-  padding: 32px 68px 32px 68px;
+  margin-right: 5px;
   background: ${(props) => props.backgroundColor || "#F4FFF8"};
   border: 1px solid ${(props) => props.borderColor || "#9AEBB7"};
 `;
 
 export const Title = styled("div")`
+  height: 40px;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
-  line-height: 29px;
+  line-height: 30px;
   margin-top: 15px;
   margin-left: 25px;
 `;
@@ -238,11 +236,38 @@ export const RightTopTitle = styled("div")`
   margin-left: 25px;
 `;
 export const BottomTitle = styled("div")`
+  height: 40px;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
-  line-height: 29px;
+  line-height: 30px;
   margin-top: 15px;
   margin-bottom: 15px;
+`;
+export const AllWrap = styled('div')`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  background-color: #eeeeee
+`;
+
+export const ImgWrap = styled("div")`
+  display: flex;
+  width: 100%;
+  border-radius: 10px;
+  height:calc(80%);
+  background-color: #FFFFFF;
+`
+export const ChartWrap = styled("div")`
+  margin: 15px;
+  background-color: #FFFFFF;
+  border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
+`;
+export const RBGridWrap = styled("div")`
+  width: 100%;
+  height: 200px;
+  padding: 5px 10px 10px 10px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
 `;

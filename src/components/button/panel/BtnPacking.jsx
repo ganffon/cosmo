@@ -21,7 +21,7 @@ function BtnPacking(props) {
         color={"#ffffff"}
         fontSize={"26px"}
         fontColor={"#1491CE"}
-        bordercolor={"#1491CE"}
+        borderColor={"#1491CE"}
         onClick={onClickDelete}
       />
     </S.ButtonSetWrap>

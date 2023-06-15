@@ -18,6 +18,7 @@
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "exceljs": "^4.3.0",
+    "hangul-js": "^0.2.6",
     "js-cookie": "^3.0.5",
     "luxon": "^3.2.1",
     "moment": "^2.29.4",

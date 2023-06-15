@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import * as S from "../../managementInfo/manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
@@ -13,6 +12,8 @@ import * as C from './CountRaws.styled'
 import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
 import CountRawsModal from './CountRawsModal';
+import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 const TempRaws = () => {
   LoginStateChk();
@@ -36,6 +37,8 @@ const TempRaws = () => {
   const weighID = useRef("");
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
+  const refGridDetail2 = useRef(null);
+  const refGridDetail3 = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [grid2DataDetail, setGrid2DataDetail] = useState(null);
@@ -120,67 +123,77 @@ const TempRaws = () => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
     refGridDetail?.current?.gridInst?.refreshLayout();
+    refGridDetail2?.current?.gridInst?.refreshLayout();
+    refGridDetail3?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
   
   
   return (
-    <S.ContentsArea>
-      <S.SearchCondition>
-        <S.ContentsHeader>
-        <S.ContentsHeaderWrap>
-          <S.Date
+    <ContentsArea>
+      <C.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+        <C.ToolWrap>
+          <C.SearchWrap>
+          <C.Date
             datePickerSet={"single"}
             dateText={dateText.startDate}
             setDateText={setDateText}
           />  
-        </S.ContentsHeaderWrap>
-        <button onClick={openModal}>모달 열기</button>{isModalOpen && <CountRawsModal onClose={closeModal} />}
-        <ButtonSearch onClickSearch={handleSearchButtonClick} />
-        </S.ContentsHeader>
-      </S.SearchCondition>
-      <C.CntTextContainer>
-        <C.CntTextWrapper>
-          {gridDataDetail && (
-            <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNum}
-            header={columnsHeader}
-            data={gridDataDetail}
-            refGrid={refGridDetail}
-          />
-          )}
-        </C.CntTextWrapper>
-        <C.CntTextWrapper>
-          {gridDataDetail && (
-            <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNum}
-            header={columnsHeader2}
-            data={grid2DataDetail}
-            refGrid={refGridDetail}
-          />
-          
-          )}
-        </C.CntTextWrapper>
-        <C.CntTextWrapper>
-          {gridDataDetail && (
-            <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNum}
-            header={columnsHeader3}
-            data={grid3DataDetail}
-            refGrid={refGridDetail}
-          />
-          )}
-        </C.CntTextWrapper>
-    </C.CntTextContainer>
+        </C.SearchWrap>
+          <C.ButtonWrap>
+            <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
+          </C.ButtonWrap>
+        </C.ToolWrap>
+      </C.ShadowBoxButton>
+      <C.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <C.GridContainer>
+          <C.CntTextWrapper >
+            <C.GridWrap isAllScreen={isAllScreen}>
+              {gridDataDetail && (
+              <GridSingle
+                columnOptions={columnOptions}
+                columns={columnsDetail}
+                rowHeaders={rowHeadersNum}
+                header={columnsHeader}
+                data={gridDataDetail}
+                refGrid={refGridDetail}
+              />
+              )}
+            </C.GridWrap >
+          </C.CntTextWrapper>
+          <C.CntTextWrapper >
+            <C.GridWrap isAllScreen={isAllScreen}>
+            {gridDataDetail && (
+              <GridSingle
+                columnOptions={columnOptions}
+                columns={columnsDetail}
+                rowHeaders={rowHeadersNum}
+                header={columnsHeader2}
+                data={grid2DataDetail}
+                refGrid={refGridDetail2}
+              />
+            )}
+            </C.GridWrap>
+          </C.CntTextWrapper>
+          <C.CntTextWrapper >
+            <C.GridWrap isAllScreen={isAllScreen}>
+              {gridDataDetail && (
+                <GridSingle
+                  columnOptions={columnOptions}
+                  columns={columnsDetail}
+                  rowHeaders={rowHeadersNum}
+                  header={columnsHeader3}
+                  data={grid3DataDetail}
+                  refGrid={refGridDetail3}
+                />
+              )}
+            </C.GridWrap>
+          </C.CntTextWrapper>
+        </C.GridContainer>
+      </C.ShadowBoxGrid>
         
         
         
-    </S.ContentsArea>
+    </ContentsArea>
   );
 };
 

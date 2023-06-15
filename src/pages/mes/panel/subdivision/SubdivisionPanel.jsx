@@ -5,7 +5,6 @@ import DateTime from "components/datetime/DateTime";
 import SubdivisionPanelSet from "./SubdivisionPanelSet";
 //import BtnSubdivisionSL from "components/button/panel/BtnSubdivisionSL";
 import InputPaper from "components/input/InputPaper";
-import InputText from "components/input/InputText";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
@@ -14,7 +13,6 @@ import * as uSearch from "custom/useSearch";
 import * as S from "./SubdivisionPanel.styled";
 import restAPI from "api/restAPI";
 import ModalSubdivision from "./ModalSubdivision";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import GridPanel from "components/grid/GridPanel";
 import ContentsArea from "components/layout/common/ContentsArea";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
@@ -31,7 +29,7 @@ function SubdivisionPanel() {
   const lot = useRef("");
   const workSubdivisionID = useRef("");
 
-  const [totalQty, setTotalQty] = useState();
+  const [totalQty, setTotalQty] = useState("");
 
   const [scaleInfo, setScaleInfo] = useState({
     barcode: "",
@@ -71,7 +69,7 @@ function SubdivisionPanel() {
   const refGridSelect = useRef(null);
   const refGridSelectDetail = useRef(null);
 
-  const refBarcode = useRef(null);
+  const refBtnNext = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
@@ -140,9 +138,6 @@ function SubdivisionPanel() {
     restURI.subdivisionDetail
   ); //➡️ Modal Select Search Load Detail
   useEffect(() => {
-    refBarcode?.current?.firstChild?.focus();
-  }, [gridDataHeader]);
-  useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridSingle?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
@@ -167,11 +162,11 @@ function SubdivisionPanel() {
     setIsModalSelectOpen(false);
   };
   const onClickGridSelect = (e) => {
-    if (e?.targetType !== "columnHeader") {
+    if (e?.targetType === "cell") {
       const Header = refGridSelect?.current?.gridInst;
       const rowID = Header.getValue(e?.rowKey, "work_subdivision_id");
       const params = `?work_subdivision_id=${rowID}`;
-      if (rowID !== workSubdivisionID.current) {
+      if (rowID !== workSubdivisionID.current && rowID !== null) {
         prodID.current = Header.getValue(e?.rowKey, "prod_id");
         prodCD.current = Header.getValue(e?.rowKey, "prod_cd");
         date.current = Header.getValue(e?.rowKey, "subdivision_date");
@@ -193,7 +188,7 @@ function SubdivisionPanel() {
       prodID.current = data.prod_id;
       prodCD.current = data.prod_cd;
       date.current = DateTime().dateFull;
-      setTotalQty(0);
+      setTotalQty("0");
       lot.current = "";
       workSubdivisionID.current = "";
       setIsModalSelectOpen(false);
@@ -227,44 +222,33 @@ function SubdivisionPanel() {
         });
       }
     }
-    refBarcode?.current?.firstChild?.focus();
   }
+  const onGetWorkSubdivisionID = async () => {
+    if (!workSubdivisionID.current) {
+      let obj = [];
+      obj.push({
+        prod_id: prodID.current,
+        subdivision_date: date.current,
+      });
+      try {
+        const result = await restAPI.post(restURI.subdivisions, obj);
+        workSubdivisionID.current = result?.data?.data?.rows[0]?.work_subdivision_id;
+        setIsLockScale(false);
+        setTotalQty("0");
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      }
+    }
+  };
   const onClickStart = async (e) => {
     if (prodID.current === "") {
-      setIsWarning({
-        ...isWarning,
-        open: true,
-        title: "Warning",
-        message: "품목코드를 입력하세요!",
-      });
-    } else {
-      if (!workSubdivisionID.current) {
-        let obj = [];
-        obj.push({
-          prod_id: prodID.current,
-          subdivision_date: date.current,
-        });
-        try {
-          const result = await restAPI.post(restURI.subdivisions, obj);
-          workSubdivisionID.current = result?.data?.data?.rows[0]?.work_subdivision_id;
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: result?.data?.message,
-            severity: "success",
-            location: "bottomRight",
-          });
-        } catch (err) {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: err?.response?.data?.message,
-            severity: "error",
-            location: "bottomRight",
-          });
-        }
-      }
-      setIsLockScale(false);
+      setIsBarcodeScanOpen(true);
     }
   };
   const [isDelete, setIsDelete] = useState(false);
@@ -343,12 +327,6 @@ function SubdivisionPanel() {
       });
     }
   };
-  const handleWarning = () => {
-    setIsWarning({
-      ...isWarning,
-      open: false,
-    });
-  };
   const onClickSelect = (e) => {
     if (isLockScale) {
       setDblClickGrid("Search");
@@ -363,13 +341,41 @@ function SubdivisionPanel() {
       setIsLockScale(true);
     }
   };
-  const onClickBefore = () => {
-    refBarcode?.current?.firstChild?.focus();
-    setScaleInfo({ ...scaleInfo, before: "505" });
+  const onClickBefore = async () => {
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
+      const data = result?.data?.data?.rows[0];
+      setScaleInfo({ ...scaleInfo, before: data.value });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
-  const onClickAfter = () => {
-    refBarcode?.current?.firstChild?.focus();
-    setScaleInfo({ ...scaleInfo, after: "465" });
+  const onClickAfter = async () => {
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
+      const data = result?.data?.data?.rows[0];
+      setScaleInfo({ ...scaleInfo, after: data.value });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
   const onClickNext = async () => {
     if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
@@ -405,14 +411,16 @@ function SubdivisionPanel() {
               severity: "success",
               location: "bottomRight",
             });
-            setGridDataHeader(result?.data?.data?.rows);
-            resetScaleInfo();
             const resultData = result?.data?.data?.rows;
+            setGridDataHeader(resultData);
+            resetScaleInfo();
             let totalQty = 0;
             for (let i = 0; resultData.length > i; i++) {
               totalQty = totalQty + resultData[i].subdivision_qty;
             }
             setTotalQty(totalQty);
+            setIsBarcodeScanOpen(true);
+            refBtnNext?.current?.blur();
           } catch (err) {
             setIsSnackOpen({
               ...isSnackOpen,
@@ -447,65 +455,132 @@ function SubdivisionPanel() {
         message: "소분 전/후 중량을 다시 확인하세요!",
       });
     }
-    refBarcode?.current?.firstChild?.focus();
-  };
-
-  const handleBarcodeEnter = async (e) => {
-    if (e.key === "Enter") {
-      try {
-        const result = await restAPI.get(restURI.barcodeERP + `?lot_no=${e?.target?.value}`);
-        setScaleInfo({ ...scaleInfo, inputLot: "MTM1804130002" });
-      } catch (err) {
-        alert(`Err : ${err}`);
-      }
-    }
-    refBarcode?.current?.firstChild?.focus();
   };
   const handleChange = (e) => {
     setScaleInfo({ ...scaleInfo, [e.target.id]: e.target.value });
   };
 
+  const onCloseBarcodeScan = () => {
+    setBarcodeScan({});
+    setIsBarcodeScanOpen(false);
+  };
+
   const [barcodeScan, setBarcodeScan] = useState({});
   const refBarcodeScan = useRef(null);
+  const refBarcodeTimeStamp = useRef(null);
 
+  //🔸timeStamp 2개를 받아서 서로 몇 초 차이 나는지 구하는 함수
+  function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {
+    if (timeStamp1 === null) return 0;
+    const difference = Math.abs(timeStamp1 - timeStamp2);
+    const seconds = difference / 1000;
+    return seconds;
+  }
+
+  const transferBarcode = async (lotNo) => {
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(restURI.barcodeERP + `?lot_no=${lotNo}`);
+      const data = result?.data?.data?.rows[0];
+      if (prodID.current === "") {
+        //prodID 비어 있으면 신규 시작
+        if (prodID.current === data.prod_id || prodID.current === "") {
+          //시작된 ID와 비교해서 같은 경우만 입력
+          prodID.current = data.prod_id;
+          prodCD.current = data.prod_cd;
+          date.current = DateTime().dateFull;
+          lot.current = lotNo;
+          onGetWorkSubdivisionID();
+          setScaleInfo({ ...scaleInfo, inputLot: lotNo });
+
+          onCloseBarcodeScan();
+          if (isLockScale === true) {
+            setIsLockScale(false);
+          }
+        } else {
+          setBarcodeScan({ ...barcodeScan, value: "현재 진행중인 작업과 다른 품목입니다." });
+        }
+      }
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+      resetRequire();
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
+
+  const onLotConfirm = () => {
+    if (barcodeScan.lot !== "") {
+      transferBarcode(barcodeScan.lot);
+    }
+  };
+  const barcodeNo = useRef("");
   useEffect(() => {
-    let barcodeNo = "";
     const onBarcodeScan = (e) => {
-      console.log(e);
-      // e?.Key 가 "Process"는 한글인 경우
+      //timeStamp 가 서로 몇초 차이인지 구함
+      const differenceTime = getTimeDifferenceInSeconds(refBarcodeTimeStamp.current, e?.timeStamp);
+      //차이 시간이 0.01초 이상이라면 저장되어 있던 값을 초기화
+      //바코드 스캐너로 입력되는 문자들은 입력 사이가 0.005초 전후 이기 때문
+      if (differenceTime > 0.01) {
+        barcodeNo.current = "";
+      }
+
+      // e?.key 가 "Process"는 한글인 경우
       if (e?.key === "Process") {
-        // e?.Key 가 "Process" 이면서 e?.code 가 "Digit" 숫자로 들어오는 경우가 있는데 무시해야 함
+        // e?.key 가 "Process" 이면서 e?.code 가 "Digit" 숫자로 들어오는 경우가 있는데 무시해야 함
         if (e?.code.includes("Key")) {
-          barcodeNo = barcodeNo + e?.code.replace("Key", "");
+          barcodeNo.current = barcodeNo.current + e?.code.replace("Key", "");
         }
+        // e?.key 가 "Shift" 인 경우 1차적으로 모두 무시
       } else if (e?.key !== "Shift") {
+        // Digit, Key, Minus 외의 값들은 전부 무시
         if (e?.code.includes("Digit")) {
-          barcodeNo = barcodeNo + e?.code.replace("Digit", "");
+          barcodeNo.current = barcodeNo.current + e?.code.replace("Digit", "");
         }
         if (e?.code.includes("Key")) {
-          barcodeNo = barcodeNo + e?.code.replace("Key", "");
+          barcodeNo.current = barcodeNo.current + e?.code.replace("Key", "");
         }
         if (e?.code.includes("Minus")) {
-          barcodeNo = barcodeNo + e?.key;
+          barcodeNo.current = barcodeNo.current + e?.key;
         }
       }
 
+      refBarcodeTimeStamp.current = e?.timeStamp;
       if (e?.key === "Enter") {
-        console.log(barcodeNo);
-        barcodeNo = "";
+        setBarcodeScan({ ...barcodeScan, value: barcodeNo.current });
+        /**
+         * ✅ SQM LITHIUM 바코드
+         *    자릿수 : 52
+         *    LOT : 20자리부터 30자리 구간
+         */
+        if (barcodeNo.current.length === 52) {
+          const lot = barcodeNo.current.slice(20, 30);
+          transferBarcode(lot);
+        } else {
+          if (barcodeScan.lot !== "") {
+            onLotConfirm();
+          } else {
+            setBarcodeScan({ ...barcodeScan, value: "정의되지 않은 바코드입니다." });
+          }
+        }
+        barcodeNo.current = "";
       }
     };
     window.addEventListener("keydown", onBarcodeScan);
-
-    const interval = setInterval(() => {
-      barcodeNo = "";
-    }, 1000);
-
     return () => {
       window.removeEventListener("keydown", onBarcodeScan);
-      clearInterval(interval);
     };
-  }, []);
+  }, [barcodeScan.lot]);
+
+  const onClickReadOnly = () => {
+    setIsBarcodeScanOpen(true);
+  };
 
   return (
     <ContentsArea flexColumn={false}>
@@ -519,28 +594,28 @@ function SubdivisionPanel() {
             nameSize={"20px"}
             namePositionTop={"-30px"}
             value={prodCD.current || ""}
-            size={"22px"}
+            size={"26px"}
             btn={true}
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
           />
           <InputPaper
-            width={"230px"}
+            width={"235px"}
             height={"60px"}
             name={"소분일자"}
             nameSize={"20px"}
             namePositionTop={"-30px"}
             value={date.current || ""}
-            size={"22px"}
+            size={"26px"}
           />
           <InputPaper
-            width={"230px"}
+            width={"235px"}
             height={"60px"}
             name={"소분총량"}
             nameSize={"20px"}
             namePositionTop={"-30px"}
             value={totalQty || ""}
-            size={"22px"}
+            size={"26px"}
           />
         </S.ItemInfoBox>
 
@@ -548,19 +623,23 @@ function SubdivisionPanel() {
           <S.ButtonBox>
             <BtnPanel
               title={"시작하기"}
-              height={"70px"}
+              subTitle={"Start"}
+              height={"80px"}
               width={"48%"}
               color={"#1491CE"}
               fontSize={"26px"}
+              subFontSize={"20px"}
               fontColor={"#FFFFFF"}
               onClick={onClickStart}
             />
             <BtnPanel
               title={"불러오기"}
-              height={"70px"}
+              subTitle={"Load"}
+              height={"80px"}
               width={"48%"}
               color={"#FFFFFF"}
               fontSize={"26px"}
+              subFontSize={"20px"}
               fontColor={"#1491CE"}
               onClick={onClickLoad}
             />
@@ -569,28 +648,34 @@ function SubdivisionPanel() {
           <S.ButtonBox>
             <BtnPanel
               title={"작업취소"}
-              height={"70px"}
+              subTitle={"Cancel"}
+              height={"80px"}
               width={"30%"}
               color={"#DD3640"}
               fontSize={"26px"}
+              subFontSize={"20px"}
               fontColor={"#FFFFFF"}
               onClick={onClickDelete}
             />
             <BtnPanel
               title={"작업보류"}
-              height={"70px"}
+              subTitle={"Hold"}
+              height={"80px"}
               width={"30%"}
               color={"#555555"}
               fontSize={"26px"}
+              subFontSize={"20px"}
               fontColor={"#FFFFFF"}
               onClick={onClickHold}
             />
             <BtnPanel
               title={"작업종료"}
-              height={"70px"}
+              subTitle={"End"}
+              height={"80px"}
               width={"30%"}
               color={"#1491CE"}
               fontSize={"26px"}
+              subFontSize={"20px"}
               fontColor={"#FFFFFF"}
               onClick={onClickEnd}
             />
@@ -599,8 +684,8 @@ function SubdivisionPanel() {
 
         <S.DataInterfaceBox>
           {isLockScale === false ? (
-            <>
-              <S.DataInterfaceWrap>
+            <S.DataInterfaceWrap>
+              <S.InputWrap>
                 <InputPaper
                   width={"470px"}
                   height={"60px"}
@@ -609,73 +694,82 @@ function SubdivisionPanel() {
                   nameColor={"black"}
                   nameSize={"20px"}
                   namePositionTop={"-30px"}
-                  placeHolder={"바코드 혹은 투입LOT를 입력하시려면 클릭하세요."}
-                  size={"20px"}
-                  onClickReadOnly={() => setIsBarcodeScanOpen(true)}
+                  placeHolder={"바코드 혹은 투입LOT 수기입력 시 클릭"}
+                  size={"26px"}
+                  onClickReadOnly={onClickReadOnly}
                   value={scaleInfo.inputLot}
                   onChange={handleChange}
                 />
                 <InputPaper
                   width={"230px"}
-                  height={"60px"}
+                  height={"110px"}
                   id={"before"}
                   name={"소분 전"}
                   nameColor={"black"}
                   nameSize={"20px"}
                   namePositionTop={"-30px"}
+                  size={"70px"}
                   value={scaleInfo.before}
                   onTextChange={handleChange}
                   readOnly={false}
                 />
                 <InputPaper
                   width={"230px"}
-                  height={"60px"}
+                  height={"110px"}
                   id={"after"}
                   name={"소분 후"}
                   nameColor={"black"}
                   nameSize={"20px"}
                   namePositionTop={"-30px"}
+                  size={"70px"}
                   value={scaleInfo.after}
                   onTextChange={handleChange}
                   readOnly={false}
                 />
-              </S.DataInterfaceWrap>
+              </S.InputWrap>
               <S.MadeButtonWrap>
                 <S.ButtonBox>
                   <BtnPanel
                     title={"소분 전 무게"}
-                    height={"70px"}
+                    subTitle={"Before Weight"}
+                    height={"80px"}
                     width={"50%"}
                     color={"#FFFFFF"}
                     fontSize={"26px"}
+                    subFontSize={"20px"}
                     fontColor={"#1491CE"}
-                    bordercolor={"#1491CE"}
+                    borderColor={"#1491CE"}
                     onClick={onClickBefore}
                   />
                   <BtnPanel
                     title={"소분 후 무게"}
-                    height={"70px"}
+                    subTitle={"After Weight"}
+                    height={"80px"}
                     width={"50%"}
                     color={"#FFFFFF"}
                     fontSize={"26px"}
+                    subFontSize={"20px"}
                     fontColor={"#1491CE"}
-                    bordercolor={"#1491CE"}
+                    borderColor={"#1491CE"}
                     onClick={onClickAfter}
                   />
                 </S.ButtonBox>
                 <S.ButtonBox>
                   <BtnPanel
                     title={"다음"}
+                    subTitle={"Next Bag"}
                     height={"70px"}
                     width={"100%"}
                     color={"#1491CE"}
                     fontSize={"26px"}
+                    subFontSize={"20px"}
                     fontColor={"#FFFFFF"}
                     onClick={onClickNext}
+                    refBtn={refBtnNext}
                   />
                 </S.ButtonBox>
               </S.MadeButtonWrap>
-            </>
+            </S.DataInterfaceWrap>
           ) : (
             <S.ScaleLock>
               <S.ScaleLockIcon />
@@ -695,7 +789,14 @@ function SubdivisionPanel() {
         </S.DataHandleBox>
       </S.ContentsRight>
       {isBarcodeScanOpen ? (
-        <BarcodeScan width={"700px"} height={"300px"} onClose={() => setIsBarcodeScanOpen(false)} />
+        <BarcodeScan
+          width={"900px"}
+          height={"300px"}
+          onClose={onCloseBarcodeScan}
+          onLotConfirm={onLotConfirm}
+          setBarcodeScan={setBarcodeScan}
+          barcodeScan={barcodeScan}
+        />
       ) : null}
       {isModalSelectOpen ? (
         <ModalSelect
@@ -736,11 +837,11 @@ function SubdivisionPanel() {
       {isDelete ? (
         <NoticeAlertModal
           textContent={"모든 작업을 취소하고 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={handleDelete}
           onCancel={() => {
             setIsDelete(false);
@@ -750,11 +851,11 @@ function SubdivisionPanel() {
       {isHold ? (
         <NoticeAlertModal
           textContent={"모든 작업을 보류시키겠습니까?"}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isConfirm={true}
-          isCancle={true}
+          isCancel={true}
           cancelColor={"#DD3640"}
           onConfirm={handleHold}
           onCancel={() => {
@@ -765,12 +866,12 @@ function SubdivisionPanel() {
       {isEnd ? (
         <NoticeAlertModal
           textContent={"모든 작업을 완료하고 마감하시겠습니까?"}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isConfirm={true}
           cancelColor={"#DD3640"}
-          isCancle={true}
+          isCancel={true}
           onConfirm={handleEnd}
           onCancel={() => {
             setIsEnd(false);
@@ -780,7 +881,7 @@ function SubdivisionPanel() {
       {isWarning.open ? (
         <NoticeAlertModal
           textContent={isWarning.message}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isConfirm={true}

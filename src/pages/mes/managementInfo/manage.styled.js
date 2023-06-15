@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import * as C from "constant/Layout";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
-
+import TextField from "@mui/material/TextField";
+import { APP_BAR_HEIGHT, SEARCH_BAR_HEIGHT, HEIGHT_MARGIN } from "constant/Layout";
 
 export const Container = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ export const Container = styled.div`
   height: 90vh;
 `;
 export const ContentsHeader = styled("div")`
-  height: 50px;
+  height: 55px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -22,7 +23,10 @@ export const ContentsHeader = styled("div")`
   margin-bottom: 8px;
 `;
 export const Date = styled(DatePicker)`
-  height: 40px;
+  height: 45px;
+`;
+export const SearchWrap = styled("div")`
+  display: flex;
 `;
 export const ContentsHeaderWrap = styled("div")`
   display: flex;
@@ -31,9 +35,7 @@ export const ContentsHeaderWrap = styled("div")`
 `;
 export const TopWrap = styled.div`
   width: 100%;
-  height: 100%;
-  width: calc(100% - 0.5rem);
-  margin-top: 20px;
+  height: 90%;
   background-color: #EFEFEF;
 `;
 export const Top = styled.div`
@@ -45,33 +47,45 @@ export const Top = styled.div`
   margin-left:10px;
   padding: 3px 5px 10px 0px;
   margin-bottom: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const InputS = styled(InputSearch)`
   height: 40px;
+  
 `;
 export const ShadowBoxGrid = styled("div")`
-  background-color: rgb(255, 255, 255);
-  width: calc(100% - 0.5rem);
+  background-color: #ffffff;
+  width: 100%;
   height: ${(props) =>
     props.isAllScreen
-      ? `calc(100vh - ${C.APP_BAR_HEIGHT} - ${C.HEIGHT_MARGIN})`
-      : `calc(100vh - ${C.APP_BAR_HEIGHT} - ${C.SEARCH_BAR_HEIGHT} - ${C.HEIGHT_MARGIN})`};
+      ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)`
+      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
   border-radius: 10px;
   border-color: rgb(255, 255, 255);
-  margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ChartDiv = styled.div`
   width: 50%;
 `;
 export const ChartWrap = styled("div")`
-  padding: 10px 10px 10px 10px;
   margin: 10px;
   background-color: #FFFFFF;
   border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
 `;
 export const GridWrap = styled("div")`
+  width: 100%;
+  height: calc(100% - 0px);
+`;
+export const GridWrap2 = styled("div")`
+  height:80%;
+  padding: 10px 10px 10px 10px;
+`;
+export const GridWrap3 = styled("div")`
+  height:40%;
   padding: 10px 10px 10px 10px;
 `;
 export const OtherContent = styled.div`
@@ -88,39 +102,38 @@ export const Footer = styled.div`
   bottom: 0;
   width: 100%;
 `;
-export const ContentsArea = styled("div")`
-  width: 100%;
-  height:100%;
-  background-color: #EFEFEF;
+export const ButtonWrap = styled("div")`
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  gap: 10px;
+  height: 40px;
 `;
 export const ShadowBoxButton = styled("div")`
-  background-color: rgb(255, 255, 255);
-  width: calc(100% - 0.5rem);
-  height: ${C.SEARCH_BAR_HEIGHT};
+  background-color: #ffffff;
+  width: 100%;
+  height: ${SEARCH_BAR_HEIGHT};
+  padding: 0px 10px;
   border-radius: 10px;
-  margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ToolWrap = styled("div")`
-  
+  display: flex;
   justify-content: space-between;
-  align-items: end;
-  padding: 5px 5px 15px 5px;
-  height: 40px
+  align-items: center;
+  padding: 5px 5px;
 `;
-export const SearchWrap = styled("div")`
-  display: flex;
-  flex-direction: column;
-`;
-
 export const FlexTop = styled.div`
-  display: flex;
+  display: flex; 
   height: 60%;
-  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  padding: 10px 10px 10px 0px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const FlexBottom = styled.div`
   display: flex;
-  height: 45%;
+  height: 50%;
   padding: 10px 10px 10px 10px;
 `;
 export const SearchCondition = styled("div")`
@@ -135,7 +148,6 @@ export const SearchCondition = styled("div")`
 `;
 export const Title = styled("div")`
   font-family: 'Noto Sans KR';
-  font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 29px;
@@ -148,8 +160,8 @@ export const BottomTitle = styled("div")`
   font-weight: 700;
   font-size: 20px;
   line-height: 29px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 30px;
+  margin-left: 25px;
 `;
 export const RightBottom = styled("div")`
   height:55%;
@@ -161,21 +173,26 @@ export const RightBottom = styled("div")`
   margin-left:10px;
   padding: 3px 5px 10px 0px;
   margin-bottom: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const Left = styled("div")`
-  width: 50%;
+  width: calc(50% - 10px);
   height:100%;
-  background-color: #EFEFEF;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 5px;
 `
 export const Right = styled("div")`
   width: 50%;
   height:100%;
-  background-color: #EFEFEF;
-  margin-Right:10px;
+  background-color: #ffffff;
+  margin-left:10px;
+  border-radius: 10px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const LeftTop = styled("div")`
-  height:90%;
+  height: calc(90% - 10px);
   display: 'flex'; 
   flexDirection: 'column';  
   border-radius: 10px;
@@ -185,10 +202,10 @@ export const LeftTop = styled("div")`
   padding: 3px 5px 10px 0px;
   margin-top: 10px;
   margin-bottom:20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const RightTop = styled("div")`
-  height:90%;
+  height: calc(90% - 10px);
   display: 'flex'; 
   flexDirection: 'column';  
   border-radius: 10px;
@@ -196,7 +213,7 @@ export const RightTop = styled("div")`
   margin-left:10px;
   padding: 3px 5px 10px 0px;
   margin-top: 10px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `
 export const LineCapaTop = styled.div`
   display: 'flex'; 
@@ -204,23 +221,18 @@ export const LineCapaTop = styled.div`
   flexDirection: 'column';  
   border-radius: 10px;
   background-color: #FFFFFF;
-  margin-top: 20px;
-  margin-left:10px;
-  padding: 3px 5px 10px 0px;
-  margin-bottom: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 10px 10px 10px 0px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const LineCapaBottom = styled.div`
   display: 'flex'; 
-  height: 25%;
+  height: 40%;
   flexDirection: 'column';  
   border-radius: 10px;
   background-color: #FFFFFF;
-  margin-top: 20px;
-  margin-left:10px;
-  padding: 3px 5px 10px 0px;
+  margin-top: 10px;
   margin-bottom: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 
 export const PartCapaTop = styled.div`
@@ -228,22 +240,15 @@ export const PartCapaTop = styled.div`
   height: 60%;
   border-radius: 10px;
   background-color: #FFFFFF;
-  margin-top: 20px;
-  margin-left:10px;
-  padding: 3px 5px 10px 0px;
-  margin-bottom: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const PartCapaBottom = styled.div`
   display: 'flex'; 
-  height: 25%;
+  height: 30%;
   border-radius: 10px;
-  background-color: #FFFFFF;
-  margin-top: 20px;
-  margin-left:10px;
-  padding: 3px 5px 10px 0px;
-  margin-bottom: 20px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #FFFFFF;    
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const PartCapaLeft = styled("div")`
   width: 70%;
@@ -256,3 +261,61 @@ export const PartCapaRight = styled("div")`
   background-color: #FFFFFF;
   margin-Right:10px;
 `
+export const HumidFlexTop = styled.div`
+  display: flex;
+  border-radius: 10px;
+  height: 30%;
+  width: 100%;
+  background-color: #EFEFEF;
+`;
+export const HumidFlexLast = styled.div`
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  height: 28%;
+  margin-top: 8px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`
+export const Last = styled("div")`
+  width: 100%;
+  height:100%;
+  background-color: #FFFFFF;
+`
+export const HumidLeft = styled("div")`
+  width: 50%;
+  height:100%;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  margin-right: 5px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`
+export const HumidRight = styled("div")`
+  width: 50%;
+  height:100%;
+  background-color: #FFFFFF;
+  margin-left: 5px;
+  border-radius: 10px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`
+
+export const InputBox = styled("div")`
+  display: flex;
+`;
+
+export const InputSet = styled(TextField)`
+  width: 180px;
+  margin-left: 10px;
+  margin-top: 5px;
+`;
+
+export const InputText = styled(TextField)`
+  height: 40px;
+  width: 180px;
+  margin-left: 10px;
+  margin-top: 5px;
+`;
+export const AllWrap = styled('div')`
+  height: 90%;
+  width: 100%;
+  display: flex;
+  background-color: #eeeeee
+`;

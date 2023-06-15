@@ -366,15 +366,22 @@ function ControlPlan() {
     modalDetailClickRowKey = null;
   };
   const onClickModalSave = () => {
-    actSave();
+    if (refGridModalDetail?.current?.gridInst?.getRowCount() !== 0) {
+      actSave();
+    }
   };
   function onClickModalClose() {
     setIsModalOpen(false);
-    setIsNewDetail(false);
     setIsEditModeHeader(false);
     actSearchHeaderIC(true);
     setGridDataModalDetail([]);
   }
+  function onClickModalDetailClose() {
+    setIsModalOpen(false);
+    setIsNewDetail(false);
+    setGridDataModalDetail([]);
+  }
+
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const onDblClickGridModalHeader = (e) => {
@@ -586,6 +593,7 @@ function ControlPlan() {
         onClickModalSave={onClickModalSave}
         onClickModalClose={onClickModalClose}
         onClickEditModalSave={onClickEditModalSave}
+        onClickModalDetailClose={onClickModalDetailClose}
         onDataLoad={onDataLoad}
         columnsModalHeader={columnsModalHeader}
         columnsModalDetail={columnsModalDetail}

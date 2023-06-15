@@ -48,10 +48,12 @@ export const ShadowBoxGrid = styled("div")`
 export const GridWrap = styled("div")`
   width: 100%;
   height: calc(100% - 50px);
+  position: relative;
 `;
 export const GridWrapReport = styled("div")`
   width: 100%;
   height: 100%;
+  position: relative;
 `;
 
 export const ComboWrap = styled("div")`

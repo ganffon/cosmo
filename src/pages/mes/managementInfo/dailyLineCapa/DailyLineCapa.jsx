@@ -18,9 +18,15 @@ import "react-splitter-layout/lib/index.css";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import InputSearch from "components/input/InputSearch";
+import TextField from "@mui/material/TextField";
+import BackDrop from "components/backdrop/BackDrop";
+import BtnComponent from "components/button/BtnComponent";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 const DailyLineCapa = () => {
   LoginStateChk();
+  const refSingleGrid = useRef(null);
+  const [isBackDrop, setIsBackDrop] = useState(false);
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -38,7 +44,10 @@ const DailyLineCapa = () => {
     // setSearchButtonClicked();
     GetMonthlyLineCapaData(dateText.endDate);
   };
-
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide]);
   const handleTextChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -84,12 +93,7 @@ const DailyLineCapa = () => {
     const dateString = year + "-" + month + "-" + day; // 년-월-일
     dateHeaders.push(dateString);
   }
-  // const columns = [
-  //   { header: '라인', name: 'line_cd' },
-  //   ...dateHeaders.map((date, index) => {
-  //     return { header: date, name: `D${index + 1}` };
-  //   }),
-  // ];
+  
   const columns = [
     { header: "라인", name: "line_cd" },
     ...dateHeaders.map((date, index) => {
@@ -106,52 +110,56 @@ const DailyLineCapa = () => {
   }
 
   return (
-    <S.ContentsArea>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
-          <S.ContentsHeader>
-            <S.ContentsHeaderWrap>
+            <S.SearchWrap>
               <S.Date
                 datePickerSet={"single"}
                 dateText={dateText}
                 setDateText={setDateText}
               />
-              <InputSearch
-                key={"line_nm"}
-                id={"line_nm"}
-                name={"라인"}
-                handleInputTextChange={handleTextChange}
-                onClickSearch={handleSearchButtonClick}
-              />
-            </S.ContentsHeaderWrap>
-            <ButtonSearch onClickSearch={handleSearchButtonClick} />
-          </S.ContentsHeader>
+                <S.InputText
+                  key={"line_nm"}
+                  id={"line_nm"}
+                  label={"라인"}
+                  size="small"
+                  handleInputTextChange={handleTextChange}
+                  onClickSearch={handleSearchButtonClick}
+                  
+                />
+            </S.SearchWrap>
+            <S.ButtonWrap>
+              <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick}/>
+            </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.TopWrap>
         <S.LineCapaTop>
-        <S.Title>생산포장 라인 별 생산량(일)</S.Title>
-        {responseData && (
-          <Chart
-            options={cOptions}
-            series={responseData.data.rows[0].graph}
-            type="line"
-            height={350}
-          />
-        )}
-        {/* {!responseData && <Chart type="line" series={tmpSeries} height={350} />} */}
+          <S.Title>생산포장 라인 별 생산량(일)</S.Title>
+            <S.ChartWrap>
+            {responseData && (
+              <Chart
+                options={cOptions}
+                series={responseData.data.rows[0].graph}
+                type="line"
+                height={350}
+              />
+            )}
+            </S.ChartWrap>
         </S.LineCapaTop>
         <S.LineCapaBottom>
           <S.GridWrap>
-        {responseData && (
-          <GridSingle columns={columns} data={responseData.data.rows[0].grid} />
-        )}
-        {!responseData && <GridSingle columns={columns} />}
-        </S.GridWrap>
+            {responseData && (
+              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
+            )}
+            {!responseData && <GridSingle columns={columns} />}
+          </S.GridWrap>
         </S.LineCapaBottom>
       </S.TopWrap>
       {/* <SplitterLayout vertical></SplitterLayout> */}
-    </S.ContentsArea>
+      <BackDrop isBackDrop={isBackDrop} />
+    </ContentsArea>
   );
 };
 

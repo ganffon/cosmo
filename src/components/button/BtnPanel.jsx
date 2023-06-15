@@ -10,13 +10,16 @@ function BtnPanel(props) {
   const {
     btnName = null,
     title = null,
+    subTitle = null,
     height = null,
     width = null,
     color = null,
     fontSize = null,
+    subFontSize = null,
     fontColor = null,
     borderColor = null,
     iconParam = null,
+    refBtn = null,
     onClick = () => {},
   } = props;
 
@@ -30,11 +33,13 @@ function BtnPanel(props) {
   };
 
   let btnTitle;
+  let btnSubTitle;
   let icon;
   let btnHeight;
   let btnWidth;
   let btnBackground;
   let btnFontSize;
+  let btnSubFontSize;
   let btnFontColor;
   let btnBorderColor;
   let btnIconParm;
@@ -68,10 +73,12 @@ function BtnPanel(props) {
 
     default:
       btnTitle = title ? title : "버튼이름 입력하세요";
+      btnSubTitle = subTitle ? subTitle : "";
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "84px";
       btnBackground = color ? color : "blue";
       btnFontSize = fontSize ? fontSize : "10px";
+      btnSubFontSize = subFontSize ? subFontSize : "10px";
       btnFontColor = fontColor ? fontColor : "white";
       btnBorderColor = borderColor ? borderColor : "white";
       break;
@@ -87,7 +94,6 @@ function BtnPanel(props) {
         handleClick();
         onClick();
       }}
-      className={isClicked ? "clicked" : ""}
     >
       <S.SearchIcon src={icon} />
       <S.SearchTitle fontSize={btnFontSize} fontColor={btnFontColor}>
@@ -104,7 +110,6 @@ function BtnPanel(props) {
         handleClick();
         onClick();
       }}
-      className={isClicked ? "clicked" : ""}
     >
       <S.Icon src={btnIconParm} />
       <S.Title fontSize={btnFontSize} fontColor={btnFontColor}>
@@ -121,11 +126,15 @@ function BtnPanel(props) {
         handleClick();
         onClick();
       }}
-      className={isClicked ? "clicked" : ""}
+      className={"directionColumn"}
+      ref={refBtn}
     >
       <S.Title fontSize={btnFontSize} fontColor={btnFontColor}>
         {btnTitle}
       </S.Title>
+      <S.SubTitle fontSize={btnSubFontSize} fontColor={btnFontColor}>
+        {btnSubTitle}
+      </S.SubTitle>
     </S.ButtonPanel>
   );
 }

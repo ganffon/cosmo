@@ -346,7 +346,6 @@ const useSearchHeaderIC = (
       const inputParams = GetInputSearchReadOnly(inputBoxID, inputSearchValue);
       const cboParams = GetCboSearchParams(inputParams, comboValue);
       const readURI = uri + cboParams;
-      console.log(readURI);
       const gridData = await restAPI.get(readURI);
       setGridData(gridData?.data?.data?.rows);
     } catch {

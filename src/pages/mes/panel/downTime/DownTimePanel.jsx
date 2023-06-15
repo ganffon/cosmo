@@ -106,19 +106,11 @@ function DownTimePanel() {
     const currentDate = new Date();
 
     // 1년 전 날짜 계산
-    const oneYearAgo = new Date(
-      currentDate.getFullYear() - 1,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    );
+    const oneYearAgo = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
     const formattedOneYearAgo = formatDate(oneYearAgo);
 
     // 1년 후 날짜 계산
-    const oneYearLater = new Date(
-      currentDate.getFullYear() + 1,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    );
+    const oneYearLater = new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), currentDate.getDate());
     const formattedOneYearLater = formatDate(oneYearLater);
 
     // 날짜를 yyyy-MM-dd 형식으로 포맷하는 함수
@@ -134,10 +126,7 @@ function DownTimePanel() {
   const handleSearch = async () => {
     try {
       const result = await restAPI.get(
-        restURI.productionDownTime +
-          `?start_date=${SearchDate()[0]}&end_date=${
-            SearchDate()[1]
-          }&complete_fg=INCOMPLETE`
+        restURI.productionDownTime + `?start_date=${SearchDate()[0]}&end_date=${SearchDate()[1]}&complete_fg=INCOMPLETE`
       );
 
       setGdMain(result?.data?.data?.rows);
@@ -359,10 +348,7 @@ function DownTimePanel() {
           location: "topCenter",
         });
         return;
-      } else if (
-        downtimeInfo.startDate === downtimeInfo.endDate &&
-        downtimeInfo.startTime > downtimeInfo.endTime
-      ) {
+      } else if (downtimeInfo.startDate === downtimeInfo.endDate && downtimeInfo.startTime > downtimeInfo.endTime) {
         setIsSnackOpen({
           ...isSnackOpen,
           open: true,
@@ -421,7 +407,7 @@ function DownTimePanel() {
                     color={"#ffffff"}
                     fontSize={"26px"}
                     fontColor={"#1491CE"}
-                    bordercolor={"#1491CE"}
+                    borderColor={"#1491CE"}
                     onClick={() => onSelectLine(line.line_id, line.line_nm)}
                   />
                 );
@@ -461,11 +447,7 @@ function DownTimePanel() {
       {isSelectOpen ? (
         <ModalSelect
           width={"50%"}
-          title={
-            refSelectType?.current === "equip"
-              ? "[ 공정/설비 선택 ]"
-              : "[ 비가동 유형/항목 선택 ]"
-          }
+          title={refSelectType?.current === "equip" ? "[ 공정/설비 선택 ]" : "[ 비가동 유형/항목 선택 ]"}
           columns={selectColumn}
           columnsOptions={Setting.columnOptions}
           rowHeaders={Setting.rowHeadersNum}
@@ -483,7 +465,7 @@ function DownTimePanel() {
       {isWarning.open ? (
         <NoticeAlertModal
           textContent={isWarning.message}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isConfirm={true}

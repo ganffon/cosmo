@@ -14,7 +14,7 @@ function InputPaper(props) {
     namePositionTop = "-10px",
     namePositionLeft = "10px",
     nameColor = "rgba(0, 0, 0, 0.6)",
-    value = null,
+    value = "",
     size = "15px",
     btn = false,
     btnSingle = false,
@@ -24,7 +24,7 @@ function InputPaper(props) {
     onClickRemove = () => {},
     onTextChange = () => {},
     readOnly = true,
-    ref = null,
+    refInput = null,
     placeHolder = "",
   } = props;
 
@@ -50,7 +50,7 @@ function InputPaper(props) {
           onKeyDown={onKeyDown}
           onClick={onClickReadOnly}
           placeholder={placeHolder}
-          ref={ref}
+          ref={refInput}
         />
       ) : (
         <S.Text
@@ -61,7 +61,7 @@ function InputPaper(props) {
           onKeyDown={onKeyDown}
           onChange={onTextChange}
           autoComplete={"off"}
-          ref={ref}
+          ref={refInput}
           placeholder={placeHolder}
         />
       )}
