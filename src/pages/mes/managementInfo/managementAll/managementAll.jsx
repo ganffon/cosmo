@@ -12,6 +12,8 @@ import restURI from "json/restURI.json";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import InputSearch from "components/input/InputSearch";
+import ContentsArea from "components/layout/common/ContentsArea";
+
 let isFirst = true;
 const ManagementAll = () => {
   LoginStateChk();
@@ -180,7 +182,7 @@ const ManagementAll = () => {
   
 // console.log(responseData.data.rows[0].grid[0].M1)
   return (
-    <S.ContentsArea>
+    <ContentsArea>
       <S.Top>
         {responseData && (
           <Chart
@@ -198,7 +200,7 @@ const ManagementAll = () => {
         )}
       </S.Bottom>
       {/* <SplitterLayout vertical></SplitterLayout> */}
-    </S.ContentsArea>
+    </ContentsArea>
   );
 };
 

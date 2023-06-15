@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./NoticeAlertModal.styled";
 import ModalWrap from "components/modal/ModalWrap";
-import Search from "img/Component/button/search.svg";
-import New from "img/Component/button/new.svg";
-import Edit from "img/Component/button/edit.svg";
 import Cancel from "img/Component/button/cancelWhite.svg";
 
 import Delete from "img/Component/button/delete2.svg";
@@ -11,11 +8,11 @@ import Delete from "img/Component/button/delete2.svg";
 function NoticeAlertModal(props) {
   const {
     textContent = "내용을 입력하세요!",
-    textfontSize = "40px",
+    textFontSize = "40px",
     isConfirm = false,
     isModify = false,
     isDelete = false,
-    isCancle = false,
+    isCancel = false,
     title = "알림",
     height = "500px",
     width = "500px",
@@ -53,7 +50,7 @@ function NoticeAlertModal(props) {
         <S.Title fontSize={"15px"}> {title}</S.Title>
       </S.HeaderBox>
       <S.ContentBox>
-        <S.Content fontSize={textfontSize} fontColor={fontColor}>
+        <S.Content fontSize={textFontSize} fontColor={fontColor}>
           {textContent}
         </S.Content>
       </S.ContentBox>
@@ -85,7 +82,7 @@ function NoticeAlertModal(props) {
             <S.Icon src={Delete} /> 삭제
           </S.NoticeButton>
         ) : null}
-        {isCancle ? (
+        {isCancel ? (
           <S.NoticeButton
             backgroundColor={cancelColor ? cancelColor : "#1491ce"}
             fontColor={"#ffffff"}

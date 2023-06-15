@@ -10,6 +10,7 @@ export const ModalWrap = styled("div")`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0px 5px 20px 15px;
 `;
 export const HeaderBox = styled("div")`
   display: flex;
@@ -19,16 +20,28 @@ export const HeaderBox = styled("div")`
 
 export const TitleBox = styled("div")`
   padding-top: 8px;
-  padding-left: 15px;
   font-weight: 700;
 `;
 
-export const ButtonClose = styled(IconButton)`
-  padding-right: 15px;
-`;
+export const ButtonClose = styled(IconButton)``;
 export const Content = styled("div")`
   height: calc(100% - 40px);
   display: flex;
   flex-direction: column;
-  padding: 0px 10px;
+  gap: 20px;
+  justify-content: center;
+  padding-left: 30px;
+`;
+
+export const InputWrap = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+`;
+export const Title = styled("div")`
+  width: 150px;
+  display: flex;
+  justify-content: end;
+  font-family: NotoSansKR;
+  font-size: 30px;
 `;

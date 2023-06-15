@@ -42,84 +42,65 @@ export const ScreenTopTitleBox = styled("div")`
   font-size: 22px;
 `;
 export const ItemInfoBox = styled("div")`
-  height: auto;
+  height: 280px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px 20px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 20px;
+  background: #ffffff;
+`;
+export const DataInterfaceBox = styled("div")`
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: #ffffff;
+  padding: 50px 20px 20px 20px;
+`;
+
+export const DataInterfaceWrap = styled("div")`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10%;
+`;
+export const InputWrap = styled("div")`
+  height: 200px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 40px 15px;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 4% 5% 8% 5%;
-  background: #ffffff;
-`;
-/*
-export const DataInterfaceBox = styled("div")`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 5% 3% 3% 3%;
-  background: #83bef4;
-`;
-*/
-export const DataInterfaceBox = styled("div")`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 5% 3% 3% 3%;
-  background: #ffffff;
-`;
-
-export const DataInterfaceWrap = styled("div")`
-  height: auto;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px 15px;
 `;
 export const MadeButtonWrap = styled("div")`
-  height: 90px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  gap: 10px 40px;
-  margin-top: 30px;
-`;
-/*
-export const MadeButtonWrap = styled("div")`
-  height: 90px;
+  height: 150px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px 40px;
-  margin-top: 30px;
+  gap: 10px;
 `;
-*/
 
 export const ButtonBox = styled("div")`
   height: 80px;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
 `;
-/*  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 1% 0%; */
 export const DataHandleBox = styled("div")`
   height: 100%;
   width: 100%;

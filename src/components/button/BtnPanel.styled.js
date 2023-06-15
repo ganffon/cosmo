@@ -1,29 +1,37 @@
 import styled, { keyframes } from "styled-components";
 
 export const ButtonPanel = styled("button")`
--webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   background: ${(props) => props.background};
-  border: 1px solid ${(props) => props.borderColor}};
+  border: 1px solid ${(props) => props.borderColor};
   border-radius: 12px;
   cursor: pointer;
   margin-left: 5px;
   margin-right: 5px;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 
+  &.directionColumn {
+    flex-direction: column;
+  }
 `;
 
 export const Title = styled("div")`
-  width: 100%;
-  height: 28px;
   font-family: "NotoSansKR";
   font-style: normal;
   font-weight: 700;
+  font-size: ${(props) => props.fontSize};
+  line-height: 28px;
+  /* identical to box height, or 108% */
+  text-align: center;
+  letter-spacing: 0em;
+  color: ${(props) => props.fontColor};
+`;
+export const SubTitle = styled("div")`
+  font-family: "NotoSansKR";
+  font-style: normal;
   font-size: ${(props) => props.fontSize};
   line-height: 28px;
   /* identical to box height, or 108% */

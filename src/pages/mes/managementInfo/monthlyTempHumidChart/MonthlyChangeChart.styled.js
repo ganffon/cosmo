@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import * as C from "constant/Layout";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
+
 
 export const Container = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ export const Container = styled.div`
   height: 90vh;
 `;
 export const ContentsHeader = styled("div")`
-  height: 40px;
+  height: 50px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -30,7 +31,7 @@ export const ContentsHeaderWrap = styled("div")`
 `;
 export const Top = styled.div`
   height: 15%;
-
+  
   border: 1px solid #000;
 `;
 export const InputS = styled(InputSearch)`
@@ -61,7 +62,7 @@ export const OtherContent = styled.div`
 `;
 
 export const Bottom = styled.div`
-  height: 100%;
+  height:100%;
   padding: 10px 10px 10px 10px;
 `;
 
@@ -72,7 +73,7 @@ export const Footer = styled.div`
 `;
 export const ContentsArea = styled("div")`
   width: 100%;
-  height: 100vh;
+  height:100vh;
   overflow: hidden auto;
   background-color: white;
 `;
@@ -85,31 +86,32 @@ export const ShadowBoxButton = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ToolWrap = styled("div")`
+  
   justify-content: space-between;
   align-items: end;
   padding: 5px 5px 15px 5px;
-  height: 40px;
+  height: 40px
 `;
 export const SearchWrap = styled("div")`
   display: flex;
   flex-direction: column;
 `;
 export const Left = styled("div")`
-  flex: 5;
-  borderright: "3px solid #ccc";
-`;
+  flex: 5; 
+  borderRight: '3px solid #ccc'
+`
 export const Right = styled("div")`
-  flex: 5;
-  borderright: "1px solid #ccc";
-`;
+  flex: 5; 
+  borderRight: '1px solid #ccc'
+`
 export const LeftBottom = styled("div")`
-  flex: 6;
-  borderright: "1px solid #ccc";
-`;
+  flex: 6; 
+  borderRight: '1px solid #ccc'
+`
 export const RightBottom = styled("div")`
-  flex: 4;
-  borderright: "1px solid #ccc";
-`;
+  flex: 4; 
+  borderRight: '1px solid #ccc'
+`
 export const FlexTop = styled.div`
   display: flex;
   height: 30%;

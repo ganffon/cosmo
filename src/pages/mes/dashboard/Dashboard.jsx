@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import "react-splitter-layout/lib/index.css";
-import { Bottom, Top, ToolWrap, Left, Right, LeftTop, RightTop, LeftBottom, RightBottom, LineState } from "./Dashboard.styled";
 import * as S from "./Dashboard.styled";
 import doriRedImg from "../../../img/Menu/bad.svg";
 import doriGreenImg from "../../../img/Menu/good.svg";
@@ -13,12 +12,13 @@ import restURI from "json/restURI.json";
 import GridSingle from "components/grid/GridSingle";
 import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
+import BackDrop from "components/backdrop/BackDrop";
 import Chart from "react-apexcharts";
-// import { useSpring, animated, config  } from 'react-spring';
+import ContentsArea from "components/layout/common/ContentsArea";
 
 const Dashboard = () => {
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [result, setResult] = useState([]);
-  const { isAllScreen } = useContext(LayoutContext);
   const [leftWidth, setLeftWidth] = useState("30%");
   const [firstPanelSize, setFirstPanelSize] = useState("30%");
   const handleResize = (newSizes) => {
@@ -34,7 +34,10 @@ const Dashboard = () => {
   const [responseData, setResponseData] = useState(null);
   const [workerData, setWorkerData] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
-
+  const refSingleGrid = useRef(null);
+  const refSecondGrid = useRef(null);
+  
+  const [isBackDrop, setIsBackDrop] = useState(false);
   useEffect(() => {
     GetDashboardData();
     setIsClicked(!isClicked);
@@ -64,7 +67,11 @@ const Dashboard = () => {
     { header: "생산량", name: "e3_performance" },
     { header: "목표량", name: "e3_target" },
   ];
-
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+    refSecondGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide]);
   const getTimeHeader = () => ({
     height: 80,
     complexColumns: [
@@ -172,7 +179,7 @@ const Dashboard = () => {
               display: 'block',
               justifyContent: 'center',
               margin: '0 auto',
-              marginTop: '20px',
+              marginTop: '10px',
               width: '75px',
               height: '25px',
             }}
@@ -221,12 +228,12 @@ const Dashboard = () => {
             flex: 'none',
             margin: '0 auto',
             width: '80px',
-            height: '80px',
+            height: '100px',
           }}
         />
-        <LineState>
+        <S.LineState>
           {name}
-        </LineState>
+        </S.LineState>
       </S.WorkerBorder>
     );
   };
@@ -238,58 +245,66 @@ const Dashboard = () => {
   const complexColumns = getTimeHeader();
   // setResult(GetTestValAndCreateAt(strJson));
   return (
-    <div style={{ display: 'flex', height: '100%', backgroundColor:'#EFEFEF'}}>
-      <Left>
-        <LeftTop> 
+    <ContentsArea>
+    <S.AllWrap>
+      <S.Left>
+        <S.LeftTop> 
           <S.Title>라인 가동 상태</S.Title>
           {equipState && (
-            <div style={{ flex: '1', display: 'flex',  margin: 10}}>
+            <S.ImgWrap>
                   {RenderImage(0)}
                   {RenderImage(1)}
                   {RenderImage(2)}
-            </div>
+            </S.ImgWrap>
           )}
-        </LeftTop>
-        <LeftBottom>
-          <S.BottomTitle>
-            실시간 생산 담당자
-          </S.BottomTitle>
-          <S.GridContainer>
-            {workerData &&
-              workerData.map((worker, index) => (
-                <React.Fragment key={index}>
-                  {RenderWorker(worker.emp_nm)}
-                </React.Fragment>
-              ))}
-          </S.GridContainer>
-        </LeftBottom>
-      </Left>
-      <Right>
-        <RightTop>
+        </S.LeftTop>
+        <S.EmpStatusWrap>
+            <S.Title>
+                실시간 생산 담당자
+              </S.Title>
+            <S.LeftBottom>
+              <S.GridContainer>
+                {workerData &&
+                  workerData.map((worker, index) => (
+                    <React.Fragment key={index}>
+                      {RenderWorker(worker.emp_nm)}
+                    </React.Fragment>
+                  ))}
+              </S.GridContainer>
+            </S.LeftBottom>
+        </S.EmpStatusWrap>
+      </S.Left>
+      <S.Right>
+        <S.RightTop>
           <S.Title>최근 라인 비가동 정보</S.Title>
           <S.GridWrap>
-            {downtime && <Grid columns={columnsDownTime} data={downtime} options={gridOptions}/>}
+            {downtime && <GridSingle columns={columnsDownTime} data={downtime} options={gridOptions} refGrid={refSingleGrid}/>}
           </S.GridWrap>
-        </RightTop>
-        <RightBottom> 
+        </S.RightTop>
+        <S.RightBottom> 
           <S.Title>
             EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: '0.8em' }}>[기준 06:00 ~ 05:59]</span>
           </S.Title>
-          <S.GridWrap>
-          {responseData && (
-            <Chart options={cOptions} type="bar" height={200} series={responseData.data.rows[0].line_work_status.graph} />
-          )}
+            <S.ChartWrap>
+              {responseData && (
+                <Chart options={cOptions} type="bar" height={200} series={responseData.data.rows[0].line_work_status.graph} />
+              )}
+          </S.ChartWrap>
+          <S.RBGridWrap>
             {responseData && (
-              <Grid
+              <GridSingle
                 header={complexColumns}
                 columns={columnsGoal}
                 data={responseData.data.rows[0].line_work_status.grid}
+                refGrid={refSecondGrid}
               />
             )}
-          </S.GridWrap>
-        </RightBottom>
-      </Right>
-    </div>
+            </S.RBGridWrap>
+        </S.RightBottom>
+      </S.Right>
+      <BackDrop isBackDrop={isBackDrop} />
+    </S.AllWrap>
+    </ContentsArea>
   );
 };
 

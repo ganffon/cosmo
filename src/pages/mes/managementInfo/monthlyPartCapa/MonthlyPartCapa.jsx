@@ -20,7 +20,9 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import TextField from "@mui/material/TextField";
 import InputSearch from "components/input/InputSearch";
-import * as C from "./MonthlyPartCapa.styled";
+import * as C from "./MonthlyPartCapa.styled"
+import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 const DonutChart = ({ data }) => {
   const options = {
@@ -29,18 +31,18 @@ const DonutChart = ({ data }) => {
     plotOptions: {
       pie: {
         donut: {
-          size: "0%", // 도넛 차트의 크기
+          size: '0%', // 도넛 차트의 크기
         },
       },
     },
     dataLabels: {
       style: {
-        colors: ["black"],
+        colors: ['black'],
       },
       enabled: true,
     },
     legend: {
-      position: "bottom",
+      position: 'bottom',
     },
   };
   return (
@@ -52,17 +54,23 @@ const DonutChart = ({ data }) => {
 
 const MonthlyPartCapa = () => {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const refSingleGrid = useRef(null);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     endDate: DateTime().dateFull,
   });
   const [year, setYear] = useState(new Date().getFullYear());
   const [textInput, setTextInput] = useState("");
   const [responseData, setResponseData] = useState(null);
-
+  
   useEffect(() => {
     handleSearchButtonClick();
   }, []);
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide]);
   const handleSearchButtonClick = () => {
     // setSearchButtonClicked();
     GetMonthlyLineCapaData(dateText.endDate, textInput);
@@ -76,9 +84,9 @@ const MonthlyPartCapa = () => {
   const GetMonthlyLineCapaData = (endDate, textInput) => {
     restAPI
       .get(restURI.monthlyProd, {
-        params: {
-          reg_date: year,
-          line_nm: textInput,
+        params: { 
+          reg_date: year
+          , line_nm: textInput 
         },
       })
       .then((response) => {
@@ -89,6 +97,7 @@ const MonthlyPartCapa = () => {
         // 오류 처리 로직
         // console.error('API 호출 중 오류 발생:', error);
       });
+      
   };
 
   // GetMonthlyLineCapaData(dateText.endDate, textInput);
@@ -120,37 +129,33 @@ const MonthlyPartCapa = () => {
     { header: "합계", name: "total" },
   ];
   return (
-    <S.ContentsArea>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
-          <S.ContentsHeader>
-            <S.ContentsHeaderWrap>
-              <TextField
+          <S.SearchWrap>
+            <S.InputText
                 id="outlined-number"
                 label="년도"
                 type="number"
                 onChange={handleChange}
                 defaultValue={year}
                 size="small"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <TextField
+                />
+            <S.InputText
                 key={"line_nm"}
                 id={"line_nm"}
                 label={"라인"}
                 size="small"
                 handleInputTextChange={handleTextChange}
                 onClickSearch={handleSearchButtonClick}
-                style={{ marginLeft: "5px" }}
               />
-            </S.ContentsHeaderWrap>
-            <ButtonSearch onClickSearch={handleSearchButtonClick} />
-          </S.ContentsHeader>
+            </S.SearchWrap>
+            <S.ButtonWrap>
+              <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
+            </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
-      <S.PartCapaTop>
+      <S.TopWrap>
         <S.FlexTop>
           <S.PartCapaLeft>
             <S.Title>월별 생산량 추이</S.Title>
@@ -167,19 +172,25 @@ const MonthlyPartCapa = () => {
             </S.ChartWrap>
           </S.PartCapaLeft>
           <S.PartCapaRight>
-            <S.Title>생산량 점유율</S.Title>
-            <S.ChartWrap>{responseData && <DonutChart data={responseData.data.rows[0].pieGraph} />}</S.ChartWrap>
+          <S.Title>생산량 점유율</S.Title>
+            <S.ChartWrap>
+              {responseData && (
+                <DonutChart data={responseData.data.rows[0].pieGraph}/>
+              )}
+            </S.ChartWrap>
           </S.PartCapaRight>
         </S.FlexTop>
-      </S.PartCapaTop>
-      <S.PartCapaBottom>
-        <S.Title>월별 생산량</S.Title>
-        <S.GridWrap>
-          {responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} />}
-        </S.GridWrap>
-      </S.PartCapaBottom>
+        <S.LineCapaBottom>
+        <S.GridWrap2>
+          {responseData && (
+            <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
+          )}
+        </S.GridWrap2>
+      </S.LineCapaBottom>
+      </S.TopWrap>
+      
       {/* <SplitterLayout vertical></SplitterLayout> */}
-    </S.ContentsArea>
+    </ContentsArea>
   );
 };
 

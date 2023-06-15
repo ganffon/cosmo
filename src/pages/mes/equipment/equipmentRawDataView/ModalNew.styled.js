@@ -31,9 +31,9 @@ export const TitleWrap = styled("div")`
   font-family: NotoSansKR_B;
 `;
 export const GridBox = styled("div")`
-  width: 20%;
+  width: 300px;
   height: 100%;
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   grid-row: 3 / -1;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
@@ -78,7 +78,22 @@ export const LeftBottom = styled("div")`
 
 export const GridContainer = styled("div")`
   width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+`;
+export const GridWrap = styled("div")`
+  width: 100%;
+  height: 100%;
+`;
+export const Left = styled("div")`
+  width: 100%;
+  height:100%;
+  
+`
+export const Right = styled("div")`
+  width: 1600px;
+  height: 500;
+  margin-right: 10px;
 `;

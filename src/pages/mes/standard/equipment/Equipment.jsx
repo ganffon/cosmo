@@ -27,8 +27,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Equipment() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
@@ -55,16 +54,8 @@ function Equipment() {
   const [searchToggle, setSearchToggle] = useState(false);
   const [processOpt, processList] = Cbo.useProcess();
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnsModalSelect,
-    columnOptions,
-    inputSet,
-  } = EquipmentSet(isEditMode, processList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnsModalSelect, columnOptions, inputSet } =
+    EquipmentSet(isEditMode, processList);
   const SWITCH_NAME_01 = "equipment";
 
   useEffect(() => {
@@ -72,19 +63,13 @@ function Equipment() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const [actSearchSelect] = uSearch.useSearchSelect(
     refModalSelectGrid,
     isBackDrop,
@@ -330,11 +315,11 @@ function Equipment() {
       {isDeleteAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={handleDelete}
           onCancel={() => {
             setIsDeleteAlertOpen(false);

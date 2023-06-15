@@ -17,6 +17,7 @@ import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
 import Grid from "@toast-ui/react-grid";
 import * as timeSet from "./PerformanceRateSet";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 const PerformanceRate = () => {
   LoginStateChk();
@@ -146,7 +147,7 @@ const PerformanceRate = () => {
   const handleSearchClick = () => {};
 
   return (
-    <S.ContentsArea>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.ContentsHeader>
@@ -171,7 +172,7 @@ const PerformanceRate = () => {
         <Grid columns={colTest} header={header} data={tesdf} />
       </S.Bottom>
       {/* <SplitterLayout vertical></SplitterLayout> */}
-    </S.ContentsArea>
+    </ContentsArea>
   );
 };
 

@@ -1,133 +1,149 @@
-// import React, { useContext, useEffect, useMemo } from "react";
-// import ModalWrap from "components/modal/ModalWrap";
-// import GridModal from "components/grid/GridModal";
-// import * as S from "./ModalNew.styled";
-// import * as CustomGrid from "components/grid/setting/CustomGrid";
-// import { LayoutContext } from "components/layout/common/Layout";
-// import ButtonModule from "components/button/ButtonModule";
-// import CloseIcon from "@mui/icons-material/Close";
-// import Chart from "react-apexcharts";
-// import Grid from "@toast-ui/react-grid";
-// import GridSingle from "components/grid/GridSingle";
-// import GridTheme from "components/grid/setting/GridTheme";
-// import CN from 'json/ColumnName.json';
-// import 'components/grid/setting/GridStyle.css';
-// import * as C from 'constant/Grid.js';
-// import * as col from 'custom/GridColumnSet';
-// import { GridWrap } from "../equipmentDetail/EquipmentDetail.styled";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import ModalWrap from "components/modal/ModalWrap";
+import GridModal from "components/grid/GridModal";
+import * as S from "./ModalNew.styled";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
+import { LayoutContext } from "components/layout/common/Layout";
+import ButtonModule from "components/button/ButtonModule";
+import CloseIcon from "@mui/icons-material/Close";
+import Chart from "react-apexcharts";
+import Grid from "@toast-ui/react-grid";
+import GridSingle from "components/grid/GridSingle";
+import GridTheme from "components/grid/setting/GridTheme";
+import ButtonSearch from "components/button/ButtonSearch";
+import BackDrop from "components/backdrop/BackDrop";
+import * as col from "custom/GridColumnSet";
 
-// const LineChart = () => {
-  // const cOptions = {
-    // plotOptions: {
-      // bar: {
-        // columnWidth: '80%',
-      // },
-    // },
-    // dataLabels: {
-      // style: {
-        // colors: ['black'],
-      // },
-      // enabled: true,
-    // },
-  // };
+const LineChart = (props) => {
+  const {
+  cOptions = {
+    dataLabels: {
+      style: {
+        colors: ['black'],
+      },
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+      width: 2
+    },
+  },
+  cSeries = []
+}= props;
 
-  // const cSeries = [
-    // {
-      // name: 'Series 1',
-      // data: [30, 40, 45, 50, 49, 60, 70, 91],
-    // },
-    // {
-      // name: 'Series 2',
-      // data: [39, 49, 45, 59, 49, 69, 79, 91],
-    // },
-  // ];
+  const cOptionsWithDefaults = {
+    ...cOptions,
+    series: cSeries,
+    options: {
+      ...cOptions,
+      chart: {
+        id: 'line-chart',
+      },
+      xaxis: {
+        tickAmount: 24,
+        lines: {
+          show: false, // y축 선 표시 여부
+          borderColor: '#e5e5e5', // y축 선 색상
+          strokeDashArray: 2, // y축 선의 선 스타일 (점선)
+          lineWidth: 1, // y축 선의 두께
+        },
+      }
+    },
+  };
 
-  // const cOptionsWithDefaults = {
-    // ...cOptions,
-    // series: cSeries,
-    // options: {
-      // ...cOptions.options,
-      // chart: {
-        // id: 'line-chart',
-      // },
-    // },
-  // };
+  return (
+    <Chart
+      options={cOptionsWithDefaults.options}
+      series={cOptionsWithDefaults.series}
+      type="line"
+      width='1600'
+      height='500'
+    />
+  );
+};
 
-  // return (
-    // <Chart
-      // options={cOptionsWithDefaults.options}
-      // series={cOptionsWithDefaults.series}
-      // type="line"
-      // width="500"
-    // />
-  // );
-// };
+function TempRawsModal(props) {
+    const {
+        onClose = () => {},
+        onClickModalGrid = () => {},
+        onDblClickModalGrid = () => {},
+        onEditingFinishModal = () => {},
+        refModalGrid = null,
+        columns = [],
+        columnOptions = [],
+        width = "100%",
+        height = "95%",
+        title = null,
+        isAddOneRow = false,
+        data = [],
+        columnsDetail = null,
+      } = props;
+      const [isBackDrop, setIsBackDrop] = useState(false);
+      const { currentMenuName } = useContext(LayoutContext);
+      const [seriesData, setSeriesData] = useState(null)
+      const refSingleGrid = useRef(null);
+      useEffect(() => {
+        isAddOneRow && refModalGrid?.current?.gridInst?.appendRow();
+      }, []);
+      const series= data;
+      const rowHeaders = ["checkbox"];
 
-// function TempRawsModal(props) {
-    // const {
-        // onClose = () => {},
-        // onClickModalGrid = () => {},
-        // onDblClickModalGrid = () => {},
-        // onEditingFinishModal = () => {},
-        // refModalGrid = null,
-        // columns = [],
-        // columnOptions = [],
-        // header = [],
-        // rowHeaders = [],
-        // width = "95%",
-        // height = "95%",
-        // title = null,
-        // isAddOneRow = false,
-        // data = [],
-        // columnsDetail = null,
-      // } = props;
-      // const { currentMenuName } = useContext(LayoutContext);
-      
-      // useEffect(() => {
-        // isAddOneRow && refModalGrid?.current?.gridInst?.appendRow();
-      // }, []);
-      
-      // const columnsDownTime = [
-        // { header: "header", name: "header",},
-        // col.check('editor', 'editor', true),
-       
-      // ]
-      // console.log(columnsDetail)
-      // console.log(data)
-      // console.log(columnsDownTime)
-    // return (
-        // <ModalWrap width={width} height={height}>
-          // <S.HeaderBox>
-            // <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
-            // <S.ButtonClose
-              // color="primary"
-              // aria-label="close"
-              // onClick={onClose}
-            // >
-              // <CloseIcon />
-            // </S.ButtonClose>
-          // </S.HeaderBox>
-          // <S.ButtonBox>
-            // <S.TitleWrap>{title}</S.TitleWrap>
-            
-          // </S.ButtonBox>
-
-          // <S.LeftBottom>
-            // <S.GridContainer>
-            // <GridWrap>
-              // <LineChart/>
-            // </GridWrap>
-              // <GridWrap>
-                // {columnsDetail&&<GridSingle columns={columnsDownTime} data={columnsDetail}/>}
-              // </GridWrap>
-              // <LineChart/>
-              // <LineChart/>
-            // </S.GridContainer>
-          // </S.LeftBottom>
+      const columnsDownTime = [
+        col.text('header', "항목", false)
+      ];
+      const onClickSearch = () => {
+        setIsBackDrop(true);
+        setSeriesData([]);
+        const isCheckedData = refSingleGrid?.current?.gridInst?.getCheckedRows();
+        if (isCheckedData.length !== 0) {
+          const itemKey = isCheckedData.map(data => { return data.name });
           
-        // </ModalWrap>
-      // );
-    // }
+          const seriesArr = series.filter(item => {
+            return itemKey.includes(item.unique);
+          });
+          setSeriesData(seriesArr);
+        }
+        setIsBackDrop(false);
+      };
+      
+    return (
+        <ModalWrap width={width} height={height}>
+          <S.HeaderBox>
+            <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
+            <S.ButtonClose
+              color="primary"
+              aria-label="close"
+              onClick={onClose}
+            >
+              <CloseIcon />
+            </S.ButtonClose>
+          </S.HeaderBox>
+          <S.ButtonBox>
+            <S.TitleWrap>{title}</S.TitleWrap>
+            <S.ButtonWrap>
+              <ButtonSearch onClickSearch={onClickSearch} />
+            </S.ButtonWrap>
+          </S.ButtonBox>
+          
+          <S.Right>
+            {seriesData&&<LineChart cSeries={seriesData}/>}
+          </S.Right>
+
+          <S.GridBox>
+            <S.GridWrap>
+              {columnsDetail&&
+                <GridSingle 
+                  columns={columnsDownTime} 
+                  data={columnsDetail} 
+                  refGrid={refSingleGrid}
+                  rowHeaders={rowHeaders}/>}
+            </S.GridWrap>
+          </S.GridBox>
+          <BackDrop isBackDrop={isBackDrop} />
+        </ModalWrap>
+        
+      );
+    }
     
-    // export default TempRawsModal;
+    export default TempRawsModal;
     

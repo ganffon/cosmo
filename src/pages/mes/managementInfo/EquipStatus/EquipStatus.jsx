@@ -10,7 +10,8 @@ import GridTheme from "components/grid/setting/GridTheme";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import ButtonSearch from "components/button/ButtonSearch";
-
+import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 const EquipStatus = () => {
   LoginStateChk();
@@ -23,7 +24,8 @@ const EquipStatus = () => {
   });
   const [year, setYear] = useState(new Date().getFullYear());
   const [responseData, setResponseData] = useState(null);
-  
+  const refSingleGrid = useRef(null);
+  const refSecondGrid = useRef(null);
   const [sDonutChartData, setSDonutChartData] = useState(null);
   const [barGrid, setBarGrid] = useState(null);
   const [sBarChartData, setSBarChartData] = useState(null);
@@ -78,7 +80,11 @@ const EquipStatus = () => {
     handleSearchButtonClick()
   }, []);
 
-
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+    refSecondGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide]);
   const monthlyColumns = [
     { header: "비가동 유형", name: "downtime_type_nm" },
     { header: "비가동 내용", name: "downtime_nm" },
@@ -162,49 +168,43 @@ const EquipStatus = () => {
   };
   
   return (
-    <S.ContentsArea>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-      <S.SearchCondition>
-        <S.ContentsHeader>
-        <S.ContentsHeaderWrap>
+      <S.ToolWrap>
+        <S.SearchWrap>
           <S.Date
             datePickerSet={"range"}
             dateText={dateText}
             setDateText={setDateText}
           />  
-        </S.ContentsHeaderWrap>
-        <ButtonSearch onClickSearch={handleSearchButtonClick} />
-        </S.ContentsHeader>
-      </S.SearchCondition>
+        </S.SearchWrap>
+        <S.ButtonWrap>
+          <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
+        </S.ButtonWrap>
+      </S.ToolWrap>
       </S.ShadowBoxButton>
-
-      <div style={{ display: 'flex', height: '100%', backgroundColor:'#EFEFEF'}}>
+      <S.AllWrap>
       <S.Left>
-        <S.LeftTop> 
-        
-          <S.Title>비가동 유형별</S.Title>
+          <S.Title>비가동(현장등록) 유형 별</S.Title>
           <S.ChartWrap>
             {sDonutChartData && <DonutChart data={sDonutChartData} />}
           </S.ChartWrap>
-          <S.GridWrap>
-            {responseData && (<Grid columns={monthlyColumns} data={responseData.data.rows[0].grid} />)}    
-          </S.GridWrap>
-          </S.LeftTop>
+          <S.GridWrap3>
+            {responseData && (<Grid columns={monthlyColumns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>)}    
+          </S.GridWrap3>
       </S.Left>
       <S.Right>
-        <S.RightTop>
-          <S.Title>라인별 비가동</S.Title>
+          <S.Title>비가동(자동등록-충진) 라인 별</S.Title>
           <S.ChartWrap>
             {sBarChartData && <BarChart data={sBarChartData} />}
           </S.ChartWrap>
-          <S.GridWrap>
-            {barGrid && (<GridSingle columns={sysColumns} data={barGrid.data.rows[0].grid} />)}
-          </S.GridWrap>
-        </S.RightTop>
+          <S.GridWrap3>
+            {barGrid && (<GridSingle columns={sysColumns} data={barGrid.data.rows[0].grid} refGrid={refSecondGrid}/>)}
+          </S.GridWrap3>
       </S.Right>
-    </div>
+    </S.AllWrap>
      
-    </S.ContentsArea>
+    </ContentsArea>
   );
 };
 

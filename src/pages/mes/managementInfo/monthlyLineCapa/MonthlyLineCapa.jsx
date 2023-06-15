@@ -20,6 +20,8 @@ import restURI from "json/restURI.json";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import InputSearch from "components/input/InputSearch";
+import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 const MonthlyLineCapa = () => {
   LoginStateChk();
@@ -31,7 +33,8 @@ const MonthlyLineCapa = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [textInput, setTextInput] = useState("");
   const [responseData, setResponseData] = useState(null);
-  
+  const refSingleGrid = useRef(null);
+
   useEffect(() => {
     handleSearchButtonClick();
   }, []);
@@ -55,8 +58,8 @@ const MonthlyLineCapa = () => {
       })
       .then((response) => {
         // API 응답 데이터 처리 로직
-        console.log(response.data)
         setResponseData(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -64,7 +67,10 @@ const MonthlyLineCapa = () => {
       });
       
   };
-
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide]);
   // GetMonthlyLineCapaData(dateText.endDate, textInput);
   const cOptions = {
     plotOptions: {
@@ -95,56 +101,58 @@ const MonthlyLineCapa = () => {
   ];
 
   return (
-    <S.ContentsArea>
+    <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
-          <S.ContentsHeader>
-            <S.ContentsHeaderWrap>
-              <TextField 
-                id="outlined-number"
-                label="년도"
-                type="number"
-                onChange={handleChange}
-                defaultValue={year}
-                size="small"
-                style={{marginLeft:'5px'}}/>
-              <TextField
-                key={"line_nm"}
-                id={"line_nm"}
-                label={"라인"}
-                size="small"
-                handleInputTextChange={handleTextChange}
-                onClickSearch={handleSearchButtonClick}
-                style={{marginLeft:'5px'}}
-              />
-            </S.ContentsHeaderWrap>
-            <ButtonSearch onClickSearch={handleSearchButtonClick} />
-          </S.ContentsHeader>
+          <S.SearchWrap>
+            <S.InputText
+              id="outlined-number"
+              label="년도"
+              type="number"
+              onChange={handleChange}
+              defaultValue={year}
+              size="small"
+            />
+            <S.InputText
+              key={"line_nm"}
+              id={"line_nm"}
+              label={"라인"}
+              size="small"
+              variant="outlined"
+              handleInputTextChange={handleTextChange}
+              onClickSearch={handleSearchButtonClick}
+            />
+          </S.SearchWrap>
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
+          </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.TopWrap>
         <S.LineCapaTop>
-          <S.Title>라인별 생산량(월)</S.Title>
-          {responseData && (
-            <Chart
-              id={"chart"}
-              options={cOptions}
-              series={responseData.data.rows[0].graph}
-              type="line"
-              height={350}
-            />
-          )}
+            <S.Title>라인별 생산량(월)</S.Title>
+            <S.ChartWrap>
+              {responseData && (
+                <Chart
+                  id={"chart"}
+                  options={cOptions}
+                  series={responseData.data.rows[0].graph}
+                  type="line"
+                  height={350}
+                />
+              )}
+            </S.ChartWrap>
         </S.LineCapaTop>
         <S.LineCapaBottom>
           <S.GridWrap>
             {responseData && (
-              <GridSingle columns={columns} data={responseData.data.rows[0].grid} />
+              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
             )}
           </S.GridWrap>
         </S.LineCapaBottom>
       </S.TopWrap>
       
-    </S.ContentsArea>
+    </ContentsArea>
   );
 };
 

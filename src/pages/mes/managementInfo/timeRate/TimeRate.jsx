@@ -18,6 +18,7 @@ import ButtonSearch from "components/button/ButtonSearch";
 import Grid from "@toast-ui/react-grid";
 import * as timeSet from "./TimeRateSet";
 import "tui-grid/dist/tui-grid.css";
+import ContentsArea from "components/layout/common/ContentsArea";
 
 const TimeRate = () => {
   LoginStateChk();
@@ -144,7 +145,7 @@ const TimeRate = () => {
   const handleSearchClick = () => {};
   try {
     return (
-      <S.ContentsArea>
+      <ContentsArea>
         <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
           <S.ToolWrap>
             <S.ContentsHeader>
@@ -169,10 +170,9 @@ const TimeRate = () => {
           <Grid columns={columns} header={header} data={data} />
           {/* <GridView/> */}
         </S.Bottom>
-      </S.ContentsArea>
+      </ContentsArea>
     );
   } catch (error) {
-    console.log("asdfb");
   }
 };
 

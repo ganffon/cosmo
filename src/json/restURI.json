@@ -98,5 +98,8 @@
   "tempRaws": "/prd/temp/raws",
   "countRaws": "/prd/count/raws",
   "monthlyChangeChart": "/prd/temp/change-by-monthly",
-  "monthlyProd": "/kpi/production/monthly-by-prod"
+  "monthlyProd": "/kpi/production/monthly-by-prod",
+
+  "opcWeight": "/prd/weight/raws",
+  "prodSite": "/dashboard/realtime/prod-site"
 }
