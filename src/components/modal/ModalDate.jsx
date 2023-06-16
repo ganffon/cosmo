@@ -2,9 +2,6 @@ import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
-import ButtonACS from "components/button/ButtonACS";
-import ButtonDS from "components/button/ButtonDS";
-import ButtonSearch from "components/button/ButtonSearch";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalDate.styled";
 import BtnComponent from "components/button/BtnComponent";
@@ -35,21 +32,13 @@ function ModalDate(props) {
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
         <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ToolWrap>
         <S.DateBox>
-          <S.Date
-            datePickerSet={datePickerSet}
-            dateText={dateText}
-            setDateText={setDateText}
-          />
+          <S.Date datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
         </S.DateBox>
         <S.ButtonBox>
           {buttonType === "ACS" ? (
@@ -58,10 +47,7 @@ function ModalDate(props) {
                 <BtnComponent btnName={"AddRow"} onClick={onClickModalAddRow} />
               </S.ButtonWrap>
               <S.ButtonWrap>
-                <BtnComponent
-                  btnName={"CancelRow"}
-                  onClick={onClickModalCancelRow}
-                />
+                <BtnComponent btnName={"CancelRow"} onClick={onClickModalCancelRow} />
               </S.ButtonWrap>
               <S.ButtonWrap>
                 <BtnComponent btnName={"Save"} onClick={onClickModalSave} />

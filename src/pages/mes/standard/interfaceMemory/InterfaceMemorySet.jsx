@@ -96,9 +96,19 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];
   const columnsModalSelect = [
-    col.text("infc_item_type_nm", CN.infc_item_type_nm),
+    col.text(
+      "infc_item_type_nm",
+      CN.infc_item_type_nm,
+      C.U,
+      C.U,
+      C.U,
+      C.U,
+      C.U,
+      true
+    ),
+
     col.id("infc_item_id", CN.infc_item_id, C.HIDDEN_ID),
-    col.text("infc_item_nm", CN.infc_item_nm),
+    col.text("infc_item_nm", CN.infc_item_nm, C.U, C.U, C.U, C.U, C.U, true),
   ];
   const columnOptions = {
     resizable: true,

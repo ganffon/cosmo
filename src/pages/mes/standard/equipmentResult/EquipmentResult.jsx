@@ -1,10 +1,8 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNEDS from "components/button/ButtonNEDS";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -253,6 +251,7 @@ function EquipmentResult() {
     setIsResultNewOpen(true);
   };
   const onResultNewClose = () => {
+    setDateCheck({ ...dateCheck, checkDate: DateTime().dateFull });
     resetInfo();
     resetEmp();
     setGridDataNew([]);
@@ -443,6 +442,7 @@ function EquipmentResult() {
     isEditMode ? resetEditNigEmp() : resetNigEmp();
   };
   const onSelectOrderClose = () => {
+    setDateSelectOrder({ ...dateSelectOrder, startDate: DateTime(-7).dateFull, endDate: DateTime().dateFull });
     setGridDataSelectOrder([]);
     setIsSelectOrderOpen(false);
   };
