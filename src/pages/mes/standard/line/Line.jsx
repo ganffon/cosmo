@@ -18,7 +18,6 @@ import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
-import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
 
 function Line(props) {
   LoginStateChk();
@@ -34,7 +33,6 @@ function Line(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const componentRef = useRef(null);
 
   const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = LineSet(isEditMode);
 
@@ -242,15 +240,6 @@ function Line(props) {
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
-      <SubdivisionBarcodePrint
-        productCode={"productCode"}
-        partName={"partName"}
-        lotNo={"lotNo"}
-        weight={"weight"}
-        legDate={"legDate"}
-        barcodeValue={"barcodeValue"}
-        componentRef={componentRef}
-      />
     </ContentsArea>
   );
 }
