@@ -25,7 +25,7 @@ class user {
     this.group_id = raw.group_id;
     this.user_nm = raw.user_nm;
     this.pwd = raw.pwd;
-    this.email = raw.email;
+    this.email = raw.email ? raw.email : null;
     this.pwd_fg = raw.pwd_fg ? true : false;
     this.admin_fg = raw.admin_fg ? true : false;
     this.super_admin_fg = raw.super_admin_fg ? true : false;
@@ -101,23 +101,13 @@ class product {
     this.use_fg = raw.use_fg ? true : false;
     this.active_fg = raw.active_fg ? true : false;
     this.bom_type_id = raw.bom_type_id;
-    this.width = !isNaN(parseFloat(raw.width))
-      ? Number(raw.width.toString().replace(/,/g, ""))
-      : null;
-    this.length = !isNaN(parseFloat(raw.length))
-      ? Number(raw.length.toString().replace(/,/g, ""))
-      : null;
-    this.height = !isNaN(parseFloat(raw.height))
-      ? Number(raw.height.toString().replace(/,/g, ""))
-      : null;
+    this.width = !isNaN(parseFloat(raw.width)) ? Number(raw.width.toString().replace(/,/g, "")) : null;
+    this.length = !isNaN(parseFloat(raw.length)) ? Number(raw.length.toString().replace(/,/g, "")) : null;
+    this.height = !isNaN(parseFloat(raw.height)) ? Number(raw.height.toString().replace(/,/g, "")) : null;
     this.material = raw.material;
     this.color = raw.color;
-    this.weight = !isNaN(parseFloat(raw.weight))
-      ? Number(raw.weight.toString().replace(/,/g, ""))
-      : null;
-    this.thickness = !isNaN(parseFloat(raw.thickness))
-      ? Number(raw.thickness.toString().replace(/,/g, ""))
-      : null;
+    this.weight = !isNaN(parseFloat(raw.weight)) ? Number(raw.weight.toString().replace(/,/g, "")) : null;
+    this.thickness = !isNaN(parseFloat(raw.thickness)) ? Number(raw.thickness.toString().replace(/,/g, "")) : null;
     this.is_spareparts = raw.is_spareparts ? true : false;
     this.mat_order_fg = raw.mat_order_fg ? true : false;
     this.mat_unit_id = raw.mat_unit_id;
@@ -142,12 +132,8 @@ class product {
     this.qms_final_insp_fg = raw.qms_final_insp_fg ? true : false;
     this.prd_plan_type_id = raw.prd_plan_type_id;
     this.prd_active_fg = raw.prd_active_fg ? true : false;
-    this.prd_min = !isNaN(parseFloat(raw.prd_min))
-      ? Number(raw.prd_min.toString().replace(/,/g, ""))
-      : null;
-    this.prd_max = !isNaN(parseFloat(raw.prd_max))
-      ? Number(raw.prd_max.toString().replace(/,/g, ""))
-      : null;
+    this.prd_min = !isNaN(parseFloat(raw.prd_min)) ? Number(raw.prd_min.toString().replace(/,/g, "")) : null;
+    this.prd_max = !isNaN(parseFloat(raw.prd_max)) ? Number(raw.prd_max.toString().replace(/,/g, "")) : null;
   }
 }
 class productType {
@@ -294,9 +280,7 @@ class infcMemory {
     this.plc_ip = raw.plc_ip;
     this.unit_nm = raw.unit_nm;
     this.weight = String(raw.weight) ? Number(raw.weight) : null;
-    this.constant_value = String(raw.constant_value)
-      ? Number(raw.constant_value)
-      : null;
+    this.constant_value = String(raw.constant_value) ? Number(raw.constant_value) : null;
     this.plc_port = String(raw.plc_port) ? Number(raw.plc_port) : null;
     this.device_address = raw.device_address;
     this.tag_id = raw.tag_id;
@@ -387,27 +371,17 @@ class documentDetail {
     this.insp_document_detail_id = raw.insp_document_detail_id;
     this.insp_document_id = raw.insp_document_id;
 
-    this.sortby = !isNaN(parseFloat(raw.sortby))
-      ? Number(raw.sortby.toString().replace(/,/g, ""))
-      : null;
+    this.sortby = !isNaN(parseFloat(raw.sortby)) ? Number(raw.sortby.toString().replace(/,/g, "")) : null;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.insp_proc_gbn = raw.insp_proc_gbn;
     this.insp_item_id = raw.insp_item_id;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = !isNaN(parseFloat(raw.spec_min))
-      ? Number(raw.spec_min.toString().replace(/,/g, ""))
-      : null;
-    this.spec_max = !isNaN(parseFloat(raw.spec_max))
-      ? Number(raw.spec_max.toString().replace(/,/g, ""))
-      : null;
-    this.spec_lcl = !isNaN(parseFloat(raw.spec_lcl))
-      ? Number(raw.spec_lcl.toString().replace(/,/g, ""))
-      : null;
-    this.spec_ucl = !isNaN(parseFloat(raw.spec_ucl))
-      ? Number(raw.spec_ucl.toString().replace(/,/g, ""))
-      : null;
+    this.spec_min = !isNaN(parseFloat(raw.spec_min)) ? Number(raw.spec_min.toString().replace(/,/g, "")) : null;
+    this.spec_max = !isNaN(parseFloat(raw.spec_max)) ? Number(raw.spec_max.toString().replace(/,/g, "")) : null;
+    this.spec_lcl = !isNaN(parseFloat(raw.spec_lcl)) ? Number(raw.spec_lcl.toString().replace(/,/g, "")) : null;
+    this.spec_ucl = !isNaN(parseFloat(raw.spec_ucl)) ? Number(raw.spec_ucl.toString().replace(/,/g, "")) : null;
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_tool_id = raw.insp_tool_id;
     this.insp_method_id = raw.insp_method_id;
@@ -502,12 +476,8 @@ class subdivisionDetail {
     this.order_detail_id = raw.order_detail_id;
     this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
-    this.before_qty = String(raw.before_subdivision_qty)
-      ? Number(raw.before_subdivision_qty)
-      : null;
-    this.after_qty = String(raw.after_subdivision_qty)
-      ? Number(raw.after_subdivision_qty)
-      : null;
+    this.before_qty = String(raw.before_subdivision_qty) ? Number(raw.before_subdivision_qty) : null;
+    this.after_qty = String(raw.after_subdivision_qty) ? Number(raw.after_subdivision_qty) : null;
     this.qty = String(raw.subdivision_qty) ? Number(raw.subdivision_qty) : null;
     this.subdivision_date = raw.subdivision_date;
     this.subdivision_time = raw.subdivision_time;
@@ -580,9 +550,7 @@ class order {
     this.work_order_date = raw.work_order_date;
     this.work_start_date = raw.work_start_date;
     this.work_end_date = raw.work_end_date;
-    this.work_order_qty = String(raw.work_order_qty)
-      ? Number(raw.work_order_qty)
-      : null;
+    this.work_order_qty = String(raw.work_order_qty) ? Number(raw.work_order_qty) : null;
     this.complete_fg = raw.complete_fg ? true : false;
     this.complete_date = raw.complete_date;
     this.remark = raw.remark;

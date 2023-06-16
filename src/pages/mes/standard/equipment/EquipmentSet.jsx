@@ -30,7 +30,7 @@ function EquipmentSet(isEditMode, processList) {
     col.id("sub_manager_emp_id", CN.sub_manager_emp_id, C.HIDDEN_ID),
     col.select("sub_manager_emp_nm", CN.sub_manager_emp_nm, isEditMode),
     col.check("use_fg", CN.use_fg, isEditMode),
-    col.check("prd_fg", CN.prd_fg, isEditMode),
+    col.check("prd_fg", CN.prd_fg, isEditMode, C.U, true),
     col.text("remark", CN.remark, isEditMode, C.U, C.WIDTH_LONG),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
@@ -46,7 +46,7 @@ function EquipmentSet(isEditMode, processList) {
     col.id("sub_manager_emp_id", CN.sub_manager_emp_id, C.HIDDEN_ID),
     col.select("sub_manager_emp_nm", CN.sub_manager_emp_nm, true),
     col.check("use_fg", CN.use_fg, true),
-    col.check("prd_fg", CN.prd_fg, true),
+    col.check("prd_fg", CN.prd_fg, true, C.U, true),
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];
   const columnsModalSelect = [

@@ -23,7 +23,7 @@ import BackDrop from "components/backdrop/BackDrop";
 import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-const DailyLineCapa = () => {
+const DailyLineCapa = ({toggle}) => {
   LoginStateChk();
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -35,11 +35,15 @@ const DailyLineCapa = () => {
   const [textInput, setTextInput] = useState("");
   const [result, setResult] = useState([]);
   const [responseData, setResponseData] = useState(null);
+  const [isAuto, setIsAuto] = useState(true);
 
   useEffect(() => {
     setResult(GetDateMonth(strGridJson, dateText.endDate));
     handleSearchButtonClick();
-  }, []);
+    if (toggle !== undefined && isAuto !== toggle) {
+      setIsAuto(toggle);
+    }
+  }, [toggle, isAuto]);
   const handleSearchButtonClick = () => {
     // setSearchButtonClicked();
     GetMonthlyLineCapaData(dateText.endDate);
@@ -111,7 +115,7 @@ const DailyLineCapa = () => {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      {isAuto === true && <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
             <S.SearchWrap>
               <S.Date
@@ -133,11 +137,11 @@ const DailyLineCapa = () => {
               <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick}/>
             </S.ButtonWrap>
         </S.ToolWrap>
-      </S.ShadowBoxButton>
+      </S.ShadowBoxButton>}
       <S.TopWrap>
         <S.LineCapaTop>
           <S.Title>생산포장 라인 별 생산량(일)</S.Title>
-            <S.ChartWrap>
+            <S.ChartWrap2>
             {responseData && (
               <Chart
                 options={cOptions}
@@ -146,7 +150,7 @@ const DailyLineCapa = () => {
                 height={350}
               />
             )}
-            </S.ChartWrap>
+            </S.ChartWrap2>
         </S.LineCapaTop>
         <S.LineCapaBottom>
           <S.GridWrap>

@@ -334,12 +334,6 @@ function SubdivisionPanel() {
           barcode_type: "SUBDIVISION",
           reference_id: referenceID,
         });
-        console.log(prodCD.current);
-        console.log(prodNM.current);
-        console.log(headerLot);
-        console.log(String(totalQty));
-        console.log(date);
-        console.log(result?.data?.data?.rows[0].barcode_no);
 
         setBarcodePrintInfo({
           ...barcodePrintInfo,
@@ -356,8 +350,9 @@ function SubdivisionPanel() {
         setIsLockScale(true);
         setIsEnd(false);
 
-        return true;
-        // handlePrint();
+        setTimeout(() => {
+          handlePrint();
+        }, 100);
       } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -366,7 +361,6 @@ function SubdivisionPanel() {
           severity: "error",
           location: "bottomRight",
         });
-        return false;
       }
     } catch (err) {
       setIsSnackOpen({
@@ -376,7 +370,6 @@ function SubdivisionPanel() {
         severity: "error",
         location: "bottomRight",
       });
-      return false;
     }
   };
   const onClickSelect = (e) => {
@@ -430,7 +423,11 @@ function SubdivisionPanel() {
     }
   };
   const handlePrint = () => {
-    const printWindow = window.open("", "_blank");
+    const width = window.innerWidth * 0.8;
+    const height = window.innerHeight * 0.8;
+    const left = window.screenX + window.innerWidth / 2 - width / 2;
+    const top = window.screenY + window.innerHeight / 2 - height / 2;
+    const printWindow = window.open("", "Print", `width=${width},height=${height},left=${left},top=${top}`);
     printWindow.document.open();
     printWindow.document.write(`
     <html>
@@ -444,17 +441,12 @@ function SubdivisionPanel() {
   `);
     printWindow.document.close();
     printWindow.print();
-
-    const closePrintWindow = () => {
-      printWindow.document.write("");
-      printWindow.document.close();
-      printWindow.removeEventListener("unload", closePrintWindow);
-      printWindow.close();
-    };
-
-    printWindow.addEventListener("unload", closePrintWindow);
+    printWindow.close();
   };
+
   const onClickNext = async () => {
+    console.log(scaleInfo.before);
+    console.log(scaleInfo.after);
     if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
       if (scaleInfo.inputLot !== "" && scaleInfo.before !== "" && scaleInfo.after !== "") {
         const raw = [
@@ -669,13 +661,6 @@ function SubdivisionPanel() {
   };
 
   const BarcodePrint = useMemo(() => {
-    console.log("★★★★★★★★★★★★★★★★★barcodePrintInfo");
-    console.log(barcodePrintInfo.prodCD);
-    console.log(barcodePrintInfo.prodNM);
-    console.log(barcodePrintInfo.lot);
-    console.log(barcodePrintInfo.qty);
-    console.log(barcodePrintInfo.date);
-    console.log(barcodePrintInfo.createBarcode);
     return (
       <SubdivisionBarcodePrint
         productCode={barcodePrintInfo.prodCD || ""}

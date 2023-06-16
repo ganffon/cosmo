@@ -27,7 +27,7 @@ function UserSet(isEditMode) {
     col.text("email", CN.email, isEditMode, C.U, C.WIDTH_MIDDLE),
     col.check("pwd_fg", CN.pwd_fg, false),
     col.check("admin_fg", CN.admin_fg, isEditMode),
-    col.check("super_admin_fg", CN.super_admin_fg, false),
+    col.check("super_admin_fg", CN.super_admin_fg, false, C.U, true),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
     col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),

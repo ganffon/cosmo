@@ -540,7 +540,7 @@
         "under": null
       },
       {
-        "name": "온습도 대시보드",
+        "name": "현장 대시보드",
         "id": "temp-view",
         "path": "temp-view",
         "under": null

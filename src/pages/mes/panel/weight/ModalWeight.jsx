@@ -8,6 +8,7 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import DateTime from "components/datetime/DateTime";
 import InputText from "components/input/InputText";
+import BtnComponent from "components/button/BtnComponent";
 
 function ModalWeight(props) {
   const {
@@ -60,19 +61,26 @@ function ModalWeight(props) {
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>${currentMenuName}</S.TitleBox>
-        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
+        <S.ButtonClose
+          color="primary"
+          aria-label="close"
+          onClick={onClickModalClose}
+        >
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
       <S.Content>
         <S.GridTitleBox>
-          <div>✳️ 일일계량일지</div>
-          <S.ButtonSet color={"#28a745"} hoverColor={"#218838"} onClick={onClickWeightSave} width={"150px"}>
-            Save
-          </S.ButtonSet>
+          <S.TitleWrap>일일계량일지</S.TitleWrap>
+          <BtnComponent
+            width={"150px"}
+            height={"40px"}
+            btnName={"Save"}
+            onClick={onClickWeightSave}
+          />
         </S.GridTitleBox>
         <S.InfoBox>
-          <S.InfoTitle>🔸라인</S.InfoTitle>
+          <S.InfoTitle>라인</S.InfoTitle>
           <InputPaper
             width={"150px"}
             height={"60px"}
@@ -81,7 +89,7 @@ function ModalWeight(props) {
             size={"30px"}
             btn={false}
           />
-          <S.InfoTitle>🔸계량일자</S.InfoTitle>
+          <S.InfoTitle>계량일자</S.InfoTitle>
           <InputPaper
             width={"200px"}
             height={"60px"}
@@ -90,7 +98,7 @@ function ModalWeight(props) {
             size={"30px"}
             btn={false}
           />
-          <S.InfoTitle>🔸계량자</S.InfoTitle>
+          <S.InfoTitle>계량자</S.InfoTitle>
           <InputPaper
             width={"250px"}
             height={"60px"}
@@ -101,10 +109,10 @@ function ModalWeight(props) {
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
           />
-          <S.InfoTitle>🔸바코드</S.InfoTitle>
+          <S.InfoTitle>바코드</S.InfoTitle>
           <InputPaper
             id={"barcode"}
-            width={"400px"}
+            width={"640px"}
             height={"60px"}
             nameColor={"black"}
             value={inputChange}

@@ -13,7 +13,7 @@ import ButtonSearch from "components/button/ButtonSearch";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-const EquipStatus = () => {
+const EquipStatus = ({toggle }) => {
   LoginStateChk();
   let isFirst = true;
   const { currentMenuName, isAllScreen, isMenuSlide } =
@@ -29,6 +29,7 @@ const EquipStatus = () => {
   const [sDonutChartData, setSDonutChartData] = useState(null);
   const [barGrid, setBarGrid] = useState(null);
   const [sBarChartData, setSBarChartData] = useState(null);
+  const [isAuto, setIsAuto] = useState(true);
   const handleChange = (event) => {
     setYear(event.target.value);
   };
@@ -77,8 +78,11 @@ const EquipStatus = () => {
   };
   
   useEffect(() => {
-    handleSearchButtonClick()
-  }, []);
+    handleSearchButtonClick();  
+    if (toggle !== undefined && isAuto !== toggle) {
+      setIsAuto(toggle);
+    }
+  }, [toggle, isAuto]);
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -167,10 +171,12 @@ const EquipStatus = () => {
     );
   };
   
+  
+  
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-      <S.ToolWrap>
+      {isAuto === true && <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+        <S.ToolWrap>
         <S.SearchWrap>
           <S.Date
             datePickerSet={"range"}
@@ -182,22 +188,22 @@ const EquipStatus = () => {
           <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
         </S.ButtonWrap>
       </S.ToolWrap>
-      </S.ShadowBoxButton>
+      </S.ShadowBoxButton>}
       <S.AllWrap>
       <S.Left>
           <S.Title>비가동(현장등록) 유형 별</S.Title>
-          <S.ChartWrap>
+          <S.EquipStatusChartWrap>
             {sDonutChartData && <DonutChart data={sDonutChartData} />}
-          </S.ChartWrap>
+          </S.EquipStatusChartWrap>
           <S.GridWrap3>
-            {responseData && (<Grid columns={monthlyColumns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>)}    
+            {responseData && (<GridSingle columns={monthlyColumns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>)}    
           </S.GridWrap3>
       </S.Left>
       <S.Right>
           <S.Title>비가동(자동등록-충진) 라인 별</S.Title>
-          <S.ChartWrap>
+          <S.EquipStatusChartWrap>
             {sBarChartData && <BarChart data={sBarChartData} />}
-          </S.ChartWrap>
+          </S.EquipStatusChartWrap>
           <S.GridWrap3>
             {barGrid && (<GridSingle columns={sysColumns} data={barGrid.data.rows[0].grid} refGrid={refSecondGrid}/>)}
           </S.GridWrap3>

@@ -388,13 +388,13 @@
         "path": null,
         "under": [
           {
-            "name": "온습도 Raw 데이터",
+            "name": "✅온습도 Raw 데이터",
             "id": "temp-raws",
             "path": "temp-raws",
             "under": null
           },
           {
-            "name": "충진기 생산 count Raw 데이터",
+            "name": "✅충진기 생산 count Raw 데이터",
             "id": "count-raws",
             "path": "count-raws",
             "under": null
@@ -459,7 +459,7 @@
         ]
       },
       {
-        "name": "✴️설비RawData현황",
+        "name": "✅설비RawData현황",
         "id": "equipment-rawdata-view",
         "path": "equipment-rawdata-view",
         "under": null
@@ -510,19 +510,19 @@
     "path": null,
     "under": [
       {
-        "name": "✴️라인별생산량(일)",
+        "name": "✅라인별생산량(일)",
         "id": "daily-line-capa",
         "path": "daily-line-capa",
         "under": null
       },
       {
-        "name": "✴️라인별생산량(월)",
+        "name": "✅라인별생산량(월)",
         "id": "monthly-line-capa",
         "path": "monthly-line-capa",
         "under": null
       },
       {
-        "name": "✴️품목별생산량",
+        "name": "✅품목별생산량",
         "id": "monthly-part-capa",
         "path": "monthly-part-capa",
         "under": null
@@ -546,19 +546,19 @@
         "under": null
       },
       {
-        "name": "✴️온습도 대시보드",
+        "name": "✅현장 대시보드",
         "id": "temp-view",
         "path": "temp-view",
         "under": null
       },
       {
-        "name": "✴️비가동 대시보드",
+        "name": "✅비가동 대시보드",
         "id": "equip-status",
         "path": "equip-status",
         "under": null
       },
       {
-        "name": "✴️공장 온습도 월별 추이 현황",
+        "name": "✅공장 온습도 월별 추이 현황",
         "id": "monthly-temp-humid-chart",
         "path": "monthly-temp-humid-chart",
         "under": null
@@ -595,7 +595,7 @@
         "under": null
       },
       {
-        "name": "✴️비가동관리",
+        "name": "✅비가동관리",
         "id": "downtime-panel",
         "path": "downtime-panel",
         "under": null

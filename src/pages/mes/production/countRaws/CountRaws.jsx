@@ -14,6 +14,7 @@ import Grid from "@toast-ui/react-grid";
 import CountRawsModal from './CountRawsModal';
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import BackDrop from "components/backdrop/BackDrop";
 
 const TempRaws = () => {
   LoginStateChk();
@@ -49,6 +50,7 @@ const TempRaws = () => {
     GetMonthlyLineCapaData();
   };
   const GetMonthlyLineCapaData = () => {
+    setIsBackDrop(true);
     restAPI
       .get(restURI.countRaws, {
         params: { 
@@ -192,7 +194,7 @@ const TempRaws = () => {
       </C.ShadowBoxGrid>
         
         
-        
+      <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );
 };

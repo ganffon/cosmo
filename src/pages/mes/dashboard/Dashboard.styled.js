@@ -194,7 +194,7 @@ export const LineStateHeader = styled("div")`
   font-size: 20px;
   font-weight: 700;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 30px;
 `
 
 export const LineStateBorder = styled("div")`
