@@ -25,7 +25,7 @@ class user {
     this.user_nm = raw.user_nm;
     this.pwd = raw.pwd;
     this.pwd_dev = raw.pwd_dev;
-    this.email = raw.email;
+    this.email = raw.email ? raw.email : null;
     this.pwd_fg = raw.pwd_fg ? true : false;
     this.admin_fg = raw.admin_fg ? true : false;
     this.super_admin_fg = raw.super_admin_fg ? true : false;

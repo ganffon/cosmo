@@ -20,7 +20,7 @@ function CountRawsSet() {
   
 
   const columnsDetail = [
-    col.text('scan_dt', "시간", false, false,C.WIDTH_LONG),
+    col.text('scan_dt', "시간", false, false,C.WIDTH_LONG, "center",true),
     col.text("scan_value", "Count", false, false, C.WIDTH_LONG),
   ];
 

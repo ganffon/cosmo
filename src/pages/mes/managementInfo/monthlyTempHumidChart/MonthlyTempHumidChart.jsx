@@ -21,7 +21,7 @@ import { TextField } from "@mui/material";
 import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-const MonthlyTempHumidChart = () => {
+const MonthlyTempHumidChart = ({toggle}) => {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -31,13 +31,16 @@ const MonthlyTempHumidChart = () => {
   const [textInput, setTextInput] = useState("");
   const [responseData, setResponseData] = useState(null);
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  const [isAuto, setIsAuto] = useState(true);
+
   useEffect(() => {
     handleSearchButtonClick();
-  }, []);
+    if (toggle !== undefined && isAuto !== toggle) {
+      setIsAuto(toggle);
+    }
+  }, [toggle, isAuto]);
 
   const handleSearchButtonClick = () => {
-    // setSearchButtonClicked();
-    console.log(dateText.startDate)
     GetMonthlyLineCapaData();
   };
 
@@ -66,6 +69,8 @@ const MonthlyTempHumidChart = () => {
     return {
       chart: {
         type: 'rangeArea',
+        width: '100%',
+        height: '100%',
       },
       xaxis: {
         tickAmount: 15,
@@ -89,16 +94,6 @@ const MonthlyTempHumidChart = () => {
       stroke: {
         curve: 'straight',
         width: [0, 2, 0, 2]
-      },
-      title: {
-        text: title,
-        align: 'left', // 제목을 가운데 정렬합니다.
-        style: {
-          fontSize: '20px', // 폰트 크기를 20px로 설정합니다.
-          fontWeight: 'bold', // 폰트 굵기를 bold로 설정합니다.
-          fontFamily: 'Arial, sans-serif', // 폰트 패밀리를 Arial로 설정합니다.
-          color: '#333' // 폰트 색상을 #333으로 설정합니다.
-        }
       },
       markers: {
         hover: {
@@ -124,7 +119,7 @@ const MonthlyTempHumidChart = () => {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      {isAuto === true && <S.ShadowBoxButton2 isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
             <S.SearchWrap>
               <S.InputText
@@ -142,36 +137,43 @@ const MonthlyTempHumidChart = () => {
               <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
             </S.ButtonWrap>
         </S.ToolWrap>
-      </S.ShadowBoxButton>
+      </S.ShadowBoxButton2>}
         <S.HumidFlexTop>
           <S.HumidLeft>
-          <S.ChartWrap>
-            {responseData&& <Chart options={getChartOptions('자재창고')} series={responseData[0]} type="rangeArea" height={200}/>}
-            </S.ChartWrap>
+            <S.Title>자재창고</S.Title>
+            <S.ChartWrap2>
+              {responseData&& <Chart options={getChartOptions('자재창고')} series={responseData[0]} type="rangeArea" height={'100%'}/>}
+            </S.ChartWrap2>
           </S.HumidLeft>
           <S.HumidRight>
-          <S.ChartWrap>
-            {responseData&& <Chart options={getChartOptions('제품창고')} series={responseData[1]} type="rangeArea" height={200}/>}    
-            </S.ChartWrap>
-          </S.HumidRight>
-        </S.HumidFlexTop>
-        <S.HumidFlexTop>
-          <S.HumidLeft>
-            <S.ChartWrap>
-              {responseData&& <Chart options={getChartOptions('투입실')} series={responseData[2]} type="rangeArea" height={200}/>}
-            </S.ChartWrap>
-          </S.HumidLeft>
-          <S.HumidRight>
-          <S.ChartWrap>
-            {responseData&& <Chart options={getChartOptions('첨가제 계량실')} series={responseData[3]} type="rangeArea" height={200}/>}
-            </S.ChartWrap>
+            <S.Title>제품창고</S.Title>
+            <S.ChartWrap2>            
+              {responseData&& <Chart options={getChartOptions('제품창고')} series={responseData[1]} type="rangeArea" height={'100%'}/>}    
+            </S.ChartWrap2>
           </S.HumidRight>
         </S.HumidFlexTop>
         <S.HumidFlexLast>
-          <S.ChartWrap>
-            {responseData&& <Chart options={getChartOptions('통제실')} series={responseData[4]} type="rangeArea" height={200}/>}
-          </S.ChartWrap>
-        </S.HumidFlexLast>
+          <S.GridContainer>
+            <S.GridWrap>
+              <S.TempHumidTitle>투입실</S.TempHumidTitle>
+              <S.ChartWrap2>
+                {responseData&& <Chart options={getChartOptions('투입실')} series={responseData[2]} type="rangeArea" height={'100%'}/>}
+              </S.ChartWrap2>
+            </S.GridWrap>
+            <S.GridWrap>
+              <S.TempHumidTitle>첨가제 계량실</S.TempHumidTitle>
+              <S.ChartWrap2>
+                {responseData&& <Chart options={getChartOptions('첨가제 계량실')} series={responseData[3]} type="rangeArea" height={'100%'}/>}
+              </S.ChartWrap2>
+            </S.GridWrap>
+            <S.GridWrap>
+              <S.TempHumidTitle>통제실</S.TempHumidTitle>
+              <S.ChartWrap2>
+                {responseData&& <Chart options={getChartOptions('통제실')} series={responseData[4]} type="rangeArea" height={'100%'}/>}
+              </S.ChartWrap2>
+            </S.GridWrap>
+        </S.GridContainer>
+      </S.HumidFlexLast>
        
     </ContentsArea>
   );

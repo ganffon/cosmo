@@ -52,7 +52,7 @@ const DonutChart = ({ data }) => {
   );
 };
 
-const MonthlyPartCapa = () => {
+const MonthlyPartCapa = ({toggle}) => {
   LoginStateChk();
   const refSingleGrid = useRef(null);
   const { currentMenuName, isAllScreen, isMenuSlide } =
@@ -63,10 +63,15 @@ const MonthlyPartCapa = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [textInput, setTextInput] = useState("");
   const [responseData, setResponseData] = useState(null);
-  
+  const [isAuto, setIsAuto] = useState(true);
+
   useEffect(() => {
     handleSearchButtonClick();
-  }, []);
+    if (toggle !== undefined && isAuto !== toggle) {
+      setIsAuto(toggle);
+    }
+  }, [toggle, isAuto]);
+
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
@@ -130,7 +135,7 @@ const MonthlyPartCapa = () => {
   ];
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      {isAuto === true && <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
             <S.InputText
@@ -154,7 +159,7 @@ const MonthlyPartCapa = () => {
               <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
             </S.ButtonWrap>
         </S.ToolWrap>
-      </S.ShadowBoxButton>
+      </S.ShadowBoxButton>}
       <S.TopWrap>
         <S.FlexTop>
           <S.PartCapaLeft>

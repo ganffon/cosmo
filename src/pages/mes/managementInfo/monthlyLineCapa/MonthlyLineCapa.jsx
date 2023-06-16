@@ -23,7 +23,7 @@ import InputSearch from "components/input/InputSearch";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-const MonthlyLineCapa = () => {
+const MonthlyLineCapa = ({toggle}) => {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } =
     useContext(LayoutContext);
@@ -34,10 +34,14 @@ const MonthlyLineCapa = () => {
   const [textInput, setTextInput] = useState("");
   const [responseData, setResponseData] = useState(null);
   const refSingleGrid = useRef(null);
+  const [isAuto, setIsAuto] = useState(true);
 
   useEffect(() => {
     handleSearchButtonClick();
-  }, []);
+    if (toggle !== undefined && isAuto !== toggle) {
+      setIsAuto(toggle);
+    }
+  }, [toggle, isAuto]);
   const handleSearchButtonClick = () => {
     // setSearchButtonClicked();
     GetMonthlyLineCapaData(dateText.endDate, textInput);
@@ -102,7 +106,7 @@ const MonthlyLineCapa = () => {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      {isAuto === true && <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
             <S.InputText
@@ -127,31 +131,30 @@ const MonthlyLineCapa = () => {
             <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
           </S.ButtonWrap>
         </S.ToolWrap>
-      </S.ShadowBoxButton>
-      <S.TopWrap>
-        <S.LineCapaTop>
-            <S.Title>라인별 생산량(월)</S.Title>
-            <S.ChartWrap>
+      </S.ShadowBoxButton>}
+        <S.TopWrap>
+          <S.LineCapaTop>
+              <S.Title>라인별 생산량(월)</S.Title>
+              <S.ChartWrap2>
+                {responseData && (
+                  <Chart
+                    id={"chart"}
+                    options={cOptions}
+                    series={responseData.data.rows[0].graph}
+                    type="line"
+                    height={350}
+                  />
+                )}
+              </S.ChartWrap2>
+          </S.LineCapaTop>
+          <S.LineCapaBottom>
+            <S.GridWrap>
               {responseData && (
-                <Chart
-                  id={"chart"}
-                  options={cOptions}
-                  series={responseData.data.rows[0].graph}
-                  type="line"
-                  height={350}
-                />
+                <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
               )}
-            </S.ChartWrap>
-        </S.LineCapaTop>
-        <S.LineCapaBottom>
-          <S.GridWrap>
-            {responseData && (
-              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
-            )}
-          </S.GridWrap>
-        </S.LineCapaBottom>
-      </S.TopWrap>
-      
+            </S.GridWrap>
+          </S.LineCapaBottom>
+        </S.TopWrap>
     </ContentsArea>
   );
 };

@@ -107,7 +107,7 @@ const Dashboard = () => {
           (item) => ({
             ...item,
             start_dt: `${item.start_date} ${item.start_time}`,
-            end_dt: `${item.end_date} ${item.end_time}`,
+            end_dt: item.end_date && item.end_time ? `${item.end_date} ${item.end_time}` : '',
             no: ++index,
           })
         );

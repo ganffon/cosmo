@@ -26,7 +26,7 @@ export const TitleBefore = styled("div")`
   height: 40px;
   width: 500px;
   margin-right: 10px;
-  padding-left: 10px;
+  padding-left: 20px;
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
@@ -37,7 +37,7 @@ export const TitleAfter = styled("div")`
 
   padding-left: 10px;
   padding-top: 5px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
@@ -116,4 +116,13 @@ export const ButtonSet = styled("button")`
   &:hover {
     background: ${(props) => props.hoverColor};
   }
+`;
+
+export const LineDataWrap = styled("div")`
+  width: 500px;
+  height: 100%;
+  margin-left: 15px;
+  display: flex;
+  flex-flow: row wrap;
+  overflow: hidden;
 `;

@@ -55,7 +55,7 @@ export const RightWrap = styled("div")`
 export const ScreenTitleBox = styled("div")`
   height: 40px;
   width: 80%;
-
+  padding-left: 10px;
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
@@ -90,4 +90,8 @@ export const GridDetail = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   background: #ffffff;
   padding: 10px 10px 10px 10px;
+`;
+
+export const BarcodeBoxWrap = styled("div")`
+  margin-top: 15px;
 `;

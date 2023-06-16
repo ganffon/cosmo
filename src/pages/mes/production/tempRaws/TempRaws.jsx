@@ -11,6 +11,7 @@ import ButtonSearch from "components/button/ButtonSearch";
 import TempRawsSet from "./TempRawsSet";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import BackDrop from "components/backdrop/BackDrop";
 
 const TempRaws = () => {
   LoginStateChk();
@@ -44,6 +45,7 @@ const TempRaws = () => {
     GetMonthlyLineCapaData();
   };
   const GetMonthlyLineCapaData = () => {
+    setIsBackDrop(true);
     restAPI
       .get(restURI.tempRaws, {
         params: { 
@@ -59,7 +61,10 @@ const TempRaws = () => {
       .catch((error) => {
         // 오류 처리 로직
         // console.error('API 호출 중 오류 발생:', error);
-      });
+      })
+      .finally(() => {
+        setIsBackDrop(false);
+      })
   };
   useEffect(() => {
     GetMonthlyLineCapaData();
@@ -107,6 +112,7 @@ const TempRaws = () => {
           )}
         </S.GridWrap>
       </S.ShadowBoxGrid>
+      <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );
 };

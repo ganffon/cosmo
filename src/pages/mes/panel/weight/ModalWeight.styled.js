@@ -22,9 +22,7 @@ export const InfoBox = styled("div")`
   display: flex;
   align-items: center;
   height: 80px;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   padding: 10px 0px;
   margin-bottom: 10px;
   gap: 20px;
@@ -53,18 +51,13 @@ export const GridTitleBox = styled("div")`
   padding-top: 8px;
   padding-left: 15px;
   font-weight: 700;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   padding: 10px 10px 10px 10px;
   margin-bottom: 10px;
 `;
 export const GridBox = styled("div")`
   width: 100%;
   height: calc(100% - 150px);
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 10px 10px 10px 10px;
 `;
 
@@ -124,7 +117,8 @@ export const ButtonSet = styled("button")`
   border-radius: 10px;
   cursor: pointer;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   transition: 0.5s;
 
@@ -139,4 +133,9 @@ export const SearchBox = styled("div")`
 `;
 export const Input = styled(InputSearch)`
   display: flex;
+`;
+
+export const TitleWrap = styled("div")`
+  font-size: 25px;
+  padding-left: 10px;
 `;

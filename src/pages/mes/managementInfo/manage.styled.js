@@ -35,7 +35,7 @@ export const ContentsHeaderWrap = styled("div")`
 `;
 export const TopWrap = styled.div`
   width: 100%;
-  height: 90%;
+  height: 100%;
   background-color: #EFEFEF;
 `;
 export const Top = styled.div`
@@ -73,19 +73,30 @@ export const ChartDiv = styled.div`
 `;
 export const ChartWrap = styled("div")`
   margin: 10px;
+  height: 80%;
   background-color: #FFFFFF;
+  border-radius: 10px;
   border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
+`;
+export const ChartWrap2 = styled("div")`
+  margin: 10px;
+  height: 80%;
+  background-color: #FFFFFF;
 `;
 export const GridWrap = styled("div")`
   width: 100%;
   height: calc(100% - 0px);
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridWrap2 = styled("div")`
   height:80%;
   padding: 10px 10px 10px 10px;
 `;
 export const GridWrap3 = styled("div")`
-  height:40%;
+  height:30%;
   padding: 10px 10px 10px 10px;
 `;
 export const OtherContent = styled.div`
@@ -116,6 +127,14 @@ export const ShadowBoxButton = styled("div")`
   padding: 0px 10px;
   border-radius: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
+export const ShadowBoxButton2 = styled("div")`
+  background-color: #ffffff;
+  width: 100%;
+  height: ${SEARCH_BAR_HEIGHT};
+  padding: 0px 10px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px 0px #00000026;
 `;
 export const ToolWrap = styled("div")`
   display: flex;
@@ -148,7 +167,7 @@ export const SearchCondition = styled("div")`
 `;
 export const Title = styled("div")`
   font-family: 'Noto Sans KR';
-  font-weight: 700;
+  font-weight: 900;
   font-size: 20px;
   line-height: 29px;
   margin-top: 15px;
@@ -264,16 +283,17 @@ export const PartCapaRight = styled("div")`
 export const HumidFlexTop = styled.div`
   display: flex;
   border-radius: 10px;
-  height: 30%;
+  height: 50%;
   width: 100%;
   background-color: #EFEFEF;
+  
 `;
 export const HumidFlexLast = styled.div`
   background-color: #FFFFFF;
   border-radius: 10px;
-  height: 28%;
-  margin-top: 8px;
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  height: 50%;
+  margin-top: 10px;
+  
 `
 export const Last = styled("div")`
   width: 100%;
@@ -286,7 +306,7 @@ export const HumidLeft = styled("div")`
   border-radius: 10px;
   background-color: #FFFFFF;
   margin-right: 5px;
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  box-shadow: 0px 2px 10px 0px #00000026;
 `
 export const HumidRight = styled("div")`
   width: 50%;
@@ -294,7 +314,7 @@ export const HumidRight = styled("div")`
   background-color: #FFFFFF;
   margin-left: 5px;
   border-radius: 10px;
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  box-shadow: 0px 2px 10px 0px #00000026;
 `
 
 export const InputBox = styled("div")`
@@ -314,8 +334,33 @@ export const InputText = styled(TextField)`
   margin-top: 5px;
 `;
 export const AllWrap = styled('div')`
-  height: 90%;
+  height: 100%;
   width: 100%;
   display: flex;
   background-color: #eeeeee
+`;
+export const GridContainer = styled("div")`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  margin-right: 10px;
+  grid-template-columns: 33% 33% 33%;
+  background-color: #EFEFEF;
+  border-radius: 10px;
+  gap: 10px;
+`;
+export const TempHumidTitle = styled("div")`
+  font-family: 'Noto Sans KR';
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 29px;
+  margin-top: 15px;
+  margin-left: 20px;
+`;
+export const EquipStatusChartWrap = styled("div")`
+  margin: 10px;
+  height: 60%;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
 `;

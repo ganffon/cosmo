@@ -47,7 +47,7 @@ export const ScreenTitleBox = styled("div")`
 export const ScreenBottomTitleBox = styled("div")`
   height: 30px;
   width: 100%;
-  padding-left: 10px;
+  padding-left: 15px;
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
@@ -102,6 +102,18 @@ export const ContentBottomLeft = styled("div")`
   padding: 20px 10px 10px 10px;
 `;
 export const SelectInfo = styled(InputPaper)``;
+
+export const SelectInfoWrap = styled("div")`
+  width: 600px;
+  height: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  margin-left: 10px;
+  gap: 20px;
+
+  padding: 20px 10px 10px 10px;
+`;
+
 export const ButtonBox = styled("div")`
   height: 100%;
   width: calc(100% - 600px);
