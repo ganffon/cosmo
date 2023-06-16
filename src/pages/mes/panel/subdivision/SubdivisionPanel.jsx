@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LoginStateChk } from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
@@ -26,6 +26,7 @@ function SubdivisionPanel() {
 
   const prodID = useRef("");
   const prodCD = useRef("");
+  const prodNM = useRef("");
   const date = useRef("");
   const lot = useRef("");
   const workSubdivisionID = useRef("");
@@ -33,7 +34,7 @@ function SubdivisionPanel() {
   const [totalQty, setTotalQty] = useState("");
 
   const [scaleInfo, setScaleInfo] = useState({
-    barcode: "",
+    createBarcode: "",
     inputLot: "",
     before: "",
     after: "",
@@ -77,6 +78,12 @@ function SubdivisionPanel() {
   const [gridDataSelect, setGridDataSelect] = useState(null);
   const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
 
+  const [barcodeScan, setBarcodeScan] = useState({});
+  const [barcodePrintInfo, setBarcodePrintInfo] = useState({});
+
+  const refBarcodeScan = useRef(null);
+  const refBarcodeTimeStamp = useRef(null);
+
   // const [require, setRequire] = useState({
   //   prod_id: "",
   //   prod_cd: "",
@@ -95,6 +102,7 @@ function SubdivisionPanel() {
   const resetRequire = () => {
     prodID.current = "";
     prodCD.current = "";
+    prodNM.current = "";
     date.current = "";
     lot.current = "";
     workSubdivisionID.current = "";
@@ -171,6 +179,7 @@ function SubdivisionPanel() {
       if (rowID !== workSubdivisionID.current && rowID !== null) {
         prodID.current = Header.getValue(e?.rowKey, "prod_id");
         prodCD.current = Header.getValue(e?.rowKey, "prod_cd");
+        prodNM.current = Header.getValue(e?.rowKey, "prod_nm");
         date.current = Header.getValue(e?.rowKey, "subdivision_date");
         lot.current = Header.getValue(e?.rowKey, "lot_no");
         setTotalQty(Header.getValue(e?.rowKey, "total_qty"));
@@ -189,6 +198,7 @@ function SubdivisionPanel() {
       const data = e?.instance?.store?.data?.rawData[e?.rowKey];
       prodID.current = data.prod_id;
       prodCD.current = data.prod_cd;
+      prodNM.current = data.prod_nm;
       date.current = DateTime().dateFull;
       setTotalQty("0");
       lot.current = "";
@@ -308,6 +318,9 @@ function SubdivisionPanel() {
   const handleEnd = async () => {
     try {
       const result = await restAPI.patch(restURI.subdivision + `/${workSubdivisionID.current}/complete`);
+      const headerLot = result?.data?.data?.rows[0].lot_no;
+      const referenceID = result?.data?.data?.rows[0].work_subdivision_id;
+      const date = result?.data?.data?.rows[0].subdivision_date;
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
@@ -315,10 +328,46 @@ function SubdivisionPanel() {
         severity: "success",
         location: "bottomRight",
       });
-      resetRequire();
-      resetScaleInfo();
-      setIsLockScale(true);
-      setIsEnd(false);
+
+      try {
+        const result = await restAPI.post(restURI.createBarcode, {
+          barcode_type: "SUBDIVISION",
+          reference_id: referenceID,
+        });
+        console.log(prodCD.current);
+        console.log(prodNM.current);
+        console.log(headerLot);
+        console.log(String(totalQty));
+        console.log(date);
+        console.log(result?.data?.data?.rows[0].barcode_no);
+
+        setBarcodePrintInfo({
+          ...barcodePrintInfo,
+          prodCD: prodCD.current,
+          prodNM: prodNM.current,
+          lot: headerLot,
+          qty: String(totalQty),
+          date: date,
+          createBarcode: result?.data?.data?.rows[0].barcode_no,
+        });
+
+        resetRequire();
+        resetScaleInfo();
+        setIsLockScale(true);
+        setIsEnd(false);
+
+        return true;
+        // handlePrint();
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+        return false;
+      }
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -327,6 +376,7 @@ function SubdivisionPanel() {
         severity: "error",
         location: "bottomRight",
       });
+      return false;
     }
   };
   const onClickSelect = (e) => {
@@ -394,7 +444,15 @@ function SubdivisionPanel() {
   `);
     printWindow.document.close();
     printWindow.print();
-    printWindow.close();
+
+    const closePrintWindow = () => {
+      printWindow.document.write("");
+      printWindow.document.close();
+      printWindow.removeEventListener("unload", closePrintWindow);
+      printWindow.close();
+    };
+
+    printWindow.addEventListener("unload", closePrintWindow);
   };
   const onClickNext = async () => {
     if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
@@ -412,13 +470,33 @@ function SubdivisionPanel() {
         ];
         try {
           const result = await restAPI.post(restURI.subdivisionDetail, raw);
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: result?.data?.message,
-            severity: "success",
-            location: "bottomRight",
-          });
+          const referenceID = result?.data?.data?.rows[0].work_subdivision_detail_id;
+          try {
+            const result = await restAPI.post(restURI.createBarcode, {
+              barcode_type: "SUBDIVISION_DETAIL",
+              reference_id: referenceID,
+            });
+
+            setBarcodePrintInfo({
+              ...barcodePrintInfo,
+              prodCD: prodCD.current,
+              prodNM: prodNM.current,
+              lot: lot.current,
+              qty: String(scaleInfo.after),
+              date: date.current,
+              createBarcode: result?.data?.data?.rows[0].barcode_no,
+            });
+          } catch (err) {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: err?.response?.data?.message,
+              severity: "error",
+              location: "bottomRight",
+            });
+            return;
+          }
+
           try {
             const result = await restAPI.get(
               restURI.subdivisionDetail + `?work_subdivision_id=${workSubdivisionID.current}`
@@ -431,7 +509,6 @@ function SubdivisionPanel() {
               location: "bottomRight",
             });
             const resultData = result?.data?.data?.rows;
-            console.log(resultData);
             setGridDataHeader(resultData);
             resetScaleInfo();
             let totalQty = 0;
@@ -487,11 +564,6 @@ function SubdivisionPanel() {
     setIsBarcodeScanOpen(false);
   };
 
-  const [barcodeScan, setBarcodeScan] = useState({});
-  const [barcodePrint, setBarcodePrint] = useState({});
-  const refBarcodeScan = useRef(null);
-  const refBarcodeTimeStamp = useRef(null);
-
   //🔸timeStamp 2개를 받아서 서로 몇 초 차이 나는지 구하는 함수
   function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {
     if (timeStamp1 === null) return 0;
@@ -509,6 +581,7 @@ function SubdivisionPanel() {
         //시작된 ID와 비교해서 같은 경우만 입력
         prodID.current = data.prod_id;
         prodCD.current = data.prod_cd;
+        prodNM.current = data.prod_nm;
         date.current = DateTime().dateFull;
         lot.current = lotNo;
         onGetWorkSubdivisionID();
@@ -594,6 +667,27 @@ function SubdivisionPanel() {
   const onClickReadOnly = () => {
     setIsBarcodeScanOpen(true);
   };
+
+  const BarcodePrint = useMemo(() => {
+    console.log("★★★★★★★★★★★★★★★★★barcodePrintInfo");
+    console.log(barcodePrintInfo.prodCD);
+    console.log(barcodePrintInfo.prodNM);
+    console.log(barcodePrintInfo.lot);
+    console.log(barcodePrintInfo.qty);
+    console.log(barcodePrintInfo.date);
+    console.log(barcodePrintInfo.createBarcode);
+    return (
+      <SubdivisionBarcodePrint
+        productCode={barcodePrintInfo.prodCD || ""}
+        partName={barcodePrintInfo.prodNM || ""}
+        lotNo={barcodePrintInfo.lot || ""}
+        weight={barcodePrintInfo.qty || ""}
+        legDate={barcodePrintInfo.date || ""}
+        barcodeValue={barcodePrintInfo.createBarcode || "Ready"}
+        componentRef={componentRef}
+      />
+    );
+  }, [barcodePrintInfo, componentRef.current]);
 
   return (
     <ContentsArea flexColumn={false}>
@@ -710,7 +804,7 @@ function SubdivisionPanel() {
                   placeHolder={"바코드 혹은 투입LOT 수기입력 시 클릭"}
                   size={"26px"}
                   onClickReadOnly={onClickReadOnly}
-                  value={scaleInfo.inputLot}
+                  value={scaleInfo.inputLot || ""}
                   onChange={handleChange}
                 />
                 <InputPaper
@@ -722,7 +816,7 @@ function SubdivisionPanel() {
                   nameSize={"20px"}
                   namePositionTop={"-30px"}
                   size={"70px"}
-                  value={scaleInfo.before}
+                  value={scaleInfo.before || ""}
                   onTextChange={handleChange}
                   readOnly={false}
                 />
@@ -735,7 +829,7 @@ function SubdivisionPanel() {
                   nameSize={"20px"}
                   namePositionTop={"-30px"}
                   size={"70px"}
-                  value={scaleInfo.after}
+                  value={scaleInfo.after || ""}
                   onTextChange={handleChange}
                   readOnly={false}
                 />
@@ -903,15 +997,7 @@ function SubdivisionPanel() {
           }}
         />
       )}
-      <SubdivisionBarcodePrint
-        productCode={"productCode"}
-        partName={"partName"}
-        lotNo={"lotNo"}
-        weight={"weight"}
-        legDate={"legDate"}
-        barcodeValue={"barcodeValue"}
-        componentRef={componentRef}
-      />
+      {BarcodePrint}
     </ContentsArea>
   );
 }
