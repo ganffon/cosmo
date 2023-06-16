@@ -22,7 +22,7 @@ export const TopWrap = styled("div")`
   gap: 5px;
 `;
 export const BottomWrap = styled("div")`
-  height: 45%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -46,30 +46,30 @@ export const ContentsRight = styled("div")`
   padding: 10px 10px 10px 5px;
 `;
 export const SearchWrap = styled("div")`
-  height: 70px;
+  background: #ffffff;
+  height: 60px;
   width: 100%;
   display: flex;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 5px 5px 10px;
+  padding: 5px 5px 5px 10px;
 `;
 export const ContentsHeader = styled("div")`
-  height: 40px;
+  height: 97%;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+  margin-top: 5px;
+  background: #ffffff;
+
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridHeaderWrap = styled("div")`
-  height: calc(100% - 130px);
+  height: calc(100% - 40px);
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   padding: 10px 10px 10px 10px;
 `;
 export const SearchInfoWrap = styled("div")`
@@ -91,16 +91,26 @@ export const SearchRightWrap = styled("div")`
 export const GridDetailWrap = styled("div")`
   height: calc(100% - 40px);
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   padding: 10px 10px 10px 10px;
 `;
 export const ButtonWrap = styled("div")`
   display: flex;
+  width: 95%;
+  padding-left: 5px;
+  padding-top: 10px;
   justify-content: end;
   align-items: center;
 `;
+
+export const SearchButtonWrap = styled("div")`
+  display: flex;
+  width: 100%;
+  padding-right: 5px;
+  justify-content: end;
+  align-items: center;
+`;
+
 export const SearchRightTopWrap = styled("div")`
   height: 50%;
   display: flex;
@@ -139,4 +149,23 @@ export const TitleMid = styled("div")`
   align-items: center;
   font-family: NotoSansKR_B;
   padding-left: 20px;
+`;
+
+export const TitleBottom = styled("div")`
+  display: flex;
+  align-items: center;
+  font-family: NotoSansKR_B;
+  padding-left: 20px;
+`;
+
+export const InputPaperWrap = styled("div")`
+  padding-top: 5px;
+  padding-left: 10px;
+`;
+
+export const TitleButtonWrap = styled("div")`
+  display: flex;
+`;
+export const InnerButtonWrap = styled("div")`
+  padding-right: 10px;
 `;

@@ -48,7 +48,7 @@ export const LeftBox = styled("div")`
 `;
 export const Welcome = styled("div")`
   font-size: 36px;
-  color: white;
+  color: #ffe500;
   font-family: NotoSansKR_B;
   text-shadow: 2px 0 0 #000, 0 2px 0 #000, -2px 0 0 #000, 0 -2px 0 #000;
   margin-top: 20px;

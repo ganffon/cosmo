@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import SaveIcon from "@mui/icons-material/Save";
 import LogoutIcon from "@mui/icons-material/Logout";
 import UTurnLeftIcon from "@mui/icons-material/UTurnLeft";
+import BtnComponent from "components/button/BtnComponent";
 
 import * as S from "./Button.styled";
 
@@ -31,7 +32,7 @@ function ButtonModule(props) {
   } = props;
   const { authMenuCode } = useContext(LayoutContext);
   return (
-    <>
+    <S.ButtonWrap>
       {newBtn ? (
         <S.ButtonSet
           variant="contained"
@@ -70,39 +71,27 @@ function ButtonModule(props) {
       ) : null}
 
       {addRowBtn ? (
-        <S.ButtonSet
-          startIcon={<AddIcon />}
-          variant="contained"
-          size="small"
-          color="success"
+        <BtnComponent
+          btnName={"AddRow"}
+          width={"100px"}
           onClick={onClickAddRow}
-          width={"130px"}
         >
           ADD ROW
-        </S.ButtonSet>
+        </BtnComponent>
       ) : null}
       {cancelRowBtn ? (
-        <S.ButtonSet
-          startIcon={<UTurnLeftIcon />}
-          variant="contained"
-          size="small"
-          color="error"
+        <BtnComponent
+          btnName={"CancelRow"}
+          width={"100px"}
           onClick={onClickCancelRow}
-          width={"130px"}
         >
           CANCEL ROW
-        </S.ButtonSet>
+        </BtnComponent>
       ) : null}
       {saveBtn ? (
-        <S.ButtonSet
-          variant="contained"
-          size="small"
-          startIcon={<SaveIcon />}
-          color="secondary"
-          onClick={onClickSave}
-        >
+        <BtnComponent btnName={"Save"} width={"100px"} onClick={onClickSave}>
           SAVE
-        </S.ButtonSet>
+        </BtnComponent>
       ) : null}
       {exitBtn ? (
         <S.ButtonSet
@@ -126,7 +115,7 @@ function ButtonModule(props) {
           SEARCH
         </S.ButtonSet>
       ) : null}
-    </>
+    </S.ButtonWrap>
   );
 }
 

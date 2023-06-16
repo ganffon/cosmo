@@ -33,7 +33,7 @@ function InputNew(props) {
     <S.Wrap>
       <S.InputWrapDivide>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸점검일자</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>점검일자</S.InfoTitle>
           <S.DatePicker
             id="checkDate"
             className="date"
@@ -49,7 +49,7 @@ function InputNew(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸라인</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>라인</S.InfoTitle>
           <InputPaper
             width={"220px"}
             height={"40px"}
@@ -61,7 +61,7 @@ function InputNew(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸품목코드</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>품목코드</S.InfoTitle>
           <InputPaper
             width={"220px"}
             height={"40px"}
@@ -70,7 +70,7 @@ function InputNew(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸품목</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>품목</S.InfoTitle>
           <InputPaper
             width={"220px"}
             height={"40px"}
@@ -81,7 +81,7 @@ function InputNew(props) {
       </S.InputWrapDivide>
       <S.InputWrapDivide>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸지시번호</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>지시번호</S.InfoTitle>
           <InputPaper
             width={"220px"}
             height={"40px"}
@@ -90,7 +90,7 @@ function InputNew(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸오전 조</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>오전 조</S.InfoTitle>
           <InputPaper
             width={"220px"}
             height={"40px"}
@@ -102,7 +102,7 @@ function InputNew(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸오후 조</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>오후 조</S.InfoTitle>
           <InputPaper
             width={"220px"}
             height={"40px"}
@@ -114,7 +114,7 @@ function InputNew(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸야간 조</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>야간 조</S.InfoTitle>
           <InputPaper
             width={"220px"}
             height={"40px"}
@@ -128,10 +128,10 @@ function InputNew(props) {
       </S.InputWrapDivide>
       <S.InputWrapDivide>
         <S.InputWrap>
-          <S.InfoTitle width={"110px"}>🔸비고</S.InfoTitle>
+          <S.InfoTitle width={"110px"}>비고</S.InfoTitle>
           <InputPaper
             id={"remark"}
-            width={"1330px"}
+            width={"1485px"}
             height={"40px"}
             value={isEditMode ? mainInfo.remark || "" : textChange.remark || ""}
             size={"20px"}

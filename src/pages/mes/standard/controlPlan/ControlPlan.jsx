@@ -24,10 +24,12 @@ import ModalControlPlan from "./ModalControlPlan";
 import restAPI from "api/restAPI";
 import ContentsAreaHidden from "components/layout/common/ContentsAreaHidden";
 import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function ControlPlan() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
@@ -95,9 +97,18 @@ function ControlPlan() {
     actSearchHeaderIC();
   }, []);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
+    isEditModeHeader,
+    refGridHeader
+  );
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
+    isEditModeDetail,
+    refGridDetail
+  );
 
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
@@ -366,22 +377,15 @@ function ControlPlan() {
     modalDetailClickRowKey = null;
   };
   const onClickModalSave = () => {
-    if (refGridModalDetail?.current?.gridInst?.getRowCount() !== 0) {
-      actSave();
-    }
+    actSave();
   };
   function onClickModalClose() {
     setIsModalOpen(false);
+    setIsNewDetail(false);
     setIsEditModeHeader(false);
     actSearchHeaderIC(true);
     setGridDataModalDetail([]);
   }
-  function onClickModalDetailClose() {
-    setIsModalOpen(false);
-    setIsNewDetail(false);
-    setGridDataModalDetail([]);
-  }
-
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const onDblClickGridModalHeader = (e) => {
@@ -477,7 +481,10 @@ function ControlPlan() {
       columnName = ["prod_cd", "prod_nm"];
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
-          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
+          return [
+            ...prevList,
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]],
+          ];
         });
       }
     } else {
@@ -515,13 +522,16 @@ function ControlPlan() {
       try {
         setIsBackDrop(true);
         const header = await restAPI.get(
-          restURI.inspDocument + `?line_id=${lineId}&prod_cd=${prodCd}&prod_nm=${prodNm}`
+          restURI.inspDocument +
+            `?line_id=${lineId}&prod_cd=${prodCd}&prod_nm=${prodNm}`
         );
         if (header?.data?.data?.count !== 0) {
           const documentId = header?.data?.data?.rows[0].insp_document_id;
 
           try {
-            const detail = await restAPI.get(restURI.inspDocumentDetail + `?insp_document_id=${documentId}`);
+            const detail = await restAPI.get(
+              restURI.inspDocumentDetail + `?insp_document_id=${documentId}`
+            );
 
             setGridDataModalDetail(detail?.data?.data?.rows);
           } catch (err) {
@@ -593,7 +603,6 @@ function ControlPlan() {
         onClickModalSave={onClickModalSave}
         onClickModalClose={onClickModalClose}
         onClickEditModalSave={onClickEditModalSave}
-        onClickModalDetailClose={onClickModalDetailClose}
         onDataLoad={onDataLoad}
         columnsModalHeader={columnsModalHeader}
         columnsModalDetail={columnsModalDetail}
@@ -629,10 +638,13 @@ function ControlPlan() {
               onChange={(_, newValue) => {
                 setComboValue({
                   ...comboValue,
-                  line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                  line_id:
+                    newValue?.line_id === undefined ? null : newValue?.line_id,
                 });
               }}
-              renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+              renderInput={(params) => (
+                <TextField {...params} label={CN.line_nm} size="small" />
+              )}
               onKeyDown={onKeyDown}
             />
 
@@ -671,7 +683,10 @@ function ControlPlan() {
             {isEditModeHeader ? (
               <>
                 <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
-                <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+                <BtnComponent
+                  btnName={"Cancel"}
+                  onClick={onClickEditModeExit}
+                />
               </>
             ) : (
               <>
@@ -684,10 +699,20 @@ function ControlPlan() {
         <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
       </S.ShadowBoxHeader>
       <S.ShadowBoxDetail>
-        <S.ShadowBoxInputInfo isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+        <S.ShadowBoxInputInfo
+          isMenuSlide={isMenuSlide}
+          isAllScreen={isAllScreen}
+        >
           <S.SearchWrap>
             {inputInfo.map((v, idx) => {
-              return <InputPaper key={v.id} id={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
+              return (
+                <InputPaper
+                  key={v.id}
+                  id={v.id}
+                  name={v.name}
+                  value={inputInfoValue[idx] || ""}
+                />
+              );
             })}
           </S.SearchWrap>
         </S.ShadowBoxInputInfo>
@@ -696,8 +721,14 @@ function ControlPlan() {
           <S.ButtonWrap>
             {isEditModeHeader ? (
               <>
-                <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
-                <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />
+                <BtnComponent
+                  btnName={"Save"}
+                  onClick={onClickEditSaveDetail}
+                />
+                <BtnComponent
+                  btnName={"Cancel"}
+                  onClick={onClickEditExitDetail}
+                />
               </>
             ) : (
               <>
@@ -740,11 +771,17 @@ function ControlPlan() {
         />
       ) : null}
       {isDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          headerClickRowID={headerClickRowID}
-          actSearchDetail={actSearchDetail}
-          actDeleteDetail={actDeleteDetail}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={actDeleteDetail}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

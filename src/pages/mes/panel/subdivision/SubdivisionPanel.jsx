@@ -18,6 +18,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import BtnPanel from "components/button/BtnPanel";
 import BarcodeScan from "./BarcodeScan";
+import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
 
 function SubdivisionPanel() {
   LoginStateChk();
@@ -70,6 +71,7 @@ function SubdivisionPanel() {
   const refGridSelectDetail = useRef(null);
 
   const refBtnNext = useRef(null);
+  const componentRef = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
@@ -377,6 +379,23 @@ function SubdivisionPanel() {
       setIsBackDrop(false);
     }
   };
+  const handlePrint = () => {
+    const printWindow = window.open("", "_blank");
+    printWindow.document.open();
+    printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print</title>
+      </head>
+      <body>
+        ${componentRef?.current?.outerHTML}
+      </body>
+    </html>
+  `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+  };
   const onClickNext = async () => {
     if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
       if (scaleInfo.inputLot !== "" && scaleInfo.before !== "" && scaleInfo.after !== "") {
@@ -412,6 +431,7 @@ function SubdivisionPanel() {
               location: "bottomRight",
             });
             const resultData = result?.data?.data?.rows;
+            console.log(resultData);
             setGridDataHeader(resultData);
             resetScaleInfo();
             let totalQty = 0;
@@ -421,6 +441,8 @@ function SubdivisionPanel() {
             setTotalQty(totalQty);
             setIsBarcodeScanOpen(true);
             refBtnNext?.current?.blur();
+
+            handlePrint();
           } catch (err) {
             setIsSnackOpen({
               ...isSnackOpen,
@@ -466,6 +488,7 @@ function SubdivisionPanel() {
   };
 
   const [barcodeScan, setBarcodeScan] = useState({});
+  const [barcodePrint, setBarcodePrint] = useState({});
   const refBarcodeScan = useRef(null);
   const refBarcodeTimeStamp = useRef(null);
 
@@ -482,34 +505,24 @@ function SubdivisionPanel() {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.barcodeERP + `?lot_no=${lotNo}`);
       const data = result?.data?.data?.rows[0];
-      if (prodID.current === "") {
-        //prodID 비어 있으면 신규 시작
-        if (prodID.current === data.prod_id || prodID.current === "") {
-          //시작된 ID와 비교해서 같은 경우만 입력
-          prodID.current = data.prod_id;
-          prodCD.current = data.prod_cd;
-          date.current = DateTime().dateFull;
-          lot.current = lotNo;
-          onGetWorkSubdivisionID();
-          setScaleInfo({ ...scaleInfo, inputLot: lotNo });
+      if (prodID.current === data.prod_id || prodID.current === "") {
+        //시작된 ID와 비교해서 같은 경우만 입력
+        prodID.current = data.prod_id;
+        prodCD.current = data.prod_cd;
+        date.current = DateTime().dateFull;
+        lot.current = lotNo;
+        onGetWorkSubdivisionID();
+        setScaleInfo({ ...scaleInfo, inputLot: lotNo });
 
-          onCloseBarcodeScan();
-          if (isLockScale === true) {
-            setIsLockScale(false);
-          }
-        } else {
-          setBarcodeScan({ ...barcodeScan, value: "현재 진행중인 작업과 다른 품목입니다." });
+        onCloseBarcodeScan();
+        if (isLockScale === true) {
+          setIsLockScale(false);
         }
+      } else {
+        setBarcodeScan({ ...barcodeScan, value: "현재 진행중인 작업과 다른 품목입니다.", lot: "", className: "red" });
       }
     } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-        location: "bottomRight",
-      });
-      resetRequire();
+      setBarcodeScan({ ...barcodeScan, value: err?.response?.data?.message, lot: "", className: "red" });
     } finally {
       setIsBackDrop(false);
     }
@@ -553,7 +566,7 @@ function SubdivisionPanel() {
 
       refBarcodeTimeStamp.current = e?.timeStamp;
       if (e?.key === "Enter") {
-        setBarcodeScan({ ...barcodeScan, value: barcodeNo.current });
+        setBarcodeScan({ ...barcodeScan, value: barcodeNo.current, className: "" });
         /**
          * ✅ SQM LITHIUM 바코드
          *    자릿수 : 52
@@ -563,10 +576,10 @@ function SubdivisionPanel() {
           const lot = barcodeNo.current.slice(20, 30);
           transferBarcode(lot);
         } else {
-          if (barcodeScan.lot !== "") {
+          if (barcodeScan.lot) {
             onLotConfirm();
           } else {
-            setBarcodeScan({ ...barcodeScan, value: "정의되지 않은 바코드입니다." });
+            setBarcodeScan({ ...barcodeScan, value: "정의되지 않은 바코드입니다.", lot: "", className: "red" });
           }
         }
         barcodeNo.current = "";
@@ -788,7 +801,7 @@ function SubdivisionPanel() {
           />
         </S.DataHandleBox>
       </S.ContentsRight>
-      {isBarcodeScanOpen ? (
+      {isBarcodeScanOpen && (
         <BarcodeScan
           width={"900px"}
           height={"300px"}
@@ -797,8 +810,8 @@ function SubdivisionPanel() {
           setBarcodeScan={setBarcodeScan}
           barcodeScan={barcodeScan}
         />
-      ) : null}
-      {isModalSelectOpen ? (
+      )}
+      {isModalSelectOpen && (
         <ModalSelect
           width={modalSelectSize.width}
           height={modalSelectSize.height}
@@ -811,8 +824,8 @@ function SubdivisionPanel() {
           refSelectGrid={refGridSelect}
           onDblClickGridSelect={onDblClickGridSelect}
         />
-      ) : null}
-      {isModalSubdivisionOpen ? (
+      )}
+      {isModalSubdivisionOpen && (
         <ModalSubdivision
           width={"60%"}
           onClickModalClose={onClickModalSubdivisionClose}
@@ -831,10 +844,10 @@ function SubdivisionPanel() {
           setIsSnackOpen={setIsSnackOpen}
           isSnackOpen={isSnackOpen}
         />
-      ) : null}
+      )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
-      {isDelete ? (
+      {isDelete && (
         <NoticeAlertModal
           textContent={"모든 작업을 취소하고 삭제하시겠습니까?"}
           textFontSize={"20px"}
@@ -847,8 +860,8 @@ function SubdivisionPanel() {
             setIsDelete(false);
           }}
         />
-      ) : null}
-      {isHold ? (
+      )}
+      {isHold && (
         <NoticeAlertModal
           textContent={"모든 작업을 보류시키겠습니까?"}
           textFontSize={"20px"}
@@ -862,8 +875,8 @@ function SubdivisionPanel() {
             setIsHold(false);
           }}
         />
-      ) : null}
-      {isEnd ? (
+      )}
+      {isEnd && (
         <NoticeAlertModal
           textContent={"모든 작업을 완료하고 마감하시겠습니까?"}
           textFontSize={"20px"}
@@ -877,8 +890,8 @@ function SubdivisionPanel() {
             setIsEnd(false);
           }}
         />
-      ) : null}
-      {isWarning.open ? (
+      )}
+      {isWarning.open && (
         <NoticeAlertModal
           textContent={isWarning.message}
           textFontSize={"20px"}
@@ -889,7 +902,16 @@ function SubdivisionPanel() {
             setIsWarning(false);
           }}
         />
-      ) : null}
+      )}
+      <SubdivisionBarcodePrint
+        productCode={"productCode"}
+        partName={"partName"}
+        lotNo={"lotNo"}
+        weight={"weight"}
+        legDate={"legDate"}
+        barcodeValue={"barcodeValue"}
+        componentRef={componentRef}
+      />
     </ContentsArea>
   );
 }

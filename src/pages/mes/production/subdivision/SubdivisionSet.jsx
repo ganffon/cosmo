@@ -112,10 +112,11 @@ function SubdivisionSet(
       isNewDetail,
       C.WIDTH_SHORT
     ),
-    col.select("prod_id", CN.prod_id, isNewDetail, C.WIDTH_SHORT),
-    col.select("prod_cd", CN.prod_cd, isNewDetail, C.WIDTH_SHORT),
-    col.select("prod_nm", CN.prod_nm, isNewDetail, C.WIDTH_SHORT),
-    col.text("lot_no", CN.lot_no, isNewDetail, true, C.WIDTH_MIDDLE),
+    col.select("prod_id", CN.prod_id, true, C.WIDTH_SHORT),
+    col.select("prod_cd", CN.prod_cd, true, C.WIDTH_SHORT),
+    col.select("prod_nm", CN.prod_nm, true, C.WIDTH_SHORT),
+    col.text("lot_no", CN.lot_no, true, true, C.WIDTH_MIDDLE),
+
     col.number(
       "total_qty",
       CN.total_qty,
@@ -123,7 +124,8 @@ function SubdivisionSet(
       C.WIDTH_SHORT,
       isNewDetail ? false : true
     ),
-    col.text("remark", CN.remark, isNewDetail, false, C.WIDTH_MIDDLE),
+
+    col.text("remark", CN.remark, true, false, C.WIDTH_MIDDLE),
   ];
   const columnsModalDetail = [
     col.id("work_subdivision_id", CN.work_subdivision_id, C.HIDDEN_ID),

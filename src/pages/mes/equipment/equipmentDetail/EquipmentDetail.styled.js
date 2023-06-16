@@ -27,9 +27,9 @@ export const ToolWrap = styled("div")`
 `;
 export const SearchWrap = styled("div")`
   display: flex;
-  flex-direction: column;
 `;
 export const ComboWrap = styled("div")`
+  padding-top: 5px;
   display: flex;
 `;
 export const ComboBox = styled(Autocomplete)`
@@ -58,5 +58,6 @@ export const ShadowBoxGrid = styled("div")`
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 50px);
+  padding: 5px;
 `;

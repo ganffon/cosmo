@@ -24,10 +24,13 @@ import * as uSave from "custom/useSave";
 import ModalSelect from "components/modal/ModalSelect";
 import * as uDelete from "custom/useDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function ProductionDownTime() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
 
   const SWITCH_NAME_01 = "productionDownTime";
 
@@ -70,10 +73,19 @@ function ProductionDownTime() {
     rowHeadersNum,
   } = ProductionDownTimeSet(isEditMode);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
@@ -141,8 +153,16 @@ function ProductionDownTime() {
     const mainGrid = refModalGrid?.current?.gridInst;
     mainGrid.appendRow();
 
-    mainGrid?.setValue(mainGrid.store.data.rawData.length - 1, "start_date", DateTime().dateFull);
-    mainGrid?.setValue(mainGrid.store.data.rawData.length - 1, "downtime_date", DateTime().dateFull);
+    mainGrid?.setValue(
+      mainGrid.store.data.rawData.length - 1,
+      "start_date",
+      DateTime().dateFull
+    );
+    mainGrid?.setValue(
+      mainGrid.store.data.rawData.length - 1,
+      "downtime_date",
+      DateTime().dateFull
+    );
   };
 
   const onClickModalCancelRow = () => {
@@ -222,7 +242,9 @@ function ProductionDownTime() {
       setColumnsSelect(columnProcEquipSelect);
       setIsModalSelectOpen(true);
       actSelectEquipProc();
-    } else if (Condition(e, ["downtime_id", "downtime_type_nm", "downtime_nm"])) {
+    } else if (
+      Condition(e, ["downtime_id", "downtime_type_nm", "downtime_nm"])
+    ) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalSelectDownTime");
       setColumnsSelect(columnDownTimeSelect);
@@ -245,7 +267,9 @@ function ProductionDownTime() {
         setColumnsSelect(columnProcEquipSelect);
         setIsModalSelectOpen(true);
         actSelectEquipProc();
-      } else if (Condition(e, ["downtime_id", "downtime_type_nm", "downtime_nm"])) {
+      } else if (
+        Condition(e, ["downtime_id", "downtime_type_nm", "downtime_nm"])
+      ) {
         setDblClickRowKey(e?.rowKey);
         setDblClickGrid("GridSelectDownTime");
         setColumnsSelect(columnDownTimeSelect);
@@ -299,7 +323,11 @@ function ProductionDownTime() {
     let columnName;
     const columnNameLine = ["line_id", "line_nm"];
     const columnNameProcEquip = ["proc_id", "proc_nm", "equip_id", "equip_nm"];
-    const columnNameDownTime = ["downtime_id", "downtime_type_nm", "downtime_nm"];
+    const columnNameDownTime = [
+      "downtime_id",
+      "downtime_type_nm",
+      "downtime_nm",
+    ];
 
     if (dblClickGrid === "ModalSelectLine") {
       refGrid = refModalGrid;
@@ -352,7 +380,11 @@ function ProductionDownTime() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+            <LS.Date
+              datePickerSet={"range"}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             {inputSet.map((v) => (
               <InputSearch
                 key={v.id}
@@ -365,24 +397,25 @@ function ProductionDownTime() {
             ))}
           </S.SearchWrap>
           <S.ButtonWrap>
-            {isEditMode ? (
-              <ButtonSES
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonNEDS
-                onClickNew={onClickNew}
-                onClickEdit={onClickEdit}
-                onClickDelete={onClickDelete}
-                onClickSearch={onClickSearch}
-              />
-            )}
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <S.ButtonWrap>
+          {isEditMode ? (
+            <>
+              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+            </>
+          ) : (
+            <>
+              <BtnComponent btnName={"New"} onClick={onClickNew} />
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            </>
+          )}
+        </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}
@@ -401,7 +434,18 @@ function ProductionDownTime() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
+        />
       ) : null}
       {isModalOpen ? (
         <ModalNew

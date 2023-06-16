@@ -9,6 +9,7 @@ export const HeaderBox = styled("div")`
   display: flex;
   justify-content: space-between;
   background-color: ${APP_BAR_COLOR};
+  border: solid 1px #e0e0e0;
   border-radius: 10px 10px 0px 0px;
   height: 40px;
 `;
@@ -19,7 +20,7 @@ export const ButtonBox = styled("div")`
   grid-row: 6 / 6;
   height: 40px;
   padding-right: 15px;
-  padding-top: 9px;
+  padding-bottom: 5px;
 `;
 export const GridTopTitleBox = styled("div")`
   width: 100%;
@@ -35,9 +36,7 @@ export const GridBoxTop = styled("div")`
   height: 100%;
   grid-column: 1 / -1;
   grid-row: 3 / 6;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   padding: 0px 10px 10px 10px;
 `;
 export const GridBoxBottom = styled("div")`

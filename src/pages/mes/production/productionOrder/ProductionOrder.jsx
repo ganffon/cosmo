@@ -13,7 +13,7 @@ import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
 import BackDrop from "components/backdrop/BackDrop";
-
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
 import * as uSearch from "custom/useSearch";
@@ -25,11 +25,13 @@ import * as S from "./ProductionOrder.styled";
 import ModalNew from "components/modal/ModalNew";
 import ModalDate from "components/modal/ModalDate";
 import restAPI from "api/restAPI";
-import ContentsArea from "components/layout/common/ContentsArea";
+import ContentsArea from "components/layout/common/ContentsAreaHidden";
+import BtnComponent from "components/button/BtnComponent";
 
 function ProductionOrder() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
 
   const refGridHeader = useRef(null);
   const refGridMid = useRef(null);
@@ -68,22 +70,34 @@ function ProductionOrder() {
   const SWITCH_NAME_02 = "orderInput";
   const SWITCH_NAME_03 = "orderDetail";
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditModeMid,
+    refGridMid
+  );
 
-  const [disableRowToggleMid, setDisableRowToggleMid] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
+  const [disableRowToggleMid, setDisableRowToggleMid] =
+    disRow.useDisableRowCheck(isEditModeMid, refGridMid);
 
-  const [disableRowToggleTop, setDisableRowToggleTop] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disableRowToggleTop, setDisableRowToggleTop] =
+    disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
 
-  const [disableRowToggleBottom, setDisableRowToggleBottom] = disRow.useDisableRowCheck(
+  const [disableRowToggleBottom, setDisableRowToggleBottom] =
+    disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
+
+  const [disRowTop, setDisRowTop] = disRow.useDisableRowCheck(
+    isEditModeHeader,
+    refGridHeader
+  );
+
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
+    isEditModeMid,
+    refGridMid
+  );
+
+  const [disRowTopBottom, setDisRowBottom] = disRow.useDisableRowCheck(
     isEditModeBottom,
     refGridBottom
   );
-
-  const [disRowTop, setDisRowTop] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
-
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
-
-  const [disRowTopBottom, setDisRowBottom] = disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -119,7 +133,10 @@ function ProductionOrder() {
     refGridBottom?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
@@ -227,7 +244,12 @@ function ProductionOrder() {
                 readURI = "?";
                 cnt++;
               }
-              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
+              readURI =
+                readURI +
+                inputBoxID[i] +
+                "=" +
+                inputTextChange[inputBoxID[i]] +
+                "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -343,11 +365,22 @@ function ProductionOrder() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameRequest = ["request_id", "request_no", "prod_id", "prod_cd", "prod_nm"];
+    const columnNameRequest = [
+      "request_id",
+      "request_no",
+      "prod_id",
+      "prod_cd",
+      "prod_nm",
+    ];
 
     const columnNameLineDept = ["line_dept_id", "line_dept_nm", "line_id"];
 
-    const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
+    const columnNameInspItem = [
+      "insp_item_type_id",
+      "insp_item_type_nm",
+      "insp_item_id",
+      "insp_item_nm",
+    ];
     const prodCode = e?.instance?.store?.data?.rawData[e?.rowKey].prod_cd;
     let prodId;
     if (prodCode && headerModalControl === "request") {
@@ -542,85 +575,163 @@ function ProductionOrder() {
   return (
     <ContentsArea>
       <S.SearchCondition>
-        <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-        {inputSet.map((v) => (
-          <S.InputS
-            key={v.id}
-            id={v.id}
-            name={v.name}
-            value={inputSearchValue || ""}
-            handleInputTextChange={handleInputTextChange}
-            onClickSearch={onClickSearch}
-            onKeyDown={onKeyDown}
+        <>
+          <S.Date
+            datePickerSet={"range"}
+            dateText={dateText}
+            setDateText={setDateText}
           />
-        ))}
+          {inputSet.map((v) => (
+            <S.InputS
+              key={v.id}
+              id={v.id}
+              name={v.name}
+              value={inputSearchValue || ""}
+              handleInputTextChange={handleInputTextChange}
+              onClickSearch={onClickSearch}
+              onKeyDown={onKeyDown}
+            />
+          ))}
+        </>
+        <S.ButtonWrap>
+          <BtnComponent btnName={"Search"} onClick={onClickSearch} />
+        </S.ButtonWrap>
       </S.SearchCondition>
+
       <S.ContentTop>
-        <S.TitleMid>❇️ 생산품목</S.TitleMid>
-        <S.ButtonTop>
-          {isEditModeHeader ? (
-            <ButtonSES
-              onClickEditModeSave={onClickEditModeSaveHeader}
-              onClickEditModeExit={onClickEditModeExitHeader}
-              onClickSearch={onClickSearch}
-            />
-          ) : (
-            <ButtonNEDS
-              onClickNew={onClickNewHeader}
-              onClickEdit={onClickEditHeader}
-              onClickDelete={onClickDeleteHeader}
-              onClickSearch={onClickSearch}
-            />
-          )}
-        </S.ButtonTop>
+        <S.TitleButtonWrap>
+          <S.TitleMid>생산품목</S.TitleMid>
+          <S.ButtonTop>
+            {isEditModeHeader ? (
+              <>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Save"}
+                    onClick={onClickEditModeSaveHeader}
+                  />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Cancel"}
+                    onClick={onClickEditModeExitHeader}
+                  />
+                </S.InnerButtonWrap>
+              </>
+            ) : (
+              <>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"New"} onClick={onClickNewHeader} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Edit"} onClick={onClickEditHeader} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Delete"}
+                    onClick={onClickDeleteHeader}
+                  />
+                </S.InnerButtonWrap>
+              </>
+            )}
+          </S.ButtonTop>
+        </S.TitleButtonWrap>
+        <S.GridTopWrap>{GridTop}</S.GridTopWrap>
       </S.ContentTop>
-      <S.GridTopWrap>{GridTop}</S.GridTopWrap>
       <S.ContentMid>
-        <S.TitleMid>❇️ 투입품목</S.TitleMid>
-        <S.ButtonMid>
-          {isEditModeMid ? (
-            <ButtonSE onClickSave={onClickEditModeSaveMid} onClickExit={onClickEditModeExitMid} />
-          ) : (
-            <ButtonED onClickEdit={onClickEditMid} onClickDelete={onClickMidDelete} />
-          )}
-        </S.ButtonMid>
+        <S.TitleButtonWrap>
+          <S.TitleMid>투입품목</S.TitleMid>
+          <S.ButtonMid>
+            {isEditModeMid ? (
+              <>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Save"}
+                    onClick={onClickEditModeSaveMid}
+                  />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Cancel"}
+                    onClick={onClickEditModeExitMid}
+                  />
+                </S.InnerButtonWrap>
+              </>
+            ) : (
+              <>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Edit"} onClick={onClickEditMid} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Delete"} onClick={onClickMidDelete} />
+                </S.InnerButtonWrap>
+              </>
+            )}
+          </S.ButtonMid>
+        </S.TitleButtonWrap>
+        <S.GridMidWrap>
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsMid}
+            rowHeaders={rowHeadersNumCheck}
+            header={header}
+            data={gridDataMid}
+            draggable={false}
+            refGrid={refGridMid}
+            isEditMode={isEditModeMid}
+            onEditingFinish={onEditingFinishGridMid}
+          />
+        </S.GridMidWrap>
       </S.ContentMid>
-      <S.GridMidWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsMid}
-          rowHeaders={rowHeadersNumCheck}
-          header={header}
-          data={gridDataMid}
-          draggable={false}
-          refGrid={refGridMid}
-          isEditMode={isEditModeMid}
-          onEditingFinish={onEditingFinishGridMid}
-        />
-      </S.GridMidWrap>
+
       <S.ContentBottom>
-        <S.TitleBottom>❇️ 점검기준서</S.TitleBottom>
-        <S.ButtonBottom>
-          {isEditModeBottom ? (
-            <ButtonSE onClickSave={onClickEditModeSaveBottom} onClickExit={onClickEditModeExitBottom} />
-          ) : (
-            <ButtonED onClickEdit={onClickEditBottom} onClickDelete={onClickDeleteBottom} />
-          )}
-        </S.ButtonBottom>
+        <S.TitleButtonWrap>
+          <S.TitleBottom>점검기준서</S.TitleBottom>
+          <S.ButtonBottom>
+            {isEditModeBottom ? (
+              <>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Save"}
+                    onClick={onClickEditModeSaveBottom}
+                  />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Cancel"}
+                    onClick={onClickEditModeExitBottom}
+                  />
+                </S.InnerButtonWrap>
+              </>
+            ) : (
+              <>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Edit"} onClick={onClickEditBottom} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent
+                    btnName={"Delete"}
+                    onClick={onClickDeleteBottom}
+                  />
+                </S.InnerButtonWrap>
+              </>
+            )}
+          </S.ButtonBottom>
+        </S.TitleButtonWrap>
+        <S.GridBottomWrap>
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsBottom}
+            rowHeaders={rowHeadersNumCheck}
+            header={header}
+            data={gridDataBottom}
+            draggable={false}
+            refGrid={refGridBottom}
+            isEditMode={isEditModeBottom}
+            onEditingFinish={onEditingFinishGridBottom}
+          />
+        </S.GridBottomWrap>
       </S.ContentBottom>
-      <S.GridBottomWrap>
-        <GridSingle
-          columnOptions={columnOptions}
-          columns={columnsBottom}
-          rowHeaders={rowHeadersNumCheck}
-          header={header}
-          data={gridDataBottom}
-          draggable={false}
-          refGrid={refGridBottom}
-          isEditMode={isEditModeBottom}
-          onEditingFinish={onEditingFinishGridBottom}
-        />
-      </S.GridBottomWrap>
+
       {isModalHeaderOpen ? GridModal : null}
       {isModalSelectOpen ? (
         headerModalControl === "request" ? (
@@ -654,27 +765,45 @@ function ProductionOrder() {
         )
       ) : null}
       {isMidDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          headerClickRowID={headerRowID}
-          actSearchDetail={actSearchMidDI}
-          actDeleteDetail={actDeleteMid}
-          setIsDeleteAlertOpen={setIsMidDeleteAlertOpen}
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={actSearchMidDI}
+          onCancel={() => {
+            setIsMidDeleteAlertOpen(false);
+          }}
         />
       ) : null}
       {isBottomDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          headerClickRowID={headerRowID}
-          actSearchDetail={actSearchBottomDI}
-          actDeleteDetail={actDeleteBottom}
-          setIsDeleteAlertOpen={setIsBottomDeleteAlertOpen}
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={actDeleteBottom}
+          onCancel={() => {
+            setIsBottomDeleteAlertOpen(false);
+          }}
         />
       ) : null}
       {isTopDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          headerClickRowID={headerRowID}
-          actSearchDetail={onClickSearch}
-          actDeleteDetail={actDeleteTop}
-          setIsDeleteAlertOpen={setIsTopDeleteAlertOpen}
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={actDeleteTop}
+          onCancel={() => {
+            setIsTopDeleteAlertOpen(false);
+          }}
         />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
