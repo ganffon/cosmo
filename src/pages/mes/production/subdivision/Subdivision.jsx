@@ -31,8 +31,7 @@ import BtnComponent from "components/button/BtnComponent";
 
 function Subdivision() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeDetail, setIsEditModeDetail] = useState(false);
@@ -50,16 +49,14 @@ function Subdivision() {
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
   const barcodePrintDetail = async (rowKey) => {
-    const gridDetailId =
-      refGridDetail?.current?.gridInst.store.data.rawData[rowKey]
-        .work_subdivision_detail_id;
+    const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_detail_id;
 
     const data = GetPostParams("createSubdivisionDetailBarcode", gridDetailId);
     if (data !== undefined) {
       if (data.length !== 0) {
         setIsBackDrop(true);
         await restAPI
-          .post(restURI.createSubdivisionBarcode, data)
+          .post(restURI.createBarcode, data)
           .then((res) => {
             setIsSnackOpen({
               ...isSnackOpen,
@@ -72,9 +69,7 @@ function Subdivision() {
             setIsSnackOpen({
               ...isSnackOpen,
               open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
+              message: res?.message ? res?.message : res?.response?.data?.message,
               severity: "error",
             });
           })
@@ -86,16 +81,14 @@ function Subdivision() {
   };
 
   const barcodePrintHeader = async (rowKey) => {
-    const gridHeaderId =
-      refGridHeader?.current?.gridInst.store.data.rawData[rowKey]
-        .work_subdivision_id;
+    const gridHeaderId = refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_id;
 
-    const data = GetPostParams("createSubdivisionBarcode", gridHeaderId);
+    const data = GetPostParams("createBarcode", gridHeaderId);
     if (data !== undefined) {
       if (data.length !== 0) {
         setIsBackDrop(true);
         await restAPI
-          .post(restURI.createSubdivisionBarcode, data)
+          .post(restURI.createBarcode, data)
           .then((res) => {
             setIsSnackOpen({
               ...isSnackOpen,
@@ -108,9 +101,7 @@ function Subdivision() {
             setIsSnackOpen({
               ...isSnackOpen,
               open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
+              message: res?.message ? res?.message : res?.response?.data?.message,
               severity: "error",
             });
           })
@@ -133,13 +124,7 @@ function Subdivision() {
     columnsSelectProd,
     inputSet,
     inputInfo,
-  } = SubdivisionSet(
-    isEditModeHeader,
-    isEditModeDetail,
-    isNewDetail,
-    barcodePrintDetail,
-    barcodePrintHeader
-  );
+  } = SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail, barcodePrintDetail, barcodePrintHeader);
 
   const SWITCH_NAME_01 = "subdivision";
   const SWITCH_NAME_02 = "subdivisionDetail";
@@ -167,19 +152,10 @@ function Subdivision() {
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
   const [columnsSelect, setColumnsSelect] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -338,11 +314,7 @@ function Subdivision() {
     Detail?.finishEditing();
     Detail?.appendRow();
 
-    Detail?.setValue(
-      Detail.store.data.rawData.length - 1,
-      "subdivision_date",
-      DateTime().dateFull
-    );
+    Detail?.setValue(Detail.store.data.rawData.length - 1, "subdivision_date", DateTime().dateFull);
     Detail?.setValue(
       Detail.store.data.rawData.length - 1,
       "subdivision_time",
@@ -407,13 +379,8 @@ function Subdivision() {
         Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty);
       }
       let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
+      for (let i = 0; i < refGridModalDetail?.current?.gridInst?.getRowCount(); i++) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
       //Header?.setValue(0, "total_qty", totalQty); 합계내역 보여주지 않기로 하여 주석처리
     }
@@ -426,13 +393,8 @@ function Subdivision() {
         Detail?.setValue(e?.rowKey, "subdivision_qty", -e?.value);
       }
       let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridModalDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
+      for (let i = 0; i < refGridModalDetail?.current?.gridInst?.getRowCount(); i++) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
       //Header?.setValue(0, "total_qty", totalQty);
     }
@@ -452,10 +414,7 @@ function Subdivision() {
       columnName = ["prod_cd", "prod_nm"];
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
-          return [
-            ...prevList,
-            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]],
-          ];
+          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
         });
       }
     } else {
@@ -484,14 +443,7 @@ function Subdivision() {
   };
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
-      const inputInfoValueList = [
-        "subdivision_date",
-        "prod_cd",
-        "prod_nm",
-        "lot_no",
-        "total_qty",
-        "remark",
-      ];
+      const inputInfoValueList = ["subdivision_date", "prod_cd", "prod_nm", "lot_no", "total_qty", "remark"];
       const rowID = e?.instance.getValue(e?.rowKey, "work_subdivision_id");
       if (rowID !== null) {
         setInputInfoValue([]);
@@ -569,13 +521,8 @@ function Subdivision() {
         Detail?.setValue(e?.rowKey, "subdivision_qty", beforeQty);
       }
       let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
+      for (let i = 0; i < refGridDetail?.current?.gridInst?.getRowCount(); i++) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
@@ -588,25 +535,13 @@ function Subdivision() {
         Detail?.setValue(e?.rowKey, "subdivision_qty", -e?.value);
       }
       let totalQty = 0;
-      for (
-        let i = 0;
-        i < refGridDetail?.current?.gridInst?.getRowCount();
-        i++
-      ) {
-        totalQty =
-          Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
+      for (let i = 0; i < refGridDetail?.current?.gridInst?.getRowCount(); i++) {
+        totalQty = Number(totalQty) + Number(Detail.getValue(i, "subdivision_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
 
-    const inputInfoValueList = [
-      "subdivision_date",
-      "prod_cd",
-      "prod_nm",
-      "lot_no",
-      "total_qty",
-      "remark",
-    ];
+    const inputInfoValueList = ["subdivision_date", "prod_cd", "prod_nm", "lot_no", "total_qty", "remark"];
     setInputInfoValue([]);
     for (let i = 0; i < inputInfoValueList.length; i++) {
       let data = Header.getValue(headerClickRowKey, inputInfoValueList[i]);
@@ -661,11 +596,7 @@ function Subdivision() {
       <S.ContentsLeft>
         <S.SearchLeftWrap>
           <S.SearchWrapDate>
-            <S.Date
-              datePickerSet={"range"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
           </S.SearchWrapDate>
           <S.SearchWrap>
             {inputSet.map((v, idx) => (
@@ -694,16 +625,10 @@ function Subdivision() {
             {isEditModeHeader ? (
               <>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Save"}
-                    onClick={onClickEditModeSave}
-                  />
+                  <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Cancel"}
-                    onClick={onClickEditModeExit}
-                  />
+                  <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
                 </S.InnerButtonWrap>
               </>
             ) : (
@@ -724,13 +649,7 @@ function Subdivision() {
         <S.SearchInfoWrap>
           <S.SearchRightTopWrap>
             {inputInfo.map((v, idx) => {
-              return (
-                <InputPaper
-                  key={v.id}
-                  name={v.name}
-                  value={inputInfoValue[idx] || ""}
-                />
-              );
+              return <InputPaper key={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
             })}
           </S.SearchRightTopWrap>
         </S.SearchInfoWrap>
@@ -741,16 +660,10 @@ function Subdivision() {
               {isEditModeDetail ? (
                 <>
                   <S.InnerButtonWrap>
-                    <BtnComponent
-                      btnName={"Save"}
-                      onClick={onClickEditSaveDetail}
-                    />
+                    <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
                   </S.InnerButtonWrap>
                   <S.InnerButtonWrap>
-                    <BtnComponent
-                      btnName={"Cancel"}
-                      onClick={onClickEditExitDetail}
-                    />
+                    <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />
                   </S.InnerButtonWrap>
                 </>
               ) : (
@@ -759,10 +672,7 @@ function Subdivision() {
                     <BtnComponent btnName={"New"} onClick={onClickEditNew} />
                   </S.InnerButtonWrap>
                   <S.InnerButtonWrap>
-                    <BtnComponent
-                      btnName={"Edit"}
-                      onClick={onClickEditDetail}
-                    />
+                    <BtnComponent btnName={"Edit"} onClick={onClickEditDetail} />
                   </S.InnerButtonWrap>
                   <S.InnerButtonWrap>
                     <BtnComponent btnName={"Delete"} onClick={onClickDelete} />

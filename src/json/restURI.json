@@ -70,7 +70,8 @@
 
   "inspResultUpload": "/qms/insp-result-upload",
   "barcodeERP": "/std/barcode/erp",
-  "createSubdivisionBarcode": "/std/barcode",
+  "createBarcode": "/std/barcode",
+  "searchBarcode": "/std/barcode-by-reference",
   "prdOrderRequest": "/prd/request",
   "prdOrder": "/prd/order",
   "prdOrderInput": "/prd/order-input",
