@@ -178,8 +178,27 @@ function SparePartReleaseSet(isEditMode) {
 
   const columnsModalSelectEquipDetail = [
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
-    col.text("equip_cd", CN.equip_cd, false, false, C.WIDTH_SHORT),
-    col.text("equip_nm", CN.equip_nm, false, false, C.WIDTH_SHORT),
+
+    col.text(
+      "equip_cd",
+      CN.equip_cd,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "equip_nm",
+      CN.equip_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
   ];
 
   const columnsModalSelectStore = [
@@ -244,7 +263,16 @@ function SparePartReleaseSet(isEditMode) {
 
   const columnsModalSelectLine = [
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
-    col.text("line_nm", CN.line_nm, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "line_nm",
+      CN.line_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
   ];
 
   return {

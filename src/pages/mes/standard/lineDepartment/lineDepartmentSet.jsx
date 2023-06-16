@@ -57,8 +57,9 @@ function lineDepartmentSet(isEditMode) {
   ];
   const columnsModalSelectDept = [
     col.id("dept_id", CN.dept_id, C.HIDDEN_ID),
-    col.text("dept_cd", CN.dept_cd),
-    col.text("dept_nm", CN.dept_nm, C.U, C.U, C.WIDTH_LONG),
+    col.text("dept_cd", CN.dept_cd, C.U, C.U, C.WIDTH_LONG, C.U, C.U, true),
+
+    col.text("dept_nm", CN.dept_nm, C.U, C.U, C.WIDTH_LONG, C.U, C.U, true),
   ];
 
   const columnOptions = {

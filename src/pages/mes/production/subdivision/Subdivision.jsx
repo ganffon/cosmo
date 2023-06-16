@@ -620,26 +620,26 @@ function Subdivision() {
           </S.SearchWrap>
         </S.SearchLeftWrap>
         <S.ContentsHeader>
-          <S.TitleMidLeft>소분일지</S.TitleMidLeft>
           <S.ContentsHeaderWrap>
+            <S.TitleMidLeft>소분일지</S.TitleMidLeft>
             {isEditModeHeader ? (
-              <>
+              <S.ButtonBox>
                 <S.InnerButtonWrap>
                   <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
                   <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
                 </S.InnerButtonWrap>
-              </>
+              </S.ButtonBox>
             ) : (
-              <>
+              <S.ButtonBox>
                 <S.InnerButtonWrap>
                   <BtnComponent btnName={"New"} onClick={onClickNew} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
                   <BtnComponent btnName={"Edit"} onClick={onClickEditHeader} />
                 </S.InnerButtonWrap>
-              </>
+              </S.ButtonBox>
             )}
           </S.ContentsHeaderWrap>
           <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
@@ -647,54 +647,50 @@ function Subdivision() {
       </S.ContentsLeft>
       <S.ContentsRight>
         <S.SearchInfoWrap>
-          <S.SearchRightTopWrap>
-            {inputInfo.map((v, idx) => {
-              return <InputPaper key={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
-            })}
-          </S.SearchRightTopWrap>
+          {inputInfo.map((v, idx) => {
+            return <InputPaper key={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
+          })}
         </S.SearchInfoWrap>
         <S.SearchRightWrap>
-          <S.SearchRightBottomWrap>
+          <S.ContentsHeaderWrap>
             <S.TitleMid>세부소분일지</S.TitleMid>
-            <S.ContentsHeaderWrap>
-              {isEditModeDetail ? (
-                <>
-                  <S.InnerButtonWrap>
-                    <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
-                  </S.InnerButtonWrap>
-                  <S.InnerButtonWrap>
-                    <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />
-                  </S.InnerButtonWrap>
-                </>
-              ) : (
-                <>
-                  <S.InnerButtonWrap>
-                    <BtnComponent btnName={"New"} onClick={onClickEditNew} />
-                  </S.InnerButtonWrap>
-                  <S.InnerButtonWrap>
-                    <BtnComponent btnName={"Edit"} onClick={onClickEditDetail} />
-                  </S.InnerButtonWrap>
-                  <S.InnerButtonWrap>
-                    <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-                  </S.InnerButtonWrap>
-                </>
-              )}
-            </S.ContentsHeaderWrap>
-            <S.GridDetailWrap isAllScreen={isAllScreen}>
-              <GridSingle
-                columnOptions={columnOptions}
-                columns={columnsDetail}
-                rowHeaders={rowHeadersNumCheck}
-                header={header}
-                data={gridDataDetail}
-                draggable={false}
-                refGrid={refGridDetail}
-                isEditMode={isEditModeDetail}
-                onDblClickGrid={onDblClickGridHeader}
-                onEditingFinish={onEditingFinishGridDetail}
-              />
-            </S.GridDetailWrap>
-          </S.SearchRightBottomWrap>
+            {isEditModeDetail ? (
+              <S.ButtonBox>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />
+                </S.InnerButtonWrap>
+              </S.ButtonBox>
+            ) : (
+              <S.ButtonBox>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"New"} onClick={onClickEditNew} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Edit"} onClick={onClickEditDetail} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+                </S.InnerButtonWrap>
+              </S.ButtonBox>
+            )}
+          </S.ContentsHeaderWrap>
+          <S.GridDetailWrap>
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columnsDetail}
+              rowHeaders={rowHeadersNumCheck}
+              header={header}
+              data={gridDataDetail}
+              draggable={false}
+              refGrid={refGridDetail}
+              isEditMode={isEditModeDetail}
+              onDblClickGrid={onDblClickGridHeader}
+              onEditingFinish={onEditingFinishGridDetail}
+            />
+          </S.GridDetailWrap>
         </S.SearchRightWrap>
       </S.ContentsRight>
 

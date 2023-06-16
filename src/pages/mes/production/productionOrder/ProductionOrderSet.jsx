@@ -360,18 +360,64 @@ function ProductionOrderSet(
   ];
 
   const columnsSelectRequest = [
-    col.text("request_no", CN.request_no, false, false, C.WIDTH_SHORT),
+    col.text(
+      "request_no",
+      CN.request_no,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
 
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT),
-    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
-    col.text("partner_nm", CN.partner_nm, false, false, C.WIDTH_SHORT),
-    col.text("sal_order_no", CN.sal_order_no, false, false, C.WIDTH_SHORT),
+    col.text(
+      "prod_cd",
+      CN.prod_cd,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "prod_nm",
+      CN.prod_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "partner_nm",
+      CN.partner_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "sal_order_no",
+      CN.sal_order_no,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.number(
       "request_work_qty",
       CN.request_work_qty,
       false,
       C.WIDTH_SHORT,
+      false,
       false
     ),
     col.text(
@@ -381,8 +427,25 @@ function ProductionOrderSet(
       false,
       C.WIDTH_SHORT
     ),
-    col.text("request_emp_nm", CN.request_emp_nm, false, false, C.WIDTH_SHORT),
-    col.date("request_date", CN.request_date, false, C.WIDTH_SHORT),
+    col.text(
+      "request_emp_nm",
+      CN.request_emp_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.date(
+      "request_date",
+      CN.request_date,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
   ];
   const columnsSelectMid = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),

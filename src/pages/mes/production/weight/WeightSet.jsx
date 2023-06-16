@@ -112,20 +112,92 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
 
   const columnsSelectOrder = [
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT),
+    col.text(
+      "work_order_no",
+      CN.work_order_no,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.date("work_weigh_date", CN.work_weigh_date, false, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
-    col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "line_dept_nm",
+      CN.line_dept_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
-    col.text("line_cd", CN.line_cd, false, false, C.WIDTH_SHORT),
-    col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "line_cd",
+      CN.line_cd,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "line_nm",
+      CN.line_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT),
-    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "prod_cd",
+      CN.prod_cd,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "prod_nm",
+      CN.prod_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text("store_nm", CN.store_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "store_nm",
+      CN.store_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text("location_nm", CN.location_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "location_nm",
+      CN.location_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
   ];
 
   const columnsmodalHeader = [

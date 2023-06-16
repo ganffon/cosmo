@@ -50,11 +50,12 @@ function EquipmentSet(isEditMode, processList) {
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];
   const columnsModalSelect = [
-    col.text("dept_nm", CN.dept_nm, C.U, C.U, C.WIDTH_LONG),
-    col.text("grade_nm", CN.grade_nm),
+    col.text("dept_nm", CN.dept_nm, C.U, C.U, C.WIDTH_LONG, C.U, C.U, true),
+
+    col.text("grade_nm", CN.grade_nm, C.U, C.U, C.U, C.U, C.U, true),
     col.id("emp_id", CN.emp_id, C.HIDDEN_ID),
-    col.text("emp_cd", CN.emp_cd),
-    col.text("emp_nm", CN.emp_nm, C.U, C.U, C.WIDTH_MIDDLE),
+    col.text("emp_cd", CN.emp_cd, C.U, C.U, C.U, C.U, C.U, true),
+    col.text("emp_nm", CN.emp_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, C.U, true),
   ];
   const columnOptions = {
     resizable: true,

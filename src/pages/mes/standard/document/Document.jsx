@@ -302,14 +302,6 @@ function Document() {
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
       setInputInfoValue([]);
-
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: result?.data?.message,
-        severity: "success",
-        location: "bottomRight",
-      });
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,

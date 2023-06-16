@@ -152,43 +152,181 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
   ];
   const columnsSelectOrder = [
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text("request_no", CN.request_no, false, false, C.WIDTH_SHORT),
-    col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT),
+    col.text(
+      "request_no",
+      CN.request_no,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "work_order_no",
+      CN.work_order_no,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.date("work_order_date", CN.work_order_date, false, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
-    col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "line_dept_nm",
+      CN.line_dept_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
-    col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "line_nm",
+      CN.line_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_MIDDLE),
-    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "prod_cd",
+      CN.prod_cd,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "prod_nm",
+      CN.prod_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text("store_nm", CN.store_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "store_nm",
+      CN.store_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text("location_nm", CN.location_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "location_nm",
+      CN.location_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.date("work_start_date", CN.work_start_date, false, C.WIDTH_SHORT),
     col.date("work_end_date", CN.work_end_date, false, C.WIDTH_SHORT),
   ];
   const columnsSelectEmp = [
-    col.text("dept_nm", CN.dept_nm, false, false, C.WIDTH_MIDDLE),
-    col.text("grade_nm", CN.grade_nm, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "dept_nm",
+      CN.dept_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "grade_nm",
+      CN.grade_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
     col.id("emp_id", CN.emp_id, C.HIDDEN_ID),
-    col.text("emp_cd", CN.emp_cd, false, true, C.WIDTH_SHORT),
-    col.text("emp_nm", CN.emp_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "emp_cd",
+      CN.emp_cd,
+      false,
+      true,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "emp_nm",
+      CN.emp_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.text(
       "worker_group_nm",
       CN.worker_group_nm,
       false,
       true,
-      C.WIDTH_MIDDLE
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
     ),
   ];
   const columnsSelectWeight = [
     col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_MIDDLE),
-    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE),
-    col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "prod_cd",
+      CN.prod_cd,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "prod_nm",
+      CN.prod_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
+    col.text(
+      "lot_no",
+      CN.lot_no,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
     col.number("total_qty", CN.actual_weight, false, C.WIDTH_SHORT, true),
     col.date("work_input_date", CN.work_input_date, false, C.WIDTH_SHORT),
     col.text(
@@ -196,12 +334,33 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
       CN.work_input_time,
       false,
       false,
-      C.WIDTH_SHORT
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
     ),
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text("store_nm", CN.store_nm, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "store_nm",
+      CN.store_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text("location_nm", CN.location_nm, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "location_nm",
+      CN.location_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
   ];
   const columnsSelectWeightDetail = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
@@ -246,9 +405,27 @@ function PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader) {
   ];
   const columnsSelectStore = [
     col.id("store_id", CN.store_id, C.HIDDEN_ID),
-    col.text("store_nm", CN.store_nm, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "store_nm",
+      CN.store_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
     col.id("location_id", CN.location_id, C.HIDDEN_ID),
-    col.text("location_nm", CN.location_nm, false, false, C.WIDTH_MIDDLE),
+    col.text(
+      "location_nm",
+      CN.location_nm,
+      false,
+      false,
+      C.WIDTH_MIDDLE,
+      false,
+      false,
+      true
+    ),
   ];
   return {
     columnOptions,

@@ -107,7 +107,16 @@ function ProductionDownTimeSet(
 
   const columnLineSelect = [
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
-    col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "line_nm",
+      CN.line_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
   ];
 
   const columnDownTimeSelect = [
@@ -117,16 +126,46 @@ function ProductionDownTimeSet(
       CN.downtime_type_nm,
       false,
       false,
-      C.WIDTH_SHORT
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
     ),
-    col.text("downtime_nm", CN.downtime_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "downtime_nm",
+      CN.downtime_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
   ];
 
   const columnProcEquipSelect = [
     col.id("proc_id", CN.proc_id, C.HIDDEN_ID),
-    col.text("proc_nm", CN.proc_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "proc_nm",
+      CN.proc_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
-    col.text("equip_nm", CN.equip_nm, false, false, C.WIDTH_SHORT),
+    col.text(
+      "equip_nm",
+      CN.equip_nm,
+      false,
+      false,
+      C.WIDTH_SHORT,
+      false,
+      false,
+      true
+    ),
   ];
 
   const columnOptions = {
