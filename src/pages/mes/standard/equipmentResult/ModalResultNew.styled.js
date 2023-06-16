@@ -15,6 +15,7 @@ export const HeaderBox = styled("div")`
   justify-content: space-between;
   background-color: ${APP_BAR_COLOR};
   border-radius: 10px 10px 0px 0px;
+  border: solid 1px #e0e0e0;
   height: 40px;
 `;
 export const GridBox = styled("div")`
@@ -38,7 +39,7 @@ export const ContentsArea = styled("div")`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+
   padding: 0px 10px 10px 10px;
 `;
 
@@ -53,10 +54,8 @@ export const ButtonWrap = styled("div")`
   display: flex;
   justify-content: end;
   align-items: center;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
+
+  padding: 0px 10px 10px 0px;
 `;
 export const ContentsTop = styled("div")`
   width: 100%;
@@ -64,18 +63,14 @@ export const ContentsTop = styled("div")`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
+
+  padding: 0px 10px 10px 0px;
 `;
 export const ContentsBottom = styled("div")`
   width: 100%;
   height: calc(100% - 280px);
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
+
+  padding: 0px 10px 10px 10px;
 `;

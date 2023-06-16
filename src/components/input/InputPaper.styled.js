@@ -31,6 +31,9 @@ export const Text = styled(InputBase)`
   margin-left: 10px;
   flex: 1;
   font-size: ${(props) => props.size};
+  &.red {
+    color: red;
+  }
 `;
 export const Icon = styled(IconButton)`
   padding: 5px;

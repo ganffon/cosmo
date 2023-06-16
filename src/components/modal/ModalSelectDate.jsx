@@ -4,6 +4,7 @@ import * as S from "./ModalSelectDate.styled";
 import ModalWrapMulti from "./ModalWrapMulti";
 import DateRange from "components/datetime/DateRange";
 import ButtonModule from "components/button/ButtonModule";
+import BtnComponent from "components/button/BtnComponent";
 
 function ModalSelectDate(props) {
   const {
@@ -42,7 +43,13 @@ function ModalSelectDate(props) {
             setDateText={setDateText}
             onClickSearch={onClickSearch}
           />
-          <ButtonModule searchBtn={true} onClickSearch={onClickSearch} />
+          <BtnComponent
+            btnName={"Search"}
+            width={"100px"}
+            onClick={onClickSearch}
+          >
+            검색
+          </BtnComponent>
         </S.SearchBox>
         <S.GridBox>
           <GridModal

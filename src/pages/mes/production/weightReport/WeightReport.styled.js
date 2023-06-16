@@ -45,7 +45,7 @@ export const SearchWrap = styled("div")`
 export const ButtonWrap = styled("div")`
   display: flex;
   justify-content: flex-end;
-  padding: 5px 5px 5px 0px;
+  padding: 5px 10px 5px 0px;
 `;
 export const GridHeaderWrap = styled("div")`
   width: calc(100% - 0.5rem);

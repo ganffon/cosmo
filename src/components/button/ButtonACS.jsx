@@ -3,41 +3,27 @@ import UTurnLeftIcon from "@mui/icons-material/UTurnLeft";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import * as S from "./Button.styled";
+import BtnComponent from "components/button/BtnComponent";
 
 function ButtonACS(props) {
   const { onClickAddRow, onClickCancelRow, onClickSave } = props;
   return (
-    <>
-      <S.ButtonSet
-        startIcon={<AddIcon />}
-        variant="contained"
-        size="small"
-        color="success"
-        onClick={onClickAddRow}
-        width={"130px"}
-      >
+    <S.ButtonWrap>
+      <BtnComponent btnName={"AddRow"} width={"100px"} onClick={onClickAddRow}>
         ADD ROW
-      </S.ButtonSet>
-      <S.ButtonSet
-        startIcon={<UTurnLeftIcon />}
-        variant="contained"
-        size="small"
-        color="error"
+      </BtnComponent>
+
+      <BtnComponent
+        btnName={"CancelRow"}
+        width={"100px"}
         onClick={onClickCancelRow}
-        width={"130px"}
       >
         CANCEL ROW
-      </S.ButtonSet>
-      <S.ButtonSet
-        startIcon={<SaveIcon />}
-        variant="contained"
-        size="small"
-        color="secondary"
-        onClick={onClickSave}
-      >
+      </BtnComponent>
+      <BtnComponent btnName={"Save"} width={"100px"} onClick={onClickSave}>
         SAVE
-      </S.ButtonSet>
-    </>
+      </BtnComponent>
+    </S.ButtonWrap>
   );
 }
 

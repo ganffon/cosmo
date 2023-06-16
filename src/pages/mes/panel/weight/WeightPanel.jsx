@@ -13,12 +13,10 @@ import * as S from "./WeightPanel.styled";
 import restAPI from "api/restAPI";
 import DateRange from "components/datetime/DateRange";
 import InputSearch from "components/input/InputSearch";
-import BtnWeight from "components/button/panel/BtnWeight";
 import ModalWeight from "./ModalWeight";
 import Condition from "custom/Condition";
 import ModalInput from "./ModalInput";
 import ModalInputSave from "./ModalInputSave";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnPanel from "components/button/BtnPanel";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
@@ -51,13 +49,6 @@ function WeightPanel() {
     title: "",
     message: "",
   });
-
-  const handleWarning = () => {
-    setIsWarning({
-      ...isWarning,
-      open: false,
-    });
-  };
 
   const {
     columnOptions,

@@ -8,6 +8,7 @@ export const Wrap = styled("div")`
   gap: 10px;
 `;
 export const InputWrap = styled("div")`
+  width: 100%;
   display: flex;
 `;
 export const InfoTitle = styled("div")`
@@ -18,12 +19,13 @@ export const InfoTitle = styled("div")`
   margin-top: 5px;
 `;
 export const InputWrapDivide = styled("div")`
+  padding-left: 10px;
   width: 100%;
   display: flex;
 `;
 
 export const DatePicker = styled(TextField)`
   width: 220px;
-  margin-left: 10px;
+
   margin-top: 5px;
 `;

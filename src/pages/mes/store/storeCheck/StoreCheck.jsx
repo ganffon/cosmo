@@ -23,12 +23,16 @@ import * as uSearch from "custom/useSearch";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import Condition from "custom/Condition";
-import * as S from "./StoreCheck.styled";
+//import * as S from "./StoreCheck.styled";
+import * as S from "pages/mes/style/oneGrid.styled";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function StoreCheck() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
 
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -89,7 +93,13 @@ function StoreCheck() {
     columnOptions,
     inputSet,
     datePickerSet,
-  } = StoreCheckSet(isEditMode, productGbnList, productModelList, productTypeList, productTypeSmallList);
+  } = StoreCheckSet(
+    isEditMode,
+    productGbnList,
+    productModelList,
+    productTypeList,
+    productTypeSmallList
+  );
   const SWITCH_NAME_01 = "storeCheck";
   const SWITCH_NAME_02 = "storeCheckNewLOT";
 
@@ -98,7 +108,10 @@ function StoreCheck() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   useEffect(() => {
     onClickSearch();
@@ -108,7 +121,10 @@ function StoreCheck() {
     onClickStockSearch();
   }, [searchModalToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
@@ -262,7 +278,16 @@ function StoreCheck() {
     setSearchToggle(!searchToggle);
   };
   const onDblClickModalGrid = (e) => {
-    if (Condition(e, ["prod_gbn_nm", "model_nm", "prod_type_nm", "prod_type_small_nm", "prod_cd", "prod_nm"])) {
+    if (
+      Condition(e, [
+        "prod_gbn_nm",
+        "model_nm",
+        "prod_type_nm",
+        "prod_type_small_nm",
+        "prod_cd",
+        "prod_nm",
+      ])
+    ) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalProd");
       setColumnsSelect(columnsSelectProd);
@@ -300,7 +325,12 @@ function StoreCheck() {
       "prod_cd",
       "prod_nm",
     ];
-    const columnNameStore = ["store_id", "store_nm", "location_id", "location_nm"];
+    const columnNameStore = [
+      "store_id",
+      "store_nm",
+      "location_id",
+      "location_nm",
+    ];
     if (dblClickGrid === "ModalProd") {
       refGrid = refModalGrid;
       columnName = columnNameProd;
@@ -394,6 +424,11 @@ function StoreCheck() {
       <S.ShadowBoxButton>
         <S.ToolWrap>
           <S.SearchWrap>
+            <DatePicker
+              datePickerSet={datePickerSet}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             <S.ComboWrap>
               <S.ComboBox
                 disablePortal
@@ -404,10 +439,15 @@ function StoreCheck() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
+                    prod_gbn_id:
+                      newValue?.prod_gbn_id === undefined
+                        ? null
+                        : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -419,10 +459,15 @@ function StoreCheck() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
+                    model_id:
+                      newValue?.model_id === undefined
+                        ? null
+                        : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.model_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -434,10 +479,15 @@ function StoreCheck() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
+                    prod_type_id:
+                      newValue?.prod_type_id === undefined
+                        ? null
+                        : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_type_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -451,15 +501,22 @@ function StoreCheck() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined
+                        ? null
+                        : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.prod_type_small_nm}
+                    size="small"
+                  />
+                )}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
             <S.InputWrap>
-              <DatePicker datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
               {inputSet.map((v) => (
                 <InputSearch
                   key={v.id}
@@ -473,24 +530,25 @@ function StoreCheck() {
             </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
-            {isEditMode ? (
-              <ButtonSES
-                onClickEditModeSave={onClickEditModeSave}
-                onClickEditModeExit={onClickEditModeExit}
-                onClickSearch={onClickSearch}
-              />
-            ) : (
-              <ButtonNEDS
-                onClickNew={onClickNew}
-                onClickEdit={onClickEdit}
-                onClickDelete={onClickDelete}
-                onClickSearch={onClickSearch}
-              />
-            )}
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <S.ButtonWrap>
+          {isEditMode ? (
+            <>
+              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+            </>
+          ) : (
+            <>
+              <BtnComponent btnName={"New"} onClick={onClickNew} />
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            </>
+          )}
+        </S.ButtonWrap>
         <S.GridWrap>{GridMain}</S.GridWrap>
       </S.ShadowBoxGrid>
       {isModalOpen ? ModalNew : null}
@@ -510,7 +568,18 @@ function StoreCheck() {
       ) : null}
       {isModalDeleteOpen ? ModalDelete : null}
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <NoticeAlertModal
+          textContent={"정말로 삭제하시겠습니까?"}
+          textfontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancle={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
+        />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />

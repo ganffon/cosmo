@@ -15,15 +15,69 @@ export const ContentsArea = styled("div")`
   overflow: hidden auto;
 `;
 export const ContentTop = styled("div")`
-  height: 40px;
+  height: 30%;
   width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: #ffffff;
+  margin-bottom: 8px;
+  padding: 10px 5px 5px 5px;
+  justify-content: space-between;
+`;
+export const ContentMiddleLeft = styled("div")`
+  height: 100%;
+  width: 50%;
+  background: #ffffff;
+  margin-right: 10px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 8px;
+  padding: 10px 5px 5px 5px;
+
+  justify-content: space-between;
+`;
+
+export const ContentMiddleRight = styled("div")`
+  height: 100%;
+  width: 50%;
+  background: #ffffff;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 8px;
+
+  padding: 10px 5px 5px 5px;
+  justify-content: space-between;
+`;
+
+export const ContentBottomLeft = styled("div")`
+  height: 100%;
+  width: 50%;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: #ffffff;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-bottom: 8px;
+  padding: 10px 5px 5px 5px;
+
+  justify-content: space-between;
+`;
+
+export const ContentBottomRight = styled("div")`
+  height: 100%;
+  width: 50%;
   margin-top: 10px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   margin-bottom: 8px;
   padding: 10px 5px 5px 5px;
-  display: flex;
+  background: #ffffff;
+  margin-left: 10px;
   justify-content: space-between;
 `;
 
@@ -59,15 +113,15 @@ export const ButtonMid = styled("div")`
 export const TitleMid = styled("div")`
   display: flex;
   align-items: center;
-
   margin-left: 10px;
   font-family: NotoSansKR_B;
 `;
 export const ContentBottom = styled("div")`
-  height: 40px;
-  width: 49%;
+  height: 20%;
+  width: 50%;
   border-radius: 10px;
-  margin-right: 20px;
+
+  background: #ffffff;
   margin-top: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -151,7 +205,12 @@ export const ContentsHeader = styled("div")`
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: 50%;
+  height: calc(100%-50px);
+  padding: 5px;
+`;
+export const GridWrap2 = styled("div")`
+  width: 100%;
+  height: 99%;
   padding: 10px 10px 10px 10px;
 `;
 
@@ -183,13 +242,9 @@ export const BoxWrap = styled("div")`
 `;
 export const TopGridWrap = styled("div")`
   height: 24%;
-  padding: 10px 5px 5px 2px;
+  padding: 0px 5px 5px 2px;
 
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  border-color: rgb(255, 255, 255);
   margin-top: 8px;
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 
 export const ModdleGridWrap = styled("div")`
@@ -205,4 +260,16 @@ export const ModdleGridWrap = styled("div")`
 export const TitleWrap = styled("div")`
   display: flex;
   justify-content: start;
+`;
+
+export const InputPaperWrap = styled("div")`
+  padding-top: 5px;
+  padding-left: 10px;
+`;
+
+export const MiddleContentWrap = styled("div")`
+  display: flex;
+`;
+export const BottomContentWrap = styled("div")`
+  display: flex;
 `;

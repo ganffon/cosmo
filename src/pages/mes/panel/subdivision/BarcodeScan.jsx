@@ -42,6 +42,7 @@ function BarcodeScan(props) {
               size={"30px"}
               refInput={refBarcode}
               value={barcodeScan.value || ""}
+              className={barcodeScan.className || ""}
             />
           </S.InputWrap>
           <S.InputWrap>

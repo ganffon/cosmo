@@ -8,7 +8,7 @@ export const HeaderBox = styled("div")`
   grid-row: 1 / 1;
   display: flex;
   justify-content: space-between;
-  background-color: #f2f2f2;
+  border: solid 1px #e0e0e0;
   border-radius: 10px 10px 0px 0px;
   height: 40px;
 `;

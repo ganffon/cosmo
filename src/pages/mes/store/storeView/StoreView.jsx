@@ -12,15 +12,18 @@ import useInputSet from "custom/useInputSet";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
 import * as uSearch from "custom/useSearch";
-import * as S from "./StoreView.styled";
+//import * as S from "./StoreView.styled";
 import restURI from "json/restURI.json";
 import DatePicker from "components/datetime/DatePicker";
 import DateTime from "components/datetime/DateTime";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
+import * as S from "pages/mes/style/oneGrid.styled";
 
 function StoreView() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);
@@ -43,7 +46,14 @@ function StoreView() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const { rowHeadersNum, header, columns, columnOptions, inputSet, datePickerSet } = StoreViewSet(
+  const {
+    rowHeadersNum,
+    header,
+    columns,
+    columnOptions,
+    inputSet,
+    datePickerSet,
+  } = StoreViewSet(
     productGbnList,
     productModelList,
     productTypeList,
@@ -56,7 +66,10 @@ function StoreView() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   useEffect(() => {
     onClickSearch();
   }, []);
@@ -95,6 +108,11 @@ function StoreView() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
+            <DatePicker
+              datePickerSet={datePickerSet}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             <S.ComboWrap>
               <S.ComboBox
                 disablePortal
@@ -105,10 +123,15 @@ function StoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
+                    prod_gbn_id:
+                      newValue?.prod_gbn_id === undefined
+                        ? null
+                        : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -120,10 +143,15 @@ function StoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
+                    model_id:
+                      newValue?.model_id === undefined
+                        ? null
+                        : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.model_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -135,10 +163,15 @@ function StoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
+                    prod_type_id:
+                      newValue?.prod_type_id === undefined
+                        ? null
+                        : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_type_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -152,15 +185,22 @@ function StoreView() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined
+                        ? null
+                        : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.prod_type_small_nm}
+                    size="small"
+                  />
+                )}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
             <S.InputWrap>
-              <DatePicker datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
               {inputSet.map((v) => (
                 <InputSearch
                   key={v.id}
@@ -174,12 +214,12 @@ function StoreView() {
             </S.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
-            <ButtonS onClickSearch={onClickSearch} />
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        <S.GridWrap>
+        <S.GridWrapReport>
           <GridSingle
             columnOptions={columnOptions}
             columns={columns}
@@ -189,7 +229,7 @@ function StoreView() {
             draggable={false}
             refGrid={refSingleGrid}
           />
-        </S.GridWrap>
+        </S.GridWrapReport>
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />

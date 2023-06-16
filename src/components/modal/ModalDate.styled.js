@@ -10,6 +10,7 @@ export const HeaderBox = styled("div")`
   display: flex;
   justify-content: space-between;
   background-color: ${APP_BAR_COLOR};
+  border: solid 1px #e0e0e0;
   border-radius: 10px 10px 0px 0px;
   height: 40px;
 `;
@@ -26,8 +27,9 @@ export const DateBox = styled("div")`
   align-items: center;
 `;
 export const ButtonBox = styled("div")`
+  width: 300px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-end;
   margin-right: 15px;
   margin-bottom: 10px;
@@ -52,4 +54,18 @@ export const TitleBox = styled("div")`
 
 export const ButtonClose = styled(IconButton)`
   padding-right: 15px;
+`;
+
+export const ButtonWrap = styled("div")`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const SingleButtonWrap = styled("div")`
+  width: 300px;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  margin-right: 15px;
+  margin-bottom: 10px;
 `;

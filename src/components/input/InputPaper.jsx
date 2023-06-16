@@ -26,6 +26,7 @@ function InputPaper(props) {
     readOnly = true,
     refInput = null,
     placeHolder = "",
+    className = "",
   } = props;
 
   return (
@@ -51,6 +52,7 @@ function InputPaper(props) {
           onClick={onClickReadOnly}
           placeholder={placeHolder}
           ref={refInput}
+          className={className}
         />
       ) : (
         <S.Text

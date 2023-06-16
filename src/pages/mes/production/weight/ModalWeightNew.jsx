@@ -6,6 +6,7 @@ import DateTime from "components/datetime/DateTime";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalWeightNew.styled";
 import ButtonSave from "components/button/ButtonSave";
+import BtnComponent from "components/button/BtnComponent";
 
 function ModalWeightNew(props) {
   const {
@@ -36,19 +37,31 @@ function ModalWeightNew(props) {
   useEffect(() => {
     if (!isNewDetail) {
       refGridModalHeader?.current?.gridInst?.appendRow();
-      refGridModalHeader?.current?.gridInst.setValue(0, "subdivision_date", DateTime().dateFull);
+      refGridModalHeader?.current?.gridInst.setValue(
+        0,
+        "subdivision_date",
+        DateTime().dateFull
+      );
     }
   }, []);
 
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>{isNewDetail ? `[수정] ${currentMenuName}` : `[신규] ${currentMenuName}`}</S.TitleBox>
-        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
+        <S.TitleBox>
+          {isNewDetail
+            ? `[수정] ${currentMenuName}`
+            : `[신규] ${currentMenuName}`}
+        </S.TitleBox>
+        <S.ButtonClose
+          color="primary"
+          aria-label="close"
+          onClick={onClickModalClose}
+        >
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
-      <S.GridTopTitleBox>✳️ 검사기준서</S.GridTopTitleBox>
+      <S.GridTopTitleBox>검사기준서</S.GridTopTitleBox>
       <S.GridBoxTop>
         <GridModal
           data={isNewDetail ? gridDataHeaderRowID : null}
@@ -63,7 +76,13 @@ function ModalWeightNew(props) {
         />
       </S.GridBoxTop>
       <S.ButtonBox>
-        <ButtonSave onClickSave={onClickModalSave} />
+        <BtnComponent
+          btnName={"Save"}
+          width={"100px"}
+          onClick={onClickModalSave}
+        >
+          SAVE
+        </BtnComponent>
       </S.ButtonBox>
 
       <S.GridBoxBottom>

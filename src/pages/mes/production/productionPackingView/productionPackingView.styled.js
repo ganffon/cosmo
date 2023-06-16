@@ -15,30 +15,33 @@ export const ContentsArea = styled("div")`
   overflow: hidden auto;
 `;
 export const ContentTop = styled("div")`
-  height: 40px;
+  height: 400px;
   width: 100%;
+
+  background: #ffffff;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   margin-bottom: 8px;
   padding: 5px 5px 5px 5px;
-  display: flex;
-  justify-content: space-between;
 `;
+
 export const SearchCondition = styled("div")`
   height: 60px;
   width: 100%;
   border-radius: 10px;
+  background: #ffffff;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 8px;
+
   padding: 5px 5px 5px 5px;
   display: flex;
 `;
 export const ButtonTop = styled("div")`
+  width: 100%;
   display: flex;
   align-items: center;
-  margin-left: 40%;
+  justify-content: end;
 `;
 export const ContentMid = styled("div")`
   height: 40px;
@@ -62,13 +65,13 @@ export const TitleMid = styled("div")`
   font-family: NotoSansKR_B;
 `;
 export const ContentBottom = styled("div")`
-  height: 40px;
+  height: 370px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 5px 5px 5px 5px;
-  display: flex;
+  background: #ffffff;
   justify-content: space-between;
 `;
 export const ButtonBottom = styled("div")`
@@ -82,21 +85,17 @@ export const TitleBottom = styled("div")`
   font-family: NotoSansKR_B;
 `;
 export const GridTopWrap = styled("div")`
-  height: 39%;
+  height: 94%;
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   margin-bottom: 8px;
   padding: 10px 10px 10px 10px;
 `;
 
 export const GridBottomWrap = styled("div")`
-  height: 41%;
+  height: 95%;
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   margin-bottom: 8px;
   padding: 10px 10px 10px 10px;
 `;
@@ -127,3 +126,10 @@ export const ContentsHeader = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   margin-bottom: 8px;
 `;
+
+export const InputPaperWrap = styled("div")`
+  padding-top: 5px;
+  padding-left: 10px;
+`;
+
+export const ContentWrap = styled("div")``;

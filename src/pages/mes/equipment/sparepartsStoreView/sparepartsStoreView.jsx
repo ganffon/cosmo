@@ -16,6 +16,7 @@ import CN from "json/ColumnName.json";
 import * as LS from "./sparepartsStoreView.styled";
 import DatePicker from "components/datetime/DatePicker";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
 
 import * as Cbo from "custom/useCboSet";
 
@@ -24,7 +25,8 @@ function SparepartsStoreView() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const {
     rowHeaders,
 
@@ -34,7 +36,12 @@ function SparepartsStoreView() {
     columnOptions,
     inputSet,
     datePickerSet,
-  } = SparepartsStoreViewSet(productGbnList, productModelList, productTypeList, productTypeSmallList);
+  } = SparepartsStoreViewSet(
+    productGbnList,
+    productModelList,
+    productTypeList,
+    productTypeSmallList
+  );
 
   LoginStateChk();
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -52,9 +59,15 @@ function SparepartsStoreView() {
     prod_type_small_id: null,
   });
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   const refSingleGrid = useRef(null);
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   //===============================================
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
@@ -100,7 +113,11 @@ function SparepartsStoreView() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <DatePicker datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
+            <DatePicker
+              datePickerSet={datePickerSet}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             <LS.ComboWrap>
               <LS.ComboBox
                 disablePortal
@@ -112,10 +129,15 @@ function SparepartsStoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
+                    prod_gbn_id:
+                      newValue?.prod_gbn_id === undefined
+                        ? null
+                        : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -128,10 +150,15 @@ function SparepartsStoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
+                    model_id:
+                      newValue?.model_id === undefined
+                        ? null
+                        : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.model_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -144,10 +171,15 @@ function SparepartsStoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
+                    prod_type_id:
+                      newValue?.prod_type_id === undefined
+                        ? null
+                        : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_type_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -161,10 +193,18 @@ function SparepartsStoreView() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined
+                        ? null
+                        : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.prod_type_small_nm}
+                    size="small"
+                  />
+                )}
                 onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
@@ -182,7 +222,7 @@ function SparepartsStoreView() {
             </LS.InputWrap>
           </S.SearchWrap>
           <S.ButtonWrap>
-            <ButtonSearch onClickSearch={onClickSearch} />
+            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>

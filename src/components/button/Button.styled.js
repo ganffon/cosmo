@@ -6,3 +6,9 @@ export const ButtonSet = styled(Button)`
   height: 30px;
   width: ${(props) => (props.width ? props.width : "100px")};
 `;
+
+export const ButtonWrap = styled(Button)`
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+`;

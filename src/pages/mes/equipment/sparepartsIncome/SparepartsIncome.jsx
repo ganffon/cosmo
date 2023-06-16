@@ -20,6 +20,8 @@ import * as uDelete from "custom/useDelete";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function SparepartIncome() {
   LoginStateChk();
@@ -67,10 +69,19 @@ function SparepartIncome() {
     onClickGridHeader,
     inputSet,
   } = SparepartsIncomeSet();
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
+    isEditModeHeader,
+    refGridHeader
+  );
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
+    isEditModeDetail,
+    refGridDetail
+  );
 
   const onClickEditModeHeaderSave = () => {
     actEdit();
@@ -80,7 +91,10 @@ function SparepartIncome() {
     setIsEditModeHeader(false);
     setSearchToggle(!searchToggle);
   };
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeHeader, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditModeHeader,
+    refSingleGrid
+  );
 
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
@@ -205,7 +219,11 @@ function SparepartIncome() {
     <ContentsArea>
       <S.ContentsLeft>
         <S.SearchLeftWrap>
-          <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+          <S.Date
+            datePickerSet={"range"}
+            dateText={dateText}
+            setDateText={setDateText}
+          />
           <S.SearchLeftTopWrap>
             {isEditModeHeader ? (
               <ButtonSES
@@ -259,7 +277,10 @@ function SparepartIncome() {
       </S.ContentsRight>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <AlertDelete
+          handleDelete={handleDelete}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        />
       ) : null}
       {isModalOpen ? (
         <ModalNew

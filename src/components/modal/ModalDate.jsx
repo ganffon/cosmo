@@ -7,6 +7,7 @@ import ButtonDS from "components/button/ButtonDS";
 import ButtonSearch from "components/button/ButtonSearch";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalDate.styled";
+import BtnComponent from "components/button/BtnComponent";
 
 function ModalDate(props) {
   const {
@@ -52,22 +53,41 @@ function ModalDate(props) {
         </S.DateBox>
         <S.ButtonBox>
           {buttonType === "ACS" ? (
-            <ButtonACS
-              onClickAddRow={onClickModalAddRow}
-              onClickCancelRow={onClickModalCancelRow}
-              onClickSave={onClickModalSave}
-            />
+            <>
+              <S.ButtonWrap>
+                <BtnComponent btnName={"AddRow"} onClick={onClickModalAddRow} />
+              </S.ButtonWrap>
+              <S.ButtonWrap>
+                <BtnComponent
+                  btnName={"CancelRow"}
+                  onClick={onClickModalCancelRow}
+                />
+              </S.ButtonWrap>
+              <S.ButtonWrap>
+                <BtnComponent btnName={"Save"} onClick={onClickModalSave} />
+              </S.ButtonWrap>
+            </>
           ) : null}
           {buttonType === "DS" ? (
-            <ButtonDS
-              onClickDelete={onClickModalDelete}
-              onClickSearch={onClickModalSearch}
-            />
+            <>
+              <S.ButtonWrap>
+                <BtnComponent btnName={"Delete"} onClick={onClickModalDelete} />
+              </S.ButtonWrap>
+              <S.ButtonWrap>
+                <BtnComponent btnName={"Search"} onClick={onClickModalSearch} />
+              </S.ButtonWrap>
+            </>
           ) : (
+            // <ButtonDS
+            //   onClickDelete={onClickModalDelete}
+            //   onClickSearch={onClickModalSearch}
+            // />
             false
           )}
           {buttonType === "Search" ? (
-            <ButtonSearch onClickSearch={onClickModalSearch} />
+            <S.SingleButtonWrap>
+              <BtnComponent btnName={"Search"} onClick={onClickModalSearch} />
+            </S.SingleButtonWrap>
           ) : null}
         </S.ButtonBox>
       </S.ToolWrap>

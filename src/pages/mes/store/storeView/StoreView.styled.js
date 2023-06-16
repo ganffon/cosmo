@@ -44,6 +44,7 @@ export const InputWrap = styled("div")`
 export const ButtonWrap = styled("div")`
   display: flex;
   height: 30px;
+  padding-right: 5px;
 `;
 export const ShadowBoxGrid = styled("div")`
   background-color: rgb(255, 255, 255);

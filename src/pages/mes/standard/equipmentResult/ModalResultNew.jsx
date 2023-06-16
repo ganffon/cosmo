@@ -5,6 +5,7 @@ import * as S from "./ModalResultNew.styled";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 import ButtonModule from "components/button/ButtonModule";
 import InputNew from "./InputNew";
+import BtnComponent from "components/button/BtnComponent";
 import { useMemo } from "react";
 
 function ModalResultNew(props) {
@@ -64,17 +65,12 @@ function ModalResultNew(props) {
       </S.HeaderBox>
       <S.ContentsArea>
         <S.ButtonWrap>
-          <S.ButtonSet
-            variant="contained"
-            size="small"
-            startIcon={<OfflineShareIcon />}
-            color="success"
-            disabled={false}
+          <BtnComponent
+            btnName={"Mapping"}
+            width={"100px"}
             onClick={onMapping}
-            width={"180px"}
-          >
-            Data Mapping
-          </S.ButtonSet>
+          ></BtnComponent>
+
           <ButtonModule saveBtn={true} onClickSave={onSaveNew} />
         </S.ButtonWrap>
         <S.ContentsTop>
