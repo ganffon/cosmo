@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // ⬇️ reference of page
 import Clock from "./Clock";
-import Logo from "img/Logo/cosmo.png";
-import LogoIspark from "img/Logo/ispark_gray.png";
 import LogoCompany from "img/Login/cosmo_logo.svg";
 import Dori from "img/Login/dori.svg";
 import NoticeSnack from "components/alert/NoticeSnack";
