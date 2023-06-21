@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const hostName = window.location.hostname;
 const IPFlag = hostName.split(".")[0];
-const BASE_URL = IPFlag === "51" ? process.env.REACT_APP_BASE_URL : process.env.REACT_APP_BASE_URL_PANEL;
+const BASE_URL = IPFlag === "192" ? process.env.REACT_APP_BASE_URL_PANEL : process.env.REACT_APP_BASE_URL;
 const restAPI = axios.create({
   baseURL: BASE_URL,
   headers: {

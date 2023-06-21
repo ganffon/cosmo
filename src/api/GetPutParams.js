@@ -10,6 +10,7 @@ class line {
   constructor(raw) {
     this.line_id = raw.line_id;
     this.line_nm = raw.line_nm;
+    this.rework_fg = raw.rework_fg ? true : false;
   }
 }
 class process {
@@ -272,6 +273,7 @@ class infcItem {
 class infcMemory {
   constructor(raw) {
     this.factory_id = raw.factory_id;
+    this.sortby = String(raw.sortby) ? Number(raw.sortby) : null;
     this.infc_memory_id = raw.infc_memory_id;
     this.infc_item_id = raw.infc_item_id;
     this.line_id = raw.line_id;
@@ -285,6 +287,7 @@ class infcMemory {
     this.device_address = raw.device_address;
     this.tag_id = raw.tag_id;
     this.infc_memory_nm = raw.infc_memory_nm;
+    this.insp_fg = raw.insp_fg ? true : false;
     this.remark = raw.remark;
   }
 }

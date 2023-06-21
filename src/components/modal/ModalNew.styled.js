@@ -23,6 +23,7 @@ export const ButtonWrap = styled("div")`
   display: flex;
   align-items: center;
   margin-right: 15px;
+  gap: 10px;
 `;
 export const TitleWrap = styled("div")`
   display: flex;

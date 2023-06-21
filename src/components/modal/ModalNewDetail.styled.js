@@ -18,7 +18,8 @@ export const ButtonBox = styled("div")`
   grid-column: 1 / -1;
   grid-row: 6 / 6;
   height: 40px;
-  padding-right: 15px;
+  margin-right: 15px;
+  gap: 10px;
 `;
 export const GridTopTitleBox = styled("div")`
   width: 100%;

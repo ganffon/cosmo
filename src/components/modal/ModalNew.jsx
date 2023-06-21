@@ -4,7 +4,7 @@ import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalNew.styled";
-import ButtonModule from "components/button/ButtonModule";
+import BtnComponent from "components/button/BtnComponent";
 
 function ModalNew(props) {
   const {
@@ -54,30 +54,21 @@ function ModalNew(props) {
     <ModalWrap width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
       <S.ButtonBox>
         <S.TitleWrap>{title}</S.TitleWrap>
         <S.ButtonWrap>
-          {buttonType === "ACS" ? (
-            <ButtonModule
-              addRowBtn={true}
-              cancelRowBtn={true}
-              saveBtn={true}
-              onClickAddRow={onClickModalAddRow}
-              onClickCancelRow={onClickModalCancelRow}
-              onClickSave={onClickModalSave}
-            />
-          ) : null}
-          {buttonType === "Save" ? (
-            <ButtonModule saveBtn={true} onClickSave={onClickModalSave} />
-          ) : null}
+          {buttonType === "ACS" && (
+            <>
+              <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
+              <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
+              <BtnComponent btnName="Save" onClick={onClickModalSave} />
+            </>
+          )}
+          {buttonType === "Save" && <BtnComponent btnName="Save" onClick={onClickModalSave} />}
         </S.ButtonWrap>
       </S.ButtonBox>
       <S.GridBox>{Grid}</S.GridBox>
