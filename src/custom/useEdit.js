@@ -2,22 +2,10 @@ import GetPutParams from "api/GetPutParams";
 import restAPI from "api/restAPI";
 import * as disRow from "custom/useDisableRowCheck";
 
-const useEdit = (
-  refGrid,
-  isBackDrop,
-  setIsBackDrop,
-  isSnackOpen,
-  setIsSnackOpen,
-  componentName,
-  uri
-) => {
+const useEdit = (refGrid, isBackDrop, setIsBackDrop, isSnackOpen, setIsSnackOpen, componentName, uri) => {
   const actEdit = async () => {
     refGrid?.current?.gridInst?.finishEditing();
-    console.log(refGrid?.current?.gridInst?.getCheckedRows());
-    const data = refGrid?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetPutParams(componentName, raw));
-    console.log(data);
+    const data = refGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetPutParams(componentName, raw));
     if (data !== undefined) {
       if (data.length !== 0) {
         setIsBackDrop(true);
@@ -36,9 +24,7 @@ const useEdit = (
             setIsSnackOpen({
               ...isSnackOpen,
               open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
+              message: res?.message ? res?.message : res?.response?.data?.message,
               severity: "error",
             });
           })
@@ -66,9 +52,7 @@ const useEditHeader = (
   const actEditHeader = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isEditMode === true) {
-      const data = refGrid?.current?.gridInst
-        ?.getCheckedRows()
-        ?.map((raw) => GetPutParams(componentName, raw));
+      const data = refGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetPutParams(componentName, raw));
       if (data !== undefined) {
         if (data.length !== 0) {
           setIsBackDrop(true);
@@ -87,9 +71,7 @@ const useEditHeader = (
               setIsSnackOpen({
                 ...isSnackOpen,
                 open: true,
-                message: res?.message
-                  ? res?.message
-                  : res?.response?.data?.message,
+                message: res?.message ? res?.message : res?.response?.data?.message,
                 severity: "error",
               });
             })
@@ -118,9 +100,7 @@ const useEditDetail = (
   const actEditDetail = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isEditMode === true) {
-      const data = refGrid?.current?.gridInst
-        ?.getCheckedRows()
-        ?.map((raw) => GetPutParams(componentName, raw));
+      const data = refGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetPutParams(componentName, raw));
       if (data !== undefined) {
         if (data.length !== 0) {
           setIsBackDrop(true);
@@ -139,9 +119,7 @@ const useEditDetail = (
               setIsSnackOpen({
                 ...isSnackOpen,
                 open: true,
-                message: res?.message
-                  ? res?.message
-                  : res?.response?.data?.message,
+                message: res?.message ? res?.message : res?.response?.data?.message,
                 severity: "error",
               });
             })

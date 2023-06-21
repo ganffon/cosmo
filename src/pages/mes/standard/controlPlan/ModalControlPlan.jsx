@@ -7,6 +7,7 @@ import DateTime from "components/datetime/DateTime";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalControlPlan.styled";
+import BtnComponent from "components/button/BtnComponent";
 
 function ModalControlPlan(props) {
   const {
@@ -40,11 +41,7 @@ function ModalControlPlan(props) {
   useEffect(() => {
     if (!isNewDetail) {
       refGridModalHeader?.current?.gridInst?.appendRow();
-      refGridModalHeader?.current?.gridInst.setValue(
-        0,
-        "subdivision_date",
-        DateTime().dateFull
-      );
+      refGridModalHeader?.current?.gridInst.setValue(0, "subdivision_date", DateTime().dateFull);
     }
   }, []);
 
@@ -68,11 +65,7 @@ function ModalControlPlan(props) {
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>
-          {isNewDetail
-            ? `[수정] ${currentMenuName}`
-            : `[신규] ${currentMenuName}`}
-        </S.TitleBox>
+        <S.TitleBox>{isNewDetail ? `[수정] ${currentMenuName}` : `[신규] ${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"
@@ -97,23 +90,11 @@ function ModalControlPlan(props) {
         />
       </S.GridBoxTop>
       <S.ButtonBox>
-        {isNewDetail ? null : (
-          <S.ButtonSet
-            startIcon={<GetAppIcon />}
-            variant="contained"
-            size="small"
-            color="primary"
-            onClick={onDataLoad}
-            width={"130px"}
-          >
-            Data Load
-          </S.ButtonSet>
-        )}
-        <ButtonACS
-          onClickAddRow={onClickModalAddRow}
-          onClickCancelRow={onClickModalCancelRow}
-          onClickSave={isNewDetail ? onClickEditModalSave : onClickModalSave}
-        />
+        {!isNewDetail && <BtnComponent btnName="DataLoad" onClick={onDataLoad} />}
+
+        <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
+        <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
+        <BtnComponent btnName="Save" onClick={isNewDetail ? onClickEditModalSave : onClickModalSave} />
       </S.ButtonBox>
       <S.GridBoxBottom>{GridDetail}</S.GridBoxBottom>
     </ModalWrap>

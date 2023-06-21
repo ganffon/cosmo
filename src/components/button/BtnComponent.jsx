@@ -10,6 +10,7 @@ import Mapping from "img/Component/button/mapping.svg";
 import New from "img/Component/button/new.svg";
 import Ok from "img/Component/button/ok.svg";
 import Save from "img/Component/button/save.svg";
+import GetAppIcon from "@mui/icons-material/GetApp";
 
 function BtnComponent(props) {
   const { btnName, height = null, width = null, onClick = () => {} } = props;
@@ -86,6 +87,12 @@ function BtnComponent(props) {
       title = "데이터 맵핑";
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "125px";
+      break;
+    case "DataLoad":
+      icon = GetAppIcon;
+      title = "불러오기";
+      btnHeight = height ? height : "34px";
+      btnWidth = width ? width : "110px";
       break;
     default:
   }
