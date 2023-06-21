@@ -22,10 +22,12 @@ import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import restAPI from "api/restAPI";
 
 function Employee() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -41,12 +43,15 @@ function Employee() {
   const [gradeOpt, gradeList] = Cbo.useGrade();
   const [workerGroupOpt, workerGroupList] = Cbo.useWorkerGroup();
 
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = EmployeeSet(
-    isEditMode,
-    deptList,
-    gradeList,
-    workerGroupList
-  );
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = EmployeeSet(isEditMode, deptList, gradeList, workerGroupList);
   const SWITCH_NAME_01 = "employee";
 
   useEffect(() => {
@@ -54,13 +59,19 @@ function Employee() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -169,6 +180,35 @@ function Employee() {
     }
   };
 
+  const loadData = async () => {
+    let result;
+    try {
+      let readURI = restURI.syncEmployee;
+
+      setIsBackDrop(true);
+
+      result = await restAPI.post(readURI);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "동기화에 실패하였습니다.",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+
+      setIsBackDrop(false);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result.data.message,
+        severity: "success",
+      });
+      onClickSearch();
+    }
+  };
+
   return (
     <ContentsArea>
       <S.ShadowBoxButton>
@@ -192,18 +232,7 @@ function Employee() {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.ButtonWrap>
-          {isEditMode ? (
-            <>
-              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
-              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
-            </>
-          ) : (
-            <>
-              <BtnComponent btnName={"New"} onClick={onClickNew} />
-              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
-              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-            </>
-          )}
+          <BtnComponent btnName={"DataLoad"} onClick={loadData} />
         </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle

@@ -102,5 +102,12 @@
   "monthlyProd": "/kpi/production/monthly-by-prod",
 
   "opcWeight": "/prd/weight/raws",
-  "prodSite": "/dashboard/realtime/prod-site"
+  "prodSite": "/dashboard/realtime/prod-site",
+
+  "syncLine": "/sys/sync-line",
+  "syncProduct": "/sys/sync-prod",
+
+  "syncDepartment": "/sys/sync-dept",
+  "syncGrade": "/sys/sync-grade",
+  "syncEmployee": "/sys/sync-emp"
 }

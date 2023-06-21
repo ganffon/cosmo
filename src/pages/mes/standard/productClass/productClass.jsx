@@ -21,10 +21,12 @@ import * as uSave from "custom/useSave";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import restAPI from "api/restAPI";
 
 function ProductClass() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const refModalGrid = useRef(null);
   const [searchToggle, setSearchToggle] = useState(false);
@@ -36,20 +38,33 @@ function ProductClass() {
     open: false,
   });
   const SWITCH_NAME_01 = "productClass";
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
-    productClassSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = productClassSet(isEditMode);
   const refSingleGrid = useRef(null);
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
   };
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -161,6 +176,34 @@ function ProductClass() {
       setSearchToggle(!searchToggle);
     }
   };
+  const loadData = async () => {
+    let result;
+    try {
+      let readURI = restURI.syncProduct;
+
+      setIsBackDrop(true);
+
+      result = await restAPI.post(readURI);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "동기화에 실패하였습니다.",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+
+      setIsBackDrop(false);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result.data.message,
+        severity: "success",
+      });
+      onClickSearch();
+    }
+  };
 
   return (
     <ContentsArea>
@@ -185,18 +228,7 @@ function ProductClass() {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.ButtonWrap>
-          {isEditMode ? (
-            <>
-              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
-              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
-            </>
-          ) : (
-            <>
-              <BtnComponent btnName={"New"} onClick={onClickNew} />
-              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
-              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-            </>
-          )}
+          <BtnComponent btnName={"DataLoad"} onClick={loadData} />
         </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle

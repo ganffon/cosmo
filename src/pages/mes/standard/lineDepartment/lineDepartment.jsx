@@ -27,12 +27,14 @@ import Condition from "custom/Condition";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import restAPI from "api/restAPI";
 
 function LineDepartment(props) {
   LoginStateChk();
   const [lineOpt, lineList] = Cbo.useLine();
   const [departmentOpt, departmentList] = Cbo.useDept();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const SWITCH_NAME_01 = "lineDepartment";
   const [isEditMode, setIsEditMode] = useState(false);
@@ -89,8 +91,14 @@ function LineDepartment(props) {
     inputSet,
   } = lineDepartmentSet(isEditMode, lineList, departmentList);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -299,6 +307,35 @@ function LineDepartment(props) {
     restURI.department
   );
 
+  const loadData = async () => {
+    let result;
+    try {
+      let readURI = restURI.syncLine;
+
+      setIsBackDrop(true);
+
+      result = await restAPI.post(readURI);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "동기화에 실패하였습니다.",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+
+      setIsBackDrop(false);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result.data.message,
+        severity: "success",
+      });
+      onClickSearch();
+    }
+  };
+
   const GridModal = useMemo(() => {
     return (
       <ModalNew
@@ -333,10 +370,15 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                    line_id:
+                      newValue?.line_id === undefined
+                        ? null
+                        : newValue?.line_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.line_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -349,10 +391,15 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    dept_id: newValue?.dept_id === undefined ? null : newValue?.dept_id,
+                    dept_id:
+                      newValue?.dept_id === undefined
+                        ? null
+                        : newValue?.dept_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.dept_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.dept_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
@@ -374,18 +421,7 @@ function LineDepartment(props) {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.ButtonWrap>
-          {isEditMode ? (
-            <>
-              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
-              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
-            </>
-          ) : (
-            <>
-              <BtnComponent btnName={"New"} onClick={onClickNew} />
-              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
-              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-            </>
-          )}
+          <BtnComponent btnName={"DataLoad"} onClick={loadData} />
         </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle
