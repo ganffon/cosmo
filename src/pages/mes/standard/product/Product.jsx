@@ -22,10 +22,12 @@ import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import restAPI from "api/restAPI";
 
 function Product() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -49,7 +51,15 @@ function Product() {
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
   const [unitOpt, unitList] = Cbo.useUnit();
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = ProductSet(
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = ProductSet(
     isEditMode,
     productGbnList,
     productModelList,
@@ -64,12 +74,18 @@ function Product() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -189,6 +205,35 @@ function Product() {
     }
   };
 
+  const loadData = async () => {
+    let result;
+    try {
+      let readURI = restURI.syncProduct;
+
+      setIsBackDrop(true);
+
+      result = await restAPI.post(readURI);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "동기화에 실패하였습니다.",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+
+      setIsBackDrop(false);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result.data.message,
+        severity: "success",
+      });
+      onClickSearch();
+    }
+  };
+
   return (
     <ContentsArea>
       <S.ShadowBoxButton>
@@ -205,10 +250,15 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
+                    prod_gbn_id:
+                      newValue?.prod_gbn_id === undefined
+                        ? null
+                        : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -221,10 +271,15 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
+                    model_id:
+                      newValue?.model_id === undefined
+                        ? null
+                        : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.model_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -237,10 +292,15 @@ function Product() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
+                    prod_type_id:
+                      newValue?.prod_type_id === undefined
+                        ? null
+                        : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField {...params} label={CN.prod_type_nm} size="small" />
+                )}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -254,10 +314,18 @@ function Product() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined
+                        ? null
+                        : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.prod_type_small_nm}
+                    size="small"
+                  />
+                )}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
@@ -281,18 +349,8 @@ function Product() {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.ButtonWrap>
-          {isEditMode ? (
-            <>
-              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
-              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
-            </>
-          ) : (
-            <>
-              <BtnComponent btnName={"New"} onClick={onClickNew} />
-              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
-              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-            </>
-          )}
+          {" "}
+          <BtnComponent btnName={"DataLoad"} onClick={loadData} />
         </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle

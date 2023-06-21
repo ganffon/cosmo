@@ -18,7 +18,6 @@ import ModalNew from "./ModalNew";
 import ModalSelectMulti from "./ModalSelectMulti";
 import GetPostParams from "api/GetPostParams";
 import GetDeleteParams from "api/GetDeleteParams";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
@@ -29,7 +28,7 @@ function PackingPanel() {
   const targetRowKey = useRef("");
   const currentRowKey = useRef("");
   LoginStateChk();
-  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
@@ -87,13 +86,6 @@ function PackingPanel() {
     message: "",
   });
 
-  const handleWarning = () => {
-    setIsWarning({
-      ...isWarning,
-      open: false,
-    });
-  };
-
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
@@ -107,8 +99,7 @@ function PackingPanel() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataPackingHeader,
-    restURI.prdPacking +
-      `?start_date=${dateText.startDate}&end_date=${dateText.endDate}`
+    restURI.prdPacking
   );
   const [actSelectWeightHeader] = uSearch.useSearchSelect(
     refGridSelectHeader,
@@ -129,9 +120,7 @@ function PackingPanel() {
         if (workWeightID.current) {
           try {
             setIsBackDrop(true);
-            const result = await restAPI.get(
-              restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`
-            );
+            const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`);
             setGridDataDetail(result?.data?.data?.rows);
           } catch (err) {
             setIsSnackOpen({
@@ -152,20 +141,18 @@ function PackingPanel() {
 
   const onClickSelect = () => {
     setIsPackingHeaderOpen(true);
-    actSelectPackingHeader();
+    actSelectPackingHeader(`?start_date=${dateText.startDate}&end_date=${dateText.endDate}`);
   };
   const onClickSelectDateClose = () => {
     setIsPackingHeaderOpen(false);
   };
   const onClickSearchSelectDate = () => {
-    actSelectPackingHeader();
+    actSelectPackingHeader(`?start_date=${dateText.startDate}&end_date=${dateText.endDate}`);
   };
   const handleGridHeaderSearch = async () => {
     try {
       setIsBackDrop(true);
-      const result = await restAPI.get(
-        restURI.prdPackingDetail + `?work_packing_id=${workPackingID.current}`
-      );
+      const result = await restAPI.get(restURI.prdPackingDetail + `?work_packing_id=${workPackingID.current}`);
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
       currentRowKey.current = "";
@@ -250,11 +237,7 @@ function PackingPanel() {
     const Grid = refGridNewHeader?.current?.gridInst;
     Grid?.appendRow();
 
-    Grid?.setValue(
-      Grid.getRowCount() - 1,
-      "work_packing_id",
-      workPackingID.current
-    );
+    Grid?.setValue(Grid.getRowCount() - 1, "work_packing_id", workPackingID.current);
   };
   const onClickCancelRow = () => {
     refGridNewHeader?.current?.gridInst?.removeRow(currentRowKey.current);
@@ -303,9 +286,7 @@ function PackingPanel() {
         if (workWeightID.current) {
           try {
             setIsBackDrop(true);
-            const result = await restAPI.get(
-              restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`
-            );
+            const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`);
             setGridDataNewDetail(result?.data?.data?.rows);
           } catch (err) {
             setIsSnackOpen({
@@ -337,9 +318,7 @@ function PackingPanel() {
     ) {
       targetRowKey.current = e?.rowKey;
       setIsModalSelectMulti(true);
-      actSelectWeightHeader(
-        `?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`
-      );
+      actSelectWeightHeader(`?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`);
     }
   };
   const onClickModalSelectClose = () => {
@@ -352,9 +331,7 @@ function PackingPanel() {
           setIsBackDrop(true);
           const Grid = refGridSelectHeader?.current?.gridInst;
           const workWeighID = Grid.getValue(e?.rowKey, "work_weigh_id");
-          const result = await restAPI.get(
-            restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`
-          );
+          const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`);
           setGridDataSelectDetail(result?.data?.data?.rows);
           currentRowKey.current = e?.rowKey;
         } catch (err) {
@@ -376,81 +353,21 @@ function PackingPanel() {
     const Header = refGridNewHeader?.current?.gridInst;
     const Select = refGridSelectHeader?.current?.gridInst;
     workWeightID.current = Select?.getValue(rowKey, "work_weigh_id");
-    Header?.setValue(
-      targetRowKey.current,
-      "work_weigh_id",
-      Select?.getValue(rowKey, "work_weigh_id")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "prod_id",
-      Select?.getValue(rowKey, "prod_id")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "prod_cd",
-      Select?.getValue(rowKey, "prod_cd")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "prod_nm",
-      Select?.getValue(rowKey, "prod_nm")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "lot_no",
-      Select?.getValue(rowKey, "lot_no")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "work_weigh_time",
-      Select?.getValue(rowKey, "work_weigh_time")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "weigh_emp_id",
-      Select?.getValue(rowKey, "weigh_emp_id")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "weigh_emp_nm",
-      Select?.getValue(rowKey, "weigh_emp_nm")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "work_input_time",
-      Select?.getValue(rowKey, "work_input_time")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "input_emp_id",
-      Select?.getValue(rowKey, "input_emp_id")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "input_emp_nm",
-      Select?.getValue(rowKey, "input_emp_nm")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "inv_to_store_id",
-      Select?.getValue(rowKey, "inv_to_store_id")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "store_nm",
-      Select?.getValue(rowKey, "store_nm")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "inv_to_location_id",
-      Select?.getValue(rowKey, "inv_to_location_id")
-    );
-    Header?.setValue(
-      targetRowKey.current,
-      "location_nm",
-      Select?.getValue(rowKey, "location_nm")
-    );
+    Header?.setValue(targetRowKey.current, "work_weigh_id", Select?.getValue(rowKey, "work_weigh_id"));
+    Header?.setValue(targetRowKey.current, "prod_id", Select?.getValue(rowKey, "prod_id"));
+    Header?.setValue(targetRowKey.current, "prod_cd", Select?.getValue(rowKey, "prod_cd"));
+    Header?.setValue(targetRowKey.current, "prod_nm", Select?.getValue(rowKey, "prod_nm"));
+    Header?.setValue(targetRowKey.current, "lot_no", Select?.getValue(rowKey, "lot_no"));
+    Header?.setValue(targetRowKey.current, "work_weigh_time", Select?.getValue(rowKey, "work_weigh_time"));
+    Header?.setValue(targetRowKey.current, "weigh_emp_id", Select?.getValue(rowKey, "weigh_emp_id"));
+    Header?.setValue(targetRowKey.current, "weigh_emp_nm", Select?.getValue(rowKey, "weigh_emp_nm"));
+    Header?.setValue(targetRowKey.current, "work_input_time", Select?.getValue(rowKey, "work_input_time"));
+    Header?.setValue(targetRowKey.current, "input_emp_id", Select?.getValue(rowKey, "input_emp_id"));
+    Header?.setValue(targetRowKey.current, "input_emp_nm", Select?.getValue(rowKey, "input_emp_nm"));
+    Header?.setValue(targetRowKey.current, "inv_to_store_id", Select?.getValue(rowKey, "inv_to_store_id"));
+    Header?.setValue(targetRowKey.current, "store_nm", Select?.getValue(rowKey, "store_nm"));
+    Header?.setValue(targetRowKey.current, "inv_to_location_id", Select?.getValue(rowKey, "inv_to_location_id"));
+    Header?.setValue(targetRowKey.current, "location_nm", Select?.getValue(rowKey, "location_nm"));
   };
 
   async function onClickGridButton(rowKey) {
@@ -458,9 +375,7 @@ function PackingPanel() {
     setIsModalSelectMulti(false);
     try {
       setIsBackDrop(true);
-      const result = await restAPI.get(
-        restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`
-      );
+      const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`);
       setGridDataNewDetail(result?.data?.data?.rows);
     } catch (err) {
       setIsSnackOpen({
