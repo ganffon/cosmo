@@ -41,6 +41,8 @@ const TimeInput = (e) => {
   } else if (e.length === 4 && Number(e.slice(-2)) > 59) {
     //e의 길이가 4이고, e의 끝에서 2자리가 59보다 큰 숫자인 경우, e를 빈 문자열("")로 변경합니다.
     e = "";
+  } else if (e.length === 6) {
+    e = "";
   } else {
     //위의 조건에 해당하지 않는 경우, removeNonNumeric 함수를 사용하여 e에서 숫자 이외의 문자를 제거합니다.
     e = removeNonNumeric(e);

@@ -22,7 +22,7 @@ export const Title = styled("div")`
   font-family: "NotoSansKR";
   font-style: normal;
   font-weight: 700;
-  font-size: ${(props) => props.fontSize};
+  font-size: ${(props) => props.size};
   line-height: 28px;
   /* identical to box height, or 108% */
   text-align: left;
@@ -44,7 +44,7 @@ export const Content = styled("div")`
   width: 100%;
   font-family: "NotoSansKR";
   font-style: normal;
-  font-size: ${(props) => props.fontSize};
+  font-size: ${(props) => props.size};
   text-align: center;
   color: ${(props) => props.fontColor};
 `;
@@ -92,7 +92,7 @@ export const ButtonPanel = styled("button")`
 
 export const SearchTitle = styled("div")`
   font-family: NotoSansKR;
-  font-size: ${(props) => props.fontSize};
+  font-size: ${(props) => props.size};
   padding-left: 15px;
   font-weight: 400;
   line-height: 16px;

@@ -8,7 +8,7 @@ const Overlay = styled("div")`
   right: 0;
   bottom: 0;
   background-color: rgb(0, 0, 0, 0.6);
-  z-index: 1000;
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -287,7 +287,7 @@ class infcMemory {
     this.device_address = raw.device_address;
     this.tag_id = raw.tag_id;
     this.infc_memory_nm = raw.infc_memory_nm;
-    this.insp_fg = raw.insp_fg ? true : false;
+    this.history_fg = raw.history_fg ? true : false;
     this.remark = raw.remark;
   }
 }

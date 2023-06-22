@@ -213,10 +213,18 @@ function ControlPlan() {
     // }
   };
   const onClickEditNew = () => {
-    if (refGridDetail?.current?.gridInst?.getRowCount() !== 0) {
+    if (inputInfoValue.length !== 0) {
       setIsNewDetail(true);
       setIsModalOpen(true);
       actSearchEditHeader(headerClickRowID);
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "관리계획서를 먼저 선택하세요",
+        severity: "warning",
+        location: "BottomRight",
+      });
     }
   };
   const onClickEditDetail = () => {
@@ -677,7 +685,7 @@ function ControlPlan() {
         <S.ShadowBoxButtonDetail>
           <S.Title>관리계획서 세부내용</S.Title>
           <S.ButtonWrap>
-            {isEditModeHeader ? (
+            {isEditModeDetail ? (
               <>
                 <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
                 <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />

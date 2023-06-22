@@ -1,6 +1,7 @@
 import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import * as S from "./NoticeSnack.styled";
 
 function NoticeSnack({ state, setState }) {
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -60,7 +61,7 @@ function NoticeSnack({ state, setState }) {
      * "success" - grin
      */
 
-    <Snackbar
+    <S.SnackWrap
       open={state.open}
       autoHideDuration={duration}
       onClose={handleClose}
@@ -69,7 +70,7 @@ function NoticeSnack({ state, setState }) {
       <Alert onClose={handleClose} severity={state.severity} sx={{ width: "100%" }}>
         {state.message}
       </Alert>
-    </Snackbar>
+    </S.SnackWrap>
   );
 }
 

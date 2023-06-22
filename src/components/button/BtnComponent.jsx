@@ -94,6 +94,18 @@ function BtnComponent(props) {
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "110px";
       break;
+    case "Add":
+      icon = null;
+      title = "추가";
+      btnHeight = height ? height : "60px";
+      btnWidth = width ? width : "70px";
+      break;
+    case "Detail":
+      icon = null;
+      title = "상세";
+      btnHeight = height ? height : "60px";
+      btnWidth = width ? width : "70px";
+      break;
     default:
   }
   return btnName === "Search" ? (

@@ -83,6 +83,8 @@ import MonthlyTempHumidChart from "pages/mes/managementInfo/monthlyTempHumidChar
 import DowntimeReport from "pages/mes/production/downtimeReport/DowntimeReport";
 import SubdivisionReport from "pages/mes/production/subdivisionReport/SubdivisionReport";
 
+import WorkerGroupStatus from "pages/mes/panel/workerGroupStatus/WorkerGroupStatus";
+
 export default function MainRouter() {
   const pages = [
     { path: "", component: Dashboard },
@@ -173,6 +175,7 @@ export default function MainRouter() {
     { path: "count-raws", component: CountRaws },
     { path: "monthly-temp-humid-chart", component: MonthlyTempHumidChart },
     { path: "subdivision-report", component: SubdivisionReport },
+    { path: "worker-group-status", component: WorkerGroupStatus },
   ];
   return (
     <Layout>

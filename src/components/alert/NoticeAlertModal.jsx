@@ -47,10 +47,10 @@ function NoticeAlertModal(props) {
   return (
     <ModalWrap height={height} width={width}>
       <S.HeaderBox>
-        <S.Title fontSize={"15px"}> {title}</S.Title>
+        <S.Title size={"15px"}> {title}</S.Title>
       </S.HeaderBox>
       <S.ContentBox>
-        <S.Content fontSize={textFontSize} fontColor={fontColor}>
+        <S.Content size={textFontSize} fontColor={fontColor}>
           {textContent}
         </S.Content>
       </S.ContentBox>
@@ -94,60 +94,5 @@ function NoticeAlertModal(props) {
       </S.ButtonWrap>
     </ModalWrap>
   );
-
-  /*
-  return btnName === "Search" ? (
-    <S.ButtonPanel
-      height={btnHeight}
-      width={btnWidth}
-      background={btnBackground}
-      borderColor={btnBordercolor}
-      onClick={() => {
-        handleClick();
-        onClick();
-      }}
-      className={isClicked ? "clicked" : ""}
-    >
-      <S.SearchIcon src={icon} />
-      <S.SearchTitle fontSize={btnFontSize} fontColor={btnFontColor}>
-        검색
-      </S.SearchTitle>
-    </S.ButtonPanel>
-  ) : btnIconParm ? (
-    <S.ButtonPanel
-      height={btnHeight}
-      width={btnWidth}
-      background={btnBackground}
-      borderColor={btnBordercolor}
-      onClick={() => {
-        handleClick();
-        onClick();
-      }}
-      className={isClicked ? "clicked" : ""}
-    >
-      <S.Icon src={btnIconParm} />
-      <S.Title fontSize={btnFontSize} fontColor={btnFontColor}>
-        {btntitle}
-      </S.Title>
-    </S.ButtonPanel>
-  ) : (
-    <S.ButtonPanel
-      height={btnHeight}
-      width={btnWidth}
-      background={btnBackground}
-      borderColor={btnBordercolor}
-      onClick={() => {
-        handleClick();
-        onClick();
-      }}
-      className={isClicked ? "clicked" : ""}
-    >
-      <S.Title fontSize={btnFontSize} fontColor={btnFontColor}>
-        {btntitle}
-      </S.Title>
-    </S.ButtonPanel>
-  );
-}
-*/
 }
 export default NoticeAlertModal;
