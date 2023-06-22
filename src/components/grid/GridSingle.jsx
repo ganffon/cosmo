@@ -25,10 +25,12 @@ function GridSingle(props) {
   }, []);
 
   const handleFocus = () => {
-    const Grid = refGrid?.current?.getInstance();
-    const coords = Grid.getFocusedCell();
-    if (coords) {
-      Grid.startEditing(coords.rowKey, coords.columnName);
+    if (refGrid) {
+      const Grid = refGrid?.current?.getInstance();
+      const coords = Grid.getFocusedCell();
+      if (coords) {
+        Grid.startEditing(coords.rowKey, coords.columnName);
+      }
     }
   };
   const beforeSelectedRow = useRef("");

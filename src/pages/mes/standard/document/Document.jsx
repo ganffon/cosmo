@@ -64,10 +64,7 @@ function Document() {
     height: "90%",
   });
   const [columnsSelect, setColumnsSelect] = useState([]);
-  const [inputSearchValue, setInputSearchValue] = useState({
-    prod_cd: "품목코드",
-    prod_nm: "품목",
-  });
+  const [inputSearchValue, setInputSearchValue] = useState([]);
   const [inputInfoValue, setInputInfoValue] = useState([]);
 
   const [lineOpt, lineList] = Cbo.useLine();
@@ -239,7 +236,7 @@ function Document() {
     setDisRowHeader(!disRowHeader);
   };
   const onClickEditNew = () => {
-    if (refGridDetail?.current?.gridInst?.getRowCount() !== 0) {
+    if (inputInfoValue.length !== 0) {
       setIsNewDetail(true);
       setIsModalOpen(true);
       actSearchEditHeader(headerClickRowID.current);
@@ -270,11 +267,7 @@ function Document() {
     actSelectProd();
   };
   const onClickProdRemove = () => {
-    setInputSearchValue({
-      ...inputSearchValue,
-      prod_cd: "품목코드",
-      prod_nm: "품목",
-    });
+    setInputSearchValue([]);
   };
   async function onClickSearch() {
     try {
@@ -507,12 +500,13 @@ function Document() {
     const columnNameEquipProc = ["proc_nm", "equip_nm", "proc_id", "equip_id"];
 
     if (targetGrid.current === "Search") {
+      setInputSearchValue([]);
       columnName = ["prod_cd", "prod_nm"];
-      setInputSearchValue({
-        ...inputSearchValue,
-        prod_cd: e?.instance?.store?.data?.rawData[e?.rowKey][columnName[0]],
-        prod_nm: e?.instance?.store?.data?.rawData[e?.rowKey][columnName[1]],
-      });
+      for (let i = 0; i < columnName.length; i++) {
+        setInputSearchValue((prevList) => {
+          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
+        });
+      }
     } else {
       if (targetGrid.current === "Header") {
         refGrid = refGridHeader;
@@ -626,7 +620,7 @@ function Document() {
             />
           </S.ComboWrap>
           {inputSet.map((v, idx) => (
-            <S.InputPaperBox
+            <InputPaper
               key={v.id}
               id={v.id}
               name={v.name}
@@ -669,7 +663,7 @@ function Document() {
         <S.ShadowBoxButtonDetail>
           <S.Title>검사기준서 세부내용</S.Title>
           <S.ButtonWrap>
-            {isEditModeHeader ? (
+            {isEditModeDetail ? (
               <>
                 <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
                 <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />

@@ -599,6 +599,12 @@
         "id": "downtime-panel",
         "path": "downtime-panel",
         "under": null
+      },
+      {
+        "name": "✴️조별상황일지",
+        "id": "worker-group-status",
+        "path": "worker-group-status",
+        "under": null
       }
     ]
   }

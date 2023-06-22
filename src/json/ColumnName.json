@@ -353,8 +353,10 @@
   "work_order_id": "지시ID",
   "work_order_no": "지시번호",
   "work_order_date": "지시일자",
-  "work_start_date": "지시시작일자",
-  "work_end_date": "지시종료일자",
+  "work_start_date": "작업시작일자",
+  "work_start_time": "작업시작시간",
+  "work_end_date": "작업종료일자",
+  "work_end_time": "작업종료시간",
   "work_order_qty": "지시수량",
 
   "bag_qty": "Bag중량",

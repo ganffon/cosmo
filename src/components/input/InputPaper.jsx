@@ -56,6 +56,7 @@ function InputPaper(props) {
         />
       ) : (
         <S.Text
+          multiline
           key={id}
           id={id}
           value={value}

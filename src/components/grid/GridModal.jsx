@@ -22,10 +22,12 @@ function GridModal(props) {
   }, []);
 
   const handleFocus = () => {
-    const Grid = refGrid?.current?.gridInst;
-    const coords = Grid.getFocusedCell();
-    if (coords) {
-      Grid.startEditing(coords.rowKey, coords.columnName);
+    if (refGrid) {
+      const Grid = refGrid?.current?.gridInst;
+      const coords = Grid.getFocusedCell();
+      if (coords) {
+        Grid.startEditing(coords.rowKey, coords.columnName);
+      }
     }
   };
 

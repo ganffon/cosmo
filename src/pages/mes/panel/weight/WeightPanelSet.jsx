@@ -36,16 +36,7 @@ function WeightPanelSet(onClickGridButton) {
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
-    col.text(
-      "prod_std",
-      CN.prod_std,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      true
-    ),
+    col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
     col.text("thickness", CN.thickness, C.U, C.U, C.U, C.U, true, true),
     col.text("width", CN.width, C.U, C.U, C.U, C.U, true, true),
     col.text("length", CN.length, C.U, C.U, C.U, C.U, true, true),
@@ -71,77 +62,23 @@ function WeightPanelSet(onClickGridButton) {
   const columnsInput = [
     col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text(
-      "work_order_no",
-      CN.work_order_no,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
+    col.text("work_order_no", CN.work_order_no, C.U, C.U, C.WIDTH_MIDDLE, false, false, true),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
-    col.text(
-      "line_dept_nm",
-      CN.line_dept_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
+    col.text("line_dept_nm", CN.line_dept_nm, C.U, C.U, C.WIDTH_MIDDLE, false, false, true),
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
     col.text("line_nm", CN.line_nm, C.U, C.U, C.U, false, false, true),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text(
-      "prod_cd",
-      CN.prod_cd,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
-    col.text(
-      "prod_nm",
-      CN.prod_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
+    col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE, false, false, true),
+    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE, false, false, true),
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
     col.text("store_nm", CN.store_nm, C.U, C.U, C.U, false, false, true),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
     col.text("location_nm", CN.location_nm, C.U, C.U, C.U, false, false, true),
     col.button("inputSave", "투입", "투입", onClickGridButton),
     col.date("work_weigh_date", CN.work_weigh_date),
-    col.text(
-      "work_weigh_time",
-      CN.work_weigh_time,
-      C.U,
-      C.U,
-      C.U,
-      "center",
-      false,
-      true
-    ),
+    col.text("work_weigh_time", CN.work_weigh_time, C.U, C.U, C.U, "center", false, true),
     col.id("weigh_emp_id", CN.weigh_emp_id, C.HIDDEN_ID),
-    col.text(
-      "weigh_emp_nm",
-      CN.weigh_emp_nm,
-      C.U,
-      C.U,
-      C.U,
-      false,
-      false,
-      true
-    ),
+    col.text("weigh_emp_nm", CN.weigh_emp_nm, C.U, C.U, C.U, false, false, true),
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG, false, false, true),
   ];
   const columnsInputDetail = [
@@ -157,16 +94,7 @@ function WeightPanelSet(onClickGridButton) {
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
   ];
   const columnsSelectEmp = [
-    col.text(
-      "dept_nm",
-      CN.dept_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
+    col.text("dept_nm", CN.dept_nm, C.U, C.U, C.WIDTH_MIDDLE, false, false, true),
     col.text("grade_nm", CN.grade_nm, C.U, C.U, C.U, false, false, true),
     col.id("emp_id", CN.emp_id, C.HIDDEN_ID),
     col.text("emp_cd", CN.emp_cd, C.U, C.U, C.U, false, false, true),

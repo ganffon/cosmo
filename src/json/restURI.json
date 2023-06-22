@@ -109,5 +109,7 @@
 
   "syncDepartment": "/sys/sync-dept",
   "syncGrade": "/sys/sync-grade",
-  "syncEmployee": "/sys/sync-emp"
+  "syncEmployee": "/sys/sync-emp",
+
+  "workerGroupStatus": "/prd/worker-group-status"
 }

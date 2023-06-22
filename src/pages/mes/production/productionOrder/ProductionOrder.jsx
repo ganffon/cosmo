@@ -4,14 +4,9 @@ import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import ProductionOrderSet from "./ProductionOrderSet";
 import useInputSet from "custom/useInputSet";
-import ButtonNEDS from "components/button/ButtonNEDS";
-import ButtonED from "components/button/ButtonED";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonSE from "components/button/ButtonSE";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
 import BackDrop from "components/backdrop/BackDrop";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import Condition from "custom/Condition";
@@ -30,8 +25,7 @@ import BtnComponent from "components/button/BtnComponent";
 
 function ProductionOrder() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refGridHeader = useRef(null);
   const refGridMid = useRef(null);
@@ -70,34 +64,22 @@ function ProductionOrder() {
   const SWITCH_NAME_02 = "orderInput";
   const SWITCH_NAME_03 = "orderDetail";
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditModeMid,
-    refGridMid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
 
-  const [disableRowToggleMid, setDisableRowToggleMid] =
-    disRow.useDisableRowCheck(isEditModeMid, refGridMid);
+  const [disableRowToggleMid, setDisableRowToggleMid] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
 
-  const [disableRowToggleTop, setDisableRowToggleTop] =
-    disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disableRowToggleTop, setDisableRowToggleTop] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
 
-  const [disableRowToggleBottom, setDisableRowToggleBottom] =
-    disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
-
-  const [disRowTop, setDisRowTop] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeMid,
-    refGridMid
-  );
-
-  const [disRowTopBottom, setDisRowBottom] = disRow.useDisableRowCheck(
+  const [disableRowToggleBottom, setDisableRowToggleBottom] = disRow.useDisableRowCheck(
     isEditModeBottom,
     refGridBottom
   );
+
+  const [disRowTop, setDisRowTop] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
+
+  const [disRowTopBottom, setDisRowBottom] = disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -133,10 +115,7 @@ function ProductionOrder() {
     refGridBottom?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
@@ -244,12 +223,7 @@ function ProductionOrder() {
                 readURI = "?";
                 cnt++;
               }
-              readURI =
-                readURI +
-                inputBoxID[i] +
-                "=" +
-                inputTextChange[inputBoxID[i]] +
-                "&";
+              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -365,22 +339,11 @@ function ProductionOrder() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameRequest = [
-      "request_id",
-      "request_no",
-      "prod_id",
-      "prod_cd",
-      "prod_nm",
-    ];
+    const columnNameRequest = ["request_id", "request_no", "prod_id", "prod_cd", "prod_nm"];
 
     const columnNameLineDept = ["line_dept_id", "line_dept_nm", "line_id"];
 
-    const columnNameInspItem = [
-      "insp_item_type_id",
-      "insp_item_type_nm",
-      "insp_item_id",
-      "insp_item_nm",
-    ];
+    const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
     const prodCode = e?.instance?.store?.data?.rawData[e?.rowKey].prod_cd;
     let prodId;
     if (prodCode && headerModalControl === "request") {
@@ -576,11 +539,7 @@ function ProductionOrder() {
     <ContentsArea>
       <S.SearchCondition>
         <>
-          <S.Date
-            datePickerSet={"range"}
-            dateText={dateText}
-            setDateText={setDateText}
-          />
+          <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
           {inputSet.map((v) => (
             <S.InputS
               key={v.id}
@@ -605,16 +564,10 @@ function ProductionOrder() {
             {isEditModeHeader ? (
               <>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Save"}
-                    onClick={onClickEditModeSaveHeader}
-                  />
+                  <BtnComponent btnName={"Save"} onClick={onClickEditModeSaveHeader} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Cancel"}
-                    onClick={onClickEditModeExitHeader}
-                  />
+                  <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExitHeader} />
                 </S.InnerButtonWrap>
               </>
             ) : (
@@ -626,10 +579,7 @@ function ProductionOrder() {
                   <BtnComponent btnName={"Edit"} onClick={onClickEditHeader} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Delete"}
-                    onClick={onClickDeleteHeader}
-                  />
+                  <BtnComponent btnName={"Delete"} onClick={onClickDeleteHeader} />
                 </S.InnerButtonWrap>
               </>
             )}
@@ -644,16 +594,10 @@ function ProductionOrder() {
             {isEditModeMid ? (
               <>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Save"}
-                    onClick={onClickEditModeSaveMid}
-                  />
+                  <BtnComponent btnName={"Save"} onClick={onClickEditModeSaveMid} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Cancel"}
-                    onClick={onClickEditModeExitMid}
-                  />
+                  <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExitMid} />
                 </S.InnerButtonWrap>
               </>
             ) : (
@@ -690,16 +634,10 @@ function ProductionOrder() {
             {isEditModeBottom ? (
               <>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Save"}
-                    onClick={onClickEditModeSaveBottom}
-                  />
+                  <BtnComponent btnName={"Save"} onClick={onClickEditModeSaveBottom} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Cancel"}
-                    onClick={onClickEditModeExitBottom}
-                  />
+                  <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExitBottom} />
                 </S.InnerButtonWrap>
               </>
             ) : (
@@ -708,10 +646,7 @@ function ProductionOrder() {
                   <BtnComponent btnName={"Edit"} onClick={onClickEditBottom} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent
-                    btnName={"Delete"}
-                    onClick={onClickDeleteBottom}
-                  />
+                  <BtnComponent btnName={"Delete"} onClick={onClickDeleteBottom} />
                 </S.InnerButtonWrap>
               </>
             )}
@@ -781,7 +716,7 @@ function ProductionOrder() {
       {isBottomDeleteAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textfontSize={"10px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
