@@ -22,8 +22,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Line(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -36,15 +35,7 @@ function Line(props) {
   });
   const [searchToggle, setSearchToggle] = useState(false);
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = LineSet(isEditMode);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = LineSet(isEditMode);
 
   const SWITCH_NAME_01 = "line";
 
@@ -55,18 +46,14 @@ function Line(props) {
     }
   }, [isMenuSlide]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -92,7 +79,7 @@ function Line(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.line
+    restURI.lineIncludeRework
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -164,7 +151,7 @@ function Line(props) {
     setSearchToggle(!searchToggle);
   }
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, []);
+    disRow.handleClickGridCheck(e, isEditMode, ["rework_fg"]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -225,13 +212,18 @@ function Line(props) {
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        <S.ButtonWrap>
-          <BtnComponent
-            btnName={"DataLoad"}
-            onClick={loadData}
-            toolTipTitle={"lineButton"}
-          />
-        </S.ButtonWrap>
+        {isEditMode ? (
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+            <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+          </S.ButtonWrap>
+        ) : (
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+            <BtnComponent btnName={"DataLoad"} onClick={loadData} toolTipTitle={"lineButton"} />
+          </S.ButtonWrap>
+        )}
+
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}

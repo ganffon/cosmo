@@ -35,7 +35,7 @@ function Weight() {
   const refGridModalHeader = useRef(null);
   const refGridModalDetail = useRef(null);
 
-  const { currentMenuName, isAllScreen } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeDetail, setIsEditModeDetail] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
@@ -108,13 +108,15 @@ function Weight() {
     columnsSelectStoreLocation,
   } = WeightSet(isEditModeHeader, isEditModeDetail, isNewDetail);
 
-  /*
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      // setSearchToggle(!searchToggle);
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    if (refGridHeader?.current !== null) {
+      refGridHeader?.current?.gridInst?.refreshLayout();
     }
-  };
-  */
+    if (refGridDetail?.current !== null) {
+      refGridDetail?.current?.gridInst?.refreshLayout();
+    }
+  }, [isAllScreen, isMenuSlide]);
 
   const [inputBoxID] = useInputSet(currentMenuName, inputSet);
 

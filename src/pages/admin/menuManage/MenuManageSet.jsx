@@ -270,7 +270,7 @@ function MenuManageSet(isEditMode) {
     },
   ];
 
-  const uri = restURI.line;
+  const uri = restURI.lineIncludeRework;
 
   return {
     data,

@@ -4,13 +4,6 @@ import * as S from "./DatePicker.styled";
 function DatePicker(props) {
   const { datePickerSet, dateText, setDateText } = props;
 
-  // useEffect(() => {
-  //   setDateText({
-  //     startDate: DateTime().dateFull,
-  //     endDate: DateTime(7).dateFull,
-  //   });
-  // }, []);
-
   const datePickerChange = (e) => {
     setDateText({ ...dateText, [e.target.id]: e.target.value });
   };

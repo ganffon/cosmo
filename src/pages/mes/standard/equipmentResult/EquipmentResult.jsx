@@ -226,7 +226,9 @@ function EquipmentResult() {
   }, [isMenuSlide]);
 
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
   const [actSelectEmp] = uSearch.useSearchSelect(

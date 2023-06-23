@@ -22,28 +22,21 @@ function EmployeeSet(isEditMode, deptList, gradeList, workerGroupList) {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const columns = [
-    col.list(
-      "dept_id",
-      "dept_nm",
-      CN.dept_nm,
-      deptList,
-      isEditMode,
-      C.WIDTH_LONG
-    ),
-    col.list("grade_id", "grade_nm", CN.grade_nm, gradeList, isEditMode),
+    col.list("dept_id", "dept_nm", CN.dept_nm, deptList, false, C.WIDTH_LONG),
+    col.list("grade_id", "grade_nm", CN.grade_nm, gradeList, false),
     col.id("emp_id", CN.emp_id, C.HIDDEN_ID),
     col.text("emp_cd", CN.emp_cd),
-    col.text("emp_nm", CN.emp_nm, isEditMode),
-    col.date("birthday", CN.birthday, isEditMode),
-    col.text("hp", CN.hp, isEditMode),
-    col.text("post", CN.post, isEditMode),
-    col.text("addr", CN.addr, isEditMode, C.U, C.WIDTH_LONG),
-    col.text("addr_detail", CN.addr_detail, isEditMode, C.U, C.WIDTH_LONG),
-    col.date("enter_date", CN.enter_date, isEditMode),
-    col.date("leave_date", CN.leave_date, isEditMode),
+    col.text("emp_nm", CN.emp_nm, false),
+    col.date("birthday", CN.birthday, false),
+    col.text("hp", CN.hp, false),
+    col.text("post", CN.post, false),
+    col.text("addr", CN.addr, false, C.U, C.WIDTH_LONG),
+    col.text("addr_detail", CN.addr_detail, false, C.U, C.WIDTH_LONG),
+    col.date("enter_date", CN.enter_date, false),
+    col.date("leave_date", CN.leave_date, false),
     col.check("worker_fg", CN.worker_fg, isEditMode),
     col.check("use_fg", CN.use_fg, isEditMode),
-    col.text("remark", CN.remark, isEditMode, C.U, C.WIDTH_LONG),
+    col.text("remark", CN.remark, false, C.U, C.WIDTH_LONG),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
     col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
@@ -63,7 +56,6 @@ function EmployeeSet(isEditMode, deptList, gradeList, workerGroupList) {
     col.date("leave_date", CN.leave_date, true),
     col.check("worker_fg", CN.worker_fg, true),
     col.check("use_fg", CN.use_fg, true),
-    col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];
   const columnOptions = {
     resizable: true,

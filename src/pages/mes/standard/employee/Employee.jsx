@@ -26,8 +26,7 @@ import restAPI from "api/restAPI";
 
 function Employee() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -43,15 +42,12 @@ function Employee() {
   const [gradeOpt, gradeList] = Cbo.useGrade();
   const [workerGroupOpt, workerGroupList] = Cbo.useWorkerGroup();
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = EmployeeSet(isEditMode, deptList, gradeList, workerGroupList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = EmployeeSet(
+    isEditMode,
+    deptList,
+    gradeList,
+    workerGroupList
+  );
   const SWITCH_NAME_01 = "employee";
 
   useEffect(() => {
@@ -59,19 +55,15 @@ function Employee() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -231,13 +223,18 @@ function Employee() {
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        <S.ButtonWrap>
-          <BtnComponent
-            btnName={"DataLoad"}
-            toolTipTitle={"employeeButton"}
-            onClick={loadData}
-          />
-        </S.ButtonWrap>
+        {isEditMode ? (
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+            <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+          </S.ButtonWrap>
+        ) : (
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+            <BtnComponent btnName={"DataLoad"} toolTipTitle={"employeeButton"} onClick={loadData} />
+          </S.ButtonWrap>
+        )}
+
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}

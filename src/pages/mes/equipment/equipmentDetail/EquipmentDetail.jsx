@@ -29,8 +29,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function EquipmentDetail() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -54,15 +53,7 @@ function EquipmentDetail() {
   const [equipmentLargeOpt, equipmentLargeList] = Cbo.useEquipmentLarge();
   const [equipmentMediumOpt, equipmentMediumList] = Cbo.useEquipmentMedium();
   const [equipmentSmallOpt, equipmentSmallList] = Cbo.useEquipmentSmall();
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = EquipmentDetailSet(
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = EquipmentDetailSet(
     isEditMode,
     processList,
     employeeList,
@@ -78,18 +69,14 @@ function EquipmentDetail() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -212,13 +199,7 @@ function EquipmentDetail() {
         onClickModalGrid={onClickModalGrid}
       />
     );
-  }, [
-    employeeList,
-    equipmentList,
-    equipmentLargeList,
-    equipmentMediumList,
-    equipmentSmallList,
-  ]);
+  }, [employeeList, equipmentList, equipmentLargeList, equipmentMediumList, equipmentSmallList]);
 
   return (
     <ContentsArea>
@@ -232,25 +213,15 @@ function EquipmentDetail() {
                 size="small"
                 key={(option) => option?.equip_classification_id}
                 options={equipmentLargeOpt || null}
-                getOptionLabel={(option) =>
-                  option?.equip_classification_nm || ""
-                }
+                getOptionLabel={(option) => option?.equip_classification_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
                     equip_classification_id:
-                      newValue?.equip_classification_id === undefined
-                        ? null
-                        : newValue?.equip_classification_id,
+                      newValue?.equip_classification_id === undefined ? null : newValue?.equip_classification_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.classification_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.classification_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -263,15 +234,10 @@ function EquipmentDetail() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    equip_group_id:
-                      newValue?.equip_group_id === undefined
-                        ? null
-                        : newValue?.equip_group_id,
+                    equip_group_id: newValue?.equip_group_id === undefined ? null : newValue?.equip_group_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.group_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.group_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -284,15 +250,10 @@ function EquipmentDetail() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    equip_class_id:
-                      newValue?.equip_class_id === undefined
-                        ? null
-                        : newValue?.equip_class_id,
+                    equip_class_id: newValue?.equip_class_id === undefined ? null : newValue?.equip_class_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.class_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.class_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>

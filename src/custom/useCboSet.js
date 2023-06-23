@@ -54,6 +54,23 @@ const useLine = () => {
   }, []);
   return [lineOpt, lineList];
 };
+let lineIncludeReworkList = [];
+const useLineIncludeRework = () => {
+  const [lineOpt, setLineOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.lineIncludeRework).then((res) => {
+        setLineOpt(cboMUISort(res?.data?.data?.rows, "line_nm"));
+        lineIncludeReworkList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "line_id", "line_nm");
+        });
+        lineIncludeReworkList = cboGridSort(lineIncludeReworkList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [lineOpt, lineIncludeReworkList];
+};
 let processList = [];
 const useProcess = () => {
   const [processOpt, setProcessOpt] = useState([]);
@@ -213,9 +230,7 @@ const useProductTypeSmall = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.productTypeSmall).then((res) => {
-        setProductTypeSmallOpt(
-          cboMUISort(res?.data?.data?.rows, "prod_type_small_nm")
-        );
+        setProductTypeSmallOpt(cboMUISort(res?.data?.data?.rows, "prod_type_small_nm"));
         productTypeSmallList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "prod_type_small_id", "prod_type_small_nm");
         });
@@ -249,9 +264,7 @@ const useInfcItemType = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.infcItemType).then((res) => {
-        setInfcItemTypeOpt(
-          cboMUISort(res?.data?.data?.rows, "infc_item_type_nm")
-        );
+        setInfcItemTypeOpt(cboMUISort(res?.data?.data?.rows, "infc_item_type_nm"));
         infcItemTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "infc_item_type_id", "infc_item_type_nm");
         });
@@ -302,15 +315,9 @@ const useEquipmentLarge = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.equipmentLarge).then((res) => {
-        setEquipmentLargeOpt(
-          cboMUISort(res?.data?.data?.rows, "equip_classification_nm")
-        );
+        setEquipmentLargeOpt(cboMUISort(res?.data?.data?.rows, "equip_classification_nm"));
         equipmentLargeList = res?.data?.data?.rows.map((data) => {
-          return GetCboParams(
-            data,
-            "equip_classification_id",
-            "equip_classification_nm"
-          );
+          return GetCboParams(data, "equip_classification_id", "equip_classification_nm");
         });
         equipmentLargeList = cboGridSort(equipmentLargeList);
       });
@@ -325,9 +332,7 @@ const useEquipmentMedium = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.equipmentMedium).then((res) => {
-        setEquipmentMediumOpt(
-          cboMUISort(res?.data?.data?.rows, "equip_group_nm")
-        );
+        setEquipmentMediumOpt(cboMUISort(res?.data?.data?.rows, "equip_group_nm"));
         equipmentMediumList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "equip_group_id", "equip_group_nm");
         });
@@ -344,9 +349,7 @@ const useEquipmentSmall = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.equipmentSmall).then((res) => {
-        setEquipmentSmallOpt(
-          cboMUISort(res?.data?.data?.rows, "equip_class_nm")
-        );
+        setEquipmentSmallOpt(cboMUISort(res?.data?.data?.rows, "equip_class_nm"));
         equipmentSmallList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "equip_class_id", "equip_class_nm");
         });
@@ -363,9 +366,7 @@ const useDowntimeType = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.downtimeType).then((res) => {
-        setDowntimeTypeOpt(
-          cboMUISort(res?.data?.data?.rows, "downtime_type_nm")
-        );
+        setDowntimeTypeOpt(cboMUISort(res?.data?.data?.rows, "downtime_type_nm"));
         downtimeTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "downtime_type_id", "downtime_type_nm");
         });
@@ -382,9 +383,7 @@ const useInspItemType = () => {
   useEffect(() => {
     const getCboOpt = async () => {
       await restAPI.get(restURI.inspItemType).then((res) => {
-        setInspItemTypeOpt(
-          cboMUISort(res?.data?.data?.rows, "insp_item_type_nm")
-        );
+        setInspItemTypeOpt(cboMUISort(res?.data?.data?.rows, "insp_item_type_nm"));
         inspItemTypeList = res?.data?.data?.rows.map((data) => {
           return GetCboParams(data, "insp_item_type_id", "insp_item_type_nm");
         });
@@ -479,6 +478,7 @@ const useUserActionList = () => {
 
 export {
   useLine,
+  useLineIncludeRework,
   useProcess,
   useEquipment,
   useDept,
