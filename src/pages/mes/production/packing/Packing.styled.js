@@ -6,9 +6,35 @@ import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
 import * as C from "constant/Layout";
 
+const RadioButtonWrapper = styled.div`
+  display: flex;
+`;
+
+const RadioButtonLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin: 5px;
+`;
+
+const RadioButtonInput = styled.input`
+  margin-right: 3px;
+`;
+
+export const RadioButton = ({ options, selectedOption, onChange }) => {
+  return (
+    <RadioButtonWrapper>
+      {options.map((option) => (
+        <RadioButtonLabel key={option.value}>
+          <RadioButtonInput type="radio" value={option.value} checked={selectedOption === option.value} onChange={() => onChange(option.value)} />
+          {option.label}
+        </RadioButtonLabel>
+      ))}
+    </RadioButtonWrapper>
+  );
+};
+
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   padding: 10px 10px;
@@ -168,4 +194,19 @@ export const TitleButtonWrap = styled("div")`
 `;
 export const InnerButtonWrap = styled("div")`
   padding-right: 10px;
+`;
+
+export const CntGridContainer = styled("div")`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: ${(props) => props.rowTemplate || "50% 50%"};
+  border-radius: 10px;
+`;
+export const TwoColGridContainer = styled("div")`
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: ${(props) => props.rowTemplate || "50% 50%"};
+  border-radius: 10px;
 `;

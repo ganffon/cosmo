@@ -25,7 +25,8 @@ import restAPI from "api/restAPI";
 
 function ProductModel(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -37,8 +38,15 @@ function ProductModel(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
-    ProductModelSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = ProductModelSet(isEditMode);
 
   const SWITCH_NAME_01 = "productModel";
 
@@ -47,12 +55,18 @@ function ProductModel(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   useEffect(() => {
     onClickSearch();
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -177,6 +191,8 @@ function ProductModel(props) {
         severity: "error",
       });
     } finally {
+      setDisableRowToggle(!disableRowToggle);
+
       setIsBackDrop(false);
       setIsSnackOpen({
         ...isSnackOpen,
@@ -211,7 +227,11 @@ function ProductModel(props) {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.ButtonWrap>
-          <BtnComponent btnName={"DataLoad"} onClick={loadData} />
+          <BtnComponent
+            btnName={"DataLoad"}
+            toolTipTitle={"productButton"}
+            onClick={loadData}
+          />
         </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle

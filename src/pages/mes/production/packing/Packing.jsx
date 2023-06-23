@@ -26,6 +26,7 @@ import GetDeleteParams from "api/GetDeleteParams";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import PackingModal from "./PackingModal";
 
 function Packing() {
   LoginStateChk();
@@ -59,6 +60,17 @@ function Packing() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+  const [selectedOption, setSelectedOption] = useState("S");
+  const [barcodeValue, setBarcodeValue] = useState("");
+  const [isModalPrintOpen, setIsModalPrintOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  const opeModalPrintOpen = () => {
+    setIsModalPrintOpen(true);
+  };
+  const [barcodePrintInfo, setBarcodePrintInfo] = useState({});
+  const closeModalPrintOpen = () => {
+    setIsModalPrintOpen(false);
+  };
   const [isWarning, setIsWarning] = useState({
     open: false,
     title: "",
@@ -71,7 +83,6 @@ function Packing() {
       open: false,
     });
   };
-
   const barcodePrintDetail = async (rowKey) => {
     const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_detail_id;
 
@@ -102,6 +113,36 @@ function Packing() {
           });
       }
     }
+  };
+
+  const onPrintClick = async (rowKey) => {
+    try {
+      const result = await restAPI.post(restURI.createBarcode, {
+        barcode_type: "PACKING",
+        reference_id: refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_packing_id,
+      });
+
+      setBarcodePrintInfo({
+        prodCD: result?.data?.data?.rows[0].prod_cd,
+        prodNM: result?.data?.data?.rows[0].prod_type_small_nm,
+        lot: result?.data?.data?.rows[0].lot_no,
+        cnt: result?.data?.data?.rows[0].packing_cnt,
+        qty: result?.data?.data?.rows[0].packing_qty,
+        date: result?.data?.data?.rows[0].work_packing_date,
+        barcodeNo: result?.data?.data?.rows[0].barcode_no,
+        gubn: selectedOption,
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    }
+    setIsModalPrintOpen(true);
+    setModalData(refGridHeader?.current?.gridInst.store.data.rawData[rowKey]);
   };
 
   const barcodePrintHeader = async (rowKey) => {
@@ -151,7 +192,7 @@ function Packing() {
     columnsSelectWeight,
     columnsSelectWeightDetail,
     columnsSelectStore,
-  } = PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader);
+  } = PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader, onPrintClick);
 
   let modalDetailClickRowKey = null;
 
@@ -246,7 +287,6 @@ function Packing() {
     restURI.prdWeight,
     null
   );
-
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -308,10 +348,7 @@ function Packing() {
       inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
       prodID.current ? (conditionProdID = `&prod_id=${prodID.current}`) : (conditionProdID = "");
       const result = await restAPI.get(
-        restURI.prdPacking +
-          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-          conditionLine +
-          conditionProdID
+        restURI.prdPacking + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionLine + conditionProdID
       );
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
@@ -548,7 +585,11 @@ function Packing() {
     setIsModalSelectOpen(false);
   };
   const onClickModalSelectDateClose = () => {
-    setDateOrder({ ...dateOrder, startDate: DateTime(-7).dateFull, endDate: DateTime().dateFull });
+    setDateOrder({
+      ...dateOrder,
+      startDate: DateTime(-7).dateFull,
+      endDate: DateTime().dateFull,
+    });
     setIsModalSelectDateOpen(false);
   };
   const onClickModalSelectMultiClose = () => {
@@ -638,7 +679,15 @@ function Packing() {
     }
     setIsModalSelectDateOpen(false);
   };
+  const options = [
+    { label: "S", value: "S" },
+    { label: "R", value: "R" },
+    { label: "X", value: "X" },
+  ];
 
+  const handleOptionChange = (optionValue) => {
+    setSelectedOption(optionValue);
+  };
   const onClickSearchSelectDate = () => {
     actSelectOrder(`?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`);
   };
@@ -699,7 +748,7 @@ function Packing() {
         onEditingFinish={onEditingFinishGridHeader}
       />
     );
-  }, [gridDataHeader, isEditModeHeader]);
+  }, [gridDataHeader, isEditModeHeader, selectedOption]);
   const GridDetail = useMemo(() => {
     return (
       <GridSingle
@@ -812,20 +861,9 @@ function Packing() {
       <S.TopWrap>
         <S.SearchWrap>
           <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
-          <InputSearch
-            id={"line_nm"}
-            name={"라인명"}
-            handleInputTextChange={handleInputTextChange}
-            onClickSearch={onClickSearch}
-          />
+          <InputSearch id={"line_nm"} name={"라인명"} handleInputTextChange={handleInputTextChange} onClickSearch={onClickSearch} />
           <S.InputPaperWrap>
-            <InputPaper
-              width={"180px"}
-              name={"품목코드"}
-              namePositionTop={"-12px"}
-              value={prodCD.current || ""}
-              btn={false}
-            />
+            <InputPaper width={"180px"} name={"품목코드"} namePositionTop={"-12px"} value={prodCD.current || ""} btn={false} />
           </S.InputPaperWrap>
           <S.InputPaperWrap>
             <InputPaper
@@ -847,6 +885,7 @@ function Packing() {
           <S.TitleButtonWrap>
             <S.TitleMid>생산품목</S.TitleMid>
             <S.ButtonWrap>
+              <S.RadioButton options={options} selectedOption={selectedOption} onChange={handleOptionChange} />
               {isEditModeHeader ? (
                 <>
                   <S.InnerButtonWrap>
@@ -900,6 +939,7 @@ function Packing() {
       {isModalSelectOpen ? GridModalSelect : null}
       {isModalSelectDateOpen ? GridModalSelectDate : null}
       {isModalSelectMultiOpen ? GridModalSelectMulti : null}
+      {isModalPrintOpen && <PackingModal onClose={closeModalPrintOpen} data={barcodePrintInfo} />}
       {isDeleteHeaderAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말로 삭제하시겠습니까?"}
