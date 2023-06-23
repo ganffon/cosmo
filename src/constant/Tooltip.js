@@ -32,6 +32,27 @@ const TooltipStore = {
     tooltip: `🔸${convertChar(CN.apply_fg)}
     품목 별로 관리하는 검사기준서를 체크하세요`,
   },
+  lineButton: {
+    columnName: "lineButton",
+    tooltip: `🔸라인, 라인부서 데이터를 ERP에서 불러옵니다.`,
+  },
+  productButton: {
+    columnName: "productButton",
+    tooltip: `🔸제품 구분, 제품군, 품종군, 품종, 제품분류, 
+    품목, 단위 데이터를 ERP에서 불러옵니다.`,
+  },
+  departmentButton: {
+    columnName: "departmentButton",
+    tooltip: `🔸부서 데이터를 ERP에서 불러옵니다.`,
+  },
+  gradeButton: {
+    columnName: "gradeButton",
+    tooltip: `🔸직급 데이터를 ERP에서 불러옵니다.`,
+  },
+  employeeButton: {
+    columnName: "employeeButton",
+    tooltip: `🔸사원 데이터를 ERP에서 불러옵니다.`,
+  },
 };
 
 export default TooltipStore;

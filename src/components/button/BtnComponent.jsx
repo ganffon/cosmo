@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./BtnComponent.styled";
 import Search from "img/Component/button/search.svg";
 import AddRow from "img/Component/button/addRow.svg";
@@ -11,17 +11,56 @@ import New from "img/Component/button/new.svg";
 import Ok from "img/Component/button/ok.svg";
 import Save from "img/Component/button/save.svg";
 import GetAppIcon from "@mui/icons-material/GetApp";
+import TooltipStore from "constant/Tooltip";
 
 function BtnComponent(props) {
-  const { btnName, height = null, width = null, onClick = () => {} } = props;
-
+  const {
+    btnName,
+    height = null,
+    width = null,
+    onClick = () => {},
+    toolTipTitle = null,
+  } = props;
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [tooltipText, setTooltipText] = useState("");
   const [isClicked, setIsClicked] = useState(false);
-
+  useEffect(() => {}, []);
   const handleClick = () => {
     setIsClicked(true);
     setTimeout(() => {
       setIsClicked(false);
     }, 300);
+  };
+  const checkTooltip = (columnName) => {
+    const matchingTooltip = Object.values(TooltipStore).find(
+      (tooltipItem) => tooltipItem.columnName === columnName
+    );
+
+    if (matchingTooltip) {
+      const tooltipContent = matchingTooltip.tooltip;
+      return tooltipContent;
+    } else {
+      return false;
+    }
+  };
+  const hoverout = () => {
+    setTooltipVisible(false);
+  };
+
+  const hoverButton = (e) => {
+    const { nativeEvent } = e;
+    setTooltipPosition({
+      ...tooltipPosition,
+      x: nativeEvent.layerX - 100,
+      y: nativeEvent.layerY - 1000,
+    });
+
+    const tooltipText = checkTooltip(toolTipTitle);
+    if (tooltipText) {
+      setTooltipText(tooltipText);
+      setTooltipVisible(true);
+    }
   };
 
   let title;
@@ -94,22 +133,11 @@ function BtnComponent(props) {
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "110px";
       break;
-    case "Add":
-      icon = null;
-      title = "추가";
-      btnHeight = height ? height : "60px";
-      btnWidth = width ? width : "70px";
-      break;
-    case "Detail":
-      icon = null;
-      title = "상세";
-      btnHeight = height ? height : "60px";
-      btnWidth = width ? width : "70px";
-      break;
     default:
   }
   return btnName === "Search" ? (
     <S.BtnComponent
+      onMouseOver={hoverButton}
       height={btnHeight}
       width={btnWidth}
       onClick={() => {
@@ -123,6 +151,8 @@ function BtnComponent(props) {
     </S.BtnComponent>
   ) : (
     <S.BtnBack
+      onMouseOver={btnName === "DataLoad" ? hoverButton : null}
+      onMouseOut={hoverout}
       height={btnHeight}
       width={btnWidth}
       onClick={() => {
@@ -133,6 +163,11 @@ function BtnComponent(props) {
     >
       <S.Icon src={icon} />
       <S.Title>{title}</S.Title>
+      {tooltipVisible ? (
+        <S.Tooltip x={1530} y={160}>
+          <S.TooltipContents>{tooltipText}</S.TooltipContents>
+        </S.Tooltip>
+      ) : null}
     </S.BtnBack>
   );
 }

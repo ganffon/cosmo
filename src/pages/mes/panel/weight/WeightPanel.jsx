@@ -33,6 +33,9 @@ function WeightPanel() {
     nowTime: DateTime().hour + ":" + DateTime().minute,
   });
 
+  const refBarcodeScan = useRef(null);
+  const refBarcodeTimeStamp = useRef(null);
+
   const [selectInfo, setSelectInfo] = useState({});
   const [selectInputInfo, setSelectInputInfo] = useState({});
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -43,7 +46,7 @@ function WeightPanel() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-
+  const [isBarcodeScanOpen, setIsBarcodeScanOpen] = useState(false);
   const [isWarning, setIsWarning] = useState({
     open: false,
     title: "",
@@ -101,7 +104,7 @@ function WeightPanel() {
   const [gridDataInput, setGridDataInput] = useState(null);
   const [gridDataInputDetail, setGridDataInputDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
-
+  const [barcodeScan, setBarcodeScan] = useState({});
   const [selectColumn, setSelectColumn] = useState([]);
   const [selectName, setSelectName] = useState("");
 
@@ -533,6 +536,14 @@ function WeightPanel() {
       />
     );
   }, [gridDataHeader]);
+  //🔸timeStamp 2개를 받아서 서로 몇 초 차이 나는지 구하는 함수
+  function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {
+    if (timeStamp1 === null) return 0;
+    const difference = Math.abs(timeStamp1 - timeStamp2);
+    const seconds = difference / 1000;
+    return seconds;
+  }
+
   return (
     <ContentsArea>
       <S.TopWrap>
