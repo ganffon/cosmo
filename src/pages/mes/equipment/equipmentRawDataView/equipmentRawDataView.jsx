@@ -24,7 +24,7 @@ function EquipmentRawDataView() {
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDataIn, setIsDataIn] = useState(false);
-  const [lineOpt, lineList] = Cbo.useLine();
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [procOpt, procList] = Cbo.useProcess();
   const [gridData, setGridData] = useState(null);
   const [chartData, setChartData] = useState(null);

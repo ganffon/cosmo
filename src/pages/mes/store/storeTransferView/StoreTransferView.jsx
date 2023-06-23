@@ -58,7 +58,9 @@ function StoreTransferView() {
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
   const [actSearch] = uSearch.useSearchOnlyCboDate(

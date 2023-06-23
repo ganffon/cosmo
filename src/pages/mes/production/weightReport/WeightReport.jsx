@@ -21,7 +21,7 @@ import BtnComponent from "components/button/BtnComponent";
 function WeightReport() {
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
-  const [lineOpt, lineList] = Cbo.useLine();
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
 
   const weighID = useRef("");
   const refGridHeader = useRef(null);
@@ -43,8 +43,7 @@ function WeightReport() {
     endDate: DateTime().dateFull,
   });
 
-  const { columnsHeader, columnsDetail, columnOptions, rowHeadersNum, header } =
-    WeightReportSet();
+  const { columnsHeader, columnsDetail, columnOptions, rowHeadersNum, header } = WeightReportSet();
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -57,25 +56,15 @@ function WeightReport() {
       setIsBackDrop(true);
       let lineID, prodCD, prodNM;
 
-      comboValue.line_id
-        ? (lineID = `&line_id=${comboValue.line_id}`)
-        : (lineID = "");
+      comboValue.line_id ? (lineID = `&line_id=${comboValue.line_id}`) : (lineID = "");
 
       //InputTextBox 정보 변수 저장
-      inputTextChange.prod_cd
-        ? (prodCD = `&prod_cd=${inputTextChange.prod_cd}`)
-        : (prodCD = "");
-      inputTextChange.prod_nm
-        ? (prodNM = `&prod_nm=${inputTextChange.prod_nm}`)
-        : (prodNM = "");
+      inputTextChange.prod_cd ? (prodCD = `&prod_cd=${inputTextChange.prod_cd}`) : (prodCD = "");
+      inputTextChange.prod_nm ? (prodNM = `&prod_nm=${inputTextChange.prod_nm}`) : (prodNM = "");
 
       //API 전송
       const result = await restAPI.get(
-        restURI.prdWeight +
-          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-          lineID +
-          prodCD +
-          prodNM
+        restURI.prdWeight + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + lineID + prodCD + prodNM
       );
 
       //Response된 Data를 HeaderGrid 출력
@@ -109,9 +98,7 @@ function WeightReport() {
       const Header = refGridHeader?.current?.gridInst;
       if (weighID.current !== Header.getValue(e?.rowKey, "work_weigh_id")) {
         weighID.current = Header.getValue(e?.rowKey, "work_weigh_id");
-        const result = await restAPI.get(
-          restURI.prdWeightDetail + `?work_weigh_id=${weighID.current}`
-        );
+        const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${weighID.current}`);
 
         setGridDataDetail(result?.data?.data?.rows);
       }
@@ -139,16 +126,9 @@ function WeightReport() {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButtonHeader
-        isMenuSlide={isMenuSlide}
-        isAllScreen={isAllScreen}
-      >
+      <S.ShadowBoxButtonHeader isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ComboWrap>
-          <DateRange
-            dateText={dateText}
-            setDateText={setDateText}
-            onClickSearch={onClickSearch}
-          />
+          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
           <S.ComboBox
             disablePortal
             id="lineCbo"
@@ -159,13 +139,10 @@ function WeightReport() {
             onChange={(_, newValue) => {
               setComboValue({
                 ...comboValue,
-                line_id:
-                  newValue?.line_id === undefined ? null : newValue?.line_id,
+                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
               });
             }}
-            renderInput={(params) => (
-              <TextField {...params} label={CN.line_nm} size="small" />
-            )}
+            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
           />
           <InputSearch
             id={"prod_cd"}

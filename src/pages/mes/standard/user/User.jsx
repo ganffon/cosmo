@@ -47,7 +47,9 @@ function User() {
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);

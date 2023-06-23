@@ -52,7 +52,7 @@ function InterfaceMemory(props) {
   const targetRowKey = useRef("");
   const targetGrid = useRef("");
 
-  const [lineOpt, lineList] = Cbo.useLine();
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [equipmentOpt, equipmentList] = Cbo.useEquipment();
   const [processOpt, processList] = Cbo.useProcess();
 
@@ -69,7 +69,9 @@ function InterfaceMemory(props) {
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);

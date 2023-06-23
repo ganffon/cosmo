@@ -24,8 +24,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function EquipmentMedium(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -37,15 +36,8 @@ function EquipmentMedium(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = EquipmentMediumSet(isEditMode);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
+    EquipmentMediumSet(isEditMode);
 
   const SWITCH_NAME_01 = "equipmentMedium";
 
@@ -54,18 +46,14 @@ function EquipmentMedium(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,

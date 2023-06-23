@@ -13,14 +13,11 @@ import BackDrop from "components/backdrop/BackDrop";
 import useInputSet from "custom/useInputSet";
 import restURI from "json/restURI.json";
 import InputSearch from "components/input/InputSearch";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonNEDS from "components/button/ButtonNEDS";
 import * as LS from "./lineDepartment.styled";
 import * as Cbo from "custom/useCboSet";
 import TextField from "@mui/material/TextField";
 import CN from "json/ColumnName.json";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ModalNew from "components/modal/ModalNew";
 import ModalSelect from "components/modal/ModalSelect";
 import Condition from "custom/Condition";
@@ -31,10 +28,9 @@ import restAPI from "api/restAPI";
 
 function LineDepartment(props) {
   LoginStateChk();
-  const [lineOpt, lineList] = Cbo.useLine();
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [departmentOpt, departmentList] = Cbo.useDept();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const SWITCH_NAME_01 = "lineDepartment";
   const [isEditMode, setIsEditMode] = useState(false);
@@ -71,7 +67,9 @@ function LineDepartment(props) {
     disRow.handleEditingFinishGridCheck(e);
   };
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
   useEffect(() => {
@@ -91,14 +89,8 @@ function LineDepartment(props) {
     inputSet,
   } = lineDepartmentSet(isEditMode, lineList, departmentList);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -223,7 +215,7 @@ function LineDepartment(props) {
     isSnackOpen,
     setIsSnackOpen,
     setGridModalSelectData,
-    restURI.line
+    restURI.lineIncludeRework
   );
 
   const [actSearchGridUpdateDept] = uSearch.useSearchSelect(
@@ -262,7 +254,7 @@ function LineDepartment(props) {
     disableRowToggle,
     setDisableRowToggle,
     comboValue,
-    restURI.lineDepartment
+    restURI.lineDepartmentIncludeRework
   );
   const [actEdit] = uEdit.useEdit(
     refSingleGrid,
@@ -294,7 +286,7 @@ function LineDepartment(props) {
     isSnackOpen,
     setIsSnackOpen,
     setGridModalSelectData,
-    restURI.line
+    restURI.lineIncludeRework
   );
 
   const [actSearchSelectDepartment] = uSearch.useSearchSelect(
@@ -370,15 +362,10 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    line_id:
-                      newValue?.line_id === undefined
-                        ? null
-                        : newValue?.line_id,
+                    line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.line_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <LS.ComboBox
@@ -391,15 +378,10 @@ function LineDepartment(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    dept_id:
-                      newValue?.dept_id === undefined
-                        ? null
-                        : newValue?.dept_id,
+                    dept_id: newValue?.dept_id === undefined ? null : newValue?.dept_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.dept_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.dept_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </LS.ComboWrap>
@@ -421,11 +403,7 @@ function LineDepartment(props) {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.ButtonWrap>
-          <BtnComponent
-            btnName={"DataLoad"}
-            onClick={loadData}
-            toolTipTitle={"lineButton"}
-          />
+          <BtnComponent btnName={"DataLoad"} onClick={loadData} toolTipTitle={"lineButton"} />
         </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle

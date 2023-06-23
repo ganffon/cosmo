@@ -410,7 +410,7 @@ function ProductionOrder() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.lineDepartment
+    restURI.lineDepartmentIncludeRework
   );
 
   const [actSave] = uSave.useSave(

@@ -22,8 +22,7 @@ import * as S from "pages/mes/style/oneGrid.styled";
 
 function StoreView() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);
@@ -46,14 +45,7 @@ function StoreView() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
-  const {
-    rowHeadersNum,
-    header,
-    columns,
-    columnOptions,
-    inputSet,
-    datePickerSet,
-  } = StoreViewSet(
+  const { rowHeadersNum, header, columns, columnOptions, inputSet, datePickerSet } = StoreViewSet(
     productGbnList,
     productModelList,
     productTypeList,
@@ -66,16 +58,12 @@ function StoreView() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
-  useEffect(() => {
-    onClickSearch();
-  }, []);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
 
   const [actSearch] = uSearch.useSearchOnlyCboDate(
@@ -108,11 +96,7 @@ function StoreView() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <DatePicker
-              datePickerSet={datePickerSet}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <DatePicker datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
             <S.ComboWrap>
               <S.ComboBox
                 disablePortal
@@ -123,15 +107,10 @@ function StoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id:
-                      newValue?.prod_gbn_id === undefined
-                        ? null
-                        : newValue?.prod_gbn_id,
+                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -143,15 +122,10 @@ function StoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id:
-                      newValue?.model_id === undefined
-                        ? null
-                        : newValue?.model_id,
+                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.model_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -163,15 +137,10 @@ function StoreView() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id:
-                      newValue?.prod_type_id === undefined
-                        ? null
-                        : newValue?.prod_type_id,
+                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_type_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -185,18 +154,10 @@ function StoreView() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined
-                        ? null
-                        : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.prod_type_small_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>

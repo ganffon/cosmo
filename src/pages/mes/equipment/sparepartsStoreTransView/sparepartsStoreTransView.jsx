@@ -84,7 +84,9 @@ function SparepartsStoreTransView() {
     actSearch("start_date", "end_date");
   };
   useEffect(() => {
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 100);
   }, [searchToggle]);
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
