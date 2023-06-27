@@ -111,12 +111,6 @@
             "id": "user",
             "path": "user",
             "under": null
-          },
-          {
-            "name": "사용자공장관리",
-            "id": null,
-            "path": null,
-            "under": null
           }
         ]
       },

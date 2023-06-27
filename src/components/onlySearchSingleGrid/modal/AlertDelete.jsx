@@ -9,7 +9,7 @@ function AlertDelete(props) {
     handleDelete = () => {},
     setIsDeleteAlertOpen,
     title = "DELETE",
-    message = "정말로 삭제하시겠습니까?",
+    message = "정말 삭제하시겠습니까?",
     onlyYes = false,
   } = props;
 
@@ -21,13 +21,7 @@ function AlertDelete(props) {
       <S.ContentsBox>
         <S.Message>{message}</S.Message>
         <S.ButtonBox>
-          <S.ButtonYes
-            variant="contained"
-            size="small"
-            startIcon={<DoneIcon />}
-            color="success"
-            onClick={handleDelete}
-          >
+          <S.ButtonYes variant="contained" size="small" startIcon={<DoneIcon />} color="success" onClick={handleDelete}>
             예 (Yes)
           </S.ButtonYes>
           {onlyYes ? null : (

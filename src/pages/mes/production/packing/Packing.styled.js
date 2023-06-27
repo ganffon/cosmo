@@ -7,7 +7,14 @@ import InputSearch from "components/input/InputSearch";
 import * as C from "constant/Layout";
 
 const RadioButtonWrapper = styled.div`
+  width: 180px;
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 0px 10px;
+  margin-right: 10px;
 `;
 
 const RadioButtonLabel = styled.label`
@@ -25,13 +32,22 @@ export const RadioButton = ({ options, selectedOption, onChange }) => {
     <RadioButtonWrapper>
       {options.map((option) => (
         <RadioButtonLabel key={option.value}>
-          <RadioButtonInput type="radio" value={option.value} checked={selectedOption === option.value} onChange={() => onChange(option.value)} />
+          <RadioButtonInput
+            type="radio"
+            value={option.value}
+            checked={selectedOption === option.value}
+            onChange={() => onChange(option.value)}
+          />
           {option.label}
         </RadioButtonLabel>
       ))}
     </RadioButtonWrapper>
   );
 };
+
+export const RadioTitle = styled("div")`
+  margin-right: 10px;
+`;
 
 export const ContentsArea = styled("div")`
   height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
@@ -122,7 +138,6 @@ export const GridDetailWrap = styled("div")`
 `;
 export const ButtonWrap = styled("div")`
   display: flex;
-  width: 95%;
   padding-left: 5px;
   padding-top: 10px;
   justify-content: end;
@@ -191,6 +206,7 @@ export const InputPaperWrap = styled("div")`
 
 export const TitleButtonWrap = styled("div")`
   display: flex;
+  justify-content: space-between;
 `;
 export const InnerButtonWrap = styled("div")`
   padding-right: 10px;

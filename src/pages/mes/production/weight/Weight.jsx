@@ -24,11 +24,23 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Weight() {
   LoginStateChk();
   const SWITCH_NAME_01 = "weight";
   const SWITCH_NAME_02 = "weightDetail";
+
+  const prodID = useRef("");
+  const prodCD = useRef("품목코드");
+  const prodNM = useRef("품목");
+
+  const resetProd = () => {
+    prodID.current = "";
+    prodCD.current = "품목코드";
+    prodNM.current = "품목";
+  };
+
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
   const refGridSelect = useRef(null);
@@ -55,7 +67,7 @@ function Weight() {
   });
 
   const [gridDataSelect, setGridDataSelect] = useState(null);
-  const [gridDataModalDetail, setgridDataModalDetail] = useState(null);
+  const [gridDataModalDetail, setGridDataModalDetail] = useState(null);
 
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
@@ -74,7 +86,7 @@ function Weight() {
   const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   useEffect(() => {
-    actSearchHeaderDI(true, "start_date", "end_date");
+    onClickSearch();
   }, []);
 
   const [dateText, setDateText] = useState({
@@ -88,6 +100,7 @@ function Weight() {
   });
 
   const onClickProdCancel = () => {
+    resetProd();
     setInputSearchValue([]);
   };
 
@@ -134,6 +147,7 @@ function Weight() {
 
   const actSearchDetail = async () => {
     try {
+      console.log("?!?!?!?!");
       setIsBackDrop(true);
       const readURI = `/prd/weigh-detail?work_weigh_id=${headerRowID.current}`;
       let gridData = await restAPI.get(readURI);
@@ -164,26 +178,9 @@ function Weight() {
   };
 
   function onClickModalClose() {
-    setgridDataModalDetail(null);
+    setGridDataModalDetail(null);
     setIsModalOpen(false);
   }
-
-  const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
-    refGridHeader,
-    refGridDetail,
-    setInputInfoValue,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    inputBoxID,
-    inputSearchValue,
-    dateText,
-    setGridDataHeader,
-    disRowHeader,
-    setDisRowHeader,
-    restURI.prdWeight
-  );
 
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
@@ -247,8 +244,39 @@ function Weight() {
     "storeIncludeLocation"
   ); //➡️ Modal Select Search Prod
 
-  const onClickSearch = () => {
-    actSearchHeaderDI(true, "start_date", "end_date");
+  const onClickSearch = async () => {
+    try {
+      setIsBackDrop(true);
+      let conditionProdID;
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
+      const result = await restAPI.get(
+        restURI.prdWeight + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionProdID
+      );
+      setGridDataHeader(result?.data?.data?.rows);
+      setGridDataDetail([]);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      if (isEditModeHeader) {
+        setDisRowHeader(!disRowHeader);
+      }
+      setIsBackDrop(false);
+    }
   };
 
   const onDblClickGridSelect = (e) => {
@@ -276,13 +304,17 @@ function Weight() {
     const columnNameInputEmployee = ["input_emp_id", "input_emp_nm"];
     const columnNameStoreLocation = ["inv_to_store_id", "store_nm", "inv_to_location_id", "location_nm"];
     if (dblClickGrid === "Search") {
-      setInputSearchValue([]);
-      columnName = ["prod_cd", "prod_nm"];
-      for (let i = 0; i < columnName.length; i++) {
-        setInputSearchValue((prevList) => {
-          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
-        });
-      }
+      // setInputSearchValue([]);
+      // columnName = ["prod_cd", "prod_nm"];
+      // for (let i = 0; i < columnName.length; i++) {
+      //   setInputSearchValue((prevList) => {
+      //     return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
+      //   });
+      // }
+      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+      prodID.current = data.prod_id;
+      prodCD.current = data.prod_cd;
+      prodNM.current = data.prod_nm;
     } else {
       if (dblClickGrid === "Header") {
         refGrid = refGridHeader;
@@ -334,7 +366,7 @@ function Weight() {
       setIsBackDrop(true);
       const readURI = `/prd/order-input/?work_order_id=${refGridModalHeaderKey.current}`;
       let gridData = await restAPI.get(readURI);
-      setgridDataModalDetail(gridData?.data?.data?.rows);
+      setGridDataModalDetail(gridData?.data?.data?.rows);
     } catch {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -522,7 +554,6 @@ function Weight() {
   };
   const onClickModalSave = () => {
     actSave();
-    onClickSearch();
   };
 
   const onClickEditModeSaveHeader = () => {
@@ -610,7 +641,8 @@ function Weight() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.prdWeight
+    restURI.prdWeight,
+    onClickModalClose
   );
 
   const GridTop = useMemo(() => {
@@ -647,7 +679,7 @@ function Weight() {
     <ContentsArea>
       <S.SearchCondition>
         <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-        {inputSet.map((v, idx) => (
+        {/* {inputSet.map((v, idx) => (
           <S.InputPaperWrap key={v.id}>
             <InputPaper
               key={v.id}
@@ -661,7 +693,27 @@ function Weight() {
               onClickRemove={onClickProdCancel}
             />
           </S.InputPaperWrap>
-        ))}
+        ))} */}
+        <S.InputPaperWrap>
+          <InputPaper
+            width={"180px"}
+            name={"품목코드"}
+            namePositionTop={"-12px"}
+            value={prodCD.current || ""}
+            btn={false}
+          />
+        </S.InputPaperWrap>
+        <S.InputPaperWrap>
+          <InputPaper
+            width={"240px"}
+            name={"품목"}
+            namePositionTop={"-12px"}
+            value={prodNM.current || ""}
+            btn={true}
+            onClickSelect={onClickProd}
+            onClickRemove={onClickProdCancel}
+          />
+        </S.InputPaperWrap>
         <S.ButtonWrap>
           <BtnComponent btnName={"Search"} onClick={onClickSearch} />
         </S.ButtonWrap>
@@ -791,14 +843,20 @@ function Weight() {
           />
         )
       ) : null}
-      {isDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          headerClickRowID={headerClickRowID}
-          actSearchDetail={actSearchDetail}
-          actDeleteDetail={actDeleteDetail}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+      {isDeleteAlertOpen && (
+        <NoticeAlertModal
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancel={true}
+          onDelete={actDeleteDetail}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
         />
-      ) : null}
+      )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

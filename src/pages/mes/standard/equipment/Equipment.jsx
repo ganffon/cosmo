@@ -1,12 +1,9 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNEDS from "components/button/ButtonNEDS";
-import ButtonSES from "components/button/ButtonSES";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -201,35 +198,37 @@ function Equipment() {
     let refGrid;
     let columnName;
     let columnNameOri = null;
-    if (dblClickGrid === "Manager") {
-      refGrid = refSingleGrid;
-      columnNameOri = ["emp_id", "emp_nm"];
-      columnName = ["manager_emp_id", "manager_emp_nm"];
-      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
-    } else if (dblClickGrid === "SubManager") {
-      refGrid = refSingleGrid;
-      columnNameOri = ["emp_id", "emp_nm"];
-      columnName = ["sub_manager_emp_id", "sub_manager_emp_nm"];
-      disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
-    } else if (dblClickGrid === "ModalManager") {
-      refGrid = refModalGrid;
-      columnNameOri = ["emp_id", "emp_nm"];
-      columnName = ["manager_emp_id", "manager_emp_nm"];
-    } else if (dblClickGrid === "ModalSubManager") {
-      refGrid = refModalGrid;
-      columnNameOri = ["emp_id", "emp_nm"];
-      columnName = ["sub_manager_emp_id", "sub_manager_emp_nm"];
+    if (e?.targetType === "cell") {
+      if (dblClickGrid === "Manager") {
+        refGrid = refSingleGrid;
+        columnNameOri = ["emp_id", "emp_nm"];
+        columnName = ["manager_emp_id", "manager_emp_nm"];
+        disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      } else if (dblClickGrid === "SubManager") {
+        refGrid = refSingleGrid;
+        columnNameOri = ["emp_id", "emp_nm"];
+        columnName = ["sub_manager_emp_id", "sub_manager_emp_nm"];
+        disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
+      } else if (dblClickGrid === "ModalManager") {
+        refGrid = refModalGrid;
+        columnNameOri = ["emp_id", "emp_nm"];
+        columnName = ["manager_emp_id", "manager_emp_nm"];
+      } else if (dblClickGrid === "ModalSubManager") {
+        refGrid = refModalGrid;
+        columnNameOri = ["emp_id", "emp_nm"];
+        columnName = ["sub_manager_emp_id", "sub_manager_emp_nm"];
+      }
+      for (let i = 0; i < columnName.length; i++) {
+        refGrid?.current?.gridInst?.setValue(
+          dblClickRowKey,
+          columnName[i],
+          columnNameOri === null
+            ? e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
+            : e?.instance?.store?.data?.rawData[e?.rowKey][columnNameOri[i]]
+        );
+      }
+      setIsModalSelectOpen(false);
     }
-    for (let i = 0; i < columnName.length; i++) {
-      refGrid?.current?.gridInst?.setValue(
-        dblClickRowKey,
-        columnName[i],
-        columnNameOri === null
-          ? e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
-          : e?.instance?.store?.data?.rawData[e?.rowKey][columnNameOri[i]]
-      );
-    }
-    setIsModalSelectOpen(false);
   };
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, ["use_fg", "prd_fg"]);
@@ -238,21 +237,23 @@ function Equipment() {
     disRow.handleEditingFinishGridCheck(e);
   };
   const onDblClickGrid = (e) => {
-    if (Condition(e, ["manager_emp_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Manager");
-      setColumnsSelect(columnsModalSelect);
-      setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
-      setIsModalSelectOpen(true);
-      actSearchSelect();
-    }
-    if (Condition(e, ["sub_manager_emp_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("SubManager");
-      setColumnsSelect(columnsModalSelect);
-      setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
-      setIsModalSelectOpen(true);
-      actSearchSelect();
+    if (isEditMode) {
+      if (Condition(e, ["manager_emp_nm"])) {
+        setDblClickRowKey(e?.rowKey);
+        setDblClickGrid("Manager");
+        setColumnsSelect(columnsModalSelect);
+        setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
+        setIsModalSelectOpen(true);
+        actSearchSelect();
+      }
+      if (Condition(e, ["sub_manager_emp_nm"])) {
+        setDblClickRowKey(e?.rowKey);
+        setDblClickGrid("SubManager");
+        setColumnsSelect(columnsModalSelect);
+        setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
+        setIsModalSelectOpen(true);
+        actSearchSelect();
+      }
     }
   };
   const onKeyDown = (e) => {
@@ -260,6 +261,24 @@ function Equipment() {
       setSearchToggle(!searchToggle);
     }
   };
+
+  const ModalNewGrid = useMemo(() => {
+    return (
+      <ModalNew
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        columns={columnsModal}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersModal}
+        refModalGrid={refModalGrid}
+        onClickModalGrid={onClickModalGrid}
+        onDblClickModalGrid={onDblClickModalGrid}
+      />
+    );
+  }, []);
 
   return (
     <ContentsArea>
@@ -316,7 +335,7 @@ function Equipment() {
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
+          textContent={"정말 삭제하시겠습니까?"}
           textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
@@ -328,21 +347,7 @@ function Equipment() {
           }}
         />
       ) : null}
-      {isModalOpen ? (
-        <ModalNew
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersModal}
-          refModalGrid={refModalGrid}
-          onClickModalGrid={onClickModalGrid}
-          onDblClickModalGrid={onDblClickModalGrid}
-        />
-      ) : null}
+      {isModalOpen && ModalNewGrid}
       {isModalSelectOpen ? (
         <ModalSelect
           width={modalSelectSize.width}

@@ -216,12 +216,12 @@ function EquipmentMedium(props) {
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={handleDelete}
           onCancel={() => {
             setIsDeleteAlertOpen(false);

@@ -28,10 +28,10 @@ function UserSet(isEditMode) {
     col.check("pwd_fg", CN.pwd_fg, false),
     col.check("admin_fg", CN.admin_fg, isEditMode),
     col.check("super_admin_fg", CN.super_admin_fg, false, C.U, true),
-    col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
-    col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
-    col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
-    col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
+    col.text("create_at", CN.create_at, C.U, true, C.WIDTH_LONG, "center"),
+    col.text("create_user_nm", CN.create_user_nm, C.U, true, C.U, "center"),
+    col.text("update_at", CN.update_at, C.U, true, C.WIDTH_LONG, "center"),
+    col.text("update_user_nm", CN.update_user_nm, C.U, true, C.U, "center"),
   ];
   const columnsModal = [
     col.text("id", CN.id, true, C.U, C.WIDTH_MIDDLE),

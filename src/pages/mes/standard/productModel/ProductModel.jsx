@@ -235,7 +235,7 @@ function ProductModel(props) {
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
+          textContent={"정말 삭제하시겠습니까?"}
           textFontSize={"20px"}
           height={"200px"}
           width={"400px"}

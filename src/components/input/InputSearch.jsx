@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "./InputSearch.styled";
 
 function InputSearch(props) {
-  const { id, name, handleInputTextChange, onClickSearch } = props;
+  const { id, name, handleInputTextChange, onClickSearch, className = "" } = props;
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       onClickSearch();
@@ -18,7 +18,8 @@ function InputSearch(props) {
         size="small"
         label={name}
         onChange={handleInputTextChange}
-        onKeyPress={onKeyPress}
+        className={className}
+        onKeyDown={onKeyPress}
       />
     </S.InputBox>
   );

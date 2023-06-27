@@ -346,9 +346,14 @@ function Packing() {
       let conditionLine;
       let conditionProdID;
       inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
-      prodID.current ? (conditionProdID = `&prod_id=${prodID.current}`) : (conditionProdID = "");
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
       const result = await restAPI.get(
-        restURI.prdPacking + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionLine + conditionProdID
+        restURI.prdPacking +
+          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          conditionLine +
+          conditionProdID
       );
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
@@ -861,9 +866,20 @@ function Packing() {
       <S.TopWrap>
         <S.SearchWrap>
           <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
-          <InputSearch id={"line_nm"} name={"라인명"} handleInputTextChange={handleInputTextChange} onClickSearch={onClickSearch} />
+          <InputSearch
+            id={"line_nm"}
+            name={"라인명"}
+            handleInputTextChange={handleInputTextChange}
+            onClickSearch={onClickSearch}
+          />
           <S.InputPaperWrap>
-            <InputPaper width={"180px"} name={"품목코드"} namePositionTop={"-12px"} value={prodCD.current || ""} btn={false} />
+            <InputPaper
+              width={"180px"}
+              name={"품목코드"}
+              namePositionTop={"-12px"}
+              value={prodCD.current || ""}
+              btn={false}
+            />
           </S.InputPaperWrap>
           <S.InputPaperWrap>
             <InputPaper
@@ -885,6 +901,7 @@ function Packing() {
           <S.TitleButtonWrap>
             <S.TitleMid>생산품목</S.TitleMid>
             <S.ButtonWrap>
+              <S.RadioTitle>바코드 출력 옵션</S.RadioTitle>
               <S.RadioButton options={options} selectedOption={selectedOption} onChange={handleOptionChange} />
               {isEditModeHeader ? (
                 <>
@@ -942,12 +959,12 @@ function Packing() {
       {isModalPrintOpen && <PackingModal onClose={closeModalPrintOpen} data={barcodePrintInfo} />}
       {isDeleteHeaderAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={handleDelete}
           onCancel={() => {
             setIsDeleteHeaderAlertOpen(false);
@@ -956,12 +973,12 @@ function Packing() {
       ) : null}
       {isDeleteDetailAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={handleDelete}
           onCancel={() => {
             setIsDeleteDetailAlertOpen(false);
@@ -971,7 +988,7 @@ function Packing() {
       {isWarning.open ? (
         <NoticeAlertModal
           textContent={isWarning.message}
-          textfontSize={"20px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isConfirm={true}
