@@ -10,17 +10,11 @@ import Mapping from "img/Component/button/mapping.svg";
 import New from "img/Component/button/new.svg";
 import Ok from "img/Component/button/ok.svg";
 import Save from "img/Component/button/save.svg";
-import GetAppIcon from "@mui/icons-material/GetApp";
+import Sync from "img/Component/button/sync.svg";
 import TooltipStore from "constant/Tooltip";
 
 function BtnComponent(props) {
-  const {
-    btnName,
-    height = null,
-    width = null,
-    onClick = () => {},
-    toolTipTitle = null,
-  } = props;
+  const { btnName, height = null, width = null, onClick = () => {}, toolTipTitle = null } = props;
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
@@ -33,9 +27,7 @@ function BtnComponent(props) {
     }, 300);
   };
   const checkTooltip = (columnName) => {
-    const matchingTooltip = Object.values(TooltipStore).find(
-      (tooltipItem) => tooltipItem.columnName === columnName
-    );
+    const matchingTooltip = Object.values(TooltipStore).find((tooltipItem) => tooltipItem.columnName === columnName);
 
     if (matchingTooltip) {
       const tooltipContent = matchingTooltip.tooltip;
@@ -128,10 +120,10 @@ function BtnComponent(props) {
       btnWidth = width ? width : "125px";
       break;
     case "DataLoad":
-      icon = GetAppIcon;
+      icon = Sync;
       title = "불러오기";
       btnHeight = height ? height : "34px";
-      btnWidth = width ? width : "110px";
+      btnWidth = width ? width : "115px";
       break;
     default:
   }

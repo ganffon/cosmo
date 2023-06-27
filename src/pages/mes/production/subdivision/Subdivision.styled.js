@@ -16,14 +16,14 @@ export const ContentsArea = styled("div")`
 `;
 export const ContentsLeft = styled("div")`
   height: 100%;
-  width: 43%;
+  width: 700px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 export const ContentsRight = styled("div")`
   height: 100%;
-  width: 57%;
+  width: calc(100% - 710px);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -31,10 +31,12 @@ export const ContentsRight = styled("div")`
 export const SearchLeftWrap = styled("div")`
   height: 120px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 5px 5px 0px;
+  padding: 10px;
   background: #ffffff;
 `;
 export const ContentsHeader = styled("div")`
@@ -78,10 +80,11 @@ export const GridDetailWrap = styled("div")`
   padding: 10px 10px 10px 10px;
 `;
 export const SearchWrap = styled("div")`
-  padding: 10px 0px 5px 10px;
+  padding: 10px 10px 5px 10px;
   height: 50%;
   display: flex;
-  flex-flow: row wrap;
+  justify-content: space-between;
+  gap: 10px;
 `;
 export const SearchWrapDate = styled("div")`
   height: 50%;
@@ -127,15 +130,16 @@ export const TitleMidLeft = styled("div")`
 `;
 
 export const ButtonWrap = styled("div")`
-  width: 40%;
   padding-top: 5px;
   justify-content: end;
   display: flex;
   height: 30px;
+  width: 100%;
 `;
 
 export const InputPaperWrap = styled("div")`
-  padding-right: 10px;
+  display: flex;
+  gap: 10px;
 `;
 export const InnerButtonWrap = styled("div")`
   padding-right: 10px;

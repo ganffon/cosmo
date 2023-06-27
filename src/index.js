@@ -8,7 +8,6 @@ import { CookiesProvider } from "react-cookie";
 import { StyledEngineProvider } from "@mui/styled-engine";
 import { ThemeProvider } from "@emotion/react";
 import theme from "style/muiTheme";
-import CssBaseline from "@mui/material/CssBaseline";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

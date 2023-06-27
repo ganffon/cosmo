@@ -29,6 +29,16 @@ function ControlPlan() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
+  const prodID = useRef("");
+  const prodCD = useRef("품목코드");
+  const prodNM = useRef("품목");
+
+  const resetProd = () => {
+    prodID.current = "";
+    prodCD.current = "품목코드";
+    prodNM.current = "품목";
+  };
+
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
   const refGridModalHeader = useRef(null);
@@ -128,7 +138,8 @@ function ControlPlan() {
     setIsSnackOpen,
     SWITCH_NAME_01,
     SWITCH_NAME_02,
-    restURI.controlPlan
+    restURI.controlPlan,
+    onClickModalClose
   );
   const [actEditHeader] = uEdit.useEditHeader(
     refGridHeader,
@@ -157,7 +168,8 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_02,
-    restURI.controlPlanDetail
+    restURI.controlPlanDetail,
+    onClickModalDetailClose
   );
 
   const [actSearchHeaderIC] = uSearch.useSearchHeaderIC(
@@ -244,18 +256,54 @@ function ControlPlan() {
     actSelectProd();
   };
   const onClickProdRemove = () => {
+    resetProd();
     setInputSearchValue([]);
   };
-  const onClickSearch = () => {
-    actSearchHeaderIC();
-  };
+  async function onClickSearch() {
+    try {
+      setIsBackDrop(true);
+      let conditionLine;
+      let conditionProd;
+      let condition;
+
+      comboValue.line_id ? (conditionLine = `line_id=${comboValue.line_id}`) : (conditionLine = "");
+      prodCD.current !== "품목코드"
+        ? (conditionProd = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProd = "");
+
+      if (conditionLine !== "" && conditionProd !== "") {
+        condition = restURI.controlPlan + "?" + conditionLine + "&" + conditionProd;
+      } else if (conditionLine !== "" && conditionProd === "") {
+        condition = restURI.controlPlan + "?" + conditionLine;
+      } else if (conditionLine === "" && conditionProd !== "") {
+        condition = restURI.controlPlan + "?" + conditionProd;
+      } else {
+        condition = restURI.controlPlan;
+      }
+
+      const result = await restAPI.get(condition);
+      setGridDataHeader(result?.data?.data?.rows);
+      setGridDataDetail([]);
+      setInputInfoValue([]);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  }
   const onClickEditModeSave = () => {
     actEditHeader();
     setIsEditModeDetail(false);
   };
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
-    actSearchHeaderIC(true);
+    onClickSearch();
     setDisRowHeader(!disRowHeader);
   };
   const onClickEditSaveDetail = () => {
@@ -289,7 +337,9 @@ function ControlPlan() {
           let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
           if (data === false) {
             //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-            data = "false";
+            data = "미적용";
+          } else if (data === true) {
+            data = "적용";
           }
           setInputInfoValue((prevList) => {
             return [...prevList, data];
@@ -301,14 +351,15 @@ function ControlPlan() {
     }
   };
   const onDblClickGridHeader = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm"])) {
-      setDblClickRowKey(e?.rowKey);
-      setDblClickGrid("Header");
-      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
-      setColumnsSelect(columnsSelectProd);
-      setIsModalSelectOpen(true);
-      actSelectProd();
-    }
+    // if (Condition(e, ["prod_cd", "prod_nm"])) {
+    //   setDblClickRowKey(e?.rowKey);
+    //   setDblClickGrid("Header");
+    //   setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
+    //   setColumnsSelect(columnsSelectProd);
+    //   setIsModalSelectOpen(true);
+    //   actSelectProd();
+    // }
+    // 기능제거 20230627
   };
   const onDblClickGridDetail = (e) => {
     if (
@@ -382,6 +433,11 @@ function ControlPlan() {
     setIsEditModeHeader(false);
     actSearchHeaderIC(true);
     setGridDataModalDetail([]);
+  }
+  function onClickModalDetailClose() {
+    setIsModalOpen(false);
+    setIsNewDetail(false);
+    actSearchDetail(headerClickRowID);
   }
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
@@ -474,13 +530,17 @@ function ControlPlan() {
     ];
 
     if (dblClickGrid === "Search") {
-      setInputSearchValue([]);
-      columnName = ["prod_cd", "prod_nm"];
-      for (let i = 0; i < columnName.length; i++) {
-        setInputSearchValue((prevList) => {
-          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
-        });
-      }
+      // setInputSearchValue([]);
+      // columnName = ["prod_cd", "prod_nm"];
+      // for (let i = 0; i < columnName.length; i++) {
+      //   setInputSearchValue((prevList) => {
+      //     return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
+      //   });
+      // }
+      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+      prodID.current = data.prod_id;
+      prodCD.current = data.prod_cd;
+      prodNM.current = data.prod_nm;
     } else {
       if (dblClickGrid === "Header") {
         refGrid = refGridHeader;
@@ -594,6 +654,7 @@ function ControlPlan() {
         onClickModalSave={onClickModalSave}
         onClickModalClose={onClickModalClose}
         onClickEditModalSave={onClickEditModalSave}
+        onClickModalDetailClose={onClickModalDetailClose}
         onDataLoad={onDataLoad}
         columnsModalHeader={columnsModalHeader}
         columnsModalDetail={columnsModalDetail}
@@ -636,7 +697,7 @@ function ControlPlan() {
               onKeyDown={onKeyDown}
             />
 
-            {inputSet.map((v, idx) => (
+            {/* {inputSet.map((v, idx) => (
               <InputPaper
                 key={v.id}
                 id={v.id}
@@ -648,7 +709,23 @@ function ControlPlan() {
                 onClickSelect={onClickProd}
                 onClickRemove={onClickProdRemove}
               />
-            ))}
+            ))} */}
+            <InputPaper
+              width={"180px"}
+              name={"품목코드"}
+              namePositionTop={"-12px"}
+              value={prodCD.current || ""}
+              btn={false}
+            />
+            <InputPaper
+              width={"240px"}
+              name={"품목"}
+              namePositionTop={"-12px"}
+              value={prodNM.current || ""}
+              btn={true}
+              onClickSelect={onClickProd}
+              onClickRemove={onClickProdRemove}
+            />
           </S.ComboWrap>
         </S.SearchWrap>
         <S.ButtonWrap>
@@ -730,20 +807,20 @@ function ControlPlan() {
           onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
-      {isDeleteAlertOpen ? (
+      {isDeleteAlertOpen && (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={actDeleteDetail}
           onCancel={() => {
             setIsDeleteAlertOpen(false);
           }}
         />
-      ) : null}
+      )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsAreaHidden>

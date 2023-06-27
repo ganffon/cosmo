@@ -50,7 +50,7 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail, barcode
   const columnsModalHeader = [
     col.id("work_subdivision_id", CN.work_subdivision_id, C.HIDDEN_ID),
     col.date("subdivision_date", CN.subdivision_date, !isNewDetail, C.WIDTH_SHORT),
-    col.select("prod_id", CN.prod_id, !isNewDetail, C.WIDTH_SHORT),
+    col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.select("prod_cd", CN.prod_cd, !isNewDetail, C.WIDTH_SHORT),
     col.select("prod_nm", CN.prod_nm, !isNewDetail, C.WIDTH_SHORT),
     col.text("lot_no", CN.lot_no, !isNewDetail, true, C.WIDTH_MIDDLE),

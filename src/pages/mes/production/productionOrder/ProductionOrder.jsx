@@ -701,12 +701,12 @@ function ProductionOrder() {
       ) : null}
       {isMidDeleteAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={actSearchMidDI}
           onCancel={() => {
             setIsMidDeleteAlertOpen(false);
@@ -715,12 +715,12 @@ function ProductionOrder() {
       ) : null}
       {isBottomDeleteAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"10px"}
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"10px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={actDeleteBottom}
           onCancel={() => {
             setIsBottomDeleteAlertOpen(false);
@@ -729,12 +729,12 @@ function ProductionOrder() {
       ) : null}
       {isTopDeleteAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제하시겠습니까?"}
-          textfontSize={"20px"}
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}
-          isCancle={true}
+          isCancel={true}
           onDelete={actDeleteTop}
           onCancel={() => {
             setIsTopDeleteAlertOpen(false);

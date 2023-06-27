@@ -4,10 +4,6 @@ import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionSet from "./SubdivisionSet";
 import useInputSet from "custom/useInputSet";
-import ButtonNES from "components/button/ButtonNES";
-import ButtonNED from "components/button/ButtonNED";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonSE from "components/button/ButtonSE";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
@@ -28,10 +24,22 @@ import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import InputSearch from "components/input/InputSearch";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Subdivision() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
+
+  const prodID = useRef("");
+  const prodCD = useRef("품목코드");
+  const prodNM = useRef("품목");
+
+  const resetProd = () => {
+    prodID.current = "";
+    prodCD.current = "품목코드";
+    prodNM.current = "품목";
+  };
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeDetail, setIsEditModeDetail] = useState(false);
@@ -164,7 +172,8 @@ function Subdivision() {
   }, [isMenuSlide, refGridHeader.current, refGridDetail.current]);
 
   useEffect(() => {
-    actSearchHeaderDI(true, "start_date", "end_date");
+    // actSearchHeaderDI(true, "start_date", "end_date");
+    onClickSearch();
   }, []);
 
   const [actSelectProd] = uSearch.useSearchSelect(
@@ -189,7 +198,7 @@ function Subdivision() {
     SWITCH_NAME_02,
     restURI.subdivision
   );
-  const [actSearchHeaderDI] = uSearch.useSearchHeaderDI(
+  const [actSearchHeaderDI] = uSearch.useSearchDI(
     refGridHeader,
     refGridDetail,
     setInputInfoValue,
@@ -220,7 +229,7 @@ function Subdivision() {
     isSnackOpen,
     setIsSnackOpen,
     setIsDeleteAlertOpen,
-    actSearchHeaderDI,
+    onClickSearch,
     actSearchDetail,
     headerClickRowID,
     restURI.subdivisionDetail,
@@ -286,6 +295,7 @@ function Subdivision() {
     setDisRowHeader(!disRowHeader);
   };
   const onClickProdCancel = () => {
+    resetProd();
     setInputSearchValue([]);
   };
   const onClickProd = () => {
@@ -300,13 +310,45 @@ function Subdivision() {
   };
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
-    actSearchHeaderDI(false, "start_date", "end_date");
+    onClickSearch();
+    // actSearchHeaderDI(false, "start_date", "end_date");
     //actSearchDetail(headerClickRowID);
     setDisRowHeader(!disRowHeader);
   };
-  const onClickSearch = () => {
-    actSearchHeaderDI(true, "start_date", "end_date");
-  };
+  async function onClickSearch() {
+    try {
+      setIsBackDrop(true);
+      let conditionProdID;
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
+      const result = await restAPI.get(
+        restURI.subdivision + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionProdID
+      );
+      setGridDataHeader(result?.data?.data?.rows);
+      setGridDataDetail([]);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      if (isEditModeHeader) {
+        setDisRowHeader(!disRowHeader);
+      }
+      setIsBackDrop(false);
+    }
+  }
   const onClickModalAddRow = () => {
     const Header = refGridModalHeader?.current?.gridInst;
     const Detail = refGridModalDetail?.current?.gridInst;
@@ -410,13 +452,17 @@ function Subdivision() {
     const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
 
     if (dblClickGrid === "Search") {
-      setInputSearchValue([]);
-      columnName = ["prod_cd", "prod_nm"];
-      for (let i = 0; i < columnName.length; i++) {
-        setInputSearchValue((prevList) => {
-          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
-        });
-      }
+      // setInputSearchValue([]);
+      // columnName = ["prod_cd", "prod_nm"];
+      // for (let i = 0; i < columnName.length; i++) {
+      //   setInputSearchValue((prevList) => {
+      //     return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
+      //   });
+      // }
+      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+      prodID.current = data.prod_id;
+      prodCD.current = data.prod_cd;
+      prodNM.current = data.prod_nm;
     } else {
       if (dblClickGrid === "Header") {
         refGrid = refGridHeader;
@@ -599,8 +645,8 @@ function Subdivision() {
             <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
           </S.SearchWrapDate>
           <S.SearchWrap>
-            {inputSet.map((v, idx) => (
-              <S.InputPaperWrap>
+            {/* <S.InputPaperWrap>
+              {inputSet.map((v, idx) => (
                 <InputPaper
                   key={v.id}
                   id={v.id}
@@ -612,8 +658,28 @@ function Subdivision() {
                   onClickSelect={onClickProd}
                   onClickRemove={onClickProdCancel}
                 />
-              </S.InputPaperWrap>
-            ))}
+              ))}
+            </S.InputPaperWrap> */}
+            <S.InputPaperWrap>
+              <InputPaper
+                width={"180px"}
+                name={"품목코드"}
+                namePositionTop={"-12px"}
+                value={prodCD.current || ""}
+                btn={false}
+              />
+            </S.InputPaperWrap>
+            <S.InputPaperWrap>
+              <InputPaper
+                width={"240px"}
+                name={"품목"}
+                namePositionTop={"-12px"}
+                value={prodNM.current || ""}
+                btn={true}
+                onClickSelect={onClickProd}
+                onClickRemove={onClickProdCancel}
+              />
+            </S.InputPaperWrap>
             <S.ButtonWrap>
               <BtnComponent btnName={"Search"} onClick={onClickSearch} />
             </S.ButtonWrap>
@@ -732,14 +798,20 @@ function Subdivision() {
           onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
-      {isDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          headerClickRowID={headerClickRowID}
-          actSearchDetail={actSearchDetail}
-          actDeleteDetail={actDeleteDetailDateRange}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+      {isDeleteAlertOpen && (
+        <NoticeAlertModal
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancel={true}
+          onDelete={actDeleteDetailDateRange}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
         />
-      ) : null}
+      )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

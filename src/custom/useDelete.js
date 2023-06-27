@@ -17,9 +17,7 @@ const useDelete = (
   const actDelete = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     if (isEditMode === false) {
-      const data = refGrid?.current?.gridInst
-        ?.getCheckedRows()
-        ?.map((raw) => GetDeleteParams(componentName, raw));
+      const data = refGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetDeleteParams(componentName, raw));
       if (data !== undefined) {
         setIsBackDrop(true);
         await restAPI
@@ -64,9 +62,7 @@ const useDeleteDetail = (
   componentName
 ) => {
   const actDeleteDetail = async () => {
-    const data = refGrid?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetDeleteParams(componentName, raw));
+    const data = refGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetDeleteParams(componentName, raw));
     if (data !== undefined) {
       setIsBackDrop(true);
       await restAPI
@@ -78,6 +74,8 @@ const useDeleteDetail = (
             message: res?.data?.message,
             severity: "success",
           });
+          actSearchHeader(false);
+          actSearchDetail(headerClickRowID);
         })
         .catch((res) => {
           setIsSnackOpen({
@@ -90,8 +88,6 @@ const useDeleteDetail = (
         .finally(() => {
           setIsBackDrop(false);
           setIsDeleteAlertOpen(false);
-          actSearchHeader(false);
-          actSearchDetail(headerClickRowID);
         });
     }
   };
@@ -105,16 +101,14 @@ const useDeleteDetailDateRange = (
   isSnackOpen,
   setIsSnackOpen,
   setIsDeleteAlertOpen,
-  actSearchHeader,
+  onClickSearch,
   actSearchDetail,
   headerClickRowID,
   uri,
   componentName
 ) => {
   const actDeleteDetailDateRange = async () => {
-    const data = refGrid?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetDeleteParams(componentName, raw));
+    const data = refGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetDeleteParams(componentName, raw));
     if (data !== undefined) {
       setIsBackDrop(true);
       await restAPI
@@ -138,7 +132,7 @@ const useDeleteDetailDateRange = (
         .finally(() => {
           setIsBackDrop(false);
           setIsDeleteAlertOpen(false);
-          actSearchHeader(false, "start_date", "end_date");
+          onClickSearch();
           actSearchDetail(headerClickRowID);
         });
     }

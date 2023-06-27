@@ -2,5 +2,5 @@
   "compilerOptions": {
     "baseUrl": "src"
   },
-  "include": ["src", "productGbn"]
+  "include": ["src", "src/pages/mes/standard/productGbn"]
 }

@@ -24,10 +24,21 @@ import restAPI from "api/restAPI";
 import GetDeleteParams from "api/GetDeleteParams";
 import ContentsAreaHidden from "components/layout/common/ContentsAreaHidden";
 import BtnComponent from "components/button/BtnComponent";
+import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Document() {
   LoginStateChk();
   const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
+
+  const prodID = useRef("");
+  const prodCD = useRef("품목코드");
+  const prodNM = useRef("품목");
+
+  const resetProd = () => {
+    prodID.current = "";
+    prodCD.current = "품목코드";
+    prodNM.current = "품목";
+  };
 
   const targetRowKey = useRef(null);
   const targetGrid = useRef(null);
@@ -223,6 +234,7 @@ function Document() {
       });
     } finally {
       setIsBackDrop(false);
+      onClickSearch();
       handleInputInfo();
       setIsDeleteAlertOpen(false);
     }
@@ -269,6 +281,7 @@ function Document() {
     actSelectProd();
   };
   const onClickProdRemove = () => {
+    resetProd();
     setInputSearchValue([]);
   };
   async function onClickSearch() {
@@ -279,8 +292,8 @@ function Document() {
       let condition;
 
       comboValue.line_id ? (conditionLine = `line_id=${comboValue.line_id}`) : (conditionLine = "");
-      inputSearchValue.prod_cd
-        ? (conditionProd = `prod_cd=${inputSearchValue.prod_cd}&prod_nm=${inputSearchValue.prod_nm}`)
+      prodCD.current !== "품목코드"
+        ? (conditionProd = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProd = "");
 
       if (conditionLine !== "" && conditionProd !== "") {
@@ -353,7 +366,7 @@ function Document() {
     }
   }
   const onClickGridHeader = async (e) => {
-    if (isEditModeHeader === false) {
+    if (!isEditModeHeader) {
       const inputInfoValueList = [
         "insp_document_no",
         "line_nm",
@@ -376,7 +389,9 @@ function Document() {
             let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
             if (data === false) {
               //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-              data = "false";
+              data = "미적용";
+            } else if (data === true) {
+              data = "적용";
             }
             setInputInfoValue((prevList) => {
               return [...prevList, data];
@@ -389,13 +404,16 @@ function Document() {
     }
   };
   const onDblClickGridHeader = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm"])) {
-      targetRowKey.current = e?.rowKey;
-      targetGrid.current = "Header";
-      setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
-      setColumnsSelect(columnsSelectProd);
-      setIsModalSelectOpen(true);
-      actSelectProd();
+    if (isEditModeHeader) {
+      // if (Condition(e, ["prod_cd", "prod_nm"])) {
+      //   targetRowKey.current = e?.rowKey;
+      //   targetGrid.current = "Header";
+      //   setModalSelectSize({ ...modalSelectSize, width: "40%", height: "90%" });
+      //   setColumnsSelect(columnsSelectProd);
+      //   setIsModalSelectOpen(true);
+      //   actSelectProd();
+      // }
+      // 기능제거 20230627
     }
   };
   const onDblClickGridDetail = (e) => {
@@ -493,52 +511,58 @@ function Document() {
     setIsModalSelectOpen(false);
   };
   const onDblClickGridSelect = (e) => {
-    //🔸Select Grid에서 DblClick
-    let refGrid;
-    let columnName;
-    const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
-    const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
+    if (e?.targetType === "cell") {
+      //🔸Select Grid에서 DblClick
+      let refGrid;
+      let columnName;
+      const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
+      const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
 
-    const columnNameEquipProc = ["proc_nm", "equip_nm", "proc_id", "equip_id"];
+      const columnNameEquipProc = ["proc_nm", "equip_nm", "proc_id", "equip_id"];
 
-    if (targetGrid.current === "Search") {
-      setInputSearchValue([]);
-      columnName = ["prod_cd", "prod_nm"];
-      for (let i = 0; i < columnName.length; i++) {
-        setInputSearchValue((prevList) => {
-          return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
-        });
+      if (targetGrid.current === "Search") {
+        // setInputSearchValue([]);
+        // columnName = ["prod_cd", "prod_nm"];
+        // for (let i = 0; i < columnName.length; i++) {
+        //   setInputSearchValue((prevList) => {
+        //     return [...prevList, e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]];
+        //   });
+        // }
+        const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+        prodID.current = data.prod_id;
+        prodCD.current = data.prod_cd;
+        prodNM.current = data.prod_nm;
+      } else {
+        if (targetGrid.current === "Header") {
+          refGrid = refGridHeader;
+          columnName = columnNameProd;
+        } else if (targetGrid.current === "ModalHeader") {
+          refGrid = refGridModalHeader;
+          columnName = columnNameProd;
+        } else if (targetGrid.current === "Detail") {
+          refGrid = refGridDetail;
+          columnName = columnNameInspItem;
+        } else if (targetGrid.current === "DetailEquip") {
+          refGrid = refGridDetail;
+          columnName = columnNameEquipProc;
+        } else if (targetGrid.current === "ModalDetailEquip") {
+          refGrid = refGridModalDetail;
+          columnName = columnNameEquipProc;
+        } else if (targetGrid.current === "ModalDetail") {
+          refGrid = refGridModalDetail;
+          columnName = columnNameInspItem;
+        }
+        for (let i = 0; i < columnName.length; i++) {
+          refGrid?.current?.gridInst?.setValue(
+            targetRowKey.current,
+            columnName[i],
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
+          );
+        }
+        disRow.handleGridSelectCheck(refGrid, targetRowKey.current);
       }
-    } else {
-      if (targetGrid.current === "Header") {
-        refGrid = refGridHeader;
-        columnName = columnNameProd;
-      } else if (targetGrid.current === "ModalHeader") {
-        refGrid = refGridModalHeader;
-        columnName = columnNameProd;
-      } else if (targetGrid.current === "Detail") {
-        refGrid = refGridDetail;
-        columnName = columnNameInspItem;
-      } else if (targetGrid.current === "DetailEquip") {
-        refGrid = refGridDetail;
-        columnName = columnNameEquipProc;
-      } else if (targetGrid.current === "ModalDetailEquip") {
-        refGrid = refGridModalDetail;
-        columnName = columnNameEquipProc;
-      } else if (targetGrid.current === "ModalDetail") {
-        refGrid = refGridModalDetail;
-        columnName = columnNameInspItem;
-      }
-      for (let i = 0; i < columnName.length; i++) {
-        refGrid?.current?.gridInst?.setValue(
-          targetRowKey.current,
-          columnName[i],
-          e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
-        );
-      }
-      disRow.handleGridSelectCheck(refGrid, targetRowKey.current);
+      setIsModalSelectOpen(false);
     }
-    setIsModalSelectOpen(false);
   };
 
   const onClickEditModalSave = () => {
@@ -621,7 +645,7 @@ function Document() {
               onKeyDown={onKeyDown}
             />
           </S.ComboWrap>
-          {inputSet.map((v, idx) => (
+          {/* {inputSet.map((v, idx) => (
             <InputPaper
               key={v.id}
               id={v.id}
@@ -633,7 +657,23 @@ function Document() {
               onClickSelect={onClickProd}
               onClickRemove={onClickProdRemove}
             />
-          ))}
+          ))} */}
+          <InputPaper
+            width={"180px"}
+            name={"품목코드"}
+            namePositionTop={"-12px"}
+            value={prodCD.current || ""}
+            btn={false}
+          />
+          <InputPaper
+            width={"240px"}
+            name={"품목"}
+            namePositionTop={"-12px"}
+            value={prodNM.current || ""}
+            btn={true}
+            onClickSelect={onClickProd}
+            onClickRemove={onClickProdRemove}
+          />
         </S.SearchWrap>
         <S.ButtonWrap>
           <BtnComponent btnName={"Search"} onClick={onClickSearch} />
@@ -710,13 +750,20 @@ function Document() {
           onDblClickGridSelect={onDblClickGridSelect}
         />
       ) : null}
-      {isDeleteAlertOpen ? (
-        <AlertDeleteDetail
-          handleInputInfo={handleInputInfo}
-          actDeleteDetail={onDeleteDetail}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+      {isDeleteAlertOpen && (
+        <NoticeAlertModal
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancel={true}
+          onDelete={onDeleteDetail}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
         />
-      ) : null}
+      )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsAreaHidden>
