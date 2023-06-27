@@ -25,4 +25,4 @@ export const WIDTH_SUPER_LONG = "250";
 export const U = undefined;
 
 const HIDDEN_FG = process.env.REACT_APP_COLUMN_HIDDEN;
-export const HIDDEN_ID = HIDDEN_FG;
+export const HIDDEN_ID = HIDDEN_FG === "true" ? true : false;
