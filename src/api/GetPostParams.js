@@ -533,7 +533,7 @@ class order {
     this.work_end_date = raw.work_end_date === "" || raw.work_end_date === null ? "2099-12-31" : raw.work_end_date;
     this.work_order_qty = String(raw.work_order_qty) ? Number(raw.work_order_qty) : null;
     this.complete_fg = raw.complete_fg;
-    this.complete_date = raw.work_end_date === "" || raw.work_end_date === null ? null : raw.complete_date;
+    this.complete_date = raw.complete_date === "" || raw.complete_date === null ? null : raw.complete_date;
     this.remark = raw.remark;
   }
 }

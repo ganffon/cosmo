@@ -41,7 +41,7 @@ function ModalDate(props) {
           <S.Date datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
         </S.DateBox>
         <S.ButtonBox>
-          {buttonType === "ACS" ? (
+          {buttonType === "ACS" && (
             <>
               <S.ButtonWrap>
                 <BtnComponent btnName={"AddRow"} onClick={onClickModalAddRow} />
@@ -53,8 +53,8 @@ function ModalDate(props) {
                 <BtnComponent btnName={"Save"} onClick={onClickModalSave} />
               </S.ButtonWrap>
             </>
-          ) : null}
-          {buttonType === "DS" ? (
+          )}
+          {buttonType === "DS" && (
             <>
               <S.ButtonWrap>
                 <BtnComponent btnName={"Delete"} onClick={onClickModalDelete} />
@@ -63,18 +63,12 @@ function ModalDate(props) {
                 <BtnComponent btnName={"Search"} onClick={onClickModalSearch} />
               </S.ButtonWrap>
             </>
-          ) : (
-            // <ButtonDS
-            //   onClickDelete={onClickModalDelete}
-            //   onClickSearch={onClickModalSearch}
-            // />
-            false
           )}
-          {buttonType === "Search" ? (
+          {buttonType === "Search" && (
             <S.SingleButtonWrap>
               <BtnComponent btnName={"Search"} onClick={onClickModalSearch} />
             </S.SingleButtonWrap>
-          ) : null}
+          )}
         </S.ButtonBox>
       </S.ToolWrap>
       <S.GridBox>

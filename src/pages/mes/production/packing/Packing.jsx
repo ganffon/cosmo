@@ -266,7 +266,7 @@ function Packing() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.employee
+    restURI.employee + `?use_fg=true&worker_fg=true`
   );
   const [actSelectStore] = uSearch.useSearchSelect(
     refGridSelect,

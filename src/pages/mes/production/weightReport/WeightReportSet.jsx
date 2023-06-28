@@ -18,7 +18,7 @@ function WeightReportSet() {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const columnsHeader = [
-    col.text("order_no", CN.order_no, false, false, C.WIDTH_SHORT),
+    col.text("work_order_no", CN.order_no, false, false, C.WIDTH_SHORT),
     col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
     col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT),
     col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT),
@@ -26,39 +26,11 @@ function WeightReportSet() {
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
     col.date("work_weigh_date", CN.work_weigh_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_weigh_time",
-      CN.work_weigh_time,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      "center"
-    ),
-    col.text(
-      "weigh_emp_nm",
-      CN.weigh_emp_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      "center"
-    ),
+    col.text("work_weigh_time", CN.work_weigh_time, false, false, C.WIDTH_SHORT, "center"),
+    col.text("weigh_emp_nm", CN.weigh_emp_nm, false, false, C.WIDTH_SHORT, "center"),
     col.date("work_input_date", CN.work_input_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_input_time",
-      CN.work_input_time,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      "center"
-    ),
-    col.text(
-      "work_input_emp_nm",
-      CN.work_input_emp_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      "center"
-    ),
+    col.text("work_input_time", CN.work_input_time, false, false, C.WIDTH_SHORT, "center"),
+    col.text("work_input_emp_nm", CN.input_emp_nm, false, false, C.WIDTH_SHORT, "center"),
     col.text("remark", CN.remark, false, false, C.WIDTH_LONG),
     col.date("create_at", CN.create_at, false, C.WIDTH_SHORT),
     col.date("update_at", CN.update_at, false, C.WIDTH_SHORT),

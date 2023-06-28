@@ -32,7 +32,6 @@ export const SearchWrap = styled("div")`
 `;
 export const ButtonWrap = styled("div")`
   display: flex;
-
   align-items: center;
 `;
 
@@ -46,6 +45,14 @@ export const TitleButton = styled("div")`
   width: 100%;
   gap: 10px;
   justify-content: end;
+  align-items: center;
+`;
+export const TitleButtonRight = styled("div")`
+  display: flex;
+  width: 100%;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -132,5 +139,9 @@ export const TopGridWrap = styled("div")`
 export const BottomGridWrap = styled("div")`
   padding-left: 10px;
   padding-right: 10px;
-  height: calc(100% - 100px);
+  height: calc(100% - 110px);
+`;
+
+export const MappingDiv = styled("div")`
+  font-size: 100px;
 `;

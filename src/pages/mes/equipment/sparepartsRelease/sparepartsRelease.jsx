@@ -165,7 +165,7 @@ function SparepartsRelease() {
     isSnackOpen,
     setIsSnackOpen,
     setGridModalSelectData,
-    restURI.employee,
+    restURI.employee + `?use_fg=true&worker_fg=true`,
     "releaseUser"
   );
 
@@ -197,7 +197,7 @@ function SparepartsRelease() {
     isSnackOpen,
     setIsSnackOpen,
     setGridModalSelectData,
-    restURI.employee,
+    restURI.employee + `?use_fg=true&worker_fg=true`,
     "releaseUser"
   );
 

@@ -22,6 +22,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnPanel from "components/button/BtnPanel";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import ModalWrap from "components/modal/ModalWrap";
 
 function EquipmentResult() {
   LoginStateChk();
@@ -33,12 +34,14 @@ function EquipmentResult() {
   const refGridNew = useRef(null);
   const refGridSelectOrder = useRef(null);
   const refGridSelectEmp = useRef(null);
+  const clickedWorkOrderId = useRef(null);
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [isResultNewOpen, setIsResultNewOpen] = useState(false);
   const [isSelectOrderOpen, setIsSelectOrderOpen] = useState(false);
   const [isSelectEmpOpen, setIsSelectEmpOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
+
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
   const [dateText, setDateText] = useState({
@@ -100,6 +103,7 @@ function EquipmentResult() {
     aftEmpNm: "",
     nigEmpId: "",
     nigEmpNm: "",
+    tagId: "",
     remark: "",
   });
   const [info, setInfo] = useState({
@@ -262,12 +266,16 @@ function EquipmentResult() {
   };
 
   const onClickEdit = async (e) => {
+    console.log(e);
     if (mainInfo.inspResultId !== "") {
       setIsEditMode(true);
       setIsResultNewOpen(true);
       try {
         setIsBackDrop(true);
-        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${mainInfo.inspResultId}`);
+        const result = await restAPI.get(
+          restURI.qmsInspResultDetail +
+            `?insp_result_id=${mainInfo.inspResultId}`
+        );
         setGridDataNew(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
@@ -326,9 +334,15 @@ function EquipmentResult() {
       try {
         setIsBackDrop(true);
         let conditionLine, conditionProdCd, conditionProdNm;
-        inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
-        inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
-        inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
+        inputTextChange.line_nm
+          ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
+          : (conditionLine = "");
+        inputTextChange.prod_cd
+          ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`)
+          : (conditionProdCd = "");
+        inputTextChange.prod_nm
+          ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`)
+          : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -361,6 +375,7 @@ function EquipmentResult() {
     if (e?.targetType !== "rowHeader" && e?.targetType === "cell") {
       if (!isBackDrop) {
         const Grid = refGridHeader?.current?.gridInst;
+        clickedWorkOrderId.current = Grid.getValue(e?.rowKey, "work_order_id");
         setMainInfo({
           ...mainInfo,
           inspResultId: Grid.getValue(e?.rowKey, "insp_result_id"),
@@ -380,12 +395,15 @@ function EquipmentResult() {
           aftEmpNm: Grid.getValue(e?.rowKey, "aft_emp_nm"),
           nigEmpId: Grid.getValue(e?.rowKey, "nig_emp_id"),
           nigEmpNm: Grid.getValue(e?.rowKey, "nig_emp_nm"),
+          tagId: Grid.getValue(e?.rowKey, "tag_id"),
           remark: Grid.getValue(e?.rowKey, "remark"),
         });
         const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
         try {
           setIsBackDrop(true);
-          const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
+          const result = await restAPI.get(
+            restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`
+          );
           setGridDataDetail(result?.data?.data?.rows);
         } catch (err) {
           setIsSnackOpen({
@@ -412,7 +430,9 @@ function EquipmentResult() {
 
   const onSelectOrder = () => {
     setIsSelectOrderOpen(true);
-    actSelectOrder(`?complete_fg=INCOMPLETE&start_date=${dateText.startDate}&end_date=${dateText.endDate}`);
+    actSelectOrder(
+      `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}&end_date=${dateSelectOrder.endDate}`
+    );
   };
   const onRemoveOrder = () => {
     resetInfo();
@@ -444,7 +464,11 @@ function EquipmentResult() {
     isEditMode ? resetEditNigEmp() : resetNigEmp();
   };
   const onSelectOrderClose = () => {
-    setDateSelectOrder({ ...dateSelectOrder, startDate: DateTime(-7).dateFull, endDate: DateTime().dateFull });
+    setDateSelectOrder({
+      ...dateSelectOrder,
+      startDate: DateTime(-7).dateFull,
+      endDate: DateTime().dateFull,
+    });
     setGridDataSelectOrder([]);
     setIsSelectOrderOpen(false);
   };
@@ -539,7 +563,8 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrderDetail + `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
+        restURI.prdOrderDetail +
+          `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
       );
       setGridDataNew(result?.data?.data?.rows);
     } catch (err) {
@@ -555,7 +580,111 @@ function EquipmentResult() {
       setIsSelectOrderOpen(false);
     }
   };
-  const onMapping = () => {};
+  const onMapping = async () => {
+    let timeString =
+      DateTime().hour + ":" + DateTime().minute + ":" + DateTime().seconds;
+    //timeString = "06:20:20";
+    const morningStart = "06:00:00";
+    const morningEnd = "13:59:59";
+
+    const afternoonStart = "14:00:00";
+    const afternoonEnd = "21:59:59";
+
+    if (morningStart <= timeString && timeString <= morningEnd) {
+      if (refGridNew?.current?.gridInst?.store?.data?.rawData?.length > 0) {
+        const workOrderIdForNew =
+          refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
+        if (
+          workOrderIdForNew === null ||
+          workOrderIdForNew === "" ||
+          workOrderIdForNew === undefined
+        ) {
+          await getRawData(clickedWorkOrderId.current, "mng_insp_value");
+        } else {
+          await getRawData(workOrderIdForNew, "mng_insp_value");
+        }
+      }
+    } else if (afternoonStart <= timeString && timeString <= afternoonEnd) {
+      if (refGridNew?.current?.gridInst?.store?.data?.rawData?.length > 0) {
+        const workOrderIdForNew =
+          refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
+
+        if (
+          workOrderIdForNew === null ||
+          workOrderIdForNew === "" ||
+          workOrderIdForNew === undefined
+        ) {
+          await getRawData(clickedWorkOrderId.current, "aft_insp_value");
+        } else {
+          await getRawData(workOrderIdForNew, "aft_insp_value");
+        }
+      }
+    } else {
+      if (refGridNew?.current?.gridInst?.store?.data?.rawData?.length > 0) {
+        const workOrderIdForNew =
+          refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
+
+        if (
+          workOrderIdForNew === null ||
+          workOrderIdForNew === "" ||
+          workOrderIdForNew === undefined
+        ) {
+          await getRawData(clickedWorkOrderId.current, "nig_insp_value");
+        } else {
+          await getRawData(workOrderIdForNew, "nig_insp_value");
+        }
+      }
+    }
+  };
+
+  const getRawData = async (workOrderId, Term) => {
+    const result = await restAPI.get(
+      restURI.getOrderDetailsRawData + "?work_order_id=" + workOrderId
+    );
+    const rowLength = result?.data?.data?.count;
+    const rowData = result?.data?.data?.rows;
+    const GridRowDataLength =
+      refGridNew?.current?.gridInst?.store?.data?.rawData?.length;
+    const GridRowData = refGridNew?.current?.gridInst;
+    for (let i = 0; i < GridRowDataLength; i++) {
+      for (let j = 0; j < rowLength; j++) {
+        if (
+          GridRowData?.store?.data?.rawData[i].tag_id === rowData[j].node_id
+        ) {
+          GridRowData?.setValue(
+            GridRowData.store.data.rawData[i].rowKey,
+            Term,
+            String(rowData[j].value)
+          );
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const Grid = refGridDetail?.current?.gridInst;
+    for (let i = 0; Grid.getRowCount() > i; i++) {
+      if (
+        Grid.getValue(i, "mng_insp_value") < Grid.getValue(i, "spec_lcl") ||
+        Grid.getValue(i, "mng_insp_value") > Grid.getValue(i, "spec_ucl")
+      ) {
+        Grid.addCellClassName(i, "mng_insp_value", "redText");
+      }
+      if (
+        Grid.getValue(i, "aft_insp_value") < Grid.getValue(i, "spec_lcl") ||
+        Grid.getValue(i, "aft_insp_value") > Grid.getValue(i, "spec_ucl")
+      ) {
+        Grid.addCellClassName(i, "aft_insp_value", "redText");
+      }
+      if (
+        Grid.getValue(i, "nig_insp_value") < Grid.getValue(i, "spec_lcl") ||
+        Grid.getValue(i, "nig_insp_value") > Grid.getValue(i, "spec_ucl")
+      ) {
+        Grid.addCellClassName(i, "nig_insp_value", "redText");
+      }
+    }
+  }, [gridDataDetail]);
+
   const onSaveNew = async () => {
     if (!isBackDrop) {
       if (!isEditMode) {
@@ -653,7 +782,10 @@ function EquipmentResult() {
           details: dataDetail,
         };
         try {
-          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
+          const result = await restAPI.put(
+            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
+            query
+          );
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -716,7 +848,11 @@ function EquipmentResult() {
     <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
-          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+          <DateRange
+            dateText={dateText}
+            setDateText={setDateText}
+            onClickSearch={onClickSearch}
+          />
           <InputSearch
             id={"line_nm"}
             name={"라인명"}
@@ -756,7 +892,6 @@ function EquipmentResult() {
               <S.Title>운전점검일지</S.Title>
               <S.TitleButton>
                 <BtnComponent btnName={"New"} onClick={onClickNew} />
-                <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
                 <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
               </S.TitleButton>
             </S.TitleButtonWrap>
@@ -765,12 +900,25 @@ function EquipmentResult() {
         </S.ContentLeft>
         <S.ContentRight>
           <S.GridDetailWrap>
-            <S.Title>세부운전점검일지</S.Title>
+            <S.TitleButtonRight>
+              <S.Title>세부운전점검일지</S.Title>
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+            </S.TitleButtonRight>
+
             <S.InfoWrap>
               {inputInfo.map((v, idx) => {
-                return <InputPaper key={v.id} id={v.id} name={v.name} width={"220px"} value={mainInfo[v.id] || ""} />;
+                return (
+                  <InputPaper
+                    key={v.id}
+                    id={v.id}
+                    name={v.name}
+                    width={"220px"}
+                    value={mainInfo[v.id] || ""}
+                  />
+                );
               })}
             </S.InfoWrap>
+
             <S.BottomGridWrap>{GridDetail}</S.BottomGridWrap>
           </S.GridDetailWrap>
         </S.ContentRight>
@@ -850,6 +998,7 @@ function EquipmentResult() {
           }}
         />
       ) : null}
+
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

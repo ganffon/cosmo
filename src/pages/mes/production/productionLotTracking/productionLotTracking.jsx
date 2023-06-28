@@ -2,8 +2,6 @@ import { LayoutContext } from "components/layout/common/Layout";
 import { LoginStateChk } from "custom/LoginStateChk";
 import { useContext, useMemo, useRef, useState } from "react";
 import * as LS from "./productionLotTracking.styled";
-
-import { InputSet } from "components/input/InputSearch.styled";
 import InputSearch from "components/input/InputSearch";
 import * as S from "pages/mes/style/oneGrid.styled";
 import DateTime from "components/datetime/DateTime";
@@ -11,7 +9,6 @@ import useInputSet from "custom/useInputSet";
 import InputPaper from "components/input/InputPaper";
 import ProductionLotTrackingSet from "./productionLotTrackingSet";
 import * as disRow from "custom/useDisableRowCheck";
-import ButtonSearch from "components/button/ButtonSearch";
 import GridSingle from "components/grid/GridSingle";
 import * as uSearch from "custom/useSearch";
 import restURI from "json/restURI.json";
@@ -24,11 +21,10 @@ import BtnComponent from "components/button/BtnComponent";
 
 function ProductionLotTracking() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
-  const refMainleGrid = useRef(null);
+  const refMainGrid = useRef(null);
   const refMiddleLeftGrid = useRef(null);
   const refMiddleRightGrid = useRef(null);
   const refBottomLeftGrid = useRef(null);
@@ -36,8 +32,13 @@ function ProductionLotTracking() {
   const refGridSelect = useRef(null);
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
 
-  const prodCD = useRef("");
-  const prodNM = useRef("");
+  const prodCD = useRef("품목코드");
+  const prodNM = useRef("품목");
+
+  const resetProd = () => {
+    prodCD.current = "품목코드";
+    prodNM.current = "품목";
+  };
 
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [columnsSelect, setColumnsSelect] = useState([]);
@@ -69,26 +70,17 @@ function ProductionLotTracking() {
     endDate: DateTime().dateFull,
   });
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   const [modalSelectSize, setModalSelectSize] = useState({
     width: "80%",
     height: "90%",
   });
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    false,
-    refMainleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(false, refMainGrid);
 
   const [gridDataSelect, setGridDataSelect] = useState(null);
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    false,
-    refMainleGrid
-  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(false, refMainGrid);
 
   function onClickGridButton() {
     setIsSnackOpen({
@@ -104,6 +96,7 @@ function ProductionLotTracking() {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
   const onClickProdCancel = () => {
+    resetProd();
     setInputSearchValue([]);
   };
   const onClickProd = () => {
@@ -128,9 +121,7 @@ function ProductionLotTracking() {
 
   const actSearch = async () => {
     try {
-      let readURI =
-        restURI.prdPacking +
-        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}&`;
+      let readURI = restURI.prdPacking + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}&`;
       if (prodCD.current !== "" && prodCD.current !== null) {
         readURI = readURI + `prod_cd=${prodCD.current}&`;
       }
@@ -153,12 +144,7 @@ function ProductionLotTracking() {
                 readURI = "?";
                 cnt++;
               }
-              readURI =
-                readURI +
-                inputBoxID[i] +
-                "=" +
-                inputTextChange[inputBoxID[i]] +
-                "&";
+              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -222,12 +208,10 @@ function ProductionLotTracking() {
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
           if (columnName[i] === "prod_cd") {
-            prodCD.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
           if (columnName[i] === "prod_nm") {
-            prodNM.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
         });
       }
@@ -242,13 +226,10 @@ function ProductionLotTracking() {
 
   const actSearchGrid = async (e) => {
     try {
-      const workPackingID =
-        e?.instance?.store?.data?.rawData[e?.rowKey].work_packing_id;
+      const workPackingID = e?.instance?.store?.data?.rawData[e?.rowKey].work_packing_id;
       const lotNo = e?.instance?.store?.data?.rawData[e?.rowKey].lot_no;
       setIsBackDrop(true);
-      let readURI =
-        restURI.prdLotTracking +
-        `?work_packing_id=${workPackingID}&lot_no=${lotNo}&`;
+      let readURI = restURI.prdLotTracking + `?work_packing_id=${workPackingID}&lot_no=${lotNo}&`;
       if (inputTextChange && inputBoxID) {
         let cnt = 1;
         //🔸inputBox 가 있다면?!
@@ -262,12 +243,7 @@ function ProductionLotTracking() {
                 readURI = "?";
                 cnt++;
               }
-              readURI =
-                readURI +
-                inputBoxID[i] +
-                "=" +
-                inputTextChange[inputBoxID[i]] +
-                "&";
+              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -295,10 +271,6 @@ function ProductionLotTracking() {
     }
   };
 
-  const onClickRemoveProd = () => {
-    setInputSearchValue([(prodCD.current = ""), (prodNM.current = "")]);
-  };
-
   const Grid = useMemo(() => {
     return (
       <GridSingle
@@ -308,7 +280,7 @@ function ProductionLotTracking() {
         header={header}
         data={gridDataHeader}
         draggable={false}
-        refGrid={refMainleGrid}
+        refGrid={refMainGrid}
         onClickGrid={onClickGrid}
       />
     );
@@ -332,11 +304,7 @@ function ProductionLotTracking() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <LS.ToolWrap>
           <LS.SearchWrap>
-            <LS.Date
-              datePickerSet={"range"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
 
             <InputSearch
               id={"line_nm"}
@@ -345,12 +313,7 @@ function ProductionLotTracking() {
               onClickSearch={onClickSearch}
             />
             <LS.InputPaperWrap>
-              <InputPaper
-                width={"180px"}
-                name={"품목코드"}
-                value={prodCD.current || ""}
-                btn={false}
-              />
+              <InputPaper width={"180px"} name={"품목코드"} value={prodCD.current || ""} btn={false} />
             </LS.InputPaperWrap>
             <LS.InputPaperWrap>
               <InputPaper
@@ -359,7 +322,7 @@ function ProductionLotTracking() {
                 value={prodNM.current || ""}
                 btn={true}
                 onClickSelect={onClickProd}
-                onClickRemove={onClickRemoveProd}
+                onClickRemove={onClickProdCancel}
               />
             </LS.InputPaperWrap>
           </LS.SearchWrap>

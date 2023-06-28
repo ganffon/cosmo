@@ -66,9 +66,9 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail, barcode
 
     col.number("before_subdivision_qty", CN.before_subdivision_qty, true, C.WIDTH_SHORT, false),
     col.number("after_subdivision_qty", CN.after_subdivision_qty, true, C.WIDTH_SHORT, false),
-    col.number("subdivision_qty", CN.subdivision_qty, true, C.WIDTH_SHORT, false),
+    col.number("subdivision_qty", CN.subdivision_qty, false, C.WIDTH_SHORT, false),
     col.date("subdivision_date", CN.subdivision_date, true, C.WIDTH_SHORT),
-    col.text("subdivision_time", CN.subdivision_time, true, false, C.WIDTH_SHORT),
+    col.text("subdivision_time", CN.subdivision_time, true, false, C.WIDTH_SHORT, "center"),
     col.id("subdivision_emp_id", CN.subdivision_emp_id, C.HIDDEN_ID),
     col.text("remark", CN.remark, true, false, C.WIDTH_MIDDLE),
   ];

@@ -31,35 +31,13 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
     col.date("work_weigh_date", CN.work_weigh_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_weigh_time",
-      CN.work_weigh_time,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
+    col.text("work_weigh_time", CN.work_weigh_time, false, false, C.WIDTH_SHORT, "center"),
     col.id("weigh_emp_id", CN.weigh_emp_id, C.HIDDEN_ID),
-    col.select(
-      "weigh_emp_nm",
-      CN.weigh_emp_nm,
-      isEditModeHeader,
-      C.WIDTH_SHORT
-    ),
+    col.select("weigh_emp_nm", CN.weigh_emp_nm, isEditModeHeader, C.WIDTH_SHORT),
     col.date("work_input_date", CN.work_input_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_input_time",
-      CN.work_input_time,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
+    col.text("work_input_time", CN.work_input_time, false, false, C.WIDTH_SHORT, "center"),
     col.id("input_emp_id", CN.input_emp_id, C.HIDDEN_ID),
-    col.select(
-      "input_emp_nm",
-      CN.input_emp_nm,
-      isEditModeHeader,
-      C.WIDTH_SHORT
-    ),
+    col.select("input_emp_nm", CN.input_emp_nm, isEditModeHeader, C.WIDTH_SHORT),
     col.number("total_qty", CN.total_qty2, false, C.WIDTH_LONG, false),
     col.text("remark", CN.remark, isEditModeHeader, false, C.WIDTH_MIDDLE),
     col.date("create_at", CN.create_at, false, C.WIDTH_LONG),
@@ -88,119 +66,29 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
   ];
   const columnsSelectProd = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text(
-      "prod_cd",
-      CN.prod_cd,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      "select"
-    ),
-    col.text(
-      "prod_nm",
-      CN.prod_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      "select"
-    ),
+    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT, false, false, "select"),
+    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT, false, false, "select"),
   ];
 
   const columnsSelectOrder = [
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text(
-      "work_order_no",
-      CN.work_order_no,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
+    col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT, false, false, true),
     col.date("work_weigh_date", CN.work_weigh_date, false, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
-    col.text(
-      "line_dept_nm",
-      CN.line_dept_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
+    col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT, false, false, true),
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
-    col.text(
-      "line_cd",
-      CN.line_cd,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
-    col.text(
-      "line_nm",
-      CN.line_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
+    col.text("line_cd", CN.line_cd, false, false, C.WIDTH_SHORT, false, false, true),
+    col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT, false, false, true),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text(
-      "prod_cd",
-      CN.prod_cd,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
-    col.text(
-      "prod_nm",
-      CN.prod_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
+    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT, false, false, true),
+    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT, false, false, true),
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text(
-      "store_nm",
-      CN.store_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
+    col.text("store_nm", CN.store_nm, false, false, C.WIDTH_SHORT, false, false, true),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text(
-      "location_nm",
-      CN.location_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      false,
-      false,
-      true
-    ),
+    col.text("location_nm", CN.location_nm, false, false, C.WIDTH_SHORT, false, false, true),
   ];
 
-  const columnsmodalHeader = [
+  const columnsModalHeader = [
     col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
     col.select("work_order_no", CN.work_order_no, true, C.WIDTH_SHORT),
@@ -218,11 +106,11 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
     col.select("location_nm", CN.location_nm, true, C.WIDTH_SHORT),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_LONG),
     col.date("work_weigh_date", CN.work_weigh_date, true, C.WIDTH_SHORT),
-    col.text("work_weigh_time", CN.work_weigh_time, true, false, C.WIDTH_SHORT),
+    col.text("work_weigh_time", CN.work_weigh_time, true, false, C.WIDTH_SHORT, "center"),
     col.id("weigh_emp_id", CN.weigh_emp_id, C.HIDDEN_ID),
     col.select("weigh_emp_nm", CN.weigh_emp_nm, true, C.WIDTH_SHORT),
     col.date("work_input_date", CN.work_input_date, true, C.WIDTH_SHORT),
-    col.text("work_input_time", CN.work_input_time, true, false, C.WIDTH_SHORT),
+    col.text("work_input_time", CN.work_input_time, true, false, C.WIDTH_SHORT, "center"),
     col.id("input_emp_id", CN.input_emp_id, C.HIDDEN_ID),
     col.select("input_emp_nm", CN.input_emp_nm, true, C.WIDTH_SHORT),
     col.text("remark", CN.remark, true, false, C.WIDTH_MIDDLE),
@@ -244,56 +132,28 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
   ];
 
   const columnsSelectWeightEmployee = [
+    col.text("dept_nm", CN.dept_nm, false, false, C.WIDTH_MIDDLE, false, false, true),
+    col.text("grade_nm", CN.grade_nm, false, false, C.WIDTH_MIDDLE, false, false, true),
     col.id("weigh_emp_id", CN.weigh_emp_id, C.HIDDEN_ID),
-    col.text(
-      "weigh_emp_nm",
-      CN.weigh_emp_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      "left",
-      C.U,
-      "select"
-    ),
+    col.text("emp_cd", CN.emp_cd, false, true, C.WIDTH_SHORT, false, false, true),
+    col.text("weigh_emp_nm", CN.weigh_emp_nm, false, false, C.WIDTH_SHORT, "left", C.U, "select"),
+    col.text("worker_group_nm", CN.worker_group_nm, false, true, C.WIDTH_MIDDLE, false, false, true),
   ];
 
   const columnsSelectInputEmployee = [
+    col.text("dept_nm", CN.dept_nm, false, false, C.WIDTH_MIDDLE, false, false, true),
+    col.text("grade_nm", CN.grade_nm, false, false, C.WIDTH_MIDDLE, false, false, true),
     col.id("input_emp_id", CN.input_emp_id, C.HIDDEN_ID),
-    col.text(
-      "input_emp_nm",
-      CN.input_emp_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      C.U,
-      C.U,
-      "select"
-    ),
+    col.text("emp_cd", CN.emp_cd, false, true, C.WIDTH_SHORT, false, false, true),
+    col.text("input_emp_nm", CN.input_emp_nm, false, false, C.WIDTH_SHORT, C.U, C.U, "select"),
+    col.text("worker_group_nm", CN.worker_group_nm, false, true, C.WIDTH_MIDDLE, false, false, true),
   ];
 
   const columnsSelectStoreLocation = [
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text(
-      "store_nm",
-      CN.store_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      C.U,
-      C.U,
-      "select"
-    ),
+    col.text("store_nm", CN.store_nm, false, false, C.WIDTH_SHORT, C.U, C.U, "select"),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text(
-      "location_nm",
-      CN.location_nm,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      C.U,
-      C.U,
-      "select"
-    ),
+    col.text("location_nm", CN.location_nm, false, false, C.WIDTH_SHORT, C.U, C.U, "select"),
   ];
 
   const inputSet = [
@@ -317,7 +177,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail) {
     inputSet,
     columnsDetail,
     columnsSelectProd,
-    columnsmodalHeader,
+    columnsModalHeader,
     columnsModalDetail,
     columnsSelectOrder,
     columnsSelectWeightEmployee,

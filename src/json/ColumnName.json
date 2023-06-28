@@ -382,8 +382,8 @@
   "work_weigh_detail_id": "상세계량일지ID",
   "work_input_date": "투입일자",
   "work_input_time": "투입시간",
-  "input_emp_id": "투입작업자ID",
-  "input_emp_nm": "투입작업자",
+  "input_emp_id": "투입자ID",
+  "input_emp_nm": "투입자",
 
   "start_time": "시작 시간",
   "end_time": "종료 시간",

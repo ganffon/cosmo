@@ -8,15 +8,12 @@ import * as disRow from "custom/useDisableRowCheck";
 import InputSearch from "components/input/InputSearch";
 import DateTime from "components/datetime/DateTime";
 import * as LS from "./productionDownTime.styled";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonNEDS from "components/button/ButtonNEDS";
 import * as uSearch from "custom/useSearch";
 import * as RE from "custom/RegularExpression";
 import useInputSet from "custom/useInputSet";
 import restURI from "json/restURI.json";
 import NoticeSnack from "components/alert/NoticeSnack";
 import ModalNew from "components/modal/ModalNew";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import BackDrop from "components/backdrop/BackDrop";
 import Condition from "custom/Condition";
 import * as uEdit from "custom/useEdit";
@@ -133,7 +130,9 @@ function ProductionDownTime() {
 
   const handleDelete = () => {
     actDelete();
-    onClickSearch();
+    setTimeout(() => {
+      onClickSearch();
+    }, 300);
   };
 
   const onClickModalGrid = (e) => {
@@ -203,6 +202,7 @@ function ProductionDownTime() {
 
   const onClickEditModeSave = () => {
     actEdit();
+    onClickSearch();
   };
 
   const onClickEditModeExit = () => {

@@ -53,6 +53,15 @@ const TooltipStore = {
     columnName: "employeeButton",
     tooltip: `🔸사원 데이터를 ERP에서 불러옵니다.`,
   },
+  dataMapping: {
+    columnName: "dataMapping",
+    tooltip: `🔸오전 검사값 [06:00 ~ 13:59]
+       오후 검사값 [14:00 ~ 21:59] 
+       야간 검사값 [22:00 ~ 05:59] 
+       
+       현재 시간에 해당하는 컬럼에
+       　　설비 값을 실시간으로 불러옵니다.`,
+  },
 };
 
 export default TooltipStore;

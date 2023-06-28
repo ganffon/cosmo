@@ -113,5 +113,6 @@
   "syncGrade": "/sys/sync-grade",
   "syncEmployee": "/sys/sync-emp",
 
-  "workerGroupStatus": "/prd/worker-group-status"
+  "workerGroupStatus": "/prd/worker-group-status",
+  "getOrderDetailsRawData": "/prd/order-details/raws"
 }
