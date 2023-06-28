@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 import { MENU_FOLD_WIDTH, APP_BAR_COLOR } from "constant/Layout";
-import InputSearch from "components/input/InputSearch";
 import { TextField } from "@mui/material";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 export const ModalWrapBox = styled(ModalWrapMulti)`
   display: flex;
@@ -32,21 +29,11 @@ export const ButtonClose = styled(IconButton)`
 `;
 export const Content = styled("div")`
   height: calc(100% - 35px);
-  display: flex;
-  padding: 10px 10px;
-  gap: 10px;
-`;
-export const ContentLeft = styled("div")`
-  height: 100%;
-  width: 50%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  background: white;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  padding: 30px 10px 10px 20px;
+  padding: 10px 10px;
+  gap: 10px;
 `;
 export const ContentRight = styled("div")`
   height: 100%;
@@ -138,12 +125,12 @@ export const Issue = styled("textarea")`
 
 export const ButtonWrap = styled("div")`
   width: 100%;
-  height: 50px;
+  height: 40px;
   display: flex;
   justify-content: end;
   gap: 10px;
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: calc(100% - 55px);
+  height: calc(100% - 45px);
 `;

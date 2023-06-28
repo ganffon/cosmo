@@ -431,12 +431,6 @@
         "id": "equipment-rawdata-view",
         "path": "equipment-rawdata-view",
         "under": null
-      },
-      {
-        "name": "설비알람이력현황",
-        "id": "equipment-alarm-view",
-        "path": "equipment-alarm-view",
-        "under": null
       }
     ]
   },

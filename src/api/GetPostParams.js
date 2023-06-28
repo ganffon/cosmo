@@ -622,6 +622,17 @@ class workGroupStatusDetail {
     this.remark = raw.remark;
   }
 }
+class workerGroupStatusAddEmp {
+  constructor(raw) {
+    this.worker_group_status_id = raw.worker_group_status_id;
+    this.emp_id = raw.emp_id;
+    this.work_start_date = raw.work_start_date;
+    this.work_start_time = raw.work_start_time;
+    this.work_end_date = raw.work_end_date;
+    this.work_end_time = raw.work_end_time;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -803,6 +814,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "workGroupStatusDetail":
         params = new workGroupStatusDetail(raw);
+        break;
+      case "workerGroupStatusAddEmp":
+        params = new workerGroupStatusAddEmp(raw);
         break;
       default:
     }

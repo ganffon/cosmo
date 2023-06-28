@@ -36,7 +36,7 @@ export const ComboBoxItem = styled(TextField)`
     font-size: 30px;
   }
 `;
-export const BottomWrap = styled("div")`
+export const BottomBox = styled("div")`
   height: calc(100% - 65px);
   width: 100%;
   display: flex;
@@ -62,7 +62,7 @@ export const BottomRightWrap = styled("div")`
   background: white;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 50px 10px 10px 10px;
 `;
 export const ButtonWrap = styled("div")`
   height: 45px;
@@ -85,10 +85,9 @@ export const GridWrap = styled("div")`
 `;
 export const MainWrap = styled("div")`
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden auto;
   gap: 10px;
 `;
 export const TopWrap = styled("div")`
@@ -106,6 +105,13 @@ export const MidWrap = styled("div")`
   align-items: center;
   padding: 0px 20px 0px 10px;
 `;
+export const BottomWrap = styled("div")`
+  width: 100%;
+  height: calc(100% - 300px);
+  display: flex;
+  gap: 10px;
+  padding: 0px 20px 0px 10px;
+`;
 export const Title = styled("div")`
   width: 120px;
   font-family: NotoSansKR_B;
@@ -120,8 +126,13 @@ export const Title = styled("div")`
 `;
 
 export const GroupWrap = styled("div")`
+  height: 70px;
   display: flex;
   gap: 10px;
+  &.columnDirection {
+    flex-direction: column;
+    height: calc(100% - 200px);
+  }
 `;
 export const ChipWrap = styled("div")`
   display: flex;
@@ -138,25 +149,22 @@ export const workButton = styled("div")`
   border: solid #828282 1px;
   text-decoration: none;
   display: inline-block;
-  cursor: pointer;
   text-align: center;
-
-  &:hover {
-    border: solid #b4b4b4 1px;
-    background: #b4b4b4;
-    border-radius: 10px;
-    text-decoration: none;
-
-    &.selected {
-      background: #ffc314;
-      border: solid #337fed 1px;
-      font-weight: 900;
-    }
-  }
 
   &.selected {
     border: solid #ffb400 1px;
     background: #ffbe0a;
     font-weight: 900;
   }
+`;
+export const Issue = styled("textarea")`
+  height: calc(100% - 80px);
+  width: calc(100% - 130px);
+  resize: none;
+  font-size: 20px;
+  font-family: NotoSansKR;
+  background: rgba(217, 217, 217, 0.3);
+  border: 1px solid rgba(217, 217, 217, 1);
+  box-shadow: none;
+  padding: 20px;
 `;

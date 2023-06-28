@@ -272,10 +272,7 @@ function EquipmentResult() {
       setIsResultNewOpen(true);
       try {
         setIsBackDrop(true);
-        const result = await restAPI.get(
-          restURI.qmsInspResultDetail +
-            `?insp_result_id=${mainInfo.inspResultId}`
-        );
+        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${mainInfo.inspResultId}`);
         setGridDataNew(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
@@ -334,15 +331,9 @@ function EquipmentResult() {
       try {
         setIsBackDrop(true);
         let conditionLine, conditionProdCd, conditionProdNm;
-        inputTextChange.line_nm
-          ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
-          : (conditionLine = "");
-        inputTextChange.prod_cd
-          ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`)
-          : (conditionProdCd = "");
-        inputTextChange.prod_nm
-          ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`)
-          : (conditionProdNm = "");
+        inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
+        inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
+        inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -401,9 +392,7 @@ function EquipmentResult() {
         const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
         try {
           setIsBackDrop(true);
-          const result = await restAPI.get(
-            restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`
-          );
+          const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
           setGridDataDetail(result?.data?.data?.rows);
         } catch (err) {
           setIsSnackOpen({
@@ -563,8 +552,7 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrderDetail +
-          `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
+        restURI.prdOrderDetail + `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
       );
       setGridDataNew(result?.data?.data?.rows);
     } catch (err) {
@@ -581,8 +569,7 @@ function EquipmentResult() {
     }
   };
   const onMapping = async () => {
-    let timeString =
-      DateTime().hour + ":" + DateTime().minute + ":" + DateTime().seconds;
+    let timeString = DateTime().hour + ":" + DateTime().minute + ":" + DateTime().seconds;
     //timeString = "06:20:20";
     const morningStart = "06:00:00";
     const morningEnd = "13:59:59";
@@ -592,13 +579,8 @@ function EquipmentResult() {
 
     if (morningStart <= timeString && timeString <= morningEnd) {
       if (refGridNew?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        const workOrderIdForNew = refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "mng_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "mng_insp_value");
@@ -606,14 +588,9 @@ function EquipmentResult() {
       }
     } else if (afternoonStart <= timeString && timeString <= afternoonEnd) {
       if (refGridNew?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
+        const workOrderIdForNew = refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
 
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "aft_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "aft_insp_value");
@@ -621,14 +598,9 @@ function EquipmentResult() {
       }
     } else {
       if (refGridNew?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
+        const workOrderIdForNew = refGridNew?.current?.gridInst.store.data.rawData[0].work_order_id;
 
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "nig_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "nig_insp_value");
@@ -638,24 +610,15 @@ function EquipmentResult() {
   };
 
   const getRawData = async (workOrderId, Term) => {
-    const result = await restAPI.get(
-      restURI.getOrderDetailsRawData + "?work_order_id=" + workOrderId
-    );
+    const result = await restAPI.get(restURI.getOrderDetailsRawData + "?work_order_id=" + workOrderId);
     const rowLength = result?.data?.data?.count;
     const rowData = result?.data?.data?.rows;
-    const GridRowDataLength =
-      refGridNew?.current?.gridInst?.store?.data?.rawData?.length;
+    const GridRowDataLength = refGridNew?.current?.gridInst?.store?.data?.rawData?.length;
     const GridRowData = refGridNew?.current?.gridInst;
     for (let i = 0; i < GridRowDataLength; i++) {
       for (let j = 0; j < rowLength; j++) {
-        if (
-          GridRowData?.store?.data?.rawData[i].tag_id === rowData[j].node_id
-        ) {
-          GridRowData?.setValue(
-            GridRowData.store.data.rawData[i].rowKey,
-            Term,
-            String(rowData[j].value)
-          );
+        if (GridRowData?.store?.data?.rawData[i].tag_id === rowData[j].node_id) {
+          GridRowData?.setValue(GridRowData.store.data.rawData[i].rowKey, Term, String(rowData[j].value));
         }
       }
     }
@@ -782,10 +745,7 @@ function EquipmentResult() {
           details: dataDetail,
         };
         try {
-          const result = await restAPI.put(
-            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
-            query
-          );
+          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -848,11 +808,7 @@ function EquipmentResult() {
     <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
-          <DateRange
-            dateText={dateText}
-            setDateText={setDateText}
-            onClickSearch={onClickSearch}
-          />
+          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
           <InputSearch
             id={"line_nm"}
             name={"라인명"}
@@ -907,15 +863,7 @@ function EquipmentResult() {
 
             <S.InfoWrap>
               {inputInfo.map((v, idx) => {
-                return (
-                  <InputPaper
-                    key={v.id}
-                    id={v.id}
-                    name={v.name}
-                    width={"220px"}
-                    value={mainInfo[v.id] || ""}
-                  />
-                );
+                return <InputPaper key={v.id} id={v.id} name={v.name} width={"220px"} value={mainInfo[v.id] || ""} />;
               })}
             </S.InfoWrap>
 
@@ -986,7 +934,7 @@ function EquipmentResult() {
       ) : null}
       {isDeleteAlertOpen ? (
         <NoticeAlertModal
-          textContent={"정말로 삭제 하시겠습니까?"}
+          textContent={"정말 삭제하시겠습니까?"}
           textFontSize={"20px"}
           height={"200px"}
           width={"400px"}

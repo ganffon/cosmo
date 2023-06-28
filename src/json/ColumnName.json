@@ -428,5 +428,7 @@
   "income_type": "입고 유형",
   "downtime_status": "상태",
   "rework_fg": "재작업라인\n여부",
-  "history_fg": "Raw Data\n조회여부"
+  "history_fg": "Raw Data\n조회여부",
+  "master_emp_nm": "작성자",
+  "shift_type": "작업시간"
 }

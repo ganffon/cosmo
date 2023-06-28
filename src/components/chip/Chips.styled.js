@@ -12,11 +12,12 @@ export const ChipsPaper = styled(Paper)`
   border: 1px solid rgba(217, 217, 217, 1);
   box-shadow: none;
   gap: 15px;
-  padding: 10px;
+  padding: 20px;
 `;
 
 export const ChipWrap = styled("div")``;
 
 export const ChipItem = styled(Chip)`
   scale: 1.1;
+  font-size: 20px;
 `;
