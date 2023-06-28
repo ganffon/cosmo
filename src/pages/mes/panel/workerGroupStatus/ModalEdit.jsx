@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import { LayoutContext } from "components/layout/common/Layout";
-import * as S from "./ModalAddNew.styled";
+import * as S from "./ModalEdit.styled";
 import InputPaper from "components/input/InputPaper";
 import DateTime from "components/datetime/DateTime";
 import * as RE from "custom/RegularExpression";
@@ -13,7 +13,7 @@ import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 
-function ModalAddNew(props) {
+function ModalEdit(props) {
   const {
     width = "95%",
     height = "95%",
@@ -31,57 +31,80 @@ function ModalAddNew(props) {
     header = [],
     rowHeaders = [],
     gridDataInput = [],
-    setNewContents = () => {},
-    newContents = {},
+    setEditContents = () => {},
+    editContents = {},
     setIsBackDrop = {},
     setIsSnackOpen = {},
     isSnackOpen = false,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
+  const [gridData, setGridData] = useState();
 
   useEffect(() => {
-    setNewContents({
-      ...newContents,
-      startDate: DateTime().dateFull,
-      endDate: DateTime().dateFull,
-      startTime: DateTime().hour + ":" + DateTime().minute,
-    });
+    switch (editContents.workTime) {
+      case "오전":
+        onMng();
+        break;
+      case "오후":
+        onAft();
+        break;
+      case "야간":
+        onNig();
+        break;
+      default:
+    }
+    switch (editContents.workGroup) {
+      case "A조":
+        onGroupA();
+        break;
+      case "B조":
+        onGroupB();
+        break;
+      case "C조":
+        onGroupC();
+        break;
+      case "D조":
+        onGroupD();
+        break;
+      default:
+    }
+    onLoadEditData();
   }, []);
 
-  const datePickerChange = (e) => {
-    setNewContents({ ...newContents, [e.target.id]: e.target.value });
-  };
-  const handleIssue = (e) => {
-    setNewContents({ ...newContents, issue: e.target.value });
-  };
   function onMng() {
-    const mngElement = document.getElementById("NewMng");
-    const aftElement = document.getElementById("NewAft");
-    const nigElement = document.getElementById("NewNig");
+    const mngElement = document.getElementById("EditMng");
+    const aftElement = document.getElementById("EditAft");
+    const nigElement = document.getElementById("EditNig");
     mngElement.classList.add("selected");
     aftElement.classList.remove("selected");
     nigElement.classList.remove("selected");
   }
   function onAft() {
-    const mngElement = document.getElementById("NewMng");
-    const aftElement = document.getElementById("NewAft");
-    const nigElement = document.getElementById("NewNig");
+    const mngElement = document.getElementById("EditMng");
+    const aftElement = document.getElementById("EditAft");
+    const nigElement = document.getElementById("EditNig");
     mngElement.classList.remove("selected");
     aftElement.classList.add("selected");
     nigElement.classList.remove("selected");
   }
   function onNig() {
-    const mngElement = document.getElementById("NewMng");
-    const aftElement = document.getElementById("NewAft");
-    const nigElement = document.getElementById("NewNig");
+    const mngElement = document.getElementById("EditMng");
+    const aftElement = document.getElementById("EditAft");
+    const nigElement = document.getElementById("EditNig");
     mngElement.classList.remove("selected");
     aftElement.classList.remove("selected");
     nigElement.classList.add("selected");
   }
+  const datePickerChange = (e) => {
+    setEditContents({ ...editContents, [e.target.id]: e.target.value });
+  };
+  const handleIssue = (e) => {
+    setEditContents({ ...editContents, issue: e.target.value });
+  };
   const onClickWorkTypeMng = (e) => {
     onMng();
-    setNewContents({
-      ...newContents,
+    setEditContents({
+      ...editContents,
       workType: "오전",
       startDate: DateTime().dateFull,
       startTime: "06:00",
@@ -91,8 +114,8 @@ function ModalAddNew(props) {
   };
   const onClickWorkTypeAft = (e) => {
     onAft();
-    setNewContents({
-      ...newContents,
+    setEditContents({
+      ...editContents,
       workType: "오후",
       startDate: DateTime().dateFull,
       startTime: "14:00",
@@ -102,8 +125,8 @@ function ModalAddNew(props) {
   };
   const onClickWorkTypeNig = (e) => {
     onNig();
-    setNewContents({
-      ...newContents,
+    setEditContents({
+      ...editContents,
       workType: "야간",
       startDate: DateTime().dateFull,
       startTime: "22:00",
@@ -112,40 +135,40 @@ function ModalAddNew(props) {
     });
   };
   function onGroupA() {
-    const groupA = document.getElementById("NewGroupA");
-    const groupB = document.getElementById("NewGroupB");
-    const groupC = document.getElementById("NewGroupC");
-    const groupD = document.getElementById("NewGroupD");
+    const groupA = document.getElementById("EditGroupA");
+    const groupB = document.getElementById("EditGroupB");
+    const groupC = document.getElementById("EditGroupC");
+    const groupD = document.getElementById("EditGroupD");
     groupA.classList.add("selected");
     groupB.classList.remove("selected");
     groupC.classList.remove("selected");
     groupD.classList.remove("selected");
   }
   function onGroupB() {
-    const groupA = document.getElementById("NewGroupA");
-    const groupB = document.getElementById("NewGroupB");
-    const groupC = document.getElementById("NewGroupC");
-    const groupD = document.getElementById("NewGroupD");
+    const groupA = document.getElementById("EditGroupA");
+    const groupB = document.getElementById("EditGroupB");
+    const groupC = document.getElementById("EditGroupC");
+    const groupD = document.getElementById("EditGroupD");
     groupA.classList.remove("selected");
     groupB.classList.add("selected");
     groupC.classList.remove("selected");
     groupD.classList.remove("selected");
   }
   function onGroupC() {
-    const groupA = document.getElementById("NewGroupA");
-    const groupB = document.getElementById("NewGroupB");
-    const groupC = document.getElementById("NewGroupC");
-    const groupD = document.getElementById("NewGroupD");
+    const groupA = document.getElementById("EditGroupA");
+    const groupB = document.getElementById("EditGroupB");
+    const groupC = document.getElementById("EditGroupC");
+    const groupD = document.getElementById("EditGroupD");
     groupA.classList.remove("selected");
     groupB.classList.remove("selected");
     groupC.classList.add("selected");
     groupD.classList.remove("selected");
   }
   function onGroupD() {
-    const groupA = document.getElementById("NewGroupA");
-    const groupB = document.getElementById("NewGroupB");
-    const groupC = document.getElementById("NewGroupC");
-    const groupD = document.getElementById("NewGroupD");
+    const groupA = document.getElementById("EditGroupA");
+    const groupB = document.getElementById("EditGroupB");
+    const groupC = document.getElementById("EditGroupC");
+    const groupD = document.getElementById("EditGroupD");
     groupA.classList.remove("selected");
     groupB.classList.remove("selected");
     groupC.classList.remove("selected");
@@ -153,53 +176,40 @@ function ModalAddNew(props) {
   }
   const onClickGroupA = (e) => {
     onGroupA();
-    setNewContents({ ...newContents, workGroup: "A조" });
+    setEditContents({ ...editContents, workGroup: "A조" });
   };
   const onClickGroupB = (e) => {
     onGroupB();
-    setNewContents({ ...newContents, workGroup: "B조" });
+    setEditContents({ ...editContents, workGroup: "B조" });
   };
   const onClickGroupC = (e) => {
     onGroupC();
-    setNewContents({ ...newContents, workGroup: "C조" });
+    setEditContents({ ...editContents, workGroup: "C조" });
   };
   const onClickGroupD = (e) => {
     onGroupD();
-    setNewContents({ ...newContents, workGroup: "D조" });
+    setEditContents({ ...editContents, workGroup: "D조" });
   };
   const handleTime = (e) => {
     const timeValue = RE.TimeInput(e?.target?.value);
     if (timeValue.length < 6) {
-      setNewContents({ ...newContents, [e.target.id]: timeValue });
+      setEditContents({ ...editContents, [e.target.id]: timeValue });
     }
-  };
-  const onNewAddRow = () => {
-    const Grid = refGrid?.current?.gridInst;
-    const rowKey = Grid.getRowCount();
-    Grid.appendRow();
-
-    Grid.setValue(rowKey, "work_start_date", newContents.startDate);
-    Grid.setValue(rowKey, "work_start_time", newContents.startTime);
-    Grid.setValue(rowKey, "work_end_date", newContents.endDate);
-    Grid.setValue(rowKey, "work_end_time", newContents.endTime);
   };
   useEffect(() => {
     const Grid = refGrid?.current?.gridInst;
     const maxRow = Grid.getRowCount();
     for (let i = 0; maxRow >= i; i++) {
-      Grid.setValue(i, "work_start_date", newContents.startDate);
-      Grid.setValue(i, "work_start_time", newContents.startTime);
-      Grid.setValue(i, "work_end_date", newContents.endDate);
-      Grid.setValue(i, "work_end_time", newContents.endTime);
+      Grid.setValue(i, "work_start_date", editContents.startDate);
+      Grid.setValue(i, "work_start_time", editContents.startTime);
+      Grid.setValue(i, "work_end_date", editContents.endDate);
+      Grid.setValue(i, "work_end_time", editContents.endTime);
     }
-  }, [newContents]);
+  }, [editContents]);
   const rowKey = useRef("");
   const onClickGrid = useCallback((e) => {
     rowKey.current = e.rowKey;
   }, []);
-  const onNewCancelRow = () => {
-    refGrid?.current?.gridInst?.removeRow(rowKey.current);
-  };
   const onEditingFinish = (e) => {
     if (Condition(e, ["work_start_time"])) {
       //🔸시간 정규표현식 적용
@@ -210,17 +220,36 @@ function ModalAddNew(props) {
       RE.Time(e, refGrid, "work_end_time");
     }
   };
-  const onNewSave = async () => {
+  const onLoadEditData = async () => {
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(
+        restURI.workerGroupStatusDetail + `?worker_group_status_id=${editContents.workId}`
+      );
+      setGridData(result?.data?.data?.rows);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
+  const onEditSave = async () => {
     refGrid?.current?.gridInst?.finishEditing();
     const header = {
-      master_emp_id: newContents.writerId,
-      shift_type: newContents.workType,
-      worker_group_nm: newContents.workGroup,
-      work_start_date: newContents.startDate,
-      work_start_time: newContents.startTime,
-      work_end_date: newContents.endDate,
-      work_end_time: newContents.endTime,
-      remark: newContents.issue,
+      master_emp_id: editContents.empID,
+      shift_type: editContents.workType,
+      worker_group_nm: editContents.workGroup,
+      work_start_date: editContents.startDate,
+      work_start_time: editContents.startTime,
+      work_end_date: editContents.endDate,
+      work_end_time: editContents.endTime,
+      remark: editContents.issue,
     };
     let result = [];
     for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
@@ -268,15 +297,14 @@ function ModalAddNew(props) {
         rowHeaders={rowHeaders}
         columns={columns}
         columnOptions={columnOptions}
-        onClickGrid={onClickGrid}
         onDblClickGrid={onDblClickGrid}
         onEditingFinish={onEditingFinish}
-        data={data}
+        data={gridData}
         refGrid={refGrid}
         isEditMode={true}
       />
     );
-  }, [refGrid.current, onClickGrid]);
+  }, [refGrid.current, gridData]);
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
@@ -289,28 +317,28 @@ function ModalAddNew(props) {
         <S.ContentLeft>
           <S.GroupWrap>
             <S.Title>작업시간</S.Title>
-            <S.workButton id={"NewMng"} onClick={onClickWorkTypeMng}>
+            <S.workButton id={"EditMng"} onClick={onClickWorkTypeMng}>
               {"오전"}
             </S.workButton>
-            <S.workButton id={"NewAft"} onClick={onClickWorkTypeAft}>
+            <S.workButton id={"EditAft"} onClick={onClickWorkTypeAft}>
               {"오후"}
             </S.workButton>
-            <S.workButton id={"NewNig"} onClick={onClickWorkTypeNig}>
+            <S.workButton id={"EditNig"} onClick={onClickWorkTypeNig}>
               {"야간"}
             </S.workButton>
           </S.GroupWrap>
           <S.GroupWrap>
             <S.Title>작업조</S.Title>
-            <S.workButton id={"NewGroupA"} onClick={onClickGroupA}>
+            <S.workButton id={"EditGroupA"} onClick={onClickGroupA}>
               {"A조"}
             </S.workButton>
-            <S.workButton id={"NewGroupB"} onClick={onClickGroupB}>
+            <S.workButton id={"EditGroupB"} onClick={onClickGroupB}>
               {"B조"}
             </S.workButton>
-            <S.workButton id={"NewGroupC"} onClick={onClickGroupC}>
+            <S.workButton id={"EditGroupC"} onClick={onClickGroupC}>
               {"C조"}
             </S.workButton>
-            <S.workButton id={"NewGroupD"} onClick={onClickGroupD}>
+            <S.workButton id={"EditGroupD"} onClick={onClickGroupD}>
               {"D조"}
             </S.workButton>
           </S.GroupWrap>
@@ -319,7 +347,7 @@ function ModalAddNew(props) {
             <InputPaper
               width={"300px"}
               height={"60px"}
-              value={newContents.writer}
+              value={editContents.writer || ""}
               size={"30px"}
               btn={true}
               onClickSelect={onClickSelect}
@@ -333,7 +361,8 @@ function ModalAddNew(props) {
               className="date"
               type="date"
               format="yyyy-MM-dd"
-              value={newContents.startDate}
+              // defaultValue={DateTime().dateFull}
+              value={editContents.startDate || ""}
               InputProps={{ sx: { height: 60 } }}
               onChange={datePickerChange}
             />
@@ -342,7 +371,7 @@ function ModalAddNew(props) {
               id={"startTime"}
               width={"120px"}
               height={"60px"}
-              value={newContents.startTime}
+              value={editContents.startTime || ""}
               size={"30px"}
               onTextChange={handleTime}
               readOnly={false}
@@ -355,7 +384,8 @@ function ModalAddNew(props) {
               className="date"
               type="date"
               format="yyyy-MM-dd"
-              value={newContents.endDate}
+              // defaultValue={DateTime().dateFull}
+              value={editContents.endDate || ""}
               InputProps={{ sx: { height: 60 } }}
               onChange={datePickerChange}
             />
@@ -364,7 +394,7 @@ function ModalAddNew(props) {
               id={"endTime"}
               width={"120px"}
               height={"60px"}
-              value={newContents.endTime}
+              value={editContents.endTime || ""}
               size={"30px"}
               onTextChange={handleTime}
               readOnly={false}
@@ -374,7 +404,7 @@ function ModalAddNew(props) {
             <S.Title>작업이슈</S.Title>
             <S.Issue
               rows={4}
-              value={newContents.issue}
+              value={editContents.issue || ""}
               onChange={handleIssue}
               placeholder="작업이슈에 대해 작성해주세요."
             />
@@ -382,9 +412,9 @@ function ModalAddNew(props) {
         </S.ContentLeft>
         <S.ContentRight>
           <S.ButtonWrap>
-            <BtnComponent btnName={"AddRow"} onClick={onNewAddRow} />
-            <BtnComponent btnName={"CancelRow"} onClick={onNewCancelRow} />
-            <BtnComponent btnName={"Save"} onClick={onNewSave} />
+            {/* <BtnComponent btnName={"AddRow"} onClick={onEditAddRow} />
+            <BtnComponent btnName={"CancelRow"} onClick={onEditCancelRow} /> */}
+            <BtnComponent btnName={"Save"} onClick={onEditSave} />
           </S.ButtonWrap>
           <S.GridWrap>{Grid}</S.GridWrap>
         </S.ContentRight>
@@ -393,4 +423,4 @@ function ModalAddNew(props) {
   );
 }
 
-export default ModalAddNew;
+export default ModalEdit;

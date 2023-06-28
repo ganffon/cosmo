@@ -23,7 +23,7 @@ const Inner = styled("div")`
   box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, 0.3);
 
   background-color: rgb(255, 255, 255);
-  z-index: 101;
+  z-index: 10000;
 `;
 
 export { Overlay, Inner };

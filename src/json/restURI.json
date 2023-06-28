@@ -114,5 +114,7 @@
   "syncEmployee": "/sys/sync-emp",
 
   "workerGroupStatus": "/prd/worker-group-status",
+  "workerGroupStatusDetail": "/prd/worker-group-status-detail",
+  "workerGroupStatusDetailChip": "/prd/worker-group-status-detail/by-chip",
   "getOrderDetailsRawData": "/prd/order-details/raws"
 }

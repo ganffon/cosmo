@@ -272,6 +272,11 @@ class equipmentResult {
     this.insp_result_id = raw.insp_result_id;
   }
 }
+class WorkerGroupStatus {
+  constructor(raw) {
+    this.worker_group_status_id = raw.worker_group_status_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -444,6 +449,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "equipmentResult":
       params = new equipmentResult(raw);
+      break;
+    case "WorkerGroupStatus":
+      params = new WorkerGroupStatus(raw);
       break;
 
     default:
