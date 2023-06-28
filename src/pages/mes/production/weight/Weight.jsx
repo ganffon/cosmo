@@ -19,7 +19,6 @@ import Condition from "custom/Condition";
 import * as uEdit from "custom/useEdit";
 import ModalDate from "components/modal/ModalDate";
 import ModalWeightNew from "./ModalWeightNew";
-import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
 import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
@@ -113,7 +112,7 @@ function Weight() {
     columnsDetail,
     inputSet,
     columnsSelectProd,
-    columnsmodalHeader,
+    columnsModalHeader,
     columnsModalDetail,
     columnsSelectOrder,
     columnsSelectWeightEmployee,
@@ -147,7 +146,6 @@ function Weight() {
 
   const actSearchDetail = async () => {
     try {
-      console.log("?!?!?!?!");
       setIsBackDrop(true);
       const readURI = `/prd/weigh-detail?work_weigh_id=${headerRowID.current}`;
       let gridData = await restAPI.get(readURI);
@@ -219,7 +217,7 @@ function Weight() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.employee,
+    restURI.employee + `?use_fg=true&worker_fg=true`,
     "weightEmployee"
   ); //➡️ Modal Select Search Prod
 
@@ -230,7 +228,7 @@ function Weight() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.employee,
+    restURI.employee + `?use_fg=true&worker_fg=true`,
     "inputEmployee"
   ); //➡️ Modal Select Search Prod
   const [actSelectStoreLocation] = uSearch.useSearchSelect(
@@ -554,6 +552,7 @@ function Weight() {
   };
   const onClickModalSave = () => {
     actSave();
+    onClickSearch();
   };
 
   const onClickEditModeSaveHeader = () => {
@@ -794,7 +793,7 @@ function Weight() {
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
           // onClickEditModalSave={onClickEditModalSave}
-          columnsModalHeader={columnsmodalHeader}
+          columnsModalHeader={columnsModalHeader}
           columnsModalDetail={columnsModalDetail}
           columnOptions={columnOptions}
           header={header}

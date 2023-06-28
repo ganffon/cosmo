@@ -179,7 +179,15 @@ const button = (name = "", header = "", btnName = "", func = () => {}, disabled 
  * }
  * @returns
  */
-const number = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, hidden = false) => {
+const number = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  hidden = false,
+  sortable = false,
+  filter = false
+) => {
   return {
     name: name,
     header: header,
@@ -190,8 +198,8 @@ const number = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_S
       return CustomGrid.NumComma(value);
     },
     hidden: hidden,
-    sortable: false,
-    filter: false,
+    sortable: sortable,
+    filter: filter,
     whiteSpace: false,
     rowSpan: false,
   };

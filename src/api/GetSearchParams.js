@@ -46,13 +46,9 @@ class documentDetailIncludeHeader {
     this.insp_method_id = raw.insp_method_id;
     this.insp_method_nm = raw.insp_method_nm;
     this.special_property = raw.special_property;
-    this.worker_sample_cnt = String(raw.worker_sample_cnt)
-      ? Number(raw.worker_sample_cnt)
-      : null;
+    this.worker_sample_cnt = String(raw.worker_sample_cnt) ? Number(raw.worker_sample_cnt) : null;
     this.worker_insp_cycle = raw.worker_insp_cycle;
-    this.inspector_sample_cnt = String(raw.inspector_sample_cnt)
-      ? Number(raw.inspector_sample_cnt)
-      : null;
+    this.inspector_sample_cnt = String(raw.inspector_sample_cnt) ? Number(raw.inspector_sample_cnt) : null;
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id;
     this.remark = raw.detail_remark;
@@ -89,15 +85,23 @@ class prdOrderRequest {
 }
 class weightEmployee {
   constructor(raw) {
+    this.dept_nm = raw.dept_nm;
+    this.grade_nm = raw.grade_nm;
     this.weigh_emp_id = raw.emp_id;
+    this.emp_cd = raw.emp_cd;
     this.weigh_emp_nm = raw.emp_nm;
+    this.worker_group_nm = raw.worker_group_nm;
   }
 }
 
 class inputEmployee {
   constructor(raw) {
+    this.dept_nm = raw.dept_nm;
+    this.grade_nm = raw.grade_nm;
     this.input_emp_id = raw.emp_id;
+    this.emp_cd = raw.emp_cd;
     this.input_emp_nm = raw.emp_nm;
+    this.worker_group_nm = raw.worker_group_nm;
   }
 }
 class storeIncludeLocation {

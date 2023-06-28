@@ -76,7 +76,7 @@ function Equipment() {
     isSnackOpen,
     setIsSnackOpen,
     setGridModalSelectData,
-    restURI.employee + "?use_fg=true"
+    restURI.employee + "?use_fg=true&worker_fg=true"
   );
 
   const [actDelete] = uDelete.useDelete(

@@ -29,10 +29,11 @@ export const DateBox = styled("div")`
 export const ButtonBox = styled("div")`
   width: 300px;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: flex-end;
   margin-right: 15px;
   margin-bottom: 10px;
+  gap: 10px;
 `;
 export const Date = styled(DatePicker)``;
 export const GridBox = styled("div")`

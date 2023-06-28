@@ -130,7 +130,7 @@ function WeightPanel() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.employee + `?use_fg=true`
+    restURI.employee + `?use_fg=true&worker_fg=true`
   );
   const [actSelectStore] = uSearch.useSearchSelect(
     refGridSelect,
@@ -155,9 +155,7 @@ function WeightPanel() {
       const workWeighID = Header.getValue(e?.rowKey, "work_weigh_id");
       handleInputSaveInfo(e?.rowKey);
       try {
-        const result = await restAPI.get(
-          restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`
-        );
+        const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeighID}`);
         setGridDataInputDetail(result?.data?.data?.rows);
       } catch (err) {
         setIsSnackOpen({
@@ -200,8 +198,7 @@ function WeightPanel() {
   const handleInputSearch = async () => {
     try {
       const result = await restAPI.get(
-        restURI.prdWeight +
-          `?complete_fg=INCOMPLETE&work_order_id=${selectInputInfo.workOrderID}`
+        restURI.prdWeight + `?complete_fg=INCOMPLETE&work_order_id=${selectInputInfo.workOrderID}`
       );
       setGridDataInput(result?.data?.data?.rows);
       setIsModalInputOpen(true);
@@ -229,10 +226,7 @@ function WeightPanel() {
   const onClickWeight = async () => {
     if (selectInputInfo.workOrderID !== "") {
       try {
-        const result = await restAPI.get(
-          restURI.prdOrderInput +
-            `?work_order_id=${selectInputInfo.workOrderID}`
-        );
+        const result = await restAPI.get(restURI.prdOrderInput + `?work_order_id=${selectInputInfo.workOrderID}`);
         setGridDataWeight(result?.data?.data?.rows);
         setIsModalWeightOpen(true);
       } catch (err) {
@@ -252,15 +246,9 @@ function WeightPanel() {
       let conditionLine;
       let conditionProdCD;
       let conditionProdNM;
-      inputTextChange.line
-        ? (conditionLine = `&line_nm=${inputTextChange.line}`)
-        : (conditionLine = "");
-      inputTextChange.prod_cd
-        ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`)
-        : (conditionProdCD = "");
-      inputTextChange.prod_nm
-        ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`)
-        : (conditionProdNM = "");
+      inputTextChange.line ? (conditionLine = `&line_nm=${inputTextChange.line}`) : (conditionLine = "");
+      inputTextChange.prod_cd ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCD = "");
+      inputTextChange.prod_nm ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNM = "");
       const result = await restAPI.get(
         restURI.prdOrder +
           `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -351,11 +339,7 @@ function WeightPanel() {
     if (selectInputInfo.empNM) {
       refGridWeight?.current?.gridInst?.finishEditing();
       let result = [];
-      for (
-        let i = 0;
-        i < refGridWeight?.current?.gridInst?.getRowCount();
-        i++
-      ) {
+      for (let i = 0; i < refGridWeight?.current?.gridInst?.getRowCount(); i++) {
         result.push(refGridWeight?.current?.gridInst?.getRowAt(i));
       }
 
@@ -457,14 +441,9 @@ function WeightPanel() {
           input_emp_id: selectInputInfo.empID,
         };
         try {
-          console.log(
-            `selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`
-          );
+          console.log(`selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`);
           const result = await restAPI.patch(
-            restURI.prdWeightComplete.replace(
-              "{id}",
-              selectInputInfo.workWeighID
-            ),
+            restURI.prdWeightComplete.replace("{id}", selectInputInfo.workWeighID),
             raw
           );
           setIsSnackOpen({
@@ -549,11 +528,7 @@ function WeightPanel() {
       <S.TopWrap>
         <S.SearchBox>
           <S.SearchCondition>
-            <DateRange
-              dateText={dateText}
-              setDateText={setDateText}
-              onClickSearch={onClickSearch}
-            />
+            <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
             <InputSearch
               id={"line"}
               name={"라인명"}
@@ -652,18 +627,10 @@ function WeightPanel() {
           </S.SelectInfoWrap>
         </S.ContentBottomLeft>
         <S.ButtonBox>
-          <S.ButtonSet
-            color={"#555555"}
-            hoverColor={"#e5b700"}
-            onClick={onClickWeight}
-          >
+          <S.ButtonSet color={"#555555"} hoverColor={"#e5b700"} onClick={onClickWeight}>
             계량
           </S.ButtonSet>
-          <S.ButtonSet
-            color={"#1491CE"}
-            hoverColor={"#990b11"}
-            onClick={onClickInput}
-          >
+          <S.ButtonSet color={"#1491CE"} hoverColor={"#990b11"} onClick={onClickInput}>
             투입
           </S.ButtonSet>
         </S.ButtonBox>

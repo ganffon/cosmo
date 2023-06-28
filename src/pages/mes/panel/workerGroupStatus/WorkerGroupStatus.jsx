@@ -83,7 +83,7 @@ function WorkerGroupStatus() {
     isSnackOpen,
     setIsSnackOpen,
     setDataGridSelect,
-    restURI.employee
+    restURI.employee + `?use_fg=true&worker_fg=true`
   );
 
   const onClickSearch = () => {};

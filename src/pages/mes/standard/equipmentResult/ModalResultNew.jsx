@@ -67,8 +67,9 @@ function ModalResultNew(props) {
         <S.ButtonWrap>
           <BtnComponent
             btnName={"Mapping"}
-            width={"100px"}
+            width={"130px"}
             onClick={onMapping}
+            toolTipTitle={"dataMapping"}
           ></BtnComponent>
 
           <ButtonModule saveBtn={true} onClickSave={onSaveNew} />

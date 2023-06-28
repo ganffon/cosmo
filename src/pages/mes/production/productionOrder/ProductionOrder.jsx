@@ -79,12 +79,16 @@ function ProductionOrder() {
 
   const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeMid, refGridMid);
 
-  const [disRowTopBottom, setDisRowBottom] = disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
+  const [disRowBottom, setDisRowBottom] = disRow.useDisableRowCheck(isEditModeBottom, refGridBottom);
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
   const [dateText, setDateText] = useState({
+    startDate: DateTime(-7).dateFull,
+    endDate: DateTime().dateFull,
+  });
+  const [dateModal, setDateModal] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
   });
@@ -131,7 +135,6 @@ function ProductionOrder() {
     actSelectRequestOnlyDate("start_date", "end_date");
   };
   const onClickGridHeader = (e) => {
-    console.log(e);
     if (!isEditModeHeader) {
       headerRowID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
 
@@ -304,13 +307,9 @@ function ProductionOrder() {
   };
   const onClickEditModeExitMid = () => {
     setIsEditModeMid(false);
-    setDisRowDetail(!disRowTopBottom);
+    setDisRowDetail(!disRowDetail);
   };
 
-  const [dateModal, setDateModal] = useState({
-    startDate: DateTime(-7).dateFull,
-    endDate: DateTime().dateFull,
-  });
   const onClickEditBottom = () => {
     setDisableRowToggleBottom(!disableRowToggleBottom);
     setIsEditModeBottom(true);
@@ -326,13 +325,14 @@ function ProductionOrder() {
   };
   const onClickEditModeExitBottom = () => {
     setIsEditModeBottom(false);
-    setDisRowBottom(!disRowDetail);
+    setDisRowBottom(!disRowBottom);
   };
 
   const onClickModalSaveHeader = async (e) => {
     actSave();
   };
   const onClickModalSelectClose = () => {
+    setDateModal({ ...dateModal, startDate: DateTime(-7).dateFull, endDate: DateTime().dateFull });
     setIsModalSelectOpen(false);
   };
   const onDblClickGridSelect = async (e) => {
@@ -519,7 +519,7 @@ function ProductionOrder() {
   const GridModal = useMemo(() => {
     return (
       <ModalNew
-        title={"01. 생산품목"}
+        title={"생산품목"}
         height={"30%"}
         onClickModalSave={onClickModalSaveHeader}
         onClickModalClose={onClickModalCloseHeader}
@@ -678,7 +678,7 @@ function ProductionOrder() {
             header={header}
             rowHeaders={rowHeadersNum}
             refModalGrid={refGridSelect}
-            dateText={dateText}
+            dateText={dateModal}
             setDateText={setDateModal}
             datePickerSet={"range"}
             buttonType={"Search"}
@@ -707,7 +707,7 @@ function ProductionOrder() {
           width={"400px"}
           isDelete={true}
           isCancel={true}
-          onDelete={actSearchMidDI}
+          onDelete={actDeleteMid}
           onCancel={() => {
             setIsMidDeleteAlertOpen(false);
           }}
@@ -716,7 +716,7 @@ function ProductionOrder() {
       {isBottomDeleteAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말 삭제하시겠습니까?"}
-          textFontSize={"10px"}
+          textFontSize={"20px"}
           height={"200px"}
           width={"400px"}
           isDelete={true}

@@ -39,9 +39,7 @@ const useSave = (
             setIsSnackOpen({
               ...isSnackOpen,
               open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
+              message: res?.response?.data?.message ?? res?.message,
               severity: "error",
             });
           })
@@ -73,18 +71,13 @@ const useSaveMulti = (
     refGrid01?.current?.gridInst?.finishEditing();
     refGrid02?.current?.gridInst?.finishEditing();
     if (idEditMode === false) {
-      const dataTop = GetPostParams(
-        componentName01,
-        refGrid01?.current?.gridInst?.getRowAt(0)
-      );
+      const dataTop = GetPostParams(componentName01, refGrid01?.current?.gridInst?.getRowAt(0));
 
       let result = [];
       for (let i = 0; i < refGrid02?.current?.gridInst?.getRowCount(); i++) {
         result.push(refGrid02?.current?.gridInst?.getRowAt(i));
       }
-      const dataBottom = result.map((raw) =>
-        GetPostParams(componentName02, raw)
-      );
+      const dataBottom = result.map((raw) => GetPostParams(componentName02, raw));
 
       const query = {
         header: dataTop,
@@ -108,9 +101,7 @@ const useSaveMulti = (
             setIsSnackOpen({
               ...isSnackOpen,
               open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
+              message: res?.message ? res?.message : res?.response?.data?.message,
               severity: "error",
             });
           })
@@ -161,9 +152,7 @@ const useSaveDetail = (
             setIsSnackOpen({
               ...isSnackOpen,
               open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
+              message: res?.message ? res?.message : res?.response?.data?.message,
               severity: "error",
             });
           })
@@ -192,13 +181,9 @@ const useSaveStoreCheck = (
   const actSaveStoreCheck = async (startDate) => {
     refGrid?.current?.gridInst?.finishEditing();
     const obj = refGrid?.current?.gridInst?.getCheckedRows();
-    let filtered = obj.filter(
-      (o) => Number(o.qty) !== Number(o.stock_inspection)
-    );
+    let filtered = obj.filter((o) => Number(o.qty) !== Number(o.stock_inspection));
     if (filtered.length !== 0) {
-      const data = filtered?.map((raw) =>
-        GetPostDateParams(componentName, raw, startDate)
-      );
+      const data = filtered?.map((raw) => GetPostDateParams(componentName, raw, startDate));
       if (data !== undefined) {
         setIsBackDrop(true);
         await restAPI
@@ -216,9 +201,7 @@ const useSaveStoreCheck = (
             setIsSnackOpen({
               ...isSnackOpen,
               open: true,
-              message: res?.message
-                ? res?.message
-                : res?.response?.data?.message,
+              message: res?.message ? res?.message : res?.response?.data?.message,
               severity: "error",
             });
           })
@@ -253,9 +236,7 @@ const useSaveStoreCheckNewLOT = (
     for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
       result.push(refGrid?.current?.gridInst?.getRowAt(i));
     }
-    const data = result.map((raw) =>
-      GetPostDateParams(componentName, raw, startDate)
-    );
+    const data = result.map((raw) => GetPostDateParams(componentName, raw, startDate));
     if (data !== undefined) {
       setIsBackDrop(true);
       await restAPI
@@ -286,10 +267,4 @@ const useSaveStoreCheckNewLOT = (
   return [actSaveStoreCheckNewLOT];
 };
 
-export {
-  useSave,
-  useSaveMulti,
-  useSaveDetail,
-  useSaveStoreCheck,
-  useSaveStoreCheckNewLOT,
-};
+export { useSave, useSaveMulti, useSaveDetail, useSaveStoreCheck, useSaveStoreCheckNewLOT };

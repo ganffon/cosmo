@@ -8,7 +8,6 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
 import BackDrop from "components/backdrop/BackDrop";
 import Condition from "custom/Condition";
 import restURI from "json/restURI.json";
@@ -24,7 +23,6 @@ import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
-import InputSearch from "components/input/InputSearch";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Subdivision() {
@@ -384,15 +382,18 @@ function Subdivision() {
   const onClickModalSave = () => {
     actSave();
     setIsModalOpen(false);
-    onClickSearch();
+
+    setTimeout(() => {
+      onClickSearch();
+    }, 300);
   };
-  const onClickModalClose = () => {
+  function onClickModalClose() {
     setIsModalOpen(false);
     setIsNewDetail(false);
     setIsEditModeHeader(false);
     // actSearchHeaderDI(true, "start_date", "end_date");
     actSearchDetail(headerClickRowID);
-  };
+  }
   const onDblClickGridModalHeader = (e) => {
     if (!isNewDetail) {
       if (Condition(e, ["prod_cd", "prod_nm"])) {
