@@ -35,8 +35,8 @@ function ProductionLotTrackingSet() {
     col.number("packing_cnt", CN.packing_cnt, false, C.WIDTH_SHORT, false),
     col.text("packing_emp_nm", CN.packing_emp_nm, false, false, C.WIDTH_SHORT),
     col.text("remark", CN.remark, false, false, C.WIDTH_SHORT),
-    col.button("remark1", CN.remark1, "무슨 지시서(개발필요)"),
-    col.button("remark2", CN.remark2, "무슨 지시서2(개발필요)"),
+    col.button("operation_Report", CN.operation_Report, "운전점검일지"),
+    col.button("inspection_Report", CN.inspection_Report, "검사성적서"),
     col.date("create_at", CN.create_at, false, C.WIDTH_SHORT),
     col.date("update_at", CN.update_at, false, C.WIDTH_SHORT),
   ];

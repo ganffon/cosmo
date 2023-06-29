@@ -96,6 +96,10 @@ function ProductionPackingViewSet(onClickDetailInputButton) {
 
   const inputSet = [
     {
+      id: "line_nm",
+      name: CN.line_nm,
+    },
+    {
       id: "prod_cd",
       name: CN.prod_cd,
     },
