@@ -14,18 +14,27 @@ import * as S from "./SubdivisionReport.styled";
 import InputPaper from "components/input/InputPaper";
 import ContentsArea from "components/layout/common/ContentsArea";
 import restAPI from "api/restAPI";
+import BtnComponent from "components/button/BtnComponent";
 
 function SubdivisionReport() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
   const [inputInfoValue, setInputInfoValue] = useState([]);
 
-  const { columnOptions, rowHeadersNumCheck, header, columnsHeader, columnsDetail, inputSet, inputInfo } =
-    SubdivisionSet();
+  const {
+    columnOptions,
+    rowHeadersNumCheck,
+    header,
+    columnsHeader,
+    columnsDetail,
+    inputSet,
+    inputInfo,
+  } = SubdivisionSet();
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
@@ -37,7 +46,10 @@ function SubdivisionReport() {
     endDate: DateTime().dateFull,
   });
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -61,9 +73,15 @@ function SubdivisionReport() {
     try {
       let prodCD, prodNM, lotNo;
       if (inputTextChange !== undefined) {
-        inputTextChange.prod_cd ? (prodCD = `&prod_cd=${inputTextChange.prod_cd}`) : (prodCD = "");
-        inputTextChange.prod_nm ? (prodNM = `&prod_nm=${inputTextChange.prod_nm}`) : (prodNM = "");
-        inputTextChange.lot_no ? (lotNo = `&lot_no=${inputTextChange.lot_no}`) : (lotNo = "");
+        inputTextChange.prod_cd
+          ? (prodCD = `&prod_cd=${inputTextChange.prod_cd}`)
+          : (prodCD = "");
+        inputTextChange.prod_nm
+          ? (prodNM = `&prod_nm=${inputTextChange.prod_nm}`)
+          : (prodNM = "");
+        inputTextChange.lot_no
+          ? (lotNo = `&lot_no=${inputTextChange.lot_no}`)
+          : (lotNo = "");
       } else {
         prodCD = "";
         prodNM = "";
@@ -71,7 +89,11 @@ function SubdivisionReport() {
       }
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.subdivision + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + prodCD + prodNM + lotNo
+        restURI.subdivision +
+          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          prodCD +
+          prodNM +
+          lotNo
       );
 
       setGridDataHeader(result?.data?.data?.rows);
@@ -102,7 +124,9 @@ function SubdivisionReport() {
     setInputInfoValue([]);
     try {
       setIsBackDrop(true);
-      const result = await restAPI.get(restURI.subdivisionDetail + `?work_subdivision_id=${rowID}`);
+      const result = await restAPI.get(
+        restURI.subdivisionDetail + `?work_subdivision_id=${rowID}`
+      );
 
       setGridDataDetail(result?.data?.data?.rows);
     } catch (err) {
@@ -119,7 +143,14 @@ function SubdivisionReport() {
   };
 
   const onClickGridHeader = (e) => {
-    const inputInfoValueList = ["subdivision_date", "prod_cd", "prod_nm", "lot_no", "total_qty", "remark"];
+    const inputInfoValueList = [
+      "subdivision_date",
+      "prod_cd",
+      "prod_nm",
+      "lot_no",
+      "total_qty",
+      "remark",
+    ];
 
     const rowID = e?.instance.getValue(e?.rowKey, "work_subdivision_id");
 
@@ -157,52 +188,71 @@ function SubdivisionReport() {
   return (
     <ContentsArea flexColumn={false}>
       <S.ContentsLeft>
-        <S.SearchLeftWrap>
-          <S.SearchWrap>
-            <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-          </S.SearchWrap>
-          <S.SearchWrap>
-            {inputSet.map((v, idx) => (
-              <InputSearch
-                key={v.id}
-                id={v.id}
-                name={v.name}
-                handleInputTextChange={handleInputTextChange}
-                onClickSearch={onClickSearch}
+        <S.ContentsLeftTop>
+          <S.SearchLeftWrap>
+            <S.SearchWrap>
+              <S.Date
+                datePickerSet={"range"}
+                dateText={dateText}
+                setDateText={setDateText}
               />
-            ))}
-          </S.SearchWrap>
-        </S.SearchLeftWrap>
-        <S.ContentsHeader>
-          <S.TitleMid>❇️ 소분일지</S.TitleMid>
-          <S.ContentsHeaderWrap>
-            <ButtonS onClickSearch={onClickSearch} />
-          </S.ContentsHeaderWrap>
-        </S.ContentsHeader>
-        <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
+            </S.SearchWrap>
+            <S.SearchWrap>
+              {inputSet.map((v, idx) => (
+                <InputSearch
+                  key={v.id}
+                  id={v.id}
+                  name={v.name}
+                  handleInputTextChange={handleInputTextChange}
+                  onClickSearch={onClickSearch}
+                />
+              ))}
+              <S.ContentsHeaderWrap>
+                <BtnComponent btnName={"Search"} onClick={onClickSearch} />
+              </S.ContentsHeaderWrap>
+            </S.SearchWrap>
+          </S.SearchLeftWrap>
+        </S.ContentsLeftTop>
+        <S.ContentsLeftbottom>
+          <S.ContentsHeader>
+            <S.TitleMid>소분일지</S.TitleMid>
+          </S.ContentsHeader>
+
+          <S.GridHeaderWrap>{GridHeader}</S.GridHeaderWrap>
+        </S.ContentsLeftbottom>
       </S.ContentsLeft>
       <S.ContentsRight>
-        <S.SearchInfoWrap>
-          <S.SearchRightTopWrap>
-            {inputInfo.map((v, idx) => {
-              return <InputPaper key={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
-            })}
-          </S.SearchRightTopWrap>
-        </S.SearchInfoWrap>
-        <S.SearchRightWrap>
-          <S.TitleMid>❇️ 세부소분일지</S.TitleMid>
-        </S.SearchRightWrap>
-        <S.GridDetailWrap isAllScreen={isAllScreen}>
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNumCheck}
-            header={header}
-            data={gridDataDetail}
-            draggable={false}
-            refGrid={refGridDetail}
-          />
-        </S.GridDetailWrap>
+        <S.ContentsRightTop>
+          <S.SearchInfoWrap>
+            <S.SearchRightTopWrap>
+              {inputInfo.map((v, idx) => {
+                return (
+                  <InputPaper
+                    key={v.id}
+                    name={v.name}
+                    value={inputInfoValue[idx] || ""}
+                  />
+                );
+              })}
+            </S.SearchRightTopWrap>
+          </S.SearchInfoWrap>
+        </S.ContentsRightTop>
+        <S.ContentsRightBottom>
+          <S.SearchRightWrap>
+            <S.TitleMid>세부소분일지</S.TitleMid>
+          </S.SearchRightWrap>
+          <S.GridDetailWrap isAllScreen={isAllScreen}>
+            <GridSingle
+              columnOptions={columnOptions}
+              columns={columnsDetail}
+              rowHeaders={rowHeadersNumCheck}
+              header={header}
+              data={gridDataDetail}
+              draggable={false}
+              refGrid={refGridDetail}
+            />
+          </S.GridDetailWrap>
+        </S.ContentsRightBottom>
       </S.ContentsRight>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />

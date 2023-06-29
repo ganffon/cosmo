@@ -16,29 +16,64 @@ export const ContentsArea = styled("div")`
 `;
 export const ContentsLeft = styled("div")`
   height: 100%;
-  width: 43%;
+  width: 49%;
+
+  padding: 0px 5px 20px 10px;
+`;
+
+export const ContentsLeftTop = styled("div")`
+  height: 120px;
+  width: 100%;
+  background: #ffffff;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-right: 2.5px;
-  padding: 10px 5px 10px 10px;
+  gap: 10px;
+  padding: 10px 10px 10px 10px;
 `;
+export const ContentsLeftbottom = styled("div")`
+  height: calc(100% - 110px);
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-top: 10px;
+  padding: 10px 10px 10px 10px;
+`;
+
 export const ContentsRight = styled("div")`
   height: 100%;
   width: 57%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-left: 2.5px;
-  padding: 10px 10px 10px 5px;
+
+  padding: 0px 10px 20px 0px;
 `;
-export const SearchLeftWrap = styled("div")`
-  height: 115px;
+export const ContentsRightTop = styled("div")`
+  height: 120px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 5px 5px 0px;
+
+  background: #ffffff;
+  padding: 10px 10px 10px 0px;
+`;
+export const ContentsRightBottom = styled("div")`
+  height: calc(100% - 110px);
+  width: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  margin-top: 10px;
+  padding: 10px 10px 10px 10px;
+`;
+
+export const SearchLeftWrap = styled("div")`
+  height: 115px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px 5px 15px 0px;
   margin-bottom: 8px;
 `;
 export const ContentsHeader = styled("div")`
@@ -47,26 +82,17 @@ export const ContentsHeader = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 8px;
 `;
 export const GridHeaderWrap = styled("div")`
-  height: calc(100% - 170px);
+  height: calc(100% - 40px);
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-top: 8px;
+
   padding: 10px 10px 10px 10px;
 `;
 export const SearchInfoWrap = styled("div")`
   height: 115px;
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+
   margin-bottom: 8px;
 `;
 export const SearchRightWrap = styled("div")`
@@ -74,28 +100,24 @@ export const SearchRightWrap = styled("div")`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridDetailWrap = styled("div")`
-  height: calc(100% - 170px);
+  height: calc(100% - 40px);
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-top: 8px;
+
   padding: 10px 10px 10px 10px;
 `;
 export const SearchWrap = styled("div")`
   height: 50%;
+  width: 80%;
   display: flex;
-  flex-flow: row wrap;
 `;
 export const ContentsHeaderWrap = styled("div")`
-  display: flex;
-  justify-content: end;
+  padding-top: 8px;
+  margin-left: calc(100% - 500px);
+  width: 100%;
   align-items: center;
+  justify-content: flex-end;
 `;
 export const SearchRightTopWrap = styled("div")`
   height: 50%;

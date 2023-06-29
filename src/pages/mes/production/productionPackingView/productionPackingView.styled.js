@@ -1,29 +1,24 @@
 import styled from "styled-components";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   padding: 5px 25px 5px 10px;
   overflow: hidden auto;
 `;
 export const ContentTop = styled("div")`
-  height: 400px;
+  height: calc(100% - 390px);
   width: 100%;
-
   background: #ffffff;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   margin-bottom: 8px;
-  padding: 5px 5px 5px 5px;
+  padding: 5px 5px 10px 5px;
 `;
 
 export const SearchCondition = styled("div")`
@@ -39,7 +34,9 @@ export const SearchCondition = styled("div")`
 `;
 export const ButtonTop = styled("div")`
   width: 100%;
+  height: 60px;
   display: flex;
+  padding-right: 10px;
   align-items: center;
   justify-content: end;
 `;
@@ -60,19 +57,21 @@ export const ButtonMid = styled("div")`
 `;
 export const TitleMid = styled("div")`
   display: flex;
+  height: 30px;
   align-items: center;
   margin-left: 10px;
   font-family: NotoSansKR_B;
 `;
 export const ContentBottom = styled("div")`
-  height: 370px;
+  height: 350px;
+  min-height: 400px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 5px 5px 5px 5px;
+
   background: #ffffff;
-  justify-content: space-between;
 `;
 export const ButtonBottom = styled("div")`
   display: flex;
@@ -85,7 +84,7 @@ export const TitleBottom = styled("div")`
   font-family: NotoSansKR_B;
 `;
 export const GridTopWrap = styled("div")`
-  height: 94%;
+  height: calc(100% - 30px);
   width: 100%;
 
   margin-bottom: 8px;
@@ -93,7 +92,7 @@ export const GridTopWrap = styled("div")`
 `;
 
 export const GridBottomWrap = styled("div")`
-  height: 95%;
+  height: calc(100% - 35px);
   width: 100%;
 
   margin-bottom: 8px;
@@ -132,4 +131,6 @@ export const InputPaperWrap = styled("div")`
   padding-left: 10px;
 `;
 
-export const ContentWrap = styled("div")``;
+export const ContentWrap = styled("div")`
+  height: calc(100% - 80px);
+`;

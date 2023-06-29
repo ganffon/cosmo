@@ -1,24 +1,28 @@
 import styled from "styled-components";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
+  height: ${(props) =>
+    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
   width: 100%;
   background-color: rgb(255, 255, 255);
   padding: 5px 25px 5px 10px;
   overflow: hidden auto;
 `;
 export const ContentTop = styled("div")`
-  height: 30%;
+  height: calc(100% - 580px);
   width: 100%;
-  margin-top: 10px;
+
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   background: #ffffff;
-  margin-bottom: 8px;
+
   padding: 10px 5px 5px 5px;
   justify-content: space-between;
 `;
@@ -52,7 +56,7 @@ export const ContentMiddleRight = styled("div")`
 export const ContentBottomLeft = styled("div")`
   height: 100%;
   width: 50%;
-  margin-top: 10px;
+
   border-radius: 10px;
   background: #ffffff;
   border-color: rgb(200, 200, 200);
@@ -66,7 +70,7 @@ export const ContentBottomLeft = styled("div")`
 export const ContentBottomRight = styled("div")`
   height: 100%;
   width: 50%;
-  margin-top: 10px;
+
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -107,6 +111,7 @@ export const ButtonMid = styled("div")`
   align-items: center;
 `;
 export const TitleMid = styled("div")`
+  height: 30px;
   display: flex;
   align-items: center;
   margin-left: 10px;
@@ -201,7 +206,7 @@ export const ContentsHeader = styled("div")`
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: calc(100%-50px);
+  height: Calc(100% - 30px);
   padding: 5px;
 `;
 export const GridWrap2 = styled("div")`
@@ -237,8 +242,8 @@ export const BoxWrap = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const TopGridWrap = styled("div")`
-  height: 24%;
-  padding: 0px 5px 5px 2px;
+  height: Calc(100% - 40px);
+  padding: 0px 5px 0px 5px;
 
   margin-top: 8px;
 `;
@@ -264,8 +269,10 @@ export const InputPaperWrap = styled("div")`
 `;
 
 export const MiddleContentWrap = styled("div")`
+  height: 250px;
   display: flex;
 `;
 export const BottomContentWrap = styled("div")`
+  height: 250px;
   display: flex;
 `;

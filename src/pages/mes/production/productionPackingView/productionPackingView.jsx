@@ -13,7 +13,7 @@ import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { BackDrop } from "components/backdrop/BackDrop.styled";
+
 import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
@@ -21,11 +21,12 @@ import ModalSelect from "components/modal/ModalSelect";
 import ModalWrap from "components/modal/ModalWrap";
 import GridModal from "components/grid/GridModal";
 import ContentsArea from "components/layout/common/ContentsArea";
+import BtnComponent from "components/button/BtnComponent";
+import BackDrop from "components/backdrop/BackDrop";
 
 function ProductionPackingView() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
   const refGridSelect = useRef(null);
@@ -43,8 +44,13 @@ function ProductionPackingView() {
   const [gridDataModalDetail, setGridDataModalDetail] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
-  const prodCD = useRef("");
-  const prodNM = useRef("");
+  const prodCD = useRef("품목코드");
+  const prodNM = useRef("품목");
+
+  const resetProd = () => {
+    prodCD.current = "품목코드";
+    prodNM.current = "품목";
+  };
 
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
@@ -62,8 +68,7 @@ function ProductionPackingView() {
   const [columnsSelect, setColumnsSelect] = useState([]);
 
   const onClickDetailInputButton = async (rowKey) => {
-    const gridDetailId =
-      refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_weigh_id;
+    const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_weigh_id;
     setIsBackDrop(true);
     let readURI = `/prd/weigh/${gridDetailId}`;
     console.log(readURI);
@@ -71,7 +76,18 @@ function ProductionPackingView() {
     setGridDataModalHeader(gridData?.data?.data?.rows);
 
     setIsInputSelectOpen(true);
+    setIsBackDrop(false);
   };
+
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    if (refGridHeader?.current !== null) {
+      refGridHeader?.current?.gridInst?.refreshLayout();
+    }
+    if (refGridDetail?.current !== null) {
+      refGridDetail?.current?.gridInst?.refreshLayout();
+    }
+  }, [isMenuSlide]);
 
   const {
     columnOptions,
@@ -85,10 +101,11 @@ function ProductionPackingView() {
     inputSet,
     columnsSelectProd,
   } = ProductionPackingViewSet(onClickDetailInputButton);
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  useEffect(() => {
+    onClickSearch();
+  }, []);
+
   const onClickSearch = () => {
     actSearchHeader();
   };
@@ -106,12 +123,10 @@ function ProductionPackingView() {
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
           if (columnName[i] === "prod_cd") {
-            prodCD.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
           if (columnName[i] === "prod_nm") {
-            prodNM.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
         });
       }
@@ -140,10 +155,7 @@ function ProductionPackingView() {
   };
 
   const onClickModalGridSelectGridHeader = (e) => {
-    modalSelectHeaderRowID.current = e?.instance.getValue(
-      e?.rowKey,
-      "work_weigh_id"
-    );
+    modalSelectHeaderRowID.current = e?.instance.getValue(e?.rowKey, "work_weigh_id");
 
     if (modalSelectHeaderRowID.current !== null) {
       actSearchModalSelectGridDetail();
@@ -156,27 +168,38 @@ function ProductionPackingView() {
   });
 
   const actSearchHeader = async () => {
+    setIsBackDrop(true);
     try {
-      setIsBackDrop(true);
-      let readURI = `/prd/packing?start_date=${dateText.startDate}&end_date=${dateText.endDate}&`;
-      if (prodCD.current !== "" && prodCD.current !== null) {
-        readURI = readURI + `prod_cd=${prodCD.current}&`;
-      }
-      if (prodNM.current !== "" && prodNM.current !== null) {
-        readURI = readURI + `prod_nm=${prodNM.current}&`;
-      }
-      if (
-        inputTextChange.line_nm !== "" &&
-        inputTextChange.line_nm !== null &&
-        inputTextChange.line_nm !== undefined
-      ) {
-        readURI = readURI + `line_nm=${inputTextChange.line_nm}&`;
-      }
+      let conditionProdID;
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
+      let readURI = `/prd/packing?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
 
-      readURI = readURI.slice(0, readURI.length - 1);
-
-      console.log(readURI);
+      if (inputTextChange && inputBoxID) {
+        let cnt = 1;
+        //🔸inputBox 가 있다면?!
+        if (inputBoxID.length > 0) {
+          //🔸inputBox 갯수만큼 반복!
+          for (let i = 0; i < inputBoxID.length; i++) {
+            //🔸inputBox에 검색조건 있으면 가져오기
+            if (inputTextChange[inputBoxID[i]]) {
+              //🔸처음 가져오는 것이면 params에 ? 세팅
+              if (cnt === 0) {
+                readURI = "?";
+                cnt++;
+              }
+              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
+            }
+          }
+          //🔸마지막에 찍힌 & 기호 제거
+          readURI = readURI.slice(0, readURI.length - 1);
+        }
+      } else {
+        readURI = readURI.slice(0, readURI.length - 1);
+      }
       let gridData = await restAPI.get(readURI);
+
       setGridDataHeader(gridData?.data?.data?.rows);
     } catch {
       setIsSnackOpen({
@@ -187,11 +210,11 @@ function ProductionPackingView() {
       });
     } finally {
       setIsBackDrop(false);
+      setGridDataDetail([]);
     }
   };
 
   const actSearchModalSelectGridDetail = async () => {
-    console.log(modalSelectHeaderRowID.current);
     try {
       setIsBackDrop(true);
       const readURI = `/prd/weigh-detail?work_weigh_id=${modalSelectHeaderRowID.current}`;
@@ -208,6 +231,11 @@ function ProductionPackingView() {
     } finally {
       setIsBackDrop(false);
     }
+  };
+
+  const onClickProdCancel = () => {
+    resetProd();
+    setInputSearchValue([]);
   };
 
   const actSearchDetail = async () => {
@@ -264,13 +292,9 @@ function ProductionPackingView() {
   ); //➡️ Modal Select Search Prod
 
   return (
-    <ContentsArea>
+    <ContentsArea isAllScreen={isAllScreen}>
       <S.SearchCondition>
-        <S.Date
-          datePickerSet={"range"}
-          dateText={dateText}
-          setDateText={setDateText}
-        />
+        <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
         <InputSearch
           id={"line_nm"}
           name={"라인명"}
@@ -278,12 +302,7 @@ function ProductionPackingView() {
           onClickSearch={onClickSearch}
         />
         <S.InputPaperWrap>
-          <InputPaper
-            width={"180px"}
-            name={"품번"}
-            value={prodCD.current || ""}
-            btn={false}
-          />
+          <InputPaper width={"180px"} name={"품목코드"} value={prodCD.current || ""} btn={false} />
         </S.InputPaperWrap>
         <S.InputPaperWrap>
           <InputPaper
@@ -292,11 +311,11 @@ function ProductionPackingView() {
             value={prodNM.current || ""}
             btn={true}
             onClickSelect={onClickProd}
-            onClickRemove={onClickRemoveProd}
+            onClickRemove={onClickProdCancel}
           />
         </S.InputPaperWrap>
         <S.ButtonTop>
-          <ButtonSearch onClickSearch={onClickSearch} />
+          <BtnComponent btnName={"Search"} onClick={onClickSearch} />
         </S.ButtonTop>
       </S.SearchCondition>
       <S.ContentWrap>
@@ -337,11 +356,7 @@ function ProductionPackingView() {
         <ModalWrap width={"95%"} height={"95%"}>
           <MS.HeaderBox>
             <MS.TitleBox>투입일지</MS.TitleBox>
-            <MS.ButtonClose
-              color="primary"
-              aria-label="close"
-              onClick={onClickInputSelectClose}
-            >
+            <MS.ButtonClose color="primary" aria-label="close" onClick={onClickInputSelectClose}>
               <CloseIcon />
             </MS.ButtonClose>
           </MS.HeaderBox>

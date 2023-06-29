@@ -430,5 +430,7 @@
   "rework_fg": "재작업라인\n여부",
   "history_fg": "Raw Data\n조회여부",
   "master_emp_nm": "작성자",
-  "shift_type": "작업시간"
+  "shift_type": "작업시간",
+  "operation_Report": "운전점검일지",
+  "inspection_Report": "검사성적서"
 }
