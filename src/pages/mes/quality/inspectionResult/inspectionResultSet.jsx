@@ -9,13 +9,13 @@ function InspectionResultSet(isEditMode) {
   const rowHeadersModal = ["rowNum"];
   const header = {};
   const columns = [
-    col.id("insp_result_upload_id", CN.insp_result_id, C.HIDDEN_ID),
+    col.id("insp_result_upload_id", CN.insp_result_upload_id, C.HIDDEN_ID),
     col.id("insp_result_id", CN.insp_result_id, C.HIDDEN_ID),
     col.text("lot_no", CN.lot_no, false, false),
     col.date("work_date", CN.work_date, false, C.U),
     col.text("insp_item", CN.insp_item, false, false),
-    col.number("insp_min", CN.insp_min, false),
-    col.number("insp_max", CN.insp_max, false),
+    col.number("insp_min", CN.insp_min, isEditMode),
+    col.number("insp_max", CN.insp_max, isEditMode),
     col.number("insp_value", CN.insp_value, isEditMode),
     col.text("remark", CN.remark, isEditMode, false),
   ];
@@ -41,7 +41,7 @@ function InspectionResultSet(isEditMode) {
   const columnProdSelect = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.select("prod_cd", CN.prod_cd, true),
-    col.select("prod_nm", CN.prod_cd, true),
+    col.select("prod_nm", CN.prod_nm, true),
   ];
   const columnOptions = {
     resizable: true,

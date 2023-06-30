@@ -638,10 +638,10 @@ class inspectionResultUpload {
     this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
     this.work_date = raw.work_date;
-    this.insp_item = raw.insp_item;
-    this.insp_min = raw.insp_min;
-    this.insp_max = raw.insp_max;
-    this.insp_value = raw.insp_value;
+    this.insp_item = raw.insp_item === "" || !raw.insp_item ? null : raw.insp_item;
+    this.insp_min = raw.insp_min === "" || !raw.insp_min ? null : raw.insp_min;
+    this.insp_max = raw.insp_max === "" || !raw.insp_max ? null : raw.insp_max;
+    this.insp_value = raw.insp_value === "" || !raw.insp_value ? null : raw.insp_value;
     this.remark = raw.remark;
   }
 }

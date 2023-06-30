@@ -628,6 +628,8 @@ class productionDownTime {
 class inspectionResultUpload {
   constructor(raw) {
     this.insp_result_upload_id = raw.insp_result_upload_id;
+    this.insp_min = raw.insp_min === "" || !raw.insp_min ? null : raw.insp_min;
+    this.insp_max = raw.insp_max === "" || !raw.insp_max ? null : raw.insp_max;
     this.insp_value = raw.insp_value;
     this.remark = raw.remark;
   }
