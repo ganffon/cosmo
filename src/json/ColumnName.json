@@ -433,6 +433,7 @@
   "shift_type": "작업시간",
   "operation_Report": "운전점검일지",
   "inspection_Report": "검사성적서",
+  "insp_result_upload_id": "검사성적서ID",
   "work_date": "생산일자",
   "insp_item": "검사항목",
   "insp_min": "최소값",

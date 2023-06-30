@@ -28,7 +28,8 @@ import ModalExcelUpload from "components/modal/ModalExcelUpload.jsx";
 
 function InspectionResult(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -48,6 +49,10 @@ function InspectionResult(props) {
   const refSingleGrid = useRef(null);
   const refGridModalSelect = useRef(null);
   const refModalGrid = useRef(null);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const prodCD = useRef("품목코드");
   const prodNM = useRef("품목");
@@ -72,7 +77,7 @@ function InspectionResult(props) {
     columnsModal,
     columnProdSelect,
     rowHeaders,
-
+    rowHeadersModal,
     header,
 
     inputSet,
@@ -116,8 +121,6 @@ function InspectionResult(props) {
 
   const onClickEditModeSave = () => {
     actEdit();
-    setIsEditMode(false);
-    setSearchToggle(!searchToggle);
   };
   const [actEdit] = uEdit.useEdit(
     refSingleGrid,
@@ -131,7 +134,7 @@ function InspectionResult(props) {
 
   const onClickEditModeExit = () => {
     setIsEditMode(false);
-
+    setDisableRowToggle(!disableRowToggle);
     onClickSearch();
   };
 
@@ -139,6 +142,7 @@ function InspectionResult(props) {
     setIsModalOpen(true);
   };
   const onClickEdit = () => {
+    setDisableRowToggle(!disableRowToggle);
     setIsEditMode(true);
   };
   const onClickDelete = () => {
@@ -212,7 +216,7 @@ function InspectionResult(props) {
 
   function onClickModalClose() {
     setIsModalOpen(false);
-    setSearchToggle(!searchToggle);
+    actSearch();
   }
 
   const onClickProdCancel = () => {
@@ -243,7 +247,10 @@ function InspectionResult(props) {
         ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProdID = "");
       let readURI =
-        `/qms/insp-result-upload?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
+        `/qms/insp-result-upload?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` +
+        conditionProdID;
+      console.log(inputTextChange);
+      console.log(inputBoxID);
       if (inputTextChange && inputBoxID) {
         let cnt = 1;
         //🔸inputBox 가 있다면?!
@@ -257,7 +264,12 @@ function InspectionResult(props) {
                 readURI = "?";
                 cnt++;
               }
-              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
+              readURI =
+                readURI +
+                inputBoxID[i] +
+                "=" +
+                inputTextChange[inputBoxID[i]] +
+                "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -269,6 +281,7 @@ function InspectionResult(props) {
         readURI = readURI.slice(0, readURI.length - 1);
       }
       let gridData = await restAPI.get(readURI);
+      console.log(gridData);
       setGridData(gridData?.data?.data?.rows);
     } catch {
       setIsSnackOpen({
@@ -290,11 +303,15 @@ function InspectionResult(props) {
     if (dblClickGrid === "Search") {
       prodNM.current = "";
       for (let i = 0; i < columnName.length; i++) {
+        console.log(e?.instance?.store?.data?.rawData);
+
         if (columnName[i] === "prod_cd") {
-          prodCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          prodCD.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
         if (columnName[i] === "prod_nm") {
-          prodNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          prodNM.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
       }
     } else if (dblClickGrid === "ModalSelectProd") {
@@ -308,12 +325,16 @@ function InspectionResult(props) {
         );
       }
     } else if (dblClickGrid === "ExcelUploadModal") {
+      console.log(e?.instance?.store?.data?.rawData[e?.rowKey]);
+
       for (let i = 0; i < columnName.length; i++) {
         if (columnName[i] === "prod_cd") {
-          excelProdCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          excelProdCD.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
         if (columnName[i] === "prod_nm") {
-          excelProdNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          excelProdNM.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
       }
     }
@@ -349,7 +370,7 @@ function InspectionResult(props) {
         columns={columnsModal}
         columnOptions={columnOptions}
         header={header}
-        //rowHeaders={rowHeadersModal}
+        rowHeaders={rowHeadersModal}
         refModalGrid={refModalGrid}
         onClickModalGrid={onClickModalGrid}
         onDblClickModalGrid={onDblClickGridModal}
@@ -362,9 +383,18 @@ function InspectionResult(props) {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+            <LS.Date
+              datePickerSet={"range"}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             <LS.InputPaperWrap>
-              <InputPaper width={"180px"} name={"품목코드"} value={prodCD.current || ""} btn={false} />
+              <InputPaper
+                width={"180px"}
+                name={"품목코드"}
+                value={prodCD.current || ""}
+                btn={false}
+              />
             </LS.InputPaperWrap>
             <LS.InputPaperWrap>
               <InputPaper
@@ -394,7 +424,11 @@ function InspectionResult(props) {
               <BtnComponent btnName={"New"} onClick={onClickNew} />
               <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
               <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-              <BtnComponent btnName={"ExcelUpload"} onClick={onClickExcelUpload} width={"130px"} />
+              <BtnComponent
+                btnName={"ExcelUpload"}
+                onClick={onClickExcelUpload}
+                width={"130px"}
+              />
             </>
           )}
         </S.ButtonWrap>
