@@ -56,7 +56,8 @@ function DocumentSet(
     col.select("proc_nm", CN.proc_nm, isEditModeDetail, C.WIDTH_MIDDLE),
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
     col.select("equip_nm", CN.equip_nm, isEditModeDetail, C.WIDTH_MIDDLE),
-    col.listGbn("insp_proc_gbn", CN.insp_proc_gbn, isEditModeDetail),
+    // col.listGbn("insp_proc_gbn", CN.insp_proc_gbn, isEditModeDetail),
+    col.text("insp_proc_gbn", CN.insp_proc_gbn, C.U, true),
     col.id("insp_item_type_id", CN.insp_item_type_id, C.HIDDEN_ID),
     col.select("insp_item_type_nm", CN.insp_item_type_nm, isEditModeDetail, C.WIDTH_MIDDLE),
     col.id("insp_item_id", CN.insp_item_id, C.HIDDEN_ID),
@@ -102,7 +103,8 @@ function DocumentSet(
     col.select("proc_nm", CN.proc_nm, true, C.WIDTH_MIDDLE),
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
     col.select("equip_nm", CN.equip_nm, true, C.WIDTH_MIDDLE),
-    col.listGbn("insp_proc_gbn", CN.insp_proc_gbn, true),
+    // col.listGbn("insp_proc_gbn", CN.insp_proc_gbn, true),
+    col.text("insp_proc_gbn", CN.insp_proc_gbn, C.U, true),
     col.id("insp_item_type_id", CN.insp_item_type_id, C.HIDDEN_ID),
     col.select("insp_item_type_nm", CN.insp_item_type_nm, true, C.WIDTH_MIDDLE),
     col.id("insp_item_id", CN.insp_item_id, C.HIDDEN_ID),
@@ -141,6 +143,9 @@ function DocumentSet(
     col.text("proc_nm", CN.proc_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
     col.text("equip_nm", CN.equip_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
+  ];
+  const columnsMemory = [
+    //line, proc,
   ];
 
   const columnOptions = {

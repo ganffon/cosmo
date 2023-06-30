@@ -15,8 +15,7 @@ import BackDrop from "components/backdrop/BackDrop";
 
 const TempRaws = () => {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
     endDate: DateTime().dateFull,
@@ -48,15 +47,14 @@ const TempRaws = () => {
     setIsBackDrop(true);
     restAPI
       .get(restURI.tempRaws, {
-        params: { 
-          reg_date: dateText.startDate
+        params: {
+          reg_date: dateText.startDate,
         },
       })
       .then((response) => {
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
         setGridDataDetail(response?.data?.data?.rows);
-        console.log(response?.data?.data?.rows)
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -64,14 +62,13 @@ const TempRaws = () => {
       })
       .finally(() => {
         setIsBackDrop(false);
-      })
+      });
   };
   useEffect(() => {
     GetMonthlyLineCapaData();
   }, []);
 
   const { columnsHeader, columnsDetail, columnOptions, rowHeadersNum, header } = TempRawsSet();
-  console.log(columnsDetail)
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
@@ -81,18 +78,14 @@ const TempRaws = () => {
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
-  
+
   return (
     <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-          <S.Date
-            datePickerSet={"single"}
-            dateText={dateText.startDate}
-            setDateText={setDateText}
-          />  
-        </S.SearchWrap>
+            <S.Date datePickerSet={"single"} dateText={dateText.startDate} setDateText={setDateText} />
+          </S.SearchWrap>
           <S.ButtonWrap>
             <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
           </S.ButtonWrap>
@@ -102,13 +95,13 @@ const TempRaws = () => {
         <S.GridWrap>
           {responseData && (
             <GridSingle
-            columnOptions={columnOptions}
-            columns={columnsDetail}
-            rowHeaders={rowHeadersNum}
-            header={columnsHeader}
-            data={gridDataDetail}
-            refGrid={refGridDetail}
-          />
+              columnOptions={columnOptions}
+              columns={columnsDetail}
+              rowHeaders={rowHeadersNum}
+              header={columnsHeader}
+              data={gridDataDetail}
+              refGrid={refGridDetail}
+            />
           )}
         </S.GridWrap>
       </S.ShadowBoxGrid>

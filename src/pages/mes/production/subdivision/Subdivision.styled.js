@@ -29,7 +29,7 @@ export const ContentsRight = styled("div")`
   gap: 10px;
 `;
 export const SearchLeftWrap = styled("div")`
-  height: 120px;
+  height: 70px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@ export const SearchLeftWrap = styled("div")`
   background: #ffffff;
 `;
 export const ContentsHeader = styled("div")`
-  height: calc(100% - 130px);
+  height: calc(100% - 75px);
   width: 100%;
   background: #ffffff;
   padding: 10px;
@@ -49,7 +49,7 @@ export const ContentsHeader = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridHeaderWrap = styled("div")`
-  height: calc(100% - 30px);
+  height: calc(100% - 50px);
   width: 100%;
   padding: 10px 10px 10px 10px;
 `;
@@ -75,7 +75,7 @@ export const SearchRightWrap = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridDetailWrap = styled("div")`
-  height: calc(100% - 30px);
+  height: calc(100% - 50px);
   width: 100%;
   padding: 10px 10px 10px 10px;
 `;
@@ -87,12 +87,12 @@ export const SearchWrap = styled("div")`
   gap: 10px;
 `;
 export const SearchWrapDate = styled("div")`
-  height: 50%;
+  height: 100%;
   display: flex;
-  flex-flow: row wrap;
 `;
 
 export const ContentsHeaderWrap = styled("div")`
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;

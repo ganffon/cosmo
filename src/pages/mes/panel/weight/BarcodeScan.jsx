@@ -1,27 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import * as S from "./BarcodeScan.styled";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 import InputPaper from "components/input/InputPaper";
-import BtnComponent from "components/button/BtnComponent";
 
 function BarcodeScan(props) {
-  const {
-    width = "95%",
-    height = "95%",
-    onClose = () => {},
-    onLotConfirm = () => {},
-    setBarcodeScan = () => {},
-    barcodeScan = {},
-  } = props;
+  const { width = "95%", height = "95%", onClose = () => {}, barcodeScan = {} } = props;
 
   const refBarcode = useRef(null);
-
-  const [isLotReadOnly, setIsLotReadOnly] = useState(true);
-
-  const lotHandWritten = (e) => {
-    setBarcodeScan({ ...barcodeScan, lot: e?.target?.value });
-  };
 
   return (
     <ModalWrapMulti width={width} height={height}>

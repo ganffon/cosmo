@@ -39,7 +39,8 @@ export const ContentBox = styled("div")`
   border-radius: 10px 10px 0px 0px;
   height: 40px;
 `;
-export const Content = styled("div")`
+export const Content = styled("pre")`
+  white-space: pre-wrap;
   justify-content: center; /* 수평 중앙 정렬 */
   width: 100%;
   font-family: "NotoSansKR";

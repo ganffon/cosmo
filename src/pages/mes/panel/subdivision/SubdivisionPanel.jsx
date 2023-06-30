@@ -81,6 +81,8 @@ function SubdivisionPanel() {
   const [barcodeScan, setBarcodeScan] = useState({});
   const [barcodePrintInfo, setBarcodePrintInfo] = useState({});
 
+  const [isLotChk, setIsLotChk] = useState(false);
+
   const refBarcodeScan = useRef(null);
   const refBarcodeTimeStamp = useRef(null);
 
@@ -127,7 +129,7 @@ function SubdivisionPanel() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
   const [actSelectLoadHeader] = uSearch.useSearchSelect(
     refGridSelect,
@@ -208,7 +210,7 @@ function SubdivisionPanel() {
   };
 
   async function onClickGridButton(rowKey) {
-    if (prodID.current) {
+    if (workSubdivisionID.current) {
       try {
         const Header = refGridSelect?.current?.gridInst;
         const workSubdivisionID = Header.getValue(rowKey, "work_subdivision_id");
@@ -239,7 +241,7 @@ function SubdivisionPanel() {
     if (!workSubdivisionID.current) {
       let obj = [];
       obj.push({
-        prod_id: prodID.current,
+        // prod_id: prodID.current,
         subdivision_date: date.current,
       });
       try {
@@ -258,7 +260,7 @@ function SubdivisionPanel() {
       }
     }
   };
-  const onClickStart = async (e) => {
+  const onClickStart = (e) => {
     if (prodID.current === "") {
       setIsBarcodeScanOpen(true);
     }
@@ -372,6 +374,16 @@ function SubdivisionPanel() {
       });
     }
   };
+  const handleLotChk = () => {
+    date.current = DateTime().dateFull;
+    lot.current = scaleInfo.lotNo;
+    onGetWorkSubdivisionID();
+    setScaleInfo({ ...scaleInfo, inputLot: scaleInfo.lotNo });
+    onCloseBarcodeScan();
+    if (isLockScale === true) {
+      setIsLockScale(false);
+    }
+  };
   const onClickSelect = (e) => {
     if (isLockScale) {
       setDblClickGrid("Search");
@@ -391,7 +403,7 @@ function SubdivisionPanel() {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
       const data = result?.data?.data?.rows[0];
-      setScaleInfo({ ...scaleInfo, before: data.value });
+      setScaleInfo({ ...scaleInfo, before: String(data.value) });
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -409,7 +421,7 @@ function SubdivisionPanel() {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
       const data = result?.data?.data?.rows[0];
-      setScaleInfo({ ...scaleInfo, after: data.value });
+      setScaleInfo({ ...scaleInfo, after: String(data.value) });
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -423,8 +435,8 @@ function SubdivisionPanel() {
     }
   };
   const handlePrint = () => {
-    const width = window.innerWidth * 0.8;
-    const height = window.innerHeight * 0.8;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     const left = window.screenX + window.innerWidth / 2 - width / 2;
     const top = window.screenY + window.innerHeight / 2 - height / 2;
     const printWindow = window.open("", "Print", `width=${width},height=${height},left=${left},top=${top}`);
@@ -445,8 +457,6 @@ function SubdivisionPanel() {
   };
 
   const onClickNext = async () => {
-    console.log(scaleInfo.before);
-    console.log(scaleInfo.after);
     if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
       if (scaleInfo.inputLot !== "" && scaleInfo.before !== "" && scaleInfo.after !== "") {
         const raw = [
@@ -567,27 +577,27 @@ function SubdivisionPanel() {
   const transferBarcode = async (lotNo) => {
     try {
       setIsBackDrop(true);
-      const result = await restAPI.get(restURI.barcodeERP + `?lot_no=${lotNo}`);
-      const data = result?.data?.data?.rows[0];
-      if (prodID.current === data.prod_id || prodID.current === "") {
-        //시작된 ID와 비교해서 같은 경우만 입력
-        prodID.current = data.prod_id;
-        prodCD.current = data.prod_cd;
-        prodNM.current = data.prod_nm;
-        date.current = DateTime().dateFull;
-        lot.current = lotNo;
-        onGetWorkSubdivisionID();
-        setScaleInfo({ ...scaleInfo, inputLot: lotNo });
-
-        onCloseBarcodeScan();
-        if (isLockScale === true) {
-          setIsLockScale(false);
-        }
-      } else {
-        setBarcodeScan({ ...barcodeScan, value: "현재 진행중인 작업과 다른 품목입니다.", lot: "", className: "red" });
+      // const result = await restAPI.get(restURI.barcodeERP + `?lot_no=${lotNo}`);
+      // const data = result?.data?.data?.rows[0];
+      // if (prodID.current === data.prod_id || prodID.current === "") {
+      //시작된 ID와 비교해서 같은 경우만 입력
+      // prodID.current = data.prod_id;
+      // prodCD.current = data.prod_cd;
+      // prodNM.current = data.prod_nm;
+      date.current = DateTime().dateFull;
+      lot.current = lotNo;
+      onGetWorkSubdivisionID();
+      setScaleInfo({ ...scaleInfo, inputLot: lotNo });
+      onCloseBarcodeScan();
+      if (isLockScale === true) {
+        setIsLockScale(false);
       }
+      // } else {
+      // setBarcodeScan({ ...barcodeScan, value: "현재 진행중인 작업과 다른 품목입니다.", lot: "", className: "red" });
+      // }
     } catch (err) {
-      setBarcodeScan({ ...barcodeScan, value: err?.response?.data?.message, lot: "", className: "red" });
+      // setBarcodeScan({ ...barcodeScan, value: err?.response?.data?.message, lot: "", className: "red" });
+      // setIsLotChk(true);
     } finally {
       setIsBackDrop(false);
     }
@@ -679,7 +689,7 @@ function SubdivisionPanel() {
       <S.ContentsLeft ref={refBarcodeScan}>
         <S.ItemInfoBox>
           <S.ScreenTopTitleBox>일일소분일지</S.ScreenTopTitleBox>
-          <InputPaper
+          {/* <InputPaper
             width={"500px"}
             height={"60px"}
             name={"품목코드"}
@@ -687,10 +697,10 @@ function SubdivisionPanel() {
             namePositionTop={"-30px"}
             value={prodCD.current || ""}
             size={"26px"}
-            btn={true}
+            btn={false}
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
-          />
+          /> */}
           <InputPaper
             width={"235px"}
             height={"60px"}
@@ -716,7 +726,7 @@ function SubdivisionPanel() {
             <BtnPanel
               title={"시작하기"}
               subTitle={"Start"}
-              height={"80px"}
+              height={"180px"}
               width={"48%"}
               color={"#1491CE"}
               fontSize={"26px"}
@@ -727,7 +737,7 @@ function SubdivisionPanel() {
             <BtnPanel
               title={"불러오기"}
               subTitle={"Load"}
-              height={"80px"}
+              height={"180px"}
               width={"48%"}
               color={"#FFFFFF"}
               fontSize={"26px"}
@@ -741,7 +751,7 @@ function SubdivisionPanel() {
             <BtnPanel
               title={"작업취소"}
               subTitle={"Cancel"}
-              height={"80px"}
+              height={"180px"}
               width={"30%"}
               color={"#DD3640"}
               fontSize={"26px"}
@@ -752,7 +762,7 @@ function SubdivisionPanel() {
             <BtnPanel
               title={"작업보류"}
               subTitle={"Hold"}
-              height={"80px"}
+              height={"180px"}
               width={"30%"}
               color={"#555555"}
               fontSize={"26px"}
@@ -763,7 +773,7 @@ function SubdivisionPanel() {
             <BtnPanel
               title={"작업종료"}
               subTitle={"End"}
-              height={"80px"}
+              height={"180px"}
               width={"30%"}
               color={"#1491CE"}
               fontSize={"26px"}
@@ -970,6 +980,21 @@ function SubdivisionPanel() {
           }}
         />
       )}
+      {/* {isLotChk && (
+        <NoticeAlertModal
+          textContent={"ERP에 등록되지 않은 정보입니다.\n그래도 진행하시겠습니까?"}
+          textFontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isConfirm={true}
+          cancelColor={"#DD3640"}
+          isCancel={true}
+          onConfirm={handleLotChk}
+          onCancel={() => {
+            setIsLotChk(false);
+          }}
+        />
+      )} */}
       {isWarning.open && (
         <NoticeAlertModal
           textContent={isWarning.message}

@@ -187,7 +187,7 @@ function Weight() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
 
   /**

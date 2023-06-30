@@ -108,7 +108,7 @@ function Document() {
   );
   const SWITCH_NAME_01 = "document";
   const SWITCH_NAME_02 = "documentDetail";
-  let modalDetailClickRowKey = null;
+  const modalDetailClickRowKey = useRef("");
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -134,7 +134,7 @@ function Document() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
   const [actSelectInsp] = uSearch.useSearchSelect(
     refGridSelect,
@@ -456,14 +456,16 @@ function Document() {
         );
       }
     }
+    const currentRowKey = Detail.getRowCount() - 1;
+    Detail.setValue(currentRowKey, "insp_proc_gbn", "공정");
   };
   const onClickGridModalDetail = (e) => {
-    modalDetailClickRowKey = e.rowKey;
+    modalDetailClickRowKey.current = e.rowKey;
   };
   const onClickModalCancelRow = () => {
     const gridEvent = refGridModalDetail?.current?.gridInst;
-    gridEvent?.removeRow(modalDetailClickRowKey);
-    modalDetailClickRowKey = null;
+    gridEvent?.removeRow(modalDetailClickRowKey.current);
+    modalDetailClickRowKey.current = "";
   };
   const onClickModalSave = () => {
     actSave();

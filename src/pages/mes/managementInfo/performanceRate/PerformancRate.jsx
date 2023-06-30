@@ -37,16 +37,7 @@ const PerformanceRate = () => {
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
   useEffect(() => {
-    setResult(
-      GetTimeRate(
-        strJson,
-        "create_at",
-        "e1_timeOper",
-        "e2_timeOper",
-        "e3_timeOper",
-        "total"
-      )
-    );
+    setResult(GetTimeRate(strJson, "create_at", "e1_timeOper", "e2_timeOper", "e3_timeOper", "total"));
   }, []);
   const handleSearchButtonClick = () => {
     setSearchButtonClicked();
@@ -142,8 +133,6 @@ const PerformanceRate = () => {
   const header = timeSet.getTimeHeader();
   const tesdf = timeSet.getData(tmpStr);
 
-  console.log(colTest);
-  console.log(header);
   const handleSearchClick = () => {};
 
   return (
@@ -151,22 +140,13 @@ const PerformanceRate = () => {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.ContentsHeader>
-            <S.Date
-              datePickerSet={"single"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <S.Date datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
             <ButtonSearch onClickSearch={handleSearchButtonClick} />
           </S.ContentsHeader>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.Top>
-        <Chart
-          options={cWithMark}
-          series={cWithMark.series}
-          type="line"
-          height={300}
-        />
+        <Chart options={cWithMark} series={cWithMark.series} type="line" height={300} />
       </S.Top>
       <S.Bottom>
         <Grid columns={colTest} header={header} data={tesdf} />

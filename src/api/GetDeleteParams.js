@@ -277,6 +277,11 @@ class WorkerGroupStatus {
     this.worker_group_status_id = raw.worker_group_status_id;
   }
 }
+class inspectionResultUpload {
+  constructor(raw) {
+    this.insp_result_upload_id = raw.insp_result_upload_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -452,6 +457,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "WorkerGroupStatus":
       params = new WorkerGroupStatus(raw);
+      break;
+    case "inspectionResultUpload":
+      params = new inspectionResultUpload(raw);
       break;
 
     default:

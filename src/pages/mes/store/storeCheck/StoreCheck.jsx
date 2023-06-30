@@ -118,7 +118,7 @@ function StoreCheck() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
   const [actSelectStore] = uSearch.useSearchSelect(
     refGridSelect,

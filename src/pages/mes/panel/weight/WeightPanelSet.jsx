@@ -3,7 +3,7 @@ import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function WeightPanelSet(onClickGridButton) {
+function WeightPanelSet(onClickGridButton, onBarcodeScanButton) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -53,6 +53,10 @@ function WeightPanelSet(onClickGridButton) {
     col.number("spec_lcl", CN.spec_lcl),
     col.number("spec_ucl", CN.spec_ucl),
     col.id("infc_memory_id", CN.infc_memory_id, C.HIDDEN_ID),
+    col.id("tag_id", CN.tag_id, C.HIDDEN_ID),
+    col.id("weight", "가중치", C.HIDDEN_ID),
+    col.id("constant_value", CN.constant_value, C.HIDDEN_ID),
+    col.button("barcodeScan", "바코드 스캔", "바코드 스캔", onBarcodeScanButton),
     col.text("lot_no", CN.lot_no, true, C.U, C.WIDTH_MIDDLE),
     col.number("total_qty", CN.total_qty2, true),
     col.number("bag_qty", CN.bag_qty, true),

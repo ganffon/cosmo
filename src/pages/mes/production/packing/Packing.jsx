@@ -248,7 +248,7 @@ function Packing() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   );
   const [actSelectOrder] = uSearch.useSearchSelect(
     refGridSelectDate,

@@ -116,7 +116,7 @@ function ControlPlan() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   );
   const [actSelectDocument] = uSearch.useSearchSelect(
     refGridSelect,
