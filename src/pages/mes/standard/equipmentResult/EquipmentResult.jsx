@@ -242,7 +242,7 @@ function EquipmentResult() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelectEmp,
-    restURI.employee + `?use_fg=true`
+    restURI.employee + `?use_fg=true&worker_fg=true`
   );
   const [actSelectOrder] = uSearch.useSearchSelect(
     refGridSelectOrder,
@@ -266,7 +266,6 @@ function EquipmentResult() {
   };
 
   const onClickEdit = async (e) => {
-    console.log(e);
     if (mainInfo.inspResultId !== "") {
       setIsEditMode(true);
       setIsResultNewOpen(true);

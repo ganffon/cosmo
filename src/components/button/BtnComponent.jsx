@@ -36,7 +36,7 @@ function BtnComponent(props) {
       return false;
     }
   };
-  const hoverout = () => {
+  const hoverOut = () => {
     setTooltipVisible(false);
   };
 
@@ -131,6 +131,13 @@ function BtnComponent(props) {
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "115px";
       break;
+
+    case "ExcelUpload":
+      icon = Sync;
+      title = "엑셀 업로드";
+      btnHeight = height ? height : "34px";
+      btnWidth = width ? width : "115px";
+      break;
     default:
   }
   return btnName === "Search" ? (
@@ -150,7 +157,7 @@ function BtnComponent(props) {
   ) : (
     <S.BtnBack
       onMouseOver={btnName === "DataLoad" || btnName === "Mapping" ? hoverButton : null}
-      onMouseOut={hoverout}
+      onMouseOut={hoverOut}
       height={btnHeight}
       width={btnWidth}
       onClick={() => {

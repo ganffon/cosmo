@@ -18,7 +18,6 @@ function BarcodeScan(props) {
   const refBarcode = useRef(null);
 
   const [isLotReadOnly, setIsLotReadOnly] = useState(true);
-
   const lotHandWritten = (e) => {
     setBarcodeScan({ ...barcodeScan, lot: e?.target?.value });
   };

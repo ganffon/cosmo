@@ -75,7 +75,6 @@ const NumComma = (e, refGrid, columnName) => {
   //   //그럼 숫자 4자리니?
   //   if (!pattern02.test(e?.value)) {
   //둘다 아니라면 공백으로 바꿔주렴
-  console.log(formattedValue);
   Grid?.setValue(e?.rowKey, columnName, formattedValue);
   // } else {
   //   Grid?.setValue(e?.rowKey, columnName, insertAt(e?.value, ":", 2));

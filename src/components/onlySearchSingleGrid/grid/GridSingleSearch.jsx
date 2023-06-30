@@ -9,9 +9,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 
 function GridSingleSearch(props) {
   const { columnOptions, columns, header, draggable } = props;
-  const { refSingleGrid, singleGridData, isEditMode } = useContext(
-    OnlySearchSingleGridContext
-  );
+  const { refSingleGrid, singleGridData, isEditMode } = useContext(OnlySearchSingleGridContext);
   const { isMenuSlide, isModalOpen } = useContext(LayoutContext);
 
   useEffect(() => {
@@ -26,7 +24,6 @@ function GridSingleSearch(props) {
   //   } else {
   //     e.instance.store.column.frozenCount = setFrozen;
   //   }
-  //   console.log(e);
   // };
 
   useEffect(() => {

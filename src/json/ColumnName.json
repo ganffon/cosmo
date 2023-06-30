@@ -432,5 +432,10 @@
   "master_emp_nm": "작성자",
   "shift_type": "작업시간",
   "operation_Report": "운전점검일지",
-  "inspection_Report": "검사성적서"
+  "inspection_Report": "검사성적서",
+  "work_date": "생산일자",
+  "insp_item": "검사항목",
+  "insp_min": "최소값",
+  "insp_max": "최대값",
+  "insp_value": "검사값"
 }

@@ -84,6 +84,7 @@ import DowntimeReport from "pages/mes/production/downtimeReport/DowntimeReport";
 import SubdivisionReport from "pages/mes/production/subdivisionReport/SubdivisionReport";
 
 import WorkerGroupStatus from "pages/mes/panel/workerGroupStatus/WorkerGroupStatus";
+import InspectionResult from "pages/mes/quality/inspectionResult/inspectionResult";
 
 export default function MainRouter() {
   const pages = [
@@ -176,6 +177,7 @@ export default function MainRouter() {
     { path: "monthly-temp-humid-chart", component: MonthlyTempHumidChart },
     { path: "subdivision-report", component: SubdivisionReport },
     { path: "worker-group-status", component: WorkerGroupStatus },
+    { path: "quality-result", component: InspectionResult },
   ];
   return (
     <Layout>

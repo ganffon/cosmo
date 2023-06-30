@@ -2,17 +2,17 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // ⬇️ import MUI
 import Divider from "@mui/material/Divider";
-import CssBaseline from "@mui/material/CssBaseline";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
-import { Link } from "react-router-dom";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import NoticeSnack from "components/alert/NoticeSnack";
 import Cookies from "js-cookie";
 import * as S from "./V2MenuDepth.styled";
 
-const NEW_TAB_URL = process.env.REACT_APP_NEW_TAB_URL;
+const hostName = window.location.hostname;
+const IPFlag = hostName.split(".")[0];
+const BASE_URL = IPFlag === "192" ? process.env.REACT_APP_NEW_TAB_URL_PANEL : process.env.REACT_APP_NEW_TAB_URL;
 
 function subTitle(lv2Menu) {
   let result;
@@ -73,7 +73,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
           if (e?.button === 0) {
             navigate(menu.path);
           } else if (e?.button === 1) {
-            window.open(NEW_TAB_URL + menu.path, "_blank");
+            window.open(BASE_URL + menu.path, "_blank");
           }
         } else {
           setAlertOpen({
@@ -99,7 +99,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
       if (e?.button === 0) {
         navigate(menu.path);
       } else if (e?.button === 1) {
-        window.open(NEW_TAB_URL + menu.path, "_blank");
+        window.open(BASE_URL + menu.path, "_blank");
       }
     }
   };

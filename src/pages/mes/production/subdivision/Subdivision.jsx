@@ -24,6 +24,7 @@ import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
 
 function Subdivision() {
   LoginStateChk();
@@ -38,6 +39,7 @@ function Subdivision() {
     prodCD.current = "품목코드";
     prodNM.current = "품목";
   };
+  const componentRef = useRef(null);
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeDetail, setIsEditModeDetail] = useState(false);
@@ -54,6 +56,30 @@ function Subdivision() {
   const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
+  const [barcodePrintInfo, setBarcodePrintInfo] = useState({});
+
+  const handlePrint = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const left = window.screenX + window.innerWidth / 2 - width / 2;
+    const top = window.screenY + window.innerHeight / 2 - height / 2;
+    const printWindow = window.open("", "Print", `width=${width},height=${height},left=${left},top=${top}`);
+    printWindow.document.open();
+    printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print</title>
+      </head>
+      <body>
+        ${componentRef?.current?.outerHTML}
+      </body>
+    </html>
+  `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+  };
+
   const barcodePrintDetail = async (rowKey) => {
     const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_detail_id;
 
@@ -64,12 +90,16 @@ function Subdivision() {
         await restAPI
           .post(restURI.createBarcode, data)
           .then((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.data?.message,
-              severity: "success",
+            setBarcodePrintInfo({
+              ...barcodePrintInfo,
+              lot: res?.data?.data?.rows[0].lot_no,
+              qty: String(res?.data?.data?.rows[0].subdivision_qty),
+              date: res?.data?.data?.rows[0].subdivision_date,
+              createBarcode: res?.data?.data?.rows[0].barcode_no,
             });
+            setTimeout(() => {
+              handlePrint();
+            }, 100);
           })
           .catch((res) => {
             setIsSnackOpen({
@@ -96,12 +126,16 @@ function Subdivision() {
         await restAPI
           .post(restURI.createBarcode, data)
           .then((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.data?.message,
-              severity: "success",
+            setBarcodePrintInfo({
+              ...barcodePrintInfo,
+              lot: res?.data?.data?.rows[0].lot_no,
+              qty: String(res?.data?.data?.rows[0].total_qty),
+              date: res?.data?.data?.rows[0].subdivision_date,
+              createBarcode: res?.data?.data?.rows[0].barcode_no,
             });
+            setTimeout(() => {
+              handlePrint();
+            }, 100);
           })
           .catch((res) => {
             setIsSnackOpen({
@@ -181,7 +215,7 @@ function Subdivision() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
 
   const [actSave] = uSave.useSaveMulti(
@@ -638,29 +672,31 @@ function Subdivision() {
     );
   }, [gridDataHeader, isEditModeHeader]);
 
+  const BarcodePrint = useMemo(() => {
+    return (
+      <SubdivisionBarcodePrint
+        productCode={barcodePrintInfo.prodCD || ""}
+        partName={barcodePrintInfo.prodNM || ""}
+        lotNo={barcodePrintInfo.lot || ""}
+        weight={barcodePrintInfo.qty || ""}
+        legDate={barcodePrintInfo.date || ""}
+        barcodeValue={barcodePrintInfo.createBarcode || "Ready"}
+        componentRef={componentRef}
+      />
+    );
+  }, [barcodePrintInfo, componentRef.current]);
+
   return (
     <ContentsArea flexColumn={false}>
       <S.ContentsLeft>
         <S.SearchLeftWrap>
           <S.SearchWrapDate>
             <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+            <S.ButtonWrap>
+              <BtnComponent btnName={"Search"} onClick={onClickSearch} />
+            </S.ButtonWrap>
           </S.SearchWrapDate>
-          <S.SearchWrap>
-            {/* <S.InputPaperWrap>
-              {inputSet.map((v, idx) => (
-                <InputPaper
-                  key={v.id}
-                  id={v.id}
-                  name={v.name}
-                  nameSize={"12px"}
-                  width={idx === 1 ? "240px" : "180px"}
-                  btn={idx === 1 ? true : false}
-                  value={inputSearchValue[idx] || ""}
-                  onClickSelect={onClickProd}
-                  onClickRemove={onClickProdCancel}
-                />
-              ))}
-            </S.InputPaperWrap> */}
+          {/* <S.SearchWrap>
             <S.InputPaperWrap>
               <InputPaper
                 width={"180px"}
@@ -684,7 +720,7 @@ function Subdivision() {
             <S.ButtonWrap>
               <BtnComponent btnName={"Search"} onClick={onClickSearch} />
             </S.ButtonWrap>
-          </S.SearchWrap>
+          </S.SearchWrap> */}
         </S.SearchLeftWrap>
         <S.ContentsHeader>
           <S.ContentsHeaderWrap>
@@ -815,6 +851,7 @@ function Subdivision() {
       )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
+      {BarcodePrint}
     </ContentsArea>
   );
 }

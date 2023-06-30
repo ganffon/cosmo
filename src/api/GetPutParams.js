@@ -625,6 +625,13 @@ class productionDownTime {
     this.remark = raw.remark;
   }
 }
+class inspectionResultUpload {
+  constructor(raw) {
+    this.insp_result_upload_id = raw.insp_result_upload_id;
+    this.insp_value = raw.insp_value;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -791,6 +798,9 @@ function GetPutParams(componentName, raw) {
 
     case "productionDownTime":
       params = new productionDownTime(raw);
+      break;
+    case "inspectionResultUpload":
+      params = new inspectionResultUpload(raw);
       break;
     default:
   }

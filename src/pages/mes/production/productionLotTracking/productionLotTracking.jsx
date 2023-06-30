@@ -21,8 +21,7 @@ import BtnComponent from "components/button/BtnComponent";
 
 function ProductionLotTracking() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const refMainGrid = useRef(null);
@@ -71,26 +70,17 @@ function ProductionLotTracking() {
     endDate: DateTime().dateFull,
   });
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   const [modalSelectSize, setModalSelectSize] = useState({
     width: "80%",
     height: "90%",
   });
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    false,
-    refMainGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(false, refMainGrid);
 
   const [gridDataSelect, setGridDataSelect] = useState(null);
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    false,
-    refMainGrid
-  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(false, refMainGrid);
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -148,7 +138,7 @@ function ProductionLotTracking() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
 
   const actSearch = async () => {
@@ -159,9 +149,7 @@ function ProductionLotTracking() {
         ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProdID = "");
       let readURI =
-        restURI.prdPacking +
-        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` +
-        conditionProdID;
+        restURI.prdPacking + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
 
       if (inputTextChange && inputBoxID) {
         let cnt = 1;
@@ -176,12 +164,7 @@ function ProductionLotTracking() {
                 readURI = "?";
                 cnt++;
               }
-              readURI =
-                readURI +
-                inputBoxID[i] +
-                "=" +
-                inputTextChange[inputBoxID[i]] +
-                "&";
+              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -229,11 +212,7 @@ function ProductionLotTracking() {
     }
   };
   const onClickGrid = (e) => {
-    if (
-      e?.columnName !== "button1" &&
-      e?.columnName !== "button2" &&
-      e?.targetType === "cell"
-    ) {
+    if (e?.columnName !== "button1" && e?.columnName !== "button2" && e?.targetType === "cell") {
       actSearchGrid(e);
     }
   };
@@ -251,12 +230,10 @@ function ProductionLotTracking() {
       for (let i = 0; i < columnName.length; i++) {
         setInputSearchValue((prevList) => {
           if (columnName[i] === "prod_cd") {
-            prodCD.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
           if (columnName[i] === "prod_nm") {
-            prodNM.current =
-              e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+            prodNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
           }
         });
       }
@@ -271,13 +248,10 @@ function ProductionLotTracking() {
 
   const actSearchGrid = async (e) => {
     try {
-      const workPackingID =
-        e?.instance?.store?.data?.rawData[e?.rowKey].work_packing_id;
+      const workPackingID = e?.instance?.store?.data?.rawData[e?.rowKey].work_packing_id;
       const lotNo = e?.instance?.store?.data?.rawData[e?.rowKey].lot_no;
       setIsBackDrop(true);
-      let readURI =
-        restURI.prdLotTracking +
-        `?work_packing_id=${workPackingID}&lot_no=${lotNo}&`;
+      let readURI = restURI.prdLotTracking + `?work_packing_id=${workPackingID}&lot_no=${lotNo}&`;
       if (inputTextChange && inputBoxID) {
         let cnt = 1;
         //🔸inputBox 가 있다면?!
@@ -291,12 +265,7 @@ function ProductionLotTracking() {
                 readURI = "?";
                 cnt++;
               }
-              readURI =
-                readURI +
-                inputBoxID[i] +
-                "=" +
-                inputTextChange[inputBoxID[i]] +
-                "&";
+              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -357,11 +326,7 @@ function ProductionLotTracking() {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <LS.ToolWrap>
           <LS.SearchWrap>
-            <LS.Date
-              datePickerSet={"range"}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
 
             <InputSearch
               id={"line_nm"}
@@ -370,12 +335,7 @@ function ProductionLotTracking() {
               onClickSearch={onClickSearch}
             />
             <LS.InputPaperWrap>
-              <InputPaper
-                width={"180px"}
-                name={"품목코드"}
-                value={prodCD.current || ""}
-                btn={false}
-              />
+              <InputPaper width={"180px"} name={"품목코드"} value={prodCD.current || ""} btn={false} />
             </LS.InputPaperWrap>
             <LS.InputPaperWrap>
               <InputPaper

@@ -23,10 +23,9 @@ import InputSearch from "components/input/InputSearch";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-const MonthlyLineCapa = ({toggle}) => {
+const MonthlyLineCapa = ({ toggle }) => {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     endDate: DateTime().dateFull,
   });
@@ -55,21 +54,19 @@ const MonthlyLineCapa = ({toggle}) => {
   const GetMonthlyLineCapaData = (endDate, textInput) => {
     restAPI
       .get(restURI.monthlyLine, {
-        params: { 
-          reg_date: year//endDate.slice(0, 4)
-          , line_nm: textInput 
+        params: {
+          reg_date: year, //endDate.slice(0, 4)
+          line_nm: textInput,
         },
       })
       .then((response) => {
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
-        console.log(response.data)
       })
       .catch((error) => {
         // 오류 처리 로직
         // console.error('API 호출 중 오류 발생:', error);
       });
-      
   };
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -106,55 +103,57 @@ const MonthlyLineCapa = ({toggle}) => {
 
   return (
     <ContentsArea>
-      {isAuto === true && <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.ToolWrap>
-          <S.SearchWrap>
-            <S.InputText
-              id="outlined-number"
-              label="년도"
-              type="number"
-              onChange={handleChange}
-              defaultValue={year}
-              size="small"
-            />
-            <S.InputText
-              key={"line_nm"}
-              id={"line_nm"}
-              label={"라인"}
-              size="small"
-              variant="outlined"
-              handleInputTextChange={handleTextChange}
-              onClickSearch={handleSearchButtonClick}
-            />
-          </S.SearchWrap>
-          <S.ButtonWrap>
-            <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
-          </S.ButtonWrap>
-        </S.ToolWrap>
-      </S.ShadowBoxButton>}
-        <S.TopWrap>
-          <S.LineCapaTop>
-              <S.Title>라인별 생산량(월)</S.Title>
-              <S.ChartWrap2>
-                {responseData && (
-                  <Chart
-                    id={"chart"}
-                    options={cOptions}
-                    series={responseData.data.rows[0].graph}
-                    type="line"
-                    height={350}
-                  />
-                )}
-              </S.ChartWrap2>
-          </S.LineCapaTop>
-          <S.LineCapaBottom>
-            <S.GridWrap>
-              {responseData && (
-                <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
-              )}
-            </S.GridWrap>
-          </S.LineCapaBottom>
-        </S.TopWrap>
+      {isAuto === true && (
+        <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+          <S.ToolWrap>
+            <S.SearchWrap>
+              <S.InputText
+                id="outlined-number"
+                label="년도"
+                type="number"
+                onChange={handleChange}
+                defaultValue={year}
+                size="small"
+              />
+              <S.InputText
+                key={"line_nm"}
+                id={"line_nm"}
+                label={"라인"}
+                size="small"
+                variant="outlined"
+                handleInputTextChange={handleTextChange}
+                onClickSearch={handleSearchButtonClick}
+              />
+            </S.SearchWrap>
+            <S.ButtonWrap>
+              <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
+            </S.ButtonWrap>
+          </S.ToolWrap>
+        </S.ShadowBoxButton>
+      )}
+      <S.TopWrap>
+        <S.LineCapaTop>
+          <S.Title>라인별 생산량(월)</S.Title>
+          <S.ChartWrap2>
+            {responseData && (
+              <Chart
+                id={"chart"}
+                options={cOptions}
+                series={responseData.data.rows[0].graph}
+                type="line"
+                height={350}
+              />
+            )}
+          </S.ChartWrap2>
+        </S.LineCapaTop>
+        <S.LineCapaBottom>
+          <S.GridWrap>
+            {responseData && (
+              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />
+            )}
+          </S.GridWrap>
+        </S.LineCapaBottom>
+      </S.TopWrap>
     </ContentsArea>
   );
 };

@@ -33,7 +33,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
     col.text("tag_id", CN.tag_id, isEditMode, C.U, C.WIDTH_SUPER_LONG),
     col.text("unit_nm", CN.unit_nm, isEditMode),
     col.text("constant_value", CN.constant_value, isEditMode, C.U, C.WIDTH_MIDDLE),
-    col.text("weight", CN.weight, isEditMode),
+    col.text("weight", "가중치", isEditMode),
     col.check("history_fg", CN.history_fg, isEditMode),
     col.text("remark", CN.remark, isEditMode, C.U, C.WIDTH_LONG),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
@@ -56,7 +56,7 @@ function InterfaceMemorySet(isEditMode, lineList, processList, equipmentList) {
     col.text("tag_id", CN.tag_id, true, C.U, C.WIDTH_SUPER_LONG),
     col.text("unit_nm", CN.unit_nm, true),
     col.text("constant_value", CN.constant_value, true, C.U, C.WIDTH_MIDDLE),
-    col.text("weight", CN.weight, true),
+    col.text("weight", "가중치", true),
     col.check("history_fg", CN.history_fg, true),
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];

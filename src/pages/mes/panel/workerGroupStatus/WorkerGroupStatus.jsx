@@ -258,7 +258,6 @@ function WorkerGroupStatus() {
     if (target.current === "New") {
       setNewContents({ ...newContents, writer: "", writerId: "" });
     } else if (target.current === "Edit") {
-      console.log("??");
       setEditContents({ ...editContents, writer: "", writerId: "" });
     }
   };

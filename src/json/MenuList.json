@@ -105,12 +105,6 @@
             "id": "employee",
             "path": "employee",
             "under": null
-          },
-          {
-            "name": "사용자관리",
-            "id": "user",
-            "path": "user",
-            "under": null
           }
         ]
       },
@@ -227,16 +221,29 @@
         ]
       },
       {
-        "name": "권한관리",
-        "id": "setup",
-        "path": "setup",
-        "under": null
-      },
-      {
-        "name": "사용자이력현황",
-        "id": "userHistoryStatus",
-        "path": "userHistoryStatus",
-        "under": null
+        "name": "계정관리",
+        "id": "account-info",
+        "path": null,
+        "under": [
+          {
+            "name": "사용자관리",
+            "id": "user",
+            "path": "user",
+            "under": null
+          },
+          {
+            "name": "권한관리",
+            "id": "setup",
+            "path": "setup",
+            "under": null
+          },
+          {
+            "name": "사용자이력현황",
+            "id": "userHistoryStatus",
+            "path": "userHistoryStatus",
+            "under": null
+          }
+        ]
       }
     ]
   },

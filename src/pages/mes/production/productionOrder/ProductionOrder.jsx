@@ -276,7 +276,6 @@ function ProductionOrder() {
 
       const readURI = `/prd/order-detail?work_order_id=${headerRowID.current}`;
       let gridData = await restAPI.get(readURI);
-      console.log(readURI);
       setGridDataBottom(gridData?.data?.data?.rows);
     } catch {
       setIsSnackOpen({

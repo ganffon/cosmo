@@ -42,7 +42,7 @@ export const ScreenTopTitleBox = styled("div")`
   font-size: 22px;
 `;
 export const ItemInfoBox = styled("div")`
-  height: 280px;
+  height: 180px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -95,7 +95,7 @@ export const MadeButtonWrap = styled("div")`
 `;
 
 export const ButtonBox = styled("div")`
-  height: 80px;
+  height: 180px;
   width: 100%;
   display: flex;
   justify-content: space-between;

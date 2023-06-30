@@ -58,12 +58,11 @@ function WeightPanel() {
     rowHeadersNum,
     header,
     columns,
-    columnsWeight,
     columnsSelectEmp,
     columnsSelectStore,
     columnsInput,
     columnsInputDetail,
-  } = WeightPanelSet(onClickGridButton);
+  } = WeightPanelSet(onClickGridButton, onBarcodeScan);
 
   const resetRequire = () => {
     setSelectInfo({
@@ -441,7 +440,6 @@ function WeightPanel() {
           input_emp_id: selectInputInfo.empID,
         };
         try {
-          console.log(`selectInputInfo.workWeighID : ${selectInputInfo.workWeighID}`);
           const result = await restAPI.patch(
             restURI.prdWeightComplete.replace("{id}", selectInputInfo.workWeighID),
             raw
@@ -503,6 +501,7 @@ function WeightPanel() {
     handleInputSaveInfo(rowKey);
     setIsModalInputSaveOpen(true);
   }
+  function onBarcodeScan() {}
   const GridHeader = useMemo(() => {
     return (
       <GridSingle
@@ -638,7 +637,6 @@ function WeightPanel() {
       {isModalWeightOpen ? (
         <ModalWeight
           onClickModalClose={onClickWeightClose}
-          columnsWeight={columnsWeight}
           columnOptions={columnOptions}
           header={header}
           gridDataWeight={gridDataWeight}

@@ -633,6 +633,18 @@ class workerGroupStatusAddEmp {
     this.remark = raw.remark;
   }
 }
+class inspectionResultUpload {
+  constructor(raw) {
+    this.prod_id = raw.prod_id;
+    this.lot_no = raw.lot_no;
+    this.work_date = raw.work_date;
+    this.insp_item = raw.insp_item;
+    this.insp_min = raw.insp_min;
+    this.insp_max = raw.insp_max;
+    this.insp_value = raw.insp_value;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -817,6 +829,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "workerGroupStatusAddEmp":
         params = new workerGroupStatusAddEmp(raw);
+        break;
+      case "inspectionResultUpload":
+        params = new inspectionResultUpload(raw);
         break;
       default:
     }

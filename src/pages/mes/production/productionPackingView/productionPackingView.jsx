@@ -71,7 +71,6 @@ function ProductionPackingView() {
     const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_weigh_id;
     setIsBackDrop(true);
     let readURI = `/prd/weigh/${gridDetailId}`;
-    console.log(readURI);
     let gridData = await restAPI.get(readURI);
     setGridDataModalHeader(gridData?.data?.data?.rows);
 
@@ -218,7 +217,7 @@ function ProductionPackingView() {
     try {
       setIsBackDrop(true);
       const readURI = `/prd/weigh-detail?work_weigh_id=${modalSelectHeaderRowID.current}`;
-      console.log(readURI);
+
       let gridData = await restAPI.get(readURI);
       setGridDataModalDetail(gridData?.data?.data?.rows);
     } catch {
@@ -288,7 +287,7 @@ function ProductionPackingView() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.product
+    restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
 
   return (
