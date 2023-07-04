@@ -5,18 +5,18 @@
     "path": null,
     "under": [
       {
-        "name": "⬇️메뉴",
+        "name": "메뉴",
         "id": "menu",
         "path": null,
         "under": [
           {
-            "name": "✅메뉴관리",
+            "name": "메뉴관리",
             "id": "menu-manage",
             "path": "menu-manage",
             "under": null
           },
           {
-            "name": "✅메뉴리스트관리",
+            "name": "메뉴리스트관리",
             "id": "menu-list",
             "path": "menu-list",
             "under": null
@@ -31,109 +31,117 @@
     "path": null,
     "under": [
       {
-        "name": "✅사업부관리",
-        "id": "factory",
-        "path": "factory",
-        "under": null
+        "name": "기본정보",
+        "id": "standard-info",
+        "path": null,
+        "under": [
+          {
+            "name": "사업부관리",
+            "id": "factory",
+            "path": "factory",
+            "under": null
+          },
+          {
+            "name": "라인관리",
+            "id": "line",
+            "path": "line",
+            "under": null
+          },
+          {
+            "name": "라인부서관리",
+            "id": "line-dept",
+            "path": "line-dept",
+            "under": null
+          },
+          {
+            "name": "공정관리",
+            "id": "process",
+            "path": "process",
+            "under": null
+          },
+          {
+            "name": "설비관리",
+            "id": "equipment",
+            "path": "equipment",
+            "under": null
+          }
+        ]
       },
+
       {
-        "name": "✅라인관리",
-        "id": "line",
-        "path": "line",
-        "under": null
-      },
-      {
-        "name": "✅라인부서관리",
-        "id": "line-dept",
-        "path": "line-dept",
-        "under": null
-      },
-      {
-        "name": "✅공정관리",
-        "id": "process",
-        "path": "process",
-        "under": null
-      },
-      {
-        "name": "✅설비관리",
-        "id": "equipment",
-        "path": "equipment",
-        "under": null
-      },
-      {
-        "name": "✅단위관리",
-        "id": "unit",
-        "path": "unit",
-        "under": null
-      },
-      {
-        "name": "⬇️제품정보",
+        "name": "제품정보",
         "id": "product-info",
         "path": null,
         "under": [
           {
-            "name": "✅제품구분관리",
+            "name": "제품구분관리",
             "id": "product-gbn",
             "path": "product-gbn",
             "under": null
           },
           {
-            "name": "✅제품군관리",
+            "name": "제품군관리",
             "id": "product-model",
             "path": "product-model",
             "under": null
           },
           {
-            "name": "✅품종군관리",
+            "name": "품종군관리",
             "id": "product-type",
             "path": "product-type",
             "under": null
           },
           {
-            "name": "✅품종관리",
+            "name": "품종관리",
             "id": "product-type-small",
             "path": "product-type-small",
             "under": null
           },
           {
-            "name": "✅제품분류관리",
+            "name": "제품분류관리",
             "id": "product-class",
             "path": "product-class",
             "under": null
           },
           {
-            "name": "✅품목관리",
+            "name": "품목관리",
             "id": "product",
             "path": "product",
+            "under": null
+          },
+          {
+            "name": "단위관리",
+            "id": "unit",
+            "path": "unit",
             "under": null
           }
         ]
       },
       {
-        "name": "⬇️사원정보",
+        "name": "사원정보",
         "id": "employee-info",
         "path": null,
         "under": [
           {
-            "name": "✅부서관리",
+            "name": "부서관리",
             "id": "department",
             "path": "department",
             "under": null
           },
           {
-            "name": "✅직급관리",
+            "name": "직급관리",
             "id": "grade",
             "path": "grade",
             "under": null
           },
           {
-            "name": "✅사원관리",
+            "name": "사원관리",
             "id": "employee",
             "path": "employee",
             "under": null
           },
           {
-            "name": "❌사용자공장관리",
+            "name": "사용자공장관리",
             "id": null,
             "path": null,
             "under": null
@@ -141,18 +149,18 @@
         ]
       },
       {
-        "name": "⬇️창고정보",
+        "name": "창고정보",
         "id": "store-info",
         "path": null,
         "under": [
           {
-            "name": "✅창고관리",
+            "name": "창고관리",
             "id": "store",
             "path": "store",
             "under": null
           },
           {
-            "name": "✅위치관리",
+            "name": "위치관리",
             "id": "store-location",
             "path": "store-location",
             "under": null
@@ -160,18 +168,18 @@
         ]
       },
       {
-        "name": "⬇️비가동정보",
+        "name": "비가동정보",
         "id": "downtime-info",
         "path": null,
         "under": [
           {
-            "name": "✅비가동유형관리",
+            "name": "비가동유형관리",
             "id": "downtime-type",
             "path": "downtime-type",
             "under": null
           },
           {
-            "name": "✅비가동관리",
+            "name": "비가동관리",
             "id": "downtime",
             "path": "downtime",
             "under": null
@@ -179,48 +187,48 @@
         ]
       },
       {
-        "name": "⬇️관리계획서정보",
+        "name": "관리계획서정보",
         "id": "inspection-info",
         "path": null,
         "under": [
           {
-            "name": "✅검사기록물관리",
+            "name": "검사기록물관리",
             "id": "filing",
             "path": "filing",
             "under": null
           },
           {
-            "name": "✅검사방법관리",
+            "name": "검사방법관리",
             "id": "method",
             "path": "method",
             "under": null
           },
           {
-            "name": "✅검사구관리",
+            "name": "검사구관리",
             "id": "tool",
             "path": "tool",
             "under": null
           },
           {
-            "name": "✅검사유형관리",
+            "name": "검사유형관리",
             "id": "inspection-item-type",
             "path": "inspection-item-type",
             "under": null
           },
           {
-            "name": "✅검사항목관리",
+            "name": "검사항목관리",
             "id": "inspection-item",
             "path": "inspection-item",
             "under": null
           },
           {
-            "name": "✅검사기준서관리",
+            "name": "검사기준서관리",
             "id": "document",
             "path": "document",
             "under": null
           },
           {
-            "name": "✅관리계획서관리",
+            "name": "관리계획서관리",
             "id": "control-plan",
             "path": "control-plan",
             "under": null
@@ -228,24 +236,24 @@
         ]
       },
       {
-        "name": "⬇️설비I/F정보",
+        "name": "설비I/F정보",
         "id": "interface-info",
         "path": null,
         "under": [
           {
-            "name": "✅설비I/F유형관리",
+            "name": "설비I/F유형관리",
             "id": "interface-item-type",
             "path": "interface-item-type",
             "under": null
           },
           {
-            "name": "✅설비I/F항목관리",
+            "name": "설비I/F항목관리",
             "id": "interface-item",
             "path": "interface-item",
             "under": null
           },
           {
-            "name": "✅MemoryMap관리",
+            "name": "MemoryMap관리",
             "id": "interface-memory",
             "path": "interface-memory",
             "under": null
@@ -253,24 +261,24 @@
         ]
       },
       {
-        "name": "⬇️계정관리",
+        "name": "계정관리",
         "id": "account-info",
         "path": null,
         "under": [
           {
-            "name": "✅사용자관리",
+            "name": "사용자관리",
             "id": "user",
             "path": "user",
             "under": null
           },
           {
-            "name": "💥권한관리",
+            "name": "권한관리",
             "id": "setup",
             "path": "setup",
             "under": null
           },
           {
-            "name": "✅사용자이력현황",
+            "name": "사용자이력현황",
             "id": "userHistoryStatus",
             "path": "userHistoryStatus",
             "under": null
@@ -285,16 +293,23 @@
     "path": null,
     "under": [
       {
-        "name": "✅재고현황",
-        "id": "store-view",
-        "path": "store-view",
-        "under": null
-      },
-      {
-        "name": "✅재고실사",
-        "id": "store-check",
-        "path": "store-check",
-        "under": null
+        "name": "재고정보",
+        "id": "inventory-info",
+        "path": null,
+        "under": [
+          {
+            "name": "재고현황",
+            "id": "store-view",
+            "path": "store-view",
+            "under": null
+          },
+          {
+            "name": "재고실사",
+            "id": "store-check",
+            "path": "store-check",
+            "under": null
+          }
+        ]
       }
     ]
   },
@@ -304,36 +319,43 @@
     "path": null,
     "under": [
       {
-        "name": "✅작업지시서",
-        "id": "production-order",
-        "path": "production-order",
-        "under": null
+        "name": "작업지시",
+        "id": "dayreport-info",
+        "path": null,
+        "under": [
+          {
+            "name": "작업지시서",
+            "id": "production-order",
+            "path": "production-order",
+            "under": null
+          }
+        ]
       },
       {
-        "name": "⬇️생산일지정보",
+        "name": "생산일지정보",
         "id": "production-dayreport-info",
         "path": null,
         "under": [
           {
-            "name": "✅일일소분일지",
+            "name": "일일소분일지",
             "id": "subdivision",
             "path": "subdivision",
             "under": null
           },
           {
-            "name": "✅일일계량일지",
+            "name": "일일계량일지",
             "id": "weight",
             "path": "weight",
             "under": null
           },
           {
-            "name": "✅일일포장일지",
+            "name": "일일포장일지",
             "id": "packing",
             "path": "packing",
             "under": null
           },
           {
-            "name": "✅일일운전점검일지",
+            "name": "일일운전점검일지",
             "id": "equipment-result",
             "path": "equipment-result",
             "under": null
@@ -341,30 +363,30 @@
         ]
       },
       {
-        "name": "⬇️생산현황",
+        "name": "생산현황",
         "id": "production-dayreport",
         "path": null,
         "under": [
           {
-            "name": "✅일일소분실적현황",
+            "name": "일일소분실적현황",
             "id": "subdivision-report",
             "path": "subdivision-report",
             "under": null
           },
           {
-            "name": "✅일일계량실적현황",
+            "name": "일일계량실적현황",
             "id": "weight-report",
             "path": "weight-report",
             "under": null
           },
           {
-            "name": "❌포장실적현황",
+            "name": "포장실적현황",
             "id": "production-packing-view",
             "path": "production-packing-view",
             "under": null
           },
           {
-            "name": "❌일일운전점검현황",
+            "name": "일일운전점검현황",
             "id": "equipment-result-view",
             "path": "equipment-result-view",
             "under": null
@@ -372,36 +394,36 @@
         ]
       },
       {
-        "name": "✅비가동관리",
+        "name": "비가동관리",
         "id": "production-downtime",
         "path": "production-downtime",
         "under": null
       },
       {
-        "name": "✅비가동현황(충진)",
+        "name": "비가동현황(충진)",
         "id": "downtime-report",
         "path": "downtime-report",
         "under": null
       },
       {
-        "name": "✅Lot추적일지",
+        "name": "Lot추적일지",
         "id": "production-lot-tracking",
         "path": "production-lot-tracking",
         "under": null
       },
       {
-        "name": "⬇️로우데이터",
+        "name": "로우데이터",
         "id": "raw-datas",
         "path": null,
         "under": [
           {
-            "name": "✅온습도 Raw 데이터",
+            "name": "온습도 Raw 데이터",
             "id": "temp-raws",
             "path": "temp-raws",
             "under": null
           },
           {
-            "name": "✅충진기 생산 count Raw 데이터",
+            "name": "충진기 생산 count Raw 데이터",
             "id": "count-raws",
             "path": "count-raws",
             "under": null
@@ -416,30 +438,30 @@
     "path": null,
     "under": [
       {
-        "name": "⬇️상세제원정보",
+        "name": "상세제원정보",
         "id": "equipment-spec-info",
         "path": null,
         "under": [
           {
-            "name": "✅대분류관리",
+            "name": "대분류관리",
             "id": "equipment-classification",
             "path": "equipment-classification",
             "under": null
           },
           {
-            "name": "✅중분류관리",
+            "name": "중분류관리",
             "id": "equipment-group",
             "path": "equipment-group",
             "under": null
           },
           {
-            "name": "✅소분류관리",
+            "name": "소분류관리",
             "id": "equipment-class",
             "path": "equipment-class",
             "under": null
           },
           {
-            "name": "✅상세제원관리",
+            "name": "상세제원관리",
             "id": "equipment-detail",
             "path": "equipment-detail",
             "under": null
@@ -447,18 +469,18 @@
         ]
       },
       {
-        "name": "⬇️SpareParts정보",
+        "name": "SpareParts정보",
         "id": "spareparts-info",
         "path": null,
         "under": [
           {
-            "name": "✴️SpareParts출고관리",
+            "name": "SpareParts출고관리",
             "id": "spareparts-outgo",
             "path": "spareparts-outgo",
             "under": null
           },
           {
-            "name": "✴️SpareParts재고현황",
+            "name": "SpareParts재고현황",
             "id": "spareparts-store-view",
             "path": "spareparts-store-view",
             "under": null
@@ -466,13 +488,13 @@
         ]
       },
       {
-        "name": "✅설비RawData현황",
+        "name": "설비RawData현황",
         "id": "equipment-rawdata-view",
         "path": "equipment-rawdata-view",
         "under": null
       },
       {
-        "name": "❌설비알람이력현황",
+        "name": "설비알람이력현황",
         "id": "equipment-alarm-view",
         "path": "equipment-alarm-view",
         "under": null
@@ -485,18 +507,18 @@
     "path": null,
     "under": [
       {
-        "name": "⬇️제품검사정보",
+        "name": "제품검사정보",
         "id": "quality-result-info",
         "path": null,
         "under": [
           {
-            "name": "❌검사성적서관리",
+            "name": "검사성적서관리",
             "id": "quality-result",
             "path": "quality-result",
             "under": null
           },
           {
-            "name": "❌검사결과현황",
+            "name": "검사결과현황",
             "id": "quality-result-view",
             "path": "quality-result-view",
             "under": null
@@ -504,7 +526,7 @@
         ]
       },
       {
-        "name": "❌공정관리도(SPC)",
+        "name": "공정관리도(SPC)",
         "id": "quality-spc",
         "path": "quality-spc",
         "under": null
@@ -517,58 +539,73 @@
     "path": null,
     "under": [
       {
-        "name": "✅라인별생산량(일)",
-        "id": "daily-line-capa",
-        "path": "daily-line-capa",
-        "under": null
+        "name": "생산량",
+        "id": "product-qty",
+        "path": null,
+        "under": [
+          {
+            "name": "라인별생산량(일)",
+            "id": "daily-line-capa",
+            "path": "daily-line-capa",
+            "under": null
+          },
+          {
+            "name": "라인별생산량(월)",
+            "id": "monthly-line-capa",
+            "path": "monthly-line-capa",
+            "under": null
+          },
+          {
+            "name": "품목별생산량",
+            "id": "monthly-part-capa",
+            "path": "monthly-part-capa",
+            "under": null
+          }
+        ]
       },
       {
-        "name": "✅라인별생산량(월)",
-        "id": "monthly-line-capa",
-        "path": "monthly-line-capa",
-        "under": null
+        "name": "가동률",
+        "id": "capa",
+        "path": null,
+        "under": [
+          {
+            "name": "시간가동률",
+            "id": "time-rate",
+            "path": "time-rate",
+            "under": null
+          },
+          {
+            "name": "성능가동률",
+            "id": "performance-rate",
+            "path": "performance-rate",
+            "under": null
+          }
+        ]
       },
       {
-        "name": "✅품목별생산량",
-        "id": "monthly-part-capa",
-        "path": "monthly-part-capa",
-        "under": null
-      },
-      {
-        "name": "✴️시간가동률",
-        "id": "time-rate",
-        "path": "time-rate",
-        "under": null
-      },
-      {
-        "name": "✴️성능가동률",
-        "id": "performance-rate",
-        "path": "performance-rate",
-        "under": null
-      },
-      {
-        "name": "✴️(미배포)",
-        "id": "managementAll",
-        "path": "managementAll",
-        "under": null
-      },
-      {
-        "name": "✅현장 대시보드",
-        "id": "temp-view",
-        "path": "temp-view",
-        "under": null
-      },
-      {
-        "name": "✅비가동 대시보드",
-        "id": "equip-status",
-        "path": "equip-status",
-        "under": null
-      },
-      {
-        "name": "✅공장 온습도 월별 추이 현황",
-        "id": "monthly-temp-humid-chart",
-        "path": "monthly-temp-humid-chart",
-        "under": null
+        "name": "대시보드",
+        "id": "dash",
+        "path": null,
+        "under": [
+          {
+            "name": "현장 대시보드",
+            "id": "temp-view",
+            "path": "temp-view",
+            "under": null
+          },
+          {
+            "name": "비가동 대시보드",
+            "id": "equip-status",
+            "path": "equip-status",
+            "under": null
+          },
+          {
+            "name": "공장 온습도 월별 추이 현황",
+            "id": "monthly-temp-humid-chart",
+            "path": "monthly-temp-humid-chart",
+            "under": null
+          }
+        ]
       }
     ]
   },
@@ -578,40 +615,47 @@
     "path": null,
     "under": [
       {
-        "name": "✅소분일지",
-        "id": "subdivision-panel",
-        "path": "subdivision-panel",
-        "under": null
-      },
-      {
-        "name": "✅계량일지",
-        "id": "weight-panel",
-        "path": "weight-panel",
-        "under": null
-      },
-      {
-        "name": "✅포장일지",
-        "id": "packing-panel",
-        "path": "packing-panel",
-        "under": null
-      },
-      {
-        "name": "✅일일운전점검일지",
-        "id": "equipment-result",
-        "path": "equipment-result",
-        "under": null
-      },
-      {
-        "name": "✅비가동관리",
-        "id": "downtime-panel",
-        "path": "downtime-panel",
-        "under": null
-      },
-      {
-        "name": "✴️조별상황일지",
-        "id": "worker-group-status",
-        "path": "worker-group-status",
-        "under": null
+        "name": "현장용",
+        "id": "panel-info",
+        "path": null,
+        "under": [
+          {
+            "name": "소분일지",
+            "id": "subdivision-panel",
+            "path": "subdivision-panel",
+            "under": null
+          },
+          {
+            "name": "계량일지",
+            "id": "weight-panel",
+            "path": "weight-panel",
+            "under": null
+          },
+          {
+            "name": "포장일지",
+            "id": "packing-panel",
+            "path": "packing-panel",
+            "under": null
+          },
+          {
+            "name": "일일운전점검일지",
+            "id": "equipment-result",
+            "path": "equipment-result",
+            "under": null
+          },
+          {
+            "name": "비가동관리",
+            "id": "downtime-panel",
+            "path": "downtime-panel",
+            "under": null
+          },
+          {
+            "name": "조별상황일지",
+            "id": "worker-group-status",
+            "path": "worker-group-status",
+            "under": null
+          }
+        ]
       }
     ]
   }

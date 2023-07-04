@@ -12,6 +12,7 @@ import Condition from "custom/Condition";
 import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
+import GetPutParams from "api/GetPutParams";
 
 function ModalEdit(props) {
   const {
@@ -255,17 +256,19 @@ function ModalEdit(props) {
     for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
       result.push(refGrid?.current?.gridInst?.getRowAt(i));
     }
-    const detail = result.map((raw) => GetPostParams("workGroupStatusDetail", raw));
+    const detail = result.map((raw) => GetPutParams("workGroupStatus", raw));
 
     const query = {
       header: header,
       details: detail,
     };
 
+    const URI = restURI.workerGroupStatusEdit.replace("{id}", editContents.workId);
+
     if (query.details !== undefined) {
       setIsBackDrop(true);
       await restAPI
-        .post(restURI.workerGroupStatus, query)
+        .put(URI, query)
         .then((res) => {
           setIsSnackOpen({
             ...isSnackOpen,

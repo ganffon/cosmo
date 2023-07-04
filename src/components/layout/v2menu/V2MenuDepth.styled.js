@@ -25,16 +25,19 @@ const MenuButton = styled(ListItemButton)`
 const MenuText = styled(ListItemText)`
   opacity: 1;
   color: #ddf1ff;
-  padding-left: 15px;
+  padding-left: 30px;
 `;
 
 const MenuSubheader = styled(ListSubheader)`
   background-color: ${MENU_DEPTH_BACK_COLOR};
   font-size: 18px;
   color: white;
-  padding: 0px 4px;
+  padding-left: 15px;
   line-height: 30px;
+  display: flex;
+  gap: 10px;
 `;
+export const MenuSubheaderTitle = styled("div")``;
 
 const MenuDepthBox = styled("div")`
   z-index: 2000;
@@ -60,18 +63,14 @@ const MenuDepthBox = styled("div")`
 
 const MenuDepth = styled("div")``;
 
+export const Icon = styled("img")`
+  scale: 0.8;
+`;
+
 const Menu = styled(List)`
   background-color: ${MENU_DEPTH_BACK_COLOR};
   width: ${MENU_DEPTH_WIDTH};
   padding: 0px 0px;
 `;
 
-export {
-  MenuItem,
-  MenuButton,
-  MenuText,
-  MenuSubheader,
-  MenuDepthBox,
-  MenuDepth,
-  Menu,
-};
+export { MenuItem, MenuButton, MenuText, MenuSubheader, MenuDepthBox, MenuDepth, Menu };

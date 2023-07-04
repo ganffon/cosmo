@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // ⬇️ import MUI
 import Divider from "@mui/material/Divider";
@@ -9,45 +9,84 @@ import restURI from "json/restURI.json";
 import NoticeSnack from "components/alert/NoticeSnack";
 import Cookies from "js-cookie";
 import * as S from "./V2MenuDepth.styled";
+import Admin from "img/Menu/admin.svg";
+import Equipment from "img/Menu/equipment.svg";
+import Management from "img/Menu/management.svg";
+import Panel from "img/Menu/panel.svg";
+import Production from "img/Menu/production.svg";
+import Quality from "img/Menu/quality.svg";
+import Standard from "img/Menu/standard.svg";
+import Inventory from "img/Menu/inventory.svg";
+import Star from "img/Menu/star.svg";
 
 const hostName = window.location.hostname;
 const IPFlag = hostName.split(".")[0];
 const BASE_URL = IPFlag === "192" ? process.env.REACT_APP_NEW_TAB_URL_PANEL : process.env.REACT_APP_NEW_TAB_URL;
 
-function subTitle(lv2Menu) {
-  let result;
-  if (lv2Menu.under === null) {
-    return null;
-  } else {
-    result = <S.MenuSubheader>{lv2Menu.name}</S.MenuSubheader>;
-    return result;
+const menuListIcon = (key) => {
+  switch (key) {
+    case "admin":
+      return <S.Icon src={Admin} />;
+    case "standard":
+      return <S.Icon src={Standard} />;
+    case "inventory":
+      return <S.Icon src={Inventory} />;
+    case "production":
+      return <S.Icon src={Production} />;
+    case "equipment":
+      return <S.Icon src={Equipment} />;
+    case "quality":
+      return <S.Icon src={Quality} />;
+    case "management":
+      return <S.Icon src={Management} />;
+    case "panel":
+      return <S.Icon src={Panel} />;
+    default:
+      return <S.Icon src={Star} />;
   }
-}
+};
 
-function subMenu(menu, handleClickMenu) {
-  let result;
-
-  if (menu === null) {
-    return null;
-  } else {
-    result = (
-      <S.MenuItem key={menu.id}>
-        <S.MenuButton onMouseDown={(e) => handleClickMenu(menu, e)}>
-          <S.MenuText primary={menu.name} />
-        </S.MenuButton>
-      </S.MenuItem>
-    );
-    return result;
-  }
-}
-
-function V2MenuDepth({ lv2Menu, setLv2Menu }) {
+function V2MenuDepth(props) {
+  const { lv2Menu, refMenu, lv1MenuID } = props;
   const { isMouseOver, setIsMouseOver, setIsModalOpen, authMenuCode, setAuthMenuCode, superAdmin } =
     useContext(LayoutContext);
   const navigate = useNavigate();
   const [alertOpen, setAlertOpen] = useState({
     open: false,
   });
+
+  function subTitle(lv2Menu, lv1MenuID) {
+    let result;
+    if (lv2Menu.under === null) {
+      return null;
+    } else {
+      result = (
+        <S.MenuSubheader>
+          {menuListIcon(lv1MenuID)}
+          <S.MenuSubheaderTitle>{lv2Menu.name}</S.MenuSubheaderTitle>
+        </S.MenuSubheader>
+      );
+      return result;
+    }
+  }
+
+  function subMenu(menu, handleClickMenu) {
+    let result;
+
+    if (menu === null) {
+      return null;
+    } else {
+      result = (
+        <S.MenuItem key={menu.id}>
+          <S.MenuButton onMouseDown={(e) => handleClickMenu(menu, e)}>
+            <S.MenuText primary={"- " + menu.name} />
+          </S.MenuButton>
+        </S.MenuItem>
+      );
+      return result;
+    }
+  }
+
   const handleClickMenu = async (menu, e) => {
     e.preventDefault();
     const loginID = Cookies.get("loginID");
@@ -70,6 +109,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
             delete: res?.data?.data?.rows[0]?.auth_delete,
           });
           setIsModalOpen(false);
+          setIsMouseOver(false);
           if (e?.button === 0) {
             navigate(menu.path);
           } else if (e?.button === 1) {
@@ -95,6 +135,7 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
         update: true,
         delete: true,
       });
+      setIsMouseOver(false);
       setIsModalOpen(false);
       if (e?.button === 0) {
         navigate(menu.path);
@@ -108,16 +149,17 @@ function V2MenuDepth({ lv2Menu, setLv2Menu }) {
     <>
       {isMouseOver ? (
         <S.MenuDepthBox
-          onMouseLeave={() => {
-            setIsMouseOver(false);
-            setLv2Menu(null);
-          }}
+          // onMouseLeave={() => {
+          //   setIsMouseOver(false);
+          //   setLv2Menu(null);
+          // }}
+          ref={refMenu}
         >
           {/* <CssBaseline /> */}
           {lv2Menu && (
             <S.MenuDepth>
               {lv2Menu.map((lv2Menu) => (
-                <S.Menu key={lv2Menu.id} subheader={subTitle(lv2Menu)}>
+                <S.Menu key={lv2Menu.id} subheader={subTitle(lv2Menu, lv1MenuID)}>
                   {lv2Menu.under
                     ? lv2Menu.under.map((lv3Menu) => subMenu(lv3Menu, handleClickMenu))
                     : subMenu(lv2Menu, handleClickMenu)}

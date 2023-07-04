@@ -132,7 +132,19 @@ function Login() {
     const state = localStorage.getItem("loginState");
     if (state === "true") {
       //🔸로그인 이미 한 경우
-      navigate("/mes");
+      if (Cookies.get("userUID")) {
+        navigate("/mes");
+      } else {
+        localStorage.setItem("loginState", false);
+        const idBox = document.querySelector("#loginID");
+        const pwBox = document.querySelector("#loginPW");
+        if (Cookies.get("loginID") === undefined) {
+          idBox.focus();
+        } else {
+          idBox.value = loginInfo.loginID;
+          pwBox.focus();
+        }
+      }
     } else {
       //🔸로그인 안 한 경우
       //🔸로그인창 ID표시 및 포커스

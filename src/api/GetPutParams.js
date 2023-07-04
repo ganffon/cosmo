@@ -634,6 +634,17 @@ class inspectionResultUpload {
     this.remark = raw.remark;
   }
 }
+class workGroupStatus {
+  constructor(raw) {
+    this.worker_group_status_id = raw.worker_group_status_id;
+    this.emp_id = raw.emp_id;
+    this.work_start_date = raw.work_start_date;
+    this.work_start_time = raw.work_start_time;
+    this.work_end_date = raw.work_end_date;
+    this.work_end_time = raw.work_end_time;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -803,6 +814,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "inspectionResultUpload":
       params = new inspectionResultUpload(raw);
+      break;
+    case "workGroupStatus":
+      params = new workGroupStatus(raw);
       break;
     default:
   }
