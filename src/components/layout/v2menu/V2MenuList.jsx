@@ -43,9 +43,8 @@ const menuListIcon = (key) => {
 };
 
 function V2MenuList(props) {
-  const { lv1Menu, setLv2Menu } = props;
-  const { setIsMouseOver, menuNameChangeSave, setMenuNameChangeSave } =
-    useContext(LayoutContext);
+  const { lv1Menu, setLv2Menu, setLv1MenuID } = props;
+  const { setIsMouseOver, menuNameChangeSave, setMenuNameChangeSave } = useContext(LayoutContext);
   return (
     <S.MenuList>
       <S.MenuButton
@@ -53,6 +52,7 @@ function V2MenuList(props) {
         onClick={() => {
           setIsMouseOver(true);
           lv1Menu.under ? setLv2Menu(lv1Menu.under) : setLv2Menu(null);
+          setLv1MenuID(lv1Menu.id);
           setMenuNameChangeSave({
             ...menuNameChangeSave,
             lv1MenuName: lv1Menu.name,

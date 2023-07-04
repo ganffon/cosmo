@@ -260,7 +260,7 @@ function SubdivisionPanel() {
       }
     }
   };
-  const onClickStart = (e) => {
+  const onClickStart = () => {
     if (prodID.current === "") {
       setIsBarcodeScanOpen(true);
     }

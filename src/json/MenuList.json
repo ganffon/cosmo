@@ -5,41 +5,43 @@
     "path": null,
     "under": [
       {
-        "name": "사업부관리",
-        "id": "factory",
-        "path": "factory",
-        "under": null
+        "name": "기본정보",
+        "id": "standard-info",
+        "path": null,
+        "under": [
+          {
+            "name": "사업부관리",
+            "id": "factory",
+            "path": "factory",
+            "under": null
+          },
+          {
+            "name": "라인관리",
+            "id": "line",
+            "path": "line",
+            "under": null
+          },
+          {
+            "name": "라인부서관리",
+            "id": "line-dept",
+            "path": "line-dept",
+            "under": null
+          },
+          {
+            "name": "공정관리",
+            "id": "process",
+            "path": "process",
+            "under": null
+          },
+          {
+            "name": "설비관리",
+            "id": "equipment",
+            "path": "equipment",
+            "under": null
+          }
+        ]
       },
-      {
-        "name": "라인관리",
-        "id": "line",
-        "path": "line",
-        "under": null
-      },
-      {
-        "name": "라인부서관리",
-        "id": "line-dept",
-        "path": "line-dept",
-        "under": null
-      },
-      {
-        "name": "공정관리",
-        "id": "process",
-        "path": "process",
-        "under": null
-      },
-      {
-        "name": "설비관리",
-        "id": "equipment",
-        "path": "equipment",
-        "under": null
-      },
-      {
-        "name": "단위관리",
-        "id": "unit",
-        "path": "unit",
-        "under": null
-      },
+
       {
         "name": "제품정보",
         "id": "product-info",
@@ -79,6 +81,12 @@
             "name": "품목관리",
             "id": "product",
             "path": "product",
+            "under": null
+          },
+          {
+            "name": "단위관리",
+            "id": "unit",
+            "path": "unit",
             "under": null
           }
         ]
@@ -253,16 +261,23 @@
     "path": null,
     "under": [
       {
-        "name": "재고현황",
-        "id": "store-view",
-        "path": "store-view",
-        "under": null
-      },
-      {
-        "name": "재고실사",
-        "id": "store-check",
-        "path": "store-check",
-        "under": null
+        "name": "재고정보",
+        "id": "inventory-info",
+        "path": null,
+        "under": [
+          {
+            "name": "재고현황",
+            "id": "store-view",
+            "path": "store-view",
+            "under": null
+          },
+          {
+            "name": "재고실사",
+            "id": "store-check",
+            "path": "store-check",
+            "under": null
+          }
+        ]
       }
     ]
   },
@@ -272,10 +287,17 @@
     "path": null,
     "under": [
       {
-        "name": "작업지시서",
-        "id": "production-order",
-        "path": "production-order",
-        "under": null
+        "name": "작업지시",
+        "id": "dayreport-info",
+        "path": null,
+        "under": [
+          {
+            "name": "작업지시서",
+            "id": "production-order",
+            "path": "production-order",
+            "under": null
+          }
+        ]
       },
       {
         "name": "생산일지정보",
@@ -479,52 +501,73 @@
     "path": null,
     "under": [
       {
-        "name": "라인별생산량(일)",
-        "id": "daily-line-capa",
-        "path": "daily-line-capa",
-        "under": null
+        "name": "생산량",
+        "id": "product-qty",
+        "path": null,
+        "under": [
+          {
+            "name": "라인별생산량(일)",
+            "id": "daily-line-capa",
+            "path": "daily-line-capa",
+            "under": null
+          },
+          {
+            "name": "라인별생산량(월)",
+            "id": "monthly-line-capa",
+            "path": "monthly-line-capa",
+            "under": null
+          },
+          {
+            "name": "품목별생산량",
+            "id": "monthly-part-capa",
+            "path": "monthly-part-capa",
+            "under": null
+          }
+        ]
       },
       {
-        "name": "라인별생산량(월)",
-        "id": "monthly-line-capa",
-        "path": "monthly-line-capa",
-        "under": null
+        "name": "가동률",
+        "id": "capa",
+        "path": null,
+        "under": [
+          {
+            "name": "시간가동률",
+            "id": "time-rate",
+            "path": "time-rate",
+            "under": null
+          },
+          {
+            "name": "성능가동률",
+            "id": "performance-rate",
+            "path": "performance-rate",
+            "under": null
+          }
+        ]
       },
       {
-        "name": "품목별생산량",
-        "id": "monthly-part-capa",
-        "path": "monthly-part-capa",
-        "under": null
-      },
-      {
-        "name": "시간가동률",
-        "id": "time-rate",
-        "path": "time-rate",
-        "under": null
-      },
-      {
-        "name": "성능가동률",
-        "id": "performance-rate",
-        "path": "performance-rate",
-        "under": null
-      },
-      {
-        "name": "현장 대시보드",
-        "id": "temp-view",
-        "path": "temp-view",
-        "under": null
-      },
-      {
-        "name": "비가동 대시보드",
-        "id": "equip-status",
-        "path": "equip-status",
-        "under": null
-      },
-      {
-        "name": "공장 온습도 월별 추이 현황",
-        "id": "monthly-temp-humid-chart",
-        "path": "monthly-temp-humid-chart",
-        "under": null
+        "name": "대시보드",
+        "id": "dash",
+        "path": null,
+        "under": [
+          {
+            "name": "현장 대시보드",
+            "id": "temp-view",
+            "path": "temp-view",
+            "under": null
+          },
+          {
+            "name": "비가동 대시보드",
+            "id": "equip-status",
+            "path": "equip-status",
+            "under": null
+          },
+          {
+            "name": "공장 온습도 월별 추이 현황",
+            "id": "monthly-temp-humid-chart",
+            "path": "monthly-temp-humid-chart",
+            "under": null
+          }
+        ]
       }
     ]
   },
@@ -534,34 +577,47 @@
     "path": null,
     "under": [
       {
-        "name": "소분일지",
-        "id": "subdivision-panel",
-        "path": "subdivision-panel",
-        "under": null
-      },
-      {
-        "name": "계량일지",
-        "id": "weight-panel",
-        "path": "weight-panel",
-        "under": null
-      },
-      {
-        "name": "포장일지",
-        "id": "packing-panel",
-        "path": "packing-panel",
-        "under": null
-      },
-      {
-        "name": "일일운전점검일지",
-        "id": "equipment-result",
-        "path": "equipment-result",
-        "under": null
-      },
-      {
-        "name": "비가동관리",
-        "id": "downtime-panel",
-        "path": "downtime-panel",
-        "under": null
+        "name": "현장용",
+        "id": "panel-info",
+        "path": null,
+        "under": [
+          {
+            "name": "소분일지",
+            "id": "subdivision-panel",
+            "path": "subdivision-panel",
+            "under": null
+          },
+          {
+            "name": "계량일지",
+            "id": "weight-panel",
+            "path": "weight-panel",
+            "under": null
+          },
+          {
+            "name": "포장일지",
+            "id": "packing-panel",
+            "path": "packing-panel",
+            "under": null
+          },
+          {
+            "name": "일일운전점검일지",
+            "id": "equipment-result",
+            "path": "equipment-result",
+            "under": null
+          },
+          {
+            "name": "비가동관리",
+            "id": "downtime-panel",
+            "path": "downtime-panel",
+            "under": null
+          },
+          {
+            "name": "조별상황일지",
+            "id": "worker-group-status",
+            "path": "worker-group-status",
+            "under": null
+          }
+        ]
       }
     ]
   }
