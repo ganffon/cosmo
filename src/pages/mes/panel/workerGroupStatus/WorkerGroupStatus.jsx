@@ -73,19 +73,18 @@ function WorkerGroupStatus() {
     endDate: DateTime().dateFull,
   });
   const [inputTextChange, setInputTextChange] = useState({});
-  const handleInputTextChange = (e) => {
-    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
-  };
   const [comboValue, setComboValue] = useState({
     workTypeKey: null,
     workGroupKey: null,
   });
+
   const refGrid = useRef(null);
   const refGridNewEmp = useRef(null);
   const refGridEditEmp = useRef(null);
   const refGridAddEmp = useRef(null);
   const refGridEmp = useRef(null);
   const targetRowKey = useRef("");
+  const researchRowKey = useRef("");
   const workGroupId = useRef("");
   const target = useRef("");
 
@@ -368,6 +367,7 @@ function WorkerGroupStatus() {
     if (e?.targetType === "cell") {
       try {
         setIsBackDrop(true);
+        researchRowKey.current = e?.rowKey;
         const Grid = refGrid?.current?.gridInst;
         const id = Grid.getValue(e?.rowKey, "worker_group_status_id");
         workGroupId.current = id;
@@ -380,6 +380,96 @@ function WorkerGroupStatus() {
         const endDate = Grid.getValue(e?.rowKey, "work_end_date");
         const endTime = Grid.getValue(e?.rowKey, "work_end_time");
         const remark = Grid.getValue(e?.rowKey, "remark");
+
+        setEditContents({
+          ...editContents,
+          workId: id,
+          workTime: workTime,
+          workGroup: workGroup,
+          writerId: writerId,
+          writer: writer,
+          startDate: startDate,
+          startTime: startTime,
+          endDate: endDate,
+          endTime: endTime,
+          issue: remark,
+        });
+
+        switch (workTime) {
+          case "오전":
+            onClickWorkTypeMng();
+            break;
+          case "오후":
+            onClickWorkTypeAft();
+            break;
+          case "야간":
+            onClickWorkTypeNig();
+            break;
+          default:
+        }
+
+        switch (workGroup) {
+          case "A조":
+            onClickGroupA();
+            break;
+          case "B조":
+            onClickGroupB();
+            break;
+          case "C조":
+            onClickGroupC();
+            break;
+          case "D조":
+            onClickGroupD();
+            break;
+          default:
+        }
+
+        const result = await restAPI.get(restURI.workerGroupStatusDetailChip + `?worker_group_status_id=${id}`);
+
+        const data = result?.data?.data?.rows;
+
+        setMainContents({
+          ...mainContents,
+          writer: writer,
+          issue: remark,
+          startDate: startDate,
+          startTime: startTime,
+          endDate: endDate,
+          endTime: endTime,
+        });
+        setChipData(data);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+        workGroupId.current = "";
+      } finally {
+        setIsBackDrop(false);
+      }
+    }
+  };
+  const onSearchAfterEdit = async (e) => {
+    console.log(researchRowKey.current);
+    if (researchRowKey.current !== "") {
+      try {
+        setIsBackDrop(true);
+        const rowKey = researchRowKey.current;
+        const Grid = refGrid?.current?.gridInst;
+        const id = Grid.getValue(rowKey, "worker_group_status_id");
+        workGroupId.current = id;
+        const workTime = Grid.getValue(rowKey, "shift_type");
+        const workGroup = Grid.getValue(rowKey, "worker_group_nm");
+        const writerId = Grid.getValue(rowKey, "master_emp_id");
+        const writer = Grid.getValue(rowKey, "master_emp_nm");
+        const startDate = Grid.getValue(rowKey, "work_start_date");
+        const startTime = Grid.getValue(rowKey, "work_start_time");
+        const endDate = Grid.getValue(rowKey, "work_end_date");
+        const endTime = Grid.getValue(rowKey, "work_end_time");
+        const remark = Grid.getValue(rowKey, "remark");
 
         setEditContents({
           ...editContents,
@@ -471,6 +561,10 @@ function WorkerGroupStatus() {
     setMainContents({});
     setChipData([]);
   };
+
+  useEffect(() => {
+    onSearchAfterEdit();
+  }, [gridData]);
 
   const GridAddSelect = useMemo(() => {
     return (
@@ -686,6 +780,7 @@ function WorkerGroupStatus() {
           setEditContents={setEditContents}
           editContents={editContents}
           onClickSearch={onClickSearch}
+          onSearchAfterEdit={onSearchAfterEdit}
           onClickSelect={onClickEditSelect}
           onClickRemove={onClickRemove}
           onDblClickGrid={onDblClickEditGrid}

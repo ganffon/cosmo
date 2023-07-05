@@ -117,6 +117,10 @@
   "workerGroupStatusDetail": "/prd/worker-group-status-detail",
   "workerGroupStatusDetailChip": "/prd/worker-group-status-detail/by-chip",
   "workerGroupStatusEdit": "/prd/worker-group-status/{id}/include-details",
+  "workerGroupStatusEmpList": "/prd/worker-group-status-detail/latest/by-worker-group",
   "getOrderDetailsRawData": "/prd/order-details/raws",
-  "inspectionResultUpload": "/qms/insp-result-upload"
+  "inspectionResultUpload": "/qms/insp-result-upload",
+  "workYield": "prd/work-yield/main",
+  "workYieldDetail": "prd/work-yield",
+  "workYieldApply": "prd/work-yield/apply"
 }

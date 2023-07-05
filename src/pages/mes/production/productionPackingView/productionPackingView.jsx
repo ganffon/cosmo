@@ -6,8 +6,6 @@ import * as MS from "./productionPackingModel.styled";
 import DateTime from "components/datetime/DateTime";
 import InputPaper from "components/input/InputPaper";
 import ProductionPackingViewSet from "./productionPackingViewSet";
-import ButtonSearch from "components/button/ButtonSearch";
-import * as disRow from "custom/useDisableRowCheck";
 import CloseIcon from "@mui/icons-material/Close";
 import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
@@ -42,7 +40,6 @@ function ProductionPackingView() {
 
   const [gridDataModalHeader, setGridDataModalHeader] = useState(null);
   const [gridDataModalDetail, setGridDataModalDetail] = useState(null);
-  const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
 
   const prodCD = useRef("품목코드");
   const prodNM = useRef("품목");
@@ -70,7 +67,7 @@ function ProductionPackingView() {
   const onClickDetailInputButton = async (rowKey) => {
     const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_weigh_id;
     setIsBackDrop(true);
-    let readURI = `/prd/weigh/${gridDetailId}`;
+    let readURI = restURI.prdWeight`/prd/weigh/${gridDetailId}`;
     let gridData = await restAPI.get(readURI);
     setGridDataModalHeader(gridData?.data?.data?.rows);
 
@@ -99,7 +96,7 @@ function ProductionPackingView() {
     columnsModalDetail,
     inputSet,
     columnsSelectProd,
-  } = ProductionPackingViewSet(onClickDetailInputButton);
+  } = ProductionPackingViewSet();
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     onClickSearch();
@@ -263,7 +260,7 @@ function ProductionPackingView() {
       <GridSingle
         columnOptions={columnOptions}
         columns={columnsHeader}
-        rowHeaders={rowHeadersNumCheck}
+        rowHeaders={rowHeadersNum}
         header={header}
         data={gridDataHeader}
         draggable={false}
@@ -328,7 +325,7 @@ function ProductionPackingView() {
             <GridSingle
               columnOptions={columnOptions}
               columns={columnsDetail}
-              rowHeaders={rowHeadersNumCheck}
+              rowHeaders={rowHeadersNum}
               header={header}
               data={gridDataDetail}
               draggable={false}

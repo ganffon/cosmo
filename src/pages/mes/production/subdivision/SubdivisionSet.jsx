@@ -96,14 +96,14 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail, barcode
       id: "subdivision_date",
       name: CN.subdivision_date,
     },
-    {
-      id: "prod_cd",
-      name: CN.prod_cd,
-    },
-    {
-      id: "prod_nm",
-      name: CN.prod_nm,
-    },
+    // {
+    //   id: "prod_cd",
+    //   name: CN.prod_cd,
+    // },
+    // {
+    //   id: "prod_nm",
+    //   name: CN.prod_nm,
+    // },
     {
       id: "lot_no",
       name: CN.lot_no,

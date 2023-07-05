@@ -4,7 +4,7 @@ import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function PackingPanelSet(onClickGridButton) {
+function PackingPanelSet(onPerformance) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -15,18 +15,17 @@ function PackingPanelSet(onClickGridButton) {
   };
   const columnsHeader = [
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
-    col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
-    col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
+    col.text("line_nm", CN.line_nm),
+    col.text("line_dept_nm", CN.line_dept_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
-    col.number("input_qty", CN.input_qty),
+    col.number("packing_qty", CN.packing_qty),
+    col.number("packing_cnt", CN.packing_cnt),
+    col.number("complete_cnt", CN.complete_cnt),
+    col.button("performance", "실적등록", "실적등록", onPerformance),
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
-    col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
-    col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
-    col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
-    col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsDetail = [
     col.text("prod_class_nm", CN.prod_class_nm, C.U, C.U, C.WIDTH_MIDDLE),
@@ -43,121 +42,26 @@ function PackingPanelSet(onClickGridButton) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsSelectPackingHeader = [
-    col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
+    col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text(
-      "work_order_no",
-      CN.work_order_no,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
+    col.text("request_no", CN.request_no, false, false, C.WIDTH_SHORT, false, false, false, false, false),
+    col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT, false, false, false, false, false),
+    col.date("work_order_date", CN.work_order_date, C.U, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
-    col.text(
-      "line_dept_nm",
-      CN.line_dept_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
+    col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT, false, false, false, false, false),
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
-    col.text("line_nm", CN.line_nm, false, false, C.U, false, false, true),
+    col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT, false, false, false, false, false),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text(
-      "prod_cd",
-      CN.prod_cd,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
-    col.text(
-      "prod_nm",
-      CN.prod_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      false,
-      false,
-      true
-    ),
-    col.date("work_packing_date", CN.work_packing_date),
-    col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE, false, false, true),
-    col.number("packing_qty", CN.packing_qty),
-    col.number("packing_cnt", CN.packing_cnt),
-    col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
-    col.text(
-      "packing_emp_nm",
-      CN.packing_emp_nm,
-      false,
-      false,
-      C.U,
-      false,
-      false,
-      true
-    ),
+    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_MIDDLE, false, false, false, false, false),
+    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE, false, false, false, false, false),
+    col.date("work_start_date", CN.work_start_date, C.U, C.WIDTH_SHORT),
+    col.date("work_end_date", CN.work_end_date, C.U, C.WIDTH_SHORT),
+    col.number("work_order_qty", CN.work_order_qty, C.U, C.WIDTH_SHORT, false),
+    col.check("complete_fg", CN.complete_fg, C.U, false, C.WIDTH_SHORT),
+    col.date("complete_date", CN.complete_date, C.U, C.WIDTH_SHORT),
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text("store_nm", CN.store_nm, false, false, C.U, false, false, true),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text(
-      "location_nm",
-      CN.location_nm,
-      false,
-      false,
-      C.U,
-      false,
-      false,
-      true
-    ),
-    col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG, false, false, true),
-    col.text(
-      "create_at",
-      CN.create_at,
-      C.U,
-      C.U,
-      C.WIDTH_LONG,
-      "center",
-      false,
-      true
-    ),
-    col.text(
-      "create_user_nm",
-      CN.create_user_nm,
-      C.U,
-      C.U,
-      C.U,
-      "center",
-      false,
-      true
-    ),
-    col.text(
-      "update_at",
-      CN.update_at,
-      C.U,
-      C.U,
-      C.WIDTH_LONG,
-      "center",
-      false,
-      true
-    ),
-    col.text(
-      "update_user_nm",
-      CN.update_user_nm,
-      C.U,
-      C.U,
-      C.U,
-      "center",
-      false,
-      true
-    ),
+    col.text("remark", CN.remark, C.U, false, C.WIDTH_SHORT, false, false, false, false, false),
   ];
   const columnsNewHeader = [
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
@@ -191,26 +95,26 @@ function PackingPanelSet(onClickGridButton) {
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
   ];
   const columnsSelectHeader = [
-    col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
-    col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
-    col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
-    col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
-    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
-    col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
-    col.text("work_weigh_time", CN.work_weigh_time, C.U, C.U, C.U, "center"),
-    col.id("weigh_emp_id", CN.weigh_emp_id, C.HIDDEN_ID),
-    col.text("weigh_emp_nm", CN.weigh_emp_nm),
-    col.text("work_input_time", CN.work_input_time, C.U, C.U, C.U, "center"),
-    col.id("input_emp_id", CN.input_emp_id, C.HIDDEN_ID),
-    col.text("input_emp_nm", CN.input_emp_nm),
-    col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text("store_nm", CN.store_nm),
-    col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text("location_nm", CN.location_nm),
-    col.number("total_qty", CN.total_qty),
-    col.button("select", "선택", "데이터 선택", onClickGridButton),
-    col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
+    // col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
+    // col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
+    // col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
+    // col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
+    // col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
+    // col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
+    // col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
+    // col.text("work_weigh_time", CN.work_weigh_time, C.U, C.U, C.U, "center"),
+    // col.id("weigh_emp_id", CN.weigh_emp_id, C.HIDDEN_ID),
+    // col.text("weigh_emp_nm", CN.weigh_emp_nm),
+    // col.text("work_input_time", CN.work_input_time, C.U, C.U, C.U, "center"),
+    // col.id("input_emp_id", CN.input_emp_id, C.HIDDEN_ID),
+    // col.text("input_emp_nm", CN.input_emp_nm),
+    // col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
+    // col.text("store_nm", CN.store_nm),
+    // col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
+    // col.text("location_nm", CN.location_nm),
+    // col.number("total_qty", CN.total_qty),
+    // col.button("select", "선택", "데이터 선택", onClickGridButton),
+    // col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
   ];
   const columnsSelectDetail = [
     col.text("prod_class_nm", CN.prod_class_nm, C.U, C.U, C.WIDTH_MIDDLE),
@@ -221,6 +125,13 @@ function PackingPanelSet(onClickGridButton) {
     col.number("bag_qty", CN.bag_qty),
     col.number("input_qty", CN.input_qty),
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
+  ];
+  const columnsSelectEmp = [
+    col.text("dept_nm", CN.dept_nm, C.U, C.U, C.WIDTH_MIDDLE, false, false, true),
+    col.text("grade_nm", CN.grade_nm, C.U, C.U, C.U, false, false, true),
+    col.id("emp_id", CN.emp_id, C.HIDDEN_ID),
+    col.text("emp_cd", CN.emp_cd, C.U, C.U, C.U, false, false, true),
+    col.text("emp_nm", CN.emp_nm, C.U, C.U, C.U, false, false, true),
   ];
   const inputSet = [
     {
@@ -266,6 +177,7 @@ function PackingPanelSet(onClickGridButton) {
     columnsNewDetail,
     columnsSelectHeader,
     columnsSelectDetail,
+    columnsSelectEmp,
     inputSet,
     inputInfo,
   };

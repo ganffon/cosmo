@@ -7,8 +7,7 @@ import InputSearch from "components/input/InputSearch";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   padding: 5px 10px 5px 10px;
@@ -16,13 +15,13 @@ export const ContentsArea = styled("div")`
 `;
 export const ContentsLeft = styled("div")`
   height: 100%;
-  width: 49%;
+  width: 750px;
 
   padding: 0px 5px 20px 10px;
 `;
 
 export const ContentsLeftTop = styled("div")`
-  height: 120px;
+  height: 80px;
   width: 100%;
   background: #ffffff;
   border-radius: 10px;
@@ -32,7 +31,7 @@ export const ContentsLeftTop = styled("div")`
   padding: 10px 10px 10px 10px;
 `;
 export const ContentsLeftbottom = styled("div")`
-  height: calc(100% - 110px);
+  height: calc(100% - 70px);
   width: 100%;
   background: #ffffff;
   border-radius: 10px;
@@ -44,12 +43,12 @@ export const ContentsLeftbottom = styled("div")`
 
 export const ContentsRight = styled("div")`
   height: 100%;
-  width: 57%;
+  width: calc(100% - 750px);
 
   padding: 0px 10px 20px 0px;
 `;
 export const ContentsRightTop = styled("div")`
-  height: 120px;
+  height: 80px;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
@@ -59,7 +58,7 @@ export const ContentsRightTop = styled("div")`
   padding: 10px 10px 10px 0px;
 `;
 export const ContentsRightBottom = styled("div")`
-  height: calc(100% - 110px);
+  height: calc(100% - 70px);
   width: 100%;
   background: #ffffff;
   border-radius: 10px;
@@ -70,8 +69,9 @@ export const ContentsRightBottom = styled("div")`
 `;
 
 export const SearchLeftWrap = styled("div")`
-  height: 115px;
+  height: 100%;
   width: 100%;
+  display: flex;
   justify-content: space-between;
   padding: 10px 5px 15px 0px;
   margin-bottom: 8px;
@@ -108,14 +108,12 @@ export const GridDetailWrap = styled("div")`
   padding: 10px 10px 10px 10px;
 `;
 export const SearchWrap = styled("div")`
-  height: 50%;
-  width: 80%;
+  height: 50px;
   display: flex;
 `;
 export const ContentsHeaderWrap = styled("div")`
   padding-top: 8px;
-  margin-left: calc(100% - 500px);
-  width: 100%;
+  height: 50px;
   align-items: center;
   justify-content: flex-end;
 `;

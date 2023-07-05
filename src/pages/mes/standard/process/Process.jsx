@@ -140,7 +140,53 @@ function Process(props) {
     rowKey = e.rowKey;
   };
   const onClickModalCancelRow = () => {
-    refModalGrid?.current?.gridInst?.removeRow(rowKey);
+    /*
+    const gridInstance = refModalGrid.current?.getInstance();
+    const dataCount = gridInstance?.getData().length;
+    console.log(dataCount);
+
+    console.log(rowKey);
+    if (rowKey === undefined) {
+      console.log("키 없음");
+      console.log(refModalGrid?.current?.gridInst);
+      refModalGrid?.current?.gridInst?.removeRow(
+        refModalGrid?.current?.gridInst?.getRowCount() - 1
+      );
+    } else {
+      console.log("키 있음");
+      console.log(rowKey);
+      refModalGrid?.current?.gridInst?.removeRow(rowKey);
+    }
+    rowKey = undefined;
+    */
+    // 선택한 Row의 키 가져오기
+    // const selectedRowKey = refModalGrid.current
+    //   ?.getInstance()
+    //   ?.getSelection()
+    //   ?.getFocusedRowKey();
+
+    if (rowKey) {
+      console.log("키있음");
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+
+      gridInstance?.removeRow(rowKey);
+    } else {
+      console.log("키없음");
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+      const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
+      // const dataCount = gridInstance?.getData();
+
+      if (rowCount > 0) {
+        const lastRowKey = refModalGrid.current?.getInstance();
+        console.log(lastRowKey);
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = undefined;
   };
   const onClickModalSave = () => {
     actSave();

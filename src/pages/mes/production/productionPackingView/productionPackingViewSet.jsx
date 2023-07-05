@@ -5,7 +5,7 @@ import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function ProductionPackingViewSet(onClickDetailInputButton) {
+function ProductionPackingViewSet() {
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -32,20 +32,19 @@ function ProductionPackingViewSet(onClickDetailInputButton) {
   ];
 
   const columnsDetail = [
-    col.id("work_weigh_id", CN.work_weigh_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_LONG),
-    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_LONG),
-    col.text("lot_no", CN.lot_no, false, false, C.WIDTH_LONG),
-    col.number("input_qty", CN.input_qty, false, C.WIDTH_LONG, false),
-    col.text("remark", CN.remark, false, false, C.WIDTH_LONG),
-    col.button(
-      "input_report",
-      CN.input_report,
-      CN.input_report,
-      onClickDetailInputButton
-    ),
+    col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
+    col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
+    col.number("packing_qty", CN.packing_qty, false, C.WIDTH_SHORT, false),
+    col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
+    col.select("packing_emp_nm", CN.packing_emp_nm),
+    col.date("work_packing_date", CN.work_packing_date),
+    col.text("work_packing_time", CN.work_packing_time, C.U, C.U, C.U, "center"),
+    col.text("remark", CN.remark, C.U, false, C.WIDTH_MIDDLE),
+    col.text("barcode_no", CN.barcode_no, false, true),
     col.date("create_at", CN.create_at, false, C.WIDTH_LONG),
+    col.text("create_user_nm", CN.create_user_nm, false, false, C.WIDTH_SHORT, "center"),
     col.date("update_at", CN.update_at, false, C.WIDTH_LONG),
+    col.text("update_user_nm", CN.update_user_nm, false, false, C.WIDTH_SHORT, "center"),
   ];
   const columnsSelectProd = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
@@ -63,22 +62,10 @@ function ProductionPackingViewSet(onClickDetailInputButton) {
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_SHORT),
     col.date("work_weigh_date", CN.work_weigh_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_weigh_time",
-      CN.work_weigh_time,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
+    col.text("work_weigh_time", CN.work_weigh_time, false, false, C.WIDTH_SHORT),
     col.text("weigh_emp_nm", CN.weigh_emp_nm, false, false, C.WIDTH_SHORT),
     col.date("work_input_date", CN.work_input_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_input_time",
-      CN.work_input_time,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
+    col.text("work_input_time", CN.work_input_time, false, false, C.WIDTH_SHORT),
     col.text("input_emp_nm", CN.input_emp_nm, false, false, C.WIDTH_SHORT),
     col.text("remark", CN.remark, false, false, C.WIDTH_SHORT),
   ];

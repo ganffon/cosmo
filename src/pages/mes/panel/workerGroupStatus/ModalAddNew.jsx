@@ -39,6 +39,8 @@ function ModalAddNew(props) {
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
+  const [gridData, setGridData] = useState([]);
+
   useEffect(() => {
     setNewContents({
       ...newContents,
@@ -151,21 +153,43 @@ function ModalAddNew(props) {
     groupC.classList.remove("selected");
     groupD.classList.add("selected");
   }
+  const getEmpList = async (group) => {
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(restURI.workerGroupStatusEmpList + `?worker_group_nm=${group}`);
+
+      setGridData(result?.data?.data?.rows);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
   const onClickGroupA = (e) => {
     onGroupA();
     setNewContents({ ...newContents, workGroup: "A조" });
+    getEmpList("A조");
   };
   const onClickGroupB = (e) => {
     onGroupB();
     setNewContents({ ...newContents, workGroup: "B조" });
+    getEmpList("B조");
   };
   const onClickGroupC = (e) => {
     onGroupC();
     setNewContents({ ...newContents, workGroup: "C조" });
+    getEmpList("C조");
   };
   const onClickGroupD = (e) => {
     onGroupD();
     setNewContents({ ...newContents, workGroup: "D조" });
+    getEmpList("D조");
   };
   const handleTime = (e) => {
     const timeValue = RE.TimeInput(e?.target?.value);
@@ -211,6 +235,57 @@ function ModalAddNew(props) {
     }
   };
   const onNewSave = async () => {
+    if (!newContents.workType) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "작업시간을 선택하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!newContents.workGroup) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "작업조를 선택하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!newContents.writer) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "작성자를 입력하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!newContents.startTime) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "시작시간을 입력하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!newContents.endTime) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "종료시간을 입력하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+
     refGrid?.current?.gridInst?.finishEditing();
     const header = {
       master_emp_id: newContents.writerId,
@@ -243,6 +318,7 @@ function ModalAddNew(props) {
             open: true,
             message: res?.data?.message,
             severity: "success",
+            location: "bottomRight",
           });
           setTimeout(() => {
             onClickModalClose();
@@ -255,6 +331,7 @@ function ModalAddNew(props) {
             open: true,
             message: res?.message ? res?.message : res?.response?.data?.message,
             severity: "error",
+            location: "bottomRight",
           });
         })
         .finally(() => {
@@ -271,12 +348,12 @@ function ModalAddNew(props) {
         onClickGrid={onClickGrid}
         onDblClickGrid={onDblClickGrid}
         onEditingFinish={onEditingFinish}
-        data={data}
+        data={gridData}
         refGrid={refGrid}
         isEditMode={true}
       />
     );
-  }, [refGrid.current, onClickGrid]);
+  }, [refGrid.current, onClickGrid, gridData]);
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>

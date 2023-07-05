@@ -32,7 +32,7 @@ export const ShadowBoxHeader = styled("div")`
 export const ShadowBoxDetail = styled("div")`
   background-color: #ffffff;
   width: 100%;
-  height: 600px;
+  height: 850px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -50,7 +50,7 @@ export const ShadowBoxButtonHeader = styled("div")`
 `;
 export const ShadowBoxButtonDetail = styled("div")`
   width: 100%;
-  height: 60px;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   align-items: end;
@@ -87,7 +87,7 @@ export const GridHeaderWrap = styled("div")`
 `;
 export const GridDetailWrap = styled("div")`
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 100px);
 `;
 export const InputBox = styled("div")`
   width: 250px;
