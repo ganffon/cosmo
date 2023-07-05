@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 import * as C from "constant/Layout";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
-
 
 export const Container = styled.div`
   display: flex;
@@ -30,7 +29,6 @@ export const ContentsHeaderWrap = styled("div")`
   align-items: center;
 `;
 export const Top = styled.div`
-  
   height: 100%;
   padding: 10px 10px 10px 10px;
 `;
@@ -57,7 +55,7 @@ export const GridWrap = styled("div")`
   height: 80%;
   padding: 5px 0px 10px 20px;
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
 export const EmpStatusWrap = styled("div")`
   width: 100%;
@@ -65,7 +63,7 @@ export const EmpStatusWrap = styled("div")`
   margin-top: 10px;
   padding: 5px 0px 15px 20px;
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 
@@ -74,7 +72,7 @@ export const OtherContent = styled.div`
 `;
 
 export const Bottom = styled.div`
-  height:100%;
+  height: 100%;
   padding: 10px 10px 10px 10px;
 `;
 
@@ -85,7 +83,7 @@ export const Footer = styled.div`
 `;
 export const ContentsArea = styled("div")`
   width: 100%;
-  height:100vh;
+  height: 100vh;
   overflow: hidden auto;
   background-color: white;
 `;
@@ -98,11 +96,10 @@ export const ShadowBoxButton = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ToolWrap = styled("div")`
-  
   justify-content: space-between;
   align-items: end;
   padding: 5px 5px 15px 5px;
-  height: 40px
+  height: 40px;
 `;
 export const SearchWrap = styled("div")`
   display: flex;
@@ -111,26 +108,26 @@ export const SearchWrap = styled("div")`
 
 export const LeftTop = styled("div")`
   height: 35%;
-  display: 'flex'; 
-  flexDirection: 'column';  
+  display: "flex";
+  flexdirection: "column";
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 3px 5px 10px 0px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-`
+`;
 export const RightTop = styled("div")`
   height: 40%;
-  display: 'flex'; 
-  flexDirection: 'column';  
+  display: "flex";
+  flexdirection: "column";
   border-radius: 10px;
-  background-color: #FFFFFF;
-  margin-left:10px;
+  background-color: #ffffff;
+  margin-left: 10px;
   padding: 5px 5px 0px 0px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-`
+`;
 export const LeftBottom = styled("div")`
   height: calc(95% - 20px);
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -139,12 +136,12 @@ export const LeftBottom = styled("div")`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #E9E9E9; /* 스크롤바 색상 */
+    background-color: #e9e9e9; /* 스크롤바 색상 */
     border-radius: 4px; /* 스크롤바 모서리 반경 */
   }
 
   ::-webkit-scrollbar-track {
-    background-color: #FFFFFF; /* 스크롤바 트랙 색상 */
+    background-color: #ffffff; /* 스크롤바 트랙 색상 */
     border-radius: 4px; /* 스크롤바 트랙 모서리 반경 */
   }
 `;
@@ -158,26 +155,26 @@ export const GridContainer = styled("div")`
 `;
 export const RightBottom = styled("div")`
   height: 60%;
-  display: 'flex'; 
-  flexDirection: 'column';  
+  display: "flex";
+  flexdirection: "column";
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   margin-top: 10px;
-  margin-left:10px;
+  margin-left: 10px;
   padding: 3px 5px 0px 0px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-`
+`;
 export const Left = styled("div")`
   width: 30%;
   height: 100%;
-  background-color: #EFEFEF;
+  background-color: #efefef;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-`
+`;
 export const Right = styled("div")`
   width: 70%;
   height: 100%;
-  background-color: #EFEFEF;
-`
+  background-color: #efefef;
+`;
 
 export const LineState = styled("div")`
   font-family: Noto Sans KR;
@@ -187,7 +184,7 @@ export const LineState = styled("div")`
   font-weight: 700;
   line-height: 40px;
   text-align: center;
-`
+`;
 
 export const LineStateHeader = styled("div")`
   font-family: Noto Sans KR;
@@ -195,7 +192,7 @@ export const LineStateHeader = styled("div")`
   font-weight: 700;
   text-align: center;
   margin-top: 30px;
-`
+`;
 
 export const LineStateBorder = styled("div")`
   box-sizing: border-box;
@@ -209,7 +206,7 @@ export const LineStateBorder = styled("div")`
 `;
 
 export const WorkerBorder = styled("div")`
-  height: 100%;
+  height: 150px;
   width: 100%;
   border-radius: 10px;
   margin-right: 5px;
@@ -219,7 +216,7 @@ export const WorkerBorder = styled("div")`
 
 export const Title = styled("div")`
   height: 40px;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -228,7 +225,7 @@ export const Title = styled("div")`
   margin-left: 25px;
 `;
 export const RightTopTitle = styled("div")`
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -237,7 +234,7 @@ export const RightTopTitle = styled("div")`
 `;
 export const BottomTitle = styled("div")`
   height: 40px;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -245,23 +242,23 @@ export const BottomTitle = styled("div")`
   margin-top: 15px;
   margin-bottom: 15px;
 `;
-export const AllWrap = styled('div')`
+export const AllWrap = styled("div")`
   height: 100%;
   width: 100%;
   display: flex;
-  background-color: #eeeeee
+  background-color: #eeeeee;
 `;
 
 export const ImgWrap = styled("div")`
   display: flex;
   width: 100%;
   border-radius: 10px;
-  height:calc(80%);
-  background-color: #FFFFFF;
-`
+  height: calc(80%);
+  background-color: #ffffff;
+`;
 export const ChartWrap = styled("div")`
   margin: 15px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
 `;
 export const RBGridWrap = styled("div")`
@@ -269,5 +266,5 @@ export const RBGridWrap = styled("div")`
   height: 200px;
   padding: 5px 10px 10px 10px;
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;

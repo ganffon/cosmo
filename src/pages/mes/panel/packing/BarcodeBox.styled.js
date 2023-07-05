@@ -36,8 +36,7 @@ export const InputWrapDivide = styled("div")`
 export const InputWrapDivideBottom = styled("div")`
   padding-bottom: 40px;
   padding-top: 10px;
-  margin-left: 10px;
-  width: 99%;
+  width: 100%;
   display: flex;
   justify-content: space-around;
 `;

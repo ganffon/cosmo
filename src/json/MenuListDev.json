@@ -359,6 +359,12 @@
             "id": "equipment-result",
             "path": "equipment-result",
             "under": null
+          },
+          {
+            "name": "라인별 수율관리",
+            "id": "line-yield",
+            "path": "line-yield",
+            "under": null
           }
         ]
       },
@@ -380,7 +386,7 @@
             "under": null
           },
           {
-            "name": "포장실적현황",
+            "name": "일일포장실적현황",
             "id": "production-packing-view",
             "path": "production-packing-view",
             "under": null

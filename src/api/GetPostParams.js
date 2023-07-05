@@ -557,12 +557,11 @@ class packing {
 class packingDetail {
   constructor(raw) {
     this.work_packing_id = raw.work_packing_id;
-    this.work_weigh_id = raw.work_weigh_id;
-    this.prod_id = raw.prod_id;
-    this.lot_no = raw.lot_no;
-    this.input_qty = String(raw.input_qty) ? Number(raw.input_qty) : null;
-    this.inv_from_store_id = raw.inv_to_store_id;
-    this.inv_from_location_id = raw.inv_to_location_id;
+    this.packing_qty = String(raw.packing_qty) ? Number(raw.packing_qty) : null;
+    this.packing_emp_id = raw.packing_emp_id;
+    this.work_packing_date = raw.work_packing_date;
+    this.work_packing_time = raw.work_packing_time;
+    this.barcode_no = raw.barcode_no;
     this.remark = raw.remark;
   }
 }
@@ -642,6 +641,13 @@ class inspectionResultUpload {
     this.insp_min = raw.insp_min === "" || !raw.insp_min ? null : raw.insp_min;
     this.insp_max = raw.insp_max === "" || !raw.insp_max ? null : raw.insp_max;
     this.insp_value = raw.insp_value === "" || !raw.insp_value ? null : raw.insp_value;
+    this.remark = raw.remark;
+  }
+}
+class workYield {
+  constructor(raw) {
+    this.line_id = raw.line_id;
+    this.yield_value = String(raw.yield_value) ? Number(raw.yield_value) : null;
     this.remark = raw.remark;
   }
 }
@@ -832,6 +838,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "inspectionResultUpload":
         params = new inspectionResultUpload(raw);
+        break;
+      case "workYield":
+        params = new workYield(raw);
         break;
       default:
     }

@@ -9,9 +9,7 @@ import JsBarcode from "jsbarcode";
 function PackingModal(props) {
   const componentRef = useRef(null);
   const { onClose = () => {}, refModalGrid = null, isAddOneRow = false, data = [] } = props;
-  const [isBackDrop, setIsBackDrop] = useState(false);
   const { currentMenuName } = useContext(LayoutContext);
-  const [seriesData, setSeriesData] = useState(null);
   useEffect(() => {
     isAddOneRow && refModalGrid?.current?.gridInst?.appendRow();
 
@@ -27,11 +25,12 @@ function PackingModal(props) {
     onClose();
   }, [data]);
 
-  const series = data;
-  const rowHeaders = ["checkbox"];
-
   const handlePrint = () => {
-    const printWindow = window.open("", "_blank", "width=1200,height=800");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const left = window.screenX + window.innerWidth / 2 - width / 2;
+    const top = window.screenY + window.innerHeight / 2 - height / 2;
+    const printWindow = window.open("", "Print", `width=${width},height=${height},left=${left},top=${top}`);
     printWindow.document.open();
     printWindow.document.write(`
       <html>
@@ -85,6 +84,7 @@ function PackingModal(props) {
               gap: "10px",
               padding: "10px",
             }}
+            key={i}
           >
             <div style={{ width: "50%", padding: "5mm", borderRight: "1px solid black", display: "flex" }}>
               <div style={{ width: "100%", height: "calc(100% - 40px)" }}>
@@ -123,7 +123,6 @@ function PackingModal(props) {
                           color: "white",
                           backgroundColor: "black",
                         }}
-                        fWeight={"bold"}
                       >
                         Item
                       </div>
@@ -288,7 +287,8 @@ function PackingModal(props) {
                             justifyContent: "center",
                           }}
                         >
-                          {data.gubn}
+                          {/* {data.gubn} */}
+                          {""}
                         </div>
                       </div>
                     )}
@@ -353,7 +353,6 @@ function PackingModal(props) {
                           color: "white",
                           backgroundColor: "black",
                         }}
-                        fWeight={"bold"}
                       >
                         Item
                       </div>
@@ -518,7 +517,8 @@ function PackingModal(props) {
                             justifyContent: "center",
                           }}
                         >
-                          {data.gubn}
+                          {/* {data.gubn} */}
+                          {""}
                         </div>
                       </div>
                     )}

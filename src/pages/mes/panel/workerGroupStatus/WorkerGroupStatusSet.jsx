@@ -22,7 +22,7 @@ function WorkerGroupStatusSet() {
     col.text("work_start_time", CN.work_start_time, C.U, C.U, C.U, "center"),
     col.text("work_end_date", CN.work_end_date, C.U, C.U, C.U, "center"),
     col.text("work_end_time", CN.work_end_time, C.U, C.U, C.U, "center"),
-    col.text("remark", CN.remark, C.U, true),
+    col.text("remark", CN.remark, C.U, false),
   ];
   const columnsSelectEmp = [
     col.text("dept_nm", CN.dept_nm, false, false, C.WIDTH_MIDDLE, false, false, true),

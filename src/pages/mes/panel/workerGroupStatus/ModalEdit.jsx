@@ -9,7 +9,6 @@ import * as RE from "custom/RegularExpression";
 import BtnComponent from "components/button/BtnComponent";
 import GridSingle from "components/grid/GridSingle";
 import Condition from "custom/Condition";
-import GetPostParams from "api/GetPostParams";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import GetPutParams from "api/GetPutParams";
@@ -20,6 +19,7 @@ function ModalEdit(props) {
     height = "95%",
     onClickModalClose = () => {},
     onClickSearch = () => {},
+    onSearchAfterEdit = () => {},
     onEditingFinishInput = () => {},
     onClickGridInput = () => {},
     onClickSelect = () => {},
@@ -31,7 +31,6 @@ function ModalEdit(props) {
     data = [],
     header = [],
     rowHeaders = [],
-    gridDataInput = [],
     setEditContents = () => {},
     editContents = {},
     setIsBackDrop = {},
@@ -39,9 +38,12 @@ function ModalEdit(props) {
     isSnackOpen = false,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
+  const [gridOriginalData, setGridOriginalData] = useState();
+  const [originalGroup, setOriginalGroup] = useState();
   const [gridData, setGridData] = useState();
 
   useEffect(() => {
+    setOriginalGroup(editContents.workGroup); // 수정하는 상황에서 기존에 등록하였던 조를 기억하기 위함
     switch (editContents.workTime) {
       case "오전":
         onMng();
@@ -175,21 +177,59 @@ function ModalEdit(props) {
     groupC.classList.remove("selected");
     groupD.classList.add("selected");
   }
+  const getEmpList = async (group) => {
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(restURI.workerGroupStatusEmpList + `?worker_group_nm=${group}`);
+
+      setGridData(result?.data?.data?.rows);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
   const onClickGroupA = (e) => {
     onGroupA();
     setEditContents({ ...editContents, workGroup: "A조" });
+    if (originalGroup === "A조") {
+      setGridData(gridOriginalData);
+    } else {
+      getEmpList("A조");
+    }
   };
   const onClickGroupB = (e) => {
     onGroupB();
     setEditContents({ ...editContents, workGroup: "B조" });
+    if (originalGroup === "B조") {
+      setGridData(gridOriginalData);
+    } else {
+      getEmpList("B조");
+    }
   };
   const onClickGroupC = (e) => {
     onGroupC();
     setEditContents({ ...editContents, workGroup: "C조" });
+    if (originalGroup === "C조") {
+      setGridData(gridOriginalData);
+    } else {
+      getEmpList("C조");
+    }
   };
   const onClickGroupD = (e) => {
     onGroupD();
     setEditContents({ ...editContents, workGroup: "D조" });
+    if (originalGroup === "D조") {
+      setGridData(gridOriginalData);
+    } else {
+      getEmpList("D조");
+    }
   };
   const handleTime = (e) => {
     const timeValue = RE.TimeInput(e?.target?.value);
@@ -207,10 +247,7 @@ function ModalEdit(props) {
       Grid.setValue(i, "work_end_time", editContents.endTime);
     }
   }, [editContents]);
-  const rowKey = useRef("");
-  const onClickGrid = useCallback((e) => {
-    rowKey.current = e.rowKey;
-  }, []);
+
   const onEditingFinish = (e) => {
     if (Condition(e, ["work_start_time"])) {
       //🔸시간 정규표현식 적용
@@ -227,7 +264,8 @@ function ModalEdit(props) {
       const result = await restAPI.get(
         restURI.workerGroupStatusDetail + `?worker_group_status_id=${editContents.workId}`
       );
-      setGridData(result?.data?.data?.rows);
+      setGridOriginalData(result?.data?.data?.rows); // 수정하는 상황에서 기존에 등록되어있던 gridData 기억용
+      setGridData(result?.data?.data?.rows); // 실제로 뿌려주는 용도
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -241,9 +279,59 @@ function ModalEdit(props) {
     }
   };
   const onEditSave = async () => {
+    if (!editContents.workTime) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "작업시간을 선택하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!editContents.workGroup) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "작업조를 선택하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!editContents.writerId) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "작성자를 입력하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!editContents.startTime) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "시작시간을 입력하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
+    if (!editContents.endTime) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "종료시간을 입력하세요!",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
+    }
     refGrid?.current?.gridInst?.finishEditing();
     const header = {
-      master_emp_id: editContents.empID,
+      master_emp_id: editContents.writerId,
       shift_type: editContents.workType,
       worker_group_nm: editContents.workGroup,
       work_start_date: editContents.startDate,
@@ -279,6 +367,7 @@ function ModalEdit(props) {
           setTimeout(() => {
             onClickModalClose();
             onClickSearch();
+            onSearchAfterEdit();
           }, 300);
         })
         .catch((res) => {
@@ -332,18 +421,10 @@ function ModalEdit(props) {
           </S.GroupWrap>
           <S.GroupWrap>
             <S.Title>작업조</S.Title>
-            <S.workButton id={"EditGroupA"} onClick={onClickGroupA}>
-              {"A조"}
-            </S.workButton>
-            <S.workButton id={"EditGroupB"} onClick={onClickGroupB}>
-              {"B조"}
-            </S.workButton>
-            <S.workButton id={"EditGroupC"} onClick={onClickGroupC}>
-              {"C조"}
-            </S.workButton>
-            <S.workButton id={"EditGroupD"} onClick={onClickGroupD}>
-              {"D조"}
-            </S.workButton>
+            <S.GroupButton id={"EditGroupA"}>{"A조"}</S.GroupButton>
+            <S.GroupButton id={"EditGroupB"}>{"B조"}</S.GroupButton>
+            <S.GroupButton id={"EditGroupC"}>{"C조"}</S.GroupButton>
+            <S.GroupButton id={"EditGroupD"}>{"D조"}</S.GroupButton>
           </S.GroupWrap>
           <S.GroupWrap>
             <S.Title>작성자</S.Title>
@@ -415,8 +496,6 @@ function ModalEdit(props) {
         </S.ContentLeft>
         <S.ContentRight>
           <S.ButtonWrap>
-            {/* <BtnComponent btnName={"AddRow"} onClick={onEditAddRow} />
-            <BtnComponent btnName={"CancelRow"} onClick={onEditCancelRow} /> */}
             <BtnComponent btnName={"Save"} onClick={onEditSave} />
           </S.ButtonWrap>
           <S.GridWrap>{Grid}</S.GridWrap>

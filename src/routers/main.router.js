@@ -85,6 +85,7 @@ import SubdivisionReport from "pages/mes/production/subdivisionReport/Subdivisio
 
 import WorkerGroupStatus from "pages/mes/panel/workerGroupStatus/WorkerGroupStatus";
 import InspectionResult from "pages/mes/quality/inspectionResult/inspectionResult";
+import LineYield from "pages/mes/production/lineYield/LineYield";
 
 export default function MainRouter() {
   const pages = [
@@ -178,6 +179,7 @@ export default function MainRouter() {
     { path: "subdivision-report", component: SubdivisionReport },
     { path: "worker-group-status", component: WorkerGroupStatus },
     { path: "quality-result", component: InspectionResult },
+    { path: "line-yield", component: LineYield },
   ];
   return (
     <Layout>

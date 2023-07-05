@@ -41,6 +41,7 @@ function Packing() {
   const currentRow = useRef("");
   const targetGrid = useRef("");
   const targetRowKey = useRef("");
+  const targetWeight = useRef("");
 
   const resetProd = () => {
     prodID.current = "";
@@ -49,6 +50,7 @@ function Packing() {
   };
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
+  const [isEditModeDetail, setIsEditModeDetail] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -123,6 +125,7 @@ function Packing() {
       });
 
       setBarcodePrintInfo({
+        ...barcodePrintInfo,
         prodCD: result?.data?.data?.rows[0].prod_cd,
         prodNM: result?.data?.data?.rows[0].prod_type_small_nm,
         lot: result?.data?.data?.rows[0].lot_no,
@@ -192,7 +195,7 @@ function Packing() {
     columnsSelectWeight,
     columnsSelectWeightDetail,
     columnsSelectStore,
-  } = PackingSet(isEditModeHeader, barcodePrintDetail, barcodePrintHeader, onPrintClick);
+  } = PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick);
 
   let modalDetailClickRowKey = null;
 
@@ -230,6 +233,7 @@ function Packing() {
   const [inputTextChange, setInputTextChange] = useState({});
 
   const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disRowHeaderDetail, setDisRowHeaderDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -297,6 +301,10 @@ function Packing() {
     setIsEditModeHeader(true);
     setDisRowHeader(!disRowHeader);
   };
+  const onClickEditDetail = () => {
+    setIsEditModeDetail(true);
+    setDisRowHeaderDetail(!disRowHeaderDetail);
+  };
   const [removeToggle, setRemoveToggle] = useState(false);
   const onClickRemoveProd = () => {
     resetProd();
@@ -335,10 +343,40 @@ function Packing() {
       setIsBackDrop(false);
     }
   };
+  const onClickEditModeSaveDetail = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridDetail?.current?.gridInst;
+      Grid?.finishEditing();
+      const data = Grid.getCheckedRows().map((raw) => GetPutParams("packingDetail", raw));
+      const res = await restAPI.put(restURI.prdPackingDetail, data);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: res?.data?.message,
+        severity: "success",
+      });
+      disRow.handleCheckReset(isEditModeDetail, refGridDetail);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
   const onClickEditModeExit = () => {
     setIsEditModeHeader(false);
     setDisRowHeader(!disRowHeader);
     onClickSearch();
+  };
+  const onClickEditModeExitDetail = () => {
+    setIsEditModeDetail(false);
+    setDisRowHeaderDetail(!disRowHeaderDetail);
+    handleGridHeaderClick(false);
   };
   const onClickSearch = async () => {
     try {
@@ -433,7 +471,7 @@ function Packing() {
         message: res?.data?.message,
         severity: "success",
       });
-      handleGridHeaderClick();
+      handleGridHeaderClick(true);
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -470,6 +508,7 @@ function Packing() {
     Grid?.finishEditing();
     Grid?.appendRow();
     Grid?.setValue(Grid.getRowCount() - 1, "work_packing_id", workPackingID.current);
+    Grid?.setValue(Grid.getRowCount() - 1, "packing_qty", targetWeight.current);
   };
   const onClickModalGrid = (e) => {
     modalDetailClickRowKey = e.rowKey;
@@ -577,6 +616,13 @@ function Packing() {
       setIsModalSelectMultiOpen(true);
       actSelectWeight(`?complete_fg=COMPLETE&work_order_id=${workOrderID.current}`);
     }
+    if (Condition(e, ["packing_emp_nm"])) {
+      targetGrid.current = "Emp";
+      targetRowKey.current = e?.rowKey;
+      setColumnsSelect(columnsSelectEmp);
+      setIsModalSelectOpen(true);
+      actSelectEmp();
+    }
   };
   function onClickModalClose() {
     setIsModalOpen(false);
@@ -647,14 +693,14 @@ function Packing() {
       prodCD.current = data.prod_cd;
       prodNM.current = data.prod_nm;
     } else if (targetGrid.current === "Emp") {
-      const Grid = refGridHeaderNew?.current?.gridInst;
+      const Grid = refGridDetailNew?.current?.gridInst;
       Grid?.setValue(targetRowKey.current, "packing_emp_id", data.emp_id);
       Grid?.setValue(targetRowKey.current, "packing_emp_nm", data.emp_nm);
-    } else if (targetGrid.current === "GridHeader") {
-      const Grid = refGridHeader?.current?.gridInst;
+    } else if (targetGrid.current === "GridDetail") {
+      const Grid = refGridDetail?.current?.gridInst;
       Grid?.setValue(targetRowKey.current, "packing_emp_id", data.emp_id);
       Grid?.setValue(targetRowKey.current, "packing_emp_nm", data.emp_nm);
-      disRow.handleGridSelectCheck(refGridHeader, targetRowKey.current);
+      disRow.handleGridSelectCheck(refGridDetail, targetRowKey.current);
     } else if (targetGrid.current === "Store") {
       const Grid = refGridHeaderNew?.current?.gridInst;
       Grid?.setValue(targetRowKey.current, "inv_to_store_id", data.store_id);
@@ -696,12 +742,18 @@ function Packing() {
   const onClickSearchSelectDate = () => {
     actSelectOrder(`?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`);
   };
-  const handleGridHeaderClick = async () => {
+  const handleGridHeaderClick = async (reSearch) => {
     if (workPackingID.current) {
       try {
         setIsBackDrop(true);
         const result = await restAPI.get(restURI.prdPackingDetail + `?work_packing_id=${workPackingID.current}`);
+        console.log(result?.data?.data?.rows);
         setGridDataDetail(result?.data?.data?.rows);
+        if (result?.data?.data?.rows.length === 0) {
+          if (reSearch) {
+            onClickSearch();
+          }
+        }
       } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -721,7 +773,8 @@ function Packing() {
         currentRow.current = e?.rowKey;
         workOrderID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
         workPackingID.current = e?.instance.getValue(e?.rowKey, "work_packing_id");
-        handleGridHeaderClick();
+        targetWeight.current = e?.instance.getValue(e?.rowKey, "packing_qty");
+        handleGridHeaderClick(false);
       }
     }
   };
@@ -734,8 +787,30 @@ function Packing() {
       actSelectEmp();
     }
   };
+  const onDblClickGridDetail = (e) => {
+    if (Condition(e, ["packing_emp_nm"])) {
+      targetGrid.current = "GridDetail";
+      targetRowKey.current = e?.rowKey;
+      setColumnsSelect(columnsSelectEmp);
+      setIsModalSelectOpen(true);
+      actSelectEmp();
+    }
+  };
   const onEditingFinishGridHeader = (e) => {
     disRow.handleEditingFinishGridCheck(e);
+  };
+  const onEditingFinishGridDetail = (e) => {
+    disRow.handleEditingFinishGridCheck(e);
+    if (Condition(e, ["work_packing_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refGridDetail, "work_packing_time");
+    }
+  };
+  const onEditingFinishModalGridDetail = (e) => {
+    if (Condition(e, ["work_packing_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refGridDetailNew, "work_packing_time");
+    }
   };
 
   const GridHeader = useMemo(() => {
@@ -751,6 +826,7 @@ function Packing() {
         onClickGrid={onClickGridHeader}
         onDblClickGrid={onDblClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
+        isEditMode={isEditModeHeader}
       />
     );
   }, [gridDataHeader, isEditModeHeader, selectedOption]);
@@ -764,9 +840,12 @@ function Packing() {
         data={gridDataDetail}
         draggable={false}
         refGrid={refGridDetail}
+        onEditingFinish={onEditingFinishGridDetail}
+        onDblClickGrid={onDblClickGridDetail}
+        isEditMode={isEditModeDetail}
       />
     );
-  }, [gridDataDetail]);
+  }, [gridDataDetail, isEditModeDetail]);
   const GridHeaderNew = useMemo(() => {
     return (
       <ModalNew
@@ -804,6 +883,7 @@ function Packing() {
         onClickModalSave={onClickModalDetailSave}
         onClickModalGrid={onClickModalDetailGrid}
         onDblClickModalGrid={onDblClickModalDetailGrid}
+        onEditingFinishModal={onEditingFinishModalGridDetail}
       />
     );
   }, [refGridDetailNew]);
@@ -901,8 +981,8 @@ function Packing() {
           <S.TitleButtonWrap>
             <S.TitleMid>생산품목</S.TitleMid>
             <S.ButtonWrap>
-              <S.RadioTitle>바코드 출력 옵션</S.RadioTitle>
-              <S.RadioButton options={options} selectedOption={selectedOption} onChange={handleOptionChange} />
+              {/* <S.RadioTitle>바코드 출력 옵션</S.RadioTitle>
+              <S.RadioButton options={options} selectedOption={selectedOption} onChange={handleOptionChange} /> */}
               {isEditModeHeader ? (
                 <>
                   <S.InnerButtonWrap>
@@ -931,23 +1011,36 @@ function Packing() {
         </S.ContentsHeader>
       </S.TopWrap>
       <S.BottomWrap>
-        <S.ContentsHeader>
-          <S.TitleButtonWrap>
-            <S.TitleBottom>투입품목</S.TitleBottom>
-            <S.ButtonWrap>
+        {/* <S.ContentsHeader> */}
+        <S.TitleButtonWrap>
+          <S.TitleBottom>투입품목</S.TitleBottom>
+          <S.ButtonWrap>
+            {isEditModeDetail ? (
+              <>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Save"} onClick={onClickEditModeSaveDetail} />
+                </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExitDetail} />
+                </S.InnerButtonWrap>
+              </>
+            ) : (
               <>
                 <S.InnerButtonWrap>
                   <BtnComponent btnName={"New"} onClick={onClickNewDetail} />
                 </S.InnerButtonWrap>
-
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Edit"} onClick={onClickEditDetail} />
+                </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
                   <BtnComponent btnName={"Delete"} onClick={onClickDeleteDetail} />
                 </S.InnerButtonWrap>
               </>
-            </S.ButtonWrap>
-          </S.TitleButtonWrap>
-          <S.GridDetailWrap>{GridDetail}</S.GridDetailWrap>
-        </S.ContentsHeader>
+            )}
+          </S.ButtonWrap>
+        </S.TitleButtonWrap>
+        <S.GridDetailWrap>{GridDetail}</S.GridDetailWrap>
+        {/* </S.ContentsHeader> */}
       </S.BottomWrap>
       {/*🔸🔸🔸Header New*/}
       {isModalOpen ? GridHeaderNew : null}
@@ -965,7 +1058,7 @@ function Packing() {
           width={"400px"}
           isDelete={true}
           isCancel={true}
-          onDelete={handleDelete}
+          onDelete={handleDeleteHeader}
           onCancel={() => {
             setIsDeleteHeaderAlertOpen(false);
           }}

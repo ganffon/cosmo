@@ -115,6 +115,26 @@ export const workButton = styled("div")`
     font-weight: 900;
   }
 `;
+export const GroupButton = styled("div")`
+  background: #828282;
+  border-radius: 10px;
+  color: black;
+  font-family: NotoSansKR;
+  font-size: 30px;
+  padding: 10px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  border: solid #828282 1px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+
+  &.selected {
+    border: solid #ffb400 1px;
+    background: #ffbe0a;
+    font-weight: 900;
+  }
+`;
 
 export const DatePicker = styled(TextField)`
   width: 250px;

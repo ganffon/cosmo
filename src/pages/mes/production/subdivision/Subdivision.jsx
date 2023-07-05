@@ -524,7 +524,7 @@ function Subdivision() {
   };
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
-      const inputInfoValueList = ["subdivision_date", "prod_cd", "prod_nm", "lot_no", "total_qty", "remark"];
+      const inputInfoValueList = ["subdivision_date", "lot_no", "total_qty", "remark"];
       const rowID = e?.instance.getValue(e?.rowKey, "work_subdivision_id");
       if (rowID !== null) {
         setInputInfoValue([]);
@@ -622,7 +622,7 @@ function Subdivision() {
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
     }
 
-    const inputInfoValueList = ["subdivision_date", "prod_cd", "prod_nm", "lot_no", "total_qty", "remark"];
+    const inputInfoValueList = ["subdivision_date", "lot_no", "total_qty", "remark"];
     setInputInfoValue([]);
     for (let i = 0; i < inputInfoValueList.length; i++) {
       let data = Header.getValue(headerClickRowKey, inputInfoValueList[i]);

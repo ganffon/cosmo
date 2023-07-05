@@ -41,11 +41,10 @@ function BtnComponent(props) {
   };
 
   const hoverButton = (e) => {
-    const { nativeEvent } = e;
     setTooltipPosition({
       ...tooltipPosition,
-      x: nativeEvent.layerX - 100,
-      y: nativeEvent.layerY - 1000,
+      x: e?.target?.offsetLeft - 250,
+      y: e?.target?.offsetTop + 35,
     });
 
     const tooltipText = checkTooltip(toolTipTitle);
@@ -142,7 +141,6 @@ function BtnComponent(props) {
   }
   return btnName === "Search" ? (
     <S.BtnComponent
-      onMouseOver={hoverButton}
       height={btnHeight}
       width={btnWidth}
       onClick={() => {
@@ -155,25 +153,27 @@ function BtnComponent(props) {
       <S.SearchTitle>검색</S.SearchTitle>
     </S.BtnComponent>
   ) : (
-    <S.BtnBack
-      onMouseOver={btnName === "DataLoad" || btnName === "Mapping" ? hoverButton : null}
-      onMouseOut={hoverOut}
-      height={btnHeight}
-      width={btnWidth}
-      onClick={() => {
-        handleClick();
-        onClick();
-      }}
-      className={isClicked ? "clicked" : ""}
-    >
-      <S.Icon src={icon} />
-      <S.Title>{title}</S.Title>
-      {tooltipVisible ? (
-        <S.Tooltip x={1530} y={160}>
+    <>
+      <S.BtnBack
+        onMouseOver={btnName === "DataLoad" || btnName === "Mapping" ? hoverButton : null}
+        onMouseOut={hoverOut}
+        height={btnHeight}
+        width={btnWidth}
+        onClick={() => {
+          handleClick();
+          onClick();
+        }}
+        className={isClicked ? "clicked" : ""}
+      >
+        <S.Icon src={icon} />
+        <S.Title>{title}</S.Title>
+      </S.BtnBack>
+      {tooltipVisible && (
+        <S.Tooltip x={tooltipPosition.x} y={tooltipPosition.y}>
           <S.TooltipContents>{tooltipText}</S.TooltipContents>
         </S.Tooltip>
-      ) : null}
-    </S.BtnBack>
+      )}
+    </>
   );
 }
 

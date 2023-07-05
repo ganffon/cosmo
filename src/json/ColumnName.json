@@ -392,8 +392,10 @@
   "downtime_date": "비가동 일자",
   "work_packing_id": "포장 ID",
   "work_packing_date": "포장 일자",
+  "work_packing_time": "포장 시간",
   "packing_qty": "포장 중량",
   "packing_cnt": "포장 수량",
+  "complete_cnt": "포장 완료수량",
   "packing_emp_nm": "포장 작업자",
   "user_action": "활동 구분",
   "user_ip": "활동 IP",
@@ -438,5 +440,9 @@
   "insp_item": "검사항목",
   "insp_min": "최소값",
   "insp_max": "최대값",
-  "insp_value": "검사값"
+  "insp_value": "검사값",
+  "yield_value": "현재 수율",
+  "after_yield_value": "적용 수율",
+  "apply": "적용",
+  "work_yield_id": "수율ID"
 }

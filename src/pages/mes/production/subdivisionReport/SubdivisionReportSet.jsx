@@ -17,9 +17,9 @@ function SubdivisionSet() {
   const columnsHeader = [
     col.id("work_subdivision_id", CN.work_subdivision_id, C.HIDDEN_ID),
     col.date("subdivision_date", CN.subdivision_date, false, C.WIDTH_SHORT),
-    col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT),
-    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
+    // col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
+    // col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT),
+    // col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
     col.number("total_qty", CN.total_qty, false, C.WIDTH_SHORT, false),
     col.text("remark", CN.remark, false, false, C.WIDTH_MIDDLE),
@@ -30,42 +30,13 @@ function SubdivisionSet() {
   ];
   const columnsDetail = [
     col.id("work_subdivision_id", CN.work_subdivision_id, C.HIDDEN_ID),
-    col.id(
-      "work_subdivision_detail_id",
-      CN.work_subdivision_detail_id,
-      C.HIDDEN_ID
-    ),
+    col.id("work_subdivision_detail_id", CN.work_subdivision_detail_id, C.HIDDEN_ID),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
-    col.number(
-      "before_subdivision_qty",
-      CN.before_subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
-    col.number(
-      "after_subdivision_qty",
-      CN.after_subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
-    col.number(
-      "subdivision_qty",
-      CN.subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
+    col.number("before_subdivision_qty", CN.before_subdivision_qty, false, C.WIDTH_SHORT, false),
+    col.number("after_subdivision_qty", CN.after_subdivision_qty, false, C.WIDTH_SHORT, false),
+    col.number("subdivision_qty", CN.subdivision_qty, false, C.WIDTH_SHORT, false),
     col.date("subdivision_date", CN.subdivision_date, false, C.WIDTH_SHORT),
-    col.text(
-      "subdivision_time",
-      CN.subdivision_time,
-      false,
-      false,
-      C.WIDTH_SHORT,
-      "center"
-    ),
+    col.text("subdivision_time", CN.subdivision_time, false, false, C.WIDTH_SHORT, "center"),
     col.id("subdivision_emp_id", CN.subdivision_emp_id, C.HIDDEN_ID),
     col.text("remark", CN.remark, false, false, C.WIDTH_MIDDLE),
     col.date("create_at", CN.create_at, false, C.WIDTH_LONG),
@@ -75,14 +46,14 @@ function SubdivisionSet() {
   ];
 
   const inputSet = [
-    {
-      id: "prod_cd",
-      name: CN.prod_cd,
-    },
-    {
-      id: "prod_nm",
-      name: CN.prod_nm,
-    },
+    // {
+    //   id: "prod_cd",
+    //   name: CN.prod_cd,
+    // },
+    // {
+    //   id: "prod_nm",
+    //   name: CN.prod_nm,
+    // },
     {
       id: "lot_no",
       name: CN.lot_no,
@@ -93,14 +64,14 @@ function SubdivisionSet() {
       id: "subdivision_date",
       name: CN.subdivision_date,
     },
-    {
-      id: "prod_cd",
-      name: CN.prod_cd,
-    },
-    {
-      id: "prod_nm",
-      name: CN.prod_nm,
-    },
+    // {
+    //   id: "prod_cd",
+    //   name: CN.prod_cd,
+    // },
+    // {
+    //   id: "prod_nm",
+    //   name: CN.prod_nm,
+    // },
     {
       id: "lot_no",
       name: CN.lot_no,

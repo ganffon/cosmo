@@ -590,6 +590,16 @@ class packing {
     this.remark = raw.remark;
   }
 }
+class packingDetail {
+  constructor(raw) {
+    this.work_packing_detail_id = raw.work_packing_detail_id;
+    this.packing_qty = String(raw.packing_qty) ? Number(raw.packing_qty) : null;
+    this.packing_emp_id = raw.packing_emp_id;
+    this.work_packing_date = raw.work_packing_date;
+    this.work_packing_time = raw.work_packing_time;
+    this.remark = raw.remark;
+  }
+}
 class weight {
   constructor(raw) {
     this.work_weigh_id = raw.work_weigh_id;
@@ -636,7 +646,7 @@ class inspectionResultUpload {
 }
 class workGroupStatus {
   constructor(raw) {
-    this.worker_group_status_id = raw.worker_group_status_id;
+    this.worker_group_status_detail_id = raw.worker_group_status_detail_id;
     this.emp_id = raw.emp_id;
     this.work_start_date = raw.work_start_date;
     this.work_start_time = raw.work_start_time;
@@ -801,6 +811,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "packing":
       params = new packing(raw);
+      break;
+    case "packingDetail":
+      params = new packingDetail(raw);
       break;
     case "weight":
       params = new weight(raw);

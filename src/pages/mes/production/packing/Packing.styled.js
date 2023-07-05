@@ -58,16 +58,22 @@ export const ContentsArea = styled("div")`
   flex-direction: column;
 `;
 export const TopWrap = styled("div")`
-  height: 55%;
+  height: 450px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 `;
 export const BottomWrap = styled("div")`
-  height: 50%;
+  height: calc(100% - 460px);
   display: flex;
   flex-direction: column;
   gap: 5px;
+  background: #ffffff;
+  margin-top: 5px;
+
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ContentsLeft = styled("div")`
   height: 100%;
@@ -98,12 +104,11 @@ export const SearchWrap = styled("div")`
   padding: 5px 5px 5px 10px;
 `;
 export const ContentsHeader = styled("div")`
-  height: 97%;
+  height: calc(100% - 60px);
   width: 100%;
 
   margin-top: 5px;
   background: #ffffff;
-
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -131,7 +136,7 @@ export const SearchRightWrap = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridDetailWrap = styled("div")`
-  height: calc(100% - 40px);
+  height: calc(100% - 45px);
   width: 100%;
 
   padding: 10px 10px 10px 10px;
@@ -205,6 +210,7 @@ export const InputPaperWrap = styled("div")`
 `;
 
 export const TitleButtonWrap = styled("div")`
+  height: 40px;
   display: flex;
   justify-content: space-between;
 `;

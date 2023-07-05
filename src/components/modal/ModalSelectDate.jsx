@@ -28,26 +28,14 @@ function ModalSelectDate(props) {
     <ModalWrapMulti width={width} height={height}>
       <S.ContentsArea>
         <S.HeaderBox>
-          <S.TitleBox>{`[데이터 선택]`}</S.TitleBox>
-          <S.ButtonClose
-            color="primary"
-            aria-label="close"
-            onClick={onClickModalSelectDateClose}
-          >
+          <S.TitleBox>{`작업지시 선택`}</S.TitleBox>
+          <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalSelectDateClose}>
             <CloseIcon />
           </S.ButtonClose>
         </S.HeaderBox>
         <S.SearchBox>
-          <DateRange
-            dateText={dateText}
-            setDateText={setDateText}
-            onClickSearch={onClickSearch}
-          />
-          <BtnComponent
-            btnName={"Search"}
-            width={"100px"}
-            onClick={onClickSearch}
-          >
+          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+          <BtnComponent btnName={"Search"} width={"100px"} onClick={onClickSearch}>
             검색
           </BtnComponent>
         </S.SearchBox>

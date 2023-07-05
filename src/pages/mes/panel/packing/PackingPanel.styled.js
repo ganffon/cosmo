@@ -2,8 +2,7 @@ import styled from "styled-components";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -13,12 +12,12 @@ export const ContentsArea = styled("div")`
   // overflow: hidden auto;
 `;
 export const TopWrap = styled("div")`
-  height: 40%;
+  height: 350px;
   display: flex;
   flex-direction: column;
 `;
 export const MidWrap = styled("div")`
-  height: 35%;
+  height: calc(100% - 360px);
   display: flex;
   flex-direction: column;
 `;
@@ -74,7 +73,7 @@ export const SearchBox = styled("div")`
 //  display: flex;
 export const ButtonWrap = styled("div")``;
 export const GridHeader = styled("div")`
-  height: 99%;
+  height: 100%;
   width: 100%;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);

@@ -5,7 +5,6 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDeleteDetail from "components/onlySearchSingleGrid/modal/AlertDeleteDetail";
 import BackDrop from "components/backdrop/BackDrop";
 import DocumentSet from "pages/mes/standard/document/DocumentSet";
 import useInputSet from "custom/useInputSet";

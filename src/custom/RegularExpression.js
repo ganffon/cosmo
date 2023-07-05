@@ -2,25 +2,46 @@ const insertAt = (str, sub, pos) => `${str.slice(0, pos)}${sub}${str.slice(pos)}
 
 const Time = (e, refGrid, columnName) => {
   const Grid = refGrid?.current?.gridInst;
+  let value = e?.value;
   let pattern01 = /^([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$/;
   let pattern02 = /^(20|21|22|23|[0-1]\d)[0-5]\d$/;
-
+  if (value === "2400") {
+    //e가 "2400"인 경우, "0000"으로 변경합니다.
+    value = "0000";
+  } else if (Number(value) > 2400) {
+    //e가 2400보다 큰 숫자인 경우, e를 빈 문자열("")로 변경합니다.
+    value = "";
+  } else if (value.length === 2 && Number(value) > 24) {
+    //e의 길이가 2이고, e가 24보다 큰 숫자인 경우, e를 빈 문자열("")로 변경합니다.
+    value = "";
+  } else if (value.length === 4 && Number(value.slice(-2)) > 59) {
+    //e의 길이가 4이고, e의 끝에서 2자리가 59보다 큰 숫자인 경우, e를 빈 문자열("")로 변경합니다.
+    value = "";
+  } else if (value.length === 6) {
+    value = "";
+  } else {
+    //위의 조건에 해당하지 않는 경우, removeNonNumeric 함수를 사용하여 e에서 숫자 이외의 문자를 제거합니다.
+    value = removeNonNumeric(value);
+  }
   // 12:34 형식이니?
-  if (!pattern01.test(e?.value)) {
+  if (!pattern01.test(value)) {
     //그럼 숫자 4자리니?
-    if (!pattern02.test(e?.value)) {
-      //둘다 아니라면 공백으로 바꿔주렴
+    if (!pattern02.test(value)) {
       Grid?.setValue(e?.rowKey, columnName, "");
     } else {
-      Grid?.setValue(e?.rowKey, columnName, insertAt(e?.value, ":", 2));
+      Grid?.setValue(e?.rowKey, columnName, insertAt(value, ":", 2));
     }
+  } else {
+    Grid?.setValue(e?.rowKey, columnName, insertAt(value.replace(":", ""), ":", 2));
   }
 };
 
 //숫자만 입력받는 정규표현식
 const removeNonNumeric = (inputString) => {
-  const regex = /[^0-9]/g;
-  return inputString.replace(regex, "");
+  if (inputString) {
+    const regex = /[^0-9]/g;
+    return inputString.replace(regex, "");
+  }
 };
 const validateTimeFormat = (inputString) => {
   const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
