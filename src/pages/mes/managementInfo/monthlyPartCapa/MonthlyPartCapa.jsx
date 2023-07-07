@@ -2,12 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import strJson from "./data.json";
 import strGridJson from "./MonthlyPartCapaData.json";
-import GetTestValAndCreateAt, {
-  GetTestValAndCreateAtDay,
-  GetTestValAndCreateAtString,
-  GetDateDay,
-  GetDateMonth,
-} from "pages/mes/dashboard/asdb";
+import GetTestValAndCreateAt, { GetTestValAndCreateAtDay, GetTestValAndCreateAtString, GetDateDay, GetDateMonth } from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
@@ -20,7 +15,7 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import TextField from "@mui/material/TextField";
 import InputSearch from "components/input/InputSearch";
-import * as C from "./MonthlyPartCapa.styled"
+import * as C from "./MonthlyPartCapa.styled";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
@@ -31,18 +26,18 @@ const DonutChart = ({ data }) => {
     plotOptions: {
       pie: {
         donut: {
-          size: '0%', // 도넛 차트의 크기
+          size: "0%", // 도넛 차트의 크기
         },
       },
     },
     dataLabels: {
       style: {
-        colors: ['black'],
+        colors: ["black"],
       },
       enabled: true,
     },
     legend: {
-      position: 'bottom',
+      position: "bottom",
     },
   };
   return (
@@ -52,13 +47,12 @@ const DonutChart = ({ data }) => {
   );
 };
 
-const MonthlyPartCapa = ({toggle}) => {
+const MonthlyPartCapa = ({ toggle }) => {
   LoginStateChk();
   const refSingleGrid = useRef(null);
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
-    endDate: DateTime().dateFull,
+    startDate: DateTime().dateFull,
   });
   const [year, setYear] = useState(new Date().getFullYear());
   const [textInput, setTextInput] = useState("");
@@ -71,14 +65,18 @@ const MonthlyPartCapa = ({toggle}) => {
       setIsAuto(toggle);
     }
   }, [toggle, isAuto]);
-
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchButtonClick();
+    }
+  };
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
   const handleSearchButtonClick = () => {
     // setSearchButtonClicked();
-    GetMonthlyLineCapaData(dateText.endDate, textInput);
+    GetMonthlyLineCapaData();
   };
   const handleTextChange = (event) => {
     setTextInput(event.target.value);
@@ -86,12 +84,12 @@ const MonthlyPartCapa = ({toggle}) => {
   const handleChange = (event) => {
     setYear(event.target.value);
   };
-  const GetMonthlyLineCapaData = (endDate, textInput) => {
+  const GetMonthlyLineCapaData = () => {
     restAPI
       .get(restURI.monthlyProd, {
-        params: { 
-          reg_date: year
-          , line_nm: textInput 
+        params: {
+          reg_date: year,
+          line_nm: textInput,
         },
       })
       .then((response) => {
@@ -102,7 +100,6 @@ const MonthlyPartCapa = ({toggle}) => {
         // 오류 처리 로직
         // console.error('API 호출 중 오류 발생:', error);
       });
-      
   };
 
   // GetMonthlyLineCapaData(dateText.endDate, textInput);
@@ -135,65 +132,37 @@ const MonthlyPartCapa = ({toggle}) => {
   ];
   return (
     <ContentsArea>
-      {isAuto === true && <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.ToolWrap>
-          <S.SearchWrap>
-            <S.InputText
-                id="outlined-number"
-                label="년도"
-                type="number"
-                onChange={handleChange}
-                defaultValue={year}
-                size="small"
-                />
-            <S.InputText
-                key={"line_nm"}
-                id={"line_nm"}
-                label={"라인"}
-                size="small"
-                handleInputTextChange={handleTextChange}
-                onClickSearch={handleSearchButtonClick}
-              />
+      {isAuto === true && (
+        <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+          <S.ToolWrap>
+            <S.SearchWrap>
+              <S.InputText id="outlined-number" label="년도" type="number" onChange={handleChange} defaultValue={year} size="small" />
+              <S.InputText key={"line_nm"} id={"line_nm"} label={"라인"} size="small" onKeyDown={onKeyPress} onChange={handleTextChange} />
             </S.SearchWrap>
             <S.ButtonWrap>
               <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
             </S.ButtonWrap>
-        </S.ToolWrap>
-      </S.ShadowBoxButton>}
+          </S.ToolWrap>
+        </S.ShadowBoxButton>
+      )}
       <S.TopWrap>
         <S.FlexTop>
           <S.PartCapaLeft>
             <S.Title>월별 생산량 추이</S.Title>
             <S.ChartWrap>
-              {responseData && (
-                <Chart
-                  id={"chart"}
-                  options={cOptions}
-                  series={responseData.data.rows[0].lineGraph}
-                  type="line"
-                  height={350}
-                />
-              )}
+              {responseData && <Chart id={"chart"} options={cOptions} series={responseData.data.rows[0].lineGraph} type="line" height={350} />}
             </S.ChartWrap>
           </S.PartCapaLeft>
           <S.PartCapaRight>
-          <S.Title>생산량 점유율</S.Title>
-            <S.ChartWrap>
-              {responseData && (
-                <DonutChart data={responseData.data.rows[0].pieGraph}/>
-              )}
-            </S.ChartWrap>
+            <S.Title>생산량 점유율</S.Title>
+            <S.ChartWrap>{responseData && <DonutChart data={responseData.data.rows[0].pieGraph} />}</S.ChartWrap>
           </S.PartCapaRight>
         </S.FlexTop>
         <S.LineCapaBottom>
-        <S.GridWrap2>
-          {responseData && (
-            <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
-          )}
-        </S.GridWrap2>
-      </S.LineCapaBottom>
+          <S.GridWrap2>{responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}</S.GridWrap2>
+        </S.LineCapaBottom>
       </S.TopWrap>
-      
+
       {/* <SplitterLayout vertical></SplitterLayout> */}
     </ContentsArea>
   );

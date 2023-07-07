@@ -341,28 +341,24 @@ class document {
 class documentDetail {
   constructor(raw) {
     this.insp_document_id = raw.insp_document_id;
-    this.sortby = !isNaN(parseFloat(raw.sortby)) ? Number(raw.sortby.replace(/,/g, "")) : null;
+    this.sortby = !isNaN(parseFloat(raw.sortby)) ? Number(raw.sortby) : null;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.insp_proc_gbn = raw.insp_proc_gbn;
     this.insp_item_id = raw.insp_item_id;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = !isNaN(parseFloat(raw.spec_min)) ? Number(raw.spec_min.replace(/,/g, "")) : null;
-    this.spec_max = !isNaN(parseFloat(raw.spec_max)) ? Number(raw.spec_max.replace(/,/g, "")) : null;
-    this.spec_lcl = !isNaN(parseFloat(raw.spec_lcl)) ? Number(raw.spec_lcl.replace(/,/g, "")) : null;
-    this.spec_ucl = !isNaN(parseFloat(raw.spec_ucl)) ? Number(raw.spec_ucl.replace(/,/g, "")) : null;
+    this.spec_min = !isNaN(parseFloat(raw.spec_min)) ? Number(raw.spec_min) : null;
+    this.spec_max = !isNaN(parseFloat(raw.spec_max)) ? Number(raw.spec_max) : null;
+    this.spec_lcl = !isNaN(parseFloat(raw.spec_lcl)) ? Number(raw.spec_lcl) : null;
+    this.spec_ucl = !isNaN(parseFloat(raw.spec_ucl)) ? Number(raw.spec_ucl) : null;
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_tool_id = raw.insp_tool_id;
     this.insp_method_id = raw.insp_method_id;
     this.special_property = raw.special_property;
-    this.worker_sample_cnt = !isNaN(parseFloat(raw.worker_sample_cnt))
-      ? Number(raw.worker_sample_cnt.replace(/,/g, ""))
-      : null;
+    this.worker_sample_cnt = !isNaN(parseFloat(raw.worker_sample_cnt)) ? Number(raw.worker_sample_cnt) : null;
     this.worker_insp_cycle = raw.worker_insp_cycle;
-    this.inspector_sample_cnt = !isNaN(parseFloat(raw.inspector_sample_cnt))
-      ? Number(raw.inspector_sample_cnt.replace(/,/g, ""))
-      : null;
+    this.inspector_sample_cnt = !isNaN(parseFloat(raw.inspector_sample_cnt)) ? Number(raw.inspector_sample_cnt) : null;
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id === "" ? null : raw.infc_memory_id;
     this.remark = raw.remark;

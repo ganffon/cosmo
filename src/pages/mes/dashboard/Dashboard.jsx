@@ -15,6 +15,7 @@ import GridTheme from "components/grid/setting/GridTheme";
 import BackDrop from "components/backdrop/BackDrop";
 import Chart from "react-apexcharts";
 import ContentsArea from "components/layout/common/ContentsArea";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 
 const Dashboard = () => {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -36,7 +37,7 @@ const Dashboard = () => {
   const [isClicked, setIsClicked] = useState(false);
   const refSingleGrid = useRef(null);
   const refSecondGrid = useRef(null);
-  
+
   const [isBackDrop, setIsBackDrop] = useState(false);
   useEffect(() => {
     GetDashboardData();
@@ -59,19 +60,34 @@ const Dashboard = () => {
     { header: "비가동명", name: "downtime_nm" },
     { header: "비가동유형", name: "downtime_type_nm" },
   ];
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+    refSecondGrid?.current?.gridInst?.refreshLayout();
+    // addDivToHeader();
+  }, [isMenuSlide]);
+  // const addDivToHeader = () => {
+  //   const e1PerformanceTh = document.querySelector('th[data-column-name="e1_performance"]');
+  //   if (e1PerformanceTh && e1PerformanceTh.children.length === 0) {
+  //     e1PerformanceTh.textContent = "";
+  //     const div = document.createElement("pre");
+  //     div.className = "multiLine";
+  //     div.style.whiteSpace = "pre-wrap";
+  //     div.textContent = "생산\n량";
+  //     e1PerformanceTh.appendChild(div);
+  //   }
+  // };
   const columnsGoal = [
-    { header: "생산량", name: "e1_performance" },
+    {
+      header: "생산량",
+      name: "e1_performance",
+    },
     { header: "목표량", name: "e1_target" },
     { header: "생산량", name: "e2_performance" },
     { header: "목표량", name: "e2_target" },
     { header: "생산량", name: "e3_performance" },
     { header: "목표량", name: "e3_target" },
   ];
-  useEffect(() => {
-    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refSingleGrid?.current?.gridInst?.refreshLayout();
-    refSecondGrid?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide]);
   const getTimeHeader = () => ({
     height: 80,
     complexColumns: [
@@ -79,6 +95,7 @@ const Dashboard = () => {
         header: "E1 라인",
         name: "E1",
         childNames: ["e1_performance", "e1_target"],
+        // renderer: CustomGrid.ColumnHeaderMultiLine,
       },
       {
         header: "E2 라인",
@@ -103,24 +120,19 @@ const Dashboard = () => {
         setResponseData(response.data);
         setWorkerData(response?.data?.data?.rows[0].worker);
         let index = 0;
-        const modifiedData = response.data.data.rows[0].downtime.map(
-          (item) => ({
-            ...item,
-            start_dt: `${item.start_date} ${item.start_time}`,
-            end_dt: item.end_date && item.end_time ? `${item.end_date} ${item.end_time}` : '',
-            no: ++index,
-          })
-        );
-        const stateData = response.data.data.rows[0].line_state.map(
-          (item) => ({
-            ...item,
-            eq_state: (item.state===1) ? true : false 
-          })
-        );
-        
-        
+        const modifiedData = response.data.data.rows[0].downtime.map((item) => ({
+          ...item,
+          start_dt: `${item.start_date} ${item.start_time}`,
+          end_dt: item.end_date && item.end_time ? `${item.end_date} ${item.end_time}` : "",
+          no: ++index,
+        }));
+        const stateData = response.data.data.rows[0].line_state.map((item) => ({
+          ...item,
+          eq_state: item.state === 1 ? true : false,
+        }));
+
         setDowntime(modifiedData);
-        setState(stateData)
+        setState(stateData);
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -144,53 +156,51 @@ const Dashboard = () => {
     },
   };
 
-  const renderLine = (index) => (
-    <S.LineStateHeader>
-      E{index + 1} Line
-    </S.LineStateHeader>
-  );
+  const renderLine = (index) => <S.LineStateHeader>E{index + 1} Line</S.LineStateHeader>;
   const handleImgClick = () => {
     setIsClicked(!isClicked);
   };
-  const RenderImage = (index) => {  
-    return (
-      equipState && equipState[index] ? (
-        <S.LineStateBorder backgroundColor={equipState[index].eq_state ? '#F4FFF8' : "#FFF2F2"} borderColor={equipState[index].eq_state ? '#9AEBB7' : "#FF9494"}>
-          {renderLine(index)}
-            <img
-            src={equipState[index].eq_state ? doriGreenImg : doriRedImg}
-            alt={equipState[index].eq_state ? "Dori Green" : "Dori Red"}
-            style={{
-              // display: 'flex',
-              display: 'block',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flex: 'none',
-              margin: '0 auto',
-              width: '75px',
-              height: '75px',
-            }}
-            onClick={handleImgClick} />
-            <img
-            src={equipState[index].eq_state ? goodFont : badFont}
-            alt={equipState[index].eq_state ? "goodFont" : "badFont"}
-            style={{
-              // display: 'flex',
-              display: 'block',
-              justifyContent: 'center',
-              margin: '0 auto',
-              marginTop: '10px',
-              width: '75px',
-              height: '25px',
-            }}
-            />
-          {/* <LineState>
+  const RenderImage = (index) => {
+    return equipState && equipState[index] ? (
+      <S.LineStateBorder
+        backgroundColor={equipState[index].eq_state ? "#F4FFF8" : "#FFF2F2"}
+        borderColor={equipState[index].eq_state ? "#9AEBB7" : "#FF9494"}
+      >
+        {renderLine(index)}
+        <img
+          src={equipState[index].eq_state ? doriGreenImg : doriRedImg}
+          alt={equipState[index].eq_state ? "Dori Green" : "Dori Red"}
+          style={{
+            // display: 'flex',
+            display: "block",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: "none",
+            margin: "0 auto",
+            width: "75px",
+            height: "75px",
+          }}
+          onClick={handleImgClick}
+        />
+        <img
+          src={equipState[index].eq_state ? goodFont : badFont}
+          alt={equipState[index].eq_state ? "goodFont" : "badFont"}
+          style={{
+            // display: 'flex',
+            display: "block",
+            justifyContent: "center",
+            margin: "0 auto",
+            marginTop: "10px",
+            width: "75px",
+            height: "25px",
+          }}
+        />
+        {/* <LineState>
             {equipState[index].eq_state ? 'GOOD!' : 'BAD!'}
           </LineState> */}
-          {/* </> */}
-          </S.LineStateBorder>
-      ) : null
-    );
+        {/* </> */}
+      </S.LineStateBorder>
+    ) : null;
   };
 
   const RadialBarChart = ({ data }) => {
@@ -198,20 +208,15 @@ const Dashboard = () => {
       plotOptions: {
         radialBar: {
           hollow: {
-            size: '70%',
+            size: "70%",
           },
         },
       },
     };
-  
+
     return (
       <div>
-        <Chart
-          options={options}
-          series={data}
-          type="radialBar"
-          height={350}
-        />
+        <Chart options={options} series={data} type="radialBar" height={350} />
       </div>
     );
   };
@@ -223,17 +228,15 @@ const Dashboard = () => {
           src={doriFace}
           alt={"doriFace"}
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flex: 'none',
-            margin: '0 auto',
-            width: '80px',
-            height: '100px',
+            display: "flex",
+            justifyContent: "center",
+            flex: "none",
+            margin: "0 auto",
+            width: "80px",
+            height: "100px",
           }}
         />
-        <S.LineState>
-          {name}
-        </S.LineState>
+        <S.LineState>{name}</S.LineState>
       </S.WorkerBorder>
     );
   };
@@ -246,64 +249,67 @@ const Dashboard = () => {
   // setResult(GetTestValAndCreateAt(strJson));
   return (
     <ContentsArea>
-    <S.AllWrap>
-      <S.Left>
-        <S.LeftTop> 
-          <S.Title>라인 가동 상태</S.Title>
-          {equipState && (
-            <S.ImgWrap>
-                  {RenderImage(0)}
-                  {RenderImage(1)}
-                  {RenderImage(2)}
-            </S.ImgWrap>
-          )}
-        </S.LeftTop>
-        <S.EmpStatusWrap>
-            <S.Title>
-                실시간 생산 담당자
-              </S.Title>
+      <S.AllWrap>
+        <S.Left>
+          <S.LeftTop>
+            <S.Title>라인 가동 상태</S.Title>
+            {equipState && (
+              <S.ImgWrap>
+                {RenderImage(0)}
+                {RenderImage(1)}
+                {RenderImage(2)}
+              </S.ImgWrap>
+            )}
+          </S.LeftTop>
+          <S.EmpStatusWrap>
+            <S.Title>실시간 생산 담당자</S.Title>
             <S.LeftBottom>
               <S.GridContainer>
                 {workerData &&
                   workerData.map((worker, index) => (
-                    <React.Fragment key={index}>
-                      {RenderWorker(worker.emp_nm)}
-                    </React.Fragment>
+                    <React.Fragment key={index}>{RenderWorker(worker.emp_nm)}</React.Fragment>
                   ))}
               </S.GridContainer>
             </S.LeftBottom>
-        </S.EmpStatusWrap>
-      </S.Left>
-      <S.Right>
-        <S.RightTop>
-          <S.Title>최근 라인 비가동 정보</S.Title>
-          <S.GridWrap>
-            {downtime && <GridSingle columns={columnsDownTime} data={downtime} options={gridOptions} refGrid={refSingleGrid}/>}
-          </S.GridWrap>
-        </S.RightTop>
-        <S.RightBottom> 
-          <S.Title>
-            EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: '0.8em' }}>[기준 06:00 ~ 05:59]</span>
-          </S.Title>
+          </S.EmpStatusWrap>
+        </S.Left>
+        <S.Right>
+          <S.RightTop>
+            <S.Title>최근 라인 비가동 정보</S.Title>
+            <S.GridWrap>
+              {downtime && (
+                <GridSingle columns={columnsDownTime} data={downtime} options={gridOptions} refGrid={refSingleGrid} />
+              )}
+            </S.GridWrap>
+          </S.RightTop>
+          <S.RightBottom>
+            <S.Title>
+              EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+            </S.Title>
             <S.ChartWrap>
               {responseData && (
-                <Chart options={cOptions} type="bar" height={200} series={responseData.data.rows[0].line_work_status.graph} />
+                <Chart
+                  options={cOptions}
+                  type="bar"
+                  height={200}
+                  series={responseData.data.rows[0].line_work_status.graph}
+                />
               )}
-          </S.ChartWrap>
-          <S.RBGridWrap>
-            {responseData && (
-              <GridSingle
-                header={complexColumns}
-                columns={columnsGoal}
-                data={responseData.data.rows[0].line_work_status.grid}
-                refGrid={refSecondGrid}
-              />
-            )}
+            </S.ChartWrap>
+            <S.RBGridWrap>
+              {responseData && (
+                <GridSingle
+                  header={complexColumns}
+                  columns={columnsGoal}
+                  data={responseData.data.rows[0].line_work_status.grid}
+                  refGrid={refSecondGrid}
+                />
+              )}
             </S.RBGridWrap>
-        </S.RightBottom>
-      </S.Right>
-      <BackDrop isBackDrop={isBackDrop} />
-    </S.AllWrap>
+          </S.RightBottom>
+        </S.Right>
+        <BackDrop isBackDrop={isBackDrop} />
+      </S.AllWrap>
     </ContentsArea>
   );
 };

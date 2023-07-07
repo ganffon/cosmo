@@ -401,13 +401,21 @@ function WeightPanel() {
       });
     }
   };
+  function countDecimalPlaces(number) {
+    const decimalPart = String(number).split(".")[1];
+    return decimalPart ? decimalPart.length : 0;
+  }
   const onEditingFinishWeight = (e) => {
     const Grid = refGridWeight?.current?.gridInst;
     if (Condition(e, ["total_qty"])) {
       const beforeQty = e?.value;
       const afterQty = Grid.getValue(e?.rowKey, "bag_qty");
+      const beforeDec = countDecimalPlaces(beforeQty);
+      const afterDec = countDecimalPlaces(afterQty);
+      const fixDec = Math.max(beforeDec, afterDec);
+
       if (afterQty) {
-        Grid?.setValue(e?.rowKey, "input_qty", beforeQty - afterQty);
+        Grid?.setValue(e?.rowKey, "input_qty", (beforeQty - afterQty).toFixed(fixDec));
       } else {
         Grid?.setValue(e?.rowKey, "input_qty", beforeQty);
       }
@@ -415,8 +423,12 @@ function WeightPanel() {
     if (Condition(e, ["bag_qty"])) {
       const beforeQty = Grid.getValue(e?.rowKey, "total_qty");
       const afterQty = e?.value;
+      const beforeDec = countDecimalPlaces(beforeQty);
+      const afterDec = countDecimalPlaces(afterQty);
+      const fixDec = Math.max(beforeDec, afterDec);
+
       if (beforeQty) {
-        Grid?.setValue(e?.rowKey, "input_qty", beforeQty - afterQty);
+        Grid?.setValue(e?.rowKey, "input_qty", (beforeQty - afterQty).toFixed(fixDec));
       } else {
         Grid?.setValue(e?.rowKey, "input_qty", -e?.value);
       }

@@ -122,5 +122,7 @@
   "inspectionResultUpload": "/qms/insp-result-upload",
   "workYield": "prd/work-yield/main",
   "workYieldDetail": "prd/work-yield",
-  "workYieldApply": "prd/work-yield/apply"
+  "workYieldApply": "prd/work-yield/apply",
+  "timeRate": "/kpi/availability/downtime",
+  "sysTimeRate": "/kpi/facility/sys-downtime"
 }

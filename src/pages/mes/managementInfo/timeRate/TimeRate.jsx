@@ -1,192 +1,237 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import strGridJson from "./MonthlyLineCapaData.json";
-import strJson from "./TimeRateData.json";
-import GetTestValAndCreateAt, {
-  GetTestValAndCreateAtDay,
-  GetTestValAndCreateAtString,
-  GetDateDay,
-  GetDateMonth,
-  GetTimeRate,
-} from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
-import Grid from "@toast-ui/react-grid";
-import * as timeSet from "./TimeRateSet";
-import "tui-grid/dist/tui-grid.css";
+import "react-splitter-layout/lib/index.css";
+import restAPI from "api/restAPI";
+import restURI from "json/restURI.json";
+import InputSearch from "components/input/InputSearch";
+import TextField from "@mui/material/TextField";
+import BackDrop from "components/backdrop/BackDrop";
+import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
+import * as Set from "./TimeRateSet";
+import Grid from "@toast-ui/react-grid";
 
-const TimeRate = () => {
+const TimeRate = ({ toggle }) => {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
-  const [dateText, setDateText] = useState({
-    endDate: DateTime().dateFull,
-  });
-  const [result, setResult] = useState([]);
-  const [result2, setResult2] = useState([]);
   const refSingleGrid = useRef(null);
-
-  const [gridData, setGridData] = useState(null);
-  const [isSnackOpen, setIsSnackOpen] = useState({
-    open: false,
+  const [isBackDrop, setIsBackDrop] = useState(false);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const [dateText, setDateText] = useState({
+    startDate: DateTime().year + "-" + DateTime().month,
   });
-  const [searchToggle, setSearchToggle] = useState(false);
-  const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  const [textInput, setTextInput] = useState("");
+  const [responseData, setResponseData] = useState(null);
+  const [responseSysData, setResponseSysData] = useState(null);
+  const [isAuto, setIsAuto] = useState(true);
+  const [e1OPTime, setE1OPTime] = useState(1440);
+  const [e2OPTime, setE2OPTime] = useState(1440);
+  const [e3OPTime, setE3OPTime] = useState(1440);
 
   useEffect(() => {
-    setResult(
-      GetTimeRate(
-        strJson,
-        "create_at",
-        "e1_Oper",
-        "e2_Oper",
-        "e3_Oper",
-        "total"
-      )
-    );
-  }, []);
+    handleSearchButtonClick();
+    if (toggle !== undefined && isAuto !== toggle) {
+      setIsAuto(toggle);
+    }
+  }, [toggle, isAuto]);
   const handleSearchButtonClick = () => {
-    setSearchButtonClicked();
+    // setSearchButtonClicked();
+    GetTimeRate();
+    GetSysTimeRate();
   };
-
-  const categories = result.map((item) => item.create_at);
-  const series1 = result.map((item) => item.testVal1);
-  const series2 = result.map((item) => item.testVal2);
-  const series3 = result.map((item) => item.testVal3);
-  const series4 = result.map((item) => item.testVal4);
-
-  const colors = [
-    "#33b2df",
-    "#546E7A",
-    "#d4526e",
-    "#13d8aa",
-    "#A5978B",
-    "#2b908f",
-    "#f9a3a4",
-    "#90ee7e",
-    "#f48024",
-    "#69d2e7",
-  ];
-
-  const myValWithGoals = [];
-  const myValWithGoals2 = [];
-  const myValWithGoals3 = [];
-  const myValWithGoals4 = [];
-  for (let i = 0; i < series1.length; i++) {
-    // myVal.push([{data:[{x:categories[0], y:series1[0], goals:[{name:"Expected", value: goal1[0], strokeHeight: 10, strokeColor: '#775DD0'}]}]}])
-    myValWithGoals.push({ x: categories[i], y: series1[i] });
-    myValWithGoals2.push({ x: categories[i], y: series2[i] });
-    myValWithGoals3.push({ x: categories[i], y: series3[i] });
-    myValWithGoals4.push({ x: categories[i], y: series4[i] });
-  }
-
-  const cWithMark = {
-    series: [
-      // 차트의 데이터를 담는 배열
-      {
-        name: "E1", // 시리즈(데이터) 이름
-        data: myValWithGoals,
-        // color:'#FFD700'
-      },
-      {
-        name: "E2", // 시리즈(데이터) 이름
-        data: myValWithGoals2,
-        // color:'#00FF00'
-      },
-      {
-        name: "E3", // 시리즈(데이터) 이름
-        data: myValWithGoals3,
-        // color:'#00FFFF'
-      },
-      {
-        name: "total", // 시리즈(데이터) 이름
-        data: myValWithGoals4,
-        color: "#00FFFF",
-      },
-    ],
-    Chart: {
-      // 차트의 기본 설정
-      height: 350, // 차트 높이
-      // type: 'bar' // 차트 타입 (막대그래프)
-    },
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    refSingleGrid?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide]);
+  const handleTextChange = (event) => {
+    setTextInput(event.target.value);
+  };
+  const handleE1Change = (event) => {
+    let targetVal = event.target.value;
+    if (event.target.value > 1440) {
+      targetVal = 1440;
+    } else if (event.target.value < 1) {
+      targetVal = 1;
+    }
+    setE1OPTime(targetVal);
+  };
+  const handleE2Change = (event) => {
+    let targetVal = event.target.value;
+    if (event.target.value > 1440) {
+      targetVal = 1440;
+    } else if (event.target.value < 1) {
+      targetVal = 1;
+    }
+    setE2OPTime(targetVal);
+  };
+  const handleE3Change = (event) => {
+    let targetVal = event.target.value;
+    if (event.target.value > 1440) {
+      targetVal = 1440;
+    } else if (event.target.value < 1) {
+      targetVal = 1;
+    }
+    setE3OPTime(targetVal);
+  };
+  const datePickerChange = (e) => {
+    setDateText({ ...dateText, [e.target.id]: e.target.value });
+  };
+  const GetTimeRate = () => {
+    restAPI
+      .get(restURI.timeRate, {
+        params: { reg_date: dateText.startDate, e1_time: e1OPTime, e2_time: e2OPTime, e3_time: e3OPTime },
+      })
+      .then((response) => {
+        // console.log(response.data);
+        // API 응답 데이터 처리 로직
+        setResponseData(response.data);
+      })
+      .catch((error) => {
+        // 오류 처리 로직
+        // console.error('API 호출 중 오류 발생:', error);
+      });
+  };
+  const GetSysTimeRate = () => {
+    restAPI
+      .get(restURI.sysTimeRate, {
+        params: { reg_date: dateText.startDate, e1_time: e1OPTime, e2_time: e2OPTime, e3_time: e3OPTime },
+      })
+      .then((response) => {
+        // API 응답 데이터 처리 로직
+        // console.log(response.data);
+        setResponseSysData(response.data);
+      })
+      .catch((error) => {
+        // 오류 처리 로직
+        // console.error('API 호출 중 오류 발생:', error);
+      });
+  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+  const cOptions = {
     plotOptions: {
       // 차트 시각화 옵션
       bar: {
         // 막대그래프 옵션
         columnWidth: "80%", // 막대 너비
+        // horizontal: true,
       },
     },
     dataLabels: {
       style: {
-        colors: ["black"],
+        colors: ["balck"],
       },
-      enabled: true,
+      enabled: false,
     },
-    title: {
-      text: "시간 가동률",
-      floating: true,
-      offsetY: 0,
-      align: "top",
-      style: {
-        color: "#444",
+    xaxis: {
+      tickAmount: 15,
+      lines: {
+        show: false, // y축 선 표시 여부
+        borderColor: "#e5e5e5", // y축 선 색상
+        strokeDashArray: 2, // y축 선의 선 스타일 (점선)
+        lineWidth: 1, // y축 선의 두께
       },
     },
   };
-  const tmpStr = strJson;
-  const columns = timeSet.getColTest();
-  const header = timeSet.getTimeHeader();
-  const data = timeSet.getData(tmpStr);
+  const complexColumns = Set.getTimeHeader();
+  const column = Set.getCol();
+  const customColumns = column;
+  const autoComplexColumns = Set.getAutoTimeHeader();
+  const autoColumn = Set.getAutoCol();
 
-  const handleSearchClick = () => {};
-  try {
-    return (
-      <ContentsArea>
+  return (
+    <ContentsArea>
+      {isAuto === true && (
         <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
           <S.ToolWrap>
-            <S.ContentsHeader>
-              <S.Date
-                datePickerSet={"single"}
-                dateText={dateText}
-                setDateText={setDateText}
+            <S.SearchWrap>
+              <S.InputText
+                id="startDate"
+                type="month"
+                format="yyyy-MM"
+                defaultValue={dateText.startDate}
+                InputProps={{ sx: { height: 40 } }}
+                onChange={datePickerChange}
+                height="40px"
+                label="날짜"
               />
-              <ButtonSearch onClickSearch={handleSearchButtonClick} />
-            </S.ContentsHeader>
+            </S.SearchWrap>
+            <S.ButtonWrap>
+              <S.BtnComponent height={"34px"} width={"145px"} onClick={openModal}>
+                <S.SearchTitle>조업시간 Setting</S.SearchTitle>
+              </S.BtnComponent>
+              <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
+            </S.ButtonWrap>
           </S.ToolWrap>
         </S.ShadowBoxButton>
-        <S.Top>
-          <Chart
-            options={cWithMark}
-            series={cWithMark.series}
-            type="line"
-            height={300}
-          />
-        </S.Top>
-        <S.Bottom>
-          <Grid columns={columns} header={header} data={data} />
-          {/* <GridView/> */}
-        </S.Bottom>
-      </ContentsArea>
-    );
-  } catch (error) {
-  }
+      )}
+      {isModalOpen && (
+        <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+          <S.ToolWrap>
+            <S.SearchWrap>
+              <S.InputText id="outlined-number" label="E1(분)" type="number" onChange={handleE1Change} value={e1OPTime} max={1440} size="small" />
+              <S.InputText id="outlined-number" label="E2(분)" type="number" onChange={handleE2Change} value={e2OPTime} max={1440} size="small" />
+              <S.InputText id="outlined-number" label="E3(분)" type="number" onChange={handleE3Change} value={e3OPTime} max={1440} size="small" />
+            </S.SearchWrap>
+          </S.ToolWrap>
+        </S.ShadowBoxButton>
+      )}
+      <S.AllWrap>
+        <S.TimeRateLeft>
+          <S.TimeRateTop>
+            <S.Title>비가동 입력 데이터 기준</S.Title>
+            <S.ChartWrap2>
+              {responseData && <Chart options={cOptions} series={responseData?.data?.rows[0].graph} type="line" height={350} />}
+            </S.ChartWrap2>
+          </S.TimeRateTop>
+          <S.TimeRateBottom>
+            <S.GridWrap>
+              <GridSingle header={complexColumns} columns={customColumns} data={responseData?.data?.rows[0].grid} />
+            </S.GridWrap>
+          </S.TimeRateBottom>
+        </S.TimeRateLeft>
+        <S.TimeRateRight>
+          <S.TimeRateTop>
+            <S.Title>충진 자동 카운트 데이터 기준</S.Title>
+            <S.ChartWrap2>
+              {responseData && <Chart options={cOptions} series={responseSysData?.data?.rows[0].graph} type="line" height={350} />}
+            </S.ChartWrap2>
+          </S.TimeRateTop>
+          <S.TimeRateBottom>
+            <S.GridWrap>
+              <S.GridWrap>
+                {responseSysData && <GridSingle header={autoComplexColumns} columns={autoColumn} data={responseSysData?.data?.rows[0].grid} />}
+              </S.GridWrap>
+            </S.GridWrap>
+          </S.TimeRateBottom>
+        </S.TimeRateRight>
+      </S.AllWrap>
+      {/* <S.TopWrap>
+        <S.LineCapaTop>
+          <S.Title>생산포장 라인 별 생산량(일)</S.Title>
+          <S.ChartWrap2>
+            {responseData && <Chart options={cOptions} series={responseData.data.rows[0].graph} type="line" height={350} />}
+          </S.ChartWrap2>
+        </S.LineCapaTop>
+        <S.LineCapaBottom>
+          <S.GridWrap>
+            {responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}
+            {!responseData && <GridSingle columns={columns} />}
+          </S.GridWrap>
+        </S.LineCapaBottom>
+      </S.TopWrap> */}
+      {/* <SplitterLayout vertical></SplitterLayout> */}
+      <BackDrop isBackDrop={isBackDrop} />
+    </ContentsArea>
+  );
 };
-
-function GridView() {
-  const tmpStr = strJson;
-  const columns = timeSet.getColTest();
-  const header = timeSet.getTimeHeader();
-  const data = timeSet.getData(tmpStr);
-  try {
-    return <Grid columns={columns} header={header} data={data} />;
-  } catch (error) {
-    // console.error('오류가 발생했습니다:', error);
-    // return <div>오류가 발생했습니다. 콘솔을 확인해주세요.</div>;
-  }
-}
 
 export default TimeRate;

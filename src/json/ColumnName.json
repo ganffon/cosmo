@@ -1,5 +1,4 @@
 {
-  "rq": "✔️",
   "factory_id": "공장ID",
   "factory_cd": "공장코드",
   "factory_nm": "공장",
@@ -444,5 +443,10 @@
   "yield_value": "현재 수율",
   "after_yield_value": "적용 수율",
   "apply": "적용",
-  "work_yield_id": "수율ID"
+  "work_yield_id": "수율ID",
+  "operating_hours": "조업\n시간",
+  "planned_downTime": "계획\n정지",
+  "unplanned_downTime": "비계획\n정지",
+  "time_rate": "시간\n가동률",
+  "total": "합계"
 }

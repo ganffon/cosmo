@@ -12,6 +12,7 @@ function InspectionResultSet(isEditMode) {
     col.id("insp_result_upload_id", CN.insp_result_upload_id, C.HIDDEN_ID),
     col.id("insp_result_id", CN.insp_result_id, C.HIDDEN_ID),
     col.text("lot_no", CN.lot_no, false, false),
+    col.text("prod_nm", CN.prod_nm, false),
     col.date("work_date", CN.work_date, false, C.U),
     col.text("insp_item", CN.insp_item, false, false),
     col.number("insp_min", CN.insp_min, isEditMode),
@@ -49,7 +50,16 @@ function InspectionResultSet(isEditMode) {
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
   const datePickerSet = null;
-  const inputSet = [];
+  const inputSet = [
+    {
+      id: "lot_no",
+      name: CN.lot_no,
+    },
+    {
+      id: "insp_item",
+      name: CN.insp_item,
+    },
+  ];
   return {
     data,
     columns,

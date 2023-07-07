@@ -1,4 +1,11 @@
-import { useContext, useState, useEffect, useRef, useMemo, useCallback } from "react";
+import {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { LoginStateChk } from "custom/LoginStateChk";
 import InputPaper from "components/input/InputPaper";
 import GridSingle from "components/grid/GridSingle";
@@ -24,6 +31,7 @@ import GetDeleteParams from "api/GetDeleteParams";
 import ContentsAreaHidden from "components/layout/common/ContentsAreaHidden";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import Modaldocument from "./ModalDocument";
 
 function Document() {
   LoginStateChk();
@@ -61,6 +69,7 @@ function Document() {
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
+  const [gridDataModalDetail, setGridDataModalDetail] = useState(null);
   const headerClickRowID = useRef("");
 
   const [isSnackOpen, setIsSnackOpen] = useState({
@@ -122,9 +131,73 @@ function Document() {
     }, 100);
   }, [searchToggle]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
+    isEditModeHeader,
+    refGridHeader
+  );
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
+    isEditModeDetail,
+    refGridDetail
+  );
+
+  const onDataLoad = async () => {
+    const Grid = refGridModalHeader?.current?.gridInst;
+    Grid?.finishEditing();
+    const lineId = Grid.getValue(0, "line_id");
+    const prodCd = Grid.getValue(0, "prod_cd");
+    const prodNm = Grid.getValue(0, "prod_nm");
+    if (lineId && prodCd) {
+      try {
+        setIsBackDrop(true);
+        const header = await restAPI.get(
+          restURI.inspDocument +
+            `?line_id=${lineId}&prod_cd=${prodCd}&prod_nm=${prodNm}`
+        );
+        if (header?.data?.data?.count !== 0) {
+          const documentId = header?.data?.data?.rows[0].insp_document_id;
+
+          try {
+            const detail = await restAPI.get(
+              restURI.inspDocumentDetail + `?insp_document_id=${documentId}`
+            );
+
+            setGridDataModalDetail(detail?.data?.data?.rows);
+          } catch (err) {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: err?.response?.data?.message,
+              severity: "error",
+              location: "bottomRight",
+            });
+          }
+        }
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      } finally {
+        setIsBackDrop(false);
+      }
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "상단에서 라인과 품목을 선택하세요!",
+        severity: "warning",
+        location: "bottomRight",
+      });
+    }
+    console.log("데이터로드입니다");
+  };
 
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
@@ -211,7 +284,9 @@ function Document() {
     restURI.inspDocument
   );
   const onDeleteDetail = async () => {
-    const data = refGridDetail?.current?.gridInst?.getCheckedRows()?.map((raw) => GetDeleteParams(SWITCH_NAME_02, raw));
+    const data = refGridDetail?.current?.gridInst
+      ?.getCheckedRows()
+      ?.map((raw) => GetDeleteParams(SWITCH_NAME_02, raw));
 
     try {
       setIsBackDrop(true);
@@ -290,13 +365,16 @@ function Document() {
       let conditionProd;
       let condition;
 
-      comboValue.line_id ? (conditionLine = `line_id=${comboValue.line_id}`) : (conditionLine = "");
+      comboValue.line_id
+        ? (conditionLine = `line_id=${comboValue.line_id}`)
+        : (conditionLine = "");
       prodCD.current !== "품목코드"
         ? (conditionProd = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProd = "");
 
       if (conditionLine !== "" && conditionProd !== "") {
-        condition = restURI.inspDocument + "?" + conditionLine + "&" + conditionProd;
+        condition =
+          restURI.inspDocument + "?" + conditionLine + "&" + conditionProd;
       } else if (conditionLine !== "" && conditionProd === "") {
         condition = restURI.inspDocument + "?" + conditionLine;
       } else if (conditionLine === "" && conditionProd !== "") {
@@ -354,7 +432,10 @@ function Document() {
     ];
     actSearchDetail(headerClickRowID.current);
     for (let i = 0; i < inputInfoValueList.length; i++) {
-      let data = refGridHeader?.current?.gridInst?.getValue(targetRowKey.current, inputInfoValueList[i]);
+      let data = refGridHeader?.current?.gridInst?.getValue(
+        targetRowKey.current,
+        inputInfoValueList[i]
+      );
       if (data === false) {
         //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
         data = "false";
@@ -377,7 +458,10 @@ function Document() {
         "contents",
         "remark",
       ];
-      if (headerClickRowID.current !== e?.instance.getValue(e?.rowKey, "insp_document_id")) {
+      if (
+        headerClickRowID.current !==
+        e?.instance.getValue(e?.rowKey, "insp_document_id")
+      ) {
         const rowID = e?.instance.getValue(e?.rowKey, "insp_document_id");
         if (rowID !== null) {
           headerClickRowID.current = rowID;
@@ -468,12 +552,14 @@ function Document() {
   };
   const onClickModalSave = () => {
     actSave();
+    setGridDataModalDetail([]);
   };
   function onClickModalClose() {
     headerClickRowID.current = "";
     setIsModalOpen(false);
     setIsEditModeHeader(false);
     setSearchToggle(!searchToggle);
+    setGridDataModalDetail([]);
   }
   function onClickModalDetailClose() {
     setIsModalOpen(false);
@@ -517,9 +603,19 @@ function Document() {
       let refGrid;
       let columnName;
       const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
-      const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
+      const columnNameInspItem = [
+        "insp_item_type_id",
+        "insp_item_type_nm",
+        "insp_item_id",
+        "insp_item_nm",
+      ];
 
-      const columnNameEquipProc = ["proc_nm", "equip_nm", "proc_id", "equip_id"];
+      const columnNameEquipProc = [
+        "proc_nm",
+        "equip_nm",
+        "proc_id",
+        "equip_id",
+      ];
 
       if (targetGrid.current === "Search") {
         // setInputSearchValue([]);
@@ -594,15 +690,17 @@ function Document() {
 
   const GridModal = useMemo(() => {
     return (
-      <ModalNewDetail
+      <Modaldocument
         isNewDetail={isNewDetail}
         gridDataHeaderRowID={gridDataHeaderRowID}
+        gridDataDetail={gridDataModalDetail}
         onClickModalAddRow={onClickModalAddRow}
         onClickModalCancelRow={onClickModalCancelRow}
         onClickModalSave={onClickModalSave}
         onClickModalClose={onClickModalClose}
         onClickEditModalSave={onClickEditModalSave}
         onClickModalDetailClose={onClickModalDetailClose}
+        onDataLoad={onDataLoad}
         columnsModalHeader={columnsModalHeader}
         columnsModalDetail={columnsModalDetail}
         columnOptions={columnOptions}
@@ -620,7 +718,14 @@ function Document() {
 
   const InputInfo = useMemo(() => {
     return inputInfo.map((v, idx) => {
-      return <InputPaper key={v.id} id={v.id} name={v.name} value={inputInfoValue[idx] || ""} />;
+      return (
+        <InputPaper
+          key={v.id}
+          id={v.id}
+          name={v.name}
+          value={inputInfoValue[idx] || ""}
+        />
+      );
     });
   }, [inputInfoValue]);
 
@@ -639,10 +744,13 @@ function Document() {
               onChange={(_, newValue) => {
                 setComboValue({
                   ...comboValue,
-                  line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                  line_id:
+                    newValue?.line_id === undefined ? null : newValue?.line_id,
                 });
               }}
-              renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+              renderInput={(params) => (
+                <TextField {...params} label={CN.line_nm} size="small" />
+              )}
               onKeyDown={onKeyDown}
             />
           </S.ComboWrap>
@@ -687,7 +795,10 @@ function Document() {
             {isEditModeHeader ? (
               <>
                 <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
-                <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+                <BtnComponent
+                  btnName={"Cancel"}
+                  onClick={onClickEditModeExit}
+                />
               </>
             ) : (
               <>
@@ -708,8 +819,14 @@ function Document() {
           <S.ButtonWrap>
             {isEditModeDetail ? (
               <>
-                <BtnComponent btnName={"Save"} onClick={onClickEditSaveDetail} />
-                <BtnComponent btnName={"Cancel"} onClick={onClickEditExitDetail} />
+                <BtnComponent
+                  btnName={"Save"}
+                  onClick={onClickEditSaveDetail}
+                />
+                <BtnComponent
+                  btnName={"Cancel"}
+                  onClick={onClickEditExitDetail}
+                />
               </>
             ) : (
               <>
