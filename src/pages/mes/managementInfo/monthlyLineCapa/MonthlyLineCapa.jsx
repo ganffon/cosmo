@@ -2,12 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import strJson from "./data.json";
 import strGridJson from "./MonthlyLineCapaData.json";
-import GetTestValAndCreateAt, {
-  GetTestValAndCreateAtDay,
-  GetTestValAndCreateAtString,
-  GetDateDay,
-  GetDateMonth,
-} from "pages/mes/dashboard/asdb";
+import GetTestValAndCreateAt, { GetTestValAndCreateAtDay, GetTestValAndCreateAtString, GetDateDay, GetDateMonth } from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
@@ -27,7 +22,7 @@ const MonthlyLineCapa = ({ toggle }) => {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
-    endDate: DateTime().dateFull,
+    startDate: DateTime().dateFull,
   });
   const [year, setYear] = useState(new Date().getFullYear());
   const [textInput, setTextInput] = useState("");
@@ -43,10 +38,15 @@ const MonthlyLineCapa = ({ toggle }) => {
   }, [toggle, isAuto]);
   const handleSearchButtonClick = () => {
     // setSearchButtonClicked();
-    GetMonthlyLineCapaData(dateText.endDate, textInput);
+    GetMonthlyLineCapaData(dateText.startDate, textInput);
   };
   const handleTextChange = (event) => {
     setTextInput(event.target.value);
+  };
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchButtonClick();
+    }
   };
   const handleChange = (event) => {
     setYear(event.target.value);
@@ -107,22 +107,15 @@ const MonthlyLineCapa = ({ toggle }) => {
         <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
           <S.ToolWrap>
             <S.SearchWrap>
-              <S.InputText
-                id="outlined-number"
-                label="년도"
-                type="number"
-                onChange={handleChange}
-                defaultValue={year}
-                size="small"
-              />
+              <S.InputText id="outlined-number" label="년도" type="number" onChange={handleChange} defaultValue={year} size="small" />
               <S.InputText
                 key={"line_nm"}
                 id={"line_nm"}
                 label={"라인"}
                 size="small"
                 variant="outlined"
-                handleInputTextChange={handleTextChange}
-                onClickSearch={handleSearchButtonClick}
+                onKeyDown={onKeyPress}
+                onChange={handleTextChange}
               />
             </S.SearchWrap>
             <S.ButtonWrap>
@@ -135,23 +128,11 @@ const MonthlyLineCapa = ({ toggle }) => {
         <S.LineCapaTop>
           <S.Title>라인별 생산량(월)</S.Title>
           <S.ChartWrap2>
-            {responseData && (
-              <Chart
-                id={"chart"}
-                options={cOptions}
-                series={responseData.data.rows[0].graph}
-                type="line"
-                height={350}
-              />
-            )}
+            {responseData && <Chart id={"chart"} options={cOptions} series={responseData.data.rows[0].graph} type="line" height={350} />}
           </S.ChartWrap2>
         </S.LineCapaTop>
         <S.LineCapaBottom>
-          <S.GridWrap>
-            {responseData && (
-              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />
-            )}
-          </S.GridWrap>
+          <S.GridWrap>{responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}</S.GridWrap>
         </S.LineCapaBottom>
       </S.TopWrap>
     </ContentsArea>

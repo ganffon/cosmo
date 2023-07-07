@@ -14,7 +14,7 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
-import restURI from "json/restURI.json";
+import URI from "api/URI";
 import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
@@ -65,7 +65,7 @@ function Line(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.line,
+    URI.STD.LINE.BASE,
     SWITCH_NAME_01
   );
   const [actSearch] = uSearch.useSearch(
@@ -79,7 +79,7 @@ function Line(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.lineIncludeRework
+    URI.STD.LINE.INCLUDE_REWORK
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -89,7 +89,7 @@ function Line(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.line
+    URI.STD.LINE.BASE
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -98,7 +98,7 @@ function Line(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.line,
+    URI.STD.LINE.BASE,
     onClickModalClose
   );
 
@@ -164,7 +164,7 @@ function Line(props) {
   const loadData = async () => {
     let result;
     try {
-      let readURI = restURI.syncLine;
+      let readURI = URI.SYNC.LINE;
 
       setIsBackDrop(true);
 

@@ -4,6 +4,9 @@ import * as S from "./BarcodeScan.styled";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 import InputPaper from "components/input/InputPaper";
 import BtnComponent from "components/button/BtnComponent";
+import SungEel from "img/Subdivision/sungeel.jpg";
+import SQM from "img/Subdivision/sqm.jpg";
+import Albemarle from "img/Subdivision/albemarle.jpg";
 
 function BarcodeScan(props) {
   const {
@@ -33,33 +36,40 @@ function BarcodeScan(props) {
         </S.HeaderBox>
 
         <S.Content>
-          <S.InputWrap>
-            <S.Title>{"바코드 스캔"}</S.Title>
-            <InputPaper
-              width={"600px"}
-              height={"60px"}
-              size={"30px"}
-              refInput={refBarcode}
-              value={barcodeScan.value || ""}
-              className={barcodeScan.className || ""}
-            />
-          </S.InputWrap>
-          <S.InputWrap>
-            <S.Title>{"투입 LOT"}</S.Title>
-            <InputPaper
-              width={"485px"}
-              height={"60px"}
-              size={"30px"}
-              placeHolder={isLotReadOnly ? "투입 LOT 수기 입력은 클릭하세요" : ""}
-              readOnly={isLotReadOnly}
-              onClickReadOnly={() => {
-                setIsLotReadOnly(false);
-              }}
-              value={barcodeScan.lot || ""}
-              onTextChange={lotHandWritten}
-            />
-            <BtnComponent btnName={"Ok"} height={"60px"} onClick={onLotConfirm} />
-          </S.InputWrap>
+          <S.BarcodeWrap>
+            <S.InputWrap>
+              <S.Title>{"바코드 스캔"}</S.Title>
+              <InputPaper
+                width={"900px"}
+                height={"60px"}
+                size={"30px"}
+                refInput={refBarcode}
+                value={barcodeScan.value || ""}
+                className={barcodeScan.className || ""}
+              />
+            </S.InputWrap>
+            <S.InputWrap>
+              <S.Title>{"투입 LOT"}</S.Title>
+              <InputPaper
+                width={"785px"}
+                height={"60px"}
+                size={"30px"}
+                placeHolder={isLotReadOnly ? "투입 LOT 수기 입력은 클릭하세요" : ""}
+                readOnly={isLotReadOnly}
+                onClickReadOnly={() => {
+                  setIsLotReadOnly(false);
+                }}
+                value={barcodeScan.lot || ""}
+                onTextChange={lotHandWritten}
+              />
+              <BtnComponent btnName={"Ok"} height={"60px"} onClick={onLotConfirm} />
+            </S.InputWrap>
+          </S.BarcodeWrap>
+          <S.ImgWrap>
+            <S.Img src={SQM} />
+            <S.Img src={Albemarle} />
+            <S.Img src={SungEel} />
+          </S.ImgWrap>
         </S.Content>
       </S.ModalWrap>
     </ModalWrapMulti>

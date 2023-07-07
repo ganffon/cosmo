@@ -453,7 +453,6 @@ function WorkerGroupStatus() {
     }
   };
   const onSearchAfterEdit = async (e) => {
-    console.log(researchRowKey.current);
     if (researchRowKey.current !== "") {
       try {
         setIsBackDrop(true);

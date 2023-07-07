@@ -49,7 +49,7 @@ function Login() {
     }
     factoryDataSetting();
 
-    window.document.title = `Cosmo MES`;
+    window.document.title = `FacdoriOn`;
   }, []);
 
   const setLoginCookie = (cookieID, cookieData, days) => {

@@ -308,6 +308,7 @@ function SubdivisionPanel() {
     resetScaleInfo();
     setIsLockScale(true);
     setIsHold(false);
+    processReadyStep1();
   };
   const onClickModalSubdivisionClose = () => {
     resetRequire();
@@ -315,7 +316,10 @@ function SubdivisionPanel() {
   };
   const [isEnd, setIsEnd] = useState(false);
   const onClickEnd = (e) => {
-    setIsEnd(true);
+    const Grid = refGridSingle?.current?.gridInst;
+    if (Grid.getRowCount() > 0) {
+      setIsEnd(true);
+    }
   };
   const handleEnd = async () => {
     try {
@@ -403,7 +407,7 @@ function SubdivisionPanel() {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
       const data = result?.data?.data?.rows[0];
-      setScaleInfo({ ...scaleInfo, before: String(data.value) });
+      setScaleInfo({ ...scaleInfo, inputLot: lot.current, before: String(data.value) });
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -457,7 +461,7 @@ function SubdivisionPanel() {
   };
 
   const onClickNext = async () => {
-    if (Number(scaleInfo.before) >= Number(scaleInfo.after)) {
+    if (Number(scaleInfo.before) > Number(scaleInfo.after)) {
       if (scaleInfo.inputLot !== "" && scaleInfo.before !== "" && scaleInfo.after !== "") {
         const raw = [
           {
@@ -522,6 +526,7 @@ function SubdivisionPanel() {
             refBtnNext?.current?.blur();
 
             handlePrint();
+            processReadyStep1();
           } catch (err) {
             setIsSnackOpen({
               ...isSnackOpen,
@@ -587,8 +592,9 @@ function SubdivisionPanel() {
       date.current = DateTime().dateFull;
       lot.current = lotNo;
       onGetWorkSubdivisionID();
-      setScaleInfo({ ...scaleInfo, inputLot: lotNo });
       onCloseBarcodeScan();
+      setScaleInfo({ ...scaleInfo, inputLot: lotNo });
+      onClickBefore(); //소분 전 무게 자동으로 가져옴
       if (isLockScale === true) {
         setIsLockScale(false);
       }
@@ -669,6 +675,136 @@ function SubdivisionPanel() {
   const onClickReadOnly = () => {
     setIsBarcodeScanOpen(true);
   };
+  const stepState = useRef("1");
+  const processReadyStep1 = () => {
+    stepState.current = "1";
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+    const line1 = document.getElementById("line1");
+    const line2 = document.getElementById("line2");
+    step1.classList.add("yellow");
+    step2.classList.remove("yellow");
+    step3.classList.remove("yellow");
+
+    step1.classList.remove("green");
+    step2.classList.remove("green");
+    step3.classList.remove("green");
+
+    line1.classList.remove("progressBarOn");
+    line1.classList.remove("progressBarOff");
+    line2.classList.remove("progressBarOn");
+    line2.classList.remove("progressBarOff");
+  };
+
+  const onStep1 = () => {
+    if (stepState.current === "1") {
+      setIsBarcodeScanOpen(true);
+    }
+  };
+  const onStep1StartAnimation = () => {
+    if (stepState.current === "1") {
+      stepState.current = "2";
+      const step1 = document.getElementById("step1");
+      const step2 = document.getElementById("step2");
+      const line1 = document.getElementById("line1");
+      step1.classList.remove("yellow");
+      step1.classList.add("green");
+      line1.classList.add("progressBarOn");
+      line1.classList.remove("progressBarOff");
+      setTimeout(() => {
+        step2.classList.add("yellow");
+      }, 1000);
+    }
+  };
+  const onStep1ReverseAnimation = () => {
+    if (stepState.current === "2") {
+      stepState.current = "1";
+      const step1 = document.getElementById("step1");
+      const step2 = document.getElementById("step2");
+      const line1 = document.getElementById("line1");
+      step2.classList.remove("yellow");
+      line1.classList.remove("progressBarOn");
+      line1.classList.add("progressBarOff");
+      setTimeout(() => {
+        step1.classList.add("yellow");
+        step2.classList.remove("yellow");
+        step2.classList.remove("green");
+      }, 1000);
+    }
+  };
+  const onStep2 = () => {
+    if (stepState.current === "2") {
+      onClickAfter();
+    }
+  };
+  const onStep2StartAnimation = () => {
+    if (stepState.current === "2") {
+      stepState.current = "3";
+      const step2 = document.getElementById("step2");
+      const step3 = document.getElementById("step3");
+      const line2 = document.getElementById("line2");
+      step2.classList.remove("yellow");
+      step2.classList.add("green");
+      line2.classList.add("progressBarOn");
+      line2.classList.remove("progressBarOff");
+      setTimeout(() => {
+        step3.classList.add("yellow");
+        step2.classList.remove("yellow");
+      }, 1000);
+    }
+  };
+  const onStep2ReverseAnimation = () => {
+    if (stepState.current === "3") {
+      stepState.current = "2";
+      const step2 = document.getElementById("step2");
+      const step3 = document.getElementById("step3");
+      const line2 = document.getElementById("line2");
+      step3.classList.remove("yellow");
+      line2.classList.remove("progressBarOn");
+      line2.classList.add("progressBarOff");
+      setTimeout(() => {
+        step2.classList.remove("green");
+        step2.classList.add("yellow");
+        step3.classList.remove("yellow");
+      }, 1000);
+    }
+  };
+  const onStep3 = () => {
+    if (stepState.current === "3") {
+      onClickNext();
+    }
+  };
+
+  useEffect(() => {
+    processReadyStep1();
+  }, []);
+
+  useEffect(() => {
+    if (scaleInfo.inputLot !== null && scaleInfo.inputLot !== undefined && scaleInfo.inputLot !== "") {
+      if (scaleInfo.before === null || scaleInfo.before === undefined || scaleInfo.before === "") {
+        if (stepState.current === "2") {
+          onStep1ReverseAnimation();
+        } else if (stepState.current === "3") {
+          onStep2ReverseAnimation();
+          setTimeout(() => {
+            onStep1ReverseAnimation();
+          }, 1000);
+        }
+      } else {
+        onStep1StartAnimation();
+        if (scaleInfo.after === null || scaleInfo.after === undefined || scaleInfo.after === "") {
+          if (stepState.current === "3") {
+            onStep2ReverseAnimation();
+          }
+        } else {
+          if (stepState.current === "2" || stepState.current === "3") {
+            onStep2StartAnimation();
+          }
+        }
+      }
+    }
+  }, [scaleInfo.inputLot, scaleInfo.before, scaleInfo.after]);
 
   const BarcodePrint = useMemo(() => {
     return (
@@ -727,7 +863,7 @@ function SubdivisionPanel() {
               title={"시작하기"}
               subTitle={"Start"}
               height={"180px"}
-              width={"48%"}
+              width={"250px"}
               color={"#1491CE"}
               fontSize={"26px"}
               subFontSize={"20px"}
@@ -738,7 +874,7 @@ function SubdivisionPanel() {
               title={"불러오기"}
               subTitle={"Load"}
               height={"180px"}
-              width={"48%"}
+              width={"250px"}
               color={"#FFFFFF"}
               fontSize={"26px"}
               subFontSize={"20px"}
@@ -748,7 +884,7 @@ function SubdivisionPanel() {
           </S.ButtonBox>
         ) : (
           <S.ButtonBox>
-            <BtnPanel
+            {/* <BtnPanel
               title={"작업취소"}
               subTitle={"Cancel"}
               height={"180px"}
@@ -758,12 +894,12 @@ function SubdivisionPanel() {
               subFontSize={"20px"}
               fontColor={"#FFFFFF"}
               onClick={onClickDelete}
-            />
+            /> */}
             <BtnPanel
               title={"작업보류"}
               subTitle={"Hold"}
               height={"180px"}
-              width={"30%"}
+              width={"250px"}
               color={"#555555"}
               fontSize={"26px"}
               subFontSize={"20px"}
@@ -771,10 +907,10 @@ function SubdivisionPanel() {
               onClick={onClickHold}
             />
             <BtnPanel
-              title={"작업종료"}
+              title={"Bag 소분완료"}
               subTitle={"End"}
               height={"180px"}
-              width={"30%"}
+              width={"250px"}
               color={"#1491CE"}
               fontSize={"26px"}
               subFontSize={"20px"}
@@ -880,6 +1016,23 @@ function SubdivisionPanel() {
         </S.DataInterfaceBox>
       </S.ContentsLeft>
       <S.ContentsRight>
+        <S.ProcessBox>
+          <S.ProcessButton id={"step1"} onClick={onStep1}>
+            1번
+          </S.ProcessButton>
+          <S.ProcessLineBox>
+            <S.ProcessLine id={"line1"} />
+          </S.ProcessLineBox>
+          <S.ProcessButton id={"step2"} onClick={onStep2}>
+            2번
+          </S.ProcessButton>
+          <S.ProcessLineBox>
+            <S.ProcessLine id={"line2"} />
+          </S.ProcessLineBox>
+          <S.ProcessButton id={"step3"} onClick={onStep3}>
+            다음
+          </S.ProcessButton>
+        </S.ProcessBox>
         <S.DataHandleBox>
           <GridPanel
             data={gridDataHeader}
@@ -892,8 +1045,8 @@ function SubdivisionPanel() {
       </S.ContentsRight>
       {isBarcodeScanOpen && (
         <BarcodeScan
-          width={"900px"}
-          height={"300px"}
+          width={"1300px"}
+          height={"700px"}
           onClose={onCloseBarcodeScan}
           onLotConfirm={onLotConfirm}
           setBarcodeScan={setBarcodeScan}

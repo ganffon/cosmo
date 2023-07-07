@@ -27,14 +27,7 @@ function EquipmentDetailSet(
    */
   const columns = [
     col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
-    col.list(
-      "equip_id",
-      "equip_nm",
-      CN.equip_nm,
-      equipmentList,
-      isEditMode,
-      C.WIDTH_MIDDLE
-    ),
+    col.list("equip_id", "equip_nm", CN.equip_nm, equipmentList, isEditMode, C.WIDTH_MIDDLE),
     col.list(
       "equip_classification_id",
       "equip_classification_nm",
@@ -43,45 +36,13 @@ function EquipmentDetailSet(
       isEditMode,
       C.WIDTH_MIDDLE
     ),
-    col.list(
-      "equip_group_id",
-      "equip_group_nm",
-      CN.group_nm,
-      equipmentMediumList,
-      isEditMode,
-      C.WIDTH_MIDDLE
-    ),
-    col.list(
-      "equip_class_id",
-      "equip_class_nm",
-      CN.class_nm,
-      equipmentSmallList,
-      isEditMode,
-      C.WIDTH_MIDDLE
-    ),
+    col.list("equip_group_id", "equip_group_nm", CN.group_nm, equipmentMediumList, isEditMode, C.WIDTH_MIDDLE),
+    col.list("equip_class_id", "equip_class_nm", CN.class_nm, equipmentSmallList, isEditMode, C.WIDTH_MIDDLE),
     col.id("equip_detail_id", CN.equip_detail_id, C.HIDDEN_ID),
     col.text("equip_detail_cd", CN.equip_detail_cd, C.U, C.U, C.WIDTH_MIDDLE),
-    col.text(
-      "equip_detail_nm",
-      CN.equip_detail_nm,
-      isEditMode,
-      C.U,
-      C.WIDTH_MIDDLE
-    ),
-    col.list(
-      "manager_emp_id",
-      "manager_emp_nm",
-      CN.manager_emp_nm,
-      employeeList,
-      isEditMode
-    ),
-    col.list(
-      "sub_manager_emp_id",
-      "sub_manager_emp_nm",
-      CN.sub_manager_emp_nm,
-      employeeList,
-      isEditMode
-    ),
+    col.text("equip_detail_nm", CN.equip_detail_nm, isEditMode, C.U, C.WIDTH_MIDDLE),
+    col.list("manager_emp_id", "manager_emp_nm", CN.manager_emp_nm, employeeList, isEditMode),
+    col.list("sub_manager_emp_id", "sub_manager_emp_nm", CN.sub_manager_emp_nm, employeeList, isEditMode),
     col.text("equip_no", CN.equip_no, isEditMode),
     col.text("equip_grade", CN.equip_grade, isEditMode),
     col.text("equip_model", CN.equip_model, isEditMode),
@@ -101,14 +62,7 @@ function EquipmentDetailSet(
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.list(
-      "equip_id",
-      "equip_nm",
-      CN.rq + CN.equip_nm,
-      equipmentList,
-      true,
-      C.WIDTH_MIDDLE
-    ),
+    col.list("equip_id", "equip_nm", CN.equip_nm, equipmentList, true, C.WIDTH_MIDDLE),
     col.list(
       "equip_classification_id",
       "equip_classification_nm",
@@ -117,50 +71,12 @@ function EquipmentDetailSet(
       true,
       C.WIDTH_MIDDLE
     ),
-    col.list(
-      "equip_group_id",
-      "equip_group_nm",
-      CN.group_nm,
-      equipmentMediumList,
-      true,
-      C.WIDTH_MIDDLE
-    ),
-    col.list(
-      "equip_class_id",
-      "equip_class_nm",
-      CN.class_nm,
-      equipmentSmallList,
-      true,
-      C.WIDTH_MIDDLE
-    ),
-    col.text(
-      "equip_detail_cd",
-      CN.rq + CN.equip_detail_cd,
-      true,
-      C.U,
-      C.WIDTH_MIDDLE
-    ),
-    col.text(
-      "equip_detail_nm",
-      CN.rq + CN.equip_detail_nm,
-      true,
-      C.U,
-      C.WIDTH_MIDDLE
-    ),
-    col.list(
-      "manager_emp_id",
-      "manager_emp_nm",
-      CN.manager_emp_nm,
-      employeeList,
-      true
-    ),
-    col.list(
-      "sub_manager_emp_id",
-      "sub_manager_emp_nm",
-      CN.sub_manager_emp_nm,
-      employeeList,
-      true
-    ),
+    col.list("equip_group_id", "equip_group_nm", CN.group_nm, equipmentMediumList, true, C.WIDTH_MIDDLE),
+    col.list("equip_class_id", "equip_class_nm", CN.class_nm, equipmentSmallList, true, C.WIDTH_MIDDLE),
+    col.text("equip_detail_cd", CN.equip_detail_cd, true, C.U, C.WIDTH_MIDDLE),
+    col.text("equip_detail_nm", CN.equip_detail_nm, true, C.U, C.WIDTH_MIDDLE),
+    col.list("manager_emp_id", "manager_emp_nm", CN.manager_emp_nm, employeeList, true),
+    col.list("sub_manager_emp_id", "sub_manager_emp_nm", CN.sub_manager_emp_nm, employeeList, true),
     col.text("equip_no", CN.equip_no, true, C.U, C.WIDTH_MIDDLE),
     col.text("equip_grade", CN.equip_grade, true),
     col.text("equip_model", CN.equip_model, true),

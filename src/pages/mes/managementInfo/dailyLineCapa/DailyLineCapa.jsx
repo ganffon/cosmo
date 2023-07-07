@@ -2,12 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import strJson from "./dayData.json";
 import strGridJson from "./MonthlyLineCapaData.json";
-import GetTestValAndCreateAt, {
-  GetTestValAndCreateAtDay,
-  GetTestValAndCreateAtString,
-  GetDateDay,
-  GetDateMonth,
-} from "pages/mes/dashboard/asdb";
+import GetTestValAndCreateAt, { GetTestValAndCreateAtDay, GetTestValAndCreateAtString, GetDateDay, GetDateMonth } from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
@@ -23,14 +18,13 @@ import BackDrop from "components/backdrop/BackDrop";
 import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-const DailyLineCapa = ({toggle}) => {
+const DailyLineCapa = ({ toggle }) => {
   LoginStateChk();
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
-    endDate: DateTime().dateFull,
+    startDate: DateTime().dateFull,
   });
   const [textInput, setTextInput] = useState("");
   const [result, setResult] = useState([]);
@@ -38,7 +32,7 @@ const DailyLineCapa = ({toggle}) => {
   const [isAuto, setIsAuto] = useState(true);
 
   useEffect(() => {
-    setResult(GetDateMonth(strGridJson, dateText.endDate));
+    setResult(GetDateMonth(strGridJson, dateText.startDate));
     handleSearchButtonClick();
     if (toggle !== undefined && isAuto !== toggle) {
       setIsAuto(toggle);
@@ -46,7 +40,12 @@ const DailyLineCapa = ({toggle}) => {
   }, [toggle, isAuto]);
   const handleSearchButtonClick = () => {
     // setSearchButtonClicked();
-    GetMonthlyLineCapaData(dateText.endDate);
+    GetMonthlyLineCapaData(dateText.startDate);
+  };
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchButtonClick();
+    }
   };
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -86,7 +85,7 @@ const DailyLineCapa = ({toggle}) => {
       enabled: true,
     },
   };
-  const tmpDate = new Date(dateText.endDate);
+  const tmpDate = new Date(dateText.startDate);
   tmpDate.setDate(tmpDate.getDate() - 12);
   const dateHeaders = [];
   for (let i = 0; i < 12; i++) {
@@ -97,7 +96,7 @@ const DailyLineCapa = ({toggle}) => {
     const dateString = year + "-" + month + "-" + day; // 년-월-일
     dateHeaders.push(dateString);
   }
-  
+
   const columns = [
     { header: "라인", name: "line_cd" },
     ...dateHeaders.map((date, index) => {
@@ -115,48 +114,29 @@ const DailyLineCapa = ({toggle}) => {
 
   return (
     <ContentsArea>
-      {isAuto === true && <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
-        <S.ToolWrap>
+      {isAuto === true && (
+        <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+          <S.ToolWrap>
             <S.SearchWrap>
-              <S.Date
-                datePickerSet={"single"}
-                dateText={dateText}
-                setDateText={setDateText}
-              />
-                <S.InputText
-                  key={"line_nm"}
-                  id={"line_nm"}
-                  label={"라인"}
-                  size="small"
-                  handleInputTextChange={handleTextChange}
-                  onClickSearch={handleSearchButtonClick}
-                  
-                />
+              <S.Date datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
+              <S.InputText key={"line_nm"} id={"line_nm"} label={"라인"} size="small" onKeyDown={onKeyPress} onChange={handleTextChange} />
             </S.SearchWrap>
             <S.ButtonWrap>
-              <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick}/>
+              <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
             </S.ButtonWrap>
-        </S.ToolWrap>
-      </S.ShadowBoxButton>}
+          </S.ToolWrap>
+        </S.ShadowBoxButton>
+      )}
       <S.TopWrap>
         <S.LineCapaTop>
           <S.Title>생산포장 라인 별 생산량(일)</S.Title>
-            <S.ChartWrap2>
-            {responseData && (
-              <Chart
-                options={cOptions}
-                series={responseData.data.rows[0].graph}
-                type="line"
-                height={350}
-              />
-            )}
-            </S.ChartWrap2>
+          <S.ChartWrap2>
+            {responseData && <Chart options={cOptions} series={responseData.data.rows[0].graph} type="line" height={350} />}
+          </S.ChartWrap2>
         </S.LineCapaTop>
         <S.LineCapaBottom>
           <S.GridWrap>
-            {responseData && (
-              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid}/>
-            )}
+            {responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}
             {!responseData && <GridSingle columns={columns} />}
           </S.GridWrap>
         </S.LineCapaBottom>

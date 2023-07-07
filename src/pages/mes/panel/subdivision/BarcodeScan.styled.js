@@ -28,11 +28,26 @@ export const Content = styled("div")`
   height: calc(100% - 40px);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  padding-left: 30px;
+  gap: 10px;
+  justify-content: start;
+  align-items: center;
+  padding-top: 10px;
+  padding-right: 10px;
 `;
 
+export const BarcodeWrap = styled("div")`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(255 255 255 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: white;
+`;
 export const InputWrap = styled("div")`
   display: flex;
   align-items: center;
@@ -44,4 +59,22 @@ export const Title = styled("div")`
   justify-content: end;
   font-family: NotoSansKR;
   font-size: 30px;
+`;
+export const ImgWrap = styled("div")`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(255 255 255 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  padding: 10px;
+  background: white;
+`;
+export const Img = styled("img")`
+  height: 420px;
+  width: 410px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(255 255 255 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;

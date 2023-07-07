@@ -91,16 +91,12 @@ function DownTimeInput(props) {
       <S.CloseWrap>
         <S.TitleDowntime>
           {downtimeInfo.workDowntimeID
-            ? hours === 0
+            ? seconds === 0
               ? `비가동 경과 시간 계산중...`
               : `비가동 ${hours}시간 ${minutes}분 ${seconds}초 경과`
             : ""}
         </S.TitleDowntime>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.CloseWrap>
@@ -173,11 +169,7 @@ function DownTimeInput(props) {
       <S.Wrap4>
         <S.Box>
           <S.Title>시작일자</S.Title>
-          <DateSingle
-            id={"startDate"}
-            setDateText={setDowntimeInfo}
-            dateText={downtimeInfo}
-          />
+          <DateSingle id={"startDate"} setDateText={setDowntimeInfo} dateText={downtimeInfo} />
         </S.Box>
         <S.Box>
           <S.Title onClick={inputStartTime}>시간</S.Title>
@@ -192,11 +184,7 @@ function DownTimeInput(props) {
         </S.Box>
         <S.Box>
           <S.Title>종료일자</S.Title>
-          <DateSingle
-            id={"endDate"}
-            setDateText={setDowntimeInfo}
-            dateText={downtimeInfo}
-          />
+          <DateSingle id={"endDate"} setDateText={setDowntimeInfo} dateText={downtimeInfo} />
         </S.Box>
         <S.Box>
           <S.Title onClick={inputEndTime}>시간</S.Title>

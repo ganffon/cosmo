@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import ButtonNEDS from "components/button/ButtonNEDS";
 import ButtonSES from "components/button/ButtonSES";
@@ -24,7 +24,8 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Process(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -36,8 +37,15 @@ function Process(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
-    ProcessSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = ProcessSet(isEditMode);
 
   const SWITCH_NAME_01 = "process";
 
@@ -46,14 +54,20 @@ function Process(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -140,56 +154,98 @@ function Process(props) {
     rowKey = e.rowKey;
   };
   const onClickModalCancelRow = () => {
-    /*
-    const gridInstance = refModalGrid.current?.getInstance();
-    const dataCount = gridInstance?.getData().length;
-    console.log(dataCount);
-
-    console.log(rowKey);
-    if (rowKey === undefined) {
-      console.log("키 없음");
-      console.log(refModalGrid?.current?.gridInst);
-      refModalGrid?.current?.gridInst?.removeRow(
-        refModalGrid?.current?.gridInst?.getRowCount() - 1
-      );
-    } else {
-      console.log("키 있음");
-      console.log(rowKey);
-      refModalGrid?.current?.gridInst?.removeRow(rowKey);
-    }
-    rowKey = undefined;
-    */
-    // 선택한 Row의 키 가져오기
-    // const selectedRowKey = refModalGrid.current
-    //   ?.getInstance()
-    //   ?.getSelection()
-    //   ?.getFocusedRowKey();
-
     if (rowKey) {
-      console.log("키있음");
       // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
       const gridInstance = refModalGrid.current?.getInstance();
-
       // 선택한 Row가 있는 경우, 해당 Row 삭제
-
       gridInstance?.removeRow(rowKey);
     } else {
-      console.log("키없음");
       // 선택한 Row가 없는 경우, 마지막 Row 제거
       const gridInstance = refModalGrid.current?.getInstance();
       const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
-      // const dataCount = gridInstance?.getData();
-
       if (rowCount > 0) {
-        const lastRowKey = refModalGrid.current?.getInstance();
-        console.log(lastRowKey);
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
         gridInstance?.removeRow(lastRowKey);
       }
     }
     rowKey = undefined;
   };
+
+  const validationDuplicated = (coulnmList) => {
+    refModalGrid?.current?.gridInst?.finishEditing();
+    const gridInstance = refModalGrid?.current?.getInstance();
+    const colunmLength = coulnmList.length;
+    const tmpCoulnmList = coulnmList;
+
+    const rawDataLength = gridInstance?.store?.data?.rawData.length;
+
+    const rawDatas = gridInstance?.store?.data?.rawData;
+    let arr = [];
+    for (let i = 0; i < rawDataLength; i++) {
+      let tempdataString;
+
+      for (let x = 0; x < colunmLength; x++) {
+        let data = rawDatas[i];
+        let tmpData = data[tmpCoulnmList[x]];
+
+        if (x === 0) {
+          tempdataString = tmpData;
+        } else {
+          tempdataString = tempdataString + "/" + tmpData;
+        }
+      }
+      arr[i] = tempdataString;
+    }
+    console.log(arr);
+    const setArrayLength = new Set(arr).size;
+    if (setArrayLength !== rawDataLength) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "중복된 값이 존재합니다.",
+        severity: "error",
+      });
+    }
+  };
+
+  const removeNullRow = () => {
+    refModalGrid?.current?.gridInst?.finishEditing();
+    const gridInstance = refModalGrid?.current?.getInstance();
+    const colunmLength = gridInstance?.store?.viewport?.columns?.length;
+    const colunmList = [];
+    for (let i = 0; i < colunmLength; i++) {
+      colunmList[i] = gridInstance?.store?.viewport?.columns[i].name;
+    }
+    const rawDataLength = gridInstance?.store?.data?.rawData.length;
+    let deleteRawList = [];
+    const rawDatas = gridInstance?.store?.data?.rawData;
+
+    for (let i = 0; i < rawDataLength; i++) {
+      let counter = 0;
+      let data = rawDatas[i];
+      for (let x = 0; x < colunmLength; x++) {
+        let tmpData = data[colunmList[x]];
+        if (!tmpData) {
+        } else {
+          counter = counter + 1;
+        }
+      }
+      if (counter === 0) {
+        deleteRawList[i] = data.rowKey;
+      }
+    }
+
+    for (let j = 0; j < deleteRawList.length; j++) {
+      if (deleteRawList[j] !== undefined) {
+        gridInstance?.removeRow(deleteRawList[j]);
+      }
+    }
+  };
+
   const onClickModalSave = () => {
-    actSave();
+    // removeNullRow();
+    // validationDuplicated();
+    // actSave();
   };
   function onClickModalClose() {
     setIsModalOpen(false);
@@ -207,6 +263,24 @@ function Process(props) {
       setSearchToggle(!searchToggle);
     }
   };
+
+  const modalGrid = useMemo(() => {
+    return (
+      <ModalNew
+        onClickModalAddRow={onClickModalAddRow}
+        onClickModalCancelRow={onClickModalCancelRow}
+        onClickModalSave={onClickModalSave}
+        onClickModalClose={onClickModalClose}
+        columns={columnsModal}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeadersModal}
+        refModalGrid={refModalGrid}
+        onClickModalGrid={onClickModalGrid}
+        requirecolumns={["proc_cd", "proc_nm"]}
+      />
+    );
+  }, []);
 
   return (
     <ContentsArea>
@@ -259,7 +333,6 @@ function Process(props) {
           />
         </S.GridWrap>
       </S.ShadowBoxGrid>
-      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말 삭제하시겠습니까?"}
@@ -274,21 +347,9 @@ function Process(props) {
           }}
         />
       ) : null}
-      {isModalOpen ? (
-        <ModalNew
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersModal}
-          refModalGrid={refModalGrid}
-          onClickModalGrid={onClickModalGrid}
-        />
-      ) : null}
+      {isModalOpen ? modalGrid : null}
       <BackDrop isBackDrop={isBackDrop} />
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
     </ContentsArea>
   );
 }

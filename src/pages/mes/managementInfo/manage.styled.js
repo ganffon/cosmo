@@ -82,10 +82,11 @@ export const ChartWrap2 = styled("div")`
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: calc(100% - 0px);
+  height: 100%;
   padding: 10px;
   border-radius: 10px;
   background-color: #ffffff;
+  font-size: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridWrap2 = styled("div")`
@@ -199,6 +200,12 @@ export const Left = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 5px;
 `;
+export const TimeRateLeft = styled("div")`
+  width: 60%;
+  height: 100%;
+
+  border-radius: 10px;
+`;
 export const Right = styled("div")`
   width: 50%;
   height: 100%;
@@ -206,6 +213,12 @@ export const Right = styled("div")`
   margin-left: 10px;
   border-radius: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
+export const TimeRateRight = styled("div")`
+  width: 48%;
+  height: 100%;
+  margin-left: 10px;
+  border-radius: 10px;
 `;
 export const LeftTop = styled("div")`
   height: calc(90% - 10px);
@@ -240,6 +253,14 @@ export const LineCapaTop = styled.div`
   padding: 10px 10px 10px 0px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
+export const TimeRateTop = styled.div`
+  display: "flex";
+  height: 60%;
+  flexdirection: "column";
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 10px 10px 10px 0px;
+`;
 export const LineCapaBottom = styled.div`
   display: "flex";
   height: 40%;
@@ -250,7 +271,15 @@ export const LineCapaBottom = styled.div`
   margin-bottom: 20px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
-
+export const TimeRateBottom = styled.div`
+  display: "flex";
+  height: 40%;
+  flexdirection: "column";
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
 export const PartCapaTop = styled.div`
   display: "flex";
   height: 60%;
@@ -332,7 +361,6 @@ export const AllWrap = styled("div")`
   height: 100%;
   width: 100%;
   display: flex;
-  background-color: #eeeeee;
 `;
 export const GridContainer = styled("div")`
   display: grid;
@@ -368,4 +396,46 @@ export const EquipStatusChartWrap = styled("div")`
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
+`;
+export const SearchTitle = styled("div")`
+  font-family: NotoSansKR;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #1491ce;
+`;
+export const BtnComponent = styled("button")`
+  height: ${(props) => props.height};
+  width: ${(props) => props.width};
+  border-radius: 6px;
+  padding: 5px 20px 5px 20px;
+  background: #ffffff;
+  border: 1px solid rgba(20, 145, 206, 1);
+  gap: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background: rgba(20, 145, 206, 0.9);
+  }
+  &.clicked {
+    animation: clickEffect 0.3s;
+
+    @keyframes clickEffect {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.97);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
 `;
