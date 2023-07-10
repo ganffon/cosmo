@@ -3,7 +3,7 @@ import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick) {
+function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -44,7 +44,9 @@ function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick) {
   const columnsDetail = [
     col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
-    col.number("packing_qty", CN.packing_qty, false, C.WIDTH_SHORT, false),
+    col.number("packing_qty", CN.packing_qty, isEditModeDetail, C.WIDTH_SHORT, false),
+    col.number("packing_no", CN.packing_no),
+    col.button("reprint", "재출력", "재출력", onReprint),
     col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
     col.select("packing_emp_nm", CN.packing_emp_nm, isEditModeDetail),
     col.date("work_packing_date", CN.work_packing_date, isEditModeDetail),
@@ -83,6 +85,7 @@ function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick) {
     col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
     col.number("packing_qty", CN.packing_qty, true, C.WIDTH_SHORT, false),
+    col.number("packing_no", CN.packing_no, true),
     col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
     col.select("packing_emp_nm", CN.packing_emp_nm, true),
     col.date("work_packing_date", CN.work_packing_date, true),

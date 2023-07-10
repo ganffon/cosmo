@@ -24,7 +24,8 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function InspectFiling(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -36,8 +37,15 @@ function InspectFiling(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
-    InspectFilingSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = InspectFilingSet(isEditMode);
 
   const SWITCH_NAME_01 = "inspFiling";
 
@@ -46,7 +54,10 @@ function InspectFiling(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -54,7 +65,10 @@ function InspectFiling(props) {
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -141,7 +155,21 @@ function InspectFiling(props) {
     rowKey = e.rowKey;
   };
   const onClickModalCancelRow = () => {
-    refModalGrid?.current?.gridInst?.removeRow(rowKey);
+    if (rowKey) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(rowKey);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+      const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = undefined;
   };
   const onClickModalSave = () => {
     actSave();
@@ -241,6 +269,7 @@ function InspectFiling(props) {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
+          requirecolumns={["insp_filing_cd", "insp_filing_nm"]}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

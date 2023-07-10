@@ -110,12 +110,12 @@ export const ProcessBox = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(255 255 255 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 15px;
+  padding: 5px 15px;
   background: white;
 `;
 
 export const ProcessButton = styled("div")`
-  height: 100%;
+  height: 150px;
   width: 200px;
   background: #828282;
   border-radius: 10px;
@@ -181,14 +181,13 @@ export const ProcessLineBox = styled("div")`
 export const ProcessLine = styled("div")`
   height: 20px;
   width: 0%;
-  border: solid #1df06e 1px;
   background: #1df06e;
   opacity: 0;
   &.progressBarOn {
-    animation: ${ProgressBar} 1s linear forwards;
+    animation: ${ProgressBar} 0.1s linear forwards;
   }
   &.progressBarOff {
-    animation: ${ProgressBarReverse} 1s linear forwards;
+    animation: ${ProgressBarReverse} 0.1s linear forwards;
   }
 `;
 export const DataHandleBox = styled("div")`

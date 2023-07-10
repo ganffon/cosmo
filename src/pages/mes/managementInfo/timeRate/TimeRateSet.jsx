@@ -20,9 +20,8 @@ class CustomColumnHeader {
 }
 
 export const getCol = () => [
-  { header: CN.work_date, name: "work_date", width: "auto" },
+  { header: CN.work_date, name: "work_date", align: "center" },
   { header: CN.operating_hours, name: "E1_time", align: "right" },
-  // { header: CN.operating_hours, name: "e1_work", align: "right" },
   { header: CN.planned_downTime, name: "E1_scheduled", align: "right" },
   { header: CN.unplanned_downTime, name: "E1_non_scheduled", align: "right" },
   { header: CN.time_rate, name: "E1_availability", align: "right" },
@@ -45,17 +44,17 @@ export const getTimeHeader = () => ({
     {
       header: "E1",
       name: "E1",
-      childNames: ["e1_work", "e1_pTime", "e1_nTime", "e1_Oper"],
+      childNames: ["E1_time", "E1_scheduled", "E1_non_scheduled", "E1_availability"],
     },
     {
       header: "E2",
       name: "E2",
-      childNames: ["e2_work", "e2_pTime", "e2_nTime", "e2_Oper"],
+      childNames: ["E2_time", "E2_scheduled", "E2_non_scheduled", "E2_availability"],
     },
     {
       header: "E3",
       name: "E3",
-      childNames: ["e3_work", "e3_pTime", "e3_nTime", "e3_Oper"],
+      childNames: ["E3_time", "E3_scheduled", "E3_non_scheduled", "E3_availability"],
     },
   ],
 });
@@ -66,36 +65,36 @@ export const getAutoTimeHeader = () => ({
     {
       header: "E1",
       name: "E1",
-      childNames: ["e1_work", "e1_nTime", "e1_Oper"],
+      childNames: ["E1_time", "E1_downtime", "E1_facility"],
     },
     {
       header: "E2",
       name: "E2",
-      childNames: ["e2_work", "e2_nTime", "e2_Oper"],
+      childNames: ["E2_time", "E2_downtime", "E2_facility"],
     },
     {
       header: "E3",
       name: "E3",
-      childNames: ["e3_work", "e3_nTime", "e3_Oper"],
+      childNames: ["E3_time", "E3_downtime", "E3_facility"],
     },
   ],
 });
 export const getAutoCol = () => [
-  { header: "생산일자", name: "work_date" },
+  { header: "생산일자", name: "work_date", align: "center" },
 
-  { header: "조업시간", name: "E1_time" },
-  { header: "비가동시간", name: "E1_downtime" },
-  { header: "설비가동률", name: "E1_facility" },
+  { header: "조업시간", name: "E1_time", align: "right" },
+  { header: "비가동시간", name: "E1_downtime", align: "right" },
+  { header: "설비가동률", name: "E1_facility", align: "right" },
 
-  { header: "조업시간", name: "E2_time" },
-  { header: "비가동시간", name: "E2_downtime" },
-  { header: "설비가동률", name: "E2_facility" },
+  { header: "조업시간", name: "E2_time", align: "right" },
+  { header: "비가동시간", name: "E2_downtime", align: "right" },
+  { header: "설비가동률", name: "E2_facility", align: "right" },
 
-  { header: "조업시간", name: "E3_time" },
-  { header: "비가동시간", name: "E3_downtime" },
-  { header: "설비가동률", name: "E3_facility" },
+  { header: "조업시간", name: "E3_time", align: "right" },
+  { header: "비가동시간", name: "E3_downtime", align: "right" },
+  { header: "설비가동률", name: "E3_facility", align: "right" },
 
-  { header: "합계", name: "total_facility" },
+  { header: "합계", name: "total_facility", align: "right" },
 ];
 
 export const getData = (tmpStr) => {

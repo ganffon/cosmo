@@ -26,13 +26,16 @@ export const InfoBox = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 30px 0px;
+  padding: 30px 30px 30px 0px;
 `;
 export const InfoTitle = styled("div")`
+  width: ${(props) => props.width ?? "150px"};
+  display: flex;
+  justify-content: end;
+  align-items: center;
   font-size: 30px;
   font-weight: 700;
-  margin-left: 30px;
-  margin-top: 15px;
+  margin-right: 20px;
 `;
 export const GridTitleBox = styled("div")`
   width: 100%;
@@ -87,8 +90,7 @@ export const ButtonSet = styled("button")`
   border-radius: 10px;
   cursor: pointer;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   transition: 0.5s;
 
@@ -106,7 +108,6 @@ export const ButtonTime = styled("button")`
   width: ${(props) => props.width};
   height: 60px;
   padding: 0.5rem 1rem;
-  margin-top: 5px;
   margin-left: 10px;
 
   font-family: "NotoSansKR_B", sans-serif;
@@ -121,8 +122,7 @@ export const ButtonTime = styled("button")`
   border-radius: 10px;
   cursor: pointer;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   transition: 0.5s;
 
@@ -134,5 +134,5 @@ export const ButtonTime = styled("button")`
 `;
 export const InfoWrap = styled("div")`
   display: flex;
-  width: 100%;
+  width: 1200px;
 `;

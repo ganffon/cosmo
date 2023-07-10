@@ -393,6 +393,7 @@
   "work_packing_date": "포장 일자",
   "work_packing_time": "포장 시간",
   "packing_qty": "포장 중량",
+  "packing_no": "Bag 번호",
   "packing_cnt": "포장 수량",
   "complete_cnt": "포장 완료수량",
   "packing_emp_nm": "포장 작업자",
@@ -448,5 +449,10 @@
   "planned_downTime": "계획\n정지",
   "unplanned_downTime": "비계획\n정지",
   "time_rate": "시간\n가동률",
-  "total": "합계"
+  "total": "합계",
+  "target": "목표\n생산량(Kg)",
+  "perf_schedule": "계획정지(분)\n",
+  "perf_scheduled_qty": "가치가동\n생산량\n(Kg)",
+  "perf_qty": "생산량\n(Kg)",
+  "performance": "성능가동률(%)"
 }

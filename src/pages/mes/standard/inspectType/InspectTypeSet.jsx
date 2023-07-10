@@ -28,8 +28,8 @@ function InspectTypeSet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("insp_item_type_cd", CN.insp_item_type_cd, true),
-    col.text("insp_item_type_nm", CN.insp_item_type_nm, true),
+    col.rText("insp_item_type_cd", CN.insp_item_type_cd, true),
+    col.rText("insp_item_type_nm", CN.insp_item_type_nm, true),
   ];
   const columnOptions = {
     resizable: true,

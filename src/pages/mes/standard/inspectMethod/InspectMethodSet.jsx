@@ -28,8 +28,8 @@ function InspectMethodSet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("insp_method_cd", CN.insp_method_cd, true),
-    col.text("insp_method_nm", CN.insp_method_nm, true),
+    col.rText("insp_method_cd", CN.insp_method_cd, true),
+    col.rText("insp_method_nm", CN.insp_method_nm, true),
   ];
   const columnOptions = {
     resizable: true,

@@ -425,6 +425,7 @@ function SubdivisionPanel() {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
       const data = result?.data?.data?.rows[0];
+      const leaveBag = result?.data?.data?.rows[1].value;
       setScaleInfo({ ...scaleInfo, after: String(data.value) });
     } catch (err) {
       setIsSnackOpen({
@@ -478,6 +479,15 @@ function SubdivisionPanel() {
           const result = await restAPI.post(restURI.subdivisionDetail, raw);
           const referenceID = result?.data?.data?.rows[0].work_subdivision_detail_id;
           try {
+            setIsBackDrop(true);
+            const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
+            const data = result?.data?.data?.rows[1].value;
+            setTotalQty(data);
+          } catch (err) {
+          } finally {
+            setIsBackDrop(false);
+          }
+          try {
             const result = await restAPI.post(restURI.createBarcode, {
               barcode_type: "SUBDIVISION_DETAIL",
               reference_id: referenceID,
@@ -517,11 +527,11 @@ function SubdivisionPanel() {
             const resultData = result?.data?.data?.rows;
             setGridDataHeader(resultData);
             resetScaleInfo();
-            let totalQty = 0;
-            for (let i = 0; resultData.length > i; i++) {
-              totalQty = totalQty + resultData[i].subdivision_qty;
-            }
-            setTotalQty(totalQty);
+            // let totalQty = 0;
+            // for (let i = 0; resultData.length > i; i++) {
+            //   totalQty = totalQty + resultData[i].subdivision_qty;
+            // }
+            // setTotalQty(totalQty);
             setIsBarcodeScanOpen(true);
             refBtnNext?.current?.blur();
 
@@ -712,9 +722,13 @@ function SubdivisionPanel() {
       step1.classList.add("green");
       line1.classList.add("progressBarOn");
       line1.classList.remove("progressBarOff");
-      setTimeout(() => {
-        step2.classList.add("yellow");
-      }, 1000);
+      if (stepState.current === "2") {
+        setTimeout(() => {
+          step1.classList.add("green");
+          step1.classList.remove("yellow");
+          step2.classList.add("yellow");
+        }, 100);
+      }
     }
   };
   const onStep1ReverseAnimation = () => {
@@ -726,11 +740,13 @@ function SubdivisionPanel() {
       step2.classList.remove("yellow");
       line1.classList.remove("progressBarOn");
       line1.classList.add("progressBarOff");
-      setTimeout(() => {
-        step1.classList.add("yellow");
-        step2.classList.remove("yellow");
-        step2.classList.remove("green");
-      }, 1000);
+      if (stepState.current === "1") {
+        setTimeout(() => {
+          step1.classList.add("yellow");
+          step2.classList.remove("yellow");
+          step2.classList.remove("green");
+        }, 100);
+      }
     }
   };
   const onStep2 = () => {
@@ -748,10 +764,13 @@ function SubdivisionPanel() {
       step2.classList.add("green");
       line2.classList.add("progressBarOn");
       line2.classList.remove("progressBarOff");
-      setTimeout(() => {
-        step3.classList.add("yellow");
-        step2.classList.remove("yellow");
-      }, 1000);
+      if (stepState.current === "3") {
+        setTimeout(() => {
+          step3.classList.add("yellow");
+          step2.classList.remove("yellow");
+          step2.classList.add("green");
+        }, 100);
+      }
     }
   };
   const onStep2ReverseAnimation = () => {
@@ -763,11 +782,13 @@ function SubdivisionPanel() {
       step3.classList.remove("yellow");
       line2.classList.remove("progressBarOn");
       line2.classList.add("progressBarOff");
-      setTimeout(() => {
-        step2.classList.remove("green");
-        step2.classList.add("yellow");
-        step3.classList.remove("yellow");
-      }, 1000);
+      if (stepState.current === "2") {
+        setTimeout(() => {
+          step2.classList.remove("green");
+          step2.classList.add("yellow");
+          step3.classList.remove("yellow");
+        }, 100);
+      }
     }
   };
   const onStep3 = () => {
@@ -789,7 +810,7 @@ function SubdivisionPanel() {
           onStep2ReverseAnimation();
           setTimeout(() => {
             onStep1ReverseAnimation();
-          }, 1000);
+          }, 100);
         }
       } else {
         onStep1StartAnimation();

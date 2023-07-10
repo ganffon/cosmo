@@ -34,9 +34,9 @@ function UserSet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, true, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("id", CN.id, true, C.U, C.WIDTH_MIDDLE),
-    col.text("user_nm", CN.user_nm, true, C.U, C.WIDTH_MIDDLE),
-    col.password("pwd", CN.pwd, true),
+    col.rText("id", CN.id, true, C.U, C.WIDTH_MIDDLE),
+    col.rText("user_nm", CN.user_nm, true, C.U, C.WIDTH_MIDDLE),
+    col.rPassword("pwd", CN.pwd, true),
     col.text("email", CN.email, true, C.U, C.WIDTH_MIDDLE),
     col.check("admin_fg", CN.admin_fg, true),
   ];

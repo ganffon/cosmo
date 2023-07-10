@@ -73,6 +73,7 @@
   "inspResultUpload": "/qms/insp-result-upload",
   "barcodeERP": "/std/barcode/erp",
   "createBarcode": "/std/barcode",
+  "packingBarcode": "/std/barcode/packing",
   "searchBarcode": "/std/barcode-by-reference",
   "prdOrderRequest": "/prd/request",
   "prdOrder": "/prd/order",
@@ -124,5 +125,7 @@
   "workYieldDetail": "prd/work-yield",
   "workYieldApply": "prd/work-yield/apply",
   "timeRate": "/kpi/availability/downtime",
-  "sysTimeRate": "/kpi/facility/sys-downtime"
+  "sysTimeRate": "/kpi/facility/sys-downtime",
+  "countChart": "/prd/count/raws/by-hours",
+  "performanceRate": "/kpi/performance/work"
 }

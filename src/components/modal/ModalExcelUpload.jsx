@@ -8,6 +8,7 @@ import * as LS from "./ModalExcelUpload.styled";
 import InputPaper from "components/input/InputPaper";
 import BtnComponent from "components/button/BtnComponent";
 import * as S from "pages/mes/style/oneGrid.styled";
+import BackDrop from "components/backdrop/BackDrop.jsx";
 import xlsx from "xlsx"; // xlsx 라이브러리 import
 import restURI from "json/restURI.json";
 import restAPI from "api/restAPI.js";
@@ -25,12 +26,14 @@ function ModalExcelUpload(props) {
 
   const [errMsg, setErrMsg] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [isBackDrop, setIsBackDrop] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState(null); // 업로드한 파일명 상태
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
   const [gridData, setGridData] = useState([]);
-  const [jsonData, setJasonData] = useState("");
+  const [jsonData, setJsonData] = useState("");
+  let jsonVal = "";
   const handleDragEnter = (e) => {
     setIsDragging(true);
   };
@@ -49,12 +52,14 @@ function ModalExcelUpload(props) {
       return;
     }
     const headers = gridData.length > 0 ? gridData[i] : [];
-
     const newHeaders = headers.map((header, index) => {
       if ((header === "D5" || header === "D50" || header === "D95" || header === "Dmin" || header === "Dmax") && index !== headers.indexOf(header)) {
         return `${header}_`;
       }
-      const value = header.richText ? header.richText[0].text + header.richText[1].text : header;
+      if (header.richText) {
+        // console.log(header.richText);
+      }
+      const value = header.richText ? header?.richText[0]?.text + header?.richText[1]?.text : header;
 
       return value;
     });
@@ -71,7 +76,7 @@ function ModalExcelUpload(props) {
         break;
       }
       const cellValue = gridData[i][index];
-      const value = cellValue.richText ? cellValue.richText[0].text + cellValue.richText[1].text : cellValue;
+      const value = cellValue.richText ? cellValue?.richText[0]?.text + cellValue?.richText[1]?.text : cellValue;
 
       const header = columns.some((col) => col.header === value) ? `${value}_` : value;
       const column = { name: value, renderer: "text", header };
@@ -145,7 +150,7 @@ function ModalExcelUpload(props) {
     if (files.length > 0) {
       const file = files[0];
       const fileExtension = file.name.split(".").pop();
-
+      setIsBackDrop(true);
       if (fileExtension === "xlsx") {
         setUploadedFileName(file.name);
         const reader = new FileReader();
@@ -181,8 +186,11 @@ function ModalExcelUpload(props) {
               const columns = getDataColumns(1, data); // 몇번째 행이 Column Name인지 0부터 시작
               const rowsArr = await ExportJson(rows, columns, data); // 문서 포맷에 맞게 세팅된 상태
               // UploadInsp(JSON.stringify(rowsArr));
-              // console.log(JSON.stringify(rowsArr));
-              setJasonData(JSON.stringify(rowsArr));
+              await setJsonData(JSON.stringify(rowsArr));
+              jsonVal = JSON.stringify(rowsArr);
+
+              console.log("test");
+              setIsBackDrop(false);
             })
             .catch((error) => {
               console.error("Error loading the workbook:", error);
@@ -243,15 +251,22 @@ function ModalExcelUpload(props) {
         severity: "error",
       });
     } else {
-      UploadInsp();
-      resetProd();
-      onClickModalClose();
+      const handleAsync = async () => {
+        setIsBackDrop(true);
+        await UploadInsp();
+        await resetProd();
+        setIsBackDrop(false);
+        onClickModalClose();
+      };
+
+      handleAsync();
     }
   };
   const UploadInsp = async () => {
-    console.log(jsonData);
     try {
-      const response = await restAPI.post(restURI.inspResultUpload, jsonData);
+      console.log(jsonVal);
+      const response = await restAPI.post(restURI.inspResultUploadExcel, jsonData);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -301,6 +316,7 @@ function ModalExcelUpload(props) {
         </LS.DragAndDropFileWrap>
       )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
+      <BackDrop isBackDrop={isBackDrop} />
     </ModalWrap>
   );
 }

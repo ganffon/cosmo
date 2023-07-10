@@ -597,6 +597,7 @@ class packingDetail {
     this.packing_emp_id = raw.packing_emp_id;
     this.work_packing_date = raw.work_packing_date;
     this.work_packing_time = raw.work_packing_time;
+    this.barcode_no = raw.barcode_no;
     this.remark = raw.remark;
   }
 }
@@ -615,6 +616,7 @@ class weightDetail {
     this.work_weigh_detail_id = raw.work_weigh_detail_id;
     this.bag_qty = String(raw.bag_qty) ? Number(raw.bag_qty) : null;
     this.input_qty = String(raw.input_qty) ? Number(raw.input_qty) : null;
+    this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
     this.remark = raw.remark;
   }
 }

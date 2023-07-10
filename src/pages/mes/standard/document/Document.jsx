@@ -47,6 +47,17 @@ function Document() {
     prodNM.current = "품목";
   };
 
+  const requireCoulnm = [
+    "insp_document_no",
+    "prod_id",
+    "insp_document_reg_date",
+    "apply_fg",
+    "sortby",
+    "insp_proc_gbn",
+    "insp_item_id",
+    "insp_filing_id",
+  ];
+
   const targetRowKey = useRef(null);
   const targetGrid = useRef(null);
 
@@ -546,8 +557,26 @@ function Document() {
     modalDetailClickRowKey.current = e.rowKey;
   };
   const onClickModalCancelRow = () => {
-    const gridEvent = refGridModalDetail?.current?.gridInst;
-    gridEvent?.removeRow(modalDetailClickRowKey.current);
+    //onst gridEvent = refGridModalDetail?.current?.gridInst;
+    //gridEvent?.removeRow(modalDetailClickRowKey.current);
+    // modalDetailClickRowKey.current = "";
+
+    if (modalDetailClickRowKey.current) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refGridModalDetail.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(modalDetailClickRowKey.current);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refGridModalDetail.current?.getInstance();
+      const rowCount = refGridModalDetail.current
+        ?.getInstance()
+        ?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
     modalDetailClickRowKey.current = "";
   };
   const onClickModalSave = () => {
@@ -709,6 +738,7 @@ function Document() {
         rowHeadersDetail={rowHeadersNum}
         refGridModalHeader={refGridModalHeader}
         refGridModalDetail={refGridModalDetail}
+        requirecolumns={requireCoulnm}
         onClickGridModalDetail={onClickGridModalDetail}
         onDblClickGridModalHeader={onDblClickGridModalHeader}
         onDblClickGridModalDetail={onDblClickGridModalDetail}

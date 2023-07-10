@@ -24,7 +24,8 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Equipment() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
@@ -51,8 +52,16 @@ function Equipment() {
   const [searchToggle, setSearchToggle] = useState(false);
   const [processOpt, processList] = Cbo.useProcess();
 
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnsModalSelect, columnOptions, inputSet } =
-    EquipmentSet(isEditMode, processList);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnsModalSelect,
+    columnOptions,
+    inputSet,
+  } = EquipmentSet(isEditMode, processList);
   const SWITCH_NAME_01 = "equipment";
 
   useEffect(() => {
@@ -60,7 +69,10 @@ function Equipment() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -68,7 +80,10 @@ function Equipment() {
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
   const [actSearchSelect] = uSearch.useSearchSelect(
     refModalSelectGrid,
     isBackDrop,
@@ -164,7 +179,21 @@ function Equipment() {
     rowKey = e.rowKey;
   };
   const onClickModalCancelRow = () => {
-    refModalGrid?.current?.gridInst?.removeRow(rowKey);
+    if (rowKey) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(rowKey);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+      const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = undefined;
   };
   const onClickModalSave = () => {
     actSave();
@@ -276,6 +305,7 @@ function Equipment() {
         refModalGrid={refModalGrid}
         onClickModalGrid={onClickModalGrid}
         onDblClickModalGrid={onDblClickModalGrid}
+        requirecolumns={["proc_id", "equip_cd", "equip_nm"]}
       />
     );
   }, []);

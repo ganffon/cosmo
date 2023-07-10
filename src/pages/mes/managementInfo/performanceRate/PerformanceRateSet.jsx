@@ -1,82 +1,64 @@
 import React from "react";
+import CN from "json/ColumnName.json";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 
+class CustomColumnHeader {
+  constructor(props) {
+    const columnInfo = props.columnInfo;
+    const el = document.createElement("div");
+    el.className = "columnHeaderMultiLine";
+    el.textContent = columnInfo.header;
+    this.el = el;
+    console.log(el);
+  }
+  getElement() {
+    return this.el;
+  }
+  render(props) {
+    this.el.textContent = props.columnInfo.header;
+  }
+}
 
-export const getColTest = () => [
-    { header: '생산일자', name: 'create_at' },
-  
-    { header: '조업시간', name: 'e1_work' },
-    { header: '계획정지시간', name: 'e1_pTime' },
-    { header: '비계획정지시간', name: 'e1_nTime' },
-    { header: '성능가동률', name: 'e1_Oper' },
-  
-    { header: '조업시간', name: 'e2_work' },
-    { header: '계획정지시간', name: 'e2_pTime' },
-    { header: '비계획정지시간', name: 'e2_nTime' },
-    { header: '성능가동률', name: 'e2_Oper' },
-  
-    { header: '조업시간', name: 'e3_work' },
-    { header: '계획정지시간', name: 'e3_pTime' },
-    { header: '비계획정지시간', name: 'e3_nTime' },
-    { header: '성능가동률', name: 'e3_Oper' },
-  
-    { header: '합계', name: 'total' },
-  ];
-  
-  export const getTimeHeader = () => ({
-    complexColumns: [
-      {
-        header: 'E1',
-        name: 'E1',
-        childNames: ['e1_work', 'e1_pTime', 'e1_nTime', 'e1_Oper'],
-      },
-      {
-        header: 'E2',
-        name: 'E2',
-        childNames: ['e2_work', 'e2_pTime', 'e2_nTime', 'e2_Oper'],
-      },
-      {
-        header: 'E3',
-        name: 'E3',
-        childNames: ['e3_work', 'e3_pTime', 'e3_nTime', 'e3_Oper'],
-      },
-    ],
-    height: '60px',
-  });
-  
+export const getPerformanceCol = () => [
+  { header: CN.work_date, name: "work_date", width: "auto", align: "center" },
 
-  export const getData = (tmpStr) => {
-    const tmpRows = [];
-    tmpStr.data.rows.map((row) => {
-        
-        const createAt = new Date(row.create_at);
-        let formattedCreateAt = `${createAt.getFullYear()}-${(createAt.getMonth() + 1).toString().padStart(2, '0')}-${createAt.getDate().toString().padStart(2, '0')}`;
-        if (isNaN(createAt.getTime())) {
-          formattedCreateAt = "TOTAL";
-        }
-      
-      const rowData = {
-        create_at: formattedCreateAt,
-        e1_work: row.e1_work,
-        e1_pTime: row.e1_pTime,
-        e1_nTime: row.e1_nTime,
-        e1_Oper: row.e1_Oper,
-        e2_work: row.e2_work,
-        e2_pTime: row.e2_pTime,
-        e2_nTime: row.e2_nTime,
-        e2_Oper: row.e2_Oper,
-        e3_work: row.e3_work,
-        e3_pTime: row.e3_pTime,
-        e3_nTime: row.e3_nTime,
-        e3_Oper: row.e3_Oper,
-        total: row.total,
-      };
-  
-      tmpRows.push(rowData);
-      return rowData;
-    });
-    
-    return tmpRows;
-  };
-  
-  
-  
+  { header: CN.target, name: "E1_target", align: "right" },
+  { header: CN.perf_schedule, name: "E1_scheduled", align: "right" },
+  { header: CN.perf_scheduled_qty, name: "E1_scheduled_qty", width: 130, align: "right" },
+  { header: CN.perf_qty, name: "E1_qty", align: "right" },
+  { header: CN.performance, name: "E1_performance", align: "right" },
+
+  { header: CN.target, name: "E2_target", align: "right" },
+  { header: CN.perf_schedule, name: "E2_scheduled", align: "right" },
+  { header: CN.perf_scheduled_qty, name: "E2_scheduled_qty", width: 130, align: "right" },
+  { header: CN.perf_qty, name: "E2_qty", align: "right" },
+  { header: CN.performance, name: "E2_performance", align: "right" },
+
+  { header: CN.target, name: "E3_target", align: "right" },
+  { header: CN.perf_schedule, name: "E3_scheduled", align: "right" },
+  { header: CN.perf_scheduled_qty, name: "E3_scheduled_qty", width: 130, align: "right" },
+  { header: CN.perf_qty, name: "E3_qty", align: "right" },
+  { header: CN.performance, name: "E3_performance", align: "right" },
+
+  { header: "합계", name: "total_performance", align: "right", width: "auto" },
+];
+export const getPerformanceHeader = () => ({
+  height: 60,
+  complexColumns: [
+    {
+      header: "E1",
+      name: "E1",
+      childNames: ["E1_target", "E1_scheduled", "E1_scheduled_qty", "E1_qty", "E1_performance"],
+    },
+    {
+      header: "E2",
+      name: "E2",
+      childNames: ["E2_target", "E2_scheduled", "E2_scheduled_qty", "E2_qty", "E2_performance"],
+    },
+    {
+      header: "E3",
+      name: "E3",
+      childNames: ["E3_target", "E3_scheduled", "E3_scheduled_qty", "E3_qty", "E3_performance"],
+    },
+  ],
+});

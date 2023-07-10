@@ -12,41 +12,57 @@ export const ContentsArea = styled("div")`
   // overflow: hidden auto;
 `;
 export const TopWrap = styled("div")`
-  height: 350px;
+  height: 250px;
+  width: 100%;
+  background-color: #a0adba;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: #ffffff;
+  padding: 10px 20px 10px 10px;
 `;
 export const MidWrap = styled("div")`
-  height: calc(100% - 360px);
+  height: calc(100% - 250px);
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  background: #ffffff;
+  padding: 10px 20px 10px 20px;
+  gap: 10px;
 `;
 export const BottomWrap = styled("div")`
   height: 30%;
   display: flex;
   flex-direction: column;
 `;
-/*
-export const ScreenTitleBox = styled("div")`
-  height: 40px;
-  width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 4px 4px 4px 20px;
-  font-family: NotoSansKR_B;
-  font-size: 20px;
+export const SearchWrap = styled("div")`
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
 `;
-*/
+export const SearchBox = styled("div")`
+  display: flex;
+`;
+export const ButtonBox = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
 
 export const LeftWrap = styled("div")`
-  width: 90%;
+  height: 100%;
+  width: calc(100% - 300px);
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
 
 export const RightWrap = styled("div")`
-  width: 20%;
+  height: 100%;
+  width: 300px;
   display: flex;
   font-family: NotoSansKR_B;
   font-size: 20px;
@@ -58,28 +74,10 @@ export const ScreenTitleBox = styled("div")`
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
-export const SearchBox = styled("div")`
-  height: 99%;
-  width: 100%;
-  background-color: #a0adba;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  background: #ffffff;
-  padding: 10px 20px 10px 10px;
-`;
-//  display: flex;
-export const ButtonWrap = styled("div")``;
+
 export const GridHeader = styled("div")`
-  height: 100%;
+  height: calc(100% - 50px);
   width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  background: #ffffff;
-  padding: 10px 10px 10px 10px;
 `;
 export const GridDetail = styled("div")`
   height: 98%;
@@ -88,7 +86,6 @@ export const GridDetail = styled("div")`
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   background: #ffffff;
-  padding: 10px 10px 10px 10px;
 `;
 
 export const BarcodeBoxWrap = styled("div")`

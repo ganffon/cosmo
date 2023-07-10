@@ -18,7 +18,7 @@ const EquipStatus = ({ toggle }) => {
   let isFirst = true;
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
-    startDate: DateTime(-50).dateFull,
+    startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
   });
   const [year, setYear] = useState(new Date().getFullYear());

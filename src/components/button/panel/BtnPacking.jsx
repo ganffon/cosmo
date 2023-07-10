@@ -7,14 +7,14 @@ function BtnPacking(props) {
     <S.ButtonSetWrap>
       <BtnPanel
         title={"등록"}
-        height={"45%"}
-        width={"80%"}
+        height={"150px"}
+        width={"200px"}
         color={"#1491CE"}
         fontSize={"26px"}
         fontColor={"#ffffff"}
         onClick={onClickNew}
       />
-      <BtnPanel
+      {/* <BtnPanel
         title={"삭제"}
         height={"45%"}
         width={"80%"}
@@ -23,7 +23,7 @@ function BtnPacking(props) {
         fontColor={"#1491CE"}
         borderColor={"#1491CE"}
         onClick={onClickDelete}
-      />
+      /> */}
     </S.ButtonSetWrap>
   );
 }

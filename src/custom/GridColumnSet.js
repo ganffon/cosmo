@@ -43,6 +43,32 @@ const text = (
   };
 };
 
+const rText = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  hidden = false,
+  minWidth = C.WIDTH_SHORT,
+  align = "left",
+  sortable = false,
+  filter = false,
+  whiteSpace = false,
+  rowSpan = false
+) => {
+  return {
+    name: name,
+    header: "* " + header,
+    minWidth: minWidth,
+    editor: isEditMode ? "text" : false,
+    align: align,
+    hidden: hidden,
+    sortable: sortable,
+    filter: filter ? "select" : false,
+    whiteSpace: whiteSpace,
+    rowSpan: rowSpan,
+  };
+};
+
 const list = (
   id = "",
   name = "",
@@ -78,6 +104,43 @@ const list = (
     rowSpan: rowSpan,
   };
 };
+
+const rList = (
+  id = "",
+  name = "",
+  header = "",
+  listArray = [],
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  hidden = false,
+  align = "left",
+  sortable = false,
+  filter = false,
+  whiteSpace = false,
+  rowSpan = false
+) => {
+  return {
+    name: isEditMode ? id : name,
+    header: "* " + header,
+    minWidth: minWidth,
+    formatter: isEditMode ? "listItemText" : null,
+    editor: isEditMode
+      ? {
+          type: "select",
+          options: {
+            listItems: listArray,
+          },
+        }
+      : false,
+    align: align,
+    hidden: hidden,
+    sortable: sortable,
+    filter: filter,
+    whiteSpace: whiteSpace,
+    rowSpan: rowSpan,
+  };
+};
+
 const listGbn = (
   name = "",
   header = "",
@@ -205,10 +268,56 @@ const number = (
   };
 };
 
+const rNumber = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  hidden = false,
+  sortable = false,
+  filter = false
+) => {
+  return {
+    name: name,
+    header: "* " + header,
+    minWidth: minWidth,
+    align: "right",
+    editor: isEditMode ? "text" : false,
+    formatter: function (value) {
+      return CustomGrid.NumComma(value);
+    },
+    hidden: hidden,
+    sortable: sortable,
+    filter: filter,
+    whiteSpace: false,
+    rowSpan: false,
+  };
+};
+
 const select = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, align = "left") => {
   return {
     name: name,
     header: header,
+    minWidth: minWidth,
+    align: align,
+    editor: false,
+    validation: isEditMode
+      ? {
+          required: true,
+        }
+      : null,
+    hidden: false,
+    sortable: false,
+    filter: false,
+    whiteSpace: false,
+    rowSpan: false,
+  };
+};
+
+const rSelect = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, align = "left") => {
+  return {
+    name: name,
+    header: "* " + header,
     minWidth: minWidth,
     align: align,
     editor: false,
@@ -248,10 +357,51 @@ const date = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHO
   };
 };
 
+const rDate = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT) => {
+  return {
+    name: name,
+    header: "* " + header,
+    minWidth: minWidth,
+    align: "center",
+    editor: isEditMode
+      ? {
+          type: "datePicker",
+          options: {
+            language: "ko",
+            format: "yyyy-MM-dd",
+          },
+        }
+      : false,
+    hidden: false,
+    sortable: false,
+    filter: false,
+    whiteSpace: false,
+    rowSpan: false,
+  };
+};
+
 const password = (name = "", header = "", isEditMode = false) => {
   return {
     name: name,
     header: header,
+    minWidth: C.WIDTH_MIDDLE,
+    align: "left",
+    editor: isEditMode ? "password" : false,
+    formatter: function (value) {
+      return CustomGrid.Password(value, false);
+    },
+    hidden: false,
+    sortable: false,
+    filter: false,
+    whiteSpace: false,
+    rowSpan: false,
+  };
+};
+
+const rPassword = (name = "", header = "", isEditMode = false) => {
+  return {
+    name: name,
+    header: "* " + header,
     minWidth: C.WIDTH_MIDDLE,
     align: "left",
     editor: isEditMode ? "password" : false,
@@ -285,4 +435,23 @@ const RENumComma = (e, refGrid, columnName) => {
   }
 };
 
-export { id, text, list, listGbn, check, button, number, select, date, password, multi, RENumComma };
+export {
+  id,
+  text,
+  rText,
+  list,
+  rList,
+  listGbn,
+  check,
+  button,
+  number,
+  rNumber,
+  select,
+  rSelect,
+  date,
+  rDate,
+  password,
+  rPassword,
+  multi,
+  RENumComma,
+};

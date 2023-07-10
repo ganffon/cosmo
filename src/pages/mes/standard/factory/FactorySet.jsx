@@ -28,8 +28,8 @@ function FactorySet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("factory_cd", CN.factory_cd, true, C.U, C.WIDTH_MIDDLE),
-    col.text("factory_nm", CN.factory_nm, true, C.U, C.WIDTH_MIDDLE),
+    col.rText("factory_cd", CN.factory_cd, true, C.U, C.WIDTH_MIDDLE),
+    col.rText("factory_nm", CN.factory_nm, true, C.U, C.WIDTH_MIDDLE),
   ];
   const columnOptions = {
     resizable: true,

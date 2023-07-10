@@ -7,6 +7,7 @@ import RadialBarChart, { RadialBarChartModule, CountModule, TempModule } from ".
 import ContentsArea from "components/layout/common/ContentsArea";
 import * as S from "./TempView.styled";
 import DateTime from "components/datetime/DateTime";
+import BackDrop from "components/backdrop/BackDrop";
 
 const TempView = () => {
   let isFirst = true;
@@ -15,7 +16,7 @@ const TempView = () => {
 
   const [tempResponseData, setTempResponseData] = useState(null);
   const [workResponseData, setWorkResponseData] = useState(null);
-
+  const [isBackDrop, setIsBackDrop] = useState(false);
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [containerWidth, setContainerWidth] = useState(1446);
   useEffect(() => {
@@ -45,7 +46,10 @@ const TempView = () => {
         setTempResponseData(response.data.data.rows[0].temp);
         setWorkResponseData(response.data.data.rows[0].work);
       })
-      .catch((error) => {});
+      .catch((error) => {})
+      .finally(() => {
+        setIsBackDrop(false);
+      });
   };
 
   useEffect(() => {
@@ -54,6 +58,7 @@ const TempView = () => {
     };
 
     if (isFirst) {
+      setIsBackDrop(true);
       fetchData();
       isFirst = false;
     }
@@ -218,6 +223,7 @@ const TempView = () => {
           </S.SecondWrap>
         </S.GridContainer>
       </S.AllWrap>
+      <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );
 };

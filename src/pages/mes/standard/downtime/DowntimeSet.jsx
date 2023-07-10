@@ -37,15 +37,15 @@ function DowntimeSet(isEditMode, downtimeTypeList) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.list(
+    col.rList(
       "downtime_type_id",
       "downtime_type_nm",
       CN.downtime_type_nm,
       downtimeTypeList,
       true
     ),
-    col.text("downtime_cd", CN.downtime_cd, true),
-    col.text("downtime_nm", CN.downtime_nm, true),
+    col.rText("downtime_cd", CN.downtime_cd, true),
+    col.rText("downtime_nm", CN.downtime_nm, true),
     col.check("scheduled_shutdown_fg", CN.scheduled_shutdown_fg, true),
   ];
   const columnOptions = {

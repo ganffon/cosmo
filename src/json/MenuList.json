@@ -572,6 +572,12 @@
             "id": "monthly-temp-humid-chart",
             "path": "monthly-temp-humid-chart",
             "under": null
+          },
+          {
+            "name": "시간별 충진 count",
+            "id": "count-Chart",
+            "path": "count-Chart",
+            "under": null
           }
         ]
       }

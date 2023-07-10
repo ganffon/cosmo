@@ -28,8 +28,8 @@ function DowntimeTypeSet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("downtime_type_cd", CN.downtime_type_cd, true),
-    col.text("downtime_type_nm", CN.downtime_type_nm, true),
+    col.rText("downtime_type_cd", CN.downtime_type_cd, true),
+    col.rText("downtime_type_nm", CN.downtime_type_nm, true),
   ];
   const columnOptions = {
     resizable: true,

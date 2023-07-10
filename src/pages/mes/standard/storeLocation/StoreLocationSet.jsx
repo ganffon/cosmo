@@ -29,9 +29,9 @@ function StoreLocationSet(isEditMode, storeList) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.list("store_id", "store_nm", CN.store_nm, storeList, true),
-    col.text("location_cd", CN.location_cd, true),
-    col.text("location_nm", CN.location_nm, true),
+    col.rList("store_id", "store_nm", CN.store_nm, storeList, true),
+    col.rText("location_cd", CN.location_cd, true),
+    col.rText("location_nm", CN.location_nm, true),
   ];
   const columnOptions = {
     resizable: true,

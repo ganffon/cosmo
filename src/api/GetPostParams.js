@@ -555,9 +555,10 @@ class packingDetail {
     this.work_packing_id = raw.work_packing_id;
     this.packing_qty = String(raw.packing_qty) ? Number(raw.packing_qty) : null;
     this.packing_emp_id = raw.packing_emp_id;
-    this.work_packing_date = raw.work_packing_date;
-    this.work_packing_time = raw.work_packing_time;
+    this.work_packing_date = raw.work_packing_date === "" ? null : raw.work_packing_date;
+    this.work_packing_time = raw.work_packing_time === "" ? null : raw.work_packing_time;
     this.barcode_no = raw.barcode_no;
+    this.packing_no = +raw.packing_no;
     this.remark = raw.remark;
   }
 }

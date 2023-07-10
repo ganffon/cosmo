@@ -7,7 +7,7 @@ import InputPaper from "components/input/InputPaper";
 
 function ModalInputSave(props) {
   const {
-    width = "65%",
+    width = "70%",
     height = "50%",
     onClickModalClose = () => {},
     onClickSelect = () => {},
@@ -25,29 +25,20 @@ function ModalInputSave(props) {
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{currentMenuName}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
       <S.Content>
         <S.GridTitleBox>
           <div>✳️ 투입정보 확인</div>
-          <S.ButtonSet
-            color={"#28a745"}
-            hoverColor={"#218838"}
-            onClick={onClickInputSave}
-            width={"150px"}
-          >
+          <S.ButtonSet color={"#28a745"} hoverColor={"#218838"} onClick={onClickInputSave} width={"150px"}>
             Save
           </S.ButtonSet>
         </S.GridTitleBox>
         <S.InfoBox>
           <S.InfoWrap>
-            <S.InfoTitle>🔸라인</S.InfoTitle>
+            <S.InfoTitle>라인</S.InfoTitle>
             <InputPaper
               width={"150px"}
               height={"60px"}
@@ -56,7 +47,7 @@ function ModalInputSave(props) {
               size={"30px"}
               btn={false}
             />
-            <S.InfoTitle>🔸품목코드</S.InfoTitle>
+            <S.InfoTitle>품목코드</S.InfoTitle>
             <InputPaper
               width={"300px"}
               height={"60px"}
@@ -65,7 +56,7 @@ function ModalInputSave(props) {
               size={"30px"}
               btn={false}
             />
-            <S.InfoTitle>🔸품목</S.InfoTitle>
+            <S.InfoTitle width={"100px"}>품목</S.InfoTitle>
             <InputPaper
               width={"300px"}
               height={"60px"}
@@ -76,7 +67,7 @@ function ModalInputSave(props) {
             />
           </S.InfoWrap>
           <S.InfoWrap>
-            <S.InfoTitle>🔸창고 위치</S.InfoTitle>
+            <S.InfoTitle>창고 위치</S.InfoTitle>
             <InputPaper
               width={"250px"}
               height={"60px"}
@@ -97,7 +88,7 @@ function ModalInputSave(props) {
             />
           </S.InfoWrap>
           <S.InfoWrap>
-            <S.InfoTitle>🔸투입자</S.InfoTitle>
+            <S.InfoTitle>투입자</S.InfoTitle>
             <InputPaper
               width={"250px"}
               height={"60px"}
@@ -108,7 +99,7 @@ function ModalInputSave(props) {
               onClickSelect={onClickSelect}
               onClickRemove={onClickRemove}
             />
-            <S.InfoTitle>🔸투입일시</S.InfoTitle>
+            <S.InfoTitle>투입일시</S.InfoTitle>
             <InputPaper
               width={"200px"}
               height={"60px"}
@@ -125,12 +116,7 @@ function ModalInputSave(props) {
               size={"30px"}
               btn={false}
             />
-            <S.ButtonTime
-              color={"#28a745"}
-              hoverColor={"#218838"}
-              onClick={onClickNowTime}
-              width={"120px"}
-            >
+            <S.ButtonTime color={"#28a745"} hoverColor={"#218838"} onClick={onClickNowTime} width={"120px"}>
               현재시간
             </S.ButtonTime>
           </S.InfoWrap>

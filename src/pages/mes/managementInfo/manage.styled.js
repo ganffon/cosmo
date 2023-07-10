@@ -28,6 +28,10 @@ export const Date = styled(DatePicker)`
 export const SearchWrap = styled("div")`
   display: flex;
 `;
+export const SearchColumnWrap = styled("div")`
+  display: flex;
+  flex-direction: column;
+`;
 export const ContentsHeaderWrap = styled("div")`
   display: flex;
   justify-content: end;
@@ -78,6 +82,7 @@ export const ChartWrap = styled("div")`
 export const ChartWrap2 = styled("div")`
   margin: 10px;
   height: 80%;
+  width: 100%;
   background-color: #ffffff;
 `;
 export const GridWrap = styled("div")`
@@ -122,6 +127,14 @@ export const ShadowBoxButton = styled("div")`
   background-color: #ffffff;
   width: 100%;
   height: ${SEARCH_BAR_HEIGHT};
+  padding: 0px 10px;
+  border-radius: 10px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
+export const ShadowHeaderBoxButton = styled("div")`
+  background-color: #ffffff;
+  width: 100%;
+  height: ${SEARCH_BAR_HEIGHT} * 2;
   padding: 0px 10px;
   border-radius: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -201,9 +214,13 @@ export const Left = styled("div")`
   padding: 5px;
 `;
 export const TimeRateLeft = styled("div")`
-  width: 60%;
+  width: 56%;
   height: 100%;
-
+  border-radius: 10px;
+`;
+export const PerformaceRateLeft = styled("div")`
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
 `;
 export const Right = styled("div")`
@@ -215,7 +232,7 @@ export const Right = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const TimeRateRight = styled("div")`
-  width: 48%;
+  width: calc(44% - 10px);
   height: 100%;
   margin-left: 10px;
   border-radius: 10px;
@@ -255,6 +272,7 @@ export const LineCapaTop = styled.div`
 `;
 export const TimeRateTop = styled.div`
   display: "flex";
+  width: 100%;
   height: 60%;
   flexdirection: "column";
   border-radius: 10px;
@@ -273,7 +291,7 @@ export const LineCapaBottom = styled.div`
 `;
 export const TimeRateBottom = styled.div`
   display: "flex";
-  height: 40%;
+  height: calc(40% - 10px);
   flexdirection: "column";
   border-radius: 10px;
   background-color: #ffffff;
@@ -361,6 +379,20 @@ export const AllWrap = styled("div")`
   height: 100%;
   width: 100%;
   display: flex;
+  overflow: auto;
+  // ::-webkit-scrollbar {
+  //   width: 8px; /* 스크롤바 너비 */
+  // }
+
+  // ::-webkit-scrollbar-thumb {
+  //   background-color: #e9e9e9; /* 스크롤바 색상 */
+  //   border-radius: 4px; /* 스크롤바 모서리 반경 */
+  // }
+
+  // ::-webkit-scrollbar-track {
+  //   background-color: #ffffff; /* 스크롤바 트랙 색상 */
+  //   border-radius: 4px; /* 스크롤바 트랙 모서리 반경 */
+  // }
 `;
 export const GridContainer = styled("div")`
   display: grid;
@@ -437,5 +469,44 @@ export const BtnComponent = styled("button")`
         transform: scale(1);
       }
     }
+  }
+`;
+export const countChartFirst = styled.div`
+  display: "flex";
+  height: 100%;
+  flexdirection: "column";
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 10px 10px 10px 0px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
+export const countChartSecond = styled.div`
+  display: "flex";
+  height: calc(33% - 5px);
+  flexdirection: "column";
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin-top: 10px;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+`;
+
+export const ContentsArea = styled("div")`
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #efefef;
+  padding: 20px;
+
+  display: flex;
+  ${(props) => (!props.hidden && props.flexColumn ? "flex-direction: column;" : "")}
+
+  gap: 10px;
+
+  & .redText {
+    color: red;
+  }
+
+  & .selectedBack {
+    background-color: #fdf0f6;
   }
 `;
