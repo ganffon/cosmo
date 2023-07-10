@@ -35,15 +35,15 @@ function InspectItemSet(isEditMode, inspItemTypeList) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.list(
+    col.rList(
       "insp_item_type_id",
       "insp_item_type_nm",
       CN.insp_item_type_nm,
       inspItemTypeList,
       true
     ),
-    col.text("insp_item_cd", CN.insp_item_cd, true),
-    col.text("insp_item_nm", CN.insp_item_nm, true),
+    col.rText("insp_item_cd", CN.insp_item_cd, true),
+    col.rText("insp_item_nm", CN.insp_item_nm, true),
   ];
   const columnOptions = {
     resizable: true,

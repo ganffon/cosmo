@@ -32,8 +32,8 @@ function SetupSet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("setup_cd", CN.setup_cd, true),
-    col.text("setup_nm", CN.setup_nm, true),
+    col.rText("setup_cd", CN.setup_cd, true),
+    col.rText("setup_nm", CN.setup_nm, true),
     col.check("auth_read", CN.auth_read, true),
     col.check("auth_create", CN.auth_create, true),
     col.check("auth_update", CN.auth_update, true),

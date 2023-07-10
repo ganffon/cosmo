@@ -54,7 +54,7 @@ export const GridHeaderWrap = styled("div")`
   padding: 10px 10px 10px 10px;
 `;
 export const SearchInfoWrap = styled("div")`
-  height: 120px;
+  height: 70px;
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -66,7 +66,7 @@ export const SearchInfoWrap = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const SearchRightWrap = styled("div")`
-  height: calc(100% - 130px);
+  height: calc(100% - 80px);
   width: 100%;
   background: #ffffff;
   padding: 10px;

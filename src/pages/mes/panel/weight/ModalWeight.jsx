@@ -184,6 +184,7 @@ function ModalWeight(props) {
 
       refBarcodeTimeStamp.current = e?.timeStamp;
       if (e?.key === "Enter") {
+        console.log(barcodeNo.current);
         setBarcodeScan({
           ...barcodeScan,
           value: barcodeNo.current,
@@ -211,14 +212,22 @@ function ModalWeight(props) {
        */
       const lot = barcodeNo.current.slice(20, 30);
 
-      // transferBarcode(lot);
       barcodeOnGrid(lot);
     } else if (barcodeNo.current.slice(0, 3) === "FDR") {
       // transferBarcodeSubdivision(barcodeNo.current);
       try {
         const result = await restAPI.get(restURI.createBarcode + `?barcode_no=${barcodeNo.current}`);
-        const data = result?.data?.data?.rows[0];
-        barcodeOnGrid(data.lot_no);
+        if (result?.data?.data?.rows.length === 0) {
+          setBarcodeScan({
+            ...barcodeScan,
+            value: "데이터가 삭제 된 바코드입니다.",
+            lot: "",
+            className: "red",
+          });
+        } else {
+          const data = result?.data?.data?.rows[0];
+          barcodeOnGrid(data.lot_no);
+        }
       } catch (err) {
         setBarcodeScan({
           ...barcodeScan,

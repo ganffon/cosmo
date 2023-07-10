@@ -5,7 +5,7 @@ import * as col from "custom/GridColumnSet";
 
 function InspectionResultSet(isEditMode) {
   const data = [];
-  const rowHeaders = ["checkbox"];
+  const rowHeaders = ["checkbox", "rowNum"];
   const rowHeadersModal = ["rowNum"];
   const header = {};
   const columns = [
@@ -22,6 +22,7 @@ function InspectionResultSet(isEditMode) {
   ];
   const columnsSelectProd = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
+    col.text("prod_type_small_nm", CN.prod_type_small_nm, false, false, C.WIDTH_SHORT),
     col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT),
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
   ];

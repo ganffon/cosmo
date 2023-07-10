@@ -162,10 +162,14 @@ function InspectionResult(props) {
   };
 
   const handleDelete = () => {
-    actDelete();
-    setTimeout(() => {
+    const handleAsync = async () => {
+      await actDelete();
       onClickSearch();
-    }, 300);
+    };
+    handleAsync();
+    // setTimeout(() => {
+
+    // }, 300);
   };
 
   const [actDelete] = uDelete.useDelete(

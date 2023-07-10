@@ -8,7 +8,6 @@ export const Wrap = styled("div")`
   justify-content: space-between;
 `;
 export const InputWrap = styled("div")`
-  margin-top: 10px;
   display: flex;
 `;
 export const InfoTitle = styled("div")`
@@ -26,7 +25,7 @@ export const InfoTitleBarcode = styled("div")`
   margin-top: 10px;
 `;
 export const InputWrapDivide = styled("div")`
-  padding-bottom: 40px;
+  padding-bottom: 10px;
   padding-top: 10px;
   width: 100%;
   display: flex;

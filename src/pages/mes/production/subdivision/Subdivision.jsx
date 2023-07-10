@@ -25,6 +25,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
+import GetDeleteParams from "api/GetDeleteParams";
 
 function Subdivision() {
   LoginStateChk();
@@ -51,6 +52,7 @@ function Subdivision() {
     open: false,
   });
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [isDeleteHeaderAlertOpen, setIsDeleteHeaderAlertOpen] = useState(false);
   const [inputInfoValue, setInputInfoValue] = useState([]);
   const [headerClickRowID, setHeaderClickRowID] = useState(null);
   const [headerClickRowKey, setHeaderClickRowKey] = useState(null);
@@ -580,6 +582,44 @@ function Subdivision() {
       setIsDeleteAlertOpen(true);
     }
   };
+  const onClickDeleteHeader = () => {
+    const data = refGridHeader?.current?.gridInst?.getCheckedRows();
+    if (data.length !== 0) {
+      setIsDeleteHeaderAlertOpen(true);
+    }
+  };
+  const onDeleteHeader = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridHeader?.current?.gridInst;
+      Grid?.finishEditing();
+
+      const data = Grid?.getCheckedRows()?.map((raw) => GetDeleteParams("subdivision", raw));
+      if (data) {
+        const result = await restAPI.delete(restURI.subdivision, { data });
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
+        setIsDeleteHeaderAlertOpen(false);
+        onClickSearch();
+        setGridDataDetail([]);
+      }
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
   const onEditingFinishGridHeader = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
@@ -742,6 +782,9 @@ function Subdivision() {
                 <S.InnerButtonWrap>
                   <BtnComponent btnName={"Edit"} onClick={onClickEditHeader} />
                 </S.InnerButtonWrap>
+                <S.InnerButtonWrap>
+                  <BtnComponent btnName={"Delete"} onClick={onClickDeleteHeader} />
+                </S.InnerButtonWrap>
               </S.ButtonBox>
             )}
           </S.ContentsHeaderWrap>
@@ -846,6 +889,20 @@ function Subdivision() {
           onDelete={actDeleteDetailDateRange}
           onCancel={() => {
             setIsDeleteAlertOpen(false);
+          }}
+        />
+      )}
+      {isDeleteHeaderAlertOpen && (
+        <NoticeAlertModal
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancel={true}
+          onDelete={onDeleteHeader}
+          onCancel={() => {
+            setIsDeleteHeaderAlertOpen(false);
           }}
         />
       )}

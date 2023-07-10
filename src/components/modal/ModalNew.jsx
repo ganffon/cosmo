@@ -35,6 +35,10 @@ function ModalNew(props) {
     isAddOneRow && refModalGrid?.current?.gridInst?.appendRow();
   }, []);
 
+  const [isSnackOpen, setIsSnackOpen] = useState({
+    open: false,
+  });
+
   const validationDuplicated = () => {
     try {
       refModalGrid?.current?.gridInst?.finishEditing();
@@ -68,6 +72,26 @@ function ModalNew(props) {
       }
     } catch {
       return "error";
+    }
+  };
+
+  const requireColumnsValidation = () => {
+    try {
+      refModalGrid?.current?.gridInst?.finishEditing();
+      const gridInstance = refModalGrid?.current?.getInstance();
+      const rawDatas = gridInstance?.store?.data?.rawData;
+      for (let i = 0; i < rawDatas.length; i++) {
+        if (rawDatas[i] !== undefined) {
+          for (let j = 0; j < requirecolumns.length; j++) {
+            const validationData = rawDatas[i][requirecolumns[j]];
+            if (validationData === null || validationData === "") {
+              throw new Error();
+            }
+          }
+        }
+      }
+    } catch {
+      return "nullValidationError";
     }
   };
 
@@ -105,6 +129,7 @@ function ModalNew(props) {
     }
   };
 
+  /*
   const Grid = useMemo(() => {
     return (
       <GridModal
@@ -121,6 +146,24 @@ function ModalNew(props) {
       />
     );
   }, [data]);
+
+  */
+  const Grid = useMemo(() => {
+    return (
+      <GridModal
+        columns={columns}
+        columnOptions={columnOptions}
+        header={header}
+        rowHeaders={rowHeaders}
+        refGrid={refModalGrid}
+        draggable={false}
+        onClick={onClickModalGrid}
+        onDblClick={onDblClickModalGrid}
+        onEditingFinish={onEditingFinishModal}
+        data={data}
+      />
+    );
+  }, []);
 
   return (
     <ModalWrap width={width} height={height}>
@@ -147,9 +190,31 @@ function ModalNew(props) {
               <BtnComponent
                 btnName="Save"
                 onClick={() => {
-                  //  removeNullRow();
-                  // validationDuplicated(["proc_cd", "proc_nm"]);
-                  onClickModalSave();
+                  removeNullRow();
+                  if (requireColumnsValidation() === "nullValidationError") {
+                    setIsSnackOpen({
+                      ...isSnackOpen,
+                      open: true,
+                      message: `필수값을 입력해주세요.`,
+                      severity: "error",
+                    });
+                  } else {
+                    onClickModalSave();
+                  }
+                  /*
+                  removeNullRow();
+                  validationDuplicated(requirecolumns);
+                  if (validationDuplicated(requirecolumns) !== "error") {
+                    onClickModalSave();
+                  } else {
+                    setIsSnackOpen({
+                      ...isSnackOpen,
+                      open: true,
+                      message: "중복값이 존재합니다.",
+                      severity: "error",
+                    });
+                  }
+                   */
                 }}
               />
             </>
@@ -160,6 +225,7 @@ function ModalNew(props) {
         </S.ButtonWrap>
       </S.ButtonBox>
       <S.GridBox>{Grid}</S.GridBox>
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
     </ModalWrap>
   );
 }

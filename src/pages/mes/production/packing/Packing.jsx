@@ -119,21 +119,13 @@ function Packing() {
 
   const onPrintClick = async (rowKey) => {
     try {
-      const result = await restAPI.post(restURI.createBarcode, {
+      const result = await restAPI.post(restURI.packingBarcode, {
         barcode_type: "PACKING",
         reference_id: refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_packing_id,
       });
-
       setBarcodePrintInfo({
         ...barcodePrintInfo,
-        prodCD: result?.data?.data?.rows[0].prod_cd,
-        prodNM: result?.data?.data?.rows[0].prod_type_small_nm,
-        lot: result?.data?.data?.rows[0].lot_no,
-        cnt: result?.data?.data?.rows[0].packing_cnt,
-        qty: result?.data?.data?.rows[0].packing_qty,
-        date: result?.data?.data?.rows[0].work_packing_date,
-        barcodeNo: result?.data?.data?.rows[0].barcode_no,
-        gubn: selectedOption,
+        result: result?.data?.data?.rows,
       });
     } catch (err) {
       setIsSnackOpen({
@@ -195,7 +187,7 @@ function Packing() {
     columnsSelectWeight,
     columnsSelectWeightDetail,
     columnsSelectStore,
-  } = PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick);
+  } = PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint);
 
   let modalDetailClickRowKey = null;
 
@@ -291,6 +283,34 @@ function Packing() {
     restURI.prdWeight,
     null
   );
+  async function onReprint(rowKey) {
+    if (!isEditModeDetail) {
+      const Grid = refGridDetail?.current?.gridInst;
+      // targetRowKey.current = rowKey;
+      // targetID.current = Grid?.getValue(rowKey, "work_packing_detail_id");
+      // targetWeight.current = Grid?.getValue(rowKey, "packing_qty");
+      // onBarcodePrintDetail(targetID.current);
+      const ID = Grid?.getValue(rowKey, "work_packing_detail_id");
+      try {
+        const result = await restAPI.get(restURI.searchBarcode + `?reference_id=${ID}`);
+        console.log(result);
+        setBarcodePrintInfo({
+          ...barcodePrintInfo,
+          result: result?.data?.data?.rows,
+        });
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      }
+      setIsModalPrintOpen(true);
+      setModalData(refGridDetail?.current?.gridInst.store.data.rawData[rowKey]);
+    }
+  }
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
@@ -543,8 +563,8 @@ function Packing() {
         message: res?.data?.message,
         severity: "success",
       });
-      workOrderID.current = "";
-      currentRow.current = "";
+
+      handleGridHeaderClick();
       setIsModalDetailOpen(false);
     } catch (err) {
       setIsSnackOpen({
@@ -747,7 +767,6 @@ function Packing() {
       try {
         setIsBackDrop(true);
         const result = await restAPI.get(restURI.prdPackingDetail + `?work_packing_id=${workPackingID.current}`);
-        console.log(result?.data?.data?.rows);
         setGridDataDetail(result?.data?.data?.rows);
         if (result?.data?.data?.rows.length === 0) {
           if (reSearch) {
@@ -829,7 +848,7 @@ function Packing() {
         isEditMode={isEditModeHeader}
       />
     );
-  }, [gridDataHeader, isEditModeHeader, selectedOption]);
+  }, [gridDataHeader, isEditModeHeader]);
   const GridDetail = useMemo(() => {
     return (
       <GridSingle
@@ -851,7 +870,7 @@ function Packing() {
       <ModalNew
         width={"90%"}
         height={"90%"}
-        title={"생산품목 추가"}
+        title={"포장지시 추가"}
         onClickModalClose={onClickModalClose}
         columns={columnsHeaderNew}
         columnOptions={columnOptions}
@@ -871,7 +890,7 @@ function Packing() {
       <ModalNew
         width={"90%"}
         height={"90%"}
-        title={"투입품목 추가"}
+        title={"포장실적 추가"}
         onClickModalClose={onClickModalDetailClose}
         columns={columnsDetailNew}
         columnOptions={columnOptions}
@@ -979,7 +998,7 @@ function Packing() {
 
         <S.ContentsHeader>
           <S.TitleButtonWrap>
-            <S.TitleMid>생산품목</S.TitleMid>
+            <S.TitleMid>포장작업지시</S.TitleMid>
             <S.ButtonWrap>
               {/* <S.RadioTitle>바코드 출력 옵션</S.RadioTitle>
               <S.RadioButton options={options} selectedOption={selectedOption} onChange={handleOptionChange} /> */}
@@ -1013,7 +1032,7 @@ function Packing() {
       <S.BottomWrap>
         {/* <S.ContentsHeader> */}
         <S.TitleButtonWrap>
-          <S.TitleBottom>투입품목</S.TitleBottom>
+          <S.TitleBottom>포장실적등록</S.TitleBottom>
           <S.ButtonWrap>
             {isEditModeDetail ? (
               <>
@@ -1049,7 +1068,7 @@ function Packing() {
       {isModalSelectOpen ? GridModalSelect : null}
       {isModalSelectDateOpen ? GridModalSelectDate : null}
       {isModalSelectMultiOpen ? GridModalSelectMulti : null}
-      {isModalPrintOpen && <PackingModal onClose={closeModalPrintOpen} data={barcodePrintInfo} />}
+      {isModalPrintOpen && <PackingModal onClose={closeModalPrintOpen} data={barcodePrintInfo.result} />}
       {isDeleteHeaderAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말 삭제하시겠습니까?"}

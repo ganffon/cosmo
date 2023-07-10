@@ -23,6 +23,13 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import BarcodeScan from "./BarcodeScan";
 import ModalSelect from "components/modal/ModalSelect";
 import PackingModal from "pages/mes/production/packing/PackingModal";
+import DatePicker from "components/datetime/DatePicker";
+import InputSearch from "components/input/InputSearch";
+import useInputSet from "custom/useInputSet";
+import BtnComponent from "components/button/BtnComponent";
+import * as disRow from "custom/useDisableRowCheck";
+import GetPutParams from "api/GetPutParams";
+import * as RE from "custom/RegularExpression";
 
 function PackingPanel() {
   const workPackingID = useRef("");
@@ -32,11 +39,16 @@ function PackingPanel() {
   const targetID = useRef("");
   const targetWeight = useRef("");
   const currentRowKey = useRef("");
+  const barcodeNo = useRef("");
+  const lotNo = useRef("");
   LoginStateChk();
-  const { isMenuSlide } = useContext(LayoutContext);
-  const [dateText, setDateText] = useState({
+  const { isMenuSlide, currentMenuName } = useContext(LayoutContext);
+  const [selectDate, setSelectDate] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
+  });
+  const [dateText, setDateText] = useState({
+    startDate: DateTime().dateFull,
   });
 
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -46,11 +58,13 @@ function PackingPanel() {
   const [isPackingHeaderOpen, setIsPackingHeaderOpen] = useState(false);
   const [isModalNewOpen, setIsModalNewOpen] = useState(false);
   const [isModalSelectEmp, setIsModalSelectEmp] = useState(false);
+  const [isGridSelectEmp, setIsGridSelectEmp] = useState(false);
   const [isModalSelectMulti, setIsModalSelectMulti] = useState(false);
   const [isBarcodeScanOpen, setIsBarcodeScanOpen] = useState(false);
   const [barcodeScan, setBarcodeScan] = useState({});
   const [isModalPrintOpen, setIsModalPrintOpen] = useState(false);
   const [barcodePrintInfo, setBarcodePrintInfo] = useState({});
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const {
     columnOptions,
@@ -65,7 +79,8 @@ function PackingPanel() {
     columnsSelectHeader,
     columnsSelectDetail,
     columnsSelectEmp,
-  } = PackingPanelSet(onPerformance);
+    inputSet,
+  } = PackingPanelSet(isEditMode, onPerformance, onReprint);
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
@@ -99,6 +114,8 @@ function PackingPanel() {
   useEffect(() => {
     handleGridHeaderSearch();
   }, []);
+
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refGridHeader);
 
   const [actSelectPackingHeader] = uSearch.useSearchSelect(
     refGridPackingHeader,
@@ -160,19 +177,31 @@ function PackingPanel() {
   };
   const onClickSelect = () => {
     setIsPackingHeaderOpen(true);
-    actSelectPackingHeader(`?start_date=${dateText.startDate}&end_date=${dateText.endDate}`);
+    actSelectPackingHeader(`?start_date=${selectDate.startDate}&end_date=${selectDate.endDate}`);
   };
   const onClickSelectDateClose = () => {
     setIsPackingHeaderOpen(false);
   };
   const onClickSearchSelectDate = () => {
-    actSelectPackingHeader(`?start_date=${dateText.startDate}&end_date=${dateText.endDate}`);
+    actSelectPackingHeader(`?start_date=${selectDate.startDate}&end_date=${selectDate.endDate}`);
   };
   const handleGridHeaderSearch = async () => {
     try {
       setIsBackDrop(true);
+      let conditionLine;
+      let conditionLotNo;
+      let conditionPackingNo;
+      inputTextChange?.line_nm ? (conditionLine = `&line_nm=${inputTextChange?.line_nm}`) : (conditionLine = "");
+      inputTextChange?.lot_no ? (conditionLotNo = `&lot_no=${inputTextChange?.lot_no}`) : (conditionLotNo = "");
+      inputTextChange?.packing_no
+        ? (conditionPackingNo = `&packing_no=${inputTextChange?.packing_no}`)
+        : (conditionPackingNo = "");
       const result = await restAPI.get(
-        restURI.prdPacking + `?start_date=${DateTime().dateFull}&end_date=${DateTime().dateFull}`
+        restURI.prdPackingDetail +
+          `?start_date=${dateText.startDate}&end_date=${dateText.startDate}` +
+          conditionLine +
+          conditionLotNo +
+          conditionPackingNo
       );
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
@@ -212,19 +241,39 @@ function PackingPanel() {
   };
   const onBarcodePrint = async (workPackingID) => {
     try {
-      const result = await restAPI.post(restURI.createBarcode, {
+      const result = await restAPI.post(restURI.packingBarcode, {
         barcode_type: "PACKING",
         reference_id: workPackingID,
       });
       setBarcodePrintInfo({
         ...barcodePrintInfo,
-        prodCD: result?.data?.data?.rows[0].prod_cd,
-        prodNM: result?.data?.data?.rows[0].prod_type_small_nm,
-        lot: result?.data?.data?.rows[0].lot_no,
-        cnt: result?.data?.data?.rows[0].packing_cnt,
-        qty: result?.data?.data?.rows[0].packing_qty,
-        date: result?.data?.data?.rows[0].work_packing_date,
-        barcodeNo: result?.data?.data?.rows[0].barcode_no,
+        result: result?.data?.data?.rows,
+        // prodCD: result?.data?.data?.rows[0].prod_cd,
+        // prodNM: result?.data?.data?.rows[0].prod_type_small_nm,
+        // lot: result?.data?.data?.rows[0].lot_no,
+        // cnt: result?.data?.data?.rows[0].packing_cnt,
+        // qty: result?.data?.data?.rows[0].packing_qty,
+        // date: result?.data?.data?.rows[0].work_packing_date,
+        // barcodeNo: result?.data?.data?.rows[0].barcode_no,
+        // remark: result?.data?.data?.rows[0].remark,
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    }
+    setIsModalPrintOpen(true);
+  };
+  const onBarcodePrintDetail = async (workPackingDetailID) => {
+    try {
+      const result = await restAPI.get(restURI.searchBarcode + `?reference_id=${workPackingDetailID}`);
+      setBarcodePrintInfo({
+        ...barcodePrintInfo,
+        result: result?.data?.data?.rows,
       });
     } catch (err) {
       setIsSnackOpen({
@@ -297,7 +346,7 @@ function PackingPanel() {
         },
       ];
       const result = await restAPI.post(restURI.prdPacking, saveData);
-      const workPackingID = result?.data?.data?.rows[0].work_packing_id;
+      const workPackingID = result?.data?.data?.rows[0].header.work_packing_id;
       handleGridHeaderSearch();
       setInfo({});
       onBarcodePrint(workPackingID);
@@ -492,18 +541,29 @@ function PackingPanel() {
   };
 
   async function onPerformance(rowKey) {
-    const Grid = refGridHeader?.current?.gridInst;
-    targetRowKey.current = rowKey;
-    targetID.current = Grid?.getValue(rowKey, "work_packing_id");
-    targetWeight.current = Grid?.getValue(rowKey, "packing_qty");
-    setIsBarcodeScanOpen(true);
+    if (!isEditMode) {
+      const Grid = refGridHeader?.current?.gridInst;
+      targetRowKey.current = rowKey;
+      targetID.current = Grid?.getValue(rowKey, "work_packing_detail_id");
+      targetWeight.current = Grid?.getValue(rowKey, "packing_qty");
+      setIsBarcodeScanOpen(true);
+    }
+  }
+  async function onReprint(rowKey) {
+    if (!isEditMode) {
+      const Grid = refGridHeader?.current?.gridInst;
+      targetRowKey.current = rowKey;
+      targetID.current = Grid?.getValue(rowKey, "work_packing_detail_id");
+      targetWeight.current = Grid?.getValue(rowKey, "packing_qty");
+      onBarcodePrintDetail(targetID.current);
+    }
   }
   const onCloseBarcodeScan = () => {
     setBarcodeScan({});
     setIsBarcodeScanOpen(false);
   };
   const onEmpConfirm = async () => {
-    if (!barcodeScan.value || barcodeScan.value.slice(0, 3) !== "FDR") {
+    if (!barcodeScan.value || barcodeScan.barcodeNo.slice(0, 3) !== "FDR") {
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
@@ -528,16 +588,16 @@ function PackingPanel() {
 
       const raw = [
         {
-          work_packing_id: targetID.current,
+          work_packing_detail_id: targetID.current,
           packing_qty: targetWeight.current,
           packing_emp_id: barcodeScan.empID,
           work_packing_date: DateTime().dateFull,
           work_packing_time: DateTime().hour + ":" + DateTime().minute,
-          barcode_no: barcodeScan.value,
+          barcode_no: barcodeScan.barcodeNo,
         },
       ];
 
-      const result = await restAPI.post(restURI.prdPackingDetail, raw);
+      const result = await restAPI.put(restURI.prdPackingDetail, raw);
 
       setIsSnackOpen({
         ...isSnackOpen,
@@ -546,6 +606,8 @@ function PackingPanel() {
         severity: "success",
         location: "bottomRight",
       });
+      onCloseBarcodeScan();
+      handleGridHeaderSearch();
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -565,7 +627,7 @@ function PackingPanel() {
   const onClickModalSelectEmpClose = () => {
     setIsModalSelectEmp(false);
   };
-  const onDblClickGridSelectEmp = (e) => {
+  const onDblClickModalSelectEmp = (e) => {
     const data = e?.instance?.store?.data?.rawData[e?.rowKey];
     setBarcodeScan({ ...barcodeScan, empID: data.emp_id, empNM: data.emp_nm });
     setIsModalSelectEmp(false);
@@ -582,8 +644,11 @@ function PackingPanel() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.createBarcode + `?barcode_no=${barcodeNo}`);
-      const scanPackingID = result?.data?.data?.rows[0].work_packing_id;
+      lotNo.current = result?.data?.data?.rows[0].lot_no;
+      const scanPackingID = result?.data?.data?.rows[0].work_packing_detail_id;
       if (scanPackingID === targetID.current) {
+        // setBarcodeScan({ ...barcodeScan, barcodeNo: barcodeNo });
+        setBarcodeScan(Object.assign(barcodeScan, { barcodeNo: barcodeNo }));
         return true;
       } else {
         return false;
@@ -600,7 +665,6 @@ function PackingPanel() {
       setIsBackDrop(false);
     }
   };
-  const barcodeNo = useRef("");
   useEffect(() => {
     const onBarcodeScan = async (e) => {
       //timeStamp 가 서로 몇초 차이인지 구함
@@ -634,11 +698,11 @@ function PackingPanel() {
       refBarcodeTimeStamp.current = e?.timeStamp;
       if (e?.key === "Enter") {
         /**
-         * ✅ 포장실적 바코드 이즈파크에서 발행한 앞 3자리가 "FDR" 인 것만 허용
+         * ✅ 포장실적 바코드 FacdoriOn에서 발행한 앞 3자리가 "FDR" 인 것만 허용
          */
         if (barcodeNo.current.slice(0, 3) === "FDR") {
-          setBarcodeScan({ ...barcodeScan, value: barcodeNo.current, className: "" });
           const scanChk = await transferBarcode(barcodeNo.current);
+          setBarcodeScan({ ...barcodeScan, value: lotNo.current, className: "" });
           if (!scanChk) {
             setBarcodeScan({
               ...barcodeScan,
@@ -647,6 +711,7 @@ function PackingPanel() {
               className: "red",
             });
           }
+          lotNo.current = "";
         } else {
           setBarcodeScan({ ...barcodeScan, value: "정의되지 않은 바코드입니다.", lot: "", className: "red" });
         }
@@ -658,6 +723,85 @@ function PackingPanel() {
       window.removeEventListener("keydown", onBarcodeScan);
     };
   }, [barcodeScan.lot]);
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleGridHeaderSearch();
+    }
+  };
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const handleInputTextChange = (e) => {
+    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
+  };
+
+  const onEdit = () => {
+    setIsEditMode(true);
+    setDisableRowToggle(!disableRowToggle);
+  };
+  const onSave = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridHeader?.current?.gridInst;
+      Grid?.finishEditing();
+
+      const raw = Grid.getCheckedRows().map((raw) => GetPutParams("packingDetail", raw));
+      console.log(raw);
+      const result = await restAPI.put(restURI.prdPackingDetail, raw);
+
+      console.log(result?.data?.data?.rows);
+
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
+  };
+  const onCancel = () => {
+    setIsEditMode(false);
+    setDisableRowToggle(!disableRowToggle);
+    handleGridHeaderSearch();
+  };
+  const onEditingFinishGrid = (e) => {
+    disRow.handleEditingFinishGridCheck(e);
+    if (Condition(e, ["work_packing_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refGridHeader, "work_packing_time");
+    }
+  };
+  const onDblClickGrid = (e) => {
+    if (Condition(e, ["packing_emp_nm"])) {
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      setIsGridSelectEmp(true);
+    }
+  };
+  const onClickGridSelectEmpClose = () => {
+    setIsGridSelectEmp(false);
+  };
+  const onDblClickGridSelectEmp = (e) => {
+    if (e?.targetType === "cell") {
+      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+      const Grid = refGridHeader?.current?.gridInst;
+      console.log(targetRowKey.current);
+      Grid.setValue(targetRowKey.current, "packing_emp_id", data.emp_id);
+      Grid.setValue(targetRowKey.current, "packing_emp_nm", data.emp_nm);
+      disRow.handleGridSelectCheck(refGridHeader, targetRowKey.current);
+
+      setIsGridSelectEmp(false);
+    }
+  };
 
   const GridHeader = useMemo(() => {
     return (
@@ -668,9 +812,12 @@ function PackingPanel() {
         data={gridDataHeader}
         refGrid={refGridHeader}
         onClickGrid={onClickGridHeader}
+        isEditMode={isEditMode}
+        onEditingFinish={onEditingFinishGrid}
+        onDblClickGrid={onDblClickGrid}
       />
     );
-  }, [gridDataHeader]);
+  }, [gridDataHeader, isEditMode]);
 
   const GridDetail = useMemo(() => {
     return (
@@ -710,24 +857,45 @@ function PackingPanel() {
   return (
     <ContentsArea>
       <S.TopWrap>
-        <S.SearchBox>
-          <S.LeftWrap>
-            <S.ScreenTitleBox>일일포장일지</S.ScreenTitleBox>
-            <S.BarcodeBoxWrap>
-              <BarcodeBox onClickSelect={onClickSelect} setInfo={setInfo} info={info} />
-            </S.BarcodeBoxWrap>
-          </S.LeftWrap>
-          <S.RightWrap>
-            <BtnPacking onClickNew={onClickNew} onClickDelete={onClickDelete} />
-          </S.RightWrap>
-        </S.SearchBox>
+        <S.LeftWrap>
+          <S.ScreenTitleBox>일일포장일지</S.ScreenTitleBox>
+          <S.BarcodeBoxWrap>
+            <BarcodeBox onClickSelect={onClickSelect} setInfo={setInfo} info={info} />
+          </S.BarcodeBoxWrap>
+        </S.LeftWrap>
+        <S.RightWrap>
+          <BtnPacking onClickNew={onClickNew} onClickDelete={onClickDelete} />
+        </S.RightWrap>
       </S.TopWrap>
       <S.MidWrap>
+        <S.SearchWrap>
+          <S.SearchBox>
+            <DatePicker datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
+            {inputSet.map((v) => (
+              <InputSearch
+                key={v.id}
+                id={v.id}
+                name={v.name}
+                handleInputTextChange={handleInputTextChange}
+                onClickSearch={handleGridHeaderSearch}
+                onKeyDown={onKeyDown}
+              />
+            ))}
+          </S.SearchBox>
+          {isEditMode ? (
+            <S.ButtonBox>
+              <BtnComponent btnName={"Save"} onClick={onSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onCancel} />
+            </S.ButtonBox>
+          ) : (
+            <S.ButtonBox>
+              <BtnComponent btnName={"Edit"} onClick={onEdit} />
+              <BtnComponent btnName={"Search"} onClick={handleGridHeaderSearch} />
+            </S.ButtonBox>
+          )}
+        </S.SearchWrap>
         <S.GridHeader>{GridHeader}</S.GridHeader>
       </S.MidWrap>
-      {/* <S.BottomWrap>
-        <S.GridDetail>{GridDetail}</S.GridDetail>
-      </S.BottomWrap> */}
       {isPackingHeaderOpen ? (
         <ModalSelectDate
           height={"60%"}
@@ -738,8 +906,8 @@ function PackingPanel() {
           gridDataSelect={gridDataPackingHeader}
           rowHeaders={rowHeadersNum}
           refGridSelect={refGridPackingHeader}
-          dateText={dateText}
-          setDateText={setDateText}
+          dateText={selectDate}
+          setDateText={setSelectDate}
           onClickSearch={onClickSearchSelectDate}
           onDblClickGridSelectDate={onDblClickPackingHeader}
           // onClickSearch={onClickSearchSelectDate}
@@ -784,6 +952,20 @@ function PackingPanel() {
           onClickSelect={onClickSelectEmp}
         />
       )}
+      {isGridSelectEmp ? (
+        <ModalSelect
+          width={"80%"}
+          height={"80%"}
+          onClickModalSelectClose={onClickGridSelectEmpClose}
+          columns={columnsSelectEmp}
+          columnOptions={columnOptions}
+          header={header}
+          gridDataSelect={gridDataSelectEmp}
+          rowHeaders={rowHeadersNum}
+          refSelectGrid={refGridSelectEmp}
+          onDblClickGridSelect={onDblClickGridSelectEmp}
+        />
+      ) : null}
       {isModalSelectEmp ? (
         <ModalSelect
           width={"80%"}
@@ -795,10 +977,10 @@ function PackingPanel() {
           gridDataSelect={gridDataSelectEmp}
           rowHeaders={rowHeadersNum}
           refSelectGrid={refGridSelectEmp}
-          onDblClickGridSelect={onDblClickGridSelectEmp}
+          onDblClickGridSelect={onDblClickModalSelectEmp}
         />
       ) : null}
-      {isModalPrintOpen && <PackingModal onClose={closeModalPrintOpen} data={barcodePrintInfo} />}
+      {isModalPrintOpen && <PackingModal onClose={closeModalPrintOpen} data={barcodePrintInfo.result} />}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

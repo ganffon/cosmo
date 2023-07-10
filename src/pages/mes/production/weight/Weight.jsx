@@ -34,6 +34,10 @@ function Weight() {
   const prodCD = useRef("품목코드");
   const prodNM = useRef("품목");
 
+  const inputDate = useRef(null);
+  const inputTime = useRef(null);
+  const inputEmployee = useRef(null);
+
   const resetProd = () => {
     prodID.current = "";
     prodCD.current = "품목코드";
@@ -46,11 +50,14 @@ function Weight() {
   const refGridModalHeader = useRef(null);
   const refGridModalDetail = useRef(null);
 
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeDetail, setIsEditModeDetail] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [isNewDetail, setIsNewDetail] = useState(false);
+  const [isDetailEditFlag, setIsDetailEditFlag] = useState(false);
+  const [isDetailEditParameter, setIsDetailEditParameter] = useState(false);
   const [headerModalControl, setHeaderModalControl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -81,8 +88,14 @@ function Weight() {
     disRow.handleEditingFinishGridCheck(e);
   };
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
+    isEditModeHeader,
+    refGridHeader
+  );
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
+    isEditModeDetail,
+    refGridDetail
+  );
 
   useEffect(() => {
     onClickSearch();
@@ -118,7 +131,12 @@ function Weight() {
     columnsSelectWeightEmployee,
     columnsSelectInputEmployee,
     columnsSelectStoreLocation,
-  } = WeightSet(isEditModeHeader, isEditModeDetail, isNewDetail);
+  } = WeightSet(
+    isEditModeHeader,
+    isEditModeDetail,
+    isNewDetail,
+    isDetailEditParameter
+  );
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -132,12 +150,26 @@ function Weight() {
 
   const [inputBoxID] = useInputSet(currentMenuName, inputSet);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditModeDetail,
+    refGridDetail
+  );
 
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
       headerRowID.current = e?.instance.getValue(e?.rowKey, "work_weigh_id");
-
+      inputDate.current = e?.instance.getValue(e?.rowKey, "work_input_date");
+      inputTime.current = e?.instance.getValue(e?.rowKey, "work_input_time");
+      inputEmployee.current = e?.instance.getValue(e?.rowKey, "input_emp_id");
+      if (
+        inputDate.current !== null &&
+        inputTime.current !== null &&
+        inputEmployee.current !== null
+      ) {
+        setIsDetailEditFlag(false);
+      } else {
+        setIsDetailEditFlag(true);
+      }
       if (headerRowID.current !== null) {
         actSearchDetail();
       }
@@ -170,7 +202,11 @@ function Weight() {
   };
 
   const onClickModalSelectClose = () => {
-    setDateModal({ ...dateModal, startDate: DateTime(-7).dateFull, endDate: DateTime().dateFull });
+    setDateModal({
+      ...dateModal,
+      startDate: DateTime(-7).dateFull,
+      endDate: DateTime().dateFull,
+    });
     setIsModalSelectOpen(false);
     //actSearchDetail(headerClickRowID);
   };
@@ -250,7 +286,9 @@ function Weight() {
         ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProdID = "");
       const result = await restAPI.get(
-        restURI.prdWeight + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionProdID
+        restURI.prdWeight +
+          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          conditionProdID
       );
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
@@ -300,7 +338,12 @@ function Weight() {
     ];
     const columnNameWeightEmployee = ["weigh_emp_id", "weigh_emp_nm"];
     const columnNameInputEmployee = ["input_emp_id", "input_emp_nm"];
-    const columnNameStoreLocation = ["inv_to_store_id", "store_nm", "inv_to_location_id", "location_nm"];
+    const columnNameStoreLocation = [
+      "inv_to_store_id",
+      "store_nm",
+      "inv_to_location_id",
+      "location_nm",
+    ];
     if (dblClickGrid === "Search") {
       // setInputSearchValue([]);
       // columnName = ["prod_cd", "prod_nm"];
@@ -321,7 +364,8 @@ function Weight() {
       if (dblClickGrid === "ModalHeader") {
         refGrid = refGridModalHeader;
         columnName = columnNameModalHeader;
-        refGridModalHeaderKey.current = e?.instance?.store?.data?.rawData[e?.rowKey]["work_order_id"];
+        refGridModalHeaderKey.current =
+          e?.instance?.store?.data?.rawData[e?.rowKey]["work_order_id"];
         onClickGetModalBottomData();
       }
       if (dblClickGrid === "ModalHeaderWeightEmployee") {
@@ -394,7 +438,11 @@ function Weight() {
     Detail?.finishEditing();
     Detail?.appendRow();
 
-    Detail?.setValue(Detail.store.data.rawData.length - 1, "subdivision_date", DateTime().dateFull);
+    Detail?.setValue(
+      Detail.store.data.rawData.length - 1,
+      "subdivision_date",
+      DateTime().dateFull
+    );
 
     if (isNewDetail === true) {
       for (let i = 0; i < Detail.store.data.rawData.length; i++) {
@@ -408,6 +456,7 @@ function Weight() {
   };
 
   const onDblClickGridHeader = (e) => {
+    console.log(Condition(e, ["weigh_emp_id", "weigh_emp_nm"]));
     if (Condition(e, ["weigh_emp_id", "weigh_emp_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("HeaderWeightEmployee");
@@ -462,7 +511,14 @@ function Weight() {
         setHeaderModalControl("-");
         setIsModalSelectOpen(true);
         actSelectInputEmployee();
-      } else if (Condition(e, ["inv_to_store_id", "store_nm", "inv_to_location_id", "location_nm"])) {
+      } else if (
+        Condition(e, [
+          "inv_to_store_id",
+          "store_nm",
+          "inv_to_location_id",
+          "location_nm",
+        ])
+      ) {
         setDblClickRowKey(e?.rowKey);
         setDblClickGrid("ModalHeaderStoreLocation");
         setColumnsSelect(columnsSelectStoreLocation);
@@ -503,15 +559,40 @@ function Weight() {
       const beforeQty = Detail.getValue(e?.rowKey, "total_qty");
       const afterQty = e?.value;
       if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "input_qty", Number(beforeQty) - Number(afterQty));
+        Detail?.setValue(
+          e?.rowKey,
+          "input_qty",
+          Number(beforeQty) - Number(afterQty)
+        );
       } else {
         Detail?.setValue(e?.rowKey, "input_qty", e?.value);
       }
       let totalQty = 0;
-      for (let i = 0; i < refGridDetail?.current?.gridInst?.getRowCount(); i++) {
+      for (
+        let i = 0;
+        i < refGridDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
         totalQty = Number(totalQty) + Number(Detail.getValue(i, "input_qty"));
       }
-      //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
+    }
+
+    if (Condition(e, ["total_qty"])) {
+      const beforeQty = e?.value;
+      const afterQty = Detail.getValue(e?.rowKey, "bag_qty");
+      if (afterQty) {
+        Detail?.setValue(e?.rowKey, "input_qty", beforeQty - afterQty);
+      } else {
+        Detail?.setValue(e?.rowKey, "input_qty", beforeQty);
+      }
+      let totalQty = 0;
+      for (
+        let i = 0;
+        i < refGridModalDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
+        totalQty = Number(totalQty) - Number(Detail.getValue(i, "total_qty"));
+      }
     }
   };
 
@@ -526,7 +607,11 @@ function Weight() {
         Detail?.setValue(e?.rowKey, "input_qty", beforeQty);
       }
       let totalQty = 0;
-      for (let i = 0; i < refGridModalDetail?.current?.gridInst?.getRowCount(); i++) {
+      for (
+        let i = 0;
+        i < refGridModalDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
         totalQty = Number(totalQty) - Number(Detail.getValue(i, "total_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
@@ -535,12 +620,20 @@ function Weight() {
       const beforeQty = Detail.getValue(e?.rowKey, "total_qty");
       const afterQty = e?.value;
       if (beforeQty) {
-        Detail?.setValue(e?.rowKey, "input_qty", Number(beforeQty) - Number(afterQty));
+        Detail?.setValue(
+          e?.rowKey,
+          "input_qty",
+          Number(beforeQty) - Number(afterQty)
+        );
       } else {
         Detail?.setValue(e?.rowKey, "input_qty", e?.value);
       }
       let totalQty = 0;
-      for (let i = 0; i < refGridModalDetail?.current?.gridInst?.getRowCount(); i++) {
+      for (
+        let i = 0;
+        i < refGridModalDetail?.current?.gridInst?.getRowCount();
+        i++
+      ) {
         totalQty = Number(totalQty) - Number(Detail.getValue(i, "total_qty"));
       }
       //Header?.setValue(headerClickRowKey, "total_qty", totalQty);
@@ -552,7 +645,7 @@ function Weight() {
   };
   const onClickModalSave = () => {
     actSave();
-    onClickSearch();
+    //onClickSearch();
   };
 
   const onClickEditModeSaveHeader = () => {
@@ -576,11 +669,15 @@ function Weight() {
 
   const onClickEditDetail = () => {
     setDisRowDetail(!disRowDetail);
+    if (isDetailEditFlag === true) {
+      setIsDetailEditParameter(true);
+    }
     setIsEditModeDetail(true);
   };
 
   const onClickEditModeExitDetail = () => {
     setIsEditModeDetail(false);
+    setIsDetailEditParameter(false);
     setDisRowDetail();
   };
 
@@ -677,7 +774,11 @@ function Weight() {
   return (
     <ContentsArea>
       <S.SearchCondition>
-        <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+        <S.Date
+          datePickerSet={"range"}
+          dateText={dateText}
+          setDateText={setDateText}
+        />
         {/* {inputSet.map((v, idx) => (
           <S.InputPaperWrap key={v.id}>
             <InputPaper
@@ -724,10 +825,16 @@ function Weight() {
             {isEditModeHeader ? (
               <>
                 <S.InnerButtonWrap>
-                  <BtnComponent btnName={"Save"} onClick={onClickEditModeSaveHeader} />
+                  <BtnComponent
+                    btnName={"Save"}
+                    onClick={onClickEditModeSaveHeader}
+                  />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExitHeader} />
+                  <BtnComponent
+                    btnName={"Cancel"}
+                    onClick={onClickEditModeExitHeader}
+                  />
                 </S.InnerButtonWrap>
               </>
             ) : (
@@ -752,10 +859,16 @@ function Weight() {
             {isEditModeDetail ? (
               <>
                 <S.InnerButtonWrap>
-                  <BtnComponent btnName={"Save"} onClick={onClickEditModeSaveDetail} />
+                  <BtnComponent
+                    btnName={"Save"}
+                    onClick={onClickEditModeSaveDetail}
+                  />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExitDetail} />
+                  <BtnComponent
+                    btnName={"Cancel"}
+                    onClick={onClickEditModeExitDetail}
+                  />
                 </S.InnerButtonWrap>
               </>
             ) : (
@@ -764,7 +877,10 @@ function Weight() {
                   <BtnComponent btnName={"Edit"} onClick={onClickEditDetail} />
                 </S.InnerButtonWrap>
                 <S.InnerButtonWrap>
-                  <BtnComponent btnName={"Delete"} onClick={onClickDeleteDetail} />
+                  <BtnComponent
+                    btnName={"Delete"}
+                    onClick={onClickDeleteDetail}
+                  />
                 </S.InnerButtonWrap>
               </>
             )}

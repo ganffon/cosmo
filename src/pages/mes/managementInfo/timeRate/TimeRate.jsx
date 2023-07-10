@@ -21,6 +21,7 @@ import Grid from "@toast-ui/react-grid";
 const TimeRate = ({ toggle }) => {
   LoginStateChk();
   const refSingleGrid = useRef(null);
+  const refSingleGrid2 = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -33,6 +34,7 @@ const TimeRate = ({ toggle }) => {
   const [e1OPTime, setE1OPTime] = useState(1440);
   const [e2OPTime, setE2OPTime] = useState(1440);
   const [e3OPTime, setE3OPTime] = useState(1440);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     handleSearchButtonClick();
@@ -45,10 +47,15 @@ const TimeRate = ({ toggle }) => {
     GetTimeRate();
     GetSysTimeRate();
   };
+
+  const openModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide]);
+    refSingleGrid2?.current?.gridInst?.refreshLayout();
+  }, [isMenuSlide, isModalOpen]);
   const handleTextChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -112,10 +119,7 @@ const TimeRate = ({ toggle }) => {
         // console.error('API 호출 중 오류 발생:', error);
       });
   };
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+
   const cOptions = {
     plotOptions: {
       // 차트 시각화 옵션
@@ -139,6 +143,10 @@ const TimeRate = ({ toggle }) => {
         strokeDashArray: 2, // y축 선의 선 스타일 (점선)
         lineWidth: 1, // y축 선의 두께
       },
+    },
+    yaxis: {
+      max: 100,
+      min: 0,
     },
   };
   const complexColumns = Set.getTimeHeader();
@@ -166,7 +174,7 @@ const TimeRate = ({ toggle }) => {
             </S.SearchWrap>
             <S.ButtonWrap>
               <S.BtnComponent height={"34px"} width={"145px"} onClick={openModal}>
-                <S.SearchTitle>조업시간 Setting</S.SearchTitle>
+                <S.SearchTitle>기준값 Setting</S.SearchTitle>
               </S.BtnComponent>
               <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
             </S.ButtonWrap>
@@ -177,9 +185,33 @@ const TimeRate = ({ toggle }) => {
         <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
           <S.ToolWrap>
             <S.SearchWrap>
-              <S.InputText id="outlined-number" label="E1(분)" type="number" onChange={handleE1Change} value={e1OPTime} max={1440} size="small" />
-              <S.InputText id="outlined-number" label="E2(분)" type="number" onChange={handleE2Change} value={e2OPTime} max={1440} size="small" />
-              <S.InputText id="outlined-number" label="E3(분)" type="number" onChange={handleE3Change} value={e3OPTime} max={1440} size="small" />
+              <S.InputText
+                id="outlined-number"
+                label="E1 조업시간(분)"
+                type="number"
+                onChange={handleE1Change}
+                value={e1OPTime}
+                max={1440}
+                size="small"
+              />
+              <S.InputText
+                id="outlined-number"
+                label="E2 조업시간(분)"
+                type="number"
+                onChange={handleE2Change}
+                value={e2OPTime}
+                max={1440}
+                size="small"
+              />
+              <S.InputText
+                id="outlined-number"
+                label="E3 조업시간(분)"
+                type="number"
+                onChange={handleE3Change}
+                value={e3OPTime}
+                max={1440}
+                size="small"
+              />
             </S.SearchWrap>
           </S.ToolWrap>
         </S.ShadowBoxButton>
@@ -194,7 +226,7 @@ const TimeRate = ({ toggle }) => {
           </S.TimeRateTop>
           <S.TimeRateBottom>
             <S.GridWrap>
-              <GridSingle header={complexColumns} columns={customColumns} data={responseData?.data?.rows[0].grid} />
+              <GridSingle header={complexColumns} columns={customColumns} data={responseData?.data?.rows[0].grid} refGrid={refSingleGrid2} />
             </S.GridWrap>
           </S.TimeRateBottom>
         </S.TimeRateLeft>
@@ -207,28 +239,13 @@ const TimeRate = ({ toggle }) => {
           </S.TimeRateTop>
           <S.TimeRateBottom>
             <S.GridWrap>
-              <S.GridWrap>
-                {responseSysData && <GridSingle header={autoComplexColumns} columns={autoColumn} data={responseSysData?.data?.rows[0].grid} />}
-              </S.GridWrap>
+              {responseSysData && (
+                <GridSingle header={autoComplexColumns} columns={autoColumn} data={responseSysData?.data?.rows[0].grid} refGrid={refSingleGrid} />
+              )}
             </S.GridWrap>
           </S.TimeRateBottom>
         </S.TimeRateRight>
       </S.AllWrap>
-      {/* <S.TopWrap>
-        <S.LineCapaTop>
-          <S.Title>생산포장 라인 별 생산량(일)</S.Title>
-          <S.ChartWrap2>
-            {responseData && <Chart options={cOptions} series={responseData.data.rows[0].graph} type="line" height={350} />}
-          </S.ChartWrap2>
-        </S.LineCapaTop>
-        <S.LineCapaBottom>
-          <S.GridWrap>
-            {responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}
-            {!responseData && <GridSingle columns={columns} />}
-          </S.GridWrap>
-        </S.LineCapaBottom>
-      </S.TopWrap> */}
-      {/* <SplitterLayout vertical></SplitterLayout> */}
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );

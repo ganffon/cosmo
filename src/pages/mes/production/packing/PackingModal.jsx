@@ -13,13 +13,24 @@ function PackingModal(props) {
   useEffect(() => {
     isAddOneRow && refModalGrid?.current?.gridInst?.appendRow();
 
-    JsBarcode("#barcode", data.barcodeNo, {
-      format: "CODE128",
-      displayValue: false,
-      fontSize: 40,
-      height: "100%",
-      margin: 5,
+    // JsBarcode("#barcode", data.barcodeNo, {
+    //   format: "CODE128",
+    //   displayValue: false,
+    //   fontSize: 40,
+    //   height: "100%",
+    //   margin: 5,
+    // });
+    console.log(data);
+    data.forEach((value) => {
+      JsBarcode(`#${value.barcode_no}`, value.barcode_no, {
+        format: "CODE128",
+        displayValue: false,
+        fontSize: 40,
+        height: "100%",
+        margin: 5,
+      });
     });
+    // <svg id={data[i].barcode_no}></svg>
 
     handlePrint();
     onClose();
@@ -74,7 +85,7 @@ function PackingModal(props) {
     if (!data) {
       return;
     } else {
-      for (let i = 0; i < data.cnt; i++) {
+      for (let i = 0; i < data.length; i++) {
         blocks.push(
           <div
             style={{
@@ -86,7 +97,15 @@ function PackingModal(props) {
             }}
             key={i}
           >
-            <div style={{ width: "50%", padding: "5mm", borderRight: "1px solid black", display: "flex" }}>
+            <div
+              style={{
+                width: "50%",
+                marginTop: "10mm",
+                padding: "5mm",
+                borderRight: "1px solid black",
+                display: "flex",
+              }}
+            >
               <div style={{ width: "100%", height: "calc(100% - 40px)" }}>
                 <div style={{ width: "100%", height: "calc(100% - 40px)", display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
@@ -141,7 +160,7 @@ function PackingModal(props) {
                           backgroundColor: "#000000",
                         }}
                       >
-                        {data.prodNM}
+                        {data[i].prod_nm}
                       </div>
                     </div>
                   </div>
@@ -171,7 +190,7 @@ function PackingModal(props) {
                           borderRight: "1px solid black",
                         }}
                       >
-                        {data.prodCD}
+                        {data[i].prod_cd}
                       </div>
                     </div>
                   </div>
@@ -200,7 +219,7 @@ function PackingModal(props) {
                           justifyContent: "flex-end",
                         }}
                       >
-                        {data.lot} -
+                        {data[i].lot_no} -
                       </div>
                     </div>
                     <div
@@ -213,7 +232,7 @@ function PackingModal(props) {
                         justifyContent: "flex-start",
                       }}
                     >
-                      <div>{i + 1}</div>
+                      <div>{data[i].packing_no}</div>
                     </div>
                   </div>
                   <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
@@ -242,7 +261,7 @@ function PackingModal(props) {
                           justifyContent: "center",
                         }}
                       >
-                        {data.qty} Kg
+                        {data[i].packing_qty} Kg
                       </div>
                     </div>
                   </div>
@@ -261,7 +280,7 @@ function PackingModal(props) {
                         Date
                       </div>
                     </div>
-                    <div style={{ width: "70%", height: "100%", borderLeft: "1px solid black" }}>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
                       <div
                         style={{
                           width: "100%",
@@ -272,26 +291,44 @@ function PackingModal(props) {
                           justifyContent: "center",
                         }}
                       >
-                        {data.date}
+                        {data[i].packing_date}
                       </div>
                     </div>
-                    {data.gubn !== "X" && (
-                      <div style={{ width: "10%", height: "100%", borderLeft: "1px solid black" }}>
-                        <div
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            fontSize: "30px",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {/* {data.gubn} */}
-                          {""}
-                        </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "32px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        비고
                       </div>
-                    )}
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].header_remark}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "center", width: "100%", height: "100%", border: "1px solid black" }}>
+                    <div style={{ widows: "100%", height: "100%", padding: "5px" }}>
+                      <svg id={data[i].barcode_no}></svg>
+                    </div>
                   </div>
                   <div
                     style={{
@@ -309,14 +346,11 @@ function PackingModal(props) {
                     COSMO AM&T Co.,Ltd.<br></br>
                     #315, Mokhang-Dong, Chungju-city, Chungbuk. Korea<br></br>
                     Phone : 82-43-850-1430 / Fax : +82-43-850-1542
-                  </div>
-                  <div style={{ textAlign: "center", marginTop: "5mm", width: "100%", height: "100%" }}>
-                    <svg id="barcode"></svg>
                   </div>
                 </div>
               </div>
             </div>
-            <div style={{ width: "50%", padding: "5mm", display: "flex" }}>
+            <div style={{ width: "50%", marginTop: "10mm", padding: "5mm", display: "flex" }}>
               <div style={{ width: "100%", height: "calc(100% - 40px)" }}>
                 <div style={{ width: "100%", height: "calc(100% - 40px)", display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
@@ -371,7 +405,7 @@ function PackingModal(props) {
                           backgroundColor: "#000000",
                         }}
                       >
-                        {data.prodNM}
+                        {data[i].prod_nm}
                       </div>
                     </div>
                   </div>
@@ -401,7 +435,7 @@ function PackingModal(props) {
                           borderRight: "1px solid black",
                         }}
                       >
-                        {data.prodCD}
+                        {data[i].prod_cd}
                       </div>
                     </div>
                   </div>
@@ -430,7 +464,7 @@ function PackingModal(props) {
                           justifyContent: "flex-end",
                         }}
                       >
-                        {data.lot} -
+                        {data[i].lot_no} -
                       </div>
                     </div>
                     <div
@@ -443,7 +477,7 @@ function PackingModal(props) {
                         justifyContent: "flex-start",
                       }}
                     >
-                      <div>{i + 1}</div>
+                      <div>{data[i].packing_no}</div>
                     </div>
                   </div>
                   <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
@@ -472,7 +506,7 @@ function PackingModal(props) {
                           justifyContent: "center",
                         }}
                       >
-                        {data.qty} Kg
+                        {data[i].packing_qty} Kg
                       </div>
                     </div>
                   </div>
@@ -502,26 +536,44 @@ function PackingModal(props) {
                           justifyContent: "center",
                         }}
                       >
-                        {data.date}
+                        {data[i].packing_date}
                       </div>
                     </div>
-                    {data.gubn !== "X" && (
-                      <div style={{ width: "10%", height: "100%", borderLeft: "1px solid black" }}>
-                        <div
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            fontSize: "30px",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {/* {data.gubn} */}
-                          {""}
-                        </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "32px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        비고
                       </div>
-                    )}
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].header_remark}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "center", width: "100%", height: "100%", border: "1px solid black" }}>
+                    <div style={{ widows: "100%", height: "100%", padding: "5px" }}>
+                      <svg id={data[i].barcode_no}></svg>
+                    </div>
                   </div>
                   <div
                     style={{
@@ -539,9 +591,6 @@ function PackingModal(props) {
                     COSMO AM&T Co.,Ltd.<br></br>
                     #315, Mokhang-Dong, Chungju-city, Chungbuk. Korea<br></br>
                     Phone : 82-43-850-1430 / Fax : +82-43-850-1542
-                  </div>
-                  <div style={{ textAlign: "center", marginTop: "5mm", width: "100%", height: "100%" }}>
-                    <svg id="barcode"></svg>
                   </div>
                 </div>
               </div>

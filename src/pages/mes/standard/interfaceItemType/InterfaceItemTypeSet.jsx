@@ -28,8 +28,8 @@ function InterfaceItemTypeSet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("infc_item_type_cd", CN.infc_item_type_cd, true),
-    col.text("infc_item_type_nm", CN.infc_item_type_nm, true),
+    col.rText("infc_item_type_cd", CN.infc_item_type_cd, true),
+    col.rText("infc_item_type_nm", CN.infc_item_type_nm, true),
   ];
   const columnOptions = {
     resizable: true,

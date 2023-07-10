@@ -243,9 +243,7 @@ function Process(props) {
   };
 
   const onClickModalSave = () => {
-    // removeNullRow();
-    // validationDuplicated();
-    // actSave();
+    actSave();
   };
   function onClickModalClose() {
     setIsModalOpen(false);

@@ -37,8 +37,8 @@ function ProcessSet(isEditMode) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("proc_cd", CN.proc_cd, true, C.U, C.WIDTH_MIDDLE),
-    col.text("proc_nm", CN.proc_nm, true, C.U, C.WIDTH_MIDDLE),
+    col.rText("proc_cd", CN.proc_cd, true, C.U, C.WIDTH_MIDDLE),
+    col.rText("proc_nm", CN.proc_nm, true, C.U, C.WIDTH_MIDDLE),
   ];
   const columnOptions = {
     resizable: true,

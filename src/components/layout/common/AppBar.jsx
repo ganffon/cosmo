@@ -19,10 +19,6 @@ function AppBar() {
     setCurrentMenuName("Dashboard");
   }, []);
 
-  const VERSION = process.env.REACT_APP_VERSION;
-  const BASEURI = process.env.REACT_APP_BASE_URL;
-  const NEWTAB = process.env.REACT_APP_NEW_TAB_URL;
-
   let menuLists = [];
   if (currentMenuName) {
     menuLists = currentMenuName.split("|");

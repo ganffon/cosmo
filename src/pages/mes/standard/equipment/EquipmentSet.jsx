@@ -38,9 +38,9 @@ function EquipmentSet(isEditMode, processList) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.list("proc_id", "proc_nm", CN.proc_nm, processList, true),
-    col.text("equip_cd", CN.equip_cd, true, C.U, C.WIDTH_MIDDLE),
-    col.text("equip_nm", CN.equip_nm, true, C.U, C.WIDTH_MIDDLE),
+    col.rList("proc_id", "proc_nm", CN.proc_nm, processList, true),
+    col.rText("equip_cd", CN.equip_cd, true, C.U, C.WIDTH_MIDDLE),
+    col.rText("equip_nm", CN.equip_nm, true, C.U, C.WIDTH_MIDDLE),
     col.id("manager_emp_id", CN.manager_emp_id, C.HIDDEN_ID),
     col.select("manager_emp_nm", CN.manager_emp_nm, true),
     col.id("sub_manager_emp_id", CN.sub_manager_emp_id, C.HIDDEN_ID),

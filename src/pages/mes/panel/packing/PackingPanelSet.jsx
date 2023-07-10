@@ -4,7 +4,7 @@ import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function PackingPanelSet(onPerformance) {
+function PackingPanelSet(isEditMode, onPerformance, onReprint) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -15,17 +15,23 @@ function PackingPanelSet(onPerformance) {
   };
   const columnsHeader = [
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
+    col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
     col.text("line_nm", CN.line_nm),
     col.text("line_dept_nm", CN.line_dept_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
-    col.number("packing_qty", CN.packing_qty),
-    col.number("packing_cnt", CN.packing_cnt),
-    col.number("complete_cnt", CN.complete_cnt),
+    col.number("packing_qty", CN.packing_qty, isEditMode),
+    col.number("packing_no", CN.packing_no),
+    col.button("reprint", "재출력", "재출력", onReprint),
+    col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
+    col.select("packing_emp_nm", CN.packing_emp_nm, isEditMode),
+    col.date("work_packing_date", CN.work_packing_date, isEditMode),
+    col.text("work_packing_time", CN.work_packing_time, isEditMode, C.U, C.U, "center"),
     col.button("performance", "실적등록", "실적등록", onPerformance),
-    col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
+    col.text("barcode_no", CN.barcode_no, C.U, true),
+    col.text("remark", CN.remark, isEditMode, C.U, C.WIDTH_LONG),
   ];
   const columnsDetail = [
     col.text("prod_class_nm", CN.prod_class_nm, C.U, C.U, C.WIDTH_MIDDLE),
@@ -135,8 +141,16 @@ function PackingPanelSet(onPerformance) {
   ];
   const inputSet = [
     {
+      id: "line_nm",
+      name: CN.line_nm,
+    },
+    {
       id: "lot_no",
       name: CN.lot_no,
+    },
+    {
+      id: "packing_no",
+      name: CN.packing_no,
     },
   ];
   const inputInfo = [

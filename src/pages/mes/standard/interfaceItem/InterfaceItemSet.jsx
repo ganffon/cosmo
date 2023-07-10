@@ -42,8 +42,8 @@ function InterfaceItemSet(isEditMode, infcItemTypeList) {
       infcItemTypeList,
       true
     ),
-    col.text("infc_item_cd", CN.infc_item_cd, true),
-    col.text("infc_item_nm", CN.infc_item_nm, true),
+    col.rText("infc_item_cd", CN.infc_item_cd, true),
+    col.rText("infc_item_nm", CN.infc_item_nm, true),
   ];
   const columnOptions = {
     resizable: true,

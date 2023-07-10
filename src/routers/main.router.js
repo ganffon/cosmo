@@ -86,6 +86,7 @@ import SubdivisionReport from "pages/mes/production/subdivisionReport/Subdivisio
 import WorkerGroupStatus from "pages/mes/panel/workerGroupStatus/WorkerGroupStatus";
 import InspectionResult from "pages/mes/quality/inspectionResult/inspectionResult";
 import LineYield from "pages/mes/production/lineYield/LineYield";
+import CountChart from "pages/mes/managementInfo/countChart/CountChart";
 
 export default function MainRouter() {
   const pages = [
@@ -180,6 +181,7 @@ export default function MainRouter() {
     { path: "worker-group-status", component: WorkerGroupStatus },
     { path: "quality-result", component: InspectionResult },
     { path: "line-yield", component: LineYield },
+    { path: "count-Chart", component: CountChart },
   ];
   return (
     <Layout>

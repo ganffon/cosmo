@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
@@ -26,6 +26,7 @@ function ModalControlPlan(props) {
     onDataLoad = () => {},
     refGridModalHeader,
     refGridModalDetail,
+    requirecolumns = [],
     isNewDetail,
     columnsModalHeader,
     columnsModalDetail,
@@ -41,9 +42,118 @@ function ModalControlPlan(props) {
   useEffect(() => {
     if (!isNewDetail) {
       refGridModalHeader?.current?.gridInst?.appendRow();
-      refGridModalHeader?.current?.gridInst.setValue(0, "subdivision_date", DateTime().dateFull);
+      refGridModalHeader?.current?.gridInst.setValue(
+        0,
+        "subdivision_date",
+        DateTime().dateFull
+      );
     }
   }, []);
+  const [isSnackOpen, setIsSnackOpen] = useState({
+    open: false,
+  });
+
+  const requireColumnsValidation = () => {
+    try {
+      refGridModalDetail?.current?.gridInst?.finishEditing();
+      const gridInstance = refGridModalDetail?.current?.getInstance();
+      const rawDatas = gridInstance?.store?.data?.rawData;
+      for (let i = 0; i < rawDatas.length; i++) {
+        if (rawDatas[i] !== undefined) {
+          for (let j = 0; j < requirecolumns.length; j++) {
+            const validationData = rawDatas[i][requirecolumns[j]];
+            if (validationData === null || validationData === "") {
+              throw new Error();
+            }
+          }
+        }
+      }
+
+      refGridModalHeader?.current?.gridInst?.finishEditing();
+      const gridInstanceForHeader = refGridModalHeader?.current?.getInstance();
+      const rawDatasForHeader = gridInstanceForHeader?.store?.data?.rawData;
+      for (let i = 0; i < rawDatasForHeader.length; i++) {
+        if (rawDatasForHeader[i] !== undefined) {
+          for (let j = 0; j < requirecolumns.length; j++) {
+            const validationData = rawDatasForHeader[i][requirecolumns[j]];
+            if (validationData === null || validationData === "") {
+              throw new Error();
+            }
+          }
+        }
+      }
+    } catch {
+      return "nullValidationError";
+    }
+  };
+
+  const removeNullRow = () => {
+    refGridModalDetail?.current?.gridInst?.finishEditing();
+    const gridInstance = refGridModalDetail?.current?.getInstance();
+    const colunmLength = gridInstance?.store?.viewport?.columns?.length;
+    const colunmList = [];
+    for (let i = 0; i < colunmLength; i++) {
+      colunmList[i] = gridInstance?.store?.viewport?.columns[i].name;
+      console.log(colunmList[i]);
+    }
+    const rawDataLength = gridInstance?.store?.data?.rawData.length;
+    let deleteRawList = [];
+    const rawDatas = gridInstance?.store?.data?.rawData;
+
+    for (let i = 0; i < rawDataLength; i++) {
+      let counter = 0;
+      let data = rawDatas[i];
+      for (let x = 0; x < colunmLength; x++) {
+        let tmpData = data[colunmList[x]];
+        if (tmpData !== null) {
+          counter = counter + 1;
+        } else {
+        }
+      }
+      console.log(counter);
+      if (counter === 0) {
+        deleteRawList[i] = data.rowKey;
+      }
+    }
+
+    for (let j = 0; j < deleteRawList.length; j++) {
+      if (deleteRawList[j] !== undefined) {
+        gridInstance?.removeRow(deleteRawList[j]);
+      }
+    }
+  };
+
+  const modalSaveNew = () => {
+    removeNullRow();
+    requireColumnsValidation();
+    if (requireColumnsValidation() === "nullValidationError") {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: `필수값을 입력해주세요.`,
+        severity: "error",
+      });
+    } else {
+      //onClickModalSave();
+    }
+    //onClickModalSave();
+  };
+
+  const modalSaveEdit = () => {
+    removeNullRow();
+    requireColumnsValidation();
+    if (requireColumnsValidation() === "nullValidationError") {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: `필수값을 입력해주세요.`,
+        severity: "error",
+      });
+    } else {
+      // onClickEditModalSave();
+    }
+    //onClickModalSave();
+  };
 
   const GridDetail = useMemo(() => {
     return (
@@ -65,7 +175,11 @@ function ModalControlPlan(props) {
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>{isNewDetail ? `[수정] ${currentMenuName}` : `[신규] ${currentMenuName}`}</S.TitleBox>
+        <S.TitleBox>
+          {isNewDetail
+            ? `[수정] ${currentMenuName}`
+            : `[신규] ${currentMenuName}`}
+        </S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"
@@ -90,11 +204,16 @@ function ModalControlPlan(props) {
         />
       </S.GridBoxTop>
       <S.ButtonBox>
-        {!isNewDetail && <BtnComponent btnName="DataLoad" onClick={onDataLoad} />}
+        {!isNewDetail && (
+          <BtnComponent btnName="DataLoad" onClick={onDataLoad} />
+        )}
 
         <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
         <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
-        <BtnComponent btnName="Save" onClick={isNewDetail ? onClickEditModalSave : onClickModalSave} />
+        <BtnComponent
+          btnName="Save"
+          onClick={isNewDetail ? modalSaveEdit : modalSaveNew}
+        />
       </S.ButtonBox>
       <S.GridBoxBottom>{GridDetail}</S.GridBoxBottom>
     </ModalWrap>
