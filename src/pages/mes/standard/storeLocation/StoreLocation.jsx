@@ -25,8 +25,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function StoreLocation(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -39,15 +38,10 @@ function StoreLocation(props) {
   });
   const [searchToggle, setSearchToggle] = useState(false);
   const [storeOpt, storeList] = Cbo.useStore();
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = StoreLocationSet(isEditMode, storeList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = StoreLocationSet(
+    isEditMode,
+    storeList
+  );
 
   const SWITCH_NAME_01 = "storeLocation";
 
@@ -56,20 +50,14 @@ function StoreLocation(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -270,7 +258,7 @@ function StoreLocation(props) {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          requirecolumns={["store_id", "location_cd", "location_nm"]}
+          requireColumns={["store_id", "location_cd", "location_nm"]}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

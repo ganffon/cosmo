@@ -24,8 +24,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function InspectMethod(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -37,15 +36,8 @@ function InspectMethod(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = InspectMethodSet(isEditMode);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
+    InspectMethodSet(isEditMode);
 
   const SWITCH_NAME_01 = "inspMethod";
 
@@ -54,10 +46,7 @@ function InspectMethod(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     setTimeout(() => {
@@ -65,10 +54,7 @@ function InspectMethod(props) {
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -262,7 +248,7 @@ function InspectMethod(props) {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          requirecolumns={["insp_method_cd", "insp_method_nm"]}
+          requireColumns={["insp_method_cd", "insp_method_nm"]}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

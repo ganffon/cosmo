@@ -40,7 +40,7 @@ function Document() {
     prodNM.current = "품목";
   };
 
-  const requireCoulnm = [
+  const requireColumn = [
     "insp_document_no",
     "prod_id",
     "insp_document_reg_date",
@@ -727,7 +727,7 @@ function Document() {
         rowHeadersDetail={rowHeadersNum}
         refGridModalHeader={refGridModalHeader}
         refGridModalDetail={refGridModalDetail}
-        requirecolumns={requireCoulnm}
+        requireColumns={requireColumn}
         onClickGridModalDetail={onClickGridModalDetail}
         onDblClickGridModalHeader={onDblClickGridModalHeader}
         onDblClickGridModalDetail={onDblClickGridModalDetail}

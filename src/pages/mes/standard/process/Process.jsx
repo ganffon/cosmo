@@ -24,8 +24,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Process(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -37,15 +36,8 @@ function Process(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = ProcessSet(isEditMode);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
+    ProcessSet(isEditMode);
 
   const SWITCH_NAME_01 = "process";
 
@@ -54,20 +46,14 @@ function Process(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -174,27 +160,27 @@ function Process(props) {
   const validationDuplicated = (coulnmList) => {
     refModalGrid?.current?.gridInst?.finishEditing();
     const gridInstance = refModalGrid?.current?.getInstance();
-    const colunmLength = coulnmList.length;
-    const tmpCoulnmList = coulnmList;
+    const columnLength = coulnmList.length;
+    const tmpColumnList = coulnmList;
 
     const rawDataLength = gridInstance?.store?.data?.rawData.length;
 
     const rawDatas = gridInstance?.store?.data?.rawData;
     let arr = [];
     for (let i = 0; i < rawDataLength; i++) {
-      let tempdataString;
+      let tempDataString;
 
-      for (let x = 0; x < colunmLength; x++) {
+      for (let x = 0; x < columnLength; x++) {
         let data = rawDatas[i];
-        let tmpData = data[tmpCoulnmList[x]];
+        let tmpData = data[tmpColumnList[x]];
 
         if (x === 0) {
-          tempdataString = tmpData;
+          tempDataString = tmpData;
         } else {
-          tempdataString = tempdataString + "/" + tmpData;
+          tempDataString = tempDataString + "/" + tmpData;
         }
       }
-      arr[i] = tempdataString;
+      arr[i] = tempDataString;
     }
     console.log(arr);
     const setArrayLength = new Set(arr).size;
@@ -211,10 +197,10 @@ function Process(props) {
   const removeNullRow = () => {
     refModalGrid?.current?.gridInst?.finishEditing();
     const gridInstance = refModalGrid?.current?.getInstance();
-    const colunmLength = gridInstance?.store?.viewport?.columns?.length;
-    const colunmList = [];
-    for (let i = 0; i < colunmLength; i++) {
-      colunmList[i] = gridInstance?.store?.viewport?.columns[i].name;
+    const columnLength = gridInstance?.store?.viewport?.columns?.length;
+    const columnList = [];
+    for (let i = 0; i < columnLength; i++) {
+      columnList[i] = gridInstance?.store?.viewport?.columns[i].name;
     }
     const rawDataLength = gridInstance?.store?.data?.rawData.length;
     let deleteRawList = [];
@@ -223,8 +209,8 @@ function Process(props) {
     for (let i = 0; i < rawDataLength; i++) {
       let counter = 0;
       let data = rawDatas[i];
-      for (let x = 0; x < colunmLength; x++) {
-        let tmpData = data[colunmList[x]];
+      for (let x = 0; x < columnLength; x++) {
+        let tmpData = data[columnList[x]];
         if (!tmpData) {
         } else {
           counter = counter + 1;
@@ -275,7 +261,7 @@ function Process(props) {
         rowHeaders={rowHeadersModal}
         refModalGrid={refModalGrid}
         onClickModalGrid={onClickModalGrid}
-        requirecolumns={["proc_cd", "proc_nm"]}
+        requireColumns={["proc_cd", "proc_nm"]}
       />
     );
   }, []);
