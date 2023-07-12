@@ -24,8 +24,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Equipment() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
@@ -52,16 +51,8 @@ function Equipment() {
   const [searchToggle, setSearchToggle] = useState(false);
   const [processOpt, processList] = Cbo.useProcess();
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnsModalSelect,
-    columnOptions,
-    inputSet,
-  } = EquipmentSet(isEditMode, processList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnsModalSelect, columnOptions, inputSet } =
+    EquipmentSet(isEditMode, processList);
   const SWITCH_NAME_01 = "equipment";
 
   useEffect(() => {
@@ -69,10 +60,7 @@ function Equipment() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     setTimeout(() => {
@@ -80,10 +68,7 @@ function Equipment() {
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const [actSearchSelect] = uSearch.useSearchSelect(
     refModalSelectGrid,
     isBackDrop,
@@ -305,7 +290,7 @@ function Equipment() {
         refModalGrid={refModalGrid}
         onClickModalGrid={onClickModalGrid}
         onDblClickModalGrid={onDblClickModalGrid}
-        requirecolumns={["proc_id", "equip_cd", "equip_nm"]}
+        requireColumns={["proc_id", "equip_cd", "equip_nm"]}
       />
     );
   }, []);

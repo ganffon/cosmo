@@ -25,7 +25,7 @@ function Modaldocument(props) {
     onDataLoad = () => {},
     refGridModalHeader,
     refGridModalDetail,
-    requirecolumns = [],
+    requireColumns = [],
     isNewDetail,
     columnsModalHeader,
     columnsModalDetail,
@@ -57,8 +57,8 @@ function Modaldocument(props) {
       const rawDatas = gridInstance?.store?.data?.rawData;
       for (let i = 0; i < rawDatas.length; i++) {
         if (rawDatas[i] !== undefined) {
-          for (let j = 0; j < requirecolumns.length; j++) {
-            const validationData = rawDatas[i][requirecolumns[j]];
+          for (let j = 0; j < requireColumns.length; j++) {
+            const validationData = rawDatas[i][requireColumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -71,8 +71,8 @@ function Modaldocument(props) {
       const rawDatasForHeader = gridInstanceForHeader?.store?.data?.rawData;
       for (let i = 0; i < rawDatasForHeader.length; i++) {
         if (rawDatasForHeader[i] !== undefined) {
-          for (let j = 0; j < requirecolumns.length; j++) {
-            const validationData = rawDatasForHeader[i][requirecolumns[j]];
+          for (let j = 0; j < requireColumns.length; j++) {
+            const validationData = rawDatasForHeader[i][requireColumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -87,10 +87,10 @@ function Modaldocument(props) {
   const removeNullRow = () => {
     refGridModalDetail?.current?.gridInst?.finishEditing();
     const gridInstance = refGridModalDetail?.current?.getInstance();
-    const colunmLength = gridInstance?.store?.viewport?.columns?.length;
-    const colunmList = [];
-    for (let i = 0; i < colunmLength; i++) {
-      colunmList[i] = gridInstance?.store?.viewport?.columns[i].name;
+    const columnLength = gridInstance?.store?.viewport?.columns?.length;
+    const columnList = [];
+    for (let i = 0; i < columnLength; i++) {
+      columnList[i] = gridInstance?.store?.viewport?.columns[i].name;
     }
     const rawDataLength = gridInstance?.store?.data?.rawData.length;
     let deleteRawList = [];
@@ -99,8 +99,8 @@ function Modaldocument(props) {
     for (let i = 0; i < rawDataLength; i++) {
       let counter = 0;
       let data = rawDatas[i];
-      for (let x = 0; x < colunmLength; x++) {
-        let tmpData = data[colunmList[x]];
+      for (let x = 0; x < columnLength; x++) {
+        let tmpData = data[columnList[x]];
         if (!tmpData) {
         } else {
           counter = counter + 1;

@@ -26,7 +26,7 @@ function ModalControlPlan(props) {
     onDataLoad = () => {},
     refGridModalHeader,
     refGridModalDetail,
-    requirecolumns = [],
+    requireColumns = [],
     isNewDetail,
     columnsModalHeader,
     columnsModalDetail,
@@ -42,11 +42,7 @@ function ModalControlPlan(props) {
   useEffect(() => {
     if (!isNewDetail) {
       refGridModalHeader?.current?.gridInst?.appendRow();
-      refGridModalHeader?.current?.gridInst.setValue(
-        0,
-        "subdivision_date",
-        DateTime().dateFull
-      );
+      refGridModalHeader?.current?.gridInst.setValue(0, "subdivision_date", DateTime().dateFull);
     }
   }, []);
   const [isSnackOpen, setIsSnackOpen] = useState({
@@ -60,8 +56,8 @@ function ModalControlPlan(props) {
       const rawDatas = gridInstance?.store?.data?.rawData;
       for (let i = 0; i < rawDatas.length; i++) {
         if (rawDatas[i] !== undefined) {
-          for (let j = 0; j < requirecolumns.length; j++) {
-            const validationData = rawDatas[i][requirecolumns[j]];
+          for (let j = 0; j < requireColumns.length; j++) {
+            const validationData = rawDatas[i][requireColumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -74,8 +70,8 @@ function ModalControlPlan(props) {
       const rawDatasForHeader = gridInstanceForHeader?.store?.data?.rawData;
       for (let i = 0; i < rawDatasForHeader.length; i++) {
         if (rawDatasForHeader[i] !== undefined) {
-          for (let j = 0; j < requirecolumns.length; j++) {
-            const validationData = rawDatasForHeader[i][requirecolumns[j]];
+          for (let j = 0; j < requireColumns.length; j++) {
+            const validationData = rawDatasForHeader[i][requireColumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -90,11 +86,11 @@ function ModalControlPlan(props) {
   const removeNullRow = () => {
     refGridModalDetail?.current?.gridInst?.finishEditing();
     const gridInstance = refGridModalDetail?.current?.getInstance();
-    const colunmLength = gridInstance?.store?.viewport?.columns?.length;
-    const colunmList = [];
-    for (let i = 0; i < colunmLength; i++) {
-      colunmList[i] = gridInstance?.store?.viewport?.columns[i].name;
-      console.log(colunmList[i]);
+    const columnLength = gridInstance?.store?.viewport?.columns?.length;
+    const columnList = [];
+    for (let i = 0; i < columnLength; i++) {
+      columnList[i] = gridInstance?.store?.viewport?.columns[i].name;
+      console.log(columnList[i]);
     }
     const rawDataLength = gridInstance?.store?.data?.rawData.length;
     let deleteRawList = [];
@@ -103,8 +99,8 @@ function ModalControlPlan(props) {
     for (let i = 0; i < rawDataLength; i++) {
       let counter = 0;
       let data = rawDatas[i];
-      for (let x = 0; x < colunmLength; x++) {
-        let tmpData = data[colunmList[x]];
+      for (let x = 0; x < columnLength; x++) {
+        let tmpData = data[columnList[x]];
         if (tmpData !== null) {
           counter = counter + 1;
         } else {
@@ -175,11 +171,7 @@ function ModalControlPlan(props) {
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>
-          {isNewDetail
-            ? `[수정] ${currentMenuName}`
-            : `[신규] ${currentMenuName}`}
-        </S.TitleBox>
+        <S.TitleBox>{isNewDetail ? `[수정] ${currentMenuName}` : `[신규] ${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"
@@ -204,16 +196,11 @@ function ModalControlPlan(props) {
         />
       </S.GridBoxTop>
       <S.ButtonBox>
-        {!isNewDetail && (
-          <BtnComponent btnName="DataLoad" onClick={onDataLoad} />
-        )}
+        {!isNewDetail && <BtnComponent btnName="DataLoad" onClick={onDataLoad} />}
 
         <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
         <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
-        <BtnComponent
-          btnName="Save"
-          onClick={isNewDetail ? modalSaveEdit : modalSaveNew}
-        />
+        <BtnComponent btnName="Save" onClick={isNewDetail ? modalSaveEdit : modalSaveNew} />
       </S.ButtonBox>
       <S.GridBoxBottom>{GridDetail}</S.GridBoxBottom>
     </ModalWrap>

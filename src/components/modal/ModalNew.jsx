@@ -18,7 +18,7 @@ function ModalNew(props) {
     onEditingFinishModal = () => {},
     refModalGrid = null,
     columns = [],
-    requirecolumns = [],
+    requireColumns = [],
     columnOptions = [],
     header = [],
     rowHeaders = [],
@@ -43,27 +43,27 @@ function ModalNew(props) {
     try {
       refModalGrid?.current?.gridInst?.finishEditing();
       const gridInstance = refModalGrid?.current?.getInstance();
-      const colunmLength = requirecolumns.length;
-      const tmpCoulnmList = requirecolumns;
+      const columnLength = requireColumns.length;
+      const tmpColumnList = requireColumns;
 
       const rawDataLength = gridInstance?.store?.data?.rawData.length;
 
       const rawDatas = gridInstance?.store?.data?.rawData;
       let arr = [];
       for (let i = 0; i < rawDataLength; i++) {
-        let tempdataString;
+        let tempDataString;
 
-        for (let x = 0; x < colunmLength; x++) {
+        for (let x = 0; x < columnLength; x++) {
           let data = rawDatas[i];
-          let tmpData = data[tmpCoulnmList[x]];
+          let tmpData = data[tmpColumnList[x]];
 
           if (x === 0) {
-            tempdataString = tmpData;
+            tempDataString = tmpData;
           } else {
-            tempdataString = tempdataString + "/" + tmpData;
+            tempDataString = tempDataString + "/" + tmpData;
           }
         }
-        arr[i] = tempdataString;
+        arr[i] = tempDataString;
       }
 
       const setArrayLength = new Set(arr).size;
@@ -82,8 +82,8 @@ function ModalNew(props) {
       const rawDatas = gridInstance?.store?.data?.rawData;
       for (let i = 0; i < rawDatas.length; i++) {
         if (rawDatas[i] !== undefined) {
-          for (let j = 0; j < requirecolumns.length; j++) {
-            const validationData = rawDatas[i][requirecolumns[j]];
+          for (let j = 0; j < requireColumns.length; j++) {
+            const validationData = rawDatas[i][requireColumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -98,10 +98,10 @@ function ModalNew(props) {
   const removeNullRow = () => {
     refModalGrid?.current?.gridInst?.finishEditing();
     const gridInstance = refModalGrid?.current?.getInstance();
-    const colunmLength = gridInstance?.store?.viewport?.columns?.length;
-    const colunmList = [];
-    for (let i = 0; i < colunmLength; i++) {
-      colunmList[i] = gridInstance?.store?.viewport?.columns[i].name;
+    const columnLength = gridInstance?.store?.viewport?.columns?.length;
+    const columnList = [];
+    for (let i = 0; i < columnLength; i++) {
+      columnList[i] = gridInstance?.store?.viewport?.columns[i].name;
     }
     const rawDataLength = gridInstance?.store?.data?.rawData.length;
     let deleteRawList = [];
@@ -110,8 +110,8 @@ function ModalNew(props) {
     for (let i = 0; i < rawDataLength; i++) {
       let counter = 0;
       let data = rawDatas[i];
-      for (let x = 0; x < colunmLength; x++) {
-        let tmpData = data[colunmList[x]];
+      for (let x = 0; x < columnLength; x++) {
+        let tmpData = data[columnList[x]];
         if (!tmpData) {
         } else {
           counter = counter + 1;
@@ -169,11 +169,7 @@ function ModalNew(props) {
     <ModalWrap width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
@@ -183,10 +179,7 @@ function ModalNew(props) {
           {buttonType === "ACS" && (
             <>
               <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
-              <BtnComponent
-                btnName="CancelRow"
-                onClick={onClickModalCancelRow}
-              />
+              <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
               <BtnComponent
                 btnName="Save"
                 onClick={() => {
@@ -203,8 +196,8 @@ function ModalNew(props) {
                   }
                   /*
                   removeNullRow();
-                  validationDuplicated(requirecolumns);
-                  if (validationDuplicated(requirecolumns) !== "error") {
+                  validationDuplicated(requireColumns);
+                  if (validationDuplicated(requireColumns) !== "error") {
                     onClickModalSave();
                   } else {
                     setIsSnackOpen({
@@ -219,9 +212,7 @@ function ModalNew(props) {
               />
             </>
           )}
-          {buttonType === "Save" && (
-            <BtnComponent btnName="Save" onClick={onClickModalSave} />
-          )}
+          {buttonType === "Save" && <BtnComponent btnName="Save" onClick={onClickModalSave} />}
         </S.ButtonWrap>
       </S.ButtonBox>
       <S.GridBox>{Grid}</S.GridBox>
