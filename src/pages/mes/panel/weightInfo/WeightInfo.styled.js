@@ -40,6 +40,7 @@ export const ContentsHeaderWrap = styled("div")`
 export const TopWrap = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
   background-color: #efefef;
 `;
 export const Top = styled.div`
@@ -69,48 +70,6 @@ export const ShadowBoxGrid = styled("div")`
   border-color: rgb(255, 255, 255);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
-export const ChartDiv = styled.div`
-  width: 50%;
-`;
-export const ChartWrap = styled("div")`
-  margin: 10px;
-  height: 80%;
-  background-color: #ffffff;
-  border-radius: 10px;
-  border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
-`;
-export const ChartWrap2 = styled("div")`
-  margin: 10px;
-  height: 80%;
-  width: 98%;
-  background-color: #ffffff;
-`;
-export const GridWrap = styled("div")`
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  font-size: 10px;
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-`;
-export const GridWrap2 = styled("div")`
-  height: 80%;
-  padding: 10px 10px 10px 10px;
-`;
-export const GridWrap3 = styled("div")`
-  height: 30%;
-  padding: 10px 10px 10px 10px;
-`;
-export const OtherContent = styled.div`
-  width: 50%;
-`;
-
-export const Bottom = styled.div`
-  height: 50%;
-  padding: 80px 10px 10px 10px;
-`;
-
 export const Footer = styled.div`
   position: absolute;
   bottom: 0;
@@ -184,6 +143,20 @@ export const Title = styled("div")`
   margin-top: 15px;
   margin-left: 25px;
 `;
+export const GridData = styled("div")`
+  font-family: "Noto Sans KR";
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 29px;
+  background-color: ${(props) => props.Bcolor};
+  color: ${(props) => props.color};
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+`;
 export const BottomTitle = styled("div")`
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -206,12 +179,31 @@ export const RightBottom = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const Left = styled("div")`
-  width: calc(50% - 10px);
+  width: calc(15% - 10px);
   height: 100%;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 5px;
+
+  flexdirection: "column";
+  justify-content: center;
+
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #e9e9e9; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 모서리 반경 */
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #ffffff; /* 스크롤바 트랙 색상 */
+    border-radius: 4px; /* 스크롤바 트랙 모서리 반경 */
+  }
 `;
 export const TimeRateLeft = styled("div")`
   width: 56%;
@@ -223,8 +215,44 @@ export const PerformaceRateLeft = styled("div")`
   height: 100%;
   border-radius: 10px;
 `;
-export const Right = styled("div")`
+export const ColGridContainer = styled("div")`
+  display: grid;
+  width: 90%;
+  height: 60%;
+  margin: 30px;
+  grid-template-columns: ${(props) => props.Template || "50% 50%"};
+  background-color: ${(props) => props.Bcolor || "#ffffff"};
+  gap: ${(props) => props.Template || "5px"};
+`;
+export const ColGridContainer2 = styled("div")`
+  display: grid;
+  width: 100%;
+  height: 100%;
+
+  grid-template-columns: ${(props) => props.Template || "50% 50%"};
+  background-color: ${(props) => props.Bcolor || "#ffffff"};
+  gap: ${(props) => props.Template || "-3px"};
+`;
+export const RowsGridContainer = styled("div")`
+  display: grid;
+  width: 100%;
+  height: 100%;
+
+  grid-template-rows: ${(props) => props.Template || "50% 50%"};
+  background-color: ${(props) => props.Bcolor};
+  gap: ${(props) => props.Template || "5px"};
+`;
+export const RowsGridContainer2 = styled("div")`
+  display: grid;
   width: 50%;
+  height: calc(30% - 70px);
+  margin: 10px 30px 30px 30px;
+  grid-template-rows: ${(props) => props.Template || "50% 50%"};
+  background-color: ${(props) => props.Bcolor};
+  gap: ${(props) => props.Template || "5px"};
+`;
+export const Right = styled("div")`
+  width: 85%;
   height: 100%;
   background-color: #ffffff;
   margin-left: 10px;
@@ -364,9 +392,16 @@ export const InputBox = styled("div")`
 `;
 
 export const InputSet = styled(TextField)`
-  width: 180px;
-  margin-left: 10px;
-  margin-top: 5px;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  background-color: ${(props) => props.Bcolor};
+  input {
+    text-align: center;
+    color: blue;
+    font-family: "Arial", sans-serif; /* 폰트 설정 */
+    font-size: 69px; /* 폰트 크기 설정 */
+  }
 `;
 
 export const InputText = styled(TextField)`
@@ -407,27 +442,12 @@ export const GridContainer = styled("div")`
 export const GridContainer2 = styled("div")`
   display: grid;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 70px);
   margin-right: 10px;
-  grid-template-columns: 0% 50% 49%;
-  background-color: #efefef;
-  border-radius: 10px;
-  gap: 0px 10px;
-`;
-export const TempHumidTitle = styled("div")`
-  font-family: "Noto Sans KR";
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 29px;
-  margin-top: 15px;
-  margin-left: 20px;
-`;
-export const EquipStatusChartWrap = styled("div")`
-  margin: 10px;
-  height: 60%;
+  grid-template-columns: 10% 40% 49%;
   background-color: #ffffff;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
+  gap: 0px 10px;
 `;
 export const SearchTitle = styled("div")`
   font-family: NotoSansKR;
@@ -443,8 +463,9 @@ export const BtnComponent = styled("button")`
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   border-radius: 6px;
-  padding: 5px 20px 5px 20px;
-  background: #ffffff;
+  padding: 10px;
+  margin-top: 20px;
+  background: ${(props) => (props.clicked ? "rgba(87, 181, 243, 0.05)" : "#ffffff")};
   border: 1px solid rgba(20, 145, 206, 1);
   gap: 4px;
   cursor: pointer;
@@ -456,7 +477,7 @@ export const BtnComponent = styled("button")`
     background: rgba(87, 181, 243, 0.05);
   }
   &.clicked {
-    animation: clickEffect 0.3s;
+    animation: clickEffect 0.8s;
     @keyframes clickEffect {
       0% {
         transform: scale(1);

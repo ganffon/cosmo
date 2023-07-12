@@ -153,9 +153,9 @@ function ModalWeight(props) {
     const onBarcodeScan = (e) => {
       //timeStamp 가 서로 몇초 차이인지 구함
       const differenceTime = getTimeDifferenceInSeconds(refBarcodeTimeStamp.current, e?.timeStamp);
-      //차이 시간이 0.01초 이상이라면 저장되어 있던 값을 초기화
+      //차이 시간이 0.03초 이상이라면 저장되어 있던 값을 초기화
       //바코드 스캐너로 입력되는 문자들은 입력 사이가 0.005초 전후 이기 때문
-      if (differenceTime > 0.01) {
+      if (differenceTime > 0.03) {
         barcodeNo.current = "";
       }
 

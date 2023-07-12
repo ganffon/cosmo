@@ -1,0 +1,20 @@
+[
+  {
+    "prod_type_small_nm": "CN5S20",
+    "item1Nm": "NCM(OH)2",
+    "item2Nm": "Li2CO3",
+    "item3Nm": "Al203",
+    "in": 1000.0,
+    "Li": 437.0,
+    "Al": 2.79
+  },
+  {
+    "prod_type_small_nm": "HCS5",
+    "item1Nm": "Co3O4",
+    "item2Nm": "Li2CO3",
+    "item3Nm": "Al203",
+    "in": 120.59,
+    "Li": 55.87,
+    "Al": 1.28
+  }
+]

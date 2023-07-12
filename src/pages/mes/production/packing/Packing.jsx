@@ -118,26 +118,37 @@ function Packing() {
   };
 
   const onPrintClick = async (rowKey) => {
-    try {
-      const result = await restAPI.post(restURI.packingBarcode, {
-        barcode_type: "PACKING",
-        reference_id: refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_packing_id,
-      });
-      setBarcodePrintInfo({
-        ...barcodePrintInfo,
-        result: result?.data?.data?.rows,
-      });
-    } catch (err) {
+    if (!isEditModeHeader) {
+      try {
+        const result = await restAPI.post(restURI.packingBarcode, {
+          barcode_type: "PACKING",
+          reference_id: refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_packing_id,
+        });
+        setBarcodePrintInfo({
+          ...barcodePrintInfo,
+          result: result?.data?.data?.rows,
+        });
+        setIsModalPrintOpen(true);
+        setModalData(refGridHeader?.current?.gridInst.store.data.rawData[rowKey]);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      }
+    } else {
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-        location: "bottomRight",
+        message: "수정 모드에서는 출력할 수 없습니다.",
+        severity: "warning",
+        location: "topCenter",
       });
+      return;
     }
-    setIsModalPrintOpen(true);
-    setModalData(refGridHeader?.current?.gridInst.store.data.rawData[rowKey]);
   };
 
   const barcodePrintHeader = async (rowKey) => {
@@ -298,6 +309,8 @@ function Packing() {
           ...barcodePrintInfo,
           result: result?.data?.data?.rows,
         });
+        setIsModalPrintOpen(true);
+        setModalData(refGridDetail?.current?.gridInst.store.data.rawData[rowKey]);
       } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -307,8 +320,15 @@ function Packing() {
           location: "bottomRight",
         });
       }
-      setIsModalPrintOpen(true);
-      setModalData(refGridDetail?.current?.gridInst.store.data.rawData[rowKey]);
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "수정 모드에서는 출력할 수 없습니다.",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
     }
   }
   const handleInputTextChange = (e) => {

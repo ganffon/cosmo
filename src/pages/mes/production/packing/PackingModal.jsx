@@ -20,7 +20,6 @@ function PackingModal(props) {
     //   height: "100%",
     //   margin: 5,
     // });
-    console.log(data);
     data.forEach((value) => {
       JsBarcode(`#${value.barcode_no}`, value.barcode_no, {
         format: "CODE128",
@@ -91,7 +90,7 @@ function PackingModal(props) {
             style={{
               display: "flex",
               width: "calc(100% - 20px)",
-              height: "calc(100% - 70px)",
+              height: "calc(100% - 30px)",
               gap: "10px",
               padding: "10px",
             }}
@@ -214,12 +213,12 @@ function PackingModal(props) {
                           width: "100%",
                           height: "100%",
                           display: "flex",
-                          fontSize: "42px",
+                          fontSize: "40px",
                           alignItems: "center",
                           justifyContent: "flex-end",
                         }}
                       >
-                        {data[i].lot_no} -
+                        {data[i].lot_no}　-　
                       </div>
                     </div>
                     <div
@@ -227,7 +226,7 @@ function PackingModal(props) {
                         width: "10%",
                         height: "100%",
                         display: "flex",
-                        fontSize: "42px",
+                        fontSize: "40px",
                         alignItems: "center",
                         justifyContent: "flex-start",
                       }}
@@ -459,12 +458,12 @@ function PackingModal(props) {
                           width: "100%",
                           height: "100%",
                           display: "flex",
-                          fontSize: "42px",
+                          fontSize: "40px",
                           alignItems: "center",
                           justifyContent: "flex-end",
                         }}
                       >
-                        {data[i].lot_no} -
+                        {data[i].lot_no}　-　
                       </div>
                     </div>
                     <div
@@ -472,7 +471,7 @@ function PackingModal(props) {
                         width: "10%",
                         height: "100%",
                         display: "flex",
-                        fontSize: "42px",
+                        fontSize: "40px",
                         alignItems: "center",
                         justifyContent: "flex-start",
                       }}

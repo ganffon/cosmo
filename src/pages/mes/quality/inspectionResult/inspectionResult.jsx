@@ -167,9 +167,6 @@ function InspectionResult(props) {
       onClickSearch();
     };
     handleAsync();
-    // setTimeout(() => {
-
-    // }, 300);
   };
 
   const [actDelete] = uDelete.useDelete(
@@ -260,8 +257,7 @@ function InspectionResult(props) {
       let conditionProdID;
       prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
       let readURI = `/qms/insp-result-upload?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
-      // console.log(inputTextChange);
-      // console.log(inputBoxID);
+
       if (inputTextChange && inputBoxID) {
         let cnt = 1;
         //🔸inputBox 가 있다면?!
@@ -287,7 +283,6 @@ function InspectionResult(props) {
         readURI = readURI.slice(0, readURI.length - 1);
       }
       let gridData = await restAPI.get(readURI);
-      console.log(gridData);
       setGridData(gridData?.data?.data?.rows);
     } catch {
       setIsSnackOpen({
@@ -309,8 +304,6 @@ function InspectionResult(props) {
     if (dblClickGrid === "Search") {
       prodNM.current = "";
       for (let i = 0; i < columnName.length; i++) {
-        console.log(e?.instance?.store?.data?.rawData);
-
         if (columnName[i] === "prod_cd") {
           prodCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
@@ -325,8 +318,6 @@ function InspectionResult(props) {
         refGrid?.current?.gridInst?.setValue(dblClickRowKey, columnName[i], e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]);
       }
     } else if (dblClickGrid === "ExcelUploadModal") {
-      console.log(e?.instance?.store?.data?.rawData[e?.rowKey]);
-
       for (let i = 0; i < columnName.length; i++) {
         if (columnName[i] === "prod_cd") {
           excelProdCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];

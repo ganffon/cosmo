@@ -87,6 +87,7 @@ import WorkerGroupStatus from "pages/mes/panel/workerGroupStatus/WorkerGroupStat
 import InspectionResult from "pages/mes/quality/inspectionResult/inspectionResult";
 import LineYield from "pages/mes/production/lineYield/LineYield";
 import CountChart from "pages/mes/managementInfo/countChart/CountChart";
+import WeightInfo from "pages/mes/panel/weightInfo/WeightInfo";
 
 export default function MainRouter() {
   const pages = [
@@ -182,6 +183,7 @@ export default function MainRouter() {
     { path: "quality-result", component: InspectionResult },
     { path: "line-yield", component: LineYield },
     { path: "count-Chart", component: CountChart },
+    { path: "weight-info", component: WeightInfo },
   ];
   return (
     <Layout>

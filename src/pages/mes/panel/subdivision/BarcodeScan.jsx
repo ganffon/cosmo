@@ -54,7 +54,7 @@ function BarcodeScan(props) {
                 width={"785px"}
                 height={"60px"}
                 size={"30px"}
-                placeHolder={isLotReadOnly ? "투입 LOT 수기 입력은 클릭하세요" : ""}
+                placeHolder={isLotReadOnly ? "투입 LOT 수기 입력은 클릭하세요 (대소문자 구분 필수)" : ""}
                 readOnly={isLotReadOnly}
                 onClickReadOnly={() => {
                   setIsLotReadOnly(false);
