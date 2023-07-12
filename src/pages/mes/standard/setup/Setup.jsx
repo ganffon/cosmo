@@ -23,7 +23,8 @@ import BtnComponent from "components/button/BtnComponent";
 
 function Setup() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -36,7 +37,15 @@ function Setup() {
   });
   const [searchToggle, setSearchToggle] = useState(false);
 
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = SetupSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = SetupSet(isEditMode);
   const SWITCH_NAME_01 = "setup";
 
   useEffect(() => {
@@ -44,14 +53,20 @@ function Setup() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -137,23 +152,6 @@ function Setup() {
   const onClickModalGrid = (e) => {
     rowKey = e.rowKey;
   };
-  const onClickModalCancelRow = () => {
-    if (rowKey) {
-      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
-      const gridInstance = refModalGrid.current?.getInstance();
-      // 선택한 Row가 있는 경우, 해당 Row 삭제
-      gridInstance?.removeRow(rowKey);
-    } else {
-      // 선택한 Row가 없는 경우, 마지막 Row 제거
-      const gridInstance = refModalGrid.current?.getInstance();
-      const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
-      if (rowCount > 0) {
-        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
-        gridInstance?.removeRow(lastRowKey);
-      }
-    }
-    rowKey = undefined;
-  };
   const onClickModalSave = () => {
     actSave();
   };
@@ -163,7 +161,12 @@ function Setup() {
   }
 
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, ["auth_read", "auth_create", "auth_update", "auth_delete"]);
+    disRow.handleClickGridCheck(e, isEditMode, [
+      "auth_read",
+      "auth_create",
+      "auth_update",
+      "auth_delete",
+    ]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -227,12 +230,15 @@ function Setup() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+        <AlertDelete
+          handleDelete={handleDelete}
+          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
+        />
       ) : null}
       {isModalOpen ? (
         <ModalNew
           onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
+          onClickModalCancelRow={null}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
           columns={columnsModal}
@@ -241,7 +247,7 @@ function Setup() {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          requireColumns={["setup_cd", "setup_nm"]}
+          requirecolumns={["setup_cd", "setup_nm"]}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />
