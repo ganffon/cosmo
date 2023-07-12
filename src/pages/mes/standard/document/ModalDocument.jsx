@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import GridModal from "components/grid/GridModal";
 import ModalWrap from "components/modal/ModalWrap";
+import ButtonACS from "components/button/ButtonACS";
 import DateTime from "components/datetime/DateTime";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalDocument.styled";
@@ -25,7 +26,7 @@ function Modaldocument(props) {
     onDataLoad = () => {},
     refGridModalHeader,
     refGridModalDetail,
-    requireColumns = [],
+    requirecolumns = [],
     isNewDetail,
     columnsModalHeader,
     columnsModalDetail,
@@ -46,9 +47,38 @@ function Modaldocument(props) {
   useEffect(() => {
     if (!isNewDetail) {
       refGridModalHeader?.current?.gridInst?.appendRow();
-      refGridModalHeader?.current?.gridInst.setValue(0, "subdivision_date", DateTime().dateFull);
+      refGridModalHeader?.current?.gridInst.setValue(
+        0,
+        "subdivision_date",
+        DateTime().dateFull
+      );
     }
   }, []);
+
+  let rowKey;
+  const onClickModalGridInnerFunction = (e) => {
+    rowKey = e.rowKey;
+  };
+
+  const onClickModalCancelRowInnerFunction = () => {
+    if (rowKey !== undefined) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refGridModalDetail.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(rowKey);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refGridModalDetail.current?.getInstance();
+      const rowCount = refGridModalDetail.current
+        ?.getInstance()
+        ?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = undefined;
+  };
 
   const requireColumnsValidation = () => {
     try {
@@ -57,8 +87,8 @@ function Modaldocument(props) {
       const rawDatas = gridInstance?.store?.data?.rawData;
       for (let i = 0; i < rawDatas.length; i++) {
         if (rawDatas[i] !== undefined) {
-          for (let j = 0; j < requireColumns.length; j++) {
-            const validationData = rawDatas[i][requireColumns[j]];
+          for (let j = 0; j < requirecolumns.length; j++) {
+            const validationData = rawDatas[i][requirecolumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -71,8 +101,8 @@ function Modaldocument(props) {
       const rawDatasForHeader = gridInstanceForHeader?.store?.data?.rawData;
       for (let i = 0; i < rawDatasForHeader.length; i++) {
         if (rawDatasForHeader[i] !== undefined) {
-          for (let j = 0; j < requireColumns.length; j++) {
-            const validationData = rawDatasForHeader[i][requireColumns[j]];
+          for (let j = 0; j < requirecolumns.length; j++) {
+            const validationData = rawDatasForHeader[i][requirecolumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -160,7 +190,10 @@ function Modaldocument(props) {
         rowHeaders={rowHeadersDetail}
         refGrid={refGridModalDetail}
         draggable={false}
-        onClick={onClickGridModalDetail}
+        onClick={(e) => {
+          onClickModalGridInnerFunction(e);
+          onClickGridModalDetail(e);
+        }}
         onDblClick={onDblClickGridModalDetail}
         onEditingFinish={onEditingFinishGridModalDetail}
       />
@@ -170,7 +203,11 @@ function Modaldocument(props) {
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>{isNewDetail ? `[수정] ${currentMenuName}` : `[신규] ${currentMenuName}`}</S.TitleBox>
+        <S.TitleBox>
+          {isNewDetail
+            ? `[수정] ${currentMenuName}`
+            : `[신규] ${currentMenuName}`}
+        </S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"
@@ -195,10 +232,22 @@ function Modaldocument(props) {
         />
       </S.GridBoxTop>
       <S.ButtonBox>
-        {!isNewDetail && <BtnComponent btnName="DataLoad" onClick={onDataLoad} />}
+        {!isNewDetail && (
+          <BtnComponent btnName="DataLoad" onClick={onDataLoad} />
+        )}
         <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
-        <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
-        <BtnComponent btnName="Save" onClick={isNewDetail ? modalSaveEdit : modalSaveNew} />
+        <BtnComponent
+          btnName="CancelRow"
+          onClick={
+            onClickModalCancelRow
+              ? onClickModalCancelRow
+              : onClickModalCancelRowInnerFunction
+          }
+        />
+        <BtnComponent
+          btnName="Save"
+          onClick={isNewDetail ? modalSaveEdit : modalSaveNew}
+        />
       </S.ButtonBox>
       <S.GridBoxBottom>{GridDetail}</S.GridBoxBottom>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />

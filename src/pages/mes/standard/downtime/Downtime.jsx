@@ -27,7 +27,8 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Downtime() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -44,10 +45,15 @@ function Downtime() {
   });
   const [downtimeTypeOpt, downtimeTypeList] = Cbo.useDowntimeType();
 
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = DowntimeSet(
-    isEditMode,
-    downtimeTypeList
-  );
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = DowntimeSet(isEditMode, downtimeTypeList);
   const SWITCH_NAME_01 = "downtime";
 
   useEffect(() => {
@@ -55,14 +61,20 @@ function Downtime() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -149,23 +161,7 @@ function Downtime() {
   const onClickModalGrid = (e) => {
     rowKey = e.rowKey;
   };
-  const onClickModalCancelRow = () => {
-    if (rowKey) {
-      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
-      const gridInstance = refModalGrid.current?.getInstance();
-      // 선택한 Row가 있는 경우, 해당 Row 삭제
-      gridInstance?.removeRow(rowKey);
-    } else {
-      // 선택한 Row가 없는 경우, 마지막 Row 제거
-      const gridInstance = refModalGrid.current?.getInstance();
-      const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
-      if (rowCount > 0) {
-        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
-        gridInstance?.removeRow(lastRowKey);
-      }
-    }
-    rowKey = undefined;
-  };
+
   const onClickModalSave = () => {
     actSave();
   };
@@ -202,10 +198,19 @@ function Downtime() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    downtime_type_id: newValue?.downtime_type_id === undefined ? null : newValue?.downtime_type_id,
+                    downtime_type_id:
+                      newValue?.downtime_type_id === undefined
+                        ? null
+                        : newValue?.downtime_type_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.downtime_type_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.downtime_type_nm}
+                    size="small"
+                  />
+                )}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
@@ -275,7 +280,7 @@ function Downtime() {
       {isModalOpen ? (
         <ModalNew
           onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
+          onClickModalCancelRow={null}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
           columns={columnsModal}
@@ -284,7 +289,7 @@ function Downtime() {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          requireColumns={["downtime_type_id", "downtime_cd", "downtime_nm"]}
+          requirecolumns={["downtime_type_id", "downtime_cd", "downtime_nm"]}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

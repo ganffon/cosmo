@@ -27,7 +27,8 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function InterfaceItem(props) {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -43,10 +44,15 @@ function InterfaceItem(props) {
     infc_item_type_id: null,
   });
   const [infcItemTypeOpt, infcItemTypeList] = Cbo.useInfcItemType();
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = InterfaceItemSet(
-    isEditMode,
-    infcItemTypeList
-  );
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+  } = InterfaceItemSet(isEditMode, infcItemTypeList);
 
   const SWITCH_NAME_01 = "infcItem";
 
@@ -55,14 +61,20 @@ function InterfaceItem(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -149,23 +161,7 @@ function InterfaceItem(props) {
   const onClickModalGrid = (e) => {
     rowKey = e.rowKey;
   };
-  const onClickModalCancelRow = () => {
-    if (rowKey) {
-      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
-      const gridInstance = refModalGrid.current?.getInstance();
-      // 선택한 Row가 있는 경우, 해당 Row 삭제
-      gridInstance?.removeRow(rowKey);
-    } else {
-      // 선택한 Row가 없는 경우, 마지막 Row 제거
-      const gridInstance = refModalGrid.current?.getInstance();
-      const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
-      if (rowCount > 0) {
-        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
-        gridInstance?.removeRow(lastRowKey);
-      }
-    }
-    rowKey = undefined;
-  };
+
   const onClickModalSave = () => {
     actSave();
   };
@@ -201,10 +197,19 @@ function InterfaceItem(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    infc_item_type_id: newValue?.infc_item_type_id === undefined ? null : newValue?.infc_item_type_id,
+                    infc_item_type_id:
+                      newValue?.infc_item_type_id === undefined
+                        ? null
+                        : newValue?.infc_item_type_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.infc_item_type_nm} size="small" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={CN.infc_item_type_nm}
+                    size="small"
+                  />
+                )}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>
@@ -274,7 +279,7 @@ function InterfaceItem(props) {
       {isModalOpen ? (
         <ModalNew
           onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={onClickModalCancelRow}
+          onClickModalCancelRow={null}
           onClickModalSave={onClickModalSave}
           onClickModalClose={onClickModalClose}
           columns={columnsModal}
@@ -283,7 +288,7 @@ function InterfaceItem(props) {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
-          requireColumns={["infc_item_cd", "infc_item_nm"]}
+          requirecolumns={["infc_item_cd", "infc_item_nm"]}
         />
       ) : null}
       <BackDrop isBackDrop={isBackDrop} />

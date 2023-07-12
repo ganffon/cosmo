@@ -18,7 +18,7 @@ function ModalNew(props) {
     onEditingFinishModal = () => {},
     refModalGrid = null,
     columns = [],
-    requireColumns = [],
+    requirecolumns = [],
     columnOptions = [],
     header = [],
     rowHeaders = [],
@@ -43,27 +43,27 @@ function ModalNew(props) {
     try {
       refModalGrid?.current?.gridInst?.finishEditing();
       const gridInstance = refModalGrid?.current?.getInstance();
-      const columnLength = requireColumns.length;
-      const tmpColumnList = requireColumns;
+      const columnLength = requirecolumns.length;
+      const tmpCoulnmList = requirecolumns;
 
       const rawDataLength = gridInstance?.store?.data?.rawData.length;
 
       const rawDatas = gridInstance?.store?.data?.rawData;
       let arr = [];
       for (let i = 0; i < rawDataLength; i++) {
-        let tempDataString;
+        let tempdataString;
 
         for (let x = 0; x < columnLength; x++) {
           let data = rawDatas[i];
-          let tmpData = data[tmpColumnList[x]];
+          let tmpData = data[tmpCoulnmList[x]];
 
           if (x === 0) {
-            tempDataString = tmpData;
+            tempdataString = tmpData;
           } else {
-            tempDataString = tempDataString + "/" + tmpData;
+            tempdataString = tempdataString + "/" + tmpData;
           }
         }
-        arr[i] = tempDataString;
+        arr[i] = tempdataString;
       }
 
       const setArrayLength = new Set(arr).size;
@@ -75,6 +75,29 @@ function ModalNew(props) {
     }
   };
 
+  let rowKey;
+  const onClickModalGridInnerFunction = (e) => {
+    rowKey = e.rowKey;
+  };
+
+  const onClickModalCancelRowInnerFunction = () => {
+    if (rowKey !== undefined) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(rowKey);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refModalGrid.current?.getInstance();
+      const rowCount = refModalGrid.current?.getInstance()?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = undefined;
+  };
+
   const requireColumnsValidation = () => {
     try {
       refModalGrid?.current?.gridInst?.finishEditing();
@@ -82,8 +105,8 @@ function ModalNew(props) {
       const rawDatas = gridInstance?.store?.data?.rawData;
       for (let i = 0; i < rawDatas.length; i++) {
         if (rawDatas[i] !== undefined) {
-          for (let j = 0; j < requireColumns.length; j++) {
-            const validationData = rawDatas[i][requireColumns[j]];
+          for (let j = 0; j < requirecolumns.length; j++) {
+            const validationData = rawDatas[i][requirecolumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -110,6 +133,7 @@ function ModalNew(props) {
     for (let i = 0; i < rawDataLength; i++) {
       let counter = 0;
       let data = rawDatas[i];
+
       for (let x = 0; x < columnLength; x++) {
         let tmpData = data[columnList[x]];
         if (!tmpData) {
@@ -129,7 +153,6 @@ function ModalNew(props) {
     }
   };
 
-  /*
   const Grid = useMemo(() => {
     return (
       <GridModal
@@ -139,25 +162,10 @@ function ModalNew(props) {
         rowHeaders={rowHeaders}
         refGrid={refModalGrid}
         draggable={false}
-        onClick={onClickModalGrid}
-        onDblClick={onDblClickModalGrid}
-        onEditingFinish={onEditingFinishModal}
-        data={data}
-      />
-    );
-  }, [data]);
-
-  */
-  const Grid = useMemo(() => {
-    return (
-      <GridModal
-        columns={columns}
-        columnOptions={columnOptions}
-        header={header}
-        rowHeaders={rowHeaders}
-        refGrid={refModalGrid}
-        draggable={false}
-        onClick={onClickModalGrid}
+        onClick={(e) => {
+          onClickModalGridInnerFunction(e);
+          onClickModalGrid(e);
+        }}
         onDblClick={onDblClickModalGrid}
         onEditingFinish={onEditingFinishModal}
         data={data}
@@ -169,7 +177,11 @@ function ModalNew(props) {
     <ModalWrap width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
-        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
+        <S.ButtonClose
+          color="primary"
+          aria-label="close"
+          onClick={onClickModalClose}
+        >
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
@@ -179,7 +191,14 @@ function ModalNew(props) {
           {buttonType === "ACS" && (
             <>
               <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
-              <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
+              <BtnComponent
+                btnName="CancelRow"
+                onClick={
+                  onClickModalCancelRow
+                    ? onClickModalCancelRow
+                    : onClickModalCancelRowInnerFunction
+                }
+              />
               <BtnComponent
                 btnName="Save"
                 onClick={() => {
@@ -194,25 +213,13 @@ function ModalNew(props) {
                   } else {
                     onClickModalSave();
                   }
-                  /*
-                  removeNullRow();
-                  validationDuplicated(requireColumns);
-                  if (validationDuplicated(requireColumns) !== "error") {
-                    onClickModalSave();
-                  } else {
-                    setIsSnackOpen({
-                      ...isSnackOpen,
-                      open: true,
-                      message: "중복값이 존재합니다.",
-                      severity: "error",
-                    });
-                  }
-                   */
                 }}
               />
             </>
           )}
-          {buttonType === "Save" && <BtnComponent btnName="Save" onClick={onClickModalSave} />}
+          {buttonType === "Save" && (
+            <BtnComponent btnName="Save" onClick={onClickModalSave} />
+          )}
         </S.ButtonWrap>
       </S.ButtonBox>
       <S.GridBox>{Grid}</S.GridBox>
