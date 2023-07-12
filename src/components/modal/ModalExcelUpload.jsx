@@ -13,6 +13,7 @@ import xlsx from "xlsx"; // xlsx 라이브러리 import
 import restURI from "json/restURI.json";
 import restAPI from "api/restAPI.js";
 import NoticeSnack from "components/alert/NoticeSnack";
+import FolderIcon from "@mui/icons-material/Folder";
 
 function ModalExcelUpload(props) {
   const {
@@ -31,9 +32,9 @@ function ModalExcelUpload(props) {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+
   const [gridData, setGridData] = useState([]);
   const [jsonData, setJsonData] = useState("");
-  let jsonVal = "";
   const handleDragEnter = (e) => {
     setIsDragging(true);
   };
@@ -55,9 +56,6 @@ function ModalExcelUpload(props) {
     const newHeaders = headers.map((header, index) => {
       if ((header === "D5" || header === "D50" || header === "D95" || header === "Dmin" || header === "Dmax") && index !== headers.indexOf(header)) {
         return `${header}_`;
-      }
-      if (header.richText) {
-        // console.log(header.richText);
       }
       const value = header.richText ? header?.richText[0]?.text + header?.richText[1]?.text : header;
 
@@ -138,7 +136,6 @@ function ModalExcelUpload(props) {
         parsedCells.push(parsedCell);
       }
     });
-    // console.log(JSON.stringify(parsedCells));
     return parsedCells;
   };
 
@@ -183,13 +180,10 @@ function ModalExcelUpload(props) {
 
               // 데이터 추출 및 가공
               const rows = getDataRows(14, data); // 몇번째 행부터 읽어올지 0부터 시작
-              const columns = getDataColumns(1, data); // 몇번째 행이 Column Name인지 0부터 시작
+              const columns = await getDataColumns(1, data); // 몇번째 행이 Column Name인지 0부터 시작
               const rowsArr = await ExportJson(rows, columns, data); // 문서 포맷에 맞게 세팅된 상태
               // UploadInsp(JSON.stringify(rowsArr));
               await setJsonData(JSON.stringify(rowsArr));
-              jsonVal = JSON.stringify(rowsArr);
-
-              console.log("test");
               setIsBackDrop(false);
             })
             .catch((error) => {
@@ -206,6 +200,34 @@ function ModalExcelUpload(props) {
         });
       }
     }
+  };
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const workbook = new ExcelJS.Workbook();
+    setUploadedFileName(file.name);
+    setIsBackDrop(true);
+    workbook.xlsx
+      .load(file)
+      .then(async (workbook) => {
+        const worksheet = workbook.worksheets[0];
+        const data = [];
+        worksheet.eachRow((row, rowNumber) => {
+          const rowData = row.values;
+          data.push(rowData);
+        });
+        setGridData(data);
+
+        // 데이터 추출 및 가공
+        const rows = getDataRows(14, data); // 몇번째 행부터 읽어올지 0부터 시작
+        const columns = await getDataColumns(1, data); // 몇번째 행이 Column Name인지 0부터 시작
+        const rowsArr = await ExportJson(rows, columns, data); // 문서 포맷에 맞게 세팅된 상태
+        // UploadInsp(JSON.stringify(rowsArr));
+        setJsonData(JSON.stringify(rowsArr));
+        setIsBackDrop(false);
+      })
+      .catch((error) => {
+        console.error("Error loading the workbook:", error);
+      });
   };
   const [prodID, setProdID] = useState("");
   const [prodCD, setProdCD] = useState("");
@@ -264,9 +286,7 @@ function ModalExcelUpload(props) {
   };
   const UploadInsp = async () => {
     try {
-      console.log(jsonVal);
       const response = await restAPI.post(restURI.inspResultUploadExcel, jsonData);
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -285,36 +305,51 @@ function ModalExcelUpload(props) {
         </LS.ButtonClose>
       </LS.HeaderBox>
       <LS.ToolWrap>
-        <LS.InputPaperWrap>
+        <LS.InputPaperWrap justify="flex-end">
           <InputPaper width={"180px"} value={prodCD || ""} btn={false} />
         </LS.InputPaperWrap>
-        <LS.InputPaperWrap>
+        <LS.InputPaperWrap pLeft="0px" justify="flex-start">
           <InputPaper width={"240px"} value={prodNM || ""} btn={true} onClickSelect={onClickProdSelect} onClickRemove={resetProd} />
         </LS.InputPaperWrap>
-        <S.ButtonWrap>
+        <LS.ButtonWrap>
           <BtnComponent btnName={"Save"} onClick={onClickSave} />
-        </S.ButtonWrap>
+        </LS.ButtonWrap>
       </LS.ToolWrap>
+
       {prodCD !== "품목코드" && (
-        <LS.DragAndDropFileWrap
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-          className={isDragging ? "dragging" : ""}
-        >
-          {uploadedFileName ? (
-            <>
-              <LS.DragAndDropFile>{uploadedFileName}</LS.DragAndDropFile>
-              <LS.IconWrap onClick={removeFile}>
-                <CloseIcon />
-              </LS.IconWrap>
-            </>
-          ) : (
-            <LS.DragAndDropFile>첨부할 파일을 드래그해주세요</LS.DragAndDropFile>
-          )}
-        </LS.DragAndDropFileWrap>
+        <>
+          <LS.DragAndDropFileWrap
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+            className={isDragging ? "dragging" : ""}
+          >
+            {uploadedFileName ? (
+              <>
+                <LS.DragAndDropFile>{uploadedFileName}</LS.DragAndDropFile>
+                <LS.IconWrap onClick={removeFile}>
+                  <CloseIcon />
+                </LS.IconWrap>
+              </>
+            ) : (
+              <>
+                <LS.DragAndDropFile>첨부할 파일을 드래그해주세요</LS.DragAndDropFile>
+                {/* <LS.BtnComponent height={"34px"} width={"80px"} onClick={handleFileUpload}>
+                  <LS.SearchTitle>선택</LS.SearchTitle>
+                </LS.BtnComponent> */}
+                <div>
+                  <label htmlFor="fileInput">
+                    <FolderIcon />
+                    <input id="fileInput" type="file" accept=".xlsx" onChange={handleFileUpload} style={{ display: "none" }} />
+                  </label>
+                </div>
+              </>
+            )}
+          </LS.DragAndDropFileWrap>
+        </>
       )}
+
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ModalWrap>

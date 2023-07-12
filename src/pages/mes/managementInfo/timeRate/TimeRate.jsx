@@ -221,12 +221,14 @@ const TimeRate = ({ toggle }) => {
           <S.TimeRateTop>
             <S.Title>비가동 입력 데이터 기준</S.Title>
             <S.ChartWrap2>
-              {responseData && <Chart options={cOptions} series={responseData?.data?.rows[0].graph} type="line" height={350} />}
+              {responseData && <Chart options={cOptions} series={responseData?.data?.rows[0]?.graph} type="line" height={350} />}
             </S.ChartWrap2>
           </S.TimeRateTop>
           <S.TimeRateBottom>
             <S.GridWrap>
-              <GridSingle header={complexColumns} columns={customColumns} data={responseData?.data?.rows[0].grid} refGrid={refSingleGrid2} />
+              {responseData && (
+                <GridSingle header={complexColumns} columns={customColumns} data={responseData?.data?.rows[0]?.grid} refGrid={refSingleGrid2} />
+              )}
             </S.GridWrap>
           </S.TimeRateBottom>
         </S.TimeRateLeft>
@@ -234,13 +236,13 @@ const TimeRate = ({ toggle }) => {
           <S.TimeRateTop>
             <S.Title>충진 자동 카운트 데이터 기준</S.Title>
             <S.ChartWrap2>
-              {responseData && <Chart options={cOptions} series={responseSysData?.data?.rows[0].graph} type="line" height={350} />}
+              {responseSysData && <Chart options={cOptions} series={responseSysData?.data?.rows[0]?.graph} type="line" height={350} />}
             </S.ChartWrap2>
           </S.TimeRateTop>
           <S.TimeRateBottom>
             <S.GridWrap>
               {responseSysData && (
-                <GridSingle header={autoComplexColumns} columns={autoColumn} data={responseSysData?.data?.rows[0].grid} refGrid={refSingleGrid} />
+                <GridSingle header={autoComplexColumns} columns={autoColumn} data={responseSysData?.data?.rows[0]?.grid} refGrid={refSingleGrid} />
               )}
             </S.GridWrap>
           </S.TimeRateBottom>

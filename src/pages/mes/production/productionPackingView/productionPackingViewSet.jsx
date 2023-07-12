@@ -35,6 +35,7 @@ function ProductionPackingViewSet() {
     col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
     col.number("packing_qty", CN.packing_qty, false, C.WIDTH_SHORT, false),
+    col.number("packing_no", CN.packing_no),
     col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
     col.select("packing_emp_nm", CN.packing_emp_nm),
     col.date("work_packing_date", CN.work_packing_date),

@@ -83,74 +83,96 @@ function Subdivision() {
   };
 
   const barcodePrintDetail = async (rowKey) => {
-    const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_detail_id;
+    if (!isEditModeDetail) {
+      const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_detail_id;
 
-    const data = GetPostParams("createSubdivisionDetailBarcode", gridDetailId);
-    if (data !== undefined) {
-      if (data.length !== 0) {
-        setIsBackDrop(true);
-        await restAPI
-          .post(restURI.createBarcode, data)
-          .then((res) => {
-            setBarcodePrintInfo({
-              ...barcodePrintInfo,
-              lot: res?.data?.data?.rows[0].lot_no,
-              qty: String(res?.data?.data?.rows[0].subdivision_qty),
-              date: res?.data?.data?.rows[0].subdivision_date,
-              createBarcode: res?.data?.data?.rows[0].barcode_no,
+      const data = GetPostParams("createSubdivisionDetailBarcode", gridDetailId);
+      if (data !== undefined) {
+        if (data.length !== 0) {
+          setIsBackDrop(true);
+          await restAPI
+            .post(restURI.createBarcode, data)
+            .then((res) => {
+              setBarcodePrintInfo({
+                ...barcodePrintInfo,
+                lot: res?.data?.data?.rows[0].lot_no,
+                qty: String(res?.data?.data?.rows[0].subdivision_qty),
+                date: res?.data?.data?.rows[0].subdivision_date,
+                createBarcode: res?.data?.data?.rows[0].barcode_no,
+              });
+              setTimeout(() => {
+                handlePrint();
+              }, 100);
+            })
+            .catch((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.message ? res?.message : res?.response?.data?.message,
+                severity: "error",
+              });
+            })
+            .finally(() => {
+              setIsBackDrop(false);
             });
-            setTimeout(() => {
-              handlePrint();
-            }, 100);
-          })
-          .catch((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.message ? res?.message : res?.response?.data?.message,
-              severity: "error",
-            });
-          })
-          .finally(() => {
-            setIsBackDrop(false);
-          });
+        }
       }
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "수정 모드에서는 출력할 수 없습니다.",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
     }
   };
 
   const barcodePrintHeader = async (rowKey) => {
-    const gridHeaderId = refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_id;
+    if (!isEditModeHeader) {
+      const gridHeaderId = refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_id;
 
-    const data = GetPostParams("createBarcode", gridHeaderId);
-    if (data !== undefined) {
-      if (data.length !== 0) {
-        setIsBackDrop(true);
-        await restAPI
-          .post(restURI.createBarcode, data)
-          .then((res) => {
-            setBarcodePrintInfo({
-              ...barcodePrintInfo,
-              lot: res?.data?.data?.rows[0].lot_no,
-              qty: String(res?.data?.data?.rows[0].total_qty),
-              date: res?.data?.data?.rows[0].subdivision_date,
-              createBarcode: res?.data?.data?.rows[0].barcode_no,
+      const data = GetPostParams("createBarcode", gridHeaderId);
+      if (data !== undefined) {
+        if (data.length !== 0) {
+          setIsBackDrop(true);
+          await restAPI
+            .post(restURI.createBarcode, data)
+            .then((res) => {
+              setBarcodePrintInfo({
+                ...barcodePrintInfo,
+                lot: res?.data?.data?.rows[0].lot_no,
+                qty: String(res?.data?.data?.rows[0].total_qty),
+                date: res?.data?.data?.rows[0].subdivision_date,
+                createBarcode: res?.data?.data?.rows[0].barcode_no,
+              });
+              setTimeout(() => {
+                handlePrint();
+              }, 100);
+            })
+            .catch((res) => {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: res?.message ? res?.message : res?.response?.data?.message,
+                severity: "error",
+              });
+            })
+            .finally(() => {
+              setIsBackDrop(false);
             });
-            setTimeout(() => {
-              handlePrint();
-            }, 100);
-          })
-          .catch((res) => {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: res?.message ? res?.message : res?.response?.data?.message,
-              severity: "error",
-            });
-          })
-          .finally(() => {
-            setIsBackDrop(false);
-          });
+        }
       }
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "수정 모드에서는 출력할 수 없습니다.",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
     }
   };
 

@@ -547,6 +547,15 @@ function PackingPanel() {
       targetID.current = Grid?.getValue(rowKey, "work_packing_detail_id");
       targetWeight.current = Grid?.getValue(rowKey, "packing_qty");
       setIsBarcodeScanOpen(true);
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "수정 모드에서는 입력할 수 없습니다.",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
     }
   }
   async function onReprint(rowKey) {
@@ -556,6 +565,15 @@ function PackingPanel() {
       targetID.current = Grid?.getValue(rowKey, "work_packing_detail_id");
       targetWeight.current = Grid?.getValue(rowKey, "packing_qty");
       onBarcodePrintDetail(targetID.current);
+    } else {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "수정 모드에서는 출력할 수 없습니다.",
+        severity: "warning",
+        location: "topCenter",
+      });
+      return;
     }
   }
   const onCloseBarcodeScan = () => {
@@ -667,11 +685,13 @@ function PackingPanel() {
   };
   useEffect(() => {
     const onBarcodeScan = async (e) => {
+      // console.log(e);
       //timeStamp 가 서로 몇초 차이인지 구함
       const differenceTime = getTimeDifferenceInSeconds(refBarcodeTimeStamp.current, e?.timeStamp);
-      //차이 시간이 0.01초 이상이라면 저장되어 있던 값을 초기화
+      //차이 시간이 0.03초 이상이라면 저장되어 있던 값을 초기화
       //바코드 스캐너로 입력되는 문자들은 입력 사이가 0.005초 전후 이기 때문
-      if (differenceTime > 0.01) {
+      console.log(differenceTime);
+      if (differenceTime > 0.03) {
         barcodeNo.current = "";
       }
 
@@ -694,7 +714,6 @@ function PackingPanel() {
           barcodeNo.current = barcodeNo.current + e?.key;
         }
       }
-
       refBarcodeTimeStamp.current = e?.timeStamp;
       if (e?.key === "Enter") {
         /**

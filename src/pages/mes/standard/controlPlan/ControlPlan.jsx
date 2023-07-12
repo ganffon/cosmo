@@ -594,6 +594,8 @@ function ControlPlan() {
               location: "bottomRight",
             });
           }
+        } else {
+          setGridDataModalDetail([]);
         }
       } catch (err) {
         setIsSnackOpen({

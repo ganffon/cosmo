@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import Autocomplete from "@mui/material/Autocomplete";
 import DatePicker from "components/datetime/DatePicker";
@@ -34,10 +33,7 @@ export const ButtonWrap = styled("div")`
 export const ShadowBoxGrid = styled("div")`
   background-color: #ffffff;
   width: 100%;
-  height: ${(props) =>
-    props.isAllScreen
-      ? `calc(100vh - ${APP_BAR_HEIGHT})`
-      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? `calc(100vh - ${APP_BAR_HEIGHT})` : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT})`)};
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -65,7 +61,7 @@ export const ComboWrap = styled("div")`
 `;
 export const GraphButton = styled("button")`
   background-color: #ffffff;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #cccccc;
   height: 34px;
   width: 84px;
 `;
@@ -84,7 +80,7 @@ export const SearchTitle = styled("div")`
   line-height: 16px;
   letter-spacing: 0em;
   text-align: center;
-  color: #1491CE;
+  color: #1491ce;
 `;
 export const BtnComponent = styled("button")`
   height: ${(props) => props.height};
@@ -100,7 +96,7 @@ export const BtnComponent = styled("button")`
   align-items: center;
 
   &:hover {
-    background: rgba(20, 145, 206, 0.9);
+    background: rgba(87, 181, 243, 0.05);
   }
   &.clicked {
     animation: clickEffect 0.3s;

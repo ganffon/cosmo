@@ -127,5 +127,6 @@
   "timeRate": "/kpi/availability/downtime",
   "sysTimeRate": "/kpi/facility/sys-downtime",
   "countChart": "/prd/count/raws/by-hours",
-  "performanceRate": "/kpi/performance/work"
+  "performanceRate": "/kpi/performance/work",
+  "inspResultUploadExcel": "/qms/insp-result-upload/excel"
 }

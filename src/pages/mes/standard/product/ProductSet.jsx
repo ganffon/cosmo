@@ -5,14 +5,7 @@ import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function ProductSet(
-  isEditMode,
-  productGbnList,
-  productModelList,
-  productTypeList,
-  productTypeSmallList,
-  unitList
-) {
+function ProductSet(isEditMode, productGbnList, productModelList, productTypeList, productTypeSmallList, unitList) {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -26,28 +19,10 @@ function ProductSet(
    */
   const columns = [
     col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
-    col.list(
-      "prod_gbn_id",
-      "prod_gbn_nm",
-      CN.prod_gbn_nm,
-      productGbnList,
-      false
-    ),
+    col.list("prod_gbn_id", "prod_gbn_nm", CN.prod_gbn_nm, productGbnList, false),
     col.list("model_id", "model_nm", CN.model_nm, productModelList, false),
-    col.list(
-      "prod_type_id",
-      "prod_type_nm",
-      CN.prod_type_nm,
-      productTypeList,
-      false
-    ),
-    col.list(
-      "prod_type_small_id",
-      "prod_type_small_nm",
-      CN.prod_type_small_nm,
-      productGbnList,
-      false
-    ),
+    col.list("prod_type_id", "prod_type_nm", CN.prod_type_nm, productTypeList, false),
+    col.list("prod_type_small_id", "prod_type_small_nm", CN.prod_type_small_nm, productGbnList, false),
     col.id("prod_class_id", CN.prod_class_id, C.HIDDEN_ID),
     col.text("prod_class_nm", CN.prod_class_nm, false, false),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
@@ -55,14 +30,7 @@ function ProductSet(
     col.text("prod_nm", CN.prod_nm, false, C.U, C.WIDTH_MIDDLE),
     col.text("rev", CN.rev, false, true, C.WIDTH_SUPER_SHORT, "center"),
     col.text("prod_std", CN.prod_std, false, C.U, C.WIDTH_MIDDLE),
-    col.list(
-      "unit_id",
-      "unit_nm",
-      CN.unit_nm,
-      unitList,
-      false,
-      C.WIDTH_SUPER_SHORT
-    ),
+    col.list("unit_id", "unit_nm", CN.unit_nm, unitList, false, C.WIDTH_SUPER_SHORT),
     col.check("lot_fg", CN.lot_fg, isEditMode, C.U, true),
     col.check("use_fg", CN.use_fg, isEditMode, C.WIDTH_SHORT),
     col.check("is_spareparts", CN.is_spareparts, isEditMode, C.WIDTH_SHORT),
@@ -88,13 +56,7 @@ function ProductSet(
     col.text("store_nm", CN.inv_to_store_nm),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
     col.text("location_nm", CN.inv_to_location_nm),
-    col.check(
-      "qms_receive_insp_fg",
-      CN.qms_receive_insp_fg,
-      isEditMode,
-      C.U,
-      true
-    ),
+    col.check("qms_receive_insp_fg", CN.qms_receive_insp_fg, isEditMode, C.U, true),
     col.check("qms_proc_insp_fg", CN.qms_proc_insp_fg, isEditMode, C.U, true),
     col.check("qms_final_insp_fg", CN.qms_final_insp_fg, isEditMode, C.U, true),
     col.id("prd_plan_type_id", CN.prd_plan_type_id, C.HIDDEN_ID),
@@ -107,40 +69,15 @@ function ProductSet(
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.list(
-      "prod_gbn_id",
-      "prod_gbn_nm",
-      CN.prod_gbn_nm,
-      productGbnList,
-      true
-    ),
+    col.list("prod_gbn_id", "prod_gbn_nm", CN.prod_gbn_nm, productGbnList, true),
     col.list("model_id", "model_nm", CN.model_nm, productModelList, true),
-    col.list(
-      "prod_type_id",
-      "prod_type_nm",
-      CN.prod_type_nm,
-      productTypeList,
-      true
-    ),
-    col.list(
-      "prod_type_small_id",
-      "prod_type_small_nm",
-      CN.prod_type_small_nm,
-      productTypeSmallList,
-      true
-    ),
+    col.list("prod_type_id", "prod_type_nm", CN.prod_type_nm, productTypeList, true),
+    col.list("prod_type_small_id", "prod_type_small_nm", CN.prod_type_small_nm, productTypeSmallList, true),
     col.text("prod_cd", CN.prod_cd, true, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, true, C.U, C.WIDTH_MIDDLE),
     col.text("rev", CN.rev, true, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.text("prod_std", CN.prod_std, true, C.U, C.WIDTH_MIDDLE),
-    col.list(
-      "unit_id",
-      "unit_nm",
-      CN.unit_nm,
-      unitList,
-      true,
-      C.WIDTH_SUPER_SHORT
-    ),
+    col.list("unit_id", "unit_nm", CN.unit_nm, unitList, true, C.WIDTH_SUPER_SHORT),
     col.check("lot_fg", CN.lot_fg, true, C.U, true),
     col.check("use_fg", CN.use_fg, true),
     col.check("active_fg", CN.active_fg, true, C.U, true),

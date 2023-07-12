@@ -5,7 +5,6 @@ import ModalWrap from "components/modal/ModalWrap";
 import DateTime from "components/datetime/DateTime";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalWeightNew.styled";
-import ButtonSave from "components/button/ButtonSave";
 import BtnComponent from "components/button/BtnComponent";
 
 function ModalWeightNew(props) {
