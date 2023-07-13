@@ -22,9 +22,13 @@ import ModalDate from "components/modal/ModalDate";
 import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsAreaHidden";
 import BtnComponent from "components/button/BtnComponent";
+import * as Cbo from "custom/useCboSet";
+import { TextField } from "@mui/material";
+import CN from "json/ColumnName.json";
 
 function ProductionOrder() {
   LoginStateChk();
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refGridHeader = useRef(null);
@@ -83,6 +87,9 @@ function ProductionOrder() {
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
+  });
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
   });
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
@@ -212,29 +219,11 @@ function ProductionOrder() {
   const actSearchGridTop = async () => {
     try {
       setIsBackDrop(true);
-      let readURI = `/prd/order?start_date=${dateText.startDate}&end_date=${dateText.endDate}&`;
-      if (inputTextChange && inputBoxID) {
-        let cnt = 1;
-        //🔸inputBox 가 있다면?!
-        if (inputBoxID.length > 0) {
-          //🔸inputBox 갯수만큼 반복!
-          for (let i = 0; i < inputBoxID.length; i++) {
-            //🔸inputBox에 검색조건 있으면 가져오기
-            if (inputTextChange[inputBoxID[i]]) {
-              //🔸처음 가져오는 것이면 params에 ? 세팅
-              if (cnt === 0) {
-                readURI = "?";
-                cnt++;
-              }
-              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
-            }
-          }
-          //🔸마지막에 찍힌 & 기호 제거
-          readURI = readURI.slice(0, readURI.length - 1);
-        }
-      } else {
-        readURI = readURI.slice(0, readURI.length - 1);
-      }
+      let lineID;
+
+      comboValue.line_id ? (lineID = `&line_id=${comboValue.line_id}`) : (lineID = "");
+      let readURI = restURI.prdOrder + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + lineID;
+
       let gridData = await restAPI.get(readURI);
 
       setGridDataHeader(gridData?.data?.data?.rows);
@@ -539,7 +528,7 @@ function ProductionOrder() {
       <S.SearchCondition>
         <>
           <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-          {inputSet.map((v) => (
+          {/* {inputSet.map((v) => (
             <S.InputS
               key={v.id}
               id={v.id}
@@ -549,7 +538,22 @@ function ProductionOrder() {
               onClickSearch={onClickSearch}
               onKeyDown={onKeyDown}
             />
-          ))}
+          ))} */}
+          <S.ComboBox
+            disablePortal
+            id="lineCbo"
+            size="small"
+            key={(option) => option?.line_id}
+            options={lineOpt || null}
+            getOptionLabel={(option) => option?.line_nm || ""}
+            onChange={(_, newValue) => {
+              setComboValue({
+                ...comboValue,
+                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+              });
+            }}
+            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+          />
         </>
         <S.ButtonWrap>
           <BtnComponent btnName={"Search"} onClick={onClickSearch} />

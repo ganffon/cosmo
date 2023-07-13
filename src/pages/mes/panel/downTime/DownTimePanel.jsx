@@ -142,7 +142,7 @@ function DownTimePanel() {
     }
   };
 
-  function onDowntimeEnd(rowKey) {
+  function onDowntimeEnd(e, rowKey) {
     const Grid = refGridMain?.current?.gridInst;
     setDowntimeInfo({
       ...downtimeInfo,

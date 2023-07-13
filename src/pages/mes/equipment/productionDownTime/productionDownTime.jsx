@@ -23,10 +23,18 @@ import * as uDelete from "custom/useDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
+import { TextField } from "@mui/material";
+import restAPI from "api/restAPI";
 
 function ProductionDownTime() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
+  });
 
   const SWITCH_NAME_01 = "productionDownTime";
 
@@ -85,8 +93,35 @@ function ProductionDownTime() {
   const [dblClickRowKey, setDblClickRowKey] = useState(); //🔸DblClick 했을 때의 rowKey 값
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
 
-  const onClickSearch = () => {
-    actSearchHeaderDI("start_date", "end_date");
+  const onClickSearch = async () => {
+    try {
+      setIsBackDrop(true);
+      let lineID;
+      comboValue.line_id ? (lineID = `&line_id=${comboValue.line_id}`) : (lineID = "");
+      const result = await restAPI.get(
+        restURI.productionDownTime + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + lineID
+      );
+
+      setGridData(result?.data?.data?.rows);
+
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
+      });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
 
   const onClickGrid = (e) => {};
@@ -114,19 +149,19 @@ function ProductionDownTime() {
   useEffect(() => {
     onClickSearch();
   }, []);
-  const [actSearchHeaderDI] = uSearch.useSearchDI(
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    inputBoxID,
-    inputTextChange,
-    dateText,
-    setGridData,
-    disableRowToggle,
-    setDisableRowToggle,
-    restURI.productionDownTime
-  );
+  // const [actSearchHeaderDI] = uSearch.useSearchDI(
+  //   isBackDrop,
+  //   setIsBackDrop,
+  //   isSnackOpen,
+  //   setIsSnackOpen,
+  //   inputBoxID,
+  //   inputTextChange,
+  //   dateText,
+  //   setGridData,
+  //   disableRowToggle,
+  //   setDisableRowToggle,
+  //   restURI.productionDownTime
+  // );
 
   const handleDelete = () => {
     actDelete();
@@ -353,9 +388,24 @@ function ProductionDownTime() {
     <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
-          <S.SearchWrap>
+          <LS.SearchWrap>
             <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-            {inputSet.map((v) => (
+            <LS.ComboBox
+              disablePortal
+              id="lineCbo"
+              size="small"
+              key={(option) => option?.line_id}
+              options={lineOpt || null}
+              getOptionLabel={(option) => option?.line_nm || ""}
+              onChange={(_, newValue) => {
+                setComboValue({
+                  ...comboValue,
+                  line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+            />
+            {/* {inputSet.map((v) => (
               <InputSearch
                 key={v.id}
                 id={v.id}
@@ -364,8 +414,8 @@ function ProductionDownTime() {
                 onClickSearch={onClickSearch}
                 onKeyDown={onKeyDown}
               />
-            ))}
-          </S.SearchWrap>
+            ))} */}
+          </LS.SearchWrap>
           <S.ButtonWrap>
             <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>

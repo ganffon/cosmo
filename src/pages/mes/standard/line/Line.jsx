@@ -39,6 +39,24 @@ function Line(props) {
 
   const SWITCH_NAME_01 = "line";
 
+  // function onButton(e, rowKey) {
+  //   if (e.target.id.includes("On")) {
+  //     e.target.id = "Off" + rowKey;
+  //     const el = document.querySelector(`#Off${rowKey}`);
+  //     el.innerText = "미적용";
+  //   } else {
+  //     if (e.target.id.indexOf("On") === -1 && e.target.id.indexOf("Off") === -1) {
+  //       e.target.id = "Off" + rowKey;
+  //       const el = document.querySelector(`#Off${rowKey}`);
+  //       el.innerText = "미적용";
+  //     } else {
+  //       e.target.id = "On" + rowKey;
+  //       const el = document.querySelector(`#On${rowKey}`);
+  //       el.innerText = "적용";
+  //     }
+  //   }
+  // }
+
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     if (refSingleGrid?.current !== null) {

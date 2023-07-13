@@ -45,6 +45,7 @@ export const SearchCondition = styled("div")`
   background: #ffffff;
   padding: 5px 5px 5px 5px;
   display: flex;
+  gap: 10px;
 `;
 export const ButtonTop = styled("div")`
   padding-top: 5px;
@@ -140,4 +141,8 @@ export const TitleButtonWrap = styled("div")`
 
 export const InnerButtonWrap = styled("div")`
   padding-right: 10px;
+`;
+export const ComboBox = styled(Autocomplete)`
+  width: 250px;
+  margin-top: 5px;
 `;

@@ -11,8 +11,8 @@ import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
-
-import InputSearch from "components/input/InputSearch";
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
 import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
 import ModalSelect from "components/modal/ModalSelect";
@@ -21,10 +21,15 @@ import GridModal from "components/grid/GridModal";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
+import { TextField } from "@mui/material";
 
 function ProductionPackingView() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
+  });
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
   const refGridSelect = useRef(null);
@@ -166,34 +171,18 @@ function ProductionPackingView() {
   const actSearchHeader = async () => {
     setIsBackDrop(true);
     try {
-      let conditionProdID;
+      let conditionProdID, conditionLineID;
       prodCD.current !== "품목코드"
         ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProdID = "");
-      let readURI = `/prd/packing?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
+      comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
 
-      if (inputTextChange && inputBoxID) {
-        let cnt = 1;
-        //🔸inputBox 가 있다면?!
-        if (inputBoxID.length > 0) {
-          //🔸inputBox 갯수만큼 반복!
-          for (let i = 0; i < inputBoxID.length; i++) {
-            //🔸inputBox에 검색조건 있으면 가져오기
-            if (inputTextChange[inputBoxID[i]]) {
-              //🔸처음 가져오는 것이면 params에 ? 세팅
-              if (cnt === 0) {
-                readURI = "?";
-                cnt++;
-              }
-              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
-            }
-          }
-          //🔸마지막에 찍힌 & 기호 제거
-          readURI = readURI.slice(0, readURI.length - 1);
-        }
-      } else {
-        readURI = readURI.slice(0, readURI.length - 1);
-      }
+      let readURI =
+        restURI.prdPacking +
+        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+        conditionProdID +
+        conditionLineID;
+
       let gridData = await restAPI.get(readURI);
 
       setGridDataHeader(gridData?.data?.data?.rows);
@@ -291,11 +280,26 @@ function ProductionPackingView() {
     <ContentsArea isAllScreen={isAllScreen}>
       <S.SearchCondition>
         <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-        <InputSearch
+        {/* <InputSearch
           id={"line_nm"}
           name={"라인명"}
           handleInputTextChange={handleInputTextChange}
           onClickSearch={onClickSearch}
+        /> */}
+        <S.ComboBox
+          disablePortal
+          id="lineCbo"
+          size="small"
+          key={(option) => option?.line_id}
+          options={lineOpt || null}
+          getOptionLabel={(option) => option?.line_nm || ""}
+          onChange={(_, newValue) => {
+            setComboValue({
+              ...comboValue,
+              line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+            });
+          }}
+          renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
         />
         <S.InputPaperWrap>
           <InputPaper width={"180px"} name={"품목코드"} value={prodCD.current || ""} btn={false} />

@@ -141,10 +141,6 @@ function PackingPanelSet(isEditMode, onPerformance, onReprint) {
   ];
   const inputSet = [
     {
-      id: "line_nm",
-      name: CN.line_nm,
-    },
-    {
       id: "lot_no",
       name: CN.lot_no,
     },

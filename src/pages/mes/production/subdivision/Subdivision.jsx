@@ -82,7 +82,7 @@ function Subdivision() {
     printWindow.close();
   };
 
-  const barcodePrintDetail = async (rowKey) => {
+  const barcodePrintDetail = async (e, rowKey) => {
     if (!isEditModeDetail) {
       const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_detail_id;
 
@@ -129,7 +129,7 @@ function Subdivision() {
     }
   };
 
-  const barcodePrintHeader = async (rowKey) => {
+  const barcodePrintHeader = async (e, rowKey) => {
     if (!isEditModeHeader) {
       const gridHeaderId = refGridHeader?.current?.gridInst.store.data.rawData[rowKey].work_subdivision_id;
 

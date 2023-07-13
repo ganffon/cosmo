@@ -25,6 +25,7 @@ function LineSet(isEditMode) {
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
     col.text("line_cd", CN.line_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("line_nm", CN.line_nm, false, C.U, C.WIDTH_MIDDLE),
+    // col.button("button", "버튼", "On", onButton),
     col.check("rework_fg", CN.rework_fg, isEditMode),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),

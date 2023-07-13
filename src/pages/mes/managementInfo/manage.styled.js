@@ -5,6 +5,7 @@ import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
 import TextField from "@mui/material/TextField";
 import { APP_BAR_HEIGHT, SEARCH_BAR_HEIGHT, HEIGHT_MARGIN } from "constant/Layout";
+import { Autocomplete } from "@mui/material";
 
 export const Container = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ export const Date = styled(DatePicker)`
 `;
 export const SearchWrap = styled("div")`
   display: flex;
+  gap: 10px;
 `;
 export const SearchColumnWrap = styled("div")`
   display: flex;
@@ -60,7 +62,9 @@ export const ShadowBoxGrid = styled("div")`
   background-color: #ffffff;
   width: 100%;
   height: ${(props) =>
-    props.isAllScreen ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)` : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
+    props.isAllScreen
+      ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)`
+      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -508,4 +512,8 @@ export const ContentsArea = styled("div")`
   & .selectedBack {
     background-color: #fdf0f6;
   }
+`;
+export const ComboBox = styled(Autocomplete)`
+  width: 180px;
+  margin-top: 5px;
 `;

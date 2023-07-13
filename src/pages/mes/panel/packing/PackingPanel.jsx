@@ -30,6 +30,9 @@ import BtnComponent from "components/button/BtnComponent";
 import * as disRow from "custom/useDisableRowCheck";
 import GetPutParams from "api/GetPutParams";
 import * as RE from "custom/RegularExpression";
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
+import { TextField } from "@mui/material";
 
 function PackingPanel() {
   const workPackingID = useRef("");
@@ -49,6 +52,10 @@ function PackingPanel() {
   });
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
+  });
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
   });
 
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -188,10 +195,12 @@ function PackingPanel() {
   const handleGridHeaderSearch = async () => {
     try {
       setIsBackDrop(true);
-      let conditionLine;
+      // let conditionLine;
       let conditionLotNo;
       let conditionPackingNo;
-      inputTextChange?.line_nm ? (conditionLine = `&line_nm=${inputTextChange?.line_nm}`) : (conditionLine = "");
+      let lineID;
+      // inputTextChange?.line_nm ? (conditionLine = `&line_nm=${inputTextChange?.line_nm}`) : (conditionLine = "");
+      comboValue.line_id ? (lineID = `&line_id=${comboValue.line_id}`) : (lineID = "");
       inputTextChange?.lot_no ? (conditionLotNo = `&lot_no=${inputTextChange?.lot_no}`) : (conditionLotNo = "");
       inputTextChange?.packing_no
         ? (conditionPackingNo = `&packing_no=${inputTextChange?.packing_no}`)
@@ -199,7 +208,7 @@ function PackingPanel() {
       const result = await restAPI.get(
         restURI.prdPackingDetail +
           `?start_date=${dateText.startDate}&end_date=${dateText.startDate}` +
-          conditionLine +
+          lineID +
           conditionLotNo +
           conditionPackingNo
       );
@@ -540,7 +549,7 @@ function PackingPanel() {
     Header?.setValue(targetRowKey.current, "location_nm", Select?.getValue(rowKey, "location_nm"));
   };
 
-  async function onPerformance(rowKey) {
+  async function onPerformance(e, rowKey) {
     if (!isEditMode) {
       const Grid = refGridHeader?.current?.gridInst;
       targetRowKey.current = rowKey;
@@ -558,7 +567,7 @@ function PackingPanel() {
       return;
     }
   }
-  async function onReprint(rowKey) {
+  async function onReprint(e, rowKey) {
     if (!isEditMode) {
       const Grid = refGridHeader?.current?.gridInst;
       targetRowKey.current = rowKey;
@@ -690,7 +699,6 @@ function PackingPanel() {
       const differenceTime = getTimeDifferenceInSeconds(refBarcodeTimeStamp.current, e?.timeStamp);
       //차이 시간이 0.03초 이상이라면 저장되어 있던 값을 초기화
       //바코드 스캐너로 입력되는 문자들은 입력 사이가 0.005초 전후 이기 때문
-      console.log(differenceTime);
       if (differenceTime > 0.03) {
         barcodeNo.current = "";
       }
@@ -763,10 +771,8 @@ function PackingPanel() {
       Grid?.finishEditing();
 
       const raw = Grid.getCheckedRows().map((raw) => GetPutParams("packingDetail", raw));
-      console.log(raw);
-      const result = await restAPI.put(restURI.prdPackingDetail, raw);
 
-      console.log(result?.data?.data?.rows);
+      const result = await restAPI.put(restURI.prdPackingDetail, raw);
 
       setIsSnackOpen({
         ...isSnackOpen,
@@ -890,8 +896,23 @@ function PackingPanel() {
         <S.SearchWrap>
           <S.SearchBox>
             <DatePicker datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
+            <S.ComboBox
+              disablePortal
+              id="lineCbo"
+              size="small"
+              key={(option) => option?.line_id}
+              options={lineOpt || null}
+              getOptionLabel={(option) => option?.line_nm || ""}
+              onChange={(_, newValue) => {
+                setComboValue({
+                  ...comboValue,
+                  line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+            />
             {inputSet.map((v) => (
-              <InputSearch
+              <S.InputSearchStyled
                 key={v.id}
                 id={v.id}
                 name={v.name}

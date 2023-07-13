@@ -102,6 +102,7 @@ export const SearchWrap = styled("div")`
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 5px 5px 5px 10px;
+  gap: 10px;
 `;
 export const ContentsHeader = styled("div")`
   height: calc(100% - 60px);
@@ -206,7 +207,6 @@ export const TitleBottom = styled("div")`
 
 export const InputPaperWrap = styled("div")`
   padding-top: 5px;
-  padding-left: 10px;
 `;
 
 export const TitleButtonWrap = styled("div")`
@@ -231,4 +231,9 @@ export const TwoColGridContainer = styled("div")`
   height: 100%;
   grid-template-columns: ${(props) => props.rowTemplate || "50% 50%"};
   border-radius: 10px;
+`;
+
+export const ComboBox = styled(Autocomplete)`
+  width: 350px;
+  margin-top: 5px;
 `;
