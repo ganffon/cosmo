@@ -63,6 +63,7 @@ import Packing from "pages/mes/production/packing/Packing";
 import PackingPanel from "pages/mes/panel/packing/PackingPanel";
 import WeightReport from "pages/mes/production/weightReport/WeightReport";
 import EquipmentResult from "pages/mes/standard/equipmentResult/EquipmentResult";
+import EquipmentResultTab from "pages/mes/standard/equipmentResultTab/EquipmentResult";
 
 import ProductionPackingView from "pages/mes/production/productionPackingView/productionPackingView";
 import EquipmentRawDataView from "pages/mes/equipment/equipmentRawDataView/equipmentRawDataView";
@@ -127,6 +128,7 @@ export default function MainRouter() {
     { path: "equipment-class", component: EquipmentSmall },
     { path: "equipment-detail", component: EquipmentDetail },
     { path: "equipment-result", component: EquipmentResult },
+    { path: "equipment-result-tab", component: EquipmentResultTab },
     { path: "equipment", component: EquipmentMedium },
     { path: "equipment", component: EquipmentMedium },
     { path: "store-view", component: StoreView },

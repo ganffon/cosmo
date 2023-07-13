@@ -17,8 +17,7 @@ import * as disRow from "custom/useDisableRowCheck";
 
 function LineYield() {
   LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refMainGrid = useRef(null);
   const refDetailGrid = useRef(null);
@@ -26,8 +25,7 @@ function LineYield() {
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
-  const [disableRowToggle, setDisableRowToggle] =
-    disRow.useDisableRowCheck(refMainGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(refMainGrid);
   const [searchToggle, setSearchToggle] = useState(false);
   const [inputTextChange, setInputTextChange] = useState({});
   const [isSnackOpen, setIsSnackOpen] = useState({
@@ -36,10 +34,10 @@ function LineYield() {
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
   };
-  const onClickApply = async (e) => {
+  const onClickApply = async (e, rowKey) => {
     onEditingFinishGrid();
     const Grid = refMainGrid?.current?.gridInst;
-    const afterYield = Grid.getValue(e, "after_yield_value");
+    const afterYield = Grid.getValue(rowKey, "after_yield_value");
     if (afterYield) {
       if (afterYield > 1 || afterYield <= 0) {
         setIsSnackOpen({
@@ -52,9 +50,9 @@ function LineYield() {
       } else {
         try {
           let datas = new Object();
-          datas.line_id = Grid.getValue(e, "line_id");
-          datas.yield_value = Grid.getValue(e, "after_yield_value");
-          datas.remark = Grid.getValue(e, "remark");
+          datas.line_id = Grid.getValue(rowKey, "line_id");
+          datas.yield_value = Grid.getValue(rowKey, "after_yield_value");
+          datas.remark = Grid.getValue(rowKey, "remark");
           setIsBackDrop(true);
           let result = [];
           result.push(datas);
@@ -81,8 +79,7 @@ function LineYield() {
           setIsBackDrop(false);
           onClickSearch();
           let apiTmp;
-          apiTmp =
-            restURI.workYieldDetail + `?line_id=${Grid.getValue(e, "line_id")}`;
+          apiTmp = restURI.workYieldDetail + `?line_id=${Grid.getValue(rowKey, "line_id")}`;
           const result = await restAPI.get(apiTmp);
           setGridDataDetail(result?.data?.data?.rows);
           disRow.handleCheckReset(true, refMainGrid); //🔸저장 후 refGrid rowCheck 초기화
@@ -158,11 +155,7 @@ function LineYield() {
   };
 
   const onClickGrid = async (e) => {
-    if (
-      e?.targetType !== "rowHeader" &&
-      e?.targetType === "cell" &&
-      e?.columnName !== "apply_button"
-    ) {
+    if (e?.targetType !== "rowHeader" && e?.targetType === "cell" && e?.columnName !== "apply_button") {
       if (!isBackDrop) {
         const Grid = refMainGrid?.current?.gridInst;
         const clickedLineId = Grid.getValue(e?.rowKey, "line_id");

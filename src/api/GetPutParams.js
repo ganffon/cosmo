@@ -835,6 +835,16 @@ function GetPutParams(componentName, raw) {
       break;
     default:
   }
+
+  const keys = Object.keys(params).filter((key) => {
+    return key.endsWith("_date") || key.endsWith("_time");
+  });
+  keys.forEach((key) => {
+    if (params[key] === "") {
+      params[key] = null;
+    }
+  });
+
   return params;
 }
 

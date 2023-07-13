@@ -60,7 +60,12 @@ function SparepartsStoreView() {
   const onClickGrid = (e) => {
     disRow.handleClickGridCheck(e, isEditMode, []);
   };
-
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    if (refSingleGrid?.current !== null) {
+      refSingleGrid?.current?.gridInst?.refreshLayout();
+    }
+  }, [isMenuSlide]);
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
@@ -100,7 +105,7 @@ function SparepartsStoreView() {
 
   return (
     <ContentsArea>
-      <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
+      <LS.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
             <DatePicker datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
@@ -188,9 +193,9 @@ function SparepartsStoreView() {
             <BtnComponent btnName={"Search"} onClick={onClickSearch} />
           </S.ButtonWrap>
         </S.ToolWrap>
-      </S.ShadowBoxButton>
-      <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        <S.GridWrap>
+      </LS.ShadowBoxButton>
+      <LS.ShadowBoxGrid isAllScreen={isAllScreen}>
+        <LS.GridWrap>
           <GridSingle
             columnOptions={columnOptions}
             columns={columns}
@@ -202,8 +207,8 @@ function SparepartsStoreView() {
             isEditMode={isEditMode}
             onClickGrid={onClickGrid}
           />
-        </S.GridWrap>
-      </S.ShadowBoxGrid>
+        </LS.GridWrap>
+      </LS.ShadowBoxGrid>
     </ContentsArea>
   );
 }

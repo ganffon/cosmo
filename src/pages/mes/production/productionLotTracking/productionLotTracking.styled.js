@@ -7,8 +7,7 @@ import InputSearch from "components/input/InputSearch";
 import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   padding: 5px 25px 5px 10px;
@@ -229,6 +228,7 @@ export const ToolWrap = styled("div")`
 `;
 export const SearchWrap = styled("div")`
   display: flex;
+  gap: 10px;
 `;
 
 export const BoxWrap = styled("div")`
@@ -265,7 +265,6 @@ export const TitleWrap = styled("div")`
 
 export const InputPaperWrap = styled("div")`
   padding-top: 5px;
-  padding-left: 10px;
 `;
 
 export const MiddleContentWrap = styled("div")`
@@ -275,4 +274,9 @@ export const MiddleContentWrap = styled("div")`
 export const BottomContentWrap = styled("div")`
   height: 250px;
   display: flex;
+`;
+
+export const ComboBox = styled(Autocomplete)`
+  width: 180px;
+  margin-top: 5px;
 `;

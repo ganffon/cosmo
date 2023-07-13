@@ -356,8 +356,8 @@
           },
           {
             "name": "일일운전점검일지",
-            "id": "equipment-result",
-            "path": "equipment-result",
+            "id": "equipment-result-tab",
+            "path": "equipment-result-tab",
             "under": null
           },
           {

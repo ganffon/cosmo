@@ -38,7 +38,7 @@ class Button {
     el.onclick = (e) => {
       const rowKey = el.parentElement.__preactattr_["data-row-key"];
       if (props.columnInfo.renderer.options.onClick != null) {
-        props.columnInfo.renderer.options.onClick(rowKey);
+        props.columnInfo.renderer.options.onClick(e, rowKey);
       } else {
         console.log("Custom Grid Button Err");
       }

@@ -27,6 +27,9 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import PackingModal from "./PackingModal";
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
+import { TextField } from "@mui/material";
 
 function Packing() {
   LoginStateChk();
@@ -48,6 +51,11 @@ function Packing() {
     prodCD.current = "품목코드";
     prodNM.current = "품목";
   };
+
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
+  });
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeDetail, setIsEditModeDetail] = useState(false);
@@ -117,7 +125,7 @@ function Packing() {
     }
   };
 
-  const onPrintClick = async (rowKey) => {
+  const onPrintClick = async (e, rowKey) => {
     if (!isEditModeHeader) {
       try {
         const result = await restAPI.post(restURI.packingBarcode, {
@@ -294,7 +302,7 @@ function Packing() {
     restURI.prdWeight,
     null
   );
-  async function onReprint(rowKey) {
+  async function onReprint(e, rowKey) {
     if (!isEditModeDetail) {
       const Grid = refGridDetail?.current?.gridInst;
       // targetRowKey.current = rowKey;
@@ -304,7 +312,6 @@ function Packing() {
       const ID = Grid?.getValue(rowKey, "work_packing_detail_id");
       try {
         const result = await restAPI.get(restURI.searchBarcode + `?reference_id=${ID}`);
-        console.log(result);
         setBarcodePrintInfo({
           ...barcodePrintInfo,
           result: result?.data?.data?.rows,
@@ -421,16 +428,16 @@ function Packing() {
   const onClickSearch = async () => {
     try {
       setIsBackDrop(true);
-      let conditionLine;
+      let conditionLineID;
       let conditionProdID;
-      inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
+      comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
       prodCD.current !== "품목코드"
         ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProdID = "");
       const result = await restAPI.get(
         restURI.prdPacking +
           `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-          conditionLine +
+          conditionLineID +
           conditionProdID
       );
       setGridDataHeader(result?.data?.data?.rows);
@@ -985,11 +992,26 @@ function Packing() {
       <S.TopWrap>
         <S.SearchWrap>
           <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
-          <InputSearch
+          {/* <InputSearch
             id={"line_nm"}
             name={"라인명"}
             handleInputTextChange={handleInputTextChange}
             onClickSearch={onClickSearch}
+          /> */}
+          <S.ComboBox
+            disablePortal
+            id="lineCbo"
+            size="small"
+            key={(option) => option?.line_id}
+            options={lineOpt || null}
+            getOptionLabel={(option) => option?.line_nm || ""}
+            onChange={(_, newValue) => {
+              setComboValue({
+                ...comboValue,
+                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+              });
+            }}
+            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
           />
           <S.InputPaperWrap>
             <InputPaper

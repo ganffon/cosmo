@@ -209,7 +209,7 @@ function SubdivisionPanel() {
     }
   };
 
-  async function onClickGridButton(rowKey) {
+  async function onClickGridButton(e, rowKey) {
     if (workSubdivisionID.current) {
       try {
         const Header = refGridSelect?.current?.gridInst;

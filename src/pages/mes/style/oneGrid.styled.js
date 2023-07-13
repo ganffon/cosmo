@@ -6,7 +6,7 @@ import { APP_BAR_HEIGHT, SEARCH_BAR_HEIGHT, HEIGHT_MARGIN } from "constant/Layou
 export const ShadowBoxButton = styled("div")`
   background-color: #ffffff;
   width: 100%;
-  height: ${SEARCH_BAR_HEIGHT};
+  height: 60px;
   padding: 0px 10px;
   border-radius: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -33,10 +33,7 @@ export const ButtonWrap = styled("div")`
 export const ShadowBoxGrid = styled("div")`
   background-color: #ffffff;
   width: 100%;
-  height: ${(props) =>
-    props.isAllScreen
-      ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)`
-      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
+  height: calc(100% - 60px);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -47,7 +44,7 @@ export const ShadowBoxGrid = styled("div")`
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 40px);
   position: relative;
 `;
 export const GridWrapReport = styled("div")`

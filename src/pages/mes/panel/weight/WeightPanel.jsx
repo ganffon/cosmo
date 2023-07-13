@@ -20,10 +20,17 @@ import ModalInputSave from "./ModalInputSave";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnPanel from "components/button/BtnPanel";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
+import { TextField } from "@mui/material";
 
 function WeightPanel() {
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
+  });
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
@@ -245,13 +252,15 @@ function WeightPanel() {
       let conditionLine;
       let conditionProdCD;
       let conditionProdNM;
-      inputTextChange.line ? (conditionLine = `&line_nm=${inputTextChange.line}`) : (conditionLine = "");
+      let lineID;
+      comboValue.line_id ? (lineID = `&line_id=${comboValue.line_id}`) : (lineID = "");
+      // inputTextChange.line ? (conditionLine = `&line_nm=${inputTextChange.line}`) : (conditionLine = "");
       inputTextChange.prod_cd ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCD = "");
       inputTextChange.prod_nm ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNM = "");
       const result = await restAPI.get(
         restURI.prdOrder +
           `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-          conditionLine +
+          lineID +
           conditionProdCD +
           conditionProdNM
       );
@@ -509,11 +518,11 @@ function WeightPanel() {
     }
     setIsModalSelectOpen(false);
   };
-  function onClickGridButton(rowKey) {
+  function onClickGridButton(e, rowKey) {
     handleInputSaveInfo(rowKey);
     setIsModalInputSaveOpen(true);
   }
-  function onBarcodeScan() {}
+  function onBarcodeScan(e, rowKey) {}
   const GridHeader = useMemo(() => {
     return (
       <GridSingle
@@ -540,19 +549,34 @@ function WeightPanel() {
         <S.SearchBox>
           <S.SearchCondition>
             <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
-            <InputSearch
+            {/* <InputSearch
               id={"line"}
               name={"라인명"}
               handleInputTextChange={handleInputTextChange}
               onClickSearch={onClickSearch}
+            /> */}
+            <S.ComboBox
+              disablePortal
+              id="lineCbo"
+              size="small"
+              key={(option) => option?.line_id}
+              options={lineOpt || null}
+              getOptionLabel={(option) => option?.line_nm || ""}
+              onChange={(_, newValue) => {
+                setComboValue({
+                  ...comboValue,
+                  line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
             />
-            <InputSearch
+            <S.InputSearchStyled
               id={"prod_cd"}
               name={"품목코드"}
               handleInputTextChange={handleInputTextChange}
               onClickSearch={onClickSearch}
             />
-            <InputSearch
+            <S.InputSearchStyled
               id={"prod_nm"}
               name={"품목"}
               handleInputTextChange={handleInputTextChange}

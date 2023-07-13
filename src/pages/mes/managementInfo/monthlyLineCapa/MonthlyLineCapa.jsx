@@ -2,7 +2,12 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import strJson from "./data.json";
 import strGridJson from "./MonthlyLineCapaData.json";
-import GetTestValAndCreateAt, { GetTestValAndCreateAtDay, GetTestValAndCreateAtString, GetDateDay, GetDateMonth } from "pages/mes/dashboard/asdb";
+import GetTestValAndCreateAt, {
+  GetTestValAndCreateAtDay,
+  GetTestValAndCreateAtString,
+  GetDateDay,
+  GetDateMonth,
+} from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 import { LoginStateChk } from "custom/LoginStateChk";
@@ -17,12 +22,24 @@ import TextField from "@mui/material/TextField";
 import InputSearch from "components/input/InputSearch";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
+import { BackDrop } from "components/backdrop/BackDrop.styled";
+import NoticeSnack from "components/alert/NoticeSnack";
 
 const MonthlyLineCapa = ({ toggle }) => {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
+  });
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
+  });
+  const [isBackDrop, setIsBackDrop] = useState(false);
+  const [isSnackOpen, setIsSnackOpen] = useState({
+    open: false,
   });
   const [year, setYear] = useState(new Date().getFullYear());
   const [textInput, setTextInput] = useState("");
@@ -51,22 +68,33 @@ const MonthlyLineCapa = ({ toggle }) => {
   const handleChange = (event) => {
     setYear(event.target.value);
   };
-  const GetMonthlyLineCapaData = (endDate, textInput) => {
-    restAPI
-      .get(restURI.monthlyLine, {
-        params: {
-          reg_date: year, //endDate.slice(0, 4)
-          line_nm: textInput,
-        },
-      })
-      .then((response) => {
-        // API 응답 데이터 처리 로직
-        setResponseData(response.data);
-      })
-      .catch((error) => {
-        // 오류 처리 로직
-        // console.error('API 호출 중 오류 발생:', error);
+  const GetMonthlyLineCapaData = async (endDate, textInput) => {
+    try {
+      setIsBackDrop(true);
+      let lineID;
+      comboValue.line_id ? (lineID = `&line_id=${comboValue.line_id}`) : (lineID = "");
+      const result = await restAPI.get(restURI.monthlyLine + `?reg_date=${year}` + lineID);
+
+      setResponseData(result?.data);
+
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
       });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -107,8 +135,15 @@ const MonthlyLineCapa = ({ toggle }) => {
         <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
           <S.ToolWrap>
             <S.SearchWrap>
-              <S.InputText id="outlined-number" label="년도" type="number" onChange={handleChange} defaultValue={year} size="small" />
               <S.InputText
+                id="outlined-number"
+                label="년도"
+                type="number"
+                onChange={handleChange}
+                defaultValue={year}
+                size="small"
+              />
+              {/* <S.InputText
                 key={"line_nm"}
                 id={"line_nm"}
                 label={"라인"}
@@ -116,6 +151,21 @@ const MonthlyLineCapa = ({ toggle }) => {
                 variant="outlined"
                 onKeyDown={onKeyPress}
                 onChange={handleTextChange}
+              /> */}
+              <S.ComboBox
+                disablePortal
+                id="lineCbo"
+                size="small"
+                key={(option) => option?.line_id}
+                options={lineOpt || null}
+                getOptionLabel={(option) => option?.line_nm || ""}
+                onChange={(_, newValue) => {
+                  setComboValue({
+                    ...comboValue,
+                    line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                  });
+                }}
+                renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
               />
             </S.SearchWrap>
             <S.ButtonWrap>
@@ -128,13 +178,27 @@ const MonthlyLineCapa = ({ toggle }) => {
         <S.LineCapaTop>
           <S.Title>라인별 생산량(월)</S.Title>
           <S.ChartWrap2>
-            {responseData && <Chart id={"chart"} options={cOptions} series={responseData.data.rows[0].graph} type="line" height={350} />}
+            {responseData && (
+              <Chart
+                id={"chart"}
+                options={cOptions}
+                series={responseData.data.rows[0].graph}
+                type="line"
+                height={350}
+              />
+            )}
           </S.ChartWrap2>
         </S.LineCapaTop>
         <S.LineCapaBottom>
-          <S.GridWrap>{responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}</S.GridWrap>
+          <S.GridWrap>
+            {responseData && (
+              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />
+            )}
+          </S.GridWrap>
         </S.LineCapaBottom>
       </S.TopWrap>
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
+      <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );
 };

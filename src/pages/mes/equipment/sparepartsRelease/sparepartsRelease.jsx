@@ -1,11 +1,8 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNEDS from "components/button/ButtonNEDS";
-import ButtonSES from "components/button/ButtonSES";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -215,7 +212,12 @@ function SparepartsRelease() {
     setDisableRowToggle,
     restURI.sparepartsOutgo
   );
-
+  useEffect(() => {
+    //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
+    if (refSingleGrid?.current !== null) {
+      refSingleGrid?.current?.gridInst?.refreshLayout();
+    }
+  }, [isMenuSlide]);
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
@@ -508,22 +510,6 @@ function SparepartsRelease() {
           )}
         </S.ButtonWrap>
         <S.GridWrap>
-          <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
-          {isDeleteAlertOpen ? (
-            <NoticeAlertModal
-              textContent={"정말 삭제하시겠습니까?"}
-              textFontSize={"20px"}
-              height={"200px"}
-              width={"400px"}
-              isDelete={true}
-              isCancel={true}
-              onDelete={handleDelete}
-              onCancel={() => {
-                setIsDeleteAlertOpen(false);
-              }}
-            />
-          ) : null}
-          {isModalOpen ? ModalNews : null}
           {isEditMode ? (
             <GridSingle
               columnOptions={columnOptions}
@@ -554,6 +540,22 @@ function SparepartsRelease() {
           )}
         </S.GridWrap>
       </S.ShadowBoxGrid>
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
+      {isDeleteAlertOpen ? (
+        <NoticeAlertModal
+          textContent={"정말 삭제하시겠습니까?"}
+          textFontSize={"20px"}
+          height={"200px"}
+          width={"400px"}
+          isDelete={true}
+          isCancel={true}
+          onDelete={handleDelete}
+          onCancel={() => {
+            setIsDeleteAlertOpen(false);
+          }}
+        />
+      ) : null}
+      {isModalOpen ? ModalNews : null}
       {headerModalControl === "prodSelect" ? (
         isModalSelectOpen ? (
           <ModalDate

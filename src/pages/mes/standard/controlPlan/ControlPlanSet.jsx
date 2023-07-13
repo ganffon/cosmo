@@ -4,12 +4,7 @@ import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function ControlPlanSet(
-  isEditModeHeader,
-  isEditModeDetail,
-  isNewDetail,
-  lineList
-) {
+function ControlPlanSet(isEditModeHeader, isEditModeDetail, isNewDetail, lineList) {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -33,11 +28,7 @@ function ControlPlanSet(
     // col.select("prod_nm", CN.prod_nm, isEditModeHeader, C.WIDTH_MIDDLE),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
-    col.date(
-      "control_plan_reg_date",
-      CN.control_plan_reg_date,
-      isEditModeHeader
-    ),
+    col.date("control_plan_reg_date", CN.control_plan_reg_date, isEditModeHeader),
     col.date("apply_date", CN.apply_date, isEditModeHeader),
     col.check("apply_fg", CN.apply_fg, isEditModeHeader),
     col.text("contents", CN.contents, isEditModeHeader, C.U, C.WIDTH_MIDDLE),
@@ -51,7 +42,7 @@ function ControlPlanSet(
     col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
     col.id("control_plan_id", CN.control_plan_id, C.HIDDEN_ID),
     col.id("control_plan_detail_id", CN.control_plan_detail_id, C.HIDDEN_ID),
-    col.number("proc_no", CN.proc_no, isEditModeDetail, C.WIDTH_SUPER_SHORT),
+    col.number("proc_no", CN.proc_no, isEditModeDetail, C.WIDTH_SUPER_SHORT, true),
     col.text("proc_nm", CN.proc_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.id("insp_document_id", CN.insp_document_id, C.HIDDEN_ID),
     col.id("insp_document_detail_id", CN.insp_document_detail_id, C.HIDDEN_ID),
@@ -61,32 +52,12 @@ function ControlPlanSet(
     col.select("prod_nm", CN.prod_nm, isEditModeDetail, C.WIDTH_MIDDLE),
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
     col.select("equip_nm", CN.equip_nm, isEditModeDetail, C.WIDTH_MIDDLE),
-    col.select(
-      "insp_proc_gbn",
-      CN.insp_proc_gbn,
-      isEditModeDetail,
-      C.WIDTH_MIDDLE
-    ),
+    col.select("insp_proc_gbn", CN.insp_proc_gbn, isEditModeDetail, C.WIDTH_MIDDLE),
     col.id("insp_item_type_id", CN.insp_item_type_id, C.HIDDEN_ID),
-    col.select(
-      "insp_item_type_nm",
-      CN.insp_item_type_nm,
-      isEditModeDetail,
-      C.WIDTH_MIDDLE
-    ),
+    col.select("insp_item_type_nm", CN.insp_item_type_nm, isEditModeDetail, C.WIDTH_MIDDLE),
     col.id("insp_item_id", CN.insp_item_id, C.HIDDEN_ID),
-    col.select(
-      "insp_item_nm",
-      CN.insp_item_nm,
-      isEditModeDetail,
-      C.WIDTH_MIDDLE
-    ),
-    col.select(
-      "insp_item_desc",
-      CN.insp_item_desc,
-      isEditModeDetail,
-      C.WIDTH_MIDDLE
-    ),
+    col.select("insp_item_nm", CN.insp_item_nm, isEditModeDetail, C.WIDTH_MIDDLE),
+    col.select("insp_item_desc", CN.insp_item_desc, isEditModeDetail, C.WIDTH_MIDDLE),
     col.select("spec_std", CN.spec_std, isEditModeDetail, C.WIDTH_MIDDLE),
     col.select("spec_min", CN.spec_min, isEditModeDetail),
     col.select("spec_max", CN.spec_max, isEditModeDetail),
@@ -98,25 +69,12 @@ function ControlPlanSet(
     col.select("insp_tool_nm", CN.insp_tool_nm, isEditModeDetail),
     col.id("insp_filing_id", CN.insp_filing_id, C.HIDDEN_ID),
     col.select("insp_filing_nm", CN.insp_filing_nm, isEditModeDetail),
-    col.select(
-      "special_property",
-      CN.special_property,
-      isEditModeDetail,
-      C.WIDTH_MIDDLE
-    ),
+    col.select("special_property", CN.special_property, isEditModeDetail, C.WIDTH_MIDDLE),
 
     col.select("worker_sample_cnt", CN.worker_sample_cnt, isEditModeDetail),
     col.select("worker_insp_cycle", CN.worker_insp_cycle, isEditModeDetail),
-    col.select(
-      "inspector_sample_cnt",
-      CN.inspector_sample_cnt,
-      isEditModeDetail
-    ),
-    col.select(
-      "inspector_insp_cycle",
-      CN.inspector_insp_cycle,
-      isEditModeDetail
-    ),
+    col.select("inspector_sample_cnt", CN.inspector_sample_cnt, isEditModeDetail),
+    col.select("inspector_insp_cycle", CN.inspector_insp_cycle, isEditModeDetail),
     col.select("remark", CN.remark, isEditModeDetail, C.WIDTH_LONG),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
@@ -125,13 +83,7 @@ function ControlPlanSet(
   ];
   const columnsModalHeader = [
     col.id("control_plan_id", CN.control_plan_id, C.HIDDEN_ID),
-    col.text(
-      "control_plan_no",
-      CN.control_plan_no,
-      !isNewDetail,
-      C.U,
-      C.WIDTH_MIDDLE
-    ),
+    col.text("control_plan_no", CN.control_plan_no, !isNewDetail, C.U, C.WIDTH_MIDDLE),
     col.rList("line_id", "line_nm", CN.line_nm, lineList, !isNewDetail),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.rSelect("prod_cd", CN.prod_cd, !isNewDetail, C.WIDTH_MIDDLE),
@@ -145,14 +97,14 @@ function ControlPlanSet(
   const columnsModalDetail = [
     col.id("control_plan_id", CN.control_plan_id, C.HIDDEN_ID),
     col.id("control_plan_detail_id", CN.control_plan_detail_id, C.HIDDEN_ID),
-    col.rNumber("proc_no", CN.proc_no, true, C.WIDTH_SUPER_SHORT),
+    col.rNumber("proc_no", CN.proc_no, true, C.WIDTH_SUPER_SHORT, true),
     col.id("proc_id", CN.proc_id, C.HIDDEN_ID),
     col.rSelect("proc_nm", CN.proc_nm, true, C.WIDTH_MIDDLE),
     col.id("insp_document_id", CN.insp_document_id, C.HIDDEN_ID),
     col.id("insp_document_detail_id", CN.insp_document_detail_id, C.HIDDEN_ID),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.rSelect("prod_cd", CN.prod_cd, true, C.WIDTH_MIDDLE),
-    col.rSelect("prod_nm", CN.prod_nm, true, C.WIDTH_MIDDLE),
+    col.select("prod_cd", CN.prod_cd, true, C.WIDTH_MIDDLE),
+    col.select("prod_nm", CN.prod_nm, true, C.WIDTH_MIDDLE),
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
     col.rSelect("equip_nm", CN.equip_nm, true, C.WIDTH_MIDDLE),
     col.select("insp_proc_gbn", CN.insp_proc_gbn, true, C.WIDTH_MIDDLE),
@@ -182,212 +134,41 @@ function ControlPlanSet(
   ];
   const columnsSelectProd = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text(
-      "prod_cd",
-      CN.prod_cd,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "prod_nm",
-      CN.prod_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
+    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
   ];
   const columnsSelectDocument = [
     col.id("insp_document_id", CN.insp_document_id, C.HIDDEN_ID),
     col.id("insp_document_detail_id", CN.insp_document_detail_id, C.HIDDEN_ID),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text(
-      "prod_cd",
-      CN.prod_cd,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "prod_nm",
-      CN.prod_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
+    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
     col.id("proc_id", CN.proc_id, C.HIDDEN_ID),
-    col.text(
-      "proc_nm",
-      CN.proc_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("proc_nm", CN.proc_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
     col.id("equip_id", CN.equip_id, C.HIDDEN_ID),
-    col.text(
-      "equip_nm",
-      CN.equip_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "insp_proc_gbn",
-      CN.insp_proc_gbn,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("equip_nm", CN.equip_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
+    col.text("insp_proc_gbn", CN.insp_proc_gbn, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
     col.id("insp_item_type_id", CN.insp_item_type_id, C.HIDDEN_ID),
-    col.text(
-      "insp_item_type_nm",
-      CN.insp_item_type_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("insp_item_type_nm", CN.insp_item_type_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
     col.id("insp_item_id", CN.insp_item_id, C.HIDDEN_ID),
-    col.text(
-      "insp_item_nm",
-      CN.insp_item_nm,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "insp_item_desc",
-      CN.insp_item_desc,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "spec_std",
-      CN.spec_std,
-      C.U,
-      C.U,
-      C.WIDTH_MIDDLE,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("insp_item_nm", CN.insp_item_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
+    col.text("insp_item_desc", CN.insp_item_desc, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
+    col.text("spec_std", CN.spec_std, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
     col.text("spec_min", CN.spec_min, C.U, C.U, C.U, C.U, true, "select"),
     col.text("spec_max", CN.spec_max, C.U, C.U, C.U, C.U, true, "select"),
     col.text("spec_lcl", CN.spec_lcl, C.U, C.U, C.U, C.U, true, "select"),
     col.text("spec_ucl", CN.spec_ucl, C.U, C.U, C.U, C.U, true, "select"),
     col.id("insp_method_id", CN.insp_method_id, C.HIDDEN_ID),
-    col.text(
-      "insp_method_nm",
-      CN.insp_method_nm,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("insp_method_nm", CN.insp_method_nm, C.U, C.U, C.U, C.U, true, "select"),
     col.id("insp_tool_id", CN.insp_tool_id, C.HIDDEN_ID),
-    col.text(
-      "insp_tool_nm",
-      CN.insp_tool_nm,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("insp_tool_nm", CN.insp_tool_nm, C.U, C.U, C.U, C.U, true, "select"),
     col.id("insp_filing_id", CN.insp_filing_id, C.HIDDEN_ID),
-    col.text(
-      "insp_filing_nm",
-      CN.insp_filing_nm,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "special_property",
-      CN.special_property,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "worker_sample_cnt",
-      CN.worker_sample_cnt,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "worker_insp_cycle",
-      CN.worker_insp_cycle,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "inspector_sample_cnt",
-      CN.inspector_sample_cnt,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
-    col.text(
-      "inspector_insp_cycle",
-      CN.inspector_insp_cycle,
-      C.U,
-      C.U,
-      C.U,
-      C.U,
-      true,
-      "select"
-    ),
+    col.text("insp_filing_nm", CN.insp_filing_nm, C.U, C.U, C.U, C.U, true, "select"),
+    col.text("special_property", CN.special_property, C.U, C.U, C.U, C.U, true, "select"),
+    col.text("worker_sample_cnt", CN.worker_sample_cnt, C.U, C.U, C.U, C.U, true, "select"),
+    col.text("worker_insp_cycle", CN.worker_insp_cycle, C.U, C.U, C.U, C.U, true, "select"),
+    col.text("inspector_sample_cnt", CN.inspector_sample_cnt, C.U, C.U, C.U, C.U, true, "select"),
+    col.text("inspector_insp_cycle", CN.inspector_insp_cycle, C.U, C.U, C.U, C.U, true, "select"),
   ];
 
   const columnOptions = {

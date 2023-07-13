@@ -4,10 +4,11 @@ import TextField from "@mui/material/TextField";
 import LockIcon from "@mui/icons-material/Lock";
 import * as C from "constant/Layout";
 import InputPaper from "components/input/InputPaper";
+import { Autocomplete } from "@mui/material";
+import InputSearch from "components/input/InputSearch";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -25,18 +26,10 @@ export const BottomWrap = styled("div")`
   display: flex;
   gap: 5px;
 `;
-/*
-export const ScreenTitleBox = styled("div")`
-  height: 40px;
-  width: 100%;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 4px 4px 4px 20px;
-  font-family: NotoSansKR_B;
-  font-size: 20px;
+export const ComboBox = styled(Autocomplete)`
+  width: 180px;
+  margin-top: 5px;
 `;
-*/
 export const ScreenTitleBox = styled("div")`
   height: 30px;
   width: 100%;
@@ -67,6 +60,7 @@ export const SearchCondition = styled("div")`
   height: auto;
   width: auto;
   display: flex;
+  gap: 10px;
 `;
 export const GridWrap = styled("div")`
   margin-top: 10px;
@@ -147,8 +141,7 @@ export const ButtonSet = styled("button")`
   border-radius: 36px;
   cursor: pointer;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   transition: 0.5s;
 
@@ -157,4 +150,8 @@ export const ButtonSet = styled("button")`
   &:hover {
     background: ${(props) => props.hoverColor};
   }
+`;
+
+export const InputSearchStyled = styled(InputSearch)`
+  margin-left: -2px;
 `;

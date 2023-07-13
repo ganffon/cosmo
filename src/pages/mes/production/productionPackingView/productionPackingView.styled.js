@@ -2,6 +2,7 @@ import styled from "styled-components";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
 import * as C from "constant/Layout";
+import { Autocomplete } from "@mui/material";
 
 export const ContentsArea = styled("div")`
   height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
@@ -31,6 +32,7 @@ export const SearchCondition = styled("div")`
 
   padding: 5px 5px 5px 5px;
   display: flex;
+  gap: 10px;
 `;
 export const ButtonTop = styled("div")`
   width: 100%;
@@ -128,9 +130,12 @@ export const ContentsHeader = styled("div")`
 
 export const InputPaperWrap = styled("div")`
   padding-top: 5px;
-  padding-left: 10px;
 `;
 
 export const ContentWrap = styled("div")`
   height: calc(100% - 80px);
+`;
+export const ComboBox = styled(Autocomplete)`
+  width: 350px;
+  margin-top: 5px;
 `;

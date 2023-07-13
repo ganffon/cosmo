@@ -4,8 +4,7 @@ import * as C from "constant/Layout";
 
 export const ContentsArea = styled("div")`
   width: 100%;
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   overflow: hidden auto;
   background-color: white;
   padding: 0px 10px 0px 10px;
@@ -13,11 +12,10 @@ export const ContentsArea = styled("div")`
 export const ShadowBoxButton = styled("div")`
   background-color: rgb(255, 255, 255);
   width: calc(100% - 0.5rem);
-  height: ${C.SEARCH_BAR_HEIGHT2};
+  height: 60px;
   border-radius: 10px;
   border-color: rgb(255, 255, 255);
 
-  margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ToolWrap = styled("div")`
@@ -48,13 +46,9 @@ export const ButtonWrap = styled("div")`
 export const ShadowBoxGrid = styled("div")`
   background-color: rgb(255, 255, 255);
   width: calc(100% - 0.5rem);
-  height: ${(props) =>
-    props.isAllScreen
-      ? `calc(100vh - ${C.APP_BAR_HEIGHT} - ${C.HEIGHT_MARGIN2})`
-      : `calc(100vh - ${C.APP_BAR_HEIGHT} - ${C.SEARCH_BAR_HEIGHT2} - ${C.HEIGHT_MARGIN})`};
+  height: calc(100% - 60px);
   border-radius: 10px;
   border-color: rgb(255, 255, 255);
-  margin-top: 8px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridWrap = styled("div")`

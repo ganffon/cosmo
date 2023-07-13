@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import * as C from "constant/Layout";
+import { Autocomplete } from "@mui/material";
+import InputSearch from "components/input/InputSearch";
 
 export const ContentsArea = styled("div")`
   height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
@@ -46,6 +48,7 @@ export const SearchWrap = styled("div")`
 `;
 export const SearchBox = styled("div")`
   display: flex;
+  gap: 10px;
 `;
 export const ButtonBox = styled("div")`
   display: flex;
@@ -90,4 +93,13 @@ export const GridDetail = styled("div")`
 
 export const BarcodeBoxWrap = styled("div")`
   margin-top: 15px;
+`;
+
+export const ComboBox = styled(Autocomplete)`
+  width: 180px;
+  margin-top: 5px;
+`;
+
+export const InputSearchStyled = styled(InputSearch)`
+  margin-left: -2px;
 `;
