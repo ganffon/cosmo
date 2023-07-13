@@ -30,6 +30,13 @@ function GridModal(props) {
       }
     }
   };
+  // const afterEnterMoveBottom = (e) => {
+  //   const Grid = refGrid?.current?.gridInst;
+  //   const coords = Grid.getFocusedCell();
+  //   if (coords) {
+  //     Grid.startEditing(coords.rowKey + 1, coords.columnName);
+  //   }
+  // };
 
   return (
     <Grid
@@ -50,7 +57,10 @@ function GridModal(props) {
         handleFocus();
       }}
       onDblclick={onDblClick}
-      onEditingFinish={onEditingFinish}
+      onEditingFinish={(e) => {
+        // afterEnterMoveBottom(e);
+        onEditingFinish(e);
+      }}
       // onClipboard={handleClipboard}
     />
   );

@@ -89,6 +89,15 @@ function GridSingle(props) {
     }
   }, []);
 
+  // const afterEnterMoveBottom = (e) => {
+  //   const Grid = refGrid?.current?.gridInst;
+  //   const coords = Grid?.getFocusedCell();
+  //   if (coords) {
+  //     console.log("?");
+  //     Grid.startEditing(coords?.rowKey + 1, coords?.columnName);
+  //   }
+  // };
+
   return (
     <>
       <Grid
@@ -110,7 +119,10 @@ function GridSingle(props) {
           selectedRow(e);
         }}
         onDblclick={onDblClickGrid}
-        onEditingFinish={onEditingFinish}
+        onEditingFinish={(e) => {
+          // afterEnterMoveBottom(e);
+          onEditingFinish(e);
+        }}
       />
       {tooltipVisible ? (
         <S.Tooltip x={tooltipPosition.x} y={40}>

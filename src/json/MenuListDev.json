@@ -494,16 +494,23 @@
         ]
       },
       {
-        "name": "설비RawData현황",
-        "id": "equipment-rawdata-view",
-        "path": "equipment-rawdata-view",
-        "under": null
-      },
-      {
-        "name": "설비알람이력현황",
-        "id": "equipment-alarm-view",
-        "path": "equipment-alarm-view",
-        "under": null
+        "name": "설비정보",
+        "id": "equipment-info",
+        "path": null,
+        "under": [
+          {
+            "name": "설비RawData현황",
+            "id": "equipment-rawdata-view",
+            "path": "equipment-rawdata-view",
+            "under": null
+          },
+          {
+            "name": "설비알람이력현황",
+            "id": "equipment-alarm-view",
+            "path": "equipment-alarm-view",
+            "under": null
+          }
+        ]
       }
     ]
   },

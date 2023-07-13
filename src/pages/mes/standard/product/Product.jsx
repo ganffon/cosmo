@@ -319,7 +319,9 @@ function Product() {
           </S.ButtonWrap>
         ) : (
           <S.ButtonWrap>
+            {/* <BtnComponent btnName={"New"} onClick={onClickNew} /> */}
             <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+            {/* <BtnComponent btnName={"Delete"} onClick={onClickDelete} /> */}
             <BtnComponent btnName={"DataLoad"} toolTipTitle={"productButton"} onClick={loadData} />
           </S.ButtonWrap>
         )}
