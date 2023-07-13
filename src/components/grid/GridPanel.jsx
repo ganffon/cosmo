@@ -44,6 +44,13 @@ function GridPanel(props) {
       }
     }
   };
+  // const afterEnterMoveBottom = (e) => {
+  //   const Grid = refGrid?.current?.gridInst;
+  //   const coords = Grid.getFocusedCell();
+  //   if (coords) {
+  //     Grid.startEditing(coords.rowKey + 1, coords.columnName);
+  //   }
+  // };
 
   useEffect(() => {
     selectedRow();
@@ -68,7 +75,10 @@ function GridPanel(props) {
         selectedRow(e);
       }}
       onDblclick={onDblClickGrid}
-      onEditingFinish={onEditingFinish}
+      onEditingFinish={(e) => {
+        // afterEnterMoveBottom(e);
+        onEditingFinish(e);
+      }}
     />
   );
 }
