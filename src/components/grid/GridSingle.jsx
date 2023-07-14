@@ -92,9 +92,10 @@ function GridSingle(props) {
   // const afterEnterMoveBottom = (e) => {
   //   const Grid = refGrid?.current?.gridInst;
   //   const coords = Grid?.getFocusedCell();
-  //   if (coords) {
-  //     console.log("?");
-  //     Grid.startEditing(coords?.rowKey + 1, coords?.columnName);
+  //   if (e?.columnName === coords?.columnName) {
+  //     if (coords) {
+  //       Grid.startEditing(coords?.rowKey + 1, coords?.columnName);
+  //     }
   //   }
   // };
 

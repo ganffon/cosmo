@@ -427,7 +427,7 @@ function SubdivisionPanel() {
       const data = result?.data?.data?.rows[0];
       const leaveBag = result?.data?.data?.rows[1].value;
       setScaleInfo({ ...scaleInfo, after: String(data.value) });
-      setTotalQty(leaveBag);
+      setTotalQty(String(leaveBag));
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,

@@ -365,6 +365,12 @@
             "id": "line-yield",
             "path": "line-yield",
             "under": null
+          },
+          {
+            "name": "포장투입일지",
+            "id": "packing-input",
+            "path": "packing-input",
+            "under": null
           }
         ]
       },

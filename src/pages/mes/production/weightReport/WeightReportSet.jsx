@@ -30,7 +30,7 @@ function WeightReportSet() {
     col.text("weigh_emp_nm", CN.weigh_emp_nm, false, false, C.WIDTH_SHORT, "center"),
     col.date("work_input_date", CN.work_input_date, false, C.WIDTH_SHORT),
     col.text("work_input_time", CN.work_input_time, false, false, C.WIDTH_SHORT, "center"),
-    col.text("work_input_emp_nm", CN.input_emp_nm, false, false, C.WIDTH_SHORT, "center"),
+    col.text("input_emp_nm", CN.input_emp_nm, false, false, C.WIDTH_SHORT, "center"),
     col.text("remark", CN.remark, false, false, C.WIDTH_LONG),
     col.date("create_at", CN.create_at, false, C.WIDTH_SHORT),
     col.date("update_at", CN.update_at, false, C.WIDTH_SHORT),

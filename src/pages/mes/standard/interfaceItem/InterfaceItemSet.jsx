@@ -19,13 +19,7 @@ function InterfaceItemSet(isEditMode, infcItemTypeList) {
    */
   const columns = [
     col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
-    col.list(
-      "infc_item_type_id",
-      "infc_item_type_nm",
-      CN.infc_item_type_nm,
-      infcItemTypeList,
-      isEditMode
-    ),
+    col.list("infc_item_type_id", "infc_item_type_nm", CN.infc_item_type_nm, infcItemTypeList, isEditMode),
     col.id("infc_item_id", CN.infc_item_id, C.HIDDEN_ID),
     col.text("infc_item_cd", CN.infc_item_cd),
     col.text("infc_item_nm", CN.infc_item_nm, isEditMode),
@@ -35,13 +29,7 @@ function InterfaceItemSet(isEditMode, infcItemTypeList) {
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.list(
-      "infc_item_type_id",
-      "infc_item_type_nm",
-      CN.infc_item_type_nm,
-      infcItemTypeList,
-      true
-    ),
+    col.list("infc_item_type_id", "infc_item_type_nm", CN.infc_item_type_nm, infcItemTypeList, true),
     col.rText("infc_item_cd", CN.infc_item_cd, true),
     col.rText("infc_item_nm", CN.infc_item_nm, true),
   ];

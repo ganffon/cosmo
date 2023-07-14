@@ -102,4 +102,9 @@ const NumComma = (e, refGrid, columnName) => {
   // }
 };
 
-export { Time, TimeInput, NumComma, removeNonNumeric, validateTimeFormat };
+const DecimalOnePoint = (value) => {
+  const pattern = /^([0-9]+(\.[0-9]?)?)$/;
+  return pattern.test(value) ? value : "";
+};
+
+export { Time, TimeInput, NumComma, removeNonNumeric, validateTimeFormat, DecimalOnePoint };
