@@ -11,6 +11,8 @@ import New from "img/Component/button/new.svg";
 import Ok from "img/Component/button/ok.svg";
 import Save from "img/Component/button/save.svg";
 import Sync from "img/Component/button/sync.svg";
+import Clean from "img/Component/button/clean.png";
+import Calculate from "img/Component/button/calculate.png";
 import TooltipStore from "constant/Tooltip";
 
 function BtnComponent(props) {
@@ -130,10 +132,21 @@ function BtnComponent(props) {
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "115px";
       break;
-
     case "ExcelUpload":
       icon = Sync;
       title = "엑셀 업로드";
+      btnHeight = height ? height : "34px";
+      btnWidth = width ? width : "115px";
+      break;
+    case "Yield":
+      icon = Calculate;
+      title = "수율 계산";
+      btnHeight = height ? height : "34px";
+      btnWidth = width ? width : "115px";
+      break;
+    case "Clean":
+      icon = Clean;
+      title = "라인 청소";
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "115px";
       break;

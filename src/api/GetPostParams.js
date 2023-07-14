@@ -648,6 +648,18 @@ class workYield {
     this.remark = raw.remark;
   }
 }
+class PackingInput {
+  constructor(raw) {
+    this.work_packing_id = raw.work_packing_id;
+    this.lot_no = raw.lot_no;
+    this.input_qty = raw.input_qty;
+    this.loss_qty = raw.loss_qty;
+    this.work_yield = raw.work_yield;
+    this.store_id = raw.store_id;
+    this.location_id = raw.location_id;
+    this.remark = raw.remark;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -838,6 +850,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "workYield":
         params = new workYield(raw);
+        break;
+      case "PackingInput":
+        params = new PackingInput(raw);
         break;
       default:
     }

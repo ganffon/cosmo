@@ -128,5 +128,11 @@
   "sysTimeRate": "/kpi/facility/sys-downtime",
   "countChart": "/prd/count/raws/by-hours",
   "performanceRate": "/kpi/performance/work",
-  "inspResultUploadExcel": "/qms/insp-result-upload/excel"
+  "inspResultUploadExcel": "/qms/insp-result-upload/excel",
+
+  "prdPackingInputCalc": "/prd/packing-input/calc",
+  "prdPackingInputWeight": "/prd/packing-input/reference-weigh",
+  "prdPackingInput": "/prd/packing-input",
+  "prdPackingInputOnly": "/prd/packing/only-input",
+  "prdPackingInputCancel": "/prd/packing/{id}/cancel"
 }
