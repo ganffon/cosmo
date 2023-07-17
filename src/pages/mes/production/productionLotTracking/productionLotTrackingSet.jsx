@@ -45,22 +45,10 @@ function ProductionLotTrackingSet() {
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_SHORT),
     col.date("work_weigh_date", CN.work_weigh_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_weigh_time",
-      CN.work_weigh_time,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
+    col.text("work_weigh_time", CN.work_weigh_time, false, false, C.WIDTH_SHORT),
     col.text("weigh_emp_nm", CN.weigh_emp_nm, false, false, C.WIDTH_SHORT),
     col.date("work_input_date", CN.work_input_date, false, C.WIDTH_SHORT),
-    col.text(
-      "work_input_time",
-      CN.work_input_time,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
+    col.text("work_input_time", CN.work_input_time, false, false, C.WIDTH_SHORT),
     col.text("input_emp_nm", CN.input_emp_nm, false, false, C.WIDTH_SHORT),
     col.text("remark", CN.remark, false, false, C.WIDTH_SHORT),
     col.date("create_at", CN.create_at, false, C.WIDTH_SHORT),
@@ -81,14 +69,8 @@ function ProductionLotTrackingSet() {
     col.date("update_at", CN.update_at, false, C.WIDTH_SHORT),
   ];
   const columnsBottomRight = [
-    col.text(
-      "receive_order_no",
-      CN.receive_order_no,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
-    col.text("receive_no", CN.receive_no, false, false, C.WIDTH_SHORT),
+    col.text("receive_order_no", CN.receive_order_no, false, true, C.WIDTH_SHORT),
+    col.text("receive_no", CN.receive_no, false, true, C.WIDTH_SHORT),
     col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT),
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_SHORT),
@@ -101,49 +83,13 @@ function ProductionLotTrackingSet() {
 
   const columnsBottomLeft = [
     col.date("subdivision_date", CN.subdivision_date, false, C.WIDTH_SHORT),
-    col.text(
-      "subdivision_time",
-      CN.subdivision_time,
-      false,
-      false,
-      C.WIDTH_SHORT
-    ),
+    col.text("subdivision_time", CN.subdivision_time, false, false, C.WIDTH_SHORT),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_SHORT),
-    col.number(
-      "subdivision_qty",
-      CN.subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
-    col.number(
-      "subdivision_qty",
-      CN.subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
-    col.number(
-      "before_subdivision_qty",
-      CN.before_subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
-    col.number(
-      "after_subdivision_qty",
-      CN.after_subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
-    col.number(
-      "subdivision_qty",
-      CN.subdivision_qty,
-      false,
-      C.WIDTH_SHORT,
-      false
-    ),
+    col.number("subdivision_qty", CN.subdivision_qty, false, C.WIDTH_SHORT, false),
+    col.number("subdivision_qty", CN.subdivision_qty, false, C.WIDTH_SHORT, false),
+    col.number("before_subdivision_qty", CN.before_subdivision_qty, false, C.WIDTH_SHORT, false),
+    col.number("after_subdivision_qty", CN.after_subdivision_qty, false, C.WIDTH_SHORT, false),
+    col.number("subdivision_qty", CN.subdivision_qty, false, C.WIDTH_SHORT, false),
     col.text("remark", CN.remark, false, false, C.WIDTH_SHORT),
     col.date("create_at", CN.create_at, false, C.WIDTH_SHORT),
     col.date("update_at", CN.update_at, false, C.WIDTH_SHORT),

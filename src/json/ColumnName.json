@@ -303,6 +303,7 @@
   "start_date": "시작일자",
   "end_date": "종료일자",
   "complete_fg": "마감\n여부",
+  "complete_fg2": "완료\n여부",
   "complete_date": "마감일자",
   "order_input_id": "투입작업지시ID",
   "order_detail_id": "세부작업지시ID",
@@ -454,5 +455,11 @@
   "perf_schedule": "계획정지(분)\n",
   "perf_scheduled_qty": "가치가동\n생산량\n(Kg)",
   "perf_qty": "생산량\n(Kg)",
-  "performance": "성능가동률(%)"
+  "performance": "성능가동률(%)",
+  "packing_complete_qty": "실적중량",
+  "input_qty2": "투입량(수율)",
+  "total_input_qty": "투입량",
+  "loss_qty": "Loss",
+  "input_date": "투입일자",
+  "input_time": "투입시간"
 }

@@ -20,7 +20,6 @@ export const SearchCondition = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 8px;
   padding: 5px 5px 5px 5px;
   display: flex;
 `;
@@ -78,7 +77,7 @@ export const TitleBottom = styled("div")`
   font-family: NotoSansKR_B;
 `;
 export const GridTopWrap = styled("div")`
-  height: 86%;
+  height: calc(100% - 50px);
   width: 100%;
 
   margin-bottom: 8px;
@@ -86,7 +85,7 @@ export const GridTopWrap = styled("div")`
 `;
 
 export const GridBottomWrap = styled("div")`
-  height: calc(100% - 55px);
+  height: calc(100% - 50px);
   width: 100%;
 
   margin-bottom: 8px;
@@ -108,38 +107,23 @@ export const GridDetailWrap = styled("div")`
   padding: 10px 10px 10px 10px;
 `;
 
-/*
 export const ContentsHeader = styled("div")`
-  height: 40px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  border-color: rgb(200, 200, 200);
-  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 8px;
-`;
-*/
-export const ContentsHeader = styled("div")`
-  height: 300px;
+  height: 500px;
   width: 100%;
   background: #ffffff;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 8px;
 `;
 
 export const ContentsDetail = styled("div")`
-  height: calc(100% - 390px);
+  height: calc(100% - 570px);
   width: 100%;
   background: #ffffff;
   align-items: center;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 8px;
 `;
 
 export const InnerButtonWrap = styled("div")`

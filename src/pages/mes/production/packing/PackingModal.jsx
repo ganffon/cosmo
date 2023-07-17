@@ -83,30 +83,29 @@ function PackingModal(props) {
     const blocks = [];
     if (!data) {
       return;
-    } else {
+    } else if (data.length === 1) {
       for (let i = 0; i < data.length; i++) {
         blocks.push(
           <div
             style={{
               display: "flex",
-              width: "calc(100% - 20px)",
-              height: "calc(100% - 30px)",
-              gap: "10px",
-              padding: "10px",
+              width: "285mm",
+              height: "calc(210mm - 20px)",
             }}
             key={i}
           >
             <div
               style={{
                 width: "50%",
-                marginTop: "10mm",
+                height: "calc(100% - 30mm)",
+                marginTop: "15mm",
                 padding: "5mm",
                 borderRight: "1px solid black",
                 display: "flex",
               }}
             >
-              <div style={{ width: "100%", height: "calc(100% - 40px)" }}>
-                <div style={{ width: "100%", height: "calc(100% - 40px)", display: "flex", flexDirection: "column" }}>
+              <div style={{ width: "100%", height: "100%" }}>
+                <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
                     <img
                       src={cosmoBarcodeLogo}
@@ -213,12 +212,12 @@ function PackingModal(props) {
                           width: "100%",
                           height: "100%",
                           display: "flex",
-                          fontSize: "40px",
+                          fontSize: "42px",
                           alignItems: "center",
                           justifyContent: "flex-end",
                         }}
                       >
-                        {data[i].lot_no}　-　
+                        {data[i].lot_no} -
                       </div>
                     </div>
                     <div
@@ -226,7 +225,7 @@ function PackingModal(props) {
                         width: "10%",
                         height: "100%",
                         display: "flex",
-                        fontSize: "40px",
+                        fontSize: "42px",
                         alignItems: "center",
                         justifyContent: "flex-start",
                       }}
@@ -349,9 +348,18 @@ function PackingModal(props) {
                 </div>
               </div>
             </div>
-            <div style={{ width: "50%", marginTop: "10mm", padding: "5mm", display: "flex" }}>
-              <div style={{ width: "100%", height: "calc(100% - 40px)" }}>
-                <div style={{ width: "100%", height: "calc(100% - 40px)", display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                width: "50%",
+                height: "calc(100% - 30mm)",
+                marginTop: "15mm",
+                padding: "5mm",
+                borderRight: "1px solid black",
+                display: "flex",
+              }}
+            >
+              <div style={{ width: "100%", height: "100%" }}>
+                <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
                     <img
                       src={cosmoBarcodeLogo}
@@ -458,12 +466,12 @@ function PackingModal(props) {
                           width: "100%",
                           height: "100%",
                           display: "flex",
-                          fontSize: "40px",
+                          fontSize: "42px",
                           alignItems: "center",
                           justifyContent: "flex-end",
                         }}
                       >
-                        {data[i].lot_no}　-　
+                        {data[i].lot_no} -
                       </div>
                     </div>
                     <div
@@ -471,7 +479,529 @@ function PackingModal(props) {
                         width: "10%",
                         height: "100%",
                         display: "flex",
-                        fontSize: "40px",
+                        fontSize: "42px",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <div>{data[i].packing_no}</div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "22px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        Net
+                      </div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].packing_qty} Kg
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "32px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        Date
+                      </div>
+                    </div>
+                    <div style={{ width: "70%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].packing_date}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "32px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        비고
+                      </div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].header_remark}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "center", width: "100%", height: "100%", border: "1px solid black" }}>
+                    <div style={{ widows: "100%", height: "100%", padding: "5px" }}>
+                      <svg id={data[i].barcode_no}></svg>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textAlign: "center",
+                      border: "1px solid black",
+                      width: "100%",
+                      height: "60%",
+                      fontWeight: "bold",
+                      fontSize: "15px",
+                    }}
+                  >
+                    COSMO AM&T Co.,Ltd.<br></br>
+                    #315, Mokhang-Dong, Chungju-city, Chungbuk. Korea<br></br>
+                    Phone : 82-43-850-1430 / Fax : +82-43-850-1542
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+    } else {
+      for (let i = 0; i < data.length; i++) {
+        blocks.push(
+          <div
+            style={{
+              display: "flex",
+              width: "285mm",
+              height: "calc(210mm - 5px)",
+            }}
+            key={i}
+          >
+            <div
+              style={{
+                width: "50%",
+                height: "calc(100% - 30mm)",
+                marginTop: "15mm",
+                padding: "5mm",
+                borderRight: "1px solid black",
+                display: "flex",
+              }}
+            >
+              <div style={{ width: "100%", height: "100%" }}>
+                <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
+                  <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
+                    <img
+                      src={cosmoBarcodeLogo}
+                      alt={"cosmoBarcodeLogo"}
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        width: "60mm",
+                        height: "40px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      height: "50%",
+                      marginTop: "15px",
+                    }}
+                  >
+                    <div style={{ width: "20%", height: "100%" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          height: "100%",
+                          borderRight: "1px solid white",
+                          fontSize: "26px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          backgroundColor: "black",
+                        }}
+                      >
+                        Item
+                      </div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", backgroundColor: "black" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          height: "100%",
+                          borderLeft: "1px solid white",
+                          fontSize: "44px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#FFFFFF",
+                          backgroundColor: "#000000",
+                        }}
+                      >
+                        {data[i].prod_nm}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div
+                      style={{
+                        width: "20%",
+                        height: "100%",
+                        borderRight: "1px solid black",
+                        display: "flex",
+                        fontSize: "22px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div>Product</div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRight: "1px solid black",
+                        }}
+                      >
+                        {data[i].prod_cd}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div
+                      style={{
+                        width: "20%",
+                        height: "100%",
+                        borderRight: "1px solid black",
+                        display: "flex",
+                        fontSize: "22px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div>Lot No.</div>
+                    </div>
+                    <div style={{ width: "70%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "42px",
+                          alignItems: "center",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        {data[i].lot_no} -
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        width: "10%",
+                        height: "100%",
+                        display: "flex",
+                        fontSize: "42px",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                      }}
+                    >
+                      <div>{data[i].packing_no}</div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "22px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        Net
+                      </div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].packing_qty} Kg
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "32px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        Date
+                      </div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].packing_date}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div style={{ width: "20%", height: "100%", borderRight: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "32px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        비고
+                      </div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {data[i].header_remark}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "center", width: "100%", height: "100%", border: "1px solid black" }}>
+                    <div style={{ widows: "100%", height: "100%", padding: "5px" }}>
+                      <svg id={data[i].barcode_no}></svg>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      textAlign: "center",
+                      border: "1px solid black",
+                      width: "100%",
+                      height: "60%",
+                      fontWeight: "bold",
+                      fontSize: "15px",
+                    }}
+                  >
+                    COSMO AM&T Co.,Ltd.<br></br>
+                    #315, Mokhang-Dong, Chungju-city, Chungbuk. Korea<br></br>
+                    Phone : 82-43-850-1430 / Fax : +82-43-850-1542
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                width: "50%",
+                height: "calc(100% - 30mm)",
+                marginTop: "15mm",
+                padding: "5mm",
+                borderRight: "1px solid black",
+                display: "flex",
+              }}
+            >
+              <div style={{ width: "100%", height: "100%" }}>
+                <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
+                  <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start" }}>
+                    <img
+                      src={cosmoBarcodeLogo}
+                      alt={"cosmoBarcodeLogo"}
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        width: "60mm",
+                        height: "40px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      height: "50%",
+                      marginTop: "15px",
+                    }}
+                  >
+                    <div style={{ width: "20%", height: "100%" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          height: "100%",
+                          borderRight: "1px solid white",
+                          fontSize: "26px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          backgroundColor: "black",
+                        }}
+                      >
+                        Item
+                      </div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", backgroundColor: "black" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          height: "100%",
+                          borderLeft: "1px solid white",
+                          fontSize: "44px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#FFFFFF",
+                          backgroundColor: "#000000",
+                        }}
+                      >
+                        {data[i].prod_nm}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div
+                      style={{
+                        width: "20%",
+                        height: "100%",
+                        borderRight: "1px solid black",
+                        display: "flex",
+                        fontSize: "22px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div>Product</div>
+                    </div>
+                    <div style={{ width: "80%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "30px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRight: "1px solid black",
+                        }}
+                      >
+                        {data[i].prod_cd}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", width: "100%", height: "50%", border: "1px solid black" }}>
+                    <div
+                      style={{
+                        width: "20%",
+                        height: "100%",
+                        borderRight: "1px solid black",
+                        display: "flex",
+                        fontSize: "22px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div>Lot No.</div>
+                    </div>
+                    <div style={{ width: "70%", height: "100%", borderLeft: "1px solid black" }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          fontSize: "42px",
+                          alignItems: "center",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        {data[i].lot_no} -
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        width: "10%",
+                        height: "100%",
+                        display: "flex",
+                        fontSize: "42px",
                         alignItems: "center",
                         justifyContent: "flex-start",
                       }}
@@ -616,7 +1146,7 @@ function PackingModal(props) {
             <S.SearchTitle>프린트</S.SearchTitle>
           </S.BtnComponent>
         </S.ButtonWrap>
-        <div style={{ width: "100%", padding: "10px", overflow: "auto" }} ref={componentRef}>
+        <div style={{ width: "100%", overflow: "auto" }} ref={componentRef}>
           {data && renderBlock(data)}
         </div>
       </S.ShadowBoxGrid>

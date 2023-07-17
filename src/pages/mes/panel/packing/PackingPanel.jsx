@@ -24,7 +24,6 @@ import BarcodeScan from "./BarcodeScan";
 import ModalSelect from "components/modal/ModalSelect";
 import PackingModal from "pages/mes/production/packing/PackingModal";
 import DatePicker from "components/datetime/DatePicker";
-import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";
 import BtnComponent from "components/button/BtnComponent";
 import * as disRow from "custom/useDisableRowCheck";
@@ -106,7 +105,7 @@ function PackingPanel() {
   const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
   const [gridDataSelectEmp, setGridDataSelectEmp] = useState(null);
 
-  const [info, setInfo] = useState({});
+  const [info, setInfo] = useState({ startDate: DateTime().dateFull });
   const [isWarning, setIsWarning] = useState({
     open: false,
     title: "",
@@ -236,7 +235,6 @@ function PackingPanel() {
         lineID: Grid.getValue(e?.rowKey, "line_id"),
         lineNM: Grid.getValue(e?.rowKey, "line_nm"),
         lineDeptID: Grid.getValue(e?.rowKey, "line_dept_id"),
-        packingDate: DateTime().dateFull,
         prodID: Grid.getValue(e?.rowKey, "prod_id"),
         prodCD: Grid.getValue(e?.rowKey, "prod_cd"),
         prodNM: Grid.getValue(e?.rowKey, "prod_nm"),
@@ -348,7 +346,7 @@ function PackingPanel() {
           lot_no: info.lotNo,
           packing_qty: info.packingWeight,
           packing_cnt: info.packingQty,
-          work_packing_date: info.packingDate,
+          work_packing_date: info.startDate,
           inv_to_store_id: info.storeID,
           inv_to_location_id: info.locationID,
           remark: info.remark,
@@ -357,7 +355,7 @@ function PackingPanel() {
       const result = await restAPI.post(restURI.prdPacking, saveData);
       const workPackingID = result?.data?.data?.rows[0].header.work_packing_id;
       handleGridHeaderSearch();
-      setInfo({});
+      setInfo({ startDate: DateTime().dateFull });
       onBarcodePrint(workPackingID);
 
       setIsSnackOpen({
@@ -895,7 +893,7 @@ function PackingPanel() {
       <S.MidWrap>
         <S.SearchWrap>
           <S.SearchBox>
-            <DatePicker datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
+            <DatePicker datePickerSet={"single"} dateTitle={"출력일자"} dateText={dateText} setDateText={setDateText} />
             <S.ComboBox
               disablePortal
               id="lineCbo"

@@ -38,10 +38,10 @@ function GridSingle(props) {
     if (refGrid) {
       const Grid = refGrid?.current?.gridInst;
       if (String(beforeSelectedRow.current)) {
-        Grid.getColumns().map((col) => Grid.removeCellClassName(beforeSelectedRow.current, col.name, "selectedBack"));
+        Grid?.getColumns().map((col) => Grid?.removeCellClassName(beforeSelectedRow.current, col.name, "selectedBack"));
       }
       if (!isEditMode) {
-        Grid.getColumns().map((col) => Grid.addCellClassName(e?.rowKey, col.name, "selectedBack"));
+        Grid?.getColumns().map((col) => Grid?.addCellClassName(e?.rowKey, col.name, "selectedBack"));
         beforeSelectedRow.current = e?.rowKey;
       }
     }

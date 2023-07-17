@@ -614,6 +614,7 @@ class weight {
 class weightDetail {
   constructor(raw) {
     this.work_weigh_detail_id = raw.work_weigh_detail_id;
+    this.lot_no = raw.lot_no;
     this.bag_qty = String(raw.bag_qty) ? Number(raw.bag_qty) : null;
     this.input_qty = String(raw.input_qty) ? Number(raw.input_qty) : null;
     this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;

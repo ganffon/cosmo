@@ -30,6 +30,7 @@ function PackingInput(props) {
   const refWeightGrid = useRef(null);
   const refModalGrid = useRef(null);
   const workPackingID = useRef(null);
+  const selectedRowKey = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
@@ -51,34 +52,37 @@ function PackingInput(props) {
 
   async function onCancelYield(e, rowKey) {
     const Grid = refPackingGrid?.current?.gridInst;
-    const completeFlag = Grid.getValue(rowKey, "complete_fg");
-    if (completeFlag) {
-      try {
-        setIsBackDrop(true);
-        const ID = Grid.getValue(rowKey, "work_packing_id");
-        const URI = restURI.prdPackingInputCancel.replace("{id}", ID);
-        const result = await restAPI.patch(URI);
+    const lastRowKey = Grid.getRowCount() - 1;
+    if (rowKey === String(lastRowKey)) {
+      const completeFlag = Grid.getValue(rowKey, "complete_fg");
+      if (completeFlag === "완료") {
+        try {
+          setIsBackDrop(true);
+          const ID = Grid.getValue(rowKey, "work_packing_id");
+          const URI = restURI.prdPackingInputCancel.replace("{id}", ID);
+          const result = await restAPI.patch(URI);
 
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: result?.data?.message,
-          severity: "success",
-          location: "bottomRight",
-        });
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: result?.data?.message,
+            severity: "success",
+            location: "bottomRight",
+          });
 
-        onSearch();
-        handleReset();
-      } catch (err) {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: err?.response?.data?.message,
-          severity: "error",
-          location: "bottomRight",
-        });
-      } finally {
-        setIsBackDrop(false);
+          onSearch("click");
+          handleReset();
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        } finally {
+          setIsBackDrop(false);
+        }
       }
     }
   }
@@ -106,41 +110,55 @@ function PackingInput(props) {
     });
     return;
   };
-  const onSearch = async () => {
-    if (comboValue.line_id) {
-      try {
-        setIsBackDrop(true);
-        const result = await restAPI.get(restURI.prdPackingInputOnly + `?line_id=${comboValue.line_id}`);
-
-        setPackingGridData(result?.data?.data?.rows);
-
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: result?.data?.message,
-          severity: "success",
-          location: "bottomRight",
-        });
-      } catch (err) {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: err?.response?.data?.message,
-          severity: "error",
-          location: "bottomRight",
-        });
-      } finally {
-        setIsBackDrop(false);
-      }
+  const onSearch = async (type = "click" | "realtime", lineID = null) => {
+    let lineId = "";
+    if (type === "click") {
+      lineId = comboValue.line_id;
     } else {
+      lineId = lineID;
+    }
+
+    if (!lineId) {
+      refPackingGrid?.current?.gridInst?.clear();
+      refInputGrid?.current?.gridInst?.clear();
+      refWeightGrid?.current?.gridInst?.clear();
+      if (type === "click") {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "라인 먼저 선택하세요!",
+          severity: "warning",
+          location: "topCenter",
+        });
+      }
+      return;
+    }
+
+    try {
+      setIsBackDrop(true);
+      const result = await restAPI.get(restURI.prdPackingInputOnly + `?line_id=${lineId}`);
+      const data = result?.data?.data?.rows.map((data) =>
+        data.complete_fg === false ? { ...data, complete_fg: "미완료" } : { ...data, complete_fg: "완료" }
+      );
+      setPackingGridData(data);
+
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
-        message: "라인 먼저 선택하세요!",
-        severity: "warning",
-        location: "topCenter",
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
       });
-      return;
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
   const onClickModalAddRow = () => {
@@ -229,7 +247,7 @@ function PackingInput(props) {
         const resultData = data.map((raw) => GetPostParams("PackingInput", raw));
         if (resultData) {
           const result = await restAPI.post(restURI.prdPackingInput, resultData);
-          onSearch();
+          onSearch("click");
           handleReset();
           setIsSnackOpen({
             ...isSnackOpen,
@@ -263,22 +281,35 @@ function PackingInput(props) {
   };
   const onClickPackingGrid = async (e) => {
     if (e?.targetType === "cell") {
-      if (e?.columnName !== "cancel") {
-        const Grid = refPackingGrid?.current?.gridInst;
-        const completeFlag = Grid.getValue(e.rowKey, "complete_fg");
-        const ID = Grid.getValue(e.rowKey, "work_packing_id");
-        if (completeFlag) {
-          try {
-            setIsBackDrop(true);
-            setSaveMode("PUT");
-            const result = await restAPI.get(restURI.prdPackingInput + `?work_packing_id=${ID}`);
-
-            setInputGridData(result?.data?.data?.rows);
-
+      if (selectedRowKey.current !== e?.rowKey) {
+        if (e?.columnName !== "cancel") {
+          const Grid = refPackingGrid?.current?.gridInst;
+          const completeFlag = Grid.getValue(e.rowKey, "complete_fg");
+          const ID = Grid.getValue(e.rowKey, "work_packing_id");
+          if (completeFlag) {
             try {
-              const result = await restAPI.get(restURI.prdPackingInputWeight + `?work_packing_id=${ID}`);
+              setIsBackDrop(true);
+              setSaveMode("PUT");
+              const result = await restAPI.get(restURI.prdPackingInput + `?work_packing_id=${ID}`);
 
-              setWeightGridData(result?.data?.data?.rows);
+              setInputGridData(result?.data?.data?.rows);
+
+              try {
+                const result = await restAPI.get(restURI.prdPackingInputWeight + `?work_packing_id=${ID}`);
+
+                setWeightGridData(result?.data?.data?.rows);
+                selectedRowKey.current = e.rowKey;
+              } catch (err) {
+                setSaveMode("");
+                setIsSnackOpen({
+                  ...isSnackOpen,
+                  open: true,
+                  message: err?.response?.data?.message,
+                  severity: "error",
+                  location: "bottomRight",
+                });
+              } finally {
+              }
             } catch (err) {
               setSaveMode("");
               setIsSnackOpen({
@@ -289,22 +320,12 @@ function PackingInput(props) {
                 location: "bottomRight",
               });
             } finally {
+              setIsBackDrop(false);
             }
-          } catch (err) {
-            setSaveMode("");
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: err?.response?.data?.message,
-              severity: "error",
-              location: "bottomRight",
-            });
-          } finally {
-            setIsBackDrop(false);
+          } else {
+            setSaveMode("POST");
+            handleReset();
           }
-        } else {
-          setSaveMode("POST");
-          handleReset();
         }
       }
     }
@@ -345,15 +366,22 @@ function PackingInput(props) {
             onChange={(_, newValue) => {
               setComboValue({
                 ...comboValue,
-                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                line_id: !newValue?.line_id ? null : newValue?.line_id,
               });
+              onSearch("realtime", !newValue?.line_id ? null : newValue?.line_id);
             }}
+            isOptionEqualToValue={(option, value) => option.line_id === value.line_id}
             renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
           />
         </S.SearchWrap>
         <S.ButtonWrap>
           <BtnComponent btnName={"Clean"} onClick={onClean} />
-          <BtnComponent btnName={"Search"} onClick={onSearch} />
+          <BtnComponent
+            btnName={"Search"}
+            onClick={() => {
+              onSearch("click");
+            }}
+          />
         </S.ButtonWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxMain>
