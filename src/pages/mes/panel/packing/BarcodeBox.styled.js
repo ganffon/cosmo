@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import styled from "styled-components";
 
 export const Wrap = styled("div")`
@@ -38,4 +39,19 @@ export const InputWrapDivideBottom = styled("div")`
   width: 100%;
   display: flex;
   justify-content: space-around;
+`;
+export const DatePicker = styled(TextField)`
+  width: 300px;
+  .MuiInputBase-root {
+    font-size: 30px;
+  }
+  margin-left: -58px;
+`;
+
+export const DateTitle = styled("div")`
+  position: relative;
+  top: -26px;
+  left: 15px;
+  font-size: 16px;
+  font-family: NotoSansKR;
 `;

@@ -54,7 +54,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail, isNewDetail, isDetailEdit
     col.text("prod_class_nm", CN.prod_class_nm, false, false, C.WIDTH_LONG),
     col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_LONG),
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_LONG),
-    col.text("lot_no", CN.lot_no, false, false, C.WIDTH_LONG),
+    col.text("lot_no", CN.lot_no, isDetailEditFlag, false, C.WIDTH_LONG),
     col.number("total_qty", CN.total_qty2, isDetailEditFlag),
     col.number("bag_qty", CN.bag_qty, isDetailEditFlag),
     col.number("input_qty", CN.input_qty, false),

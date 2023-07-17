@@ -9,25 +9,10 @@ function BarcodeBox(props) {
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.id]: e.target.value });
   };
+
   return (
     <S.Wrap>
       <S.InputWrapDivide>
-        {/* <S.InputWrap>
-          <InputPaper
-            name={"바코드 스캔"}
-            namePositionTop={"-24px"}
-            width={"95%"}
-            height={"50px"}
-            nameColor={"black"}
-            nameSize={"16px"}
-            value={""}
-            size={"30px"}
-            readOnly={false}
-            btn={true}
-            btnSingle={true}
-            onClickSelect={onClickSelect}
-          />
-        </S.InputWrap> */}
         <S.InputWrap>
           <InputPaper
             name={"라인"}
@@ -44,8 +29,18 @@ function BarcodeBox(props) {
           />
         </S.InputWrap>
         <S.InputWrap>
-          <InputPaper
-            name={"포장일자"}
+          <S.DateTitle>출력일자</S.DateTitle>
+          <S.DatePicker
+            id="startDate"
+            className="date"
+            type="date"
+            format="yyyy-MM-dd"
+            value={info.startDate}
+            InputProps={{ sx: { height: 50 } }}
+            onChange={handleChange}
+          />
+          {/* <InputPaper
+            name={"출력일자"}
             namePositionTop={"-24px"}
             width={"300px"}
             height={"50px"}
@@ -53,7 +48,7 @@ function BarcodeBox(props) {
             nameColor={"black"}
             value={info.packingDate || ""}
             size={"30px"}
-          />
+          /> */}
         </S.InputWrap>
         <S.InputWrap>
           <InputPaper

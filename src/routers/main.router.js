@@ -90,6 +90,8 @@ import LineYield from "pages/mes/production/lineYield/LineYield";
 import CountChart from "pages/mes/managementInfo/countChart/CountChart";
 import WeightInfo from "pages/mes/panel/weightInfo/WeightInfo";
 import PackingInput from "pages/mes/production/packingInput/PackingInput";
+import DailyLineInputCapa from "pages/mes/managementInfo/dailyLineInputCapa/DailyLineInputCapa";
+import QualitySpc from "pages/mes/quality/qualitySpc/QualitySpc";
 
 export default function MainRouter() {
   const pages = [
@@ -188,6 +190,8 @@ export default function MainRouter() {
     { path: "count-Chart", component: CountChart },
     { path: "weight-info", component: WeightInfo },
     { path: "packing-input", component: PackingInput },
+    { path: "daily-line-input-capa", component: DailyLineInputCapa },
+    { path: "quality-spc", component: QualitySpc },
   ];
   return (
     <Layout>

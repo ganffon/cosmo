@@ -59,26 +59,13 @@ function ModalWeightNew(props) {
   return (
     <ModalWrap width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>{isNewDetail ? `[수정] ${currentMenuName}` : `[신규] ${currentMenuName}`}</S.TitleBox>
+        <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
-      <S.GridTopTitleBox>검사기준서</S.GridTopTitleBox>
-      <S.GridBoxTop>
-        {/* <GridModal
-          data={isNewDetail ? gridDataHeaderRowID : null}
-          columns={columnsModalHeader}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersHeader}
-          refGrid={refGridModalHeader}
-          draggable={false}
-          onDblClick={onDblClickGridModalHeader}
-          onEditingFinish={onEditingFinishGridModalHeader}
-        /> */}
-        {GridHeader}
-      </S.GridBoxTop>
+      <S.GridTopTitleBox>계량/투입 신규</S.GridTopTitleBox>
+      <S.GridBoxTop>{GridHeader}</S.GridBoxTop>
       <S.ButtonBox>
         <BtnComponent btnName={"Save"} width={"100px"} onClick={onClickModalSave}>
           SAVE

@@ -167,7 +167,7 @@ const MonthlyTempHumidChart = ({ toggle }) => {
             {chart4}
           </S.GridWrap>
           <S.GridWrap>
-            <S.TempHumidTitle>통제실</S.TempHumidTitle>
+            <S.TempHumidTitle>소성로</S.TempHumidTitle>
             {chart5}
           </S.GridWrap>
         </S.GridContainer>

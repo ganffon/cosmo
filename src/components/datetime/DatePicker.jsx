@@ -3,7 +3,7 @@ import * as S from "./DatePicker.styled";
 import { useEffect } from "react";
 
 function DatePicker(props) {
-  const { datePickerSet, dateText, setDateText } = props;
+  const { datePickerSet, dateText, setDateText, dateTitle = "" } = props;
 
   const datePickerChange = (e) => {
     setDateText({ ...dateText, [e.target.id]: e.target.value });
@@ -19,15 +19,7 @@ function DatePicker(props) {
           format="yyyy-MM-dd"
           defaultValue={datePickerSet === "single" ? DateTime().dateFull : DateTime(-7).dateFull}
           InputProps={{ sx: { height: 40 } }}
-          label={datePickerSet === "single" ? "날짜" : "기간"}
-          // InputProps={{
-          //   sx: { height: 40 },
-          //   startAdornment: (
-          //     <InputAdornment position="start">
-          //       {datePickerSet === "single" ? "날짜" : "기간"}
-          //     </InputAdornment>
-          //   ),
-          // }}
+          label={datePickerSet === "single" ? (dateTitle === "" ? "날짜" : dateTitle) : "기간"}
           onChange={datePickerChange}
         />
       )}
