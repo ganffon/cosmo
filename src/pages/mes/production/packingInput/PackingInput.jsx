@@ -339,6 +339,17 @@ function PackingInput(props) {
     }
   };
 
+  useEffect(() => {
+    const Grid = refPackingGrid?.current?.gridInst;
+    const lastRowKey = Grid.getRowCount() - 1;
+    if (Grid.getValue(0, "complete_fg") === "미완료") {
+      Grid.addCellClassName(0, "complete_fg", "redText");
+    }
+    if (Grid.getValue(lastRowKey, "complete_fg") === "완료") {
+      Grid.addCellClassName(lastRowKey, "complete_fg", "blueText");
+    }
+  }, [packingGridData]);
+
   const PackingGrid = useMemo(() => {
     return (
       <GridSingle

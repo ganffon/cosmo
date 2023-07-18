@@ -112,7 +112,7 @@ function ProductionOrder() {
     columnsMid,
     columnsBottom,
     columnsModalHeader,
-    columnsSelectRequest,
+    columnsSelectDocument,
     columnsSelectLineDept,
     inputSet,
   } = ProductionOrderSet(isEditModeHeader, isEditModeMid, isEditModeBottom);
@@ -139,7 +139,7 @@ function ProductionOrder() {
   };
 
   const onClickSelectSearch = () => {
-    actSelectRequestOnlyDate("start_date", "end_date");
+    actSelectDocument();
   };
   const onClickGridHeader = (e) => {
     if (!isEditModeHeader) {
@@ -162,20 +162,25 @@ function ProductionOrder() {
     onClickSearch();
   }
   const onDblClickModalHeader = (e) => {
-    if (Condition(e, ["request_no", "prod_cd", "prod_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm"])) {
+      setModalSelectSize({ ...modalSelectSize, width: "80%", height: "90%" });
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
-      setHeaderModalControl("request");
-      setColumnsSelect(columnsSelectRequest);
+      setHeaderModalControl("document");
+      setColumnsSelect(columnsSelectDocument);
       setIsModalSelectOpen(true);
-      actSelectRequestOnlyDate("start_date", "end_date");
-    } else if (Condition(e, ["line_dept_id", "line_dept_nm"])) {
+      actSelectDocument();
+    } else if (Condition(e, ["line_dept_nm"])) {
+      const Grid = refGridModalHeader?.current?.gridInst;
+      const lineID = Grid.getValue(e?.rowKey, "line_id");
+      const param = lineID ? `?line_id=${lineID}` : "";
+      setModalSelectSize({ ...modalSelectSize, width: "20%", height: "60%" });
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalHeader");
-      setHeaderModalControl("linedept");
+      setHeaderModalControl("lineDept");
       setColumnsSelect(columnsSelectLineDept);
       setIsModalSelectOpen(true);
-      actSelectLineDept();
+      actSelectLineDept(param);
     }
   };
   const onClickEditHeader = () => {
@@ -327,26 +332,20 @@ function ProductionOrder() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameRequest = ["request_id", "request_no", "prod_id", "prod_cd", "prod_nm"];
+    const columnNameDocument = ["insp_document_id", "line_id", "prod_id", "prod_cd", "prod_nm"];
 
-    const columnNameLineDept = ["line_dept_id", "line_dept_nm", "line_id"];
+    const columnNameLineDept = ["line_dept_id", "line_dept_nm"];
 
     const columnNameInspItem = ["insp_item_type_id", "insp_item_type_nm", "insp_item_id", "insp_item_nm"];
-    const prodCode = e?.instance?.store?.data?.rawData[e?.rowKey].prod_cd;
-    let prodId;
-    if (prodCode && headerModalControl === "request") {
-      const productDataSet = await restAPI.get(`/std/prod?prod_cd=${prodCode}`);
-      prodId = productDataSet.data.data.rows[0].prod_id;
-    }
 
     if (dblClickGrid === "Search") {
     } else if (dblClickGrid === "Header") {
       refGrid = refGridHeader;
-      columnName = columnNameRequest;
+      columnName = columnNameDocument;
     } else if (dblClickGrid === "ModalHeader") {
-      if (headerModalControl === "request") {
+      if (headerModalControl === "document") {
         refGrid = refGridModalHeader;
-        columnName = columnNameRequest;
+        columnName = columnNameDocument;
       } else {
         refGrid = refGridModalHeader;
         columnName = columnNameLineDept;
@@ -356,7 +355,7 @@ function ProductionOrder() {
       columnName = columnNameInspItem;
     } else if (dblClickGrid === "ModalBottom") {
       refGrid = refGridModalBottom;
-      columnName = columnNameRequest;
+      columnName = columnNameDocument;
     }
     for (let i = 0; i < columnName.length; i++) {
       refGrid?.current?.gridInst?.setValue(
@@ -364,10 +363,6 @@ function ProductionOrder() {
         columnName[i],
         e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
       );
-    }
-
-    if (headerModalControl === "request") {
-      refGrid?.current?.gridInst.setValue(dblClickRowKey, "prod_id", prodId);
     }
 
     disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
@@ -379,18 +374,6 @@ function ProductionOrder() {
     }
   };
 
-  const [actSelectRequestOnlyDate] = uSearch.useSearchOnlyDate(
-    refGridSelect,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridDataSelect,
-    dateModal,
-    restURI.prdOrderRequest,
-    "prdOrderRequest"
-  ); //➡️ Modal Select Search Prod
-
   const [actSelectLineDept] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
@@ -399,6 +382,15 @@ function ProductionOrder() {
     setIsSnackOpen,
     setGridDataSelect,
     restURI.lineDepartmentIncludeRework
+  );
+  const [actSelectDocument] = uSearch.useSearchSelect(
+    refGridSelect,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridDataSelect,
+    restURI.inspDocument + `?apply_fg=true`
   );
 
   const [actSave] = uSave.useSave(
@@ -528,17 +520,6 @@ function ProductionOrder() {
       <S.SearchCondition>
         <>
           <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-          {/* {inputSet.map((v) => (
-            <S.InputS
-              key={v.id}
-              id={v.id}
-              name={v.name}
-              value={inputSearchValue || ""}
-              handleInputTextChange={handleInputTextChange}
-              onClickSearch={onClickSearch}
-              onKeyDown={onKeyDown}
-            />
-          ))} */}
           <S.ComboBox
             disablePortal
             id="lineCbo"
@@ -671,37 +652,20 @@ function ProductionOrder() {
       </S.ContentBottom>
 
       {isModalHeaderOpen ? GridModal : null}
-      {isModalSelectOpen ? (
-        headerModalControl === "request" ? (
-          <ModalDate
-            onClickModalSearch={onClickSelectSearch}
-            onClickModalClose={onClickModalSelectClose}
-            columns={columnsSelect}
-            columnOptions={columnOptions}
-            header={header}
-            rowHeaders={rowHeadersNum}
-            refModalGrid={refGridSelect}
-            dateText={dateModal}
-            setDateText={setDateModal}
-            datePickerSet={"range"}
-            buttonType={"Search"}
-            data={gridDataSelect}
-            refGridSelect={refGridSelect}
-            onDblClickModalGrid={onDblClickGridSelect}
-          />
-        ) : (
-          <ModalSelect
-            onClickModalSelectClose={onClickModalSelectClose}
-            columns={columnsSelect}
-            columnOptions={columnOptions}
-            header={header}
-            rowHeaders={rowHeadersNum}
-            gridDataSelect={gridDataSelect}
-            refGridSelect={refGridSelect}
-            onDblClickGridSelect={onDblClickGridSelect}
-          />
-        )
-      ) : null}
+      {isModalSelectOpen && (
+        <ModalSelect
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
+          onClickModalSelectClose={onClickModalSelectClose}
+          columns={columnsSelect}
+          columnOptions={columnOptions}
+          header={header}
+          rowHeaders={rowHeadersNum}
+          gridDataSelect={gridDataSelect}
+          refGridSelect={refGridSelect}
+          onDblClickGridSelect={onDblClickGridSelect}
+        />
+      )}
       {isMidDeleteAlertOpen ? (
         <NoticeAlertModal
           textContent={"정말 삭제하시겠습니까?"}

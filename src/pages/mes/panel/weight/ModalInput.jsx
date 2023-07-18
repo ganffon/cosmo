@@ -43,17 +43,13 @@ function ModalInput(props) {
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{currentMenuName}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
       <S.Content>
         <S.GridTitleBox>
-          <div>✳️ 일일투입일지</div>
+          <div>일일투입일지</div>
           {/* <S.ButtonSet
             color={"#28a745"}
             hoverColor={"#218838"}
@@ -112,7 +108,7 @@ function ModalInput(props) {
         </S.InfoBox> */}
         <S.GridBox>{GridHeader}</S.GridBox>
         <S.GridTitleBox>
-          <div>✳️ 세부계량내역</div>
+          <div>세부계량내역</div>
         </S.GridTitleBox>
         <S.GridBoxBottom>
           <GridModal

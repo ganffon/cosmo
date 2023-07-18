@@ -119,7 +119,7 @@ export const ButtonBox = styled("div")`
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 30px;
 `;
 export const ButtonSet = styled("button")`
   -webkit-appearance: none;
@@ -129,7 +129,6 @@ export const ButtonSet = styled("button")`
   width: 500px;
   height: 350px;
   padding: 0rem 1rem;
-  margin: 5px 0px 0px 10px;
 
   font-family: "NotoSansKR_B", sans-serif;
   font-size: 10rem;
@@ -154,4 +153,16 @@ export const ButtonSet = styled("button")`
 
 export const InputSearchStyled = styled(InputSearch)`
   margin-left: -2px;
+`;
+
+export const QuestionMark = styled("img")`
+  position: relative;
+  top: -170px;
+  left: -10px;
+  cursor: pointer;
+`;
+export const QuestionImg = styled("img")`
+  width: 1500px;
+  outline: 10px solid #5990dc;
+  border-radius: 10px;
 `;

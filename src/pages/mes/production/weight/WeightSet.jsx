@@ -13,7 +13,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail, isNewDetail, isDetailEdit
   };
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
-  const header = {};
+  const header = col.multi(["bag_cleaning_fg"]);
   const datePickerSet = null;
 
   const columnsHeader = [
@@ -39,6 +39,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail, isNewDetail, isDetailEdit
     col.id("input_emp_id", CN.input_emp_id, C.HIDDEN_ID),
     col.select("input_emp_nm", CN.input_emp_nm, isEditModeHeader, C.WIDTH_SHORT),
     col.number("total_qty", CN.total_qty2, false),
+    col.check("bag_cleaning_fg", CN.bag_cleaning_fg, isEditModeHeader),
     col.text("remark", CN.remark, isEditModeHeader, false, C.WIDTH_MIDDLE),
     col.date("create_at", CN.create_at, false, C.WIDTH_LONG),
     col.text("create_user_nm", CN.create_user_nm, false, false, C.WIDTH_SHORT),
@@ -113,6 +114,7 @@ function WeightSet(isEditModeHeader, isEditModeDetail, isNewDetail, isDetailEdit
     col.text("work_input_time", CN.work_input_time, true, false, C.WIDTH_SHORT, "center"),
     col.id("input_emp_id", CN.input_emp_id, C.HIDDEN_ID),
     col.select("input_emp_nm", CN.input_emp_nm, true, C.WIDTH_SHORT),
+    // col.check("bag_cleaning_fg", CN.bag_cleaning_fg, true),
     col.text("remark", CN.remark, true, false, C.WIDTH_MIDDLE),
   ];
 

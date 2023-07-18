@@ -91,6 +91,15 @@ function StoreView() {
     }
   };
 
+  useEffect(() => {
+    const Grid = refSingleGrid?.current?.gridInst;
+    for (let i = 0; Grid.getRowCount() > i; i++) {
+      if (Grid.getValue(i, "stock") < 0) {
+        Grid.addCellClassName(i, "stock", "redText");
+      }
+    }
+  }, [gridData]);
+
   return (
     <ContentsArea>
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>

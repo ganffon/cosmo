@@ -17,7 +17,9 @@ function ModalInputSave(props) {
     onClickInputSave = () => {},
     onClickNowTime = () => {},
     nowDateTime = {},
+    setSelectInputInfo = () => {},
     selectInputInfo = {},
+    refCheck = null,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
@@ -31,7 +33,7 @@ function ModalInputSave(props) {
       </S.HeaderBox>
       <S.Content>
         <S.GridTitleBox>
-          <div>✳️ 투입정보 확인</div>
+          <div>투입정보 확인</div>
           <S.ButtonSet color={"#28a745"} hoverColor={"#218838"} onClick={onClickInputSave} width={"150px"}>
             Save
           </S.ButtonSet>
@@ -74,9 +76,19 @@ function ModalInputSave(props) {
               nameColor={"black"}
               value={selectInputInfo.storeNM || ""}
               size={"30px"}
-              btn={false}
+              btn={true}
+              onClickSelect={onClickSelectStore}
+              onClickRemove={onClickRemoveStore}
             />
-            <InputPaper
+            <S.InfoTitle width={"532px"}>투입 Bag 하부 Cleaning 진행 여부 체크</S.InfoTitle>
+            <S.BagCleaning
+              type={"checkbox"}
+              ref={refCheck}
+              onClick={() => {
+                setSelectInputInfo({ ...selectInputInfo, cleaningCheck: refCheck?.current?.checked });
+              }}
+            />
+            {/* <InputPaper
               width={"250px"}
               height={"60px"}
               nameColor={"black"}
@@ -85,7 +97,7 @@ function ModalInputSave(props) {
               btn={true}
               onClickSelect={onClickSelectStore}
               onClickRemove={onClickRemoveStore}
-            />
+            /> */}
           </S.InfoWrap>
           <S.InfoWrap>
             <S.InfoTitle>투입자</S.InfoTitle>

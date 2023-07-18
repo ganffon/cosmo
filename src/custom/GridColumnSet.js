@@ -334,7 +334,7 @@ const rSelect = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_
   };
 };
 
-const date = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT) => {
+const date = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, sortable = false) => {
   return {
     name: name,
     header: header,
@@ -350,14 +350,14 @@ const date = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHO
         }
       : false,
     hidden: false,
-    sortable: false,
+    sortable: sortable,
     filter: false,
     whiteSpace: false,
     rowSpan: false,
   };
 };
 
-const rDate = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT) => {
+const rDate = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, sortable = false) => {
   return {
     name: name,
     header: "* " + header,
@@ -373,7 +373,7 @@ const rDate = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SH
         }
       : false,
     hidden: false,
-    sortable: false,
+    sortable: sortable,
     filter: false,
     whiteSpace: false,
     rowSpan: false,

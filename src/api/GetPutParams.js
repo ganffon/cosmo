@@ -608,6 +608,8 @@ class weight {
     this.work_weigh_time = raw.work_weigh_time;
     this.weigh_emp_id = raw.weigh_emp_id;
     this.input_emp_id = raw.input_emp_id;
+    this.bag_cleaning_fg = raw.bag_cleaning_fg ? true : false;
+    this.remark = raw.remark;
   }
 }
 

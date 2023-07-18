@@ -89,8 +89,9 @@ function PackingModal(props) {
           <div
             style={{
               display: "flex",
-              width: "285mm",
+              width: "275mm",
               height: "calc(210mm - 20px)",
+              marginLeft: "10mm",
             }}
             key={i}
           >
@@ -354,7 +355,7 @@ function PackingModal(props) {
                 height: "calc(100% - 30mm)",
                 marginTop: "15mm",
                 padding: "5mm",
-                borderRight: "1px solid black",
+                // borderRight: "1px solid black",
                 display: "flex",
               }}
             >
@@ -611,8 +612,11 @@ function PackingModal(props) {
           <div
             style={{
               display: "flex",
-              width: "285mm",
+              // width: "285mm",
+              // height: "calc(210mm - 5px)",
+              width: "275mm",
               height: "calc(210mm - 5px)",
+              marginLeft: "10mm",
             }}
             key={i}
           >
@@ -876,7 +880,7 @@ function PackingModal(props) {
                 height: "calc(100% - 30mm)",
                 marginTop: "15mm",
                 padding: "5mm",
-                borderRight: "1px solid black",
+                // borderRight: "1px solid black",
                 display: "flex",
               }}
             >
