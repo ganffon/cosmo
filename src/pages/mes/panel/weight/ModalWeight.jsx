@@ -79,46 +79,6 @@ function ModalWeight(props) {
     setIsBarcodeScanOpen(true);
   }
 
-  const handleInputChange = (e) => {
-    setInputChange(e.target.value);
-  };
-  const handleBarcodeEnter = async (e) => {
-    if (e.key === "Enter") {
-      // let uri;
-      // try {
-      //   if (inputChange === undefined) {
-      //     uri = restURI.subdivision + `?complete_fg=INCOMPLETE`;
-      //   } else {
-      //     if (inputChange.length === 0) {
-      //       uri = restURI.subdivision + `?complete_fg=INCOMPLETE`;
-      //     } else {
-      //       uri =
-      //         restURI.subdivision +
-      //         `?complete_fg=INCOMPLETE&prod_cd=${inputChange}`;
-      //     }
-      //   }
-      //   const result = await restAPI.get(uri);
-      //   setGridDataHeader(result?.data?.data?.rows);
-      // } catch (err) {
-      //   alert(err);
-      // }
-    }
-  };
-
-  /**바코드 스캔 영역 시작 */
-
-  const onLotConfirm = () => {
-    if (barcodeScan.lot !== "") {
-      transferBarcode(barcodeScan.lot);
-    }
-  };
-
-  const transferBarcodeSubdivision = async (barcode) => {
-    const result = await restAPI.get(restURI.createBarcode + `?barcode_no=${barcode}`);
-    const data = result?.data?.data?.rows[0];
-
-    inputLotNo(data.lot_no, data.prod_id);
-  };
   const inputLotNo = (lotNo, prodCode) => {
     let modalGridDataLength = refGridWeight?.current?.gridInst?.store?.data?.rawData.length;
     const modalData = refGridWeight?.current?.gridInst?.store?.data?.rawData;
@@ -140,21 +100,6 @@ function ModalWeight(props) {
     }
   };
 
-  const transferBarcode = async (lotNo) => {
-    try {
-      const result = await restAPI.get(restURI.barcodeERP + `?lot_no=${lotNo}`);
-      const data = result?.data?.data?.rows[0];
-      inputLotNo(lotNo, data.prod_id);
-    } catch (err) {
-      setBarcodeScan({
-        ...barcodeScan,
-        value: err?.response?.data?.message,
-        lot: "",
-        className: "red",
-      });
-    } finally {
-    }
-  };
   function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {
     if (timeStamp1 === null) return 0;
     const difference = Math.abs(timeStamp1 - timeStamp2);
@@ -198,7 +143,6 @@ function ModalWeight(props) {
 
       refBarcodeTimeStamp.current = e?.timeStamp;
       if (e?.key === "Enter") {
-        console.log(barcodeNo.current);
         setBarcodeScan({
           ...barcodeScan,
           value: barcodeNo.current,
@@ -306,7 +250,7 @@ function ModalWeight(props) {
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
-        <S.TitleBox>${currentMenuName}</S.TitleBox>
+        <S.TitleBox>{currentMenuName}</S.TitleBox>
         <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>

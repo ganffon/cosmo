@@ -12,7 +12,6 @@ import * as uSearch from "custom/useSearch";
 import * as S from "./WeightPanel.styled";
 import restAPI from "api/restAPI";
 import DateRange from "components/datetime/DateRange";
-import InputSearch from "components/input/InputSearch";
 import ModalWeight from "./ModalWeight";
 import Condition from "custom/Condition";
 import ModalInput from "./ModalInput";
@@ -23,6 +22,10 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
+import QuestionMark from "img/Component/questionMark64.png";
+import ModalWrapMulti from "components/modal/ModalWrapMulti";
+import QuestionWeight from "img/Component/quesitonWeight.png";
+import QuestionInput from "img/Component/quesitonInput.png";
 
 function WeightPanel() {
   LoginStateChk();
@@ -80,6 +83,7 @@ function WeightPanel() {
       prodCD: "",
       prodNM: "",
     });
+    setSelectInputInfo({ workOrderID: "" });
   };
   const resetEmp = () => {
     setSelectInputInfo({
@@ -104,6 +108,8 @@ function WeightPanel() {
   const refGridWeight = useRef(null);
   const refGridInput = useRef(null);
   const refGridInputDetail = useRef(null);
+
+  const refCheck = useRef(null);
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataWeight, setGridDataWeight] = useState(null);
@@ -230,7 +236,7 @@ function WeightPanel() {
     }
   };
   const onClickWeight = async () => {
-    if (selectInputInfo.workOrderID !== "") {
+    if (selectInputInfo.workOrderID) {
       try {
         const result = await restAPI.get(restURI.prdOrderInput + `?work_order_id=${selectInputInfo.workOrderID}`);
         setGridDataWeight(result?.data?.data?.rows);
@@ -245,6 +251,13 @@ function WeightPanel() {
         });
       }
     }
+  };
+  const [question, setQuestion] = useState({ weightOpen: false, inputOpen: false });
+  const onQuestionWeight = () => {
+    setQuestion({ ...question, weightOpen: true, inputOpen: false });
+  };
+  const onQuestionInput = () => {
+    setQuestion({ ...question, weightOpen: false, inputOpen: true });
   };
   const onClickSearch = async () => {
     try {
@@ -416,6 +429,21 @@ function WeightPanel() {
   }
   const onEditingFinishWeight = (e) => {
     const Grid = refGridWeight?.current?.gridInst;
+    if (Condition(e, ["lot_no"])) {
+      const lotNo = Grid.getValue(e?.rowKey, "lot_no");
+      if (lotNo.slice(0, 3) === "FDR") {
+        Grid.setValue(e?.rowKey, "lot_no", "");
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message:
+            "LOT NO 입력란에 바코드 번호가 입력되었습니다! 바코드를 스캔하시려면 좌측 [바코드 스캔] 버튼을 눌러주세요!",
+          severity: "warning",
+          location: "topCenter",
+        });
+        return;
+      }
+    }
     if (Condition(e, ["total_qty"])) {
       const beforeQty = e?.value;
       const afterQty = Grid.getValue(e?.rowKey, "bag_qty");
@@ -459,6 +487,7 @@ function WeightPanel() {
           inv_to_store_id: selectInputInfo.storeID,
           inv_to_location_id: selectInputInfo.locationID,
           input_emp_id: selectInputInfo.empID,
+          bag_cleaning_fg: selectInputInfo.cleaningCheck,
         };
         try {
           const result = await restAPI.patch(
@@ -665,9 +694,11 @@ function WeightPanel() {
           <S.ButtonSet color={"#555555"} hoverColor={"#e5b700"} onClick={onClickWeight}>
             계량
           </S.ButtonSet>
+          <S.QuestionMark src={QuestionMark} onClick={onQuestionWeight} />
           <S.ButtonSet color={"#1491CE"} hoverColor={"#990b11"} onClick={onClickInput}>
             투입
           </S.ButtonSet>
+          <S.QuestionMark src={QuestionMark} onClick={onQuestionInput} />
         </S.ButtonBox>
       </S.BottomWrap>
       {isModalWeightOpen ? (
@@ -713,7 +744,9 @@ function WeightPanel() {
           onClickNowTime={onClickNowTime}
           onClickGridInput={onClickGridInput}
           nowDateTime={nowDateTime}
+          setSelectInputInfo={setSelectInputInfo}
           selectInputInfo={selectInputInfo}
+          refCheck={refCheck}
         />
       ) : null}
       {isModalSelectOpen ? (
@@ -742,6 +775,22 @@ function WeightPanel() {
           }}
         />
       ) : null}
+      {question.weightOpen && (
+        <ModalWrapMulti>
+          <S.QuestionImg
+            src={QuestionWeight}
+            onClick={() => setQuestion({ ...question, weightOpen: false, inputOpen: false })}
+          />
+        </ModalWrapMulti>
+      )}
+      {question.inputOpen && (
+        <ModalWrapMulti>
+          <S.QuestionImg
+            src={QuestionInput}
+            onClick={() => setQuestion({ ...question, weightOpen: false, inputOpen: false })}
+          />
+        </ModalWrapMulti>
+      )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

@@ -136,3 +136,10 @@ export const InfoWrap = styled("div")`
   display: flex;
   width: 1200px;
 `;
+
+export const BagCleaning = styled("input")`
+  cursor: pointer;
+  transform: scale(4);
+  accent-color: #f5329498;
+  margin-left: 20px;
+`;

@@ -154,6 +154,10 @@ function Weight() {
       if (headerRowID.current !== null) {
         actSearchDetail();
       }
+    } else {
+      if (Condition(e, ["bag_cleaning_fg"])) {
+        disRow.handleEditingFinishGridCheck(e);
+      }
     }
   };
 
@@ -680,20 +684,7 @@ function Weight() {
   );
 
   const GridTop = useMemo(() => {
-    return isEditModeHeader ? (
-      <GridSingle
-        columnOptions={columnOptions}
-        columns={columnsHeader}
-        rowHeaders={rowHeadersNumCheck}
-        header={header}
-        data={gridDataHeader}
-        draggable={false}
-        refGrid={refGridHeader}
-        isEditMode={isEditModeHeader}
-        onDblClickGrid={onDblClickGridHeader}
-        onEditingFinish={onEditingFinishGridHeader}
-      />
-    ) : (
+    return (
       <GridSingle
         columnOptions={columnOptions}
         columns={columnsHeader}
@@ -704,6 +695,7 @@ function Weight() {
         refGrid={refGridHeader}
         isEditMode={isEditModeHeader}
         onClickGrid={onClickGridHeader}
+        onDblClickGrid={onDblClickGridHeader}
         onEditingFinish={onEditingFinishGridHeader}
       />
     );
@@ -713,21 +705,6 @@ function Weight() {
     <ContentsArea>
       <S.SearchCondition>
         <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-        {/* {inputSet.map((v, idx) => (
-          <S.InputPaperWrap key={v.id}>
-            <InputPaper
-              key={v.id}
-              id={v.id}
-              name={v.name}
-              nameSize={"12px"}
-              width={idx === 1 ? "240px" : "180px"}
-              btn={idx === 1 ? true : false}
-              value={inputSearchValue[idx] || ""}
-              onClickSelect={onClickProd}
-              onClickRemove={onClickProdCancel}
-            />
-          </S.InputPaperWrap>
-        ))} */}
         <S.InputPaperWrap>
           <InputPaper
             width={"180px"}

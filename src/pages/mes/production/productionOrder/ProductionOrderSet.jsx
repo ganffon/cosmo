@@ -34,9 +34,7 @@ function ProductionOrderSet(
   const datePickerSet = null;
 
   const columnsHeader = [
-    col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text("request_no", CN.request_no, false, false, C.WIDTH_SHORT, false, false, false, false, false),
     col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT, false, false, false, false, false),
     col.date("work_order_date", CN.work_order_date, isEditModeHeader, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
@@ -113,15 +111,14 @@ function ProductionOrderSet(
     col.text("delete_user_nm", CN.delete_user_nm, false, true, C.WIDTH_SHORT, "center"),
   ];
   const columnsModalHeader = [
-    col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
-    col.select("request_no", CN.request_no, true, C.WIDTH_SHORT),
+    col.id("insp_document_id", CN.insp_document_id, C.HIDDEN_ID),
     col.date("work_order_date", CN.work_order_date, true, C.WIDTH_SHORT),
-    col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
-    col.select("line_dept_nm", CN.line_dept_nm, true, C.WIDTH_SHORT),
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.select("prod_cd", CN.prod_cd, true),
     col.select("prod_nm", CN.prod_nm, true, C.WIDTH_SHORT),
+    col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
+    col.select("line_dept_nm", CN.line_dept_nm, true, C.WIDTH_SHORT),
     col.date("work_start_date", CN.work_start_date, true, C.WIDTH_SHORT),
     col.date("work_end_date", CN.work_end_date, true, C.WIDTH_SHORT),
     col.number("work_order_qty", CN.work_order_qty, true, C.WIDTH_SHORT, false),
@@ -132,22 +129,21 @@ function ProductionOrderSet(
 
   const columnsSelectLineDept = [
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
-    col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT),
+    col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT, C.U, true, true),
     col.id("line_id", CN.line_id, C.HIDDEN_ID),
   ];
-
-  const columnsSelectRequest = [
-    col.text("request_no", CN.request_no, false, false, C.WIDTH_SHORT, false, false, true),
-
+  const columnsSelectDocument = [
+    col.id("insp_document_id", CN.insp_document_id, C.HIDDEN_ID),
+    col.text("insp_document_no", CN.insp_document_no, C.U, C.U, C.WIDTH_MIDDLE),
+    col.id("line_id", CN.line_id, C.HIDDEN_ID),
+    col.text("line_nm", CN.line_nm, C.U, C.U, C.U, C.U, true, true),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_SHORT, false, false, true),
-    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_SHORT, false, false, true),
-    col.text("partner_nm", CN.partner_nm, false, false, C.WIDTH_SHORT, false, false, true),
-    col.text("sal_order_no", CN.sal_order_no, false, false, C.WIDTH_SHORT, false, false, true),
-    col.number("request_work_qty", CN.request_work_qty, false, C.WIDTH_SHORT, false, false),
-    col.text("request_dept_nm", CN.request_dept_nm, false, false, C.WIDTH_SHORT),
-    col.text("request_emp_nm", CN.request_emp_nm, false, false, C.WIDTH_SHORT, false, false, true),
-    col.date("request_date", CN.request_date, false, C.WIDTH_SHORT, false, false, true),
+    col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
+    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
+    col.date("insp_document_reg_date", CN.insp_document_reg_date, C.U, C.U, true),
+    col.date("apply_date", CN.apply_date, C.U, C.U, true),
+    col.text("contents", CN.contents, C.U, C.U, C.WIDTH_MIDDLE),
+    col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
   ];
   const columnsSelectMid = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
@@ -209,7 +205,7 @@ function ProductionOrderSet(
     columnsSelectLineDept,
     columnsModalHeader,
 
-    columnsSelectRequest,
+    columnsSelectDocument,
     columnsSelectMid,
     columnsSelectBottom,
     columnOptions,

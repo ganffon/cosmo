@@ -577,6 +577,7 @@ class weight {
     this.input_emp_id = raw.input_emp_id;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
+    // this.bag_cleaning_fg = raw.bag_cleaning_fg ? true : false;
     this.remark = raw.remark;
   }
 }

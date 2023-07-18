@@ -43,9 +43,7 @@ function ModalSubdivision(props) {
         if (inputChange.length === 0) {
           uri = restURI.subdivision + `?complete_fg=INCOMPLETE`;
         } else {
-          uri =
-            restURI.subdivision +
-            `?complete_fg=INCOMPLETE&prod_cd=${inputChange}`;
+          uri = restURI.subdivision + `?complete_fg=INCOMPLETE&prod_cd=${inputChange}`;
         }
       }
       const result = await restAPI.get(uri);
@@ -79,11 +77,7 @@ function ModalSubdivision(props) {
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{currentMenuName}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
@@ -91,7 +85,7 @@ function ModalSubdivision(props) {
       <S.Content>
         <S.ContentTop>
           <S.ButtonBox>
-            <div>✳️ 소분정보</div>
+            <div>소분정보</div>
             <S.SearchBox>
               <S.Input
                 id={"prod_cd"}
@@ -100,12 +94,7 @@ function ModalSubdivision(props) {
                 onKeyDown={onKeyDownModalMulti}
                 onClickSearch={onClickSearch}
               />
-              <S.ButtonSet
-                width={"120px"}
-                color={"#2986cc"}
-                hoverColor={"#1f5e8e"}
-                onClick={onClickSearch}
-              >
+              <S.ButtonSet width={"120px"} color={"#2986cc"} hoverColor={"#1f5e8e"} onClick={onClickSearch}>
                 Search
               </S.ButtonSet>
             </S.SearchBox>
@@ -113,7 +102,7 @@ function ModalSubdivision(props) {
           <S.GridBoxTop>{GridHeader}</S.GridBoxTop>
         </S.ContentTop>
         <S.ContentBottom>
-          <S.GridBottomTitleBox>✳️ 세부소분정보</S.GridBottomTitleBox>
+          <S.GridBottomTitleBox>세부소분정보</S.GridBottomTitleBox>
           <S.GridBoxBottom>
             <GridModal
               data={gridDataDetail}

@@ -31,6 +31,7 @@ function WeightReportSet() {
     col.date("work_input_date", CN.work_input_date, false, C.WIDTH_SHORT),
     col.text("work_input_time", CN.work_input_time, false, false, C.WIDTH_SHORT, "center"),
     col.text("input_emp_nm", CN.input_emp_nm, false, false, C.WIDTH_SHORT, "center"),
+    col.check("bag_cleaning_fg", CN.bag_cleaning_fg),
     col.text("remark", CN.remark, false, false, C.WIDTH_LONG),
     col.date("create_at", CN.create_at, false, C.WIDTH_SHORT),
     col.date("update_at", CN.update_at, false, C.WIDTH_SHORT),
@@ -50,6 +51,7 @@ function WeightReportSet() {
   ];
 
   const rowHeadersNum = ["rowNum"];
+  const header = col.multi(["bag_cleaning_fg"]);
 
   return {
     data,
@@ -62,7 +64,7 @@ function WeightReportSet() {
     // columnOptions,
     // rowHeadersNumCheck,
     rowHeadersNum,
-    // header,
+    header,
     // datePickerSet,
     // inputSet,
     // inputInfo,

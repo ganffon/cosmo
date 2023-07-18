@@ -178,7 +178,7 @@ function ModalControlPlan(props) {
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
-      <S.GridTopTitleBox>✳️ 검사기준서</S.GridTopTitleBox>
+      <S.GridTopTitleBox>검사기준서</S.GridTopTitleBox>
       <S.GridBoxTop>
         <GridModal
           data={isNewDetail ? gridDataHeaderRowID : null}

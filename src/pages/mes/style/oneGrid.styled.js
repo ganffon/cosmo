@@ -51,6 +51,9 @@ export const GridWrapReport = styled("div")`
   width: 100%;
   height: 100%;
   position: relative;
+  .redText {
+    font-color: red;
+  }
 `;
 
 export const ComboWrap = styled("div")`
