@@ -99,7 +99,7 @@ export const GridWrap = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const GridWrap2 = styled("div")`
-  height: 80%;
+  height: 100%;
   padding: 10px 10px 10px 10px;
 `;
 export const GridWrap3 = styled("div")`
@@ -216,6 +216,10 @@ export const Left = styled("div")`
   border-radius: 10px;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 5px;
+`;
+export const ComboBox = styled(Autocomplete)`
+  width: 180px;
+  margin-top: 5px;
 `;
 export const TimeRateLeft = styled("div")`
   width: 56%;
@@ -431,6 +435,7 @@ export const EquipStatusChartWrap = styled("div")`
   height: 60%;
   background-color: #ffffff;
   border-radius: 10px;
+  padding-top: 20px;
   border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
 `;
 export const SearchTitle = styled("div")`
@@ -512,8 +517,4 @@ export const ContentsArea = styled("div")`
   & .selectedBack {
     background-color: #fdf0f6;
   }
-`;
-export const ComboBox = styled(Autocomplete)`
-  width: 180px;
-  margin-top: 5px;
 `;

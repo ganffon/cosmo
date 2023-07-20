@@ -59,7 +59,7 @@ export const ButtonWrap = styled("div")`
 `;
 export const ContentsTop = styled("div")`
   width: 100%;
-  height: 200px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,7 +68,7 @@ export const ContentsTop = styled("div")`
 `;
 export const ContentsBottom = styled("div")`
   width: 100%;
-  height: calc(100% - 280px);
+  height: calc(100% - 500px);
   display: flex;
   flex-direction: column;
 

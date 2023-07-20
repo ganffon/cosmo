@@ -139,5 +139,9 @@
   "prdPackingInputOnly": "/prd/packing/only-input",
   "prdPackingInputCancel": "/prd/packing/{id}/cancel",
 
-  "stdEmpLatest": "/std/emp/latest"
+  "stdEmpLatest": "/std/emp/latest",
+  "inspResultColumns": "/qms/insp-result-upload/columns",
+  "inspResultStatus": "/qms/insp-result-upload/status",
+  "spc": "/spc/by-opc",
+  "inspResultEmp": "/qms/insp-result-emp"
 }

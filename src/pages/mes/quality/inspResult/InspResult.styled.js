@@ -14,6 +14,7 @@ export const InputText = styled(TextField)`
   height: 40px;
   width: 180px;
   margin-left: 10px;
+  margin-top: 5px;
 `;
 export const ShadowBoxButton = styled("div")`
   background-color: #ffffff;
@@ -26,6 +27,7 @@ export const ShadowBoxButton = styled("div")`
 export const Date = styled(DatePicker)`
   height: 40px;
 `;
+
 export const InputPaperWrap = styled("div")`
   padding-top: 5px;
   padding-left: 10px;
@@ -34,14 +36,6 @@ export const GridTitle = styled("div")``;
 export const ButtonTitleWrap = styled("div")`
   display: flex;
   width: 100%;
-`;
-export const Title = styled("div")`
-  font-family: "Noto Sans KR";
-  font-weight: 900;
-  font-size: 20px;
-  line-height: 29px;
-  margin-top: 0px;
-  margin-left: 25px;
 `;
 export const EachToolWrap = styled("div")`
   display: flex;
@@ -58,7 +52,7 @@ export const CntGridContainer = styled("div")`
 export const ColGridContainer = styled("div")`
   display: grid;
   width: 100%;
-  height: ${(props) => props.height || "70%"};
+  height: 70%;
   grid-template-columns: ${(props) => props.rowTemplate || "50% 50%"};
   border-radius: 10px;
 `;
@@ -80,8 +74,8 @@ export const ShadowBoxGrid = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ChartWrap = styled("div")`
-  margin-left: 5px;
-  height: ${(props) => props.customHeight || "calc(100% - 15px);"};
+  margin: 5px;
+  height: calc(100% - 15px);
 
   background-color: #ffffff;
   border-radius: 10px;

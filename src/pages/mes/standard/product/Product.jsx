@@ -49,6 +49,7 @@ function Product() {
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
+  const [prodClassOpt, prodClassList] = Cbo.useProdClass();
   const [unitOpt, unitList] = Cbo.useUnit();
   const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = ProductSet(
     isEditMode,
@@ -56,7 +57,8 @@ function Product() {
     productModelList,
     productTypeList,
     productTypeSmallList,
-    unitList
+    unitList,
+    prodClassList
   );
   const SWITCH_NAME_01 = "product";
 
@@ -263,19 +265,19 @@ function Product() {
                 disablePortal
                 id="factoryCombo"
                 size="small"
-                key={(option) => option?.prod_type_id}
-                options={productTypeOpt || null}
-                getOptionLabel={(option) => option?.prod_type_nm || ""}
+                key={(option) => option?.prod_class_id}
+                options={prodClassOpt || null}
+                getOptionLabel={(option) => option?.prod_class_nm || ""}
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
+                    prod_class_id: newValue?.prod_class_id === undefined ? null : newValue?.prod_class_id,
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
+                renderInput={(params) => <TextField {...params} label={CN.prod_class_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
-              <S.ComboBox
+              {/* <S.ComboBox
                 disablePortal
                 id="factoryCombo"
                 size="small"
@@ -291,7 +293,7 @@ function Product() {
                 }}
                 renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
                 onKeyDown={onKeyDown}
-              />
+              /> */}
             </S.ComboWrap>
             <S.InputWrap>
               {inputSet.map((v) => (
@@ -319,10 +321,10 @@ function Product() {
           </S.ButtonWrap>
         ) : (
           <S.ButtonWrap>
-            {/* <BtnComponent btnName={"New"} onClick={onClickNew} /> */}
+            <BtnComponent btnName={"New"} onClick={onClickNew} />
             <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
-            {/* <BtnComponent btnName={"Delete"} onClick={onClickDelete} /> */}
-            <BtnComponent btnName={"DataLoad"} toolTipTitle={"productButton"} onClick={loadData} />
+            <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            {/* <BtnComponent btnName={"DataLoad"} toolTipTitle={"productButton"} onClick={loadData} /> */}
           </S.ButtonWrap>
         )}
 

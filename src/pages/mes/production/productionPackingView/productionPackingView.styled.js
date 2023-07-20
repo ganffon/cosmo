@@ -92,7 +92,11 @@ export const GridTopWrap = styled("div")`
   margin-bottom: 8px;
   padding: 10px 10px 10px 10px;
 `;
-
+export const GridWrap = styled("div")`
+  height: calc(100% - 40px);
+  width: 100%;
+  margin-bottom: 8px;
+`;
 export const GridBottomWrap = styled("div")`
   height: calc(100% - 35px);
   width: 100%;
@@ -133,7 +137,12 @@ export const InputPaperWrap = styled("div")`
 `;
 
 export const ContentWrap = styled("div")`
-  height: calc(100% - 80px);
+  height: calc(100% - 60px);
+  background: #ffffff;
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  border-color: rgb(200, 200, 200);
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ComboBox = styled(Autocomplete)`
   width: 350px;

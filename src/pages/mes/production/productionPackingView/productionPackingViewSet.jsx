@@ -32,6 +32,9 @@ function ProductionPackingViewSet() {
   ];
 
   const columnsDetail = [
+    col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT),
+    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE),
+    col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
     col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
     col.number("packing_qty", CN.packing_qty, false, C.WIDTH_SHORT, false),

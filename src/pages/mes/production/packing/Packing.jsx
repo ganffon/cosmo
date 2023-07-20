@@ -638,7 +638,7 @@ function Packing() {
       targetGrid.current = "Order";
       targetRowKey.current = e?.rowKey;
       setIsModalSelectDateOpen(true);
-      actSelectOrder(`?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`);
+      actSelectOrder(`?reg_date=${dateOrder.startDate}`);
     }
     if (Condition(e, ["packing_emp_nm"])) {
       targetGrid.current = "Emp";
@@ -786,7 +786,7 @@ function Packing() {
     setSelectedOption(optionValue);
   };
   const onClickSearchSelectDate = () => {
-    actSelectOrder(`?start_date=${dateOrder.startDate}&end_date=${dateOrder.endDate}`);
+    actSelectOrder(`?reg_date=${dateOrder.startDate}`);
   };
   const handleGridHeaderClick = async (reSearch) => {
     if (workPackingID.current) {

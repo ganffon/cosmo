@@ -20,7 +20,7 @@ export const ShadowBoxButton = styled("div")`
 export const ShadowBoxHeader = styled("div")`
   background-color: #ffffff;
   width: 100%;
-  height: 600px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   gap: 10px;

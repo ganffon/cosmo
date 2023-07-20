@@ -139,6 +139,23 @@ const useGrade = () => {
   }, []);
   return [gradeOpt, gradeList];
 };
+let prodClassList = [];
+const useProdClass = () => {
+  const [prodClassOpt, setProdClassOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.productClass).then((res) => {
+        setProdClassOpt(cboMUISort(res?.data?.data?.rows, "prod_class_nm"));
+        prodClassList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "prod_class_id", "prod_class_nm");
+        });
+        prodClassList = cboGridSort(prodClassList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [prodClassOpt, prodClassList];
+};
 let employeeList = [];
 const useEmployee = () => {
   const [employeeOpt, setEmployeeOpt] = useState([]);
@@ -483,6 +500,7 @@ export {
   useEquipment,
   useDept,
   useGrade,
+  useProdClass,
   useEmployee,
   useWorkerGroup,
   useProductGbn,

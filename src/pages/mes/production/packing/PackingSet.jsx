@@ -99,7 +99,7 @@ function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint)
   ];
   const columnsSelectOrder = [
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text("request_no", CN.request_no, false, false, C.WIDTH_SHORT, false, false, true),
+    col.text("request_no", CN.request_no, false, true, C.WIDTH_SHORT, false, false, true),
     col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT, false, false, true),
     col.date("work_order_date", CN.work_order_date, false, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),

@@ -5,6 +5,7 @@ import ModalWrapMulti from "./ModalWrapMulti";
 import DateRange from "components/datetime/DateRange";
 import ButtonModule from "components/button/ButtonModule";
 import BtnComponent from "components/button/BtnComponent";
+import DatePicker from "components/datetime/DatePicker";
 
 function ModalSelectDate(props) {
   const {
@@ -34,7 +35,12 @@ function ModalSelectDate(props) {
           </S.ButtonClose>
         </S.HeaderBox>
         <S.SearchBox>
-          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+          <DatePicker
+            datePickerSet={"single"}
+            dateText={dateText}
+            setDateText={setDateText}
+            onClickSearch={onClickSearch}
+          />
           <BtnComponent btnName={"Search"} width={"100px"} onClick={onClickSearch}>
             검색
           </BtnComponent>
