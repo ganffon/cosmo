@@ -23,12 +23,17 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
+import Condition from "custom/Condition";
+import ModalSelect from "components/modal/ModalSelect";
 
 function Product() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
+  const refGridSelect = useRef(null);
+  const targetGrid = useRef("");
+  const targetRowKey = useRef("");
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -37,6 +42,12 @@ function Product() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+  const [modalSelectSize, setModalSelectSize] = useState({
+    width: "80%",
+    height: "90%",
+  });
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [gridDataSelect, setGridDataSelect] = useState(null);
   const [searchToggle, setSearchToggle] = useState(false);
   const [comboValue, setComboValue] = useState({
     prod_gbn_id: null,
@@ -51,15 +62,16 @@ function Product() {
   const [productTypeSmallOpt, productTypeSmallList] = Cbo.useProductTypeSmall();
   const [prodClassOpt, prodClassList] = Cbo.useProdClass();
   const [unitOpt, unitList] = Cbo.useUnit();
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = ProductSet(
-    isEditMode,
-    productGbnList,
-    productModelList,
-    productTypeList,
-    productTypeSmallList,
-    unitList,
-    prodClassList
-  );
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnSelect, columnOptions, inputSet } =
+    ProductSet(
+      isEditMode,
+      productGbnList,
+      productModelList,
+      productTypeList,
+      productTypeSmallList,
+      unitList,
+      prodClassList
+    );
   const SWITCH_NAME_01 = "product";
 
   useEffect(() => {
@@ -124,6 +136,15 @@ function Product() {
     restURI.product,
     onClickModalClose
   );
+  const [actSelectStore] = uSearch.useSearchSelect(
+    refGridSelect,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridDataSelect,
+    restURI.storeLocation
+  ); //➡️ Modal Select Search EquipProc
   const onClickNew = () => {
     setIsModalOpen(true);
   };
@@ -220,6 +241,52 @@ function Product() {
         severity: "success",
       });
       onClickSearch();
+    }
+  };
+  const onDblClickGrid = (e) => {
+    if (e?.targetType === "cell") {
+      if (Condition(e, ["store_nm", "location_nm"])) {
+        targetGrid.current = "main";
+        targetRowKey.current = e?.rowKey;
+        actSelectStore();
+        setIsSelectOpen(true);
+      }
+    }
+  };
+  const onDblClickModalGrid = (e) => {
+    if (e?.targetType === "cell") {
+      if (Condition(e, ["store_nm", "location_nm"])) {
+        targetGrid.current = "modal";
+        targetRowKey.current = e?.rowKey;
+        actSelectStore();
+        setIsSelectOpen(true);
+      }
+    }
+  };
+  const onDblSelect = (e) => {
+    if (e?.targetType === "cell") {
+      let Grid;
+      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+      switch (targetGrid?.current) {
+        case "main":
+          Grid = refSingleGrid?.current?.gridInst;
+          Grid.setValue(targetRowKey?.current, "inv_to_store_id", data?.store_id);
+          Grid.setValue(targetRowKey?.current, "store_nm", data?.store_nm);
+          Grid.setValue(targetRowKey?.current, "inv_to_location_id", data?.location_id);
+          Grid.setValue(targetRowKey?.current, "location_nm", data?.location_nm);
+          disRow.handleGridSelectCheck(refSingleGrid, targetRowKey?.current);
+          setIsSelectOpen(false);
+          break;
+        case "modal":
+          Grid = refModalGrid?.current?.gridInst;
+          Grid.setValue(targetRowKey?.current, "inv_to_store_id", data?.store_id);
+          Grid.setValue(targetRowKey?.current, "store_nm", data?.store_nm);
+          Grid.setValue(targetRowKey?.current, "inv_to_location_id", data?.location_id);
+          Grid.setValue(targetRowKey?.current, "location_nm", data?.location_nm);
+          setIsSelectOpen(false);
+          break;
+        default:
+      }
     }
   };
 
@@ -339,6 +406,7 @@ function Product() {
             refGrid={refSingleGrid}
             isEditMode={isEditMode}
             onClickGrid={onClickGrid}
+            onDblClickGrid={onDblClickGrid}
             onEditingFinish={onEditingFinishGrid}
           />
         </S.GridWrap>
@@ -370,8 +438,25 @@ function Product() {
           rowHeaders={rowHeadersModal}
           refModalGrid={refModalGrid}
           onClickModalGrid={onClickModalGrid}
+          onDblClickModalGrid={onDblClickModalGrid}
         />
       ) : null}
+      {isSelectOpen && (
+        <ModalSelect
+          width={modalSelectSize.width}
+          height={modalSelectSize.height}
+          onClickModalSelectClose={() => {
+            setIsSelectOpen(false);
+          }}
+          columns={columnSelect}
+          columnOptions={columnOptions}
+          header={header}
+          gridDataSelect={gridDataSelect}
+          rowHeaders={rowHeadersModal}
+          refSelectGrid={refGridSelect}
+          onDblClickGridSelect={onDblSelect}
+        />
+      )}
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );

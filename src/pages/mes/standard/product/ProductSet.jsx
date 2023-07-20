@@ -61,10 +61,13 @@ function ProductSet(
     col.check("inv_use_fg", CN.inv_use_fg, isEditMode, C.U, true),
     col.number("inv_unit_qty", CN.inv_unit_qty, false, C.U, true),
     col.number("inv_safe_qty", CN.inv_safe_qty, false, C.U, true),
+
     col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
-    col.text("store_nm", CN.inv_to_store_nm),
+    col.select("store_nm", CN.inv_to_store_nm, isEditMode),
+    // col.text("store_nm", CN.inv_to_store_nm),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
-    col.text("location_nm", CN.inv_to_location_nm),
+    col.select("location_nm", CN.inv_to_location_nm, isEditMode),
+    // col.text("location_nm", CN.inv_to_location_nm),
     col.check("qms_receive_insp_fg", CN.qms_receive_insp_fg, isEditMode, C.U, true),
     col.check("qms_proc_insp_fg", CN.qms_proc_insp_fg, isEditMode, C.U, true),
     col.check("qms_final_insp_fg", CN.qms_final_insp_fg, isEditMode, C.U, true),
@@ -88,6 +91,10 @@ function ProductSet(
     col.text("rev", CN.rev, true, true, C.WIDTH_SUPER_SHORT, "center"),
     col.text("prod_std", CN.prod_std, true, C.U, C.WIDTH_MIDDLE),
     col.list("unit_id", "unit_nm", CN.unit_nm, unitList, true, C.WIDTH_SUPER_SHORT),
+    col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
+    col.select("store_nm", CN.inv_to_store_nm, true),
+    col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
+    col.select("location_nm", CN.inv_to_location_nm, true),
     col.check("lot_fg", CN.lot_fg, true, C.U, true),
     col.check("use_fg", CN.use_fg, true),
     col.check("active_fg", CN.active_fg, true, C.U, true),
@@ -112,6 +119,12 @@ function ProductSet(
     col.check("prd_active_fg", CN.prd_active_fg, true, C.U, true),
     col.number("prd_min", CN.prd_min, true, C.U, true),
     col.number("prd_max", CN.prd_max, true, C.U, true),
+  ];
+  const columnSelect = [
+    col.id("store_id", CN.store_id, C.HIDDEN_ID),
+    col.text("store_nm", CN.store_nm),
+    col.id("location_id", CN.location_id, C.HIDDEN_ID),
+    col.text("location_nm", CN.location_nm),
   ];
   const columnOptions = {
     resizable: true,
@@ -165,6 +178,7 @@ function ProductSet(
     data,
     columns,
     columnsModal,
+    columnSelect,
     columnOptions,
     rowHeaders,
     rowHeadersModal,
