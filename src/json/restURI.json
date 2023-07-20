@@ -137,5 +137,7 @@
   "prdPackingInputWeight": "/prd/packing-input/reference-weigh",
   "prdPackingInput": "/prd/packing-input",
   "prdPackingInputOnly": "/prd/packing/only-input",
-  "prdPackingInputCancel": "/prd/packing/{id}/cancel"
+  "prdPackingInputCancel": "/prd/packing/{id}/cancel",
+
+  "stdEmpLatest": "/std/emp/latest"
 }

@@ -180,8 +180,9 @@ function WeightPanel() {
       }
     }
   };
-  const handleInputSaveInfo = (rowKey) => {
+  const handleInputSaveInfo = async (rowKey) => {
     const Header = refGridInput?.current?.gridInst;
+    const latestEmp = await restAPI.get(restURI.stdEmpLatest + `?line_id=${selectInputInfo.lineID}&type=INPUT`);
 
     setSelectInputInfo({
       ...selectInputInfo,
@@ -192,8 +193,8 @@ function WeightPanel() {
       storeNM: Header.getValue(rowKey, "store_nm"),
       locationID: Header.getValue(rowKey, "inv_to_location_id"),
       locationNM: Header.getValue(rowKey, "location_nm"),
-      empID: "",
-      empNM: "",
+      empID: latestEmp?.data?.data?.rows[0]?.emp_id,
+      empNM: latestEmp?.data?.data?.rows[0]?.emp_nm,
       startDate: DateTime().dateFull,
       nowTime: DateTime().hour + ":" + DateTime().minute,
     });
@@ -236,6 +237,12 @@ function WeightPanel() {
       try {
         const result = await restAPI.get(restURI.prdOrderInput + `?work_order_id=${selectInputInfo.workOrderID}`);
         setGridDataWeight(result?.data?.data?.rows);
+        const latestEmp = await restAPI.get(restURI.stdEmpLatest + `?line_id=${selectInputInfo.lineID}&type=WEIGH`);
+        setSelectInputInfo({
+          ...selectInputInfo,
+          empID: latestEmp?.data?.data?.rows[0]?.emp_id,
+          empNM: latestEmp?.data?.data?.rows[0]?.emp_nm,
+        });
         setIsModalWeightOpen(true);
       } catch (err) {
         setIsSnackOpen({
