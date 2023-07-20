@@ -634,7 +634,7 @@ function Packing() {
     }
   };
   const onDblClickModalGrid = (e) => {
-    if (Condition(e, ["work_order_no", "line_dept_nm", "line_nm", "prod_cd", "prod_nm"])) {
+    if (Condition(e, ["work_order_no", "line_dept_nm", "line_nm", "prod_cd", "prod_nm", "prod_std"])) {
       targetGrid.current = "Order";
       targetRowKey.current = e?.rowKey;
       setIsModalSelectDateOpen(true);
@@ -656,7 +656,7 @@ function Packing() {
     }
   };
   const onDblClickModalDetailGrid = (e) => {
-    if (Condition(e, ["prod_cd", "prod_nm", "lot_no", "store_nm", "location_nm"])) {
+    if (Condition(e, ["prod_cd", "prod_nm", "prod_std", "lot_no", "store_nm", "location_nm"])) {
       targetGrid.current = "Weight";
       targetRowKey.current = e?.rowKey;
       setIsModalSelectMultiOpen(true);
@@ -721,6 +721,7 @@ function Packing() {
     Grid?.setValue(targetRowKey.current, "prod_id", data.prod_id);
     Grid?.setValue(targetRowKey.current, "prod_cd", data.prod_cd);
     Grid?.setValue(targetRowKey.current, "prod_nm", data.prod_nm);
+    Grid?.setValue(targetRowKey.current, "prod_std", data.prod_std);
     Grid?.setValue(targetRowKey.current, "lot_no", data.lot_no);
     // Grid?.setValue(targetRowKey.current, "input_qty", data.total_qty);
     Grid?.setValue(targetRowKey.current, "inv_to_store_id", data.inv_to_store_id);
@@ -769,6 +770,7 @@ function Packing() {
       Grid?.setValue(targetRowKey.current, "prod_id", data.prod_id);
       Grid?.setValue(targetRowKey.current, "prod_cd", data.prod_cd);
       Grid?.setValue(targetRowKey.current, "prod_nm", data.prod_nm);
+      Grid?.setValue(targetRowKey.current, "prod_std", data.prod_std);
       Grid?.setValue(targetRowKey.current, "inv_to_store_id", data.inv_to_store_id);
       Grid?.setValue(targetRowKey.current, "store_nm", data.store_nm);
       Grid?.setValue(targetRowKey.current, "inv_to_location_id", data.inv_to_location_id);

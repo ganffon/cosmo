@@ -909,6 +909,7 @@ function InspDocument() {
           severity: "success",
           location: "bottomRight",
         });
+        handleReSearch("input");
         setIsAddInputOpen(false);
       }
     } catch (err) {
@@ -942,6 +943,7 @@ function InspDocument() {
           severity: "success",
           location: "bottomRight",
         });
+        handleReSearch("detail");
         setIsAddDetailOpen(false);
       }
     } catch (err) {

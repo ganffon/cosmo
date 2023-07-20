@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  createRef,
-} from "react";
+import { useContext, useState, useEffect, useRef, useMemo, createRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
@@ -117,6 +110,7 @@ function EquipmentResult() {
     prodId: "",
     prodCd: "",
     prodNm: "",
+    prodStd: "",
     orderId: "",
     orderNo: "",
     mngEmpId: "",
@@ -245,6 +239,7 @@ function EquipmentResult() {
       prodId: "",
       prodCd: "",
       prodNm: "",
+      prodStd: "",
       orderId: "",
       orderNo: "",
       mngEmpId: "",
@@ -309,13 +304,8 @@ function EquipmentResult() {
       setIsResultNewOpen(true);
       try {
         setIsBackDrop(true);
-        const result = await restAPI.get(
-          restURI.qmsInspResultDetail +
-            `?insp_result_id=${mainInfo.inspResultId}`
-        );
-        const employeeResult = await restAPI.get(
-          restURI.inspResultEmp + `?insp_result_id=${mainInfo.inspResultId}`
-        );
+        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${mainInfo.inspResultId}`);
+        const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${mainInfo.inspResultId}`);
 
         empListTemp.current = employeeResult?.data?.data?.rows;
 
@@ -377,15 +367,9 @@ function EquipmentResult() {
       try {
         setIsBackDrop(true);
         let conditionLine, conditionProdCd, conditionProdNm;
-        inputTextChange.line_nm
-          ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
-          : (conditionLine = "");
-        inputTextChange.prod_cd
-          ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`)
-          : (conditionProdCd = "");
-        inputTextChange.prod_nm
-          ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`)
-          : (conditionProdNm = "");
+        inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
+        inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
+        inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -407,6 +391,7 @@ function EquipmentResult() {
           prodId: "",
           prodCd: "",
           prodNm: "",
+          prodStd: "",
           orderId: "",
           orderNo: "",
           tagId: "",
@@ -450,6 +435,7 @@ function EquipmentResult() {
           prodId: Grid.getValue(e?.rowKey, "prod_id"),
           prodCd: Grid.getValue(e?.rowKey, "prod_cd"),
           prodNm: Grid.getValue(e?.rowKey, "prod_nm"),
+          prodStd: Grid.getValue(e?.rowKey, "prod_std"),
           orderId: Grid.getValue(e?.rowKey, "work_order_id"),
           orderNo: Grid.getValue(e?.rowKey, "work_order_no"),
           tagId: Grid.getValue(e?.rowKey, "tag_id"),
@@ -457,9 +443,7 @@ function EquipmentResult() {
         });
         const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
 
-        const employeeResult = await restAPI.get(
-          restURI.inspResultEmp + `?insp_result_id=${inspResultId}`
-        );
+        const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${inspResultId}`);
 
         empListTemp.current = employeeResult?.data?.data?.rows;
 
@@ -474,18 +458,13 @@ function EquipmentResult() {
 
         try {
           setIsBackDrop(true);
-          const result = await restAPI.get(
-            restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`
-          );
+          const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
 
           setGridDataDetail(result?.data?.data?.rows);
 
           for (let i = 0; i < tabListTmp.current.length; i++) {
             for (let j = 0; j < result?.data?.data?.rows.length; j++) {
-              if (
-                tabListTmp.current[i] ===
-                result?.data?.data?.rows[j].insp_filing_id
-              ) {
+              if (tabListTmp.current[i] === result?.data?.data?.rows[j].insp_filing_id) {
                 //detailDataList[i].push(result?.data?.data?.rows[j]);
               }
             }
@@ -516,24 +495,12 @@ function EquipmentResult() {
     tabListArr = [];
     let bacListIdArr = [];
     for (let i = 0; i < tabListTmp?.current?.data?.data?.rows.length; i++) {
-      if (
-        tabListArr.indexOf(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm === -1
-        )
-      ) {
-        tabListArr.push(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm
-        );
+      if (tabListArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm === -1)) {
+        tabListArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm);
       }
 
-      if (
-        bacListIdArr.indexOf(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_id === -1
-        )
-      ) {
-        bacListIdArr.push(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_id
-        );
+      if (bacListIdArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_id === -1)) {
+        bacListIdArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_id);
       }
     }
 
@@ -660,6 +627,7 @@ function EquipmentResult() {
       prodId: Grid.getValue(e?.rowKey, "prod_id"),
       prodCd: Grid.getValue(e?.rowKey, "prod_cd"),
       prodNm: Grid.getValue(e?.rowKey, "prod_nm"),
+      prodStd: Grid.getValue(e?.rowKey, "prod_std"),
       orderId: Grid.getValue(e?.rowKey, "work_order_id"),
       orderNo: Grid.getValue(e?.rowKey, "work_order_no"),
     });
@@ -667,8 +635,7 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrderDetail +
-          `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
+        restURI.prdOrderDetail + `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
       );
       setGridDataNew(result?.data?.data?.rows);
     } catch (err) {
@@ -803,10 +770,7 @@ function EquipmentResult() {
         };
 
         try {
-          const result = await restAPI.put(
-            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
-            query
-          );
+          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -936,11 +900,7 @@ function EquipmentResult() {
     <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
-          <DateRange
-            dateText={dateText}
-            setDateText={setDateText}
-            onClickSearch={onClickSearch}
-          />
+          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
           <InputSearch
             id={"line_nm"}
             name={"라인명"}
@@ -995,15 +955,7 @@ function EquipmentResult() {
 
             <S.InfoWrap>
               {inputInfo.map((v, idx) => {
-                return (
-                  <InputPaper
-                    key={v.id}
-                    id={v.id}
-                    name={v.name}
-                    width={"220px"}
-                    value={mainInfo[v.id] || ""}
-                  />
-                );
+                return <InputPaper key={v.id} id={v.id} name={v.name} width={"220px"} value={mainInfo[v.id] || ""} />;
               })}
             </S.InfoWrap>
             {GridTab}
