@@ -26,6 +26,7 @@ function PackingInputSet(onCancelYield) {
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
+    col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE),
     col.date("work_packing_date", CN.work_packing_date),
     col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
     col.number("packing_complete_qty", CN.packing_complete_qty),
@@ -50,6 +51,7 @@ function PackingInputSet(onCancelYield) {
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
+    col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE),
   ];
   const columnsModal = [
     col.text("line_cd", CN.line_cd, true),

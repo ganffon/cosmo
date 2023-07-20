@@ -173,10 +173,16 @@ function ProductionPackingView() {
     setIsBackDrop(true);
     try {
       let conditionProdID, conditionLineID;
-      prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
       comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
 
-      let readURI = restURI.prdPacking + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionProdID + conditionLineID;
+      let readURI =
+        restURI.prdPacking +
+        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+        conditionProdID +
+        conditionLineID;
 
       let gridData = await restAPI.get(readURI);
 
@@ -222,7 +228,9 @@ function ProductionPackingView() {
     try {
       setIsBackDrop(true);
       let conditionProdID, conditionLineID;
-      prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
       comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
 
       let readURI =
@@ -324,7 +332,7 @@ function ProductionPackingView() {
         </S.ButtonTop>
       </S.SearchCondition>
       <S.ContentWrap>
-        <S.TitleMid>투입 품목</S.TitleMid>
+        <S.TitleMid>포장 실적</S.TitleMid>
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}

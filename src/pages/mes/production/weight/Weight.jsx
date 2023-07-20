@@ -303,7 +303,7 @@ function Weight() {
     //🔸Select Grid에서 DblClick
     let refGrid;
     let columnName;
-    const columnNameProd = ["prod_id", "prod_cd", "prod_nm"];
+    const columnNameProd = ["prod_id", "prod_cd", "prod_nm", "prod_std"];
     const columnNameModalHeader = [
       "work_order_id",
       "work_order_no",
@@ -315,6 +315,7 @@ function Weight() {
       "prod_id",
       "prod_cd",
       "prod_nm",
+      "prod_std",
       "inv_to_store_id",
       "store_nm",
       "inv_to_location_id",
@@ -463,6 +464,7 @@ function Weight() {
           "prod_id",
           "prod_cd",
           "prod_nm",
+          "prod_std",
         ])
       ) {
         setDblClickRowKey(e?.rowKey);
