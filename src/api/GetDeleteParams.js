@@ -287,6 +287,21 @@ class inspectionResultUpload {
     this.insp_result_upload_id = raw.insp_result_upload_id;
   }
 }
+class inspDocument {
+  constructor(raw) {
+    this.insp_document_id = raw.insp_document_id;
+  }
+}
+class inspDocumentInput {
+  constructor(raw) {
+    this.insp_document_input_id = raw.insp_document_input_id;
+  }
+}
+class inspDocumentDetail {
+  constructor(raw) {
+    this.insp_document_detail_id = raw.insp_document_detail_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -469,10 +484,18 @@ function GetDeleteParams(componentName, raw) {
     case "inspectionResultUpload":
       params = new inspectionResultUpload(raw);
       break;
+    case "inspDocument":
+      params = new inspDocument(raw);
+      break;
+    case "inspDocumentInput":
+      params = new inspDocumentInput(raw);
+      break;
+    case "inspDocumentDetail":
+      params = new inspDocumentDetail(raw);
+      break;
 
     default:
   }
-
   return params;
 }
 

@@ -66,28 +66,6 @@ const Dashboard = () => {
     refSecondGrid?.current?.gridInst?.refreshLayout();
     // addDivToHeader();
   }, [isMenuSlide]);
-  // const addDivToHeader = () => {
-  //   const e1PerformanceTh = document.querySelector('th[data-column-name="e1_performance"]');
-  //   if (e1PerformanceTh && e1PerformanceTh.children.length === 0) {
-  //     e1PerformanceTh.textContent = "";
-  //     const div = document.createElement("pre");
-  //     div.className = "multiLine";
-  //     div.style.whiteSpace = "pre-wrap";
-  //     div.textContent = "생산\n량";
-  //     e1PerformanceTh.appendChild(div);
-  //   }
-  // };
-  const columnsGoal = [
-    {
-      header: "생산량",
-      name: "e1_performance",
-    },
-    { header: "목표량", name: "e1_target" },
-    { header: "생산량", name: "e2_performance" },
-    { header: "목표량", name: "e2_target" },
-    { header: "생산량", name: "e3_performance" },
-    { header: "목표량", name: "e3_target" },
-  ];
   const getTimeHeader = () => ({
     height: 80,
     complexColumns: [
@@ -140,6 +118,7 @@ const Dashboard = () => {
       });
   };
   const cOptions = {
+    colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)"],
     plotOptions: {
       // 차트 시각화 옵션
       bar: {
@@ -155,7 +134,67 @@ const Dashboard = () => {
       enabled: true,
     },
   };
-
+  const stackedOptions = {
+    colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)", "rgb(233, 204, 71)", "rgb(225, 73, 124)"],
+    // colors: [function({ value, seriesIndex, w }) {
+    //   if (value < 55) {
+    //       return '#7E36AF'
+    //   } else {
+    //       return '#D9534F'
+    //   }
+    // }, function({ value, seriesIndex, w }) {
+    //   if (value < 111) {
+    //       return '#7E36AF'
+    //   } else {
+    //       return '#D9534F'
+    //   }
+    // }]
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        borderRadius: 10,
+        columnWidth: "60%", // 막대 너비
+        dataLabels: {
+          total: {
+            enabled: true,
+            style: {
+              fontSize: "13px",
+              fontWeight: 900,
+            },
+          },
+        },
+      },
+    },
+    dataLabels: {
+      style: {
+        colors: ["black"],
+      },
+      enabled: true,
+    },
+    chart: {
+      type: "bar",
+      height: 350,
+      stacked: true,
+      toolbar: {
+        show: true,
+      },
+      zoom: {
+        enabled: true,
+      },
+    },
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          legend: {
+            position: "bottom",
+            offsetX: -10,
+            offsetY: 0,
+          },
+        },
+      },
+    ],
+  };
   const renderLine = (index) => <S.LineStateHeader>E{index + 1} Line</S.LineStateHeader>;
   const handleImgClick = () => {
     setIsClicked(!isClicked);
@@ -202,25 +241,6 @@ const Dashboard = () => {
       </S.LineStateBorder>
     ) : null;
   };
-
-  const RadialBarChart = ({ data }) => {
-    const options = {
-      plotOptions: {
-        radialBar: {
-          hollow: {
-            size: "70%",
-          },
-        },
-      },
-    };
-
-    return (
-      <div>
-        <Chart options={options} series={data} type="radialBar" height={350} />
-      </div>
-    );
-  };
-
   const RenderWorker = (name) => {
     return (
       <S.WorkerBorder backgroundColor={"#FCFCFC"} borderColor={"#D9D9D9"}>
@@ -241,6 +261,77 @@ const Dashboard = () => {
     );
   };
 
+  // console.log(responseData.data.rows[0].line_work_status.graph);
+  const stackedTmpData = [
+    {
+      name: "반제품",
+      data: [
+        {
+          x: "E1",
+          y: 1753,
+        },
+        {
+          x: "E2",
+          y: 0,
+        },
+        {
+          x: "E3",
+          y: 0,
+        },
+      ],
+    },
+    {
+      name: "전구체",
+      data: [
+        {
+          x: "E1",
+          y: 1753,
+        },
+        {
+          x: "E2",
+          y: 1356,
+        },
+        {
+          x: "E3",
+          y: 1234,
+        },
+      ],
+    },
+    {
+      name: "리튬",
+      data: [
+        {
+          x: "E1",
+          y: 3987,
+        },
+        {
+          x: "E2",
+          y: 3022,
+        },
+        {
+          x: "E3",
+          y: 3012,
+        },
+      ],
+    },
+    {
+      name: "첨가제",
+      data: [
+        {
+          x: "2023-07-15",
+          y: 700,
+        },
+        {
+          x: "2023-07-16",
+          y: 654,
+        },
+        {
+          x: "2023-07-17",
+          y: 606,
+        },
+      ],
+    },
+  ];
   const gridOptions = {
     theme: "default",
   };
@@ -265,10 +356,7 @@ const Dashboard = () => {
             <S.Title>실시간 생산 담당자</S.Title>
             <S.LeftBottom>
               <S.GridContainer>
-                {workerData &&
-                  workerData.map((worker, index) => (
-                    <React.Fragment key={index}>{RenderWorker(worker.emp_nm)}</React.Fragment>
-                  ))}
+                {workerData && workerData.map((worker, index) => <React.Fragment key={index}>{RenderWorker(worker.emp_nm)}</React.Fragment>)}
               </S.GridContainer>
             </S.LeftBottom>
           </S.EmpStatusWrap>
@@ -277,26 +365,25 @@ const Dashboard = () => {
           <S.RightTop>
             <S.Title>최근 라인 비가동 정보</S.Title>
             <S.GridWrap>
-              {downtime && (
-                <GridSingle columns={columnsDownTime} data={downtime} options={gridOptions} refGrid={refSingleGrid} />
-              )}
+              {downtime && <GridSingle columns={columnsDownTime} data={downtime} options={gridOptions} refGrid={refSingleGrid} />}
             </S.GridWrap>
           </S.RightTop>
           <S.RightBottom>
-            <S.Title>
-              EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
-            </S.Title>
-            <S.ChartWrap>
-              {responseData && (
-                <Chart
-                  options={cOptions}
-                  type="bar"
-                  height={200}
-                  series={responseData.data.rows[0].line_work_status.graph}
-                />
-              )}
-            </S.ChartWrap>
-            <S.RBGridWrap>
+            <S.GridContainer2>
+              <S.ChartWrap>
+                <S.Title>
+                  EV 라인 투입량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+                </S.Title>
+                {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={stackedTmpData} />}
+              </S.ChartWrap>
+              <S.ChartWrap>
+                <S.Title>
+                  EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+                </S.Title>
+                {responseData && <Chart options={cOptions} type="bar" height={"85%"} series={responseData.data.rows[0].line_work_status.graph} />}
+              </S.ChartWrap>
+            </S.GridContainer2>
+            {/* <S.RBGridWrap>
               {responseData && (
                 <GridSingle
                   header={complexColumns}
@@ -305,7 +392,7 @@ const Dashboard = () => {
                   refGrid={refSecondGrid}
                 />
               )}
-            </S.RBGridWrap>
+            </S.RBGridWrap> */}
           </S.RightBottom>
         </S.Right>
         <BackDrop isBackDrop={isBackDrop} />

@@ -29,11 +29,11 @@ class CheckBox {
 class Button {
   constructor(props) {
     const el = document.createElement("button");
-    const elName = props.columnInfo.renderer.options.name;
+    // const elName = props.columnInfo.renderer.options.name;
     const disabled = props.columnInfo.renderer.options.disabled;
     el.type = "button";
     el.className = "customButton";
-    el.innerText = elName;
+    // el.innerText = elName;
     el.disabled = disabled;
     el.onclick = (e) => {
       const rowKey = el.parentElement.__preactattr_["data-row-key"];
@@ -53,7 +53,14 @@ class Button {
   }
 
   render(props) {
-    this.el.checked = Boolean(props.value); //🔸BE에서 받아온 데이터에 따라 체크표시 유무
+    const value = props.value;
+    const elName = props.columnInfo.renderer.options.name;
+    const elName2 = props.columnInfo.renderer.options.name2;
+    if (elName2 === "") {
+      this.el.innerText = elName;
+    } else {
+      this.el.innerText = value ? elName : elName2;
+    }
   }
 }
 

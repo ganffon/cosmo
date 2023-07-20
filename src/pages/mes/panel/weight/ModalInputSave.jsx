@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import GridModal from "components/grid/GridModal";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "./ModalInputSave.styled";
 import InputPaper from "components/input/InputPaper";
+import * as RE from "custom/RegularExpression";
 
 function ModalInputSave(props) {
   const {
@@ -16,12 +16,19 @@ function ModalInputSave(props) {
     onClickRemoveStore = () => {},
     onClickInputSave = () => {},
     onClickNowTime = () => {},
-    nowDateTime = {},
     setSelectInputInfo = () => {},
     selectInputInfo = {},
     refCheck = null,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
+
+  const datePickerChange = (e) => {
+    setSelectInputInfo({ ...selectInputInfo, [e.target.id]: e.target.value });
+  };
+
+  const handleNowTime = (e) => {
+    setSelectInputInfo({ ...selectInputInfo, [e.target.id]: RE.TimeInput(e.target.value) });
+  };
 
   return (
     <S.ModalWrapBox width={width} height={height}>
@@ -112,21 +119,33 @@ function ModalInputSave(props) {
               onClickRemove={onClickRemove}
             />
             <S.InfoTitle>투입일시</S.InfoTitle>
-            <InputPaper
+            <S.DatePicker
+              id="startDate"
+              className="date"
+              type="date"
+              format="yyyy-MM-dd"
+              value={selectInputInfo.startDate}
+              InputProps={{ sx: { height: 60 } }}
+              onChange={datePickerChange}
+            />
+            {/* <InputPaper
               width={"200px"}
               height={"60px"}
               nameColor={"black"}
               value={nowDateTime.nowDate || ""}
               size={"30px"}
               btn={false}
-            />
+            /> */}
             <InputPaper
+              id={"nowTime"}
               width={"120px"}
               height={"60px"}
               nameColor={"black"}
-              value={nowDateTime.nowTime || ""}
+              value={selectInputInfo.nowTime || ""}
               size={"30px"}
               btn={false}
+              readOnly={false}
+              onTextChange={handleNowTime}
             />
             <S.ButtonTime color={"#28a745"} hoverColor={"#218838"} onClick={onClickNowTime} width={"120px"}>
               현재시간

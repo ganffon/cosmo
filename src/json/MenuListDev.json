@@ -232,6 +232,12 @@
             "id": "control-plan",
             "path": "control-plan",
             "under": null
+          },
+          {
+            "name": "✴️관리계획서",
+            "id": "insp-document",
+            "path": "insp-document",
+            "under": null
           }
         ]
       },
@@ -578,6 +584,12 @@
             "name": "품목별생산량",
             "id": "monthly-part-capa",
             "path": "monthly-part-capa",
+            "under": null
+          },
+          {
+            "name": "투입/생산",
+            "id": "daily-line-input-capa",
+            "path": "daily-line-input-capa",
             "under": null
           }
         ]

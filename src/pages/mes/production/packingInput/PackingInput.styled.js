@@ -106,16 +106,6 @@ export const SubTitle = styled("div")`
 export const GridWrap = styled("div")`
   width: 100%;
   height: calc(100% - 60px);
-  .redText {
-    color: red;
-    font-weight: 900;
-    font-size: 16px;
-  }
-  .blueText {
-    color: blue;
-    font-weight: 900;
-    font-size: 16px;
-  }
 `;
 export const GridWrapReport = styled("div")`
   width: 100%;

@@ -34,7 +34,10 @@
   "inspItem": "/std/insp-item",
   "inspDocument": "/std/insp-document",
   "inspDocumentDetail": "/std/insp-document-detail",
+  "inspDocumentInput": "/std/insp-document-input",
   "inspDocumentDetailIncludeHeader": "/std/insp-document/include-details",
+  "inspDocumentApply": "/std/insp-document/{id}/apply",
+  "inspDocumentCancel": "/std/insp-document/{id}/cancel",
 
   "infcItemType": "/std/infc-item-type",
   "infcItem": "/std/infc-item",
