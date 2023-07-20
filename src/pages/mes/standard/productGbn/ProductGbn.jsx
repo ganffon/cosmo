@@ -215,7 +215,19 @@ function ProductGbn(props) {
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         <S.ButtonWrap>
-          <BtnComponent btnName={"DataLoad"} onClick={loadData} toolTipTitle={"productButton"} />
+          {/* <BtnComponent btnName={"DataLoad"} onClick={loadData} toolTipTitle={"productButton"} /> */}
+          {isEditMode ? (
+            <>
+              <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+              <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+            </>
+          ) : (
+            <>
+              <BtnComponent btnName={"New"} onClick={onClickNew} />
+              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            </>
+          )}
         </S.ButtonWrap>
         <S.GridWrap>
           <GridSingle
