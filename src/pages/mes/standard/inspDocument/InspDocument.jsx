@@ -532,6 +532,7 @@ function InspDocument() {
         severity: "success",
         location: "bottomRight",
       });
+      onSearch();
       setIsNewDocumentOpen(false);
     } catch (err) {
       setIsSnackOpen({
@@ -544,58 +545,60 @@ function InspDocument() {
     }
   };
   const onClickHeader = async (e) => {
-    if (!isEditModeHeader) {
-      const Grid = refGridHeader?.current?.gridInst;
-      searchRowID.current = Grid.getValue(e?.rowKey, "insp_document_id");
-      const inputInfoValueList = [
-        "insp_document_no",
-        "line_nm",
-        "prod_cd",
-        "prod_nm",
-        "insp_document_reg_date",
-        "apply_date",
-        "apply_fg",
-        "contents",
-        "remark",
-      ];
-      if (searchRowKey.current !== e?.rowKey) {
-        if (searchRowID.current !== "") {
-          searchRowKey.current = e?.rowKey;
-          setInputInfoValue([]);
-          for (let i = 0; i < inputInfoValueList.length; i++) {
-            let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
-            if (data === false) {
-              //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
-              data = "미적용";
-            } else if (data === true) {
-              data = "적용";
+    if (e?.targetType === "cell") {
+      if (!isEditModeHeader) {
+        const Grid = refGridHeader?.current?.gridInst;
+        searchRowID.current = Grid.getValue(e?.rowKey, "insp_document_id");
+        const inputInfoValueList = [
+          "insp_document_no",
+          "line_nm",
+          "prod_cd",
+          "prod_nm",
+          "insp_document_reg_date",
+          "apply_date",
+          "apply_fg",
+          "contents",
+          "remark",
+        ];
+        if (searchRowKey.current !== e?.rowKey) {
+          if (searchRowID.current !== "") {
+            searchRowKey.current = e?.rowKey;
+            setInputInfoValue([]);
+            for (let i = 0; i < inputInfoValueList.length; i++) {
+              let data = e?.instance.getValue(e?.rowKey, inputInfoValueList[i]);
+              if (data === false) {
+                //🔸false 인 경우 데이터 안찍혀서 강제로 찍음
+                data = "미적용";
+              } else if (data === true) {
+                data = "적용";
+              }
+              setInputInfoValue((prevList) => {
+                return [...prevList, data];
+              });
             }
-            setInputInfoValue((prevList) => {
-              return [...prevList, data];
+          }
+
+          try {
+            setIsBackDrop(true);
+            const result = await restAPI.get(restURI.inspDocumentInput + `?insp_document_id=${searchRowID.current}`);
+            setGridDataInput(result?.data?.data?.rows);
+            const result2 = await restAPI.get(restURI.inspDocumentDetail + `?insp_document_id=${searchRowID.current}`);
+            setGridDataDetail(result2?.data?.data?.rows);
+          } catch (err) {
+            setIsSnackOpen({
+              ...isSnackOpen,
+              open: true,
+              message: err?.response?.data?.message,
+              severity: "error",
+              location: "bottomRight",
             });
+          } finally {
+            setIsBackDrop(false);
           }
         }
-
-        try {
-          setIsBackDrop(true);
-          const result = await restAPI.get(restURI.inspDocumentInput + `?insp_document_id=${searchRowID.current}`);
-          setGridDataInput(result?.data?.data?.rows);
-          const result2 = await restAPI.get(restURI.inspDocumentDetail + `?insp_document_id=${searchRowID.current}`);
-          setGridDataDetail(result2?.data?.data?.rows);
-        } catch (err) {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: err?.response?.data?.message,
-            severity: "error",
-            location: "bottomRight",
-          });
-        } finally {
-          setIsBackDrop(false);
-        }
+      } else {
+        disRow.handleClickGridCheck(e, isEditModeHeader, ["apply_fg"]);
       }
-    } else {
-      disRow.handleClickGridCheck(e, isEditModeHeader, ["apply_fg"]);
     }
   };
   const onEditingFinishHeader = (e) => {
@@ -906,6 +909,7 @@ function InspDocument() {
           severity: "success",
           location: "bottomRight",
         });
+        setIsAddInputOpen(false);
       }
     } catch (err) {
       setIsSnackOpen({
@@ -938,6 +942,7 @@ function InspDocument() {
           severity: "success",
           location: "bottomRight",
         });
+        setIsAddDetailOpen(false);
       }
     } catch (err) {
       setIsSnackOpen({
@@ -995,6 +1000,8 @@ function InspDocument() {
         switch (deleteFlag) {
           case "header":
             handleReSearch("header");
+            setGridDataInput([]);
+            setGridDataDetail([]);
             searchRowID.current = "";
             searchRowKey.current = "";
             break;
