@@ -43,24 +43,6 @@ function ModalWeight(props) {
   const weight = useRef(1);
   const constantValue = useRef(0);
 
-  useEffect(() => {
-    const Grid = refGridWeight?.current?.gridInst;
-    const stdQty = Grid.getRowAt(0).spec_std;
-    const totQty = Grid.getRowAt(0).input_qty;
-    for (let i = 1; i < Grid?.getRowCount(); i++) {
-      let eachQty = Grid.getRowAt(i).spec_std;
-      let eachBag = Grid.getRowAt(i).bag_qty;
-      const tmpQty = Math.round(((eachQty * totQty) / stdQty) * 1000) / 1000;
-      const tmpMinusBagQty = Math.round(((eachQty * totQty) / stdQty - eachBag) * 1000) / 1000;
-      Grid?.setValue(i, "total_qty", tmpQty);
-      Grid?.setValue(i, "input_qty", tmpMinusBagQty);
-    }
-  }, [refGridWeight?.current?.gridInst.getRowAt(0).input_qty, refGridWeight?.current?.gridInst.getRowAt(0).total_qty]);
-
-  const onClickReadOnly = () => {
-    setIsBarcodeScanOpen(true);
-  };
-
   const onCloseBarcodeScan = () => {
     targetRowKey.current = "";
     tagID.current = "";

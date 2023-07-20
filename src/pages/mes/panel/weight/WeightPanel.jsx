@@ -38,10 +38,6 @@ function WeightPanel() {
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
   });
-  const [nowDateTime, setNowDateTime] = useState({
-    nowDate: DateTime().dateFull,
-    nowTime: DateTime().hour + ":" + DateTime().minute,
-  });
 
   const refBarcodeScan = useRef(null);
   const refBarcodeTimeStamp = useRef(null);
@@ -83,7 +79,9 @@ function WeightPanel() {
       prodCD: "",
       prodNM: "",
     });
-    setSelectInputInfo({ workOrderID: "" });
+    setSelectInputInfo({
+      workOrderID: "",
+    });
   };
   const resetEmp = () => {
     setSelectInputInfo({
@@ -99,6 +97,8 @@ function WeightPanel() {
       storeNM: "",
       locationID: "",
       locationNM: "",
+      startDate: DateTime().dateFull,
+      nowTime: DateTime().hour + ":" + DateTime().minute,
     });
   };
 
@@ -155,9 +155,9 @@ function WeightPanel() {
   );
 
   const onClickNowTime = () => {
-    setNowDateTime({
-      ...nowDateTime,
-      nowDate: DateTime().dateFull,
+    setSelectInputInfo({
+      ...selectInputInfo,
+      startDate: DateTime().dateFull,
       nowTime: DateTime().hour + ":" + DateTime().minute,
     });
   };
@@ -194,11 +194,7 @@ function WeightPanel() {
       locationNM: Header.getValue(rowKey, "location_nm"),
       empID: "",
       empNM: "",
-    });
-
-    setNowDateTime({
-      ...nowDateTime,
-      nowDate: DateTime().dateFull,
+      startDate: DateTime().dateFull,
       nowTime: DateTime().hour + ":" + DateTime().minute,
     });
   };
@@ -226,9 +222,9 @@ function WeightPanel() {
   };
   const onClickInput = async () => {
     if (selectInputInfo.workOrderID) {
-      setNowDateTime({
-        ...nowDateTime,
-        nowDate: DateTime().dateFull,
+      setSelectInputInfo({
+        ...selectInputInfo,
+        startDate: DateTime().dateFull,
         nowTime: DateTime().hour + ":" + DateTime().minute,
       });
       setGridDataInputDetail([]);
@@ -456,6 +452,18 @@ function WeightPanel() {
       } else {
         Grid?.setValue(e?.rowKey, "input_qty", beforeQty);
       }
+      if (e?.rowKey === 0) {
+        const stdQty = Grid.getRowAt(0).spec_std;
+        const totQty = Grid.getRowAt(0).input_qty;
+        for (let i = 1; i < Grid?.getRowCount(); i++) {
+          let eachQty = Grid.getRowAt(i).spec_std;
+          let eachBag = Grid.getRowAt(i).bag_qty;
+          const tmpQty = Math.round(((eachQty * totQty) / stdQty) * 1000) / 1000;
+          const tmpMinusBagQty = Math.round(((eachQty * totQty) / stdQty - eachBag) * 1000) / 1000;
+          Grid?.setValue(i, "total_qty", tmpQty);
+          Grid?.setValue(i, "input_qty", tmpMinusBagQty);
+        }
+      }
     }
     if (Condition(e, ["bag_qty"])) {
       const beforeQty = Grid.getValue(e?.rowKey, "total_qty");
@@ -482,8 +490,8 @@ function WeightPanel() {
     if (selectInputInfo.storeID) {
       if (selectInputInfo.empNM) {
         const raw = {
-          work_input_date: nowDateTime.nowDate,
-          work_input_time: nowDateTime.nowTime,
+          work_input_date: selectInputInfo.startDate,
+          work_input_time: selectInputInfo.nowTime,
           inv_to_store_id: selectInputInfo.storeID,
           inv_to_location_id: selectInputInfo.locationID,
           input_emp_id: selectInputInfo.empID,
@@ -733,7 +741,7 @@ function WeightPanel() {
           onClickGridInput={onClickGridInput}
         />
       ) : null}
-      {isModalInputSaveOpen ? (
+      {isModalInputSaveOpen && (
         <ModalInputSave
           onClickModalClose={onClickInputSaveClose}
           onClickSelect={onClickSelect}
@@ -743,12 +751,11 @@ function WeightPanel() {
           onClickInputSave={onClickInputSave}
           onClickNowTime={onClickNowTime}
           onClickGridInput={onClickGridInput}
-          nowDateTime={nowDateTime}
           setSelectInputInfo={setSelectInputInfo}
           selectInputInfo={selectInputInfo}
           refCheck={refCheck}
         />
-      ) : null}
+      )}
       {isModalSelectOpen ? (
         <ModalSelect
           width={modalSelectSize.width}

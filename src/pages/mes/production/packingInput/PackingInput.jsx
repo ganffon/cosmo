@@ -55,7 +55,7 @@ function PackingInput(props) {
     const lastRowKey = Grid.getRowCount() - 1;
     if (rowKey === String(lastRowKey)) {
       const completeFlag = Grid.getValue(rowKey, "complete_fg");
-      if (completeFlag === "완료") {
+      if (completeFlag === true) {
         try {
           setIsBackDrop(true);
           const ID = Grid.getValue(rowKey, "work_packing_id");
@@ -137,10 +137,10 @@ function PackingInput(props) {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.prdPackingInputOnly + `?line_id=${lineId}`);
-      const data = result?.data?.data?.rows.map((data) =>
-        data.complete_fg === false ? { ...data, complete_fg: "미완료" } : { ...data, complete_fg: "완료" }
-      );
-      setPackingGridData(data);
+      // const data = result?.data?.data?.rows.map((data) =>
+      //   data.complete_fg === false ? { ...data, complete_fg: "미완료" } : { ...data, complete_fg: "완료" }
+      // );
+      setPackingGridData(result?.data?.data?.rows);
 
       setIsSnackOpen({
         ...isSnackOpen,
@@ -338,17 +338,6 @@ function PackingInput(props) {
       onYieldCalc();
     }
   };
-
-  useEffect(() => {
-    const Grid = refPackingGrid?.current?.gridInst;
-    const lastRowKey = Grid.getRowCount() - 1;
-    if (Grid.getValue(0, "complete_fg") === "미완료") {
-      Grid.addCellClassName(0, "complete_fg", "redText");
-    }
-    if (Grid.getValue(lastRowKey, "complete_fg") === "완료") {
-      Grid.addCellClassName(lastRowKey, "complete_fg", "blueText");
-    }
-  }, [packingGridData]);
 
   const PackingGrid = useMemo(() => {
     return (

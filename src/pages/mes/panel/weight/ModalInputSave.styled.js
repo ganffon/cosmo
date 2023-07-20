@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 import { MENU_FOLD_WIDTH, APP_BAR_COLOR } from "constant/Layout";
 import InputSearch from "components/input/InputSearch";
+import { TextField } from "@mui/material";
 
 export const ModalWrapBox = styled(ModalWrapMulti)`
   display: flex;
@@ -139,7 +140,13 @@ export const InfoWrap = styled("div")`
 
 export const BagCleaning = styled("input")`
   cursor: pointer;
-  transform: scale(4);
+  width: 40px;
   accent-color: #f5329498;
-  margin-left: 20px;
+  margin-left: 10px;
+`;
+export const DatePicker = styled(TextField)`
+  width: 250px;
+  .MuiInputBase-root {
+    font-size: 30px;
+  }
 `;

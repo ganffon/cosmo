@@ -208,7 +208,7 @@ const check = (
     rowSpan: rowSpan,
   };
 };
-const button = (name = "", header = "", btnName = "", func = () => {}, disabled = false) => {
+const button = (name = "", header = "", btnName = "", func = () => {}, btnName2 = "", disabled = false) => {
   return {
     name: name,
     header: header,
@@ -219,6 +219,7 @@ const button = (name = "", header = "", btnName = "", func = () => {}, disabled 
       type: CustomGrid.Button,
       options: {
         name: btnName,
+        name2: btnName2,
         onClick: func,
         disabled: disabled,
       },

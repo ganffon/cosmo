@@ -153,6 +153,13 @@ export const GridContainer = styled("div")`
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 `;
+export const GridContainer2 = styled("div")`
+  display: grid;
+  height: 100%;
+  margin-right: 10px;
+  grid-template-columns: 50% 50%;
+  gap: 10px;
+`;
 export const RightBottom = styled("div")`
   height: 60%;
   display: "flex";
@@ -258,6 +265,7 @@ export const ImgWrap = styled("div")`
 `;
 export const ChartWrap = styled("div")`
   margin: 15px;
+  height: 95%;
   background-color: #ffffff;
   border: 1px solid ${(props) => props.borderColor || "#DEDEDE"};
 `;
