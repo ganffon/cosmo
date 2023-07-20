@@ -93,6 +93,7 @@ import PackingInput from "pages/mes/production/packingInput/PackingInput";
 import DailyLineInputCapa from "pages/mes/managementInfo/dailyLineInputCapa/DailyLineInputCapa";
 import QualitySpc from "pages/mes/quality/qualitySpc/QualitySpc";
 import InspDocument from "pages/mes/standard/inspDocument/InspDocument";
+import InspResult from "pages/mes/quality/inspResult/InspResult";
 
 export default function MainRouter() {
   const pages = [
@@ -194,6 +195,7 @@ export default function MainRouter() {
     { path: "daily-line-input-capa", component: DailyLineInputCapa },
     { path: "quality-spc", component: QualitySpc },
     { path: "insp-document", component: InspDocument },
+    { path: "quality-result-view", component: InspResult },
   ];
   return (
     <Layout>

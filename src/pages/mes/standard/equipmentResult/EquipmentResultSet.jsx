@@ -37,6 +37,7 @@ function EquipmentResultSet() {
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
   ];
   const columnsDetail = [
+    col.id("insp_filing_id", CN.insp_filing_id, C.HIDDEN_ID),
     col.text(
       "insp_result_detail_id",
       CN.insp_result_detail_id,
@@ -65,8 +66,8 @@ function EquipmentResultSet() {
     col.number("spec_max", CN.spec_max),
     col.number("spec_lcl", CN.spec_lcl),
     col.number("spec_ucl", CN.spec_ucl),
-    col.text("mng_insp_value", CN.mng_insp_value),
-    col.text("aft_insp_value", CN.aft_insp_value),
+    col.text("mng_insp_value", CN.mng_insp_value, false),
+    col.text("aft_insp_value", CN.aft_insp_value, false),
     col.text("nig_insp_value", CN.nig_insp_value),
     col.id("insp_method_id", CN.insp_method_id, C.HIDDEN_ID),
     col.text("insp_method_nm", CN.insp_method_nm),
@@ -104,13 +105,13 @@ function EquipmentResultSet() {
     col.text("insp_item_nm", CN.insp_item_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("insp_item_desc", CN.insp_item_desc, C.U, C.U, C.WIDTH_LONG),
     col.text("spec_std", CN.spec_std, C.U, C.U, C.WIDTH_MIDDLE),
+    col.text("mng_insp_value", CN.mng_insp_value, true),
+    col.text("aft_insp_value", CN.aft_insp_value, true),
+    col.text("nig_insp_value", CN.nig_insp_value, true),
     col.number("spec_min", CN.spec_min),
     col.number("spec_max", CN.spec_max),
     col.number("spec_lcl", CN.spec_lcl),
     col.number("spec_ucl", CN.spec_ucl),
-    col.text("mng_insp_value", CN.mng_insp_value, true),
-    col.text("aft_insp_value", CN.aft_insp_value, true),
-    col.text("nig_insp_value", CN.nig_insp_value, true),
     col.id("insp_method_id", CN.insp_method_id, C.HIDDEN_ID),
     col.text("insp_method_nm", CN.insp_method_nm),
     col.id("insp_tool_id", CN.insp_tool_id, C.HIDDEN_ID),
@@ -277,18 +278,18 @@ function EquipmentResultSet() {
       id: "orderNo",
       name: CN.work_order_no,
     },
-    {
-      id: "mngEmpNm",
-      name: CN.mng_emp_nm,
-    },
-    {
-      id: "aftEmpNm",
-      name: CN.aft_emp_nm,
-    },
-    {
-      id: "nigEmpNm",
-      name: CN.nig_emp_nm,
-    },
+    // {
+    //   id: "mngEmpNm",
+    //   name: CN.mng_emp_nm,
+    // },
+    // {
+    //   id: "aftEmpNm",
+    //   name: CN.aft_emp_nm,
+    // },
+    // {
+    //   id: "nigEmpNm",
+    //   name: CN.nig_emp_nm,
+    // },
     {
       id: "remark",
       name: CN.remark,

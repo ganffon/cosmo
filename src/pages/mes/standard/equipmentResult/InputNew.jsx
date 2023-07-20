@@ -79,54 +79,7 @@ function InputNew(props) {
           />
         </S.InputWrap>
       </S.InputWrapDivide>
-      <S.InputWrapDivide>
-        <S.InputWrap>
-          <S.InfoTitle width={"110px"}>지시번호</S.InfoTitle>
-          <InputPaper
-            width={"220px"}
-            height={"40px"}
-            value={isEditMode ? mainInfo.orderNo || "" : info.orderNo || ""}
-            size={"20px"}
-          />
-        </S.InputWrap>
-        <S.InputWrap>
-          <S.InfoTitle width={"110px"}>오전 조</S.InfoTitle>
-          <InputPaper
-            width={"220px"}
-            height={"40px"}
-            value={isEditMode ? mainInfo.mngEmpNm || "" : emp.mngEmpNm || ""}
-            size={"20px"}
-            btn={true}
-            onClickSelect={onSelectMorning}
-            onClickRemove={onRemoveMorning}
-          />
-        </S.InputWrap>
-        <S.InputWrap>
-          <S.InfoTitle width={"110px"}>오후 조</S.InfoTitle>
-          <InputPaper
-            width={"220px"}
-            height={"40px"}
-            value={isEditMode ? mainInfo.aftEmpNm || "" : emp.aftEmpNm || ""}
-            size={"20px"}
-            btn={true}
-            onClickSelect={onSelectAfternoon}
-            onClickRemove={onRemoveAfternoon}
-          />
-        </S.InputWrap>
-        <S.InputWrap>
-          <S.InfoTitle width={"110px"}>야간 조</S.InfoTitle>
-          <InputPaper
-            width={"220px"}
-            height={"40px"}
-            value={isEditMode ? mainInfo.nigEmpNm || "" : emp.nigEmpNm || ""}
-            size={"20px"}
-            btn={true}
-            onClickSelect={onSelectNight}
-            onClickRemove={onRemoveNight}
-          />
-        </S.InputWrap>
-      </S.InputWrapDivide>
-      <S.InputWrapDivide>
+      {/* <S.InputWrapDivide>
         <S.InputWrap>
           <S.InfoTitle width={"110px"}>비고</S.InfoTitle>
           <InputPaper
@@ -139,7 +92,18 @@ function InputNew(props) {
             onTextChange={isEditMode ? onTextChangeEdit : onTextChange}
           />
         </S.InputWrap>
-      </S.InputWrapDivide>
+      </S.InputWrapDivide> */}
+      <S.InputWrapDivide2>
+        <S.InputWrap2>
+          <S.InfoTitle width={"110px"}>지시번호</S.InfoTitle>
+          <InputPaper
+            width={"220px"}
+            height={"40px"}
+            value={isEditMode ? mainInfo.orderNo || "" : info.orderNo || ""}
+            size={"20px"}
+          />
+        </S.InputWrap2>
+      </S.InputWrapDivide2>
     </S.Wrap>
   );
 }

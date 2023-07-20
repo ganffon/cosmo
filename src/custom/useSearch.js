@@ -311,6 +311,7 @@ const useSearchSelect = (
         open: true,
         message: "조회 실패",
         severity: "error",
+        location: "bottomRight",
       });
     } finally {
       setIsBackDrop(false);

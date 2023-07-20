@@ -218,7 +218,7 @@ const EquipStatus = ({ toggle }) => {
           <S.Title>비가동(현장등록) 유형 별</S.Title>
           {/* <S.EquipStatusChartWrap>{sDonutChartData && <DonutChart data={sDonutChartData} />}</S.EquipStatusChartWrap> */}
           <S.EquipStatusChartWrap>
-            {sDonutChartData && <Chart options={donutOptions} series={sDonutChartData.map((item) => item.y)} type="donut" height={350} />}
+            {sDonutChartData && <Chart options={donutOptions} series={sDonutChartData.map((item) => item.y)} type="donut" height={"100%"} />}
           </S.EquipStatusChartWrap>
           <S.GridWrap3>
             {responseData && <GridSingle columns={monthlyColumns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}

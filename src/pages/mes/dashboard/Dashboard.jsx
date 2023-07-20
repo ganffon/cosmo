@@ -37,7 +37,7 @@ const Dashboard = () => {
   const [isClicked, setIsClicked] = useState(false);
   const refSingleGrid = useRef(null);
   const refSecondGrid = useRef(null);
-
+  const [packingData, setPackingData] = useState(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   useEffect(() => {
     GetDashboardData();
@@ -49,7 +49,11 @@ const Dashboard = () => {
     // { header: '직급', name: 'total'}
   ];
   const columnsDownTime = [
-    { header: "No. ", name: "no", width: 30 },
+    {
+      header: "No. ",
+      name: "no",
+      width: 30,
+    },
     { header: "라인종류", name: "line_cd" },
     // { header: '발생일자', name: 'start_date', width:'100'},
     // { header: '발생시간', name: 'start_time', width:'70'},
@@ -109,14 +113,23 @@ const Dashboard = () => {
           eq_state: item.state === 1 ? true : false,
         }));
 
+        console.log(response?.data?.data?.rows[0].input);
         setDowntime(modifiedData);
         setState(stateData);
+        if (response?.data?.data?.rows[0].packing.data === 0) {
+          setPackingData([{ name: "생산량", data: [{ x: "E1호기", y: "0" }] }]);
+        } else {
+          setPackingData(response?.data?.data?.rows[0].packing);
+        }
       })
       .catch((error) => {
         // 오류 처리 로직
         // console.error('API 호출 중 오류 발생:', error);
       });
   };
+  {
+    packingData && console.log(packingData);
+  }
   const cOptions = {
     colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)"],
     plotOptions: {
@@ -241,7 +254,7 @@ const Dashboard = () => {
       </S.LineStateBorder>
     ) : null;
   };
-  const RenderWorker = (name) => {
+  const RenderWorker = (name, index) => {
     return (
       <S.WorkerBorder backgroundColor={"#FCFCFC"} borderColor={"#D9D9D9"}>
         <img
@@ -256,87 +269,16 @@ const Dashboard = () => {
             height: "100px",
           }}
         />
-        <S.LineState>{name}</S.LineState>
+
+        {index === 1 && <S.LineState color="blue">{name}</S.LineState>}
+        {index > 1 && <S.LineState>{name}</S.LineState>}
       </S.WorkerBorder>
     );
   };
 
-  // console.log(responseData.data.rows[0].line_work_status.graph);
-  const stackedTmpData = [
-    {
-      name: "반제품",
-      data: [
-        {
-          x: "E1",
-          y: 1753,
-        },
-        {
-          x: "E2",
-          y: 0,
-        },
-        {
-          x: "E3",
-          y: 0,
-        },
-      ],
-    },
-    {
-      name: "전구체",
-      data: [
-        {
-          x: "E1",
-          y: 1753,
-        },
-        {
-          x: "E2",
-          y: 1356,
-        },
-        {
-          x: "E3",
-          y: 1234,
-        },
-      ],
-    },
-    {
-      name: "리튬",
-      data: [
-        {
-          x: "E1",
-          y: 3987,
-        },
-        {
-          x: "E2",
-          y: 3022,
-        },
-        {
-          x: "E3",
-          y: 3012,
-        },
-      ],
-    },
-    {
-      name: "첨가제",
-      data: [
-        {
-          x: "2023-07-15",
-          y: 700,
-        },
-        {
-          x: "2023-07-16",
-          y: 654,
-        },
-        {
-          x: "2023-07-17",
-          y: 606,
-        },
-      ],
-    },
-  ];
   const gridOptions = {
     theme: "default",
   };
-
-  const complexColumns = getTimeHeader();
   // setResult(GetTestValAndCreateAt(strJson));
   return (
     <ContentsArea>
@@ -356,7 +298,19 @@ const Dashboard = () => {
             <S.Title>실시간 생산 담당자</S.Title>
             <S.LeftBottom>
               <S.GridContainer>
-                {workerData && workerData.map((worker, index) => <React.Fragment key={index}>{RenderWorker(worker.emp_nm)}</React.Fragment>)}
+                {workerData && (
+                  <>
+                    {(() => {
+                      const renderedWorkers = [];
+                      for (let i = 1; i < workerData.length; i++) {
+                        const worker = workerData[i];
+                        renderedWorkers.push(<React.Fragment key={i}>{RenderWorker(worker.emp_nm, i)}</React.Fragment>);
+                      }
+                      return renderedWorkers;
+                    })()}
+                  </>
+                )}
+                {/* {workerData && workerData.map((worker, index) => <React.Fragment key={index}>{RenderWorker(worker.emp_nm)}</React.Fragment>)} */}
               </S.GridContainer>
             </S.LeftBottom>
           </S.EmpStatusWrap>
@@ -365,22 +319,38 @@ const Dashboard = () => {
           <S.RightTop>
             <S.Title>최근 라인 비가동 정보</S.Title>
             <S.GridWrap>
-              {downtime && <GridSingle columns={columnsDownTime} data={downtime} options={gridOptions} refGrid={refSingleGrid} />}
+              {downtime && (
+                <div style={{ height: "100%", width: "100%", paddingRight: "15px" }}>
+                  {" "}
+                  <GridSingle columns={columnsDownTime} data={downtime} options={gridOptions} refGrid={refSingleGrid} />
+                  <style>
+                    {`
+                      .tui-grid-cell {
+                      font-size: 14px; /* 원하는 폰트 사이즈로 변경 */
+                      }
+                    `}
+                  </style>
+                </div>
+              )}
             </S.GridWrap>
           </S.RightTop>
           <S.RightBottom>
             <S.GridContainer2>
               <S.ChartWrap>
                 <S.Title>
-                  EV 라인 투입량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+                  라인별 투입량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
                 </S.Title>
-                {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={stackedTmpData} />}
+                {/* {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={stackedTmpData} />} */}
+                {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={responseData?.data?.rows[0]?.input} />}
               </S.ChartWrap>
               <S.ChartWrap>
                 <S.Title>
-                  EV 라인 금일 생산량 / 목표량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+                  라인별 생산량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
                 </S.Title>
-                {responseData && <Chart options={cOptions} type="bar" height={"85%"} series={responseData.data.rows[0].line_work_status.graph} />}
+                {packingData && <Chart options={cOptions} type="bar" height={"85%"} series={packingData} />}
+                {/* {!responseData?.data?.rows[0]?.packing && (
+                  <Chart options={cOptions} type="bar" height={"85%"} series={{ name: "생산량", data: [{ x: "E1", y: "0" }] }} />
+                )} */}
               </S.ChartWrap>
             </S.GridContainer2>
             {/* <S.RBGridWrap>

@@ -21,7 +21,24 @@ import Star from "img/Menu/star.svg";
 
 const hostName = window.location.hostname;
 const IPFlag = hostName.split(".")[0];
-const BASE_URL = IPFlag === "192" ? process.env.REACT_APP_NEW_TAB_URL_PANEL : process.env.REACT_APP_NEW_TAB_URL;
+// const BASE_URL = IPFlag === "192" ? process.env.REACT_APP_NEW_TAB_URL_PANEL : process.env.REACT_APP_NEW_TAB_URL;
+let BASE_URL;
+switch (IPFlag) {
+  case "192":
+    BASE_URL = process.env.REACT_APP_NEW_TAB_URL_PANEL;
+    break;
+  case "51":
+    BASE_URL = process.env.REACT_APP_NEW_TAB_URL;
+    break;
+  case "61":
+    BASE_URL = process.env.REACT_APP_NEW_TAB_URL;
+    break;
+  case "localhost":
+    BASE_URL = process.env.REACT_APP_NEW_TAB_URL;
+    break;
+  default:
+    BASE_URL = process.env.REACT_APP_NEW_TAB_URL_DOMAIN;
+}
 
 const menuListIcon = (key) => {
   switch (key) {

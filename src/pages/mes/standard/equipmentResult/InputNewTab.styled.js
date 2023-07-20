@@ -11,13 +11,6 @@ export const InputWrap = styled("div")`
   width: 100%;
   display: flex;
 `;
-
-export const InputWrap2 = styled("div")`
-  width: 100%;
-  display: flex;
-  visibility: hidden;
-`;
-
 export const InfoTitle = styled("div")`
   width: ${(props) => props.width};
   font-size: 20px;
@@ -29,14 +22,6 @@ export const InputWrapDivide = styled("div")`
   padding-left: 10px;
   width: 100%;
   display: flex;
-`;
-
-export const InputWrapDivide2 = styled("div")`
-  padding-left: 10px;
-  width: 100%;
-  display: flex;
-  visibility: hidden;
-  height: 0;
 `;
 
 export const DatePicker = styled(TextField)`

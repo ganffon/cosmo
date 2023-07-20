@@ -26,6 +26,7 @@ import QuestionMark from "img/Component/questionMark64.png";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 import QuestionWeight from "img/Component/quesitonWeight.png";
 import QuestionInput from "img/Component/quesitonInput.png";
+import DatePicker from "components/datetime/DatePicker";
 
 function WeightPanel() {
   LoginStateChk();
@@ -265,17 +266,16 @@ function WeightPanel() {
   const onClickSearch = async () => {
     try {
       setIsBackDrop(true);
-      let conditionLine;
       let conditionProdCD;
       let conditionProdNM;
       let lineID;
       comboValue.line_id ? (lineID = `&line_id=${comboValue.line_id}`) : (lineID = "");
-      // inputTextChange.line ? (conditionLine = `&line_nm=${inputTextChange.line}`) : (conditionLine = "");
       inputTextChange.prod_cd ? (conditionProdCD = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCD = "");
       inputTextChange.prod_nm ? (conditionProdNM = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNM = "");
       const result = await restAPI.get(
         restURI.prdOrder +
-          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          // `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          `?reg_date=${dateText.startDate}` +
           lineID +
           conditionProdCD +
           conditionProdNM
@@ -592,7 +592,12 @@ function WeightPanel() {
       <S.TopWrap>
         <S.SearchBox>
           <S.SearchCondition>
-            <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+            <DatePicker
+              datePickerSet={"single"}
+              dateText={dateText}
+              setDateText={setDateText}
+              onClickSearch={onClickSearch}
+            />
             {/* <InputSearch
               id={"line"}
               name={"라인명"}

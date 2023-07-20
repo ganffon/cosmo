@@ -183,13 +183,13 @@ function PackingPanel() {
   };
   const onClickSelect = () => {
     setIsPackingHeaderOpen(true);
-    actSelectPackingHeader(`?start_date=${selectDate.startDate}&end_date=${selectDate.endDate}`);
+    actSelectPackingHeader(`?reg_date=${selectDate.startDate}`);
   };
   const onClickSelectDateClose = () => {
     setIsPackingHeaderOpen(false);
   };
   const onClickSearchSelectDate = () => {
-    actSelectPackingHeader(`?start_date=${selectDate.startDate}&end_date=${selectDate.endDate}`);
+    actSelectPackingHeader(`?reg_date=${selectDate.startDate}`);
   };
   const handleGridHeaderSearch = async () => {
     try {
@@ -553,6 +553,14 @@ function PackingPanel() {
       targetRowKey.current = rowKey;
       targetID.current = Grid?.getValue(rowKey, "work_packing_detail_id");
       targetWeight.current = Grid?.getValue(rowKey, "packing_qty");
+      const lineID = Grid?.getValue(rowKey, "line_id");
+      const latestEmp = await restAPI.get(restURI.stdEmpLatest + `?line_id=${lineID}&type=PACKING`);
+
+      setBarcodeScan({
+        ...barcodeScan,
+        empID: latestEmp?.data?.data?.rows[0]?.emp_id,
+        empNM: latestEmp?.data?.data?.rows[0]?.emp_nm,
+      });
       setIsBarcodeScanOpen(true);
     } else {
       setIsSnackOpen({
@@ -657,97 +665,97 @@ function PackingPanel() {
     setBarcodeScan({ ...barcodeScan, empID: data.emp_id, empNM: data.emp_nm });
     setIsModalSelectEmp(false);
   };
-  //🔸timeStamp 2개를 받아서 서로 몇 초 차이 나는지 구하는 함수
-  function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {
-    if (timeStamp1 === null) return 0;
-    const difference = Math.abs(timeStamp1 - timeStamp2);
-    const seconds = difference / 1000;
-    return seconds;
-  }
+  // //🔸timeStamp 2개를 받아서 서로 몇 초 차이 나는지 구하는 함수
+  // function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {
+  //   if (timeStamp1 === null) return 0;
+  //   const difference = Math.abs(timeStamp1 - timeStamp2);
+  //   const seconds = difference / 1000;
+  //   return seconds;
+  // }
 
-  const transferBarcode = async (barcodeNo) => {
-    try {
-      setIsBackDrop(true);
-      const result = await restAPI.get(restURI.createBarcode + `?barcode_no=${barcodeNo}`);
-      lotNo.current = result?.data?.data?.rows[0].lot_no;
-      const scanPackingID = result?.data?.data?.rows[0].work_packing_detail_id;
-      if (scanPackingID === targetID.current) {
-        // setBarcodeScan({ ...barcodeScan, barcodeNo: barcodeNo });
-        setBarcodeScan(Object.assign(barcodeScan, { barcodeNo: barcodeNo }));
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-        location: "bottomRight",
-      });
-    } finally {
-      setIsBackDrop(false);
-    }
-  };
-  useEffect(() => {
-    const onBarcodeScan = async (e) => {
-      // console.log(e);
-      //timeStamp 가 서로 몇초 차이인지 구함
-      const differenceTime = getTimeDifferenceInSeconds(refBarcodeTimeStamp.current, e?.timeStamp);
-      //차이 시간이 0.03초 이상이라면 저장되어 있던 값을 초기화
-      //바코드 스캐너로 입력되는 문자들은 입력 사이가 0.005초 전후 이기 때문
-      if (differenceTime > 0.03) {
-        barcodeNo.current = "";
-      }
+  // const transferBarcode = async (barcodeNo) => {
+  //   try {
+  //     setIsBackDrop(true);
+  //     const result = await restAPI.get(restURI.createBarcode + `?barcode_no=${barcodeNo}`);
+  //     lotNo.current = result?.data?.data?.rows[0].lot_no;
+  //     const scanPackingID = result?.data?.data?.rows[0].work_packing_detail_id;
+  //     if (scanPackingID === targetID.current) {
+  //       // setBarcodeScan({ ...barcodeScan, barcodeNo: barcodeNo });
+  //       setBarcodeScan(Object.assign(barcodeScan, { barcodeNo: barcodeNo }));
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (err) {
+  //     setIsSnackOpen({
+  //       ...isSnackOpen,
+  //       open: true,
+  //       message: err?.response?.data?.message,
+  //       severity: "error",
+  //       location: "bottomRight",
+  //     });
+  //   } finally {
+  //     setIsBackDrop(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   const onBarcodeScan = async (e) => {
+  //     // console.log(e);
+  //     //timeStamp 가 서로 몇초 차이인지 구함
+  //     const differenceTime = getTimeDifferenceInSeconds(refBarcodeTimeStamp.current, e?.timeStamp);
+  //     //차이 시간이 0.03초 이상이라면 저장되어 있던 값을 초기화
+  //     //바코드 스캐너로 입력되는 문자들은 입력 사이가 0.005초 전후 이기 때문
+  //     if (differenceTime > 0.03) {
+  //       barcodeNo.current = "";
+  //     }
 
-      // e?.key 가 "Process"는 한글인 경우
-      if (e?.key === "Process") {
-        // e?.key 가 "Process" 이면서 e?.code 가 "Digit" 숫자로 들어오는 경우가 있는데 무시해야 함
-        if (e?.code.includes("Key")) {
-          barcodeNo.current = barcodeNo.current + e?.code.replace("Key", "");
-        }
-        // e?.key 가 "Shift" 인 경우 1차적으로 모두 무시
-      } else if (e?.key !== "Shift") {
-        // Digit, Key, Minus 외의 값들은 전부 무시
-        if (e?.code.includes("Digit")) {
-          barcodeNo.current = barcodeNo.current + e?.code.replace("Digit", "");
-        }
-        if (e?.code.includes("Key")) {
-          barcodeNo.current = barcodeNo.current + e?.code.replace("Key", "");
-        }
-        if (e?.code.includes("Minus")) {
-          barcodeNo.current = barcodeNo.current + e?.key;
-        }
-      }
-      refBarcodeTimeStamp.current = e?.timeStamp;
-      if (e?.key === "Enter") {
-        /**
-         * ✅ 포장실적 바코드 FacdoriOn에서 발행한 앞 3자리가 "FDR" 인 것만 허용
-         */
-        if (barcodeNo.current.slice(0, 3) === "FDR") {
-          const scanChk = await transferBarcode(barcodeNo.current);
-          setBarcodeScan({ ...barcodeScan, value: lotNo.current, className: "" });
-          if (!scanChk) {
-            setBarcodeScan({
-              ...barcodeScan,
-              value: "포장지시와 일치하지 않는 바코드입니다.",
-              lot: "",
-              className: "red",
-            });
-          }
-          lotNo.current = "";
-        } else {
-          setBarcodeScan({ ...barcodeScan, value: "정의되지 않은 바코드입니다.", lot: "", className: "red" });
-        }
-        barcodeNo.current = "";
-      }
-    };
-    window.addEventListener("keydown", onBarcodeScan);
-    return () => {
-      window.removeEventListener("keydown", onBarcodeScan);
-    };
-  }, [barcodeScan.lot]);
+  //     // e?.key 가 "Process"는 한글인 경우
+  //     if (e?.key === "Process") {
+  //       // e?.key 가 "Process" 이면서 e?.code 가 "Digit" 숫자로 들어오는 경우가 있는데 무시해야 함
+  //       if (e?.code.includes("Key")) {
+  //         barcodeNo.current = barcodeNo.current + e?.code.replace("Key", "");
+  //       }
+  //       // e?.key 가 "Shift" 인 경우 1차적으로 모두 무시
+  //     } else if (e?.key !== "Shift") {
+  //       // Digit, Key, Minus 외의 값들은 전부 무시
+  //       if (e?.code.includes("Digit")) {
+  //         barcodeNo.current = barcodeNo.current + e?.code.replace("Digit", "");
+  //       }
+  //       if (e?.code.includes("Key")) {
+  //         barcodeNo.current = barcodeNo.current + e?.code.replace("Key", "");
+  //       }
+  //       if (e?.code.includes("Minus")) {
+  //         barcodeNo.current = barcodeNo.current + e?.key;
+  //       }
+  //     }
+  //     refBarcodeTimeStamp.current = e?.timeStamp;
+  //     if (e?.key === "Enter") {
+  //       /**
+  //        * ✅ 포장실적 바코드 FacdoriOn에서 발행한 앞 3자리가 "FDR" 인 것만 허용
+  //        */
+  //       if (barcodeNo.current.slice(0, 3) === "FDR") {
+  //         const scanChk = await transferBarcode(barcodeNo.current);
+  //         setBarcodeScan({ ...barcodeScan, value: lotNo.current, className: "" });
+  //         if (!scanChk) {
+  //           setBarcodeScan({
+  //             ...barcodeScan,
+  //             value: "포장지시와 일치하지 않는 바코드입니다.",
+  //             lot: "",
+  //             className: "red",
+  //           });
+  //         }
+  //         lotNo.current = "";
+  //       } else {
+  //         setBarcodeScan({ ...barcodeScan, value: "정의되지 않은 바코드입니다.", lot: "", className: "red" });
+  //       }
+  //       barcodeNo.current = "";
+  //     }
+  //   };
+  //   window.addEventListener("keydown", onBarcodeScan);
+  //   return () => {
+  //     window.removeEventListener("keydown", onBarcodeScan);
+  //   };
+  // }, [barcodeScan.lot]);
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       handleGridHeaderSearch();

@@ -108,7 +108,8 @@ function ProductionPackingView() {
   }, []);
 
   const onClickSearch = () => {
-    actSearchHeader();
+    // actSearchHeader();
+    actSearchDetail();
   };
 
   const onDblClickGridSelect = (e) => {
@@ -172,16 +173,10 @@ function ProductionPackingView() {
     setIsBackDrop(true);
     try {
       let conditionProdID, conditionLineID;
-      prodCD.current !== "품목코드"
-        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
-        : (conditionProdID = "");
+      prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
       comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
 
-      let readURI =
-        restURI.prdPacking +
-        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-        conditionProdID +
-        conditionLineID;
+      let readURI = restURI.prdPacking + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionProdID + conditionLineID;
 
       let gridData = await restAPI.get(readURI);
 
@@ -226,7 +221,17 @@ function ProductionPackingView() {
   const actSearchDetail = async () => {
     try {
       setIsBackDrop(true);
-      const readURI = `/prd/packing-detail?work_packing_id=${headerRowID.current}`;
+      let conditionProdID, conditionLineID;
+      prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
+      comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
+
+      let readURI =
+        restURI.prdPackingDetail +
+        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+        conditionProdID +
+        conditionLineID +
+        `&complete_fg=true`;
+      // const readURI = `/prd/packing-detail?work_packing_id=${headerRowID.current}`;
 
       let gridData = await restAPI.get(readURI);
       setGridDataDetail(gridData?.data?.data?.rows);
@@ -319,24 +324,18 @@ function ProductionPackingView() {
         </S.ButtonTop>
       </S.SearchCondition>
       <S.ContentWrap>
-        <S.ContentTop>
-          <S.TitleMid>생산 품목</S.TitleMid>
-          <S.GridTopWrap>{GridTop}</S.GridTopWrap>
-        </S.ContentTop>
-        <S.ContentBottom>
-          <S.TitleMid>투입 품목</S.TitleMid>
-          <S.GridBottomWrap>
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columnsDetail}
-              rowHeaders={rowHeadersNum}
-              header={header}
-              data={gridDataDetail}
-              draggable={false}
-              refGrid={refGridDetail}
-            />
-          </S.GridBottomWrap>
-        </S.ContentBottom>
+        <S.TitleMid>투입 품목</S.TitleMid>
+        <S.GridWrap>
+          <GridSingle
+            columnOptions={columnOptions}
+            columns={columnsDetail}
+            rowHeaders={rowHeadersNum}
+            header={header}
+            data={gridDataDetail}
+            draggable={false}
+            refGrid={refGridDetail}
+          />
+        </S.GridWrap>
       </S.ContentWrap>
       {isModalSelectOpen ? (
         <ModalSelect

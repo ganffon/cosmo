@@ -24,6 +24,9 @@ import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
+import { TextField } from "@mui/material";
 
 function Weight() {
   LoginStateChk();
@@ -69,6 +72,10 @@ function Weight() {
   const [gridDataHeaderRowID, setGridDataHeaderRowID] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
+  });
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
   });
 
   const [gridDataSelect, setGridDataSelect] = useState(null);
@@ -211,25 +218,15 @@ function Weight() {
     restURI.product + `?use_fg=true`
   ); //➡️ Modal Select Search Prod
 
-  /**
-   * refGridSelect,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridDataSelect,
-    restURI.prdOrder
-   */
-  const [actSelectWorkOrder] = uSearch.useSearchOnlyDate(
+  const [actSelectOrder] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
     setIsBackDrop,
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    dateModal,
     restURI.prdOrder
-  ); //➡️ Modal Select Search Prod
+  );
 
   const [actSelectWeightEmployee] = uSearch.useSearchSelect(
     refGridSelect,
@@ -266,12 +263,16 @@ function Weight() {
   const onClickSearch = async () => {
     try {
       setIsBackDrop(true);
-      let conditionProdID;
+      let conditionLineID, conditionProdID;
+      comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
       prodCD.current !== "품목코드"
         ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProdID = "");
       const result = await restAPI.get(
-        restURI.prdWeight + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` + conditionProdID
+        restURI.prdWeight +
+          `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+          conditionLineID +
+          conditionProdID
       );
       setGridDataHeader(result?.data?.data?.rows);
       setGridDataDetail([]);
@@ -469,7 +470,7 @@ function Weight() {
         setColumnsSelect(columnsSelectOrder);
         setHeaderModalControl("Order");
         setIsModalSelectOpen(true);
-        actSelectWorkOrder("start_date", "end_date");
+        actSelectOrder(`?reg_date=${dateModal.startDate}`);
       } else if (Condition(e, ["weigh_emp_id", "weigh_emp_nm"])) {
         setDblClickRowKey(e?.rowKey);
         setDblClickGrid("ModalHeaderWeightEmployee");
@@ -605,7 +606,7 @@ function Weight() {
 
   const onClickEditModeExitHeader = () => {
     setIsEditModeHeader(false);
-    actSelectWorkOrder("start_date", "end_date");
+    actSelectOrder(`?reg_date=${dateModal.startDate}`);
     setDisRowHeader();
   };
 
@@ -624,7 +625,7 @@ function Weight() {
   };
 
   const onClickSelectSearch = () => {
-    actSelectWorkOrder("start_date", "end_date");
+    actSelectOrder(`?reg_date=${dateModal.startDate}`);
   };
 
   const onClickDeleteDetail = () => {
@@ -705,6 +706,21 @@ function Weight() {
     <ContentsArea>
       <S.SearchCondition>
         <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+        <S.ComboBox
+          disablePortal
+          id="lineCbo"
+          size="small"
+          key={(option) => option?.line_id}
+          options={lineOpt || null}
+          getOptionLabel={(option) => option?.line_nm || ""}
+          onChange={(_, newValue) => {
+            setComboValue({
+              ...comboValue,
+              line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+            });
+          }}
+          renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+        />
         <S.InputPaperWrap>
           <InputPaper
             width={"180px"}
@@ -834,7 +850,7 @@ function Weight() {
             refModalGrid={refGridSelect}
             dateText={dateModal}
             setDateText={setDateModal}
-            datePickerSet={"range"}
+            datePickerSet={"single"}
             buttonType={"Search"}
             data={gridDataSelect}
             refGridModalDetail={refGridModalDetail}

@@ -13,7 +13,7 @@ function WeightPanelSet(onClickGridButton, onBarcodeScanButton) {
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
   const columns = [
-    col.text("request_no", CN.request_no, C.U, C.U, C.WIDTH_MIDDLE),
+    col.text("request_no", CN.request_no, C.U, true, C.WIDTH_MIDDLE),
     col.text("work_order_no", CN.work_order_no, C.U, C.U, C.WIDTH_MIDDLE),
     col.date("work_order_date", CN.work_order_date),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),

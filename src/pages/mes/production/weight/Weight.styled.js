@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import DatePicker from "components/datetime/DatePicker";
 import InputSearch from "components/input/InputSearch";
+import { Autocomplete } from "@mui/material";
 
 export const InputPaperWrap = styled("div")`
-  padding: 5px 0px 0px 5px;
+  margin-top: 5px;
 `;
 export const ButtonWrap = styled("div")`
   width: 100%;
@@ -22,11 +23,16 @@ export const SearchCondition = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
   padding: 5px 5px 5px 5px;
   display: flex;
+  gap: 10px;
 `;
 export const ButtonTop = styled("div")`
   padding-top: 10px;
   display: flex;
   align-items: center;
+`;
+export const ComboBox = styled(Autocomplete)`
+  width: 350px;
+  margin-top: 5px;
 `;
 
 export const TitleButtonWrap = styled("div")`

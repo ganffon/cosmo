@@ -50,7 +50,7 @@ function PackingPanelSet(isEditMode, onPerformance, onReprint) {
   const columnsSelectPackingHeader = [
     col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
-    col.text("request_no", CN.request_no, false, false, C.WIDTH_SHORT, false, false, false, false, false),
+    col.text("request_no", CN.request_no, false, true, C.WIDTH_SHORT, false, false, false, false, false),
     col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT, false, false, false, false, false),
     col.date("work_order_date", CN.work_order_date, C.U, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
