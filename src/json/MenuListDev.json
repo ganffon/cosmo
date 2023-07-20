@@ -127,12 +127,6 @@
             "id": "employee",
             "path": "employee",
             "under": null
-          },
-          {
-            "name": "사용자공장관리",
-            "id": null,
-            "path": null,
-            "under": null
           }
         ]
       },
@@ -210,19 +204,7 @@
             "under": null
           },
           {
-            "name": "검사기준서관리",
-            "id": "document",
-            "path": "document",
-            "under": null
-          },
-          {
-            "name": "관리계획서관리",
-            "id": "control-plan",
-            "path": "control-plan",
-            "under": null
-          },
-          {
-            "name": "✴️관리계획서",
+            "name": "관리계획서",
             "id": "insp-document",
             "path": "insp-document",
             "under": null
@@ -355,12 +337,6 @@
             "under": null
           },
           {
-            "name": "라인별 수율관리",
-            "id": "line-yield",
-            "path": "line-yield",
-            "under": null
-          },
-          {
             "name": "포장투입일지",
             "id": "packing-input",
             "path": "packing-input",
@@ -389,12 +365,6 @@
             "name": "일일포장실적현황",
             "id": "production-packing-view",
             "path": "production-packing-view",
-            "under": null
-          },
-          {
-            "name": "일일운전점검현황",
-            "id": "equipment-result-view",
-            "path": "equipment-result-view",
             "under": null
           }
         ]
