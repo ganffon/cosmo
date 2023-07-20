@@ -60,18 +60,6 @@
             "under": null
           },
           {
-            "name": "품종군관리",
-            "id": "product-type",
-            "path": "product-type",
-            "under": null
-          },
-          {
-            "name": "품종관리",
-            "id": "product-type-small",
-            "path": "product-type-small",
-            "under": null
-          },
-          {
             "name": "제품분류관리",
             "id": "product-class",
             "path": "product-class",

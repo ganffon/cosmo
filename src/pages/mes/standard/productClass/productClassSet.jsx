@@ -10,21 +10,15 @@ function productClassSet(isEditMode) {
   const columns = [
     col.id("prod_class_id", CN.prod_class_id, C.HIDDEN_ID),
     col.text("prod_class_cd", CN.prod_class_cd, C.U, C.U, C.WIDTH_MIDDLE),
-    col.text(
-      "prod_class_nm",
-      CN.prod_class_nm,
-      isEditMode,
-      C.U,
-      C.WIDTH_MIDDLE
-    ),
+    col.text("prod_class_nm", CN.prod_class_nm, isEditMode, C.U, C.WIDTH_MIDDLE),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
     col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsModal = [
-    col.text("model_cd", CN.model_cd, true),
-    col.text("model_nm", CN.model_nm, true),
+    col.text("prod_class_cd", CN.prod_class_cd, true),
+    col.text("prod_class_nm", CN.prod_class_nm, true),
   ];
   const columnOptions = {
     resizable: true,
