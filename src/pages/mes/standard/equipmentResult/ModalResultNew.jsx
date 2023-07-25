@@ -231,7 +231,7 @@ function ModalResultNew(props) {
               aft_insp_value: raw.aft_insp_value,
               nig_insp_value: raw.nig_insp_value,
               insp_result_fg: null,
-              // remark: raw.remark,
+              remark: raw.remark,
             };
           });
           let workerResult = [];
@@ -303,10 +303,11 @@ function ModalResultNew(props) {
             aft_insp_value: raw.aft_insp_value,
             nig_insp_value: raw.nig_insp_value,
             insp_result_fg: null,
+            remark: raw.remark,
           };
         });
         let workerResult = [];
-        console.log(workerInfo);
+
         for (let i = 0; i < workerInfo.length; i++) {
           workerResult.push(workerInfo[i]);
         }
@@ -358,6 +359,8 @@ function ModalResultNew(props) {
   /**저장 함수 종료 */
 
   const GridTab = useMemo(() => {
+    console.log(employeeList);
+
     return (
       <EditTabs
         tabLength={tabTitleLength}
@@ -386,12 +389,36 @@ function ModalResultNew(props) {
         flag={flag}
       />
     );
-  }, [refGridArrayModal, employeeList.current]);
+  }, [refGridArrayModal, employeeList, emp]);
 
   /**탭 종료 */
 
   // ModalResultNew 컴포넌트
   const selectedObjectRef = useRef(null); // useRef로 선택된 객체를 참조할 변수 생성
+
+  const InputNews = useMemo(() => {
+    return (
+      <InputNew
+        onSelectOrder={onSelectOrder}
+        onRemoveOrder={onRemoveOrder}
+        onSelectMorning={onSelectMorning}
+        onRemoveMorning={onRemoveMorning}
+        onSelectAfternoon={onSelectAfternoon}
+        onRemoveAfternoon={onRemoveAfternoon}
+        onSelectNight={onSelectNight}
+        onRemoveNight={onRemoveNight}
+        dateText={dateText}
+        setDateText={setDateText}
+        info={info}
+        emp={emp}
+        mainInfo={mainInfo}
+        // onTextChange={onTextChange}
+        // onTextChangeEdit={onTextChangeEdit}
+        textChange={textChange}
+        isEditMode={isEditMode}
+      />
+    );
+  }, [emp, mainInfo, info]);
 
   return (
     <ModalWrapMulti width={width} height={height}>
@@ -414,27 +441,7 @@ function ModalResultNew(props) {
 
           <ButtonModule saveBtn={true} onClickSave={onSaveNew} />
         </S.ButtonWrap>
-        <S.ContentsTop>
-          <InputNew
-            onSelectOrder={onSelectOrder}
-            onRemoveOrder={onRemoveOrder}
-            onSelectMorning={onSelectMorning}
-            onRemoveMorning={onRemoveMorning}
-            onSelectAfternoon={onSelectAfternoon}
-            onRemoveAfternoon={onRemoveAfternoon}
-            onSelectNight={onSelectNight}
-            onRemoveNight={onRemoveNight}
-            dateText={dateText}
-            setDateText={setDateText}
-            info={info}
-            emp={emp}
-            mainInfo={mainInfo}
-            // onTextChange={onTextChange}
-            // onTextChangeEdit={onTextChangeEdit}
-            textChange={textChange}
-            isEditMode={isEditMode}
-          />
-        </S.ContentsTop>
+        <S.ContentsTop>{InputNews}</S.ContentsTop>
         <S.ContentsBottom>{GridTab}</S.ContentsBottom>
       </S.ContentsArea>
 

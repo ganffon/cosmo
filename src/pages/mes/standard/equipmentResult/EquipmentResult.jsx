@@ -27,6 +27,10 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import BasicTabs from "components/gridtab/gridTab";
 
+import * as Cbo from "custom/useCboSet";
+import CN from "json/ColumnName.json";
+import { TextField } from "@mui/material";
+
 function EquipmentResult() {
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -63,7 +67,7 @@ function EquipmentResult() {
     endDate: DateTime().dateFull,
   });
   const [dateSelectOrder, setDateSelectOrder] = useState({
-    startDate: DateTime(-7).dateFull,
+    startDate: DateTime().dateFull,
     endDate: DateTime().dateFull,
   });
   const [dateCheck, setDateCheck] = useState({
@@ -78,6 +82,9 @@ function EquipmentResult() {
   const [gridDataNew, setGridDataNew] = useState(null);
   const [gridDataSelectOrder, setGridDataSelectOrder] = useState(null);
   const [gridDataSelectEmp, setGridDataSelectEmp] = useState(null);
+
+  const [getWorkerId, setGetWorkerId] = useState(null);
+  const [getTabTabId, setGetTabTabId] = useState(null);
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -110,7 +117,6 @@ function EquipmentResult() {
     prodId: "",
     prodCd: "",
     prodNm: "",
-    prodStd: "",
     orderId: "",
     orderNo: "",
     mngEmpId: "",
@@ -122,6 +128,12 @@ function EquipmentResult() {
     tagId: "",
     remark: "",
   });
+
+  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
+  const [comboValue, setComboValue] = useState({
+    line_id: null,
+  });
+
   const [info, setInfo] = useState({
     lineDeptId: "",
     lineDeptNm: "",
@@ -239,7 +251,6 @@ function EquipmentResult() {
       prodId: "",
       prodCd: "",
       prodNm: "",
-      prodStd: "",
       orderId: "",
       orderNo: "",
       mngEmpId: "",
@@ -366,14 +377,17 @@ function EquipmentResult() {
     if (!isBackDrop) {
       try {
         setIsBackDrop(true);
-        let conditionLine, conditionProdCd, conditionProdNm;
-        inputTextChange.line_nm ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`) : (conditionLine = "");
+        let conditionLineID, conditionProdCd, conditionProdNm;
+        // inputTextChange.line_nm
+        //   ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
+        //   : (conditionLine = "");
+        comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
         inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
         inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-            conditionLine +
+            conditionLineID +
             conditionProdCd +
             conditionProdNm
         );
@@ -391,7 +405,6 @@ function EquipmentResult() {
           prodId: "",
           prodCd: "",
           prodNm: "",
-          prodStd: "",
           orderId: "",
           orderNo: "",
           tagId: "",
@@ -420,67 +433,66 @@ function EquipmentResult() {
   let tabListArr = [];
   const onClickGrid = async (e) => {
     if (e?.targetType !== "rowHeader" && e?.targetType === "cell") {
-      if (!isBackDrop) {
-        const Grid = refGridHeader?.current?.gridInst;
-        clickedWorkOrderId.current = Grid.getValue(e?.rowKey, "work_order_id");
+      // if (!isBackDrop) {
+      const Grid = refGridHeader?.current?.gridInst;
+      clickedWorkOrderId.current = Grid.getValue(e?.rowKey, "work_order_id");
 
-        setMainInfo({
-          ...mainInfo,
-          inspResultId: Grid.getValue(e?.rowKey, "insp_result_id"),
-          inspResultDate: Grid.getValue(e?.rowKey, "insp_result_date"),
-          lineDeptId: Grid.getValue(e?.rowKey, "line_dept_id"),
-          lineDeptNm: Grid.getValue(e?.rowKey, "line_dept_nm"),
-          lineId: Grid.getValue(e?.rowKey, "line_id"),
-          lineNm: Grid.getValue(e?.rowKey, "line_nm"),
-          prodId: Grid.getValue(e?.rowKey, "prod_id"),
-          prodCd: Grid.getValue(e?.rowKey, "prod_cd"),
-          prodNm: Grid.getValue(e?.rowKey, "prod_nm"),
-          prodStd: Grid.getValue(e?.rowKey, "prod_std"),
-          orderId: Grid.getValue(e?.rowKey, "work_order_id"),
-          orderNo: Grid.getValue(e?.rowKey, "work_order_no"),
-          tagId: Grid.getValue(e?.rowKey, "tag_id"),
-          remark: Grid.getValue(e?.rowKey, "remark"),
-        });
-        const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
+      setMainInfo({
+        ...mainInfo,
+        inspResultId: Grid.getValue(e?.rowKey, "insp_result_id"),
+        inspResultDate: Grid.getValue(e?.rowKey, "insp_result_date"),
+        lineDeptId: Grid.getValue(e?.rowKey, "line_dept_id"),
+        lineDeptNm: Grid.getValue(e?.rowKey, "line_dept_nm"),
+        lineId: Grid.getValue(e?.rowKey, "line_id"),
+        lineNm: Grid.getValue(e?.rowKey, "line_nm"),
+        prodId: Grid.getValue(e?.rowKey, "prod_id"),
+        prodCd: Grid.getValue(e?.rowKey, "prod_cd"),
+        prodNm: Grid.getValue(e?.rowKey, "prod_nm"),
+        orderId: Grid.getValue(e?.rowKey, "work_order_id"),
+        orderNo: Grid.getValue(e?.rowKey, "work_order_no"),
+        tagId: Grid.getValue(e?.rowKey, "tag_id"),
+        remark: Grid.getValue(e?.rowKey, "remark"),
+      });
+      const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
 
-        const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${inspResultId}`);
+      const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${inspResultId}`);
 
-        empListTemp.current = employeeResult?.data?.data?.rows;
+      empListTemp.current = employeeResult?.data?.data?.rows;
 
-        //   tagId:employeeResult.,
-        //   mngEmpId: "",
-        //   mngEmpNm: "",
-        //   aftEmpId: "",
-        //   aftEmpNm: "",
-        //   nigEmpId: "",
-        //   nigEmpNm: "",
-        // });
+      //   tagId:employeeResult.,
+      //   mngEmpId: "",
+      //   mngEmpNm: "",
+      //   aftEmpId: "",
+      //   aftEmpNm: "",
+      //   nigEmpId: "",
+      //   nigEmpNm: "",
+      // });
 
-        try {
-          setIsBackDrop(true);
-          const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
+      try {
+        // setIsBackDrop(true);
+        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
 
-          setGridDataDetail(result?.data?.data?.rows);
+        setGridDataDetail(result?.data?.data?.rows);
 
-          for (let i = 0; i < tabListTmp.current.length; i++) {
-            for (let j = 0; j < result?.data?.data?.rows.length; j++) {
-              if (tabListTmp.current[i] === result?.data?.data?.rows[j].insp_filing_id) {
-                //detailDataList[i].push(result?.data?.data?.rows[j]);
-              }
+        for (let i = 0; i < tabListTmp.current.length; i++) {
+          for (let j = 0; j < result?.data?.data?.rows.length; j++) {
+            if (tabListTmp.current[i] === result?.data?.data?.rows[j].insp_filing_id) {
+              //detailDataList[i].push(result?.data?.data?.rows[j]);
             }
           }
-          //console.log(detailDataList);
-        } catch (err) {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: err?.response?.data?.message,
-            severity: "error",
-          });
-        } finally {
-          setIsBackDrop(false);
         }
+        //console.log(detailDataList);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+        });
+      } finally {
+        // setIsBackDrop(false);
       }
+      // }
     }
 
     for (let i = 0; i < tabListTmp?.current?.data?.data?.rows.length; i++) {
@@ -519,9 +531,7 @@ function EquipmentResult() {
 
   const onSelectOrder = () => {
     setIsSelectOrderOpen(true);
-    actSelectOrder(
-      `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}&end_date=${dateSelectOrder.endDate}`
-    );
+    actSelectOrder(`?complete_fg=INCOMPLETE&reg_date=${dateSelectOrder.startDate}`);
   };
   const onRemoveOrder = () => {
     resetInfo();
@@ -534,7 +544,8 @@ function EquipmentResult() {
     actSelectEmp();
   };
   const onRemoveMorning = () => {
-    isEditMode ? resetEditMngEmp() : resetMngEmp();
+    selectEmpState.current = "mngDelete";
+    onDblClickSelectEmp();
   };
   const onSelectAfternoon = () => {
     selectEmpState.current = "aft";
@@ -542,7 +553,8 @@ function EquipmentResult() {
     actSelectEmp();
   };
   const onRemoveAfternoon = () => {
-    isEditMode ? resetEditAftEmp() : resetAftEmp();
+    selectEmpState.current = "aftDelete";
+    onDblClickSelectEmp();
   };
   const onSelectNight = () => {
     selectEmpState.current = "nig";
@@ -550,7 +562,8 @@ function EquipmentResult() {
     actSelectEmp();
   };
   const onRemoveNight = () => {
-    isEditMode ? resetEditNigEmp() : resetNigEmp();
+    selectEmpState.current = "nigDelete";
+    onDblClickSelectEmp();
   };
   const onSelectOrderClose = () => {
     setDateSelectOrder({
@@ -585,6 +598,24 @@ function EquipmentResult() {
           nigEmpId: selectGrid.getValue(e?.rowKey, "emp_id"),
           nigEmpNm: selectGrid.getValue(e?.rowKey, "emp_nm"),
         });
+      } else if (selectEmpState.current === "nigDelete") {
+        setEmp({
+          ...emp,
+          nigEmpId: "",
+          nigEmpNm: "",
+        });
+      } else if (selectEmpState.current === "aftDelete") {
+        setEmp({
+          ...emp,
+          aftEmpId: "",
+          aftEmpNm: "",
+        });
+      } else if (selectEmpState.current === "mngDelete") {
+        setEmp({
+          ...emp,
+          mngEmpId: "",
+          mngEmpNm: "",
+        });
       }
       setIsSelectEmpOpen(false);
     }
@@ -594,8 +625,7 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrder +
-          `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}&end_date=${dateSelectOrder.endDate}`
+        restURI.prdOrder + `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}`
       );
       setGridDataSelectOrder(result?.data?.data?.rows);
       setIsSnackOpen({
@@ -627,7 +657,6 @@ function EquipmentResult() {
       prodId: Grid.getValue(e?.rowKey, "prod_id"),
       prodCd: Grid.getValue(e?.rowKey, "prod_cd"),
       prodNm: Grid.getValue(e?.rowKey, "prod_nm"),
-      prodStd: Grid.getValue(e?.rowKey, "prod_std"),
       orderId: Grid.getValue(e?.rowKey, "work_order_id"),
       orderNo: Grid.getValue(e?.rowKey, "work_order_no"),
     });
@@ -894,18 +923,73 @@ function EquipmentResult() {
         empListTemp={empListTemp}
       />
     );
-  }, [refs, tabListArr, gridDataDetail, emp, empListTemp, tabListTmp.current]);
+  }, [gridDataDetail]);
+
+  const modalResultNew = useMemo(() => {
+    return (
+      <ModalResultNew
+        onClose={onResultNewClose}
+        onSelectOrder={onSelectOrder}
+        onRemoveOrder={onRemoveOrder}
+        onSelectMorning={onSelectMorning}
+        onRemoveMorning={onRemoveMorning}
+        onSelectAfternoon={onSelectAfternoon}
+        onRemoveAfternoon={onRemoveAfternoon}
+        onSelectNight={onSelectNight}
+        onRemoveNight={onRemoveNight}
+        onTextChange={handleRemarkChange}
+        onTextChangeEdit={handleRemarkEditChange}
+        onMapping={onMapping}
+        textChange={remarkChange}
+        dateText={dateCheck}
+        clickedWorkOrderId={clickedWorkOrderId}
+        setDateText={setDateCheck}
+        columns={columnsNew}
+        columnOptions={columnOptions}
+        rowHeaders={rowHeadersCheck}
+        gridDataSelect={gridDataNew}
+        draggable={false}
+        refSelectGrid={refGridNew}
+        refCurrentGrid={refCurrentGrid}
+        info={info}
+        emp={emp}
+        refGridArrayModal={refGridArrayModal}
+        mainInfo={mainInfo}
+        isEditMode={isEditMode}
+        tabTitleList={tabListTmp.current}
+        tabTitleLength={tabListTmp.current.length}
+        resetInfo={resetInfo}
+        resetEmp={resetEmp}
+        onClickSearch={onClickSearch}
+        onResultNewClose={onResultNewClose}
+        selectEmpState={selectEmpState.current}
+        gridTabId={tabListId.current}
+        employeeList={empListTemp}
+        flag={editOrNewFlag.current}
+        onClickGrid={onClickGrid}
+      />
+    );
+  }, [refs, tabListArr, gridDataDetail, emp, empListTemp.current, tabListTmp.current]);
 
   return (
     <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
           <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
-          <InputSearch
-            id={"line_nm"}
-            name={"라인명"}
-            handleInputTextChange={handleInputTextChange}
-            onClickSearch={onClickSearch}
+          <S.ComboBox
+            disablePortal
+            id="lineCbo"
+            size="small"
+            key={(option) => option?.line_id}
+            options={lineOpt || null}
+            getOptionLabel={(option) => option?.line_nm || ""}
+            onChange={(_, newValue) => {
+              setComboValue({
+                ...comboValue,
+                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+              });
+            }}
+            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
           />
           <InputSearch
             id={"prod_cd"}
@@ -962,49 +1046,7 @@ function EquipmentResult() {
           </S.GridDetailWrap>
         </S.ContentRight>
       </S.ContentBottom>
-      {isResultNewOpen ? (
-        <ModalResultNew
-          onClose={onResultNewClose}
-          onSelectOrder={onSelectOrder}
-          onRemoveOrder={onRemoveOrder}
-          onSelectMorning={onSelectMorning}
-          onRemoveMorning={onRemoveMorning}
-          onSelectAfternoon={onSelectAfternoon}
-          onRemoveAfternoon={onRemoveAfternoon}
-          onSelectNight={onSelectNight}
-          onRemoveNight={onRemoveNight}
-          onTextChange={handleRemarkChange}
-          onTextChangeEdit={handleRemarkEditChange}
-          onMapping={onMapping}
-          textChange={remarkChange}
-          dateText={dateCheck}
-          clickedWorkOrderId={clickedWorkOrderId}
-          setDateText={setDateCheck}
-          columns={columnsNew}
-          columnOptions={columnOptions}
-          rowHeaders={rowHeadersCheck}
-          gridDataSelect={gridDataNew}
-          draggable={false}
-          refSelectGrid={refGridNew}
-          refCurrentGrid={refCurrentGrid}
-          info={info}
-          emp={emp}
-          refGridArrayModal={refGridArrayModal}
-          mainInfo={mainInfo}
-          isEditMode={isEditMode}
-          tabTitleList={tabListTmp.current}
-          tabTitleLength={tabListTmp.current.length}
-          resetInfo={resetInfo}
-          resetEmp={resetEmp}
-          onClickSearch={onClickSearch}
-          onResultNewClose={onResultNewClose}
-          selectEmpState={selectEmpState.current}
-          gridTabId={tabListId.current}
-          employeeList={empListTemp}
-          flag={editOrNewFlag.current}
-          onClickGrid={onClickGrid}
-        />
-      ) : null}
+      {isResultNewOpen ? modalResultNew : null}
       {isSelectOrderOpen ? (
         <ModalSelectDate
           width={"80%"}

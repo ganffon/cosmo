@@ -185,7 +185,7 @@ function Login() {
                 options={factoryDataOption || null}
                 getOptionLabel={(option) => option?.factory_nm || ""}
                 onChange={(_, newValue) => {
-                  const result = factoryDataOption?.find((factory) => factory.factory_id === newValue?.factory_id);
+                  const result = factoryDataOption?.find((factory) => factory?.factory_id === newValue?.factory_id);
                   setSelectedFactory(result);
                   setLoginInfo({
                     ...loginInfo,

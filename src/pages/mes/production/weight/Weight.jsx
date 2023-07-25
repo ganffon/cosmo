@@ -107,7 +107,7 @@ function Weight() {
   });
 
   const [dateModal, setDateModal] = useState({
-    startDate: DateTime(-7).dateFull,
+    startDate: DateTime().dateFull,
     endDate: DateTime().dateFull,
   });
 

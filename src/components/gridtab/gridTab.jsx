@@ -91,7 +91,7 @@ function GridTab(props) {
         }
       }
     }
-
+    console.log(workerData);
     setWorkerData(workerData);
 
     if (empListTemp?.current?.length === 0) {
@@ -269,7 +269,7 @@ function GridTab(props) {
       refGrid,
       emp,
       toggle,
-      //workerData,
+      workerData,
       empListTemp,
       toggle,
     ]

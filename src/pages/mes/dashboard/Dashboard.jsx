@@ -113,7 +113,6 @@ const Dashboard = () => {
           eq_state: item.state === 1 ? true : false,
         }));
 
-        console.log(response?.data?.data?.rows[0].input);
         setDowntime(modifiedData);
         setState(stateData);
         if (response?.data?.data?.rows[0].packing.data === 0) {
@@ -341,7 +340,14 @@ const Dashboard = () => {
                   라인별 투입량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
                 </S.Title>
                 {/* {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={stackedTmpData} />} */}
-                {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={responseData?.data?.rows[0]?.input} />}
+                {responseData && (
+                  <Chart
+                    options={stackedOptions}
+                    type="bar"
+                    height={"85%"}
+                    series={responseData?.data?.rows[0]?.input}
+                  />
+                )}
               </S.ChartWrap>
               <S.ChartWrap>
                 <S.Title>
