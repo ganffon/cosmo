@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import * as C from "constant/Layout";
+import { Autocomplete } from "@mui/material";
 
 export const ContentsArea = styled("div")`
   height: ${(props) =>
@@ -11,6 +12,12 @@ export const ContentsArea = styled("div")`
   flex-direction: column;
   gap: 10px;
   // overflow: hidden auto;
+`;
+
+export const ComboBox = styled(Autocomplete)`
+  padding-left: 10px;
+  width: 180px;
+  margin-top: 5px;
 `;
 
 export const ContentTop = styled("div")`

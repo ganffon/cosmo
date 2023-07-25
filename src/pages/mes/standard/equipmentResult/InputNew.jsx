@@ -1,6 +1,6 @@
 import InputPaper from "components/input/InputPaper";
 import * as S from "./InputNew.styled";
-import React from "react";
+import React, { useMemo } from "react";
 import DatePicker from "components/datetime/DatePicker";
 import DateTime from "components/datetime/DateTime";
 
@@ -29,6 +29,9 @@ function InputNew(props) {
     setDateText({ ...dateText, [e.target.id]: e.target.value });
   };
 
+  console.log(info);
+  console.log(mainInfo);
+  console.log(isEditMode);
   return (
     <S.Wrap>
       <S.InputWrapDivide>

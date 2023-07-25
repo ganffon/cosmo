@@ -337,6 +337,12 @@
             "under": null
           },
           {
+            "name": "일일운전점검일지(Tab)",
+            "id": "equipment-result-tab",
+            "path": "equipment-result-tab",
+            "under": null
+          },
+          {
             "name": "포장투입일지",
             "id": "packing-input",
             "path": "packing-input",

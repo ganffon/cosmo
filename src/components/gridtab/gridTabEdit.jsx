@@ -37,6 +37,8 @@ function GridTabEdit(props) {
     setWorkerInfo = () => {},
     empListTemp = [],
     flag = null,
+    setGetWorkerId = () => {},
+    setGetTabTabId = () => {},
   } = props;
   const [value, setValue] = React.useState(0);
   const [activeTab, setActiveTab] = React.useState(null);
@@ -54,6 +56,9 @@ function GridTabEdit(props) {
   const [splitDataSetArr, setSplitDataSetArr] = React.useState([]); // splitDataSetArr 상태 추가
 
   const initializeWorker = () => {
+    console.log(empListTemp);
+    console.log(setWorkerInfo);
+    console.log(emp);
     const initialWorkerData = gridTabTitle.map(() => [
       {
         tabId: "",
@@ -124,7 +129,6 @@ function GridTabEdit(props) {
   };
 
   const updateDataset = (index) => {
-    console.log(refGrid);
     let result = [];
     for (let i = 0; i < refGrid.length; i++) {
       refGrid[i]?.current?.gridInst?.finishEditing();
@@ -140,6 +144,8 @@ function GridTabEdit(props) {
   };
 
   React.useEffect(() => {
+    setValue(0);
+
     getActiveGrid(refGrid[0]);
     splitData();
   }, [data]);
@@ -165,6 +171,15 @@ function GridTabEdit(props) {
       } else if (selectEmpState === "nig") {
         workerDataEdit[value][0].nigEmpId = emp.nigEmpId;
         workerDataEdit[value][0].nigEmpNm = emp.nigEmpNm;
+      } else if (selectEmpState === "nigDelete") {
+        workerDataEdit[value][0].nigEmpId = "";
+        workerDataEdit[value][0].nigEmpNm = "";
+      } else if (selectEmpState === "aftDelete") {
+        workerDataEdit[value][0].aftEmpId = "";
+        workerDataEdit[value][0].aftEmpNm = "";
+      } else if (selectEmpState === "mngDelete") {
+        workerDataEdit[value][0].mngEmpId = "";
+        workerDataEdit[value][0].mngEmpNm = "";
       }
     }
 
@@ -221,6 +236,8 @@ function GridTabEdit(props) {
                 onRemoveAfternoon={onRemoveAfternoon}
                 onSelectNight={onSelectNight}
                 onRemoveNight={onRemoveNight}
+                setGetWorkerId={setGetWorkerId}
+                setGetTabTabId={setGetTabTabId}
                 emp={
                   Array.isArray(workerDataEdit[index])
                     ? workerDataEdit[index][0]
@@ -247,7 +264,7 @@ function GridTabEdit(props) {
       refGrid,
       emp,
       toggle,
-      workerDataEdit.current,
+      workerDataEdit,
       empListTemp.current,
     ]
   );

@@ -231,7 +231,7 @@ function Packing() {
     endDate: DateTime().dateFull,
   });
   const [dateOrder, setDateOrder] = useState({
-    startDate: DateTime(-7).dateFull,
+    startDate: DateTime().dateFull,
     endDate: DateTime().dateFull,
   });
   const [modalSelectSize, setModalSelectSize] = useState({
