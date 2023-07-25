@@ -213,9 +213,22 @@ function Unit(props) {
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        <S.ButtonWrap>
+        {/* <S.ButtonWrap>
           <BtnComponent btnName={"DataLoad"} toolTipTitle={"productButton"} onClick={loadData} />
-        </S.ButtonWrap>
+        </S.ButtonWrap> */}
+        {isEditMode ? (
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
+            <BtnComponent btnName={"Cancel"} onClick={onClickEditModeExit} />
+          </S.ButtonWrap>
+        ) : (
+          <S.ButtonWrap>
+            <BtnComponent btnName={"New"} onClick={onClickNew} />
+            <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+            <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
+            {/* <BtnComponent btnName={"DataLoad"} toolTipTitle={"productButton"} onClick={loadData} /> */}
+          </S.ButtonWrap>
+        )}
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}
