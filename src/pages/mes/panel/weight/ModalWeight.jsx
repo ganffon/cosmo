@@ -10,6 +10,7 @@ import DateTime from "components/datetime/DateTime";
 import BtnComponent from "components/button/BtnComponent";
 import BarcodeScan from "./BarcodeScan";
 import WeightPanelSet from "./WeightPanelSet";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 
 function ModalWeight(props) {
   const {
@@ -24,6 +25,7 @@ function ModalWeight(props) {
     columnOptions = [],
     header = [],
     rowHeadersDetail = [],
+    setGridDataWeight = () => {},
     gridDataWeight = [],
     selectInputInfo = {},
     // lineNM = "",
@@ -31,7 +33,7 @@ function ModalWeight(props) {
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
-  const { columnsWeight } = WeightPanelSet(onClickGridButton, onBarcodeScanButton);
+  const { columnsWeight } = WeightPanelSet(onInput, onBarcodeScanButton, onCopyRow, onCancelRow);
 
   const [inputChange, setInputChange] = useState();
 
@@ -51,7 +53,30 @@ function ModalWeight(props) {
     setBarcodeScan({});
     setIsBarcodeScanOpen(false);
   };
-  function onClickGridButton() {}
+  function onInput() {}
+  function onCopyRow(e, rowKey) {
+    const copyColumns = [
+      "work_order_input_id",
+      "prod_id",
+      "prod_class_nm",
+      "prod_cd",
+      "prod_nm",
+      "prod_std",
+      "spec_std",
+      "spec_min",
+      "spec_max",
+      "spec_lcl",
+      "spec_ucl",
+      "infc_memory_id",
+      "tag_id",
+      "weight",
+      "constant_value",
+    ];
+    CustomGrid.copyRow(refGridWeight, setGridDataWeight, columnsWeight, copyColumns, rowKey);
+  }
+  function onCancelRow(e, rowKey) {
+    CustomGrid.cancelRow(refGridWeight, setGridDataWeight, rowKey);
+  }
   function onBarcodeScanButton(rowKey) {
     const Grid = refGridWeight?.current?.gridInst;
     targetRowKey.current = rowKey;

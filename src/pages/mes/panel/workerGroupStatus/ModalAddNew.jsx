@@ -24,7 +24,9 @@ function ModalAddNew(props) {
     onClickSelect = () => {},
     onClickRemove = () => {},
     onDblClickGrid = () => {},
+    onDblClickNewSupportGrid = () => {},
     refGrid = null,
+    refSupportGrid = null,
     columns = [],
     columnOptions = [],
     data = [],
@@ -36,10 +38,12 @@ function ModalAddNew(props) {
     setIsBackDrop = {},
     setIsSnackOpen = {},
     isSnackOpen = false,
+    target = null,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
   const [gridData, setGridData] = useState([]);
+  const [gridSupportData, setGridSupportData] = useState([]);
 
   useEffect(() => {
     setNewContents({
@@ -52,6 +56,9 @@ function ModalAddNew(props) {
 
   const datePickerChange = (e) => {
     setNewContents({ ...newContents, [e.target.id]: e.target.value });
+  };
+  const handleRemark = (e) => {
+    setNewContents({ ...newContents, remark: e.target.value });
   };
   const handleIssue = (e) => {
     setNewContents({ ...newContents, issue: e.target.value });
@@ -158,7 +165,8 @@ function ModalAddNew(props) {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.workerGroupStatusEmpList + `?worker_group_nm=${group}`);
 
-      setGridData(result?.data?.data?.rows);
+      setGridData(result?.data?.data?.rows[0]?.worker);
+      setGridSupportData(result?.data?.data?.rows[0]?.support);
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -207,6 +215,16 @@ function ModalAddNew(props) {
     Grid.setValue(rowKey, "work_end_date", newContents.endDate);
     Grid.setValue(rowKey, "work_end_time", newContents.endTime);
   };
+  const onSupportAddRow = () => {
+    const Grid = refSupportGrid?.current?.gridInst;
+    const rowKey = Grid.getRowCount();
+    Grid.appendRow();
+
+    Grid.setValue(rowKey, "work_start_date", newContents.startDate);
+    Grid.setValue(rowKey, "work_start_time", newContents.startTime);
+    Grid.setValue(rowKey, "work_end_date", newContents.endDate);
+    Grid.setValue(rowKey, "work_end_time", newContents.endTime);
+  };
   useEffect(() => {
     const Grid = refGrid?.current?.gridInst;
     const maxRow = Grid.getRowCount();
@@ -223,6 +241,9 @@ function ModalAddNew(props) {
   }, []);
   const onNewCancelRow = () => {
     refGrid?.current?.gridInst?.removeRow(rowKey.current);
+  };
+  const onSupportCancelRow = () => {
+    refSupportGrid?.current?.gridInst?.removeRow(rowKey.current);
   };
   const onEditingFinish = (e) => {
     if (Condition(e, ["work_start_time"])) {
@@ -255,16 +276,6 @@ function ModalAddNew(props) {
       });
       return;
     }
-    if (!newContents.writer) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: "작성자를 입력하세요!",
-        severity: "warning",
-        location: "topCenter",
-      });
-      return;
-    }
     if (!newContents.startTime) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -287,27 +298,35 @@ function ModalAddNew(props) {
     }
 
     refGrid?.current?.gridInst?.finishEditing();
+    refSupportGrid?.current?.gridInst?.finishEditing();
     const header = {
-      master_emp_id: newContents.writerId,
       shift_type: newContents.workType,
       worker_group_nm: newContents.workGroup,
       work_start_date: newContents.startDate,
       work_start_time: newContents.startTime,
       work_end_date: newContents.endDate,
       work_end_time: newContents.endTime,
-      remark: newContents.issue,
+      remark: newContents.remark,
+      issue: newContents.issue,
     };
     let result = [];
+    let supportResult = [];
     for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
       result.push(refGrid?.current?.gridInst?.getRowAt(i));
     }
+    for (let i = 0; i < refSupportGrid?.current?.gridInst?.getRowCount(); i++) {
+      supportResult.push(refSupportGrid?.current?.gridInst?.getRowAt(i));
+    }
+
     const detail = result.map((raw) => GetPostParams("workGroupStatusDetail", raw));
+    const supportDetail = supportResult.map((raw) => detail.push(GetPostParams("supportWorkGroupStatusDetail", raw)));
 
     const query = {
       header: header,
       details: detail,
     };
 
+    // return;
     if (query.details !== undefined) {
       setIsBackDrop(true);
       await restAPI
@@ -354,6 +373,21 @@ function ModalAddNew(props) {
       />
     );
   }, [refGrid.current, onClickGrid, gridData]);
+  const GridSupport = useMemo(() => {
+    return (
+      <GridSingle
+        rowHeaders={rowHeaders}
+        columns={columns}
+        columnOptions={columnOptions}
+        onClickGrid={onClickGrid}
+        onDblClickGrid={onDblClickNewSupportGrid}
+        onEditingFinish={onEditingFinish}
+        data={gridSupportData}
+        refGrid={refSupportGrid}
+        isEditMode={true}
+      />
+    );
+  }, [refSupportGrid.current, onClickGrid, gridSupportData]);
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
@@ -391,7 +425,7 @@ function ModalAddNew(props) {
               {"D조"}
             </S.workButton>
           </S.GroupWrap>
-          <S.GroupWrap>
+          {/* <S.GroupWrap>
             <S.Title>작성자</S.Title>
             <InputPaper
               width={"300px"}
@@ -402,7 +436,7 @@ function ModalAddNew(props) {
               onClickSelect={onClickSelect}
               onClickRemove={onClickRemove}
             />
-          </S.GroupWrap>
+          </S.GroupWrap> */}
           <S.GroupWrap>
             <S.Title>시작일자</S.Title>
             <S.DatePicker
@@ -449,21 +483,41 @@ function ModalAddNew(props) {
           </S.GroupWrap>
           <S.GroupWrap className={"columnDirection"}>
             <S.Title>작업이슈</S.Title>
-            <S.Issue
-              rows={4}
-              value={newContents.issue}
-              onChange={handleIssue}
-              placeholder="작업이슈에 대해 작성해주세요."
-            />
+            <S.Issue rows={4} value={newContents.remark} onChange={handleRemark} placeholder="작업이슈에 대해 작성해주세요." />
+            <S.Title>파견현황</S.Title>
+            <S.Issue rows={4} value={newContents.issue} onChange={handleIssue} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
           </S.GroupWrap>
+          {/* <S.GroupWrap className={"columnDirection"}>
+            
+          </S.GroupWrap> */}
         </S.ContentLeft>
         <S.ContentRight>
-          <S.ButtonWrap>
-            <BtnComponent btnName={"AddRow"} onClick={onNewAddRow} />
-            <BtnComponent btnName={"CancelRow"} onClick={onNewCancelRow} />
-            <BtnComponent btnName={"Save"} onClick={onNewSave} />
-          </S.ButtonWrap>
-          <S.GridWrap>{Grid}</S.GridWrap>
+          <S.RowsGridContainer Template={"5% 60% 35%"}>
+            <S.ButtonWrap>
+              <BtnComponent btnName={"Save"} onClick={onNewSave} />
+            </S.ButtonWrap>
+            <div style={{ width: "100%", height: "100%" }}>
+              <div style={{ display: "flex" }}>
+                <S.GridTitle>작업자</S.GridTitle>
+                <S.ButtonWrap>
+                  <BtnComponent btnName={"AddRow"} onClick={onNewAddRow} />
+                  <BtnComponent btnName={"CancelRow"} onClick={onNewCancelRow} />
+                </S.ButtonWrap>
+              </div>
+              <S.GridWrap>{Grid}</S.GridWrap>
+            </div>
+
+            <div style={{ width: "100%", height: "100%" }}>
+              <div style={{ display: "flex" }}>
+                <S.GridTitle>근무지원 (다른 조원을 작성)</S.GridTitle>
+                <S.ButtonWrap>
+                  <BtnComponent btnName={"AddRow"} onClick={onSupportAddRow} />
+                  <BtnComponent btnName={"CancelRow"} onClick={onSupportCancelRow} />
+                </S.ButtonWrap>
+              </div>
+              <S.GridWrap>{GridSupport}</S.GridWrap>
+            </div>
+          </S.RowsGridContainer>
         </S.ContentRight>
       </S.Content>
     </S.ModalWrapBox>

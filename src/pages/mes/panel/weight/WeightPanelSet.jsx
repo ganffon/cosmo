@@ -3,7 +3,12 @@ import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function WeightPanelSet(onClickGridButton, onBarcodeScanButton) {
+function WeightPanelSet(
+  onInput = () => {},
+  onBarcodeScanButton = () => {},
+  onCopyRow = () => {},
+  onCancelRow = () => {}
+) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = {};
@@ -45,24 +50,26 @@ function WeightPanelSet(onClickGridButton, onBarcodeScanButton) {
   const columnsWeight = [
     col.id("work_order_input_id", CN.work_order_input_id, C.HIDDEN_ID),
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
-    col.text("prod_class_nm", CN.prod_class_nm, C.U, C.U, C.U, C.U, true, true),
-    col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
-    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
-    col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true),
-    col.text("spec_std", CN.spec_std, C.U, C.U, C.WIDTH_MIDDLE),
-    col.number("spec_min", CN.spec_min),
-    col.number("spec_max", CN.spec_max),
-    col.number("spec_lcl", CN.spec_lcl),
-    col.number("spec_ucl", CN.spec_ucl),
-    col.id("infc_memory_id", CN.infc_memory_id, C.HIDDEN_ID),
-    col.id("tag_id", CN.tag_id, C.HIDDEN_ID),
-    col.id("weight", "가중치", C.HIDDEN_ID),
-    col.id("constant_value", CN.constant_value, C.HIDDEN_ID),
+    col.text("prod_class_nm", CN.prod_class_nm, C.U, C.U, C.U, C.U, true, true, C.U, true),
     col.button("barcodeScan", "바코드 스캔", "바코드 스캔", onBarcodeScanButton),
+    col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true, C.U, true),
+    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true, C.U, true),
+    col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE, C.U, true, true, C.U, true),
+    col.button("copyRow", "Lot 추가", "Lot 추가", onCopyRow, "", "copy"),
+    col.button("cancelRow", "Lot 취소", "Lot 취소", onCancelRow, "", "cancel", true),
     col.text("lot_no", CN.lot_no, true, C.U, C.WIDTH_MIDDLE),
     col.number("total_qty", CN.total_qty2, true),
     col.number("bag_qty", CN.bag_qty, true),
     col.number("input_qty", CN.input_qty),
+    col.text("spec_std", CN.spec_std, C.U, C.U, C.U, C.U, C.U, C.U, C.U, true),
+    col.number("spec_min", CN.spec_min, C.U, C.U, C.U, C.U, C.U, true),
+    col.number("spec_max", CN.spec_max, C.U, C.U, C.U, C.U, C.U, true),
+    col.number("spec_lcl", CN.spec_lcl, C.U, C.U, C.U, C.U, C.U, true),
+    col.number("spec_ucl", CN.spec_ucl, C.U, C.U, C.U, C.U, C.U, true),
+    col.id("infc_memory_id", CN.infc_memory_id, C.HIDDEN_ID),
+    col.id("tag_id", CN.tag_id, C.HIDDEN_ID),
+    col.id("weight", "가중치", C.HIDDEN_ID),
+    col.id("constant_value", CN.constant_value, C.HIDDEN_ID),
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];
   const columnsInput = [
@@ -81,7 +88,7 @@ function WeightPanelSet(onClickGridButton, onBarcodeScanButton) {
     col.text("store_nm", CN.store_nm, C.U, C.U, C.U, false, false, true),
     col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
     col.text("location_nm", CN.location_nm, C.U, C.U, C.U, false, false, true),
-    col.button("inputSave", "투입", "투입", onClickGridButton),
+    col.button("inputSave", "투입", "투입", onInput),
     col.date("work_weigh_date", CN.work_weigh_date),
     col.text("work_weigh_time", CN.work_weigh_time, C.U, C.U, C.U, "center", false, true),
     col.id("weigh_emp_id", CN.weigh_emp_id, C.HIDDEN_ID),

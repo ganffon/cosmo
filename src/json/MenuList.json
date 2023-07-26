@@ -101,6 +101,12 @@
             "id": "employee",
             "path": "employee",
             "under": null
+          },
+          {
+            "name": "근무유형",
+            "id": "work-type",
+            "path": "work-type",
+            "under": null
           }
         ]
       },

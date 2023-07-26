@@ -61,12 +61,12 @@ export const ContentRight = styled("div")`
   padding: 20px 10px 10px 20px;
 `;
 export const GroupWrap = styled("div")`
-  height: 70px;
+  height: "70px";
   display: flex;
   gap: 10px;
   &.columnDirection {
     flex-direction: column;
-    height: calc(100% - 500px);
+    height: calc(100% - 400px);
   }
 `;
 export const Title = styled("div")`
@@ -78,6 +78,18 @@ export const Title = styled("div")`
   align-items: center;
   justify-content: end;
   margin-right: 10px;
+  &.alignTop {
+    align-items: start;
+  }
+`;
+export const GridTitle = styled("div")`
+  height: 40px;
+  width: 100%;
+  font-family: NotoSansKR_B;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
   &.alignTop {
     align-items: start;
   }
@@ -124,7 +136,7 @@ export const DatePicker = styled(TextField)`
 `;
 
 export const Issue = styled("textarea")`
-  height: calc(100% - 80px);
+  height: 150px;
   width: 700px;
   margin-left: 10px;
   resize: none;
@@ -145,5 +157,12 @@ export const ButtonWrap = styled("div")`
 `;
 export const GridWrap = styled("div")`
   width: 100%;
-  height: calc(100% - 55px);
+  height: calc(100% - 50px);
+`;
+export const RowsGridContainer = styled("div")`
+  display: grid;
+  width: 100%;
+  height: calc(100% - 40px);
+  grid-template-rows: ${(props) => props.Template || "50% 50%"};
+  gap: 10px;
 `;

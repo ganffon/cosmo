@@ -9,5 +9,7 @@ const TabGridWrap = styled("div")`
 const InputNewTab = styled("div")`
   height: 50px;
 `;
-
-export { TabGridWrap, InputNewTab };
+const TabSingleGridWrap = styled("div")`
+  height: 100%;
+`;
+export { TabGridWrap, InputNewTab, TabSingleGridWrap };

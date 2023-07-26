@@ -189,6 +189,7 @@ export const LineState = styled("div")`
   width: 100%;
   font-size: 23px;
   font-weight: 700;
+  color: ${(props) => props.color || "black"};
   line-height: 40px;
   text-align: center;
 `;

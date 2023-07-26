@@ -94,6 +94,7 @@ import DailyLineInputCapa from "pages/mes/managementInfo/dailyLineInputCapa/Dail
 import QualitySpc from "pages/mes/quality/qualitySpc/QualitySpc";
 import InspDocument from "pages/mes/standard/inspDocument/InspDocument";
 import InspResult from "pages/mes/quality/inspResult/InspResult";
+import WorkType from "pages/mes/standard/workType/WorkType";
 
 export default function MainRouter() {
   const pages = [
@@ -196,6 +197,7 @@ export default function MainRouter() {
     { path: "quality-spc", component: QualitySpc },
     { path: "insp-document", component: InspDocument },
     { path: "quality-result-view", component: InspResult },
+    { path: "work-type", component: WorkType },
   ];
   return (
     <Layout>

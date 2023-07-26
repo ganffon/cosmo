@@ -44,8 +44,19 @@ export default function Chips(props) {
       {chipData.map((data) => {
         return (
           <S.ChipWrap key={data.key}>
-            <S.ChipItem label={data.label} onDelete={isLock ? undefined : () => handleDelete(data)} />
+            {/* <S.ChipItem cor={"blue"} label={data.label} onDelete={isLock ? undefined : () => handleDelete(data)} /> */}
             {/* <S.ChipItem label={data.label} onDelete={isLock ? undefined : () => setIsDeleteAlertOpen(true)} /> */}
+            {data.is_work === true &&
+              data.leader === true && ( // 작업중 조장
+                <S.ChipItem bakCor={"blue"} cor={"white"} label={data.label} onDelete={isLock ? undefined : () => handleDelete(data)} />
+              )}
+            {data.is_work === true &&
+              data.leader !== true && ( // 일반 작업자
+                <S.ChipItem label={data.label} onDelete={isLock ? undefined : () => handleDelete(data)} />
+              )}
+            {data.is_work !== true && ( // 휴가자
+              <S.ChipItem bakCor={"red"} cor={"white"} label={data.label} onDelete={isLock ? undefined : () => handleDelete(data)} />
+            )}
           </S.ChipWrap>
         );
       })}

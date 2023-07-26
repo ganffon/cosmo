@@ -617,6 +617,9 @@ class workGroupStatusDetail {
     this.work_start_time = raw.work_start_time;
     this.work_end_date = raw.work_end_date;
     this.work_end_time = raw.work_end_time;
+    this.work_type_id = raw.work_type_id;
+    this.leader_fg = raw.leader_fg;
+    this.support_fg = false;
     this.remark = raw.remark;
   }
 }
@@ -624,10 +627,13 @@ class workerGroupStatusAddEmp {
   constructor(raw) {
     this.worker_group_status_id = raw.worker_group_status_id;
     this.emp_id = raw.emp_id;
+    this.work_type_id = raw.work_type_id;
     this.work_start_date = raw.work_start_date;
     this.work_start_time = raw.work_start_time;
     this.work_end_date = raw.work_end_date;
     this.work_end_time = raw.work_end_time;
+    this.leader_fg = raw.leader_fg;
+    this.support_fg = false;
     this.remark = raw.remark;
   }
 }
@@ -708,6 +714,40 @@ class inspDocumentDetail {
     this.inspector_sample_cnt = raw.inspector_sample_cnt === "" ? null : Number(raw.inspector_sample_cnt);
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id;
+    this.remark = raw.remark;
+  }
+}
+class workType {
+  constructor(raw) {
+    this.work_type_cd = raw.work_type_cd;
+    this.work_type_nm = raw.work_type_nm;
+    this.is_work = raw.is_work ? true : false;
+  }
+}
+class supportWorkGroupStatusDetail {
+  constructor(raw) {
+    this.emp_id = raw.emp_id;
+    this.work_start_date = raw.work_start_date;
+    this.work_start_time = raw.work_start_time;
+    this.work_end_date = raw.work_end_date;
+    this.work_end_time = raw.work_end_time;
+    this.work_type_id = raw.work_type_id;
+    this.leader_fg = raw.leader_fg !== null ? raw.leader_fg : false;
+    this.support_fg = true;
+    this.remark = raw.remark;
+  }
+}
+class workerGroupStatusAddSupportEmp {
+  constructor(raw) {
+    this.worker_group_status_id = raw.worker_group_status_id;
+    this.emp_id = raw.emp_id;
+    this.work_type_id = raw.work_type_id;
+    this.work_start_date = raw.work_start_date;
+    this.work_start_time = raw.work_start_time;
+    this.work_end_date = raw.work_end_date;
+    this.work_end_time = raw.work_end_time;
+    this.leader_fg = raw.leader_fg;
+    this.support_fg = true;
     this.remark = raw.remark;
   }
 }
@@ -910,6 +950,15 @@ function GetPostParams(componentName, raw) {
         break;
       case "inspDocumentDetail":
         params = new inspDocumentDetail(raw);
+        break;
+      case "workType":
+        params = new workType(raw);
+        break;
+      case "supportWorkGroupStatusDetail":
+        params = new supportWorkGroupStatusDetail(raw);
+        break;
+      case "workerGroupStatusAddSupportEmp":
+        params = new workerGroupStatusAddSupportEmp(raw);
         break;
       default:
     }

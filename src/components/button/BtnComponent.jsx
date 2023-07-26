@@ -150,6 +150,12 @@ function BtnComponent(props) {
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "115px";
       break;
+    case "Copy":
+      icon = Clean;
+      title = "행 복사";
+      btnHeight = height ? height : "34px";
+      btnWidth = width ? width : "115px";
+      break;
     default:
   }
   return btnName === "Search" ? (

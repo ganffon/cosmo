@@ -15,12 +15,15 @@ function WorkerGroupStatusSet() {
   const columns = [
     col.id("worker_group_status_id", CN.worker_group_status_id, C.HIDDEN_ID),
     col.id("master_emp_id", CN.master_emp_id, C.HIDDEN_ID),
-    col.text("master_emp_nm", CN.master_emp_nm),
+    col.text("master_emp_nm", CN.master_emp_nm, false, true),
+    col.text("work_start_date", CN.work_start_date, C.U, C.U, C.U, "center"),
+
     col.text("shift_type", CN.shift_type),
     col.text("worker_group_nm", CN.worker_group_nm),
-    col.text("work_start_date", CN.work_start_date, C.U, C.U, C.U, "center"),
-    col.text("work_start_time", CN.work_start_time, C.U, C.U, C.U, "center"),
     col.text("work_end_date", CN.work_end_date, C.U, C.U, C.U, "center"),
+
+    col.text("work_start_time", CN.work_start_time, C.U, C.U, C.U, "center"),
+
     col.text("work_end_time", CN.work_end_time, C.U, C.U, C.U, "center"),
     col.text("remark", CN.remark, C.U, false),
   ];
@@ -32,10 +35,20 @@ function WorkerGroupStatusSet() {
     col.text("emp_nm", CN.emp_nm, false, false, C.WIDTH_SHORT, false, false, true),
     col.text("worker_group_nm", CN.worker_group_nm, false, true, C.WIDTH_MIDDLE, false, false, true),
   ];
+  const columnsWorkType = [
+    col.id("work_type_id", CN.work_type_id, C.HIDDEN_ID),
+    col.text("work_type_cd", CN.work_type_cd, false, false, C.WIDTH_SHORT, false, false, true),
+    col.text("work_type_nm", CN.work_type_nm, false, false, C.WIDTH_SHORT, false, false, true),
+  ];
   const columnsNewEmp = [
     col.id("emp_id", CN.emp_id, C.HIDDEN_ID),
     col.select("emp_cd", CN.emp_cd, true),
     col.select("emp_nm", CN.emp_nm, true),
+    col.id("work_type_id", CN.work_type_id, C.HIDDEN_ID),
+    col.select("work_type_cd", CN.work_type_cd, true),
+    col.select("work_type_nm", CN.work_type_nm, true),
+    col.check("leader_fg", CN.leader_fg, true),
+
     col.date("work_start_date", CN.work_start_date, true),
     col.text("work_start_time", CN.work_start_time, true, C.U, C.U, "center"),
     col.date("work_end_date", CN.work_end_date, true),
@@ -47,10 +60,14 @@ function WorkerGroupStatusSet() {
     col.id("emp_id", CN.emp_id, C.HIDDEN_ID),
     col.select("emp_cd", CN.emp_cd, true),
     col.select("emp_nm", CN.emp_nm, true),
+    col.id("work_type_id", CN.work_type_id, C.HIDDEN_ID),
+    col.select("work_type_cd", CN.work_type_cd, true),
+    col.select("work_type_nm", CN.work_type_nm, true),
     col.date("work_start_date", CN.work_start_date, true),
     col.text("work_start_time", CN.work_start_time, true, C.U, C.U, "center"),
     col.date("work_end_date", CN.work_end_date, true),
     col.text("work_end_time", CN.work_end_time, true, C.U, C.U, "center"),
+    col.check("leader_fg", CN.leader_fg, true),
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];
   const inputSet = [
@@ -96,6 +113,7 @@ function WorkerGroupStatusSet() {
     columnsAddEmp,
     inputSet,
     inputInfo,
+    columnsWorkType,
   };
 }
 export default WorkerGroupStatusSet;

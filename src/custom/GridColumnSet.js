@@ -208,7 +208,15 @@ const check = (
     rowSpan: rowSpan,
   };
 };
-const button = (name = "", header = "", btnName = "", func = () => {}, btnName2 = "", disabled = false) => {
+const button = (
+  name = "",
+  header = "",
+  btnName = "",
+  func = () => {},
+  btnName2 = "",
+  btnType = "",
+  disabled = false
+) => {
   return {
     name: name,
     header: header,
@@ -222,6 +230,7 @@ const button = (name = "", header = "", btnName = "", func = () => {}, btnName2 
         name2: btnName2,
         onClick: func,
         disabled: disabled,
+        btnType: btnType,
       },
     },
     hidden: false,
@@ -250,7 +259,8 @@ const number = (
   minWidth = C.WIDTH_SHORT,
   hidden = false,
   sortable = false,
-  filter = false
+  filter = false,
+  rowSpan = false
 ) => {
   return {
     name: name,
@@ -265,7 +275,7 @@ const number = (
     sortable: sortable,
     filter: filter,
     whiteSpace: false,
-    rowSpan: false,
+    rowSpan: rowSpan,
   };
 };
 
@@ -276,7 +286,8 @@ const rNumber = (
   minWidth = C.WIDTH_SHORT,
   hidden = false,
   sortable = false,
-  filter = false
+  filter = false,
+  rowSpan = false
 ) => {
   return {
     name: name,
@@ -291,7 +302,7 @@ const rNumber = (
     sortable: sortable,
     filter: filter,
     whiteSpace: false,
-    rowSpan: false,
+    rowSpan: rowSpan,
   };
 };
 

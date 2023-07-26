@@ -462,5 +462,10 @@
   "loss_qty": "Loss",
   "input_date": "투입일자",
   "input_time": "투입시간",
-  "bag_cleaning_fg": "Bag\n청소"
+  "bag_cleaning_fg": "Bag\n청소",
+  "work_type_id": "근무유형ID",
+  "work_type_nm": "근무유형",
+  "work_type_cd": "근무 유형 코드",
+  "is_work": "정상근무",
+  "leader_fg": "조장"
 }

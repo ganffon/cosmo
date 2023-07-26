@@ -825,7 +825,7 @@ function PackingPanel() {
     if (e?.targetType === "cell") {
       const data = e?.instance?.store?.data?.rawData[e?.rowKey];
       const Grid = refGridHeader?.current?.gridInst;
-      console.log(targetRowKey.current);
+      // console.log(targetRowKey.current);
       Grid.setValue(targetRowKey.current, "packing_emp_id", data.emp_id);
       Grid.setValue(targetRowKey.current, "packing_emp_nm", data.emp_nm);
       disRow.handleGridSelectCheck(refGridHeader, targetRowKey.current);

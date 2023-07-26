@@ -117,8 +117,7 @@ function ModalResultNew(props) {
   };
 
   const onMapping = async () => {
-    let timeString =
-      DateTime().hour + ":" + DateTime().minute + ":" + DateTime().seconds;
+    let timeString = DateTime().hour + ":" + DateTime().minute + ":" + DateTime().seconds;
     //timeString = "06:20:20";
     const morningStart = "06:00:00";
     const morningEnd = "13:59:59";
@@ -128,13 +127,8 @@ function ModalResultNew(props) {
 
     if (morningStart <= timeString && timeString <= morningEnd) {
       if (activeTab?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        const workOrderIdForNew = activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "mng_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "mng_insp_value");
@@ -142,14 +136,9 @@ function ModalResultNew(props) {
       }
     } else if (afternoonStart <= timeString && timeString <= afternoonEnd) {
       if (activeTab?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
+        const workOrderIdForNew = activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
 
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "aft_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "aft_insp_value");
@@ -157,14 +146,9 @@ function ModalResultNew(props) {
       }
     } else {
       if (activeTab?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
+        const workOrderIdForNew = activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
 
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "nig_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "nig_insp_value");
@@ -174,24 +158,15 @@ function ModalResultNew(props) {
   };
 
   const getRawData = async (workOrderId, Term) => {
-    const result = await restAPI.get(
-      restURI.getOrderDetailsRawData + "?work_order_id=" + workOrderId
-    );
+    const result = await restAPI.get(restURI.getOrderDetailsRawData + "?work_order_id=" + workOrderId);
     const rowLength = result?.data?.data?.count;
     const rowData = result?.data?.data?.rows;
-    const GridRowDataLength =
-      activeTab?.current?.gridInst?.store?.data?.rawData?.length;
+    const GridRowDataLength = activeTab?.current?.gridInst?.store?.data?.rawData?.length;
     const GridRowData = activeTab?.current?.gridInst;
     for (let i = 0; i < GridRowDataLength; i++) {
       for (let j = 0; j < rowLength; j++) {
-        if (
-          GridRowData?.store?.data?.rawData[i].tag_id === rowData[j].node_id
-        ) {
-          GridRowData?.setValue(
-            GridRowData.store.data.rawData[i].rowKey,
-            Term,
-            String(rowData[j].value)
-          );
+        if (GridRowData?.store?.data?.rawData[i].tag_id === rowData[j].node_id) {
+          GridRowData?.setValue(GridRowData.store.data.rawData[i].rowKey, Term, String(rowData[j].value));
         }
       }
     }
@@ -326,10 +301,7 @@ function ModalResultNew(props) {
           emps: dataEmps,
         };
         try {
-          const result = await restAPI.put(
-            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
-            query
-          );
+          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -359,8 +331,6 @@ function ModalResultNew(props) {
   /**저장 함수 종료 */
 
   const GridTab = useMemo(() => {
-    console.log(employeeList);
-
     return (
       <EditTabs
         tabLength={tabTitleLength}
@@ -423,9 +393,7 @@ function ModalResultNew(props) {
   return (
     <ModalWrapMulti width={width} height={height}>
       <S.HeaderBox>
-        <S.TitleBox>
-          {isEditMode ? `[일일운전점검일지 수정]` : `[일일운전점검일지 신규]`}
-        </S.TitleBox>
+        <S.TitleBox>{isEditMode ? `[일일운전점검일지 수정]` : `[일일운전점검일지 신규]`}</S.TitleBox>
         <S.ButtonClose color="primary" aria-label="close" onClick={onClose}>
           <CloseIcon />
         </S.ButtonClose>

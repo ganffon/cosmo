@@ -27,14 +27,12 @@ function UnitSet(isEditMode) {
     col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
-  const columnsModal = [
-    col.text("unit_cd", CN.unit_cd, true),
-    col.text("unit_nm", CN.unit_nm, true),
-  ];
+  const columnsModal = [col.text("unit_cd", CN.unit_cd, true), col.text("unit_nm", CN.unit_nm, true)];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
+    uniqueKey: true,
   };
 
   const header = {};

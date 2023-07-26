@@ -69,7 +69,7 @@ function WeightPanel() {
     columnsSelectStore,
     columnsInput,
     columnsInputDetail,
-  } = WeightPanelSet(onClickGridButton, onBarcodeScan);
+  } = WeightPanelSet(onInput, onBarcodeScan);
 
   const resetRequire = () => {
     setSelectInfo({
@@ -562,7 +562,7 @@ function WeightPanel() {
     }
     setIsModalSelectOpen(false);
   };
-  function onClickGridButton(e, rowKey) {
+  function onInput(e, rowKey) {
     handleInputSaveInfo(rowKey);
     setIsModalInputSaveOpen(true);
   }
@@ -713,12 +713,12 @@ function WeightPanel() {
         <S.ButtonBox>
           <S.ButtonSet color={"#555555"} hoverColor={"#e5b700"} onClick={onClickWeight}>
             계량
+            <S.QuestionMark src={QuestionMark} onClick={onQuestionWeight} />
           </S.ButtonSet>
-          <S.QuestionMark src={QuestionMark} onClick={onQuestionWeight} />
           <S.ButtonSet color={"#1491CE"} hoverColor={"#990b11"} onClick={onClickInput}>
             투입
+            <S.QuestionMark src={QuestionMark} onClick={onQuestionInput} />
           </S.ButtonSet>
-          <S.QuestionMark src={QuestionMark} onClick={onQuestionInput} />
         </S.ButtonBox>
       </S.BottomWrap>
       {isModalWeightOpen ? (
@@ -726,6 +726,7 @@ function WeightPanel() {
           onClickModalClose={onClickWeightClose}
           columnOptions={columnOptions}
           header={header}
+          setGridDataWeight={setGridDataWeight}
           gridDataWeight={gridDataWeight}
           rowHeadersHeader={rowHeadersNum}
           rowHeadersDetail={rowHeadersNum}

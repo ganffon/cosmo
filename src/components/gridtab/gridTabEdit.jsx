@@ -37,8 +37,6 @@ function GridTabEdit(props) {
     setWorkerInfo = () => {},
     empListTemp = [],
     flag = null,
-    setGetWorkerId = () => {},
-    setGetTabTabId = () => {},
   } = props;
   const [value, setValue] = React.useState(0);
   const [activeTab, setActiveTab] = React.useState(null);
@@ -56,9 +54,6 @@ function GridTabEdit(props) {
   const [splitDataSetArr, setSplitDataSetArr] = React.useState([]); // splitDataSetArr 상태 추가
 
   const initializeWorker = () => {
-    console.log(empListTemp);
-    console.log(setWorkerInfo);
-    console.log(emp);
     const initialWorkerData = gridTabTitle.map(() => [
       {
         tabId: "",
@@ -144,8 +139,6 @@ function GridTabEdit(props) {
   };
 
   React.useEffect(() => {
-    setValue(0);
-
     getActiveGrid(refGrid[0]);
     splitData();
   }, [data]);
@@ -171,15 +164,6 @@ function GridTabEdit(props) {
       } else if (selectEmpState === "nig") {
         workerDataEdit[value][0].nigEmpId = emp.nigEmpId;
         workerDataEdit[value][0].nigEmpNm = emp.nigEmpNm;
-      } else if (selectEmpState === "nigDelete") {
-        workerDataEdit[value][0].nigEmpId = "";
-        workerDataEdit[value][0].nigEmpNm = "";
-      } else if (selectEmpState === "aftDelete") {
-        workerDataEdit[value][0].aftEmpId = "";
-        workerDataEdit[value][0].aftEmpNm = "";
-      } else if (selectEmpState === "mngDelete") {
-        workerDataEdit[value][0].mngEmpId = "";
-        workerDataEdit[value][0].mngEmpNm = "";
       }
     }
 
@@ -208,7 +192,7 @@ function GridTabEdit(props) {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }} height={"530px"}>
+          <Box sx={{ p: 3 }}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -225,7 +209,7 @@ function GridTabEdit(props) {
     (index) => {
       return gridTabTitle.map((title, index) => (
         <TabPanel value={value} index={index} key={index}>
-          <S.TabGridWrap height={height}>
+          <S.TabGridWrap height={`calc(100% - 100px)`}>
             <S.InputNewTab>
               <InputNewTab
                 isEditMode={false}
@@ -236,8 +220,6 @@ function GridTabEdit(props) {
                 onRemoveAfternoon={onRemoveAfternoon}
                 onSelectNight={onSelectNight}
                 onRemoveNight={onRemoveNight}
-                setGetWorkerId={setGetWorkerId}
-                setGetTabTabId={setGetTabTabId}
                 emp={
                   Array.isArray(workerDataEdit[index])
                     ? workerDataEdit[index][0]
@@ -245,14 +227,16 @@ function GridTabEdit(props) {
                 }
               />
             </S.InputNewTab>
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columns}
-              header={header}
-              rowHeaders={rowHeaders}
-              data={splitDataSetArr[index]}
-              refGrid={refGrid[index]}
-            />
+            <S.TabSingleGridWrap>
+              <GridSingle
+                columnOptions={columnOptions}
+                columns={columns}
+                header={header}
+                rowHeaders={rowHeaders}
+                data={splitDataSetArr[index]}
+                refGrid={refGrid[index]}
+              />
+            </S.TabSingleGridWrap>
           </S.TabGridWrap>
         </TabPanel>
       ));
@@ -264,13 +248,13 @@ function GridTabEdit(props) {
       refGrid,
       emp,
       toggle,
-      workerDataEdit,
+      workerDataEdit.current,
       empListTemp.current,
     ]
   );
 
   return (
-    <Box sx={{ width: "100%", height: "500px" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <TabContext value={value}>
           <TabList onChange={handleChange}>
@@ -292,6 +276,7 @@ function GridTabEdit(props) {
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
+        style={{ height: "100%" }}
         {...other}
       >
         {children}

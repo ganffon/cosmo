@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const hostName = window.location.hostname;
 const IPFlag = hostName.split(".")[0];
 let BASE_URL;
-console.log(`IPFlag : ${IPFlag}`);
+// console.log(`IPFlag : ${IPFlag}`);
 switch (IPFlag) {
   case "192":
     BASE_URL = process.env.REACT_APP_BASE_URL_PANEL;
