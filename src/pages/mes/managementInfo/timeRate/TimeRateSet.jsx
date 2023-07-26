@@ -9,7 +9,7 @@ class CustomColumnHeader {
     el.className = "columnHeaderMultiLine";
     el.textContent = columnInfo.header;
     this.el = el;
-    console.log(el);
+    // console.log(el);
   }
   getElement() {
     return this.el;
@@ -101,10 +101,9 @@ export const getData = (tmpStr) => {
   const tmpRows = [];
   tmpStr.data.rows.map((row) => {
     const createAt = new Date(row.create_at);
-    let formattedCreateAt = `${createAt.getFullYear()}-${(createAt.getMonth() + 1).toString().padStart(2, "0")}-${createAt
-      .getDate()
+    let formattedCreateAt = `${createAt.getFullYear()}-${(createAt.getMonth() + 1)
       .toString()
-      .padStart(2, "0")}`;
+      .padStart(2, "0")}-${createAt.getDate().toString().padStart(2, "0")}`;
     if (isNaN(createAt.getTime())) {
       formattedCreateAt = "TOTAL";
     }

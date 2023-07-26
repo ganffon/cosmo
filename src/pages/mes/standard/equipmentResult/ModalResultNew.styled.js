@@ -68,7 +68,7 @@ export const ContentsTop = styled("div")`
 `;
 export const ContentsBottom = styled("div")`
   width: 100%;
-  height: calc(100% - 500px);
+  height: 100%;
   display: flex;
   flex-direction: column;
 

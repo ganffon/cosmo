@@ -32,11 +32,13 @@ function ModalAddEmp(props) {
     rowHeaders = [],
     gridDataInput = [],
     setChipData = () => {},
+    setSupportChipData = () => {},
     mainContents = {},
     setIsBackDrop = {},
     setIsSnackOpen = {},
     isSnackOpen = false,
     workGroupId = "",
+    isSupport = "",
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
@@ -60,7 +62,7 @@ function ModalAddEmp(props) {
       Grid.setValue(i, "work_end_date", mainContents.endDate);
       Grid.setValue(i, "work_end_time", mainContents.endTime);
     }
-  }, [mainContents]);
+  }, [mainContents, isSupport]);
   const rowKey = useRef("");
   const onClickGrid = useCallback((e) => {
     rowKey.current = e.rowKey;
@@ -90,7 +92,14 @@ function ModalAddEmp(props) {
       for (let i = 0; i < Grid?.getRowCount(); i++) {
         data.push(Grid?.getRowAt(i));
       }
-      const resultData = data.map((raw) => GetPostParams("workerGroupStatusAddEmp", raw));
+      let resultData = "";
+      if (isSupport === true) {
+        // Support일때
+        resultData = data.map((raw) => GetPostParams("workerGroupStatusAddSupportEmp", raw));
+      } else {
+        resultData = data.map((raw) => GetPostParams("workerGroupStatusAddEmp", raw));
+      }
+      //
       if (resultData) {
         const result = await restAPI.post(restURI.workerGroupStatusDetail, resultData);
 
@@ -102,12 +111,10 @@ function ModalAddEmp(props) {
           location: "bottomRight",
         });
 
-        const reSearch = await restAPI.get(
-          restURI.workerGroupStatusDetailChip + `?worker_group_status_id=${workGroupId}`
-        );
-        const data = reSearch?.data?.data?.rows;
-        setChipData(data);
-
+        const reSearch = await restAPI.get(restURI.workerGroupStatusDetailChip + `?worker_group_status_id=${workGroupId}`);
+        const data = reSearch?.data?.data?.rows[0];
+        setChipData(data.worker);
+        setSupportChipData(data.support);
         onClickModalClose();
       }
     } catch (err) {

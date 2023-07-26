@@ -106,7 +106,7 @@ const PerformanceRate = ({ toggle }) => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
       })
@@ -234,12 +234,19 @@ const PerformanceRate = ({ toggle }) => {
           <S.TimeRateTop>
             <S.Title>성능가동률</S.Title>
             <S.ChartWrap2>
-              {responseData && <Chart options={cOptions} series={responseData?.data?.rows[0].graph} type="line" height={350} />}
+              {responseData && (
+                <Chart options={cOptions} series={responseData?.data?.rows[0].graph} type="line" height={350} />
+              )}
             </S.ChartWrap2>
           </S.TimeRateTop>
           <S.TimeRateBottom>
             <S.GridWrap>
-              <GridSingle header={complexColumns} columns={customColumns} data={responseData?.data?.rows[0].grid} refGrid={refSingleGrid} />
+              <GridSingle
+                header={complexColumns}
+                columns={customColumns}
+                data={responseData?.data?.rows[0].grid}
+                refGrid={refSingleGrid}
+              />
             </S.GridWrap>
           </S.TimeRateBottom>
         </S.PerformaceRateLeft>

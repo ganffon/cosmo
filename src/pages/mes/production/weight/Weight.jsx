@@ -431,7 +431,6 @@ function Weight() {
   };
 
   const onDblClickGridHeader = (e) => {
-    console.log(Condition(e, ["weigh_emp_id", "weigh_emp_nm"]));
     if (Condition(e, ["weigh_emp_id", "weigh_emp_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("HeaderWeightEmployee");

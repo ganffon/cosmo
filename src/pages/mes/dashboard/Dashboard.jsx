@@ -115,28 +115,39 @@ const Dashboard = () => {
 
         setDowntime(modifiedData);
         setState(stateData);
+        const pack = [];
         if (response?.data?.data?.rows[0].packing.data === 0) {
           setPackingData([{ name: "생산량", data: [{ x: "E1호기", y: "0" }] }]);
         } else {
-          setPackingData(response?.data?.data?.rows[0].packing);
+          pack.push(response?.data?.data?.rows[0].packing);
+          setPackingData(pack);
         }
       })
       .catch((error) => {
         // 오류 처리 로직
-        // console.error('API 호출 중 오류 발생:', error);
       });
   };
-  {
-    packingData && console.log(packingData);
-  }
   const cOptions = {
-    colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)"],
+    // colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)"],
+    // colors: ["rgb(108, 172, 228)"],
+    colors: ["#01B1ECff"],
     plotOptions: {
-      // 차트 시각화 옵션
       bar: {
-        // 막대그래프 옵션
-        columnWidth: "50%", // 막대 너비
-        // horizontal: true,
+        horizontal: false,
+        columnWidth: "60%", // 막대 너비
+        dataLabels: {
+          position: "center",
+          maxItems: 100,
+          hideOverflowingLabels: true,
+          total: {
+            enabled: false,
+            // offsetY: 30,
+            style: {
+              fontSize: "13px",
+              fontWeight: 900,
+            },
+          },
+        },
       },
     },
     dataLabels: {
@@ -145,30 +156,43 @@ const Dashboard = () => {
       },
       enabled: true,
     },
+    chart: {
+      type: "bar",
+      height: 350,
+      stacked: false,
+      toolbar: {
+        show: true,
+      },
+      zoom: {
+        enabled: true,
+      },
+    },
+    responsive: [
+      {
+        breakpoint: 0,
+        options: {
+          legend: {
+            position: "bottom",
+            offsetX: -10,
+            offsetY: 0,
+          },
+        },
+      },
+    ],
   };
   const stackedOptions = {
-    colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)", "rgb(233, 204, 71)", "rgb(225, 73, 124)"],
-    // colors: [function({ value, seriesIndex, w }) {
-    //   if (value < 55) {
-    //       return '#7E36AF'
-    //   } else {
-    //       return '#D9534F'
-    //   }
-    // }, function({ value, seriesIndex, w }) {
-    //   if (value < 111) {
-    //       return '#7E36AF'
-    //   } else {
-    //       return '#D9534F'
-    //   }
-    // }]
+    colors: ["rgb(107, 232, 168)", "#deb887", "#ffb6c1ff", "#ffa500ff"],
     plotOptions: {
       bar: {
         horizontal: false,
-        borderRadius: 10,
         columnWidth: "60%", // 막대 너비
         dataLabels: {
+          position: "center",
+          maxItems: 100,
+          hideOverflowingLabels: true,
           total: {
-            enabled: true,
+            enabled: false,
+            // offsetY: 30,
             style: {
               fontSize: "13px",
               fontWeight: 900,
@@ -196,7 +220,7 @@ const Dashboard = () => {
     },
     responsive: [
       {
-        breakpoint: 480,
+        breakpoint: 0,
         options: {
           legend: {
             position: "bottom",
@@ -253,7 +277,7 @@ const Dashboard = () => {
       </S.LineStateBorder>
     ) : null;
   };
-  const RenderWorker = (name, index) => {
+  const RenderWorker = (name, leader) => {
     return (
       <S.WorkerBorder backgroundColor={"#FCFCFC"} borderColor={"#D9D9D9"}>
         <img
@@ -269,8 +293,8 @@ const Dashboard = () => {
           }}
         />
 
-        {index === 1 && <S.LineState color="blue">{name}</S.LineState>}
-        {index > 1 && <S.LineState>{name}</S.LineState>}
+        {leader && <S.LineState color="blue">{name}</S.LineState>}
+        {!leader && <S.LineState>{name}</S.LineState>}
       </S.WorkerBorder>
     );
   };
@@ -301,9 +325,9 @@ const Dashboard = () => {
                   <>
                     {(() => {
                       const renderedWorkers = [];
-                      for (let i = 1; i < workerData.length; i++) {
+                      for (let i = 0; i < workerData.length; i++) {
                         const worker = workerData[i];
-                        renderedWorkers.push(<React.Fragment key={i}>{RenderWorker(worker.emp_nm, i)}</React.Fragment>);
+                        renderedWorkers.push(<React.Fragment key={i}>{RenderWorker(worker.emp_nm, worker.leader)}</React.Fragment>);
                       }
                       return renderedWorkers;
                     })()}
@@ -337,21 +361,14 @@ const Dashboard = () => {
             <S.GridContainer2>
               <S.ChartWrap>
                 <S.Title>
-                  라인별 투입량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+                  금일 라인별 투입량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
                 </S.Title>
                 {/* {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={stackedTmpData} />} */}
-                {responseData && (
-                  <Chart
-                    options={stackedOptions}
-                    type="bar"
-                    height={"85%"}
-                    series={responseData?.data?.rows[0]?.input}
-                  />
-                )}
+                {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={responseData?.data?.rows[0]?.input} />}
               </S.ChartWrap>
               <S.ChartWrap>
                 <S.Title>
-                  라인별 생산량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
+                  금일 라인별 생산량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
                 </S.Title>
                 {packingData && <Chart options={cOptions} type="bar" height={"85%"} series={packingData} />}
                 {/* {!responseData?.data?.rows[0]?.packing && (

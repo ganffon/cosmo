@@ -1,15 +1,12 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNEDS from "components/button/ButtonNEDS";
-import ButtonSES from "components/button/ButtonSES";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import UnitSet from "pages/mes/standard/unit/UnitSet";
+import WorkTypeSet from "./WorkTypeSet";
 import * as disRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
@@ -17,14 +14,14 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as uSave from "custom/useSave";
 import * as S from "pages/mes/style/oneGrid.styled";
+import URI from "api/URI";
 import restURI from "json/restURI.json";
+import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
-import restAPI from "api/restAPI";
-import DateTime from "components/datetime/DateTime";
 
-function Unit(props) {
+function WorkType(props) {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
@@ -38,14 +35,18 @@ function Unit(props) {
     open: false,
   });
   const [searchToggle, setSearchToggle] = useState(false);
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = UnitSet(isEditMode);
 
-  const SWITCH_NAME_01 = "unit";
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } =
+    WorkTypeSet(isEditMode);
+
+  const SWITCH_NAME_01 = "workType";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
-    refSingleGrid?.current?.gridInst?.refreshLayout();
-  }, [isMenuSlide, refSingleGrid.current]);
+    if (refSingleGrid?.current !== null) {
+      refSingleGrid?.current?.gridInst?.refreshLayout();
+    }
+  }, [isMenuSlide]);
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
@@ -66,10 +67,9 @@ function Unit(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    restURI.unit,
+    restURI.workType,
     SWITCH_NAME_01
   );
-
   const [actSearch] = uSearch.useSearch(
     refSingleGrid,
     isBackDrop,
@@ -81,7 +81,7 @@ function Unit(props) {
     setGridData,
     disableRowToggle,
     setDisableRowToggle,
-    restURI.unit
+    restURI.workType
   );
 
   const [actEdit] = uEdit.useEdit(
@@ -91,7 +91,7 @@ function Unit(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.unit
+    restURI.workType
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -100,7 +100,7 @@ function Unit(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    restURI.unit,
+    restURI.workType,
     onClickModalClose
   );
 
@@ -129,6 +129,7 @@ function Unit(props) {
   };
   const onClickEditModeSave = () => {
     actEdit();
+    setSearchToggle(!searchToggle);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
@@ -151,9 +152,8 @@ function Unit(props) {
     setIsModalOpen(false);
     setSearchToggle(!searchToggle);
   }
-
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, []);
+    disRow.handleClickGridCheck(e, isEditMode, ["is_work"]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -161,35 +161,6 @@ function Unit(props) {
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       setSearchToggle(!searchToggle);
-    }
-  };
-
-  const loadData = async () => {
-    let result;
-    try {
-      let readURI = restURI.syncProduct;
-
-      setIsBackDrop(true);
-
-      result = await restAPI.post(readURI);
-    } catch {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: "동기화에 실패하였습니다.",
-        severity: "error",
-      });
-    } finally {
-      setDisableRowToggle(!disableRowToggle);
-
-      setIsBackDrop(false);
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: result.data.message,
-        severity: "success",
-      });
-      onClickSearch();
     }
   };
 
@@ -215,9 +186,6 @@ function Unit(props) {
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        {/* <S.ButtonWrap>
-          <BtnComponent btnName={"DataLoad"} toolTipTitle={"productButton"} onClick={loadData} />
-        </S.ButtonWrap> */}
         {isEditMode ? (
           <S.ButtonWrap>
             <BtnComponent btnName={"Save"} onClick={onClickEditModeSave} />
@@ -228,9 +196,9 @@ function Unit(props) {
             <BtnComponent btnName={"New"} onClick={onClickNew} />
             <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
             <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-            {/* <BtnComponent btnName={"DataLoad"} toolTipTitle={"productButton"} onClick={loadData} /> */}
           </S.ButtonWrap>
         )}
+
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}
@@ -280,4 +248,4 @@ function Unit(props) {
   );
 }
 
-export default Unit;
+export default WorkType;

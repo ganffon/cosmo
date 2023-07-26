@@ -125,6 +125,7 @@ export const ButtonSet = styled("button")`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  position: relative;
 
   width: 500px;
   height: 350px;
@@ -156,9 +157,9 @@ export const InputSearchStyled = styled(InputSearch)`
 `;
 
 export const QuestionMark = styled("img")`
-  position: relative;
-  top: -170px;
-  left: -10px;
+  position: absolute;
+  top: 10px;
+  right: 20px;
   cursor: pointer;
 `;
 export const QuestionImg = styled("img")`

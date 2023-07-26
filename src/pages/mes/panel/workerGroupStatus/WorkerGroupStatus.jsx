@@ -23,19 +23,12 @@ import BackDrop from "components/backdrop/BackDrop";
 import ModalEdit from "./ModalEdit";
 import ModalAddEmp from "./ModalAddEmp";
 import Condition from "custom/Condition";
+import URI from "api/URI";
 
 function WorkerGroupStatus() {
   const { isMenuSlide } = useContext(LayoutContext);
-  const {
-    columns,
-    columnsSelectEmp,
-    columnsNewEmp,
-    columnsAddEmp,
-    columnOptions,
-    header,
-    rowHeadersNumCheck,
-    rowHeadersNum,
-  } = WorkerGroupStatusSet();
+  const { columns, columnsSelectEmp, columnsNewEmp, columnsAddEmp, columnOptions, header, rowHeadersNumCheck, rowHeadersNum, columnsWorkType } =
+    WorkerGroupStatusSet();
   const workType = [
     {
       name: "오전",
@@ -66,8 +59,10 @@ function WorkerGroupStatus() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+  const [isSupport, setIsSupport] = useState(false);
   const [gridData, setGridData] = useState();
   const [chipData, setChipData] = useState([]);
+  const [chipSupportData, setSupportChipData] = useState([]);
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
@@ -80,9 +75,12 @@ function WorkerGroupStatus() {
 
   const refGrid = useRef(null);
   const refGridNewEmp = useRef(null);
+  const refGridNewSupportEmp = useRef(null);
   const refGridEditEmp = useRef(null);
+  const refGridEditWorkType = useRef(null);
   const refGridAddEmp = useRef(null);
   const refGridEmp = useRef(null);
+  const refGridWorkType = useRef(null);
   const targetRowKey = useRef("");
   const researchRowKey = useRef("");
   const workGroupId = useRef("");
@@ -97,7 +95,10 @@ function WorkerGroupStatus() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isEmpOpen, setIsEmpOpen] = useState(false);
   const [isEmpNewOpen, setIsEmpNewOpen] = useState(false);
+  const [isWorkTypeNewOpen, setIsWorkTypeNewOpen] = useState(false);
+
   const [dataGridSelect, setDataGridSelect] = useState();
+  const [workTypeDataGridSelect, setWorkTypeDataGridSelect] = useState();
 
   const [actSelectEmp] = uSearch.useSearchSelect(
     refGridEmp,
@@ -107,6 +108,15 @@ function WorkerGroupStatus() {
     setIsSnackOpen,
     setDataGridSelect,
     restURI.employee + `?use_fg=true&worker_fg=true`
+  );
+  const [actSearchWorkType] = uSearch.useSearchSelect(
+    refGridWorkType,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setWorkTypeDataGridSelect,
+    restURI.workType
   );
 
   useEffect(() => {
@@ -126,9 +136,7 @@ function WorkerGroupStatus() {
       let conditionWorkTime;
       let conditionWorkGroup;
       comboValue.workTypeKey ? (conditionWorkTime = `&shift_type=${comboValue.workTypeKey}`) : (conditionWorkTime = "");
-      comboValue.workGroupKey
-        ? (conditionWorkGroup = `&worker_group_nm=${comboValue.workGroupKey}`)
-        : (conditionWorkGroup = "");
+      comboValue.workGroupKey ? (conditionWorkGroup = `&worker_group_nm=${comboValue.workGroupKey}`) : (conditionWorkGroup = "");
 
       const URI = restURI.workerGroupStatus + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}`;
       const result = await restAPI.get(URI + conditionWorkTime + conditionWorkGroup);
@@ -224,6 +232,13 @@ function WorkerGroupStatus() {
     groupD.classList.add("selected");
   };
   const onAdd = () => {
+    setIsSupport(false);
+    if (workGroupId.current !== "") {
+      setIsAddEmpOpen(true);
+    }
+  };
+  const onSupportAdd = () => {
+    setIsSupport(true);
     if (workGroupId.current !== "") {
       setIsAddEmpOpen(true);
     }
@@ -245,11 +260,13 @@ function WorkerGroupStatus() {
   };
   const onClickSelect = () => {
     target.current = "New";
+    actSearchWorkType();
     actSelectEmp();
     setIsEmpOpen(true);
   };
   const onClickEditSelect = () => {
     target.current = "Edit";
+    actSearchWorkType();
     actSelectEmp();
     setIsEmpOpen(true);
   };
@@ -281,6 +298,14 @@ function WorkerGroupStatus() {
     }
   };
   const onDblClickEmp = (e) => {
+    if (
+      target.current === "NewSupportWorkType" ||
+      target.current === "EditWorkType" ||
+      target.current === "AddWorkType" ||
+      target.current === "EditSupportWorkType"
+    ) {
+      onDblClickWorkType(e);
+    }
     if (e.targetType === "cell") {
       let targetGrid;
       const gridSelect = refGridEmp?.current?.gridInst;
@@ -290,12 +315,35 @@ function WorkerGroupStatus() {
         targetGrid = refGridEditEmp?.current?.gridInst;
       } else if (target.current === "Add") {
         targetGrid = refGridAddEmp?.current?.gridInst;
+      } else if (target.current === "NewSupport") {
+        targetGrid = refGridNewSupportEmp?.current?.gridInst;
       }
-
       targetGrid.setValue(targetRowKey.current, "emp_id", gridSelect.getValue(e?.rowKey, "emp_id"));
       targetGrid.setValue(targetRowKey.current, "emp_cd", gridSelect.getValue(e?.rowKey, "emp_cd"));
       targetGrid.setValue(targetRowKey.current, "emp_nm", gridSelect.getValue(e?.rowKey, "emp_nm"));
       setIsEmpNewOpen(false);
+    }
+  };
+  const onDblClickWorkType = (e) => {
+    if (e.targetType === "cell") {
+      let targetGrid;
+      const gridSelect = refGridWorkType?.current?.gridInst;
+      if (target.current === "NewWorkType") {
+        targetGrid = refGridNewEmp?.current?.gridInst;
+      } else if (target.current === "EditWorkType") {
+        targetGrid = refGridEditEmp?.current?.gridInst;
+      } else if (target.current === "AddWorkType") {
+        targetGrid = refGridAddEmp?.current?.gridInst;
+      } else if (target.current === "NewSupportWorkType") {
+        targetGrid = refGridNewSupportEmp?.current?.gridInst;
+      } else if (target.current === "EditSupportWorkType") {
+        targetGrid = refGridEditWorkType?.current?.gridInst;
+      }
+
+      targetGrid.setValue(targetRowKey.current, "work_type_id", gridSelect.getValue(e?.rowKey, "work_type_id"));
+      targetGrid.setValue(targetRowKey.current, "work_type_cd", gridSelect.getValue(e?.rowKey, "work_type_cd"));
+      targetGrid.setValue(targetRowKey.current, "work_type_nm", gridSelect.getValue(e?.rowKey, "work_type_nm"));
+      setIsWorkTypeNewOpen(false);
     }
   };
   const onDblClickNewGrid = (e) => {
@@ -303,7 +351,29 @@ function WorkerGroupStatus() {
       target.current = "New";
       targetRowKey.current = e?.rowKey;
       actSelectEmp();
+      actSearchWorkType();
       setIsEmpNewOpen(true);
+    } else if (Condition(e, ["work_type_cd", "work_type_nm"])) {
+      target.current = "NewWorkType";
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      actSearchWorkType();
+      setIsWorkTypeNewOpen(true);
+    }
+  };
+  const onDblClickNewSupportGrid = (e) => {
+    if (Condition(e, ["emp_cd", "emp_nm"])) {
+      target.current = "NewSupport";
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      actSearchWorkType();
+      setIsEmpNewOpen(true);
+    } else if (Condition(e, ["work_type_cd", "work_type_nm"])) {
+      target.current = "NewSupportWorkType";
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      actSearchWorkType();
+      setIsWorkTypeNewOpen(true);
     }
   };
   const onDblClickEditGrid = (e) => {
@@ -311,7 +381,29 @@ function WorkerGroupStatus() {
       target.current = "Edit";
       targetRowKey.current = e?.rowKey;
       actSelectEmp();
+      actSearchWorkType();
       setIsEmpNewOpen(true);
+    } else if (Condition(e, ["work_type_cd", "work_type_nm"])) {
+      target.current = "EditWorkType";
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      actSearchWorkType();
+      setIsWorkTypeNewOpen(true);
+    }
+  };
+  const onDblClickEditSupportGrid = (e) => {
+    if (Condition(e, ["emp_cd", "emp_nm"])) {
+      target.current = "Edit";
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      actSearchWorkType();
+      setIsEmpNewOpen(true);
+    } else if (Condition(e, ["work_type_cd", "work_type_nm"])) {
+      target.current = "EditSupportWorkType";
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      actSearchWorkType();
+      setIsWorkTypeNewOpen(true);
     }
   };
   const onDblClickAddEmpGrid = (e) => {
@@ -319,7 +411,14 @@ function WorkerGroupStatus() {
       target.current = "Add";
       targetRowKey.current = e?.rowKey;
       actSelectEmp();
+      actSearchWorkType();
       setIsEmpNewOpen(true);
+    } else if (Condition(e, ["work_type_cd", "work_type_nm"])) {
+      target.current = "AddWorkType";
+      targetRowKey.current = e?.rowKey;
+      actSelectEmp();
+      actSearchWorkType();
+      setIsWorkTypeNewOpen(true);
     }
   };
   const onDelete = () => {
@@ -380,6 +479,7 @@ function WorkerGroupStatus() {
         const endDate = Grid.getValue(e?.rowKey, "work_end_date");
         const endTime = Grid.getValue(e?.rowKey, "work_end_time");
         const remark = Grid.getValue(e?.rowKey, "remark");
+        const issue = Grid.getValue(e?.rowKey, "issue");
 
         setEditContents({
           ...editContents,
@@ -392,7 +492,8 @@ function WorkerGroupStatus() {
           startTime: startTime,
           endDate: endDate,
           endTime: endTime,
-          issue: remark,
+          remark: remark,
+          issue: issue,
         });
 
         switch (workTime) {
@@ -431,13 +532,15 @@ function WorkerGroupStatus() {
         setMainContents({
           ...mainContents,
           writer: writer,
-          issue: remark,
+          remark: remark,
+          issue: issue,
           startDate: startDate,
           startTime: startTime,
           endDate: endDate,
           endTime: endTime,
         });
-        setChipData(data);
+        setChipData(data[0].worker);
+        setSupportChipData(data[0].support);
       } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -469,6 +572,7 @@ function WorkerGroupStatus() {
         const endDate = Grid.getValue(rowKey, "work_end_date");
         const endTime = Grid.getValue(rowKey, "work_end_time");
         const remark = Grid.getValue(rowKey, "remark");
+        const issue = Grid.getValue(rowKey, "issue");
 
         setEditContents({
           ...editContents,
@@ -481,7 +585,8 @@ function WorkerGroupStatus() {
           startTime: startTime,
           endDate: endDate,
           endTime: endTime,
-          issue: remark,
+          remark: remark,
+          issue: issue,
         });
 
         switch (workTime) {
@@ -520,13 +625,15 @@ function WorkerGroupStatus() {
         setMainContents({
           ...mainContents,
           writer: writer,
-          issue: remark,
+          remark: remark,
+          issue: issue,
           startDate: startDate,
           startTime: startTime,
           endDate: endDate,
           endTime: endTime,
         });
-        setChipData(data);
+        setChipData(data[0].worker);
+        setSupportChipData(data[0].support);
       } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -559,6 +666,7 @@ function WorkerGroupStatus() {
     groupD.classList.remove("selected");
     setMainContents({});
     setChipData([]);
+    setSupportChipData([]);
   };
 
   useEffect(() => {
@@ -616,6 +724,24 @@ function WorkerGroupStatus() {
       />
     );
   }, [dataGridSelect]);
+
+  const GridWorkType = useMemo(() => {
+    return (
+      <ModalSelect
+        width={"40%"}
+        height={"80%"}
+        title={"근무유형"}
+        onClickModalSelectClose={() => setIsWorkTypeNewOpen(false)}
+        columns={columnsWorkType}
+        columnOptions={columnOptions}
+        header={header}
+        gridDataSelect={workTypeDataGridSelect}
+        rowHeaders={rowHeadersNum}
+        refSelectGrid={refGridWorkType}
+        onDblClickGridSelect={onDblClickWorkType}
+      />
+    );
+  }, [workTypeDataGridSelect]);
   const GridAddEmp = useMemo(() => {
     return (
       <ModalAddEmp
@@ -632,10 +758,12 @@ function WorkerGroupStatus() {
         isSnackOpen={isSnackOpen}
         workGroupId={workGroupId.current}
         setChipData={setChipData}
+        setSupportChipData={setSupportChipData}
         mainContents={mainContents}
+        isSupport={isSupport}
       />
     );
-  }, [refGridAddEmp, workGroupId.current, mainContents]);
+  }, [refGridAddEmp, workGroupId.current, mainContents, isSupport]);
   return (
     <ContentsArea>
       <S.SearchWrap>
@@ -690,16 +818,11 @@ function WorkerGroupStatus() {
         <S.BottomLeftWrap>
           <S.ButtonWrap>
             <BtnComponent btnName={"New"} onClick={onAddNew} />
+            <BtnComponent btnName={"Edit"} onClick={onEdit} />
             <BtnComponent btnName={"Delete"} onClick={onDelete} />
           </S.ButtonWrap>
           <S.GridWrap>
-            <GridSingle
-              refGrid={refGrid}
-              data={gridData}
-              rowHeaders={rowHeadersNumCheck}
-              columns={columns}
-              onClickGrid={onClickGrid}
-            />
+            <GridSingle refGrid={refGrid} data={gridData} rowHeaders={rowHeadersNumCheck} columns={columns} onClickGrid={onClickGrid} />
           </S.GridWrap>
         </S.BottomLeftWrap>
         <S.BottomRightWrap>
@@ -719,15 +842,15 @@ function WorkerGroupStatus() {
                 <S.workButton id={"GroupD"}>{"D조"}</S.workButton>
               </S.GroupWrap>
               <S.GroupWrap>
-                <S.Title>작성자</S.Title>
-                <InputPaper width={"180px"} height={"60px"} size={"30px"} value={mainContents.writer} />
+                {/* <S.Title>작성자</S.Title>
+                <InputPaper width={"180px"} height={"60px"} size={"30px"} value={mainContents.writer} /> */}
               </S.GroupWrap>
             </S.TopWrap>
             <S.MidWrap>
               <S.ChipWrap>
                 <S.Title className={"alignTop"}>작업자</S.Title>
                 <Chips
-                  height={"130px"}
+                  height={"80px"}
                   width={"995px"}
                   chipData={chipData}
                   setChipData={setChipData}
@@ -739,13 +862,36 @@ function WorkerGroupStatus() {
                 />
                 <S.ChipButtonWrap>
                   <BtnComponent btnName={"Add"} height={"60px"} width={"84px"} onClick={onAdd} />
-                  <BtnComponent btnName={"Edit"} height={"60px"} width={"84px"} onClick={onEdit} />
+                  {/* <BtnComponent btnName={"Edit"} height={"60px"} width={"84px"} onClick={onEdit} /> */}
+                </S.ChipButtonWrap>
+              </S.ChipWrap>
+              {/* <div style={{ marginTop: "10px" }}></div> */}
+              <S.ChipWrap>
+                <S.Title className={"alignTop"}>근무지원</S.Title>
+                <Chips
+                  height={"80px"}
+                  width={"995px"}
+                  chipData={chipSupportData}
+                  setChipData={setSupportChipData}
+                  deleteURI={restURI.workerGroupStatusDetail}
+                  deleteKey={"worker_group_status_detail_id"}
+                  setIsBackDrop={setIsBackDrop}
+                  isSnackOpen={isSnackOpen}
+                  setIsSnackOpen={setIsSnackOpen}
+                />
+                <S.ChipButtonWrap>
+                  <BtnComponent btnName={"Add"} height={"60px"} width={"84px"} onClick={onSupportAdd} />
+                  {/* <BtnComponent btnName={"Edit"} height={"60px"} width={"84px"} onClick={onEdit} /> */}
                 </S.ChipButtonWrap>
               </S.ChipWrap>
             </S.MidWrap>
             <S.BottomWrap>
               <S.Title className={"alignTop"}>작업이슈</S.Title>
-              <S.Issue disabled rows={4} value={mainContents.issue || ""} placeholder="작업이슈에 대해 작성해주세요." />
+              <S.Issue disabled rows={4} value={mainContents.remark || ""} placeholder="작업이슈에 대해 작성해주세요." />
+            </S.BottomWrap>
+            <S.BottomWrap>
+              <S.Title className={"alignTop"}>파견현황</S.Title>
+              <S.Issue disabled rows={4} value={mainContents.issue || ""} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
             </S.BottomWrap>
           </S.MainWrap>
         </S.BottomRightWrap>
@@ -757,16 +903,19 @@ function WorkerGroupStatus() {
           columns={columnsNewEmp}
           columnOptions={columnOptions}
           refGrid={refGridNewEmp}
+          refSupportGrid={refGridNewSupportEmp}
           setNewContents={setNewContents}
           newContents={newContents}
           onClickSearch={onClickSearch}
           onClickSelect={onClickSelect}
           onClickRemove={onClickRemove}
           onDblClickGrid={onDblClickNewGrid}
+          onDblClickNewSupportGrid={onDblClickNewSupportGrid}
           onClickModalClose={onAddNewClose}
           setIsBackDrop={setIsBackDrop}
           setIsSnackOpen={setIsSnackOpen}
           isSnackOpen={isSnackOpen}
+          target={target}
         />
       )}
       {isEditOpen && (
@@ -776,6 +925,7 @@ function WorkerGroupStatus() {
           columns={columnsNewEmp}
           columnOptions={columnOptions}
           refGrid={refGridEditEmp}
+          refSupportGrid={refGridEditWorkType}
           setEditContents={setEditContents}
           editContents={editContents}
           onClickSearch={onClickSearch}
@@ -783,6 +933,7 @@ function WorkerGroupStatus() {
           onClickSelect={onClickEditSelect}
           onClickRemove={onClickRemove}
           onDblClickGrid={onDblClickEditGrid}
+          onDblClickEditSupportGrid={onDblClickEditSupportGrid}
           onClickModalClose={onEditClose}
           setIsBackDrop={setIsBackDrop}
           setIsSnackOpen={setIsSnackOpen}
@@ -793,6 +944,7 @@ function WorkerGroupStatus() {
       {isAddSelectOpen && GridAddSelect}
       {isEmpOpen && GridNewWriter}
       {isEmpNewOpen && GridNewEmp}
+      {isWorkTypeNewOpen && GridWorkType}
       {isDeleteAlertOpen && (
         <NoticeAlertModal
           textContent={"정말 삭제하시겠습니까?"}

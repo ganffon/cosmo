@@ -143,5 +143,7 @@
   "inspResultColumns": "/qms/insp-result-upload/columns",
   "inspResultStatus": "/qms/insp-result-upload/status",
   "spc": "/spc/by-opc",
-  "inspResultEmp": "/qms/insp-result-emp"
+  "inspResultEmp": "/qms/insp-result-emp",
+  "workerGroupStatusDetailByUpdate": "/prd/worker-group-status-detail/by-update",
+  "workType": "/std/work-type"
 }

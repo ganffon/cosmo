@@ -302,6 +302,11 @@ class inspDocumentDetail {
     this.insp_document_detail_id = raw.insp_document_detail_id;
   }
 }
+class workType {
+  constructor(raw) {
+    this.work_type_id = raw.work_type_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -492,6 +497,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "inspDocumentDetail":
       params = new inspDocumentDetail(raw);
+      break;
+    case "workType":
+      params = new workType(raw);
       break;
 
     default:

@@ -25,7 +25,9 @@ function ModalEdit(props) {
     onClickSelect = () => {},
     onClickRemove = () => {},
     onDblClickGrid = () => {},
+    onDblClickEditSupportGrid = () => {},
     refGrid = null,
+    refSupportGrid = null,
     columns = [],
     columnOptions = [],
     data = [],
@@ -40,8 +42,9 @@ function ModalEdit(props) {
   const { currentMenuName } = useContext(LayoutContext);
   const [gridOriginalData, setGridOriginalData] = useState();
   const [originalGroup, setOriginalGroup] = useState();
+  const [GridOriginalSupportData, setGridOriginalSupportData] = useState();
   const [gridData, setGridData] = useState();
-
+  const [gridSupportData, setGridSupportData] = useState([]);
   useEffect(() => {
     setOriginalGroup(editContents.workGroup); // 수정하는 상황에서 기존에 등록하였던 조를 기억하기 위함
     switch (editContents.workTime) {
@@ -100,6 +103,9 @@ function ModalEdit(props) {
   }
   const datePickerChange = (e) => {
     setEditContents({ ...editContents, [e.target.id]: e.target.value });
+  };
+  const handleRemark = (e) => {
+    setEditContents({ ...editContents, remark: e.target.value });
   };
   const handleIssue = (e) => {
     setEditContents({ ...editContents, issue: e.target.value });
@@ -182,7 +188,8 @@ function ModalEdit(props) {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.workerGroupStatusEmpList + `?worker_group_nm=${group}`);
 
-      setGridData(result?.data?.data?.rows);
+      setGridData(result?.data?.data?.rows[0]?.worker);
+      setGridSupportData(result?.data?.data?.rows[0]?.support);
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -193,42 +200,6 @@ function ModalEdit(props) {
       });
     } finally {
       setIsBackDrop(false);
-    }
-  };
-  const onClickGroupA = (e) => {
-    onGroupA();
-    setEditContents({ ...editContents, workGroup: "A조" });
-    if (originalGroup === "A조") {
-      setGridData(gridOriginalData);
-    } else {
-      getEmpList("A조");
-    }
-  };
-  const onClickGroupB = (e) => {
-    onGroupB();
-    setEditContents({ ...editContents, workGroup: "B조" });
-    if (originalGroup === "B조") {
-      setGridData(gridOriginalData);
-    } else {
-      getEmpList("B조");
-    }
-  };
-  const onClickGroupC = (e) => {
-    onGroupC();
-    setEditContents({ ...editContents, workGroup: "C조" });
-    if (originalGroup === "C조") {
-      setGridData(gridOriginalData);
-    } else {
-      getEmpList("C조");
-    }
-  };
-  const onClickGroupD = (e) => {
-    onGroupD();
-    setEditContents({ ...editContents, workGroup: "D조" });
-    if (originalGroup === "D조") {
-      setGridData(gridOriginalData);
-    } else {
-      getEmpList("D조");
     }
   };
   const handleTime = (e) => {
@@ -261,11 +232,13 @@ function ModalEdit(props) {
   const onLoadEditData = async () => {
     try {
       setIsBackDrop(true);
-      const result = await restAPI.get(
-        restURI.workerGroupStatusDetail + `?worker_group_status_id=${editContents.workId}`
-      );
-      setGridOriginalData(result?.data?.data?.rows); // 수정하는 상황에서 기존에 등록되어있던 gridData 기억용
-      setGridData(result?.data?.data?.rows); // 실제로 뿌려주는 용도
+      // const result = await restAPI.get(restURI.workerGroupStatusDetail + `?worker_group_status_id=${editContents.workId}`);
+      const result = await restAPI.get(restURI.workerGroupStatusDetailByUpdate + `?worker_group_status_id=${editContents.workId}`);
+
+      setGridOriginalData(result?.data?.data?.rows[0]?.worker); // 수정하는 상황에서 기존에 등록되어있던 gridData 기억용
+      setGridData(result?.data?.data?.rows[0]?.worker); // 실제로 뿌려주는 용도
+      setGridOriginalSupportData(result?.data?.data?.rows[0]?.support); // 수정하는 상황에서 기존에 등록되어있던 gridData 기억용
+      setGridSupportData(result?.data?.data?.rows[0]?.support); // 실제로 뿌려주는 용도
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -299,16 +272,6 @@ function ModalEdit(props) {
       });
       return;
     }
-    if (!editContents.writerId) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: "작성자를 입력하세요!",
-        severity: "warning",
-        location: "topCenter",
-      });
-      return;
-    }
     if (!editContents.startTime) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -331,20 +294,27 @@ function ModalEdit(props) {
     }
     refGrid?.current?.gridInst?.finishEditing();
     const header = {
-      master_emp_id: editContents.writerId,
       shift_type: editContents.workType,
       worker_group_nm: editContents.workGroup,
       work_start_date: editContents.startDate,
       work_start_time: editContents.startTime,
       work_end_date: editContents.endDate,
       work_end_time: editContents.endTime,
-      remark: editContents.issue,
+      remark: editContents.remark,
+      issue: editContents.issue,
     };
     let result = [];
+    let supportResult = [];
+
     for (let i = 0; i < refGrid?.current?.gridInst?.getRowCount(); i++) {
       result.push(refGrid?.current?.gridInst?.getRowAt(i));
     }
+    for (let i = 0; i < refSupportGrid?.current?.gridInst?.getRowCount(); i++) {
+      supportResult.push(refSupportGrid?.current?.gridInst?.getRowAt(i));
+    }
+
     const detail = result.map((raw) => GetPutParams("workGroupStatus", raw));
+    const supportDetail = supportResult.map((raw) => detail.push(GetPutParams("supportWorkGroupStatusDetail", raw)));
 
     const query = {
       header: header,
@@ -397,6 +367,22 @@ function ModalEdit(props) {
       />
     );
   }, [refGrid.current, gridData]);
+  const GridSupport = useMemo(() => {
+    return (
+      <GridSingle
+        rowHeaders={rowHeaders}
+        columns={columns}
+        columnOptions={columnOptions}
+        // onClickGrid={onClickGrid}
+        onDblClickGrid={onDblClickEditSupportGrid}
+        onEditingFinish={onEditingFinish}
+        data={gridSupportData}
+        refGrid={refSupportGrid}
+        isEditMode={true}
+      />
+    );
+  }, [refSupportGrid.current, gridSupportData]);
+
   return (
     <S.ModalWrapBox width={width} height={height}>
       <S.HeaderBox>
@@ -484,14 +470,15 @@ function ModalEdit(props) {
               readOnly={false}
             />
           </S.GroupWrap>
+          {/* <S.GroupWrap className={"columnDirection"}>
+            <S.Title>작업이슈</S.Title>
+            <S.Issue rows={4} value={editContents.issue || ""} onChange={handleIssue} placeholder="작업이슈에 대해 작성해주세요." />
+          </S.GroupWrap> */}
           <S.GroupWrap className={"columnDirection"}>
             <S.Title>작업이슈</S.Title>
-            <S.Issue
-              rows={4}
-              value={editContents.issue || ""}
-              onChange={handleIssue}
-              placeholder="작업이슈에 대해 작성해주세요."
-            />
+            <S.Issue rows={4} value={editContents.remark} onChange={handleRemark} placeholder="작업이슈에 대해 작성해주세요." />
+            <S.Title>파견현황</S.Title>
+            <S.Issue rows={4} value={editContents.issue} onChange={handleIssue} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
           </S.GroupWrap>
         </S.ContentLeft>
         <S.ContentRight>
@@ -499,6 +486,7 @@ function ModalEdit(props) {
             <BtnComponent btnName={"Save"} onClick={onEditSave} />
           </S.ButtonWrap>
           <S.GridWrap>{Grid}</S.GridWrap>
+          <S.GridWrap>{GridSupport}</S.GridWrap>
         </S.ContentRight>
       </S.Content>
     </S.ModalWrapBox>

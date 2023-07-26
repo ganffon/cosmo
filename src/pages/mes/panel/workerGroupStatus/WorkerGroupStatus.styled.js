@@ -76,7 +76,7 @@ export const ChipButtonWrap = styled("div")`
   width: 60px;
   display: flex;
   flex-direction: column;
-  justify-content: end;
+
   gap: 10px;
 `;
 export const GridWrap = styled("div")`
@@ -104,10 +104,12 @@ export const MidWrap = styled("div")`
   display: flex;
   align-items: center;
   padding: 0px 20px 0px 10px;
+  flex-direction: column;
+  gap: 10px;
 `;
 export const BottomWrap = styled("div")`
   width: 100%;
-  height: calc(100% - 300px);
+  height: calc(100% - 200px);
   display: flex;
   gap: 10px;
   padding: 0px 20px 0px 10px;
@@ -137,6 +139,9 @@ export const GroupWrap = styled("div")`
 export const ChipWrap = styled("div")`
   display: flex;
   gap: 10px;
+  width: 100%;
+  display: flex;
+  gap: 10px;
 `;
 export const workButton = styled("div")`
   background: #828282;
@@ -158,7 +163,7 @@ export const workButton = styled("div")`
   }
 `;
 export const Issue = styled("textarea")`
-  height: calc(100% - 80px);
+  height: 100%;
   width: calc(100% - 130px);
   resize: none;
   font-size: 20px;

@@ -1,4 +1,4 @@
-class CheckBox {
+export class CheckBox {
   constructor(props) {
     const el = document.createElement("input");
     const elName = props.columnInfo.renderer.options.name;
@@ -26,7 +26,7 @@ class CheckBox {
   }
 }
 
-class Button {
+export class Button {
   constructor(props) {
     const el = document.createElement("button");
     // const elName = props.columnInfo.renderer.options.name;
@@ -37,6 +37,7 @@ class Button {
     el.disabled = disabled;
     el.onclick = (e) => {
       const rowKey = el.parentElement.__preactattr_["data-row-key"];
+      const columnName = el.parentElement.__preactattr_["data-column-name"];
       if (props.columnInfo.renderer.options.onClick != null) {
         props.columnInfo.renderer.options.onClick(e, rowKey);
       } else {
@@ -56,10 +57,22 @@ class Button {
     const value = props.value;
     const elName = props.columnInfo.renderer.options.name;
     const elName2 = props.columnInfo.renderer.options.name2;
-    if (elName2 === "") {
-      this.el.innerText = elName;
-    } else {
-      this.el.innerText = value ? elName : elName2;
+    const type = props.columnInfo.renderer.options.btnType;
+    switch (type) {
+      case "copy":
+        this.el.innerText = elName;
+        this.el.disabled = value ? true : false;
+        break;
+      case "cancel":
+        this.el.innerText = elName;
+        this.el.disabled = value ? false : true;
+        break;
+      default:
+        if (elName2 === "") {
+          this.el.innerText = elName;
+        } else {
+          this.el.innerText = value ? elName : elName2;
+        }
     }
   }
 }
@@ -73,7 +86,7 @@ class Button {
  * 총 4종류를 만들어 두었음.
  */
 //🔸Grid Cell Type 정수
-class EditorNumber {
+export class EditorNumber {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
@@ -91,7 +104,7 @@ class EditorNumber {
   }
 }
 //🔸Grid Cell Type 소수점 1자리
-class EditorFloat1 {
+export class EditorFloat1 {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
@@ -109,7 +122,7 @@ class EditorFloat1 {
   }
 }
 //🔸Grid Cell Type 소수점 2자리
-class EditorFloat2 {
+export class EditorFloat2 {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
@@ -127,7 +140,7 @@ class EditorFloat2 {
   }
 }
 //🔸Grid Cell Type 소수점 3자리
-class EditorFloat3 {
+export class EditorFloat3 {
   constructor(props) {
     const el = document.createElement("input");
     el.type = "number";
@@ -150,7 +163,7 @@ class EditorFloat3 {
  * @param {any} value 숫자 3자리 마다 콤마를 찍음
  * @returns
  */
-function NumComma(value) {
+export function NumComma(value) {
   if (value.value !== null) {
     // 소수점 이하 자리 수를 구함
     const decimalLength = value.value.toString().includes(".") ? value.value.toString().split(".")[1].length : 0;
@@ -170,7 +183,7 @@ function NumComma(value) {
  * @param {any} value 다른 문자는 숨기고 숫자만 보여줌
  * @returns
  */
-function OnlyNum(value) {
+export function OnlyNum(value) {
   if (value.value !== null) {
     return value.value
       .toString()
@@ -185,7 +198,7 @@ function OnlyNum(value) {
  * @param {any} value yyyy-MM-dd 형식 표현
  * @returns
  */
-function DateFormat(value) {
+export function DateFormat(value) {
   if (value.value !== null) {
     return value.value.toString().substr(0, 10);
   } else {
@@ -198,7 +211,7 @@ function DateFormat(value) {
  * @param {boolean} fg true인 경우 비밀번호 입력 문자 수 만큼 치환하고, false인 경우 비밀번호 치환 문자 수 고정
  * @returns
  */
-function Password(value, fg) {
+export function Password(value, fg) {
   if (value.value !== null) {
     if (fg) {
       return value.value.toString().replace(value.value.toString(), () => {
@@ -216,7 +229,7 @@ function Password(value, fg) {
   }
 }
 
-class ColumnHeaderMultiLine {
+export class ColumnHeaderMultiLine {
   constructor(props) {
     const columnInfo = props.columnInfo;
     const el = document.createElement("div");
@@ -232,16 +245,88 @@ class ColumnHeaderMultiLine {
   }
 }
 
-export {
-  CheckBox,
-  Button,
-  NumComma,
-  OnlyNum,
-  DateFormat,
-  Password,
-  EditorNumber,
-  EditorFloat1,
-  EditorFloat2,
-  EditorFloat3,
-  ColumnHeaderMultiLine,
+export const copyRow = (refGrid, setGridData, columns, copyColumnNames, btnRowKey = null) => {
+  let rowKey = null;
+  if (!btnRowKey) {
+    rowKey = refGrid?.current?.gridInst?.getFocusedCell().rowKey; //현재 선택된 cell의 rowKey 가져오기
+  } else {
+    rowKey = btnRowKey;
+  }
+  if (rowKey) {
+    const targetGridData = refGrid?.current?.gridInst?.getData(); //현재 Grid Data 모두 가져오기
+    const maxRowCount = targetGridData.length;
+    targetGridData.forEach((item) => {
+      item.copyRow = item.copyRow === 1 ? 1 : 0;
+      item.cancelRow = item.cancelRow === 1 ? 1 : 0;
+    });
+    const makesCopyRow = {}; //Copy 할 Row 를 만들기 시작
+    columns.forEach((column) => {
+      if (copyColumnNames.includes(column.name)) {
+        //copyColumnNames 에 배열로 전달받은 컬럼만 내용을 복사함
+        makesCopyRow[column.name] = targetGridData[rowKey]?.[column.name];
+      } else {
+        makesCopyRow[column.name] = null;
+      }
+    });
+    makesCopyRow.copyRow = 1;
+    makesCopyRow.cancelRow = 1;
+
+    if (Number(rowKey) !== maxRowCount - 1) {
+      //연속 복사 시 복사한 다음 row에 추가될 수 있도록 조치함
+      for (let i = Number(rowKey) + 1; i < Number(maxRowCount) + 1; i++) {
+        if (targetGridData[i]?.copyRow === 0) {
+          rowKey = i;
+          break;
+        }
+        if (i === maxRowCount) {
+          rowKey = maxRowCount;
+        }
+      }
+    } else {
+      rowKey = Number(rowKey) + 1;
+    }
+
+    // targetGridData.splice(Number(rowKey) + 1, 0, makesCopyRow);
+    targetGridData.splice(rowKey, 0, makesCopyRow);
+    const copiedData = targetGridData.map((item, index) => {
+      //최종적으로 만들어진 데이터에 uniqueKey와 rowKey를 재선언함
+      return { ...item, uniqueKey: `@dataKey${Date.now()}-${index}`, rowKey: index };
+    });
+    setGridData(copiedData);
+  }
 };
+export const cancelRow = (refGrid, setGridData, btnRowKey = null) => {
+  let rowKey = null;
+  if (!btnRowKey) {
+    rowKey = refGrid?.current?.gridInst?.getFocusedCell().rowKey; //현재 선택된 cell의 rowKey 가져오기
+  } else {
+    rowKey = btnRowKey;
+  }
+  if (rowKey) {
+    refGrid?.current?.gridInst?.removeRow(rowKey); // 일단 지우고
+    const targetGridData = refGrid?.current?.gridInst?.getData(); //현재 Grid Data 모두 가져오기
+    targetGridData.forEach((item) => {
+      item.copyRow = item.copyRow === 1 ? 1 : 0;
+      item.cancelRow = item.cancelRow === 1 ? 1 : 0;
+    });
+    const cancelData = targetGridData.map((item, index) => {
+      //최종적으로 만들어진 데이터에 uniqueKey와 rowKey를 재선언함
+      return { ...item, uniqueKey: `@dataKey${Date.now()}-${index}`, rowKey: index };
+    });
+    setGridData(cancelData);
+  }
+};
+
+// export {
+//   CheckBox,
+//   Button,
+//   NumComma,
+//   OnlyNum,
+//   DateFormat,
+//   Password,
+//   EditorNumber,
+//   EditorFloat1,
+//   EditorFloat2,
+//   EditorFloat3,
+//   ColumnHeaderMultiLine,
+// };

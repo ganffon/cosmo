@@ -28,10 +28,6 @@ function InputNew(props) {
   const datePickerChange = (e) => {
     setDateText({ ...dateText, [e.target.id]: e.target.value });
   };
-
-  console.log(info);
-  console.log(mainInfo);
-  console.log(isEditMode);
   return (
     <S.Wrap>
       <S.InputWrapDivide>
@@ -42,11 +38,7 @@ function InputNew(props) {
             className="date"
             type="date"
             format="yyyy-MM-dd"
-            defaultValue={
-              isEditMode
-                ? mainInfo.inspResultDate || DateTime().dateFull
-                : DateTime().dateFull
-            }
+            defaultValue={isEditMode ? mainInfo.inspResultDate || DateTime().dateFull : DateTime().dateFull}
             InputProps={{ sx: { height: 40 } }}
             onChange={datePickerChange}
           />

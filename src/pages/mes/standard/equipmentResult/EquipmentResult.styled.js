@@ -3,8 +3,7 @@ import * as C from "constant/Layout";
 import { Autocomplete } from "@mui/material";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) =>
-    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
+  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
   width: 100%;
   background-color: rgb(255, 255, 255);
   padding: 5px 25px 5px 10px;
@@ -12,12 +11,6 @@ export const ContentsArea = styled("div")`
   flex-direction: column;
   gap: 10px;
   // overflow: hidden auto;
-`;
-
-export const ComboBox = styled(Autocomplete)`
-  padding-left: 10px;
-  width: 180px;
-  margin-top: 5px;
 `;
 
 export const ContentTop = styled("div")`
@@ -135,7 +128,7 @@ export const InfoWrap = styled("div")`
 export const GridDetailWrap = styled("div")`
   align-items: center;
   width: 100%;
-  height: calc(100% - 70px);
+  height: 100%;
   padding: 5px 5px 5px 5px;
 `;
 
@@ -151,4 +144,9 @@ export const BottomGridWrap = styled("div")`
 
 export const MappingDiv = styled("div")`
   font-size: 100px;
+`;
+export const ComboBox = styled(Autocomplete)`
+  margin-left: 10px;
+  margin-top: 5px;
+  width: 180px;
 `;

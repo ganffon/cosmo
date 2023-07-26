@@ -91,7 +91,7 @@ function GridTab(props) {
         }
       }
     }
-    console.log(workerData);
+
     setWorkerData(workerData);
 
     if (empListTemp?.current?.length === 0) {
@@ -219,7 +219,7 @@ function GridTab(props) {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }} height={"530px"}>
+          <Box sx={{ p: 3 }}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -236,7 +236,7 @@ function GridTab(props) {
     (index) => {
       return gridTabTitle.map((title, index) => (
         <TabPanel value={value} index={index} key={index}>
-          <S.TabGridWrap height={height}>
+          <S.TabGridWrap height={`calc(100% - 280px)`}>
             <S.InputNewTab>
               <InputNewTab
                 isEditMode={false}
@@ -250,14 +250,16 @@ function GridTab(props) {
                 emp={workerData[index]}
               />
             </S.InputNewTab>
-            <GridSingle
-              columnOptions={columnOptions}
-              columns={columns}
-              header={header}
-              rowHeaders={rowHeaders}
-              data={splitDataSetArr[index]}
-              refGrid={refGrid[index]}
-            />
+            <S.TabSingleGridWrap>
+              <GridSingle
+                columnOptions={columnOptions}
+                columns={columns}
+                header={header}
+                rowHeaders={rowHeaders}
+                data={splitDataSetArr[index]}
+                refGrid={refGrid[index]}
+              />
+            </S.TabSingleGridWrap>
           </S.TabGridWrap>
         </TabPanel>
       ));
@@ -266,17 +268,17 @@ function GridTab(props) {
       splitDataSetArr,
       value,
       data,
-      refGrid,
-      emp,
-      toggle,
-      workerData,
-      empListTemp,
-      toggle,
+      // refGrid,
+      // emp,
+      // toggle,
+      // //workerData,
+      // empListTemp,
+      // toggle,
     ]
   );
 
   return (
-    <Box sx={{ width: "100%", height: "500px" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <TabContext value={value}>
           <TabList onChange={handleChange}>
@@ -298,6 +300,7 @@ function GridTab(props) {
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
+        style={{ height: "100%" }}
         {...other}
       >
         {children}

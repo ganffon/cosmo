@@ -654,10 +654,13 @@ class workGroupStatus {
   constructor(raw) {
     this.worker_group_status_detail_id = raw.worker_group_status_detail_id;
     this.emp_id = raw.emp_id;
+    this.work_type_id = raw.work_type_id;
     this.work_start_date = raw.work_start_date;
     this.work_start_time = raw.work_start_time;
     this.work_end_date = raw.work_end_date;
     this.work_end_time = raw.work_end_time;
+    this.leader_fg = raw.leader_fg;
+    this.support_fg = raw.support_fg;
     this.remark = raw.remark;
   }
 }
@@ -708,6 +711,27 @@ class inspDocumentDetail {
     this.inspector_sample_cnt = raw.inspector_sample_cnt === "" ? null : Number(raw.inspector_sample_cnt);
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id;
+    this.remark = raw.remark;
+  }
+}
+class WorkType {
+  constructor(raw) {
+    this.work_type_id = raw.work_type_id;
+    this.work_type_nm = raw.work_type_nm;
+    this.is_work = raw.is_work ? true : false;
+  }
+}
+class supportWorkGroupStatusDetail {
+  constructor(raw) {
+    this.worker_group_status_detail_id = raw.worker_group_status_detail_id;
+    this.emp_id = raw.emp_id;
+    this.work_type_id = raw.work_type_id;
+    this.work_start_date = raw.work_start_date;
+    this.work_start_time = raw.work_start_time;
+    this.work_end_date = raw.work_end_date;
+    this.work_end_time = raw.work_end_time;
+    this.leader_fg = raw.leader_fg;
+    this.support_fg = raw.support_fg;
     this.remark = raw.remark;
   }
 }
@@ -895,6 +919,12 @@ function GetPutParams(componentName, raw) {
       break;
     case "inspDocumentDetail":
       params = new inspDocumentDetail(raw);
+      break;
+    case "supportWorkGroupStatusDetail":
+      params = new supportWorkGroupStatusDetail(raw);
+      break;
+    case "workType":
+      params = new WorkType(raw);
       break;
     default:
   }

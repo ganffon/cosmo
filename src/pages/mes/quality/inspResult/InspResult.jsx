@@ -50,8 +50,17 @@ function InspResult(props) {
   });
   const refGridModalSelect = useRef(null);
   const [searchToggle, setSearchToggle] = useState(false);
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet, columnsSelectProd, rowHeadersNum } =
-    InspResultSet(isEditMode);
+  const {
+    rowHeaders,
+    rowHeadersModal,
+    header,
+    columns,
+    columnsModal,
+    columnOptions,
+    inputSet,
+    columnsSelectProd,
+    rowHeadersNum,
+  } = InspResultSet(isEditMode);
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
@@ -116,7 +125,15 @@ function InspResult(props) {
     width: "80%",
     height: "90%",
   });
-  const [actEdit] = uEdit.useEdit(refSingleGrid, isBackDrop, setIsBackDrop, isSnackOpen, setIsSnackOpen, SWITCH_NAME_01, restURI.factory);
+  const [actEdit] = uEdit.useEdit(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_01,
+    restURI.factory
+  );
   const [actSave] = uSave.useSave(
     refModalGrid,
     isBackDrop,
@@ -169,7 +186,11 @@ function InspResult(props) {
       refGrid = refModalGrid;
 
       for (let i = 0; i < columnName.length; i++) {
-        refGrid?.current?.gridInst?.setValue(dblClickRowKey, columnName[i], e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]);
+        refGrid?.current?.gridInst?.setValue(
+          dblClickRowKey,
+          columnName[i],
+          e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
+        );
       }
     }
     disRow.handleGridSelectCheck(refGrid, dblClickRowKey);
@@ -195,7 +216,6 @@ function InspResult(props) {
       })
       .then((response) => {
         // API 응답 데이터 처리 로직
-        console.log(response);
         setResponseData(response.data);
       })
       .catch((error) => {
@@ -339,7 +359,11 @@ function InspResult(props) {
             onEditingFinish={onEditingFinishGrid}
           /> */}
           {Data && (
-            <GridSingle header={responseData?.data?.rows[0]?.columnChild} columns={responseData?.data?.rows[0]?.columnHeader} data={Data.data.rows} />
+            <GridSingle
+              header={responseData?.data?.rows[0]?.columnChild}
+              columns={responseData?.data?.rows[0]?.columnHeader}
+              data={Data.data.rows}
+            />
           )}
         </LS.GridWrap>
       </S.ShadowBoxGrid>
