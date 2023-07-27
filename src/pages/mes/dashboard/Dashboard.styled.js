@@ -224,7 +224,7 @@ export const WorkerBorder = styled("div")`
 
 export const Title = styled("div")`
   height: 40px;
-  font-family: "Noto Sans KR";
+  font-family: "NotoSansKR";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -233,7 +233,7 @@ export const Title = styled("div")`
   margin-left: 25px;
 `;
 export const RightTopTitle = styled("div")`
-  font-family: "Noto Sans KR";
+  font-family: NotoSansKR, Arial;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -242,13 +242,12 @@ export const RightTopTitle = styled("div")`
 `;
 export const BottomTitle = styled("div")`
   height: 40px;
-  font-family: "Noto Sans KR";
+  font-family: NotoSansKR, Arial;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;
   margin-top: 15px;
-  margin-bottom: 15px;
 `;
 export const AllWrap = styled("div")`
   height: 100%;

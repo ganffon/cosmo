@@ -22,6 +22,7 @@ export const TitleBox = styled("div")`
   padding-top: 8px;
   padding-left: 15px;
   font-weight: 700;
+  width: 100%;
 `;
 
 export const ButtonClose = styled(IconButton)`

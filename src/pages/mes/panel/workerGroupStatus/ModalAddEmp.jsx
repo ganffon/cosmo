@@ -153,11 +153,15 @@ function ModalAddEmp(props) {
         </S.ButtonClose>
       </S.HeaderBox>
       <S.Content>
-        <S.ButtonWrap>
-          <BtnComponent btnName={"AddRow"} onClick={onAddRow} />
-          <BtnComponent btnName={"CancelRow"} onClick={onCancelRow} />
-          <BtnComponent btnName={"Save"} onClick={onSave} />
-        </S.ButtonWrap>
+        <div style={{ display: "flex", width: "100%" }}>
+          {isSupport === true && <S.TitleBox>근무 지원 추가</S.TitleBox>}
+          {isSupport !== true && <S.TitleBox>작업자 추가</S.TitleBox>}
+          <S.ButtonWrap>
+            <BtnComponent btnName={"AddRow"} onClick={onAddRow} />
+            <BtnComponent btnName={"CancelRow"} onClick={onCancelRow} />
+            <BtnComponent btnName={"Save"} onClick={onSave} />
+          </S.ButtonWrap>
+        </div>
         <S.GridWrap>{Grid}</S.GridWrap>
       </S.Content>
     </S.ModalWrapBox>

@@ -101,6 +101,7 @@ const Dashboard = () => {
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
         setWorkerData(response?.data?.data?.rows[0].worker);
+
         let index = 0;
         const modifiedData = response.data.data.rows[0].downtime.map((item) => ({
           ...item,
@@ -318,7 +319,7 @@ const Dashboard = () => {
             )}
           </S.LeftTop>
           <S.EmpStatusWrap>
-            <S.Title>실시간 생산 담당자</S.Title>
+            <S.BottomTitle>실시간 생산 담당자</S.BottomTitle>
             <S.LeftBottom>
               <S.GridContainer>
                 {workerData && (
@@ -327,7 +328,9 @@ const Dashboard = () => {
                       const renderedWorkers = [];
                       for (let i = 0; i < workerData.length; i++) {
                         const worker = workerData[i];
-                        renderedWorkers.push(<React.Fragment key={i}>{RenderWorker(worker.emp_nm, worker.leader)}</React.Fragment>);
+                        renderedWorkers.push(
+                          <React.Fragment key={i}>{RenderWorker(worker.emp_nm, worker.leader)}</React.Fragment>
+                        );
                       }
                       return renderedWorkers;
                     })()}
@@ -364,7 +367,14 @@ const Dashboard = () => {
                   금일 라인별 투입량 (KG) <span style={{ fontSize: "0.8em" }}>[기준 06:00 ~ 05:59]</span>
                 </S.Title>
                 {/* {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={stackedTmpData} />} */}
-                {responseData && <Chart options={stackedOptions} type="bar" height={"85%"} series={responseData?.data?.rows[0]?.input} />}
+                {responseData && (
+                  <Chart
+                    options={stackedOptions}
+                    type="bar"
+                    height={"85%"}
+                    series={responseData?.data?.rows[0]?.input}
+                  />
+                )}
               </S.ChartWrap>
               <S.ChartWrap>
                 <S.Title>

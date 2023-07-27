@@ -62,7 +62,7 @@ export const BottomRightWrap = styled("div")`
   background: white;
   display: flex;
   flex-direction: column;
-  padding: 50px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
 `;
 export const ButtonWrap = styled("div")`
   height: 45px;
@@ -112,7 +112,7 @@ export const BottomWrap = styled("div")`
   height: calc(100% - 200px);
   display: flex;
   gap: 10px;
-  padding: 0px 20px 0px 10px;
+  padding: 20px 20px 0px 10px;
 `;
 export const Title = styled("div")`
   width: 120px;

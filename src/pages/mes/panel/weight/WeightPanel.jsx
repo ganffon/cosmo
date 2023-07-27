@@ -107,6 +107,7 @@ function WeightPanel() {
   const refGridDetail = useRef(null);
   const refGridSelect = useRef(null);
   const refGridWeight = useRef(null);
+  const refGridWeightAutoCalc = useRef(null);
   const refGridInput = useRef(null);
   const refGridInputDetail = useRef(null);
 
@@ -114,6 +115,7 @@ function WeightPanel() {
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataWeight, setGridDataWeight] = useState(null);
+  const [gridDataWeightAutoCalc, setGridDataWeightAutoCalc] = useState(null);
   const [gridDataInput, setGridDataInput] = useState(null);
   const [gridDataInputDetail, setGridDataInputDetail] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
@@ -238,6 +240,7 @@ function WeightPanel() {
       try {
         const result = await restAPI.get(restURI.prdOrderInput + `?work_order_id=${selectInputInfo.workOrderID}`);
         setGridDataWeight(result?.data?.data?.rows);
+        setGridDataWeightAutoCalc(result?.data?.data?.rows);
         const latestEmp = await restAPI.get(restURI.stdEmpLatest + `?line_id=${selectInputInfo.lineID}&type=WEIGH`);
         setSelectInputInfo({
           ...selectInputInfo,
@@ -459,18 +462,18 @@ function WeightPanel() {
       } else {
         Grid?.setValue(e?.rowKey, "input_qty", beforeQty);
       }
-      if (e?.rowKey === 0) {
-        const stdQty = Grid.getRowAt(0).spec_std;
-        const totQty = Grid.getRowAt(0).input_qty;
-        for (let i = 1; i < Grid?.getRowCount(); i++) {
-          let eachQty = Grid.getRowAt(i).spec_std;
-          let eachBag = Grid.getRowAt(i).bag_qty;
-          const tmpQty = Math.round(((eachQty * totQty) / stdQty) * 1000) / 1000;
-          const tmpMinusBagQty = Math.round(((eachQty * totQty) / stdQty - eachBag) * 1000) / 1000;
-          Grid?.setValue(i, "total_qty", tmpQty);
-          Grid?.setValue(i, "input_qty", tmpMinusBagQty);
-        }
-      }
+      // if (e?.rowKey === 0) {
+      //   const stdQty = Grid.getRowAt(0).spec_std;
+      //   const totQty = Grid.getRowAt(0).input_qty;
+      //   for (let i = 1; i < Grid?.getRowCount(); i++) {
+      //     let eachQty = Grid.getRowAt(i).spec_std;
+      //     let eachBag = Grid.getRowAt(i).bag_qty;
+      //     const tmpQty = Math.round(((eachQty * totQty) / stdQty) * 1000) / 1000;
+      //     const tmpMinusBagQty = Math.round(((eachQty * totQty) / stdQty - eachBag) * 1000) / 1000;
+      //     Grid?.setValue(i, "total_qty", tmpQty);
+      //     Grid?.setValue(i, "input_qty", tmpMinusBagQty);
+      //   }
+      // }
     }
     if (Condition(e, ["bag_qty"])) {
       const beforeQty = Grid.getValue(e?.rowKey, "total_qty");
@@ -483,6 +486,26 @@ function WeightPanel() {
         Grid?.setValue(e?.rowKey, "input_qty", (beforeQty - afterQty).toFixed(fixDec));
       } else {
         Grid?.setValue(e?.rowKey, "input_qty", -e?.value);
+      }
+    }
+  };
+  const onEditingFinishWeightAutoCalc = (e) => {
+    const Grid = refGridWeightAutoCalc?.current?.gridInst;
+    if (Condition(e, ["total_qty"])) {
+      if (e?.rowKey === 0) {
+        const stdQty = Grid.getRowAt(0).spec_std;
+        // const totQty = Grid.getRowAt(0).input_qty;
+        const totQty = Grid.getRowAt(0).total_qty;
+        console.log(`stdQty = ${stdQty}`);
+        console.log(`totQty = ${totQty}`);
+        for (let i = 1; i < Grid?.getRowCount(); i++) {
+          let eachQty = Grid.getRowAt(i).spec_std;
+          // let eachBag = Grid.getRowAt(i).bag_qty;
+          const tmpQty = Math.round(((eachQty * totQty) / stdQty) * 1000) / 1000;
+          // const tmpMinusBagQty = Math.round(((eachQty * totQty) / stdQty - eachBag) * 1000) / 1000;
+          Grid?.setValue(i, "total_qty", tmpQty);
+          // Grid?.setValue(i, "input_qty", tmpMinusBagQty);
+        }
       }
     }
   };
@@ -728,13 +751,16 @@ function WeightPanel() {
           header={header}
           setGridDataWeight={setGridDataWeight}
           gridDataWeight={gridDataWeight}
+          gridDataWeightAutoCalc={gridDataWeightAutoCalc}
           rowHeadersHeader={rowHeadersNum}
           rowHeadersDetail={rowHeadersNum}
           refGridWeight={refGridWeight}
+          refGridWeightAutoCalc={refGridWeightAutoCalc}
           onClickSelect={onClickSelect}
           onClickRemove={onClickRemove}
           onClickWeightSave={onClickWeightSave}
           onEditingFinishWeight={onEditingFinishWeight}
+          onEditingFinishWeightAutoCalc={onEditingFinishWeightAutoCalc}
           selectInputInfo={selectInputInfo}
         />
       ) : null}

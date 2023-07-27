@@ -11,6 +11,7 @@ import BtnComponent from "components/button/BtnComponent";
 import BarcodeScan from "./BarcodeScan";
 import WeightPanelSet from "./WeightPanelSet";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
+import GridSingle from "components/grid/GridSingle";
 
 function ModalWeight(props) {
   const {
@@ -21,19 +22,22 @@ function ModalWeight(props) {
     onClickRemove = () => {},
     onClickWeightSave = () => {},
     onEditingFinishWeight = () => {},
+    onEditingFinishWeightAutoCalc = () => {},
     refGridWeight = null,
+    refGridWeightAutoCalc = null,
     columnOptions = [],
     header = [],
     rowHeadersDetail = [],
     setGridDataWeight = () => {},
     gridDataWeight = [],
+    gridDataWeightAutoCalc = [],
     selectInputInfo = {},
     // lineNM = "",
     // empNM = "",
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
-  const { columnsWeight } = WeightPanelSet(onInput, onBarcodeScanButton, onCopyRow, onCancelRow);
+  const { columnsWeight, columnsWeightAutoCalc } = WeightPanelSet(onInput, onBarcodeScanButton, onCopyRow, onCancelRow);
 
   const [inputChange, setInputChange] = useState();
 
@@ -85,27 +89,6 @@ function ModalWeight(props) {
     constantValue.current = Grid.getValue(rowKey, "constant_value");
     setIsBarcodeScanOpen(true);
   }
-
-  const inputLotNo = (lotNo, prodCode) => {
-    let modalGridDataLength = refGridWeight?.current?.gridInst?.store?.data?.rawData.length;
-    const modalData = refGridWeight?.current?.gridInst?.store?.data?.rawData;
-    let counter = 0;
-    for (let i = 0; i < modalGridDataLength; i++) {
-      if (prodCode === modalData[i].prod_id) {
-        refGridWeight?.current?.gridInst.setValue(i, "lot_no", lotNo);
-        counter = counter + 1;
-        onCloseBarcodeScan();
-      }
-    }
-    if (counter === 0) {
-      setBarcodeScan({
-        ...barcodeScan,
-        value: "현재 진행중인 작업과 다른 품목입니다.",
-        lot: "",
-        className: "red",
-      });
-    }
-  };
 
   function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {
     if (timeStamp1 === null) return 0;
@@ -297,22 +280,22 @@ function ModalWeight(props) {
             onClickSelect={onClickSelect}
             onClickRemove={onClickRemove}
           />
-          {/* <S.InfoTitle>바코드</S.InfoTitle>
-          <InputPaper
-            id={"barcode"}
-            width={"640px"}
-            height={"60px"}
-            placeHolder={"바코드 혹은 투입LOT 수기입력은 여기를 클릭하세요"}
-            nameColor={"black"}
-            value={inputChange}
-            size={"25px"}
-            btn={false}
-            handleEnter={handleBarcodeEnter}
-            onClickReadOnly={onClickReadOnly}
-            onChange={handleInputChange}
-          /> */}
         </S.InfoBox>
         <S.GridBox>{GridMain}</S.GridBox>
+        <S.TitleWrap>계량 비율 시뮬레이션</S.TitleWrap>
+        <S.AutoCalcBox>
+          <GridSingle
+            data={gridDataWeightAutoCalc}
+            columns={columnsWeightAutoCalc}
+            columnOptions={columnOptions}
+            header={header}
+            rowHeaders={rowHeadersDetail}
+            refGrid={refGridWeightAutoCalc}
+            draggable={false}
+            onEditingFinish={onEditingFinishWeightAutoCalc}
+            isEditMode={true}
+          />
+        </S.AutoCalcBox>
       </S.Content>
       {isBarcodeScanOpen && (
         <BarcodeScan

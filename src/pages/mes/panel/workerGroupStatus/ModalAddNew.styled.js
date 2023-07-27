@@ -38,7 +38,7 @@ export const Content = styled("div")`
 `;
 export const ContentLeft = styled("div")`
   height: 100%;
-  width: 50%;
+  width: 750px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -50,7 +50,7 @@ export const ContentLeft = styled("div")`
 `;
 export const ContentRight = styled("div")`
   height: 100%;
-  width: 50%;
+  width: calc(100% - 750px);
   display: flex;
   flex-direction: column;
   gap: 10px;

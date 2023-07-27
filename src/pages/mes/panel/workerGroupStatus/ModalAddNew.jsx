@@ -160,41 +160,70 @@ function ModalAddNew(props) {
     groupC.classList.remove("selected");
     groupD.classList.add("selected");
   }
-  const getEmpList = async (group) => {
-    try {
-      setIsBackDrop(true);
-      const result = await restAPI.get(restURI.workerGroupStatusEmpList + `?worker_group_nm=${group}`);
 
-      setGridData(result?.data?.data?.rows[0]?.worker);
-      setGridSupportData(result?.data?.data?.rows[0]?.support);
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-        location: "bottomRight",
+  const getEmpList = (group) => {
+    setIsBackDrop(true);
+
+    restAPI
+      .get(restURI.workerGroupStatusEmpList + `?worker_group_nm=${group}`)
+      .then((result) => {
+        const workers = result?.data?.data?.rows[0]?.worker;
+
+        // workers 배열을 map 함수를 사용하여 반복하면서 work_start_time과 work_end_time 값을 수정
+        const modifiedWorkers = workers.map((worker) => {
+          let startDateToUse = newContents.startDate;
+          let startTimeToUse = newContents.startTime;
+          let endDateToUse = newContents.endDate;
+          let endTimeToUse = newContents.endTime;
+          // 조건은 일부러 endTime으로 잡음(초기에 endTime은 설정 안되니까)
+          if (!newContents.endTime) {
+            startDateToUse = worker.work_start_date;
+            startTimeToUse = worker.work_start_time;
+            endDateToUse = worker.work_end_date;
+            endTimeToUse = worker.work_end_time;
+          }
+          // 각 worker 객체의 work_start_time과 work_end_time 값을 변경하고자 하는 값으로 수정
+          return {
+            ...worker,
+            work_start_date: startDateToUse,
+            work_start_time: startTimeToUse,
+            work_end_date: endDateToUse,
+            work_end_time: endTimeToUse,
+          };
+        });
+        setGridData(modifiedWorkers);
+        // setGridSupportData(result?.data?.data?.rows[0]?.support);
+
+        setIsBackDrop(false);
+      })
+      .catch((err) => {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+
+        setIsBackDrop(false);
       });
-    } finally {
-      setIsBackDrop(false);
-    }
   };
-  const onClickGroupA = (e) => {
+  const onClickGroupA = async (e) => {
     onGroupA();
     setNewContents({ ...newContents, workGroup: "A조" });
     getEmpList("A조");
   };
-  const onClickGroupB = (e) => {
+  const onClickGroupB = async (e) => {
     onGroupB();
     setNewContents({ ...newContents, workGroup: "B조" });
     getEmpList("B조");
   };
-  const onClickGroupC = (e) => {
+  const onClickGroupC = async (e) => {
     onGroupC();
     setNewContents({ ...newContents, workGroup: "C조" });
     getEmpList("C조");
   };
-  const onClickGroupD = (e) => {
+  const onClickGroupD = async (e) => {
     onGroupD();
     setNewContents({ ...newContents, workGroup: "D조" });
     getEmpList("D조");
@@ -483,9 +512,19 @@ function ModalAddNew(props) {
           </S.GroupWrap>
           <S.GroupWrap className={"columnDirection"}>
             <S.Title>작업이슈</S.Title>
-            <S.Issue rows={4} value={newContents.remark} onChange={handleRemark} placeholder="작업이슈에 대해 작성해주세요." />
+            <S.Issue
+              rows={4}
+              value={newContents.remark}
+              onChange={handleRemark}
+              placeholder="작업이슈에 대해 작성해주세요."
+            />
             <S.Title>파견현황</S.Title>
-            <S.Issue rows={4} value={newContents.issue} onChange={handleIssue} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
+            <S.Issue
+              rows={4}
+              value={newContents.issue}
+              onChange={handleIssue}
+              placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다."
+            />
           </S.GroupWrap>
           {/* <S.GroupWrap className={"columnDirection"}>
             
