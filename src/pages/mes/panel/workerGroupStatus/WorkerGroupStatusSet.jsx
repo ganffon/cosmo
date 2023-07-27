@@ -45,10 +45,9 @@ function WorkerGroupStatusSet() {
     col.select("emp_cd", CN.emp_cd, true),
     col.select("emp_nm", CN.emp_nm, true),
     col.id("work_type_id", CN.work_type_id, C.HIDDEN_ID),
-    col.select("work_type_cd", CN.work_type_cd, true),
+    col.id("work_type_cd", CN.work_type_cd, C.HIDDEN_ID),
     col.select("work_type_nm", CN.work_type_nm, true),
     col.check("leader_fg", CN.leader_fg, true),
-
     col.date("work_start_date", CN.work_start_date, true),
     col.text("work_start_time", CN.work_start_time, true, C.U, C.U, "center"),
     col.date("work_end_date", CN.work_end_date, true),

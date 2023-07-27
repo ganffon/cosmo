@@ -62,9 +62,7 @@ export const ShadowBoxGrid = styled("div")`
   background-color: #ffffff;
   width: 100%;
   height: ${(props) =>
-    props.isAllScreen
-      ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)`
-      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
+    props.isAllScreen ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)` : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -181,7 +179,7 @@ export const SearchCondition = styled("div")`
   display: flex;
 `;
 export const Title = styled("div")`
-  font-family: "Noto Sans KR";
+  font-family: NotoSansKR, Arial;
   font-weight: 900;
   font-size: 20px;
   line-height: 29px;
@@ -189,7 +187,7 @@ export const Title = styled("div")`
   margin-left: 25px;
 `;
 export const BottomTitle = styled("div")`
-  font-family: "Noto Sans KR";
+  font-family: NotoSansKR, Arial;
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -423,7 +421,7 @@ export const GridContainer2 = styled("div")`
   gap: 0px 10px;
 `;
 export const TempHumidTitle = styled("div")`
-  font-family: "Noto Sans KR";
+  font-family: NotoSansKR, Arial;
   font-weight: 700;
   font-size: 20px;
   line-height: 29px;

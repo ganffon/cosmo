@@ -850,8 +850,8 @@ function WorkerGroupStatus() {
               <S.ChipWrap>
                 <S.Title className={"alignTop"}>작업자</S.Title>
                 <Chips
-                  height={"80px"}
-                  width={"995px"}
+                  height={"120px"}
+                  width={"calc(100% - 235px)"}
                   chipData={chipData}
                   setChipData={setChipData}
                   deleteURI={restURI.workerGroupStatusDetail}
@@ -861,7 +861,7 @@ function WorkerGroupStatus() {
                   setIsSnackOpen={setIsSnackOpen}
                 />
                 <S.ChipButtonWrap>
-                  <BtnComponent btnName={"Add"} height={"60px"} width={"84px"} onClick={onAdd} />
+                  <BtnComponent btnName={"Add"} height={"120px"} width={"84px"} onClick={onAdd} />
                   {/* <BtnComponent btnName={"Edit"} height={"60px"} width={"84px"} onClick={onEdit} /> */}
                 </S.ChipButtonWrap>
               </S.ChipWrap>
@@ -870,7 +870,8 @@ function WorkerGroupStatus() {
                 <S.Title className={"alignTop"}>근무지원</S.Title>
                 <Chips
                   height={"80px"}
-                  width={"995px"}
+                  // width={"995px"}
+                  width={"calc(100% - 235px)"}
                   chipData={chipSupportData}
                   setChipData={setSupportChipData}
                   deleteURI={restURI.workerGroupStatusDetail}
@@ -880,7 +881,7 @@ function WorkerGroupStatus() {
                   setIsSnackOpen={setIsSnackOpen}
                 />
                 <S.ChipButtonWrap>
-                  <BtnComponent btnName={"Add"} height={"60px"} width={"84px"} onClick={onSupportAdd} />
+                  <BtnComponent btnName={"Add"} height={"80px"} width={"84px"} onClick={onSupportAdd} />
                   {/* <BtnComponent btnName={"Edit"} height={"60px"} width={"84px"} onClick={onEdit} /> */}
                 </S.ChipButtonWrap>
               </S.ChipWrap>
@@ -898,7 +899,7 @@ function WorkerGroupStatus() {
       </S.BottomBox>
       {isAddNewOpen && (
         <ModalAddNew
-          width={"80%"}
+          width={"95%"}
           rowHeaders={rowHeadersNum}
           columns={columnsNewEmp}
           columnOptions={columnOptions}

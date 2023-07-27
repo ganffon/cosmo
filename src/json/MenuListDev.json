@@ -627,31 +627,31 @@
         "path": null,
         "under": [
           {
-            "name": "소분일지",
+            "name": "소분 공정",
             "id": "subdivision-panel",
             "path": "subdivision-panel",
             "under": null
           },
           {
-            "name": "계량일지",
+            "name": "계량/투입 공정",
             "id": "weight-panel",
             "path": "weight-panel",
             "under": null
           },
           {
-            "name": "포장일지",
+            "name": "포장 공정",
             "id": "packing-panel",
             "path": "packing-panel",
             "under": null
           },
           {
-            "name": "일일운전점검일지",
+            "name": "운전점검일지",
             "id": "equipment-result",
             "path": "equipment-result",
             "under": null
           },
           {
-            "name": "비가동관리",
+            "name": "비가동 등록",
             "id": "downtime-panel",
             "path": "downtime-panel",
             "under": null

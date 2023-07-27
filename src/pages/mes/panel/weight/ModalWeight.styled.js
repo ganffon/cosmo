@@ -10,6 +10,7 @@ export const ModalWrapBox = styled(ModalWrapMulti)`
   flex-direction: column;
   background-color: ${APP_BAR_COLOR};
   border-radius: 10px 10px 0px 0px;
+  font-family: NotoSansKR;
 `;
 export const HeaderBox = styled("div")`
   display: flex;
@@ -48,16 +49,16 @@ export const GridTitleBox = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 8px;
-  padding-left: 15px;
-  font-weight: 700;
-
   padding: 10px 10px 10px 10px;
-  margin-bottom: 10px;
 `;
 export const GridBox = styled("div")`
   width: 100%;
-  height: calc(100% - 150px);
+  height: calc(100% - 450px);
+  padding: 10px 10px 10px 10px;
+`;
+export const AutoCalcBox = styled("div")`
+  width: 100%;
+  height: 300px;
   padding: 10px 10px 10px 10px;
 `;
 
@@ -117,8 +118,7 @@ export const ButtonSet = styled("button")`
   border-radius: 10px;
   cursor: pointer;
 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   transition: 0.5s;
 
@@ -137,5 +137,6 @@ export const Input = styled(InputSearch)`
 
 export const TitleWrap = styled("div")`
   font-size: 25px;
-  padding-left: 10px;
+  padding-left: 15px;
+  font-weight: 700;
 `;

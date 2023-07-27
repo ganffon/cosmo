@@ -8,7 +8,7 @@ export const ChipsPaper = styled(Paper)`
   align-items: center;
   flex-wrap: wrap;
   list-style: none;
-  background: ${(props) => props.bakCor || "#ffffff"};
+  // background: ${(props) => props.bakCor || "#ffffff"};
   border: 1px solid rgba(217, 217, 217, 1);
   box-shadow: none;
   gap: 15px;
@@ -22,6 +22,20 @@ export const ChipWrap = styled("div")`
 export const ChipItem = styled(Chip)`
   scale: 1.1;
   font-size: 20px;
-  background: ${(props) => props.bakCor || ""};
-  color: ${(props) => props.cor || "black"};
+  &.chip__backColor--boss {
+    background: blue;
+    color: white;
+
+    .MuiChip-deleteIcon {
+      color: white;
+    }
+  }
+  &.chip__backColor--rest {
+    background: red;
+    color: white;
+
+    .MuiChip-deleteIcon {
+      color: white;
+    }
+  }
 `;
