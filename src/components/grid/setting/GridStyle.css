@@ -7,9 +7,18 @@
   accent-color: #f5329498;
 }
 .customButton {
-  width: 95%;
+  width: 80%;
   height: 25px;
   font-family: "NotoSansKR";
+  border-radius: 5px;
+  border: 1px solid gray;
+  cursor: pointer;
+}
+.grid__button--apply {
+  background: #f8c1d6;
+}
+.grid__button--disabled {
+  cursor: not-allowed;
 }
 
 .number {

@@ -256,6 +256,7 @@ function ModalAddNew(props) {
   };
   useEffect(() => {
     const Grid = refGrid?.current?.gridInst;
+    const SupportGrid = refSupportGrid?.current?.gridInst;
     const maxRow = Grid.getRowCount();
     for (let i = 0; maxRow >= i; i++) {
       Grid.setValue(i, "work_start_date", newContents.startDate);
@@ -263,16 +264,53 @@ function ModalAddNew(props) {
       Grid.setValue(i, "work_end_date", newContents.endDate);
       Grid.setValue(i, "work_end_time", newContents.endTime);
     }
+    const supportMaxRow = SupportGrid.getRowCount();
+    for (let i = 0; supportMaxRow >= i; i++) {
+      SupportGrid.setValue(i, "work_start_date", newContents.startDate);
+      SupportGrid.setValue(i, "work_start_time", newContents.startTime);
+      SupportGrid.setValue(i, "work_end_date", newContents.endDate);
+      SupportGrid.setValue(i, "work_end_time", newContents.endTime);
+    }
   }, [newContents]);
-  const rowKey = useRef("");
-  const onClickGrid = useCallback((e) => {
-    rowKey.current = e.rowKey;
-  }, []);
+  let rowKey;
+  const onClickGrid = (e) => {
+    rowKey = e.rowKey;
+  };
   const onNewCancelRow = () => {
-    refGrid?.current?.gridInst?.removeRow(rowKey.current);
+    // refGrid?.current?.gridInst?.removeRow(rowKey.current);
+    if (rowKey !== undefined) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refGrid.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(rowKey);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refGrid.current?.getInstance();
+      const rowCount = refGrid.current?.getInstance()?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = undefined;
   };
   const onSupportCancelRow = () => {
-    refSupportGrid?.current?.gridInst?.removeRow(rowKey.current);
+    // refGrid?.current?.gridInst?.removeRow(rowKey.current);
+    if (rowKey !== undefined) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refSupportGrid.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(rowKey);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refSupportGrid.current?.getInstance();
+      const rowCount = refSupportGrid.current?.getInstance()?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = undefined;
   };
   const onEditingFinish = (e) => {
     if (Condition(e, ["work_start_time"])) {
@@ -282,6 +320,16 @@ function ModalAddNew(props) {
     if (Condition(e, ["work_end_time"])) {
       //🔸시간 정규표현식 적용
       RE.Time(e, refGrid, "work_end_time");
+    }
+  };
+  const onSupportEditingFinish = (e) => {
+    if (Condition(e, ["work_start_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refSupportGrid, "work_start_time");
+    }
+    if (Condition(e, ["work_end_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refSupportGrid, "work_end_time");
     }
   };
   const onNewSave = async () => {
@@ -410,7 +458,7 @@ function ModalAddNew(props) {
         columnOptions={columnOptions}
         onClickGrid={onClickGrid}
         onDblClickGrid={onDblClickNewSupportGrid}
-        onEditingFinish={onEditingFinish}
+        onEditingFinish={onSupportEditingFinish}
         data={gridSupportData}
         refGrid={refSupportGrid}
         isEditMode={true}
@@ -512,19 +560,9 @@ function ModalAddNew(props) {
           </S.GroupWrap>
           <S.GroupWrap className={"columnDirection"}>
             <S.Title>작업이슈</S.Title>
-            <S.Issue
-              rows={4}
-              value={newContents.remark}
-              onChange={handleRemark}
-              placeholder="작업이슈에 대해 작성해주세요."
-            />
+            <S.Issue rows={4} value={newContents.remark} onChange={handleRemark} placeholder="작업이슈에 대해 작성해주세요." />
             <S.Title>파견현황</S.Title>
-            <S.Issue
-              rows={4}
-              value={newContents.issue}
-              onChange={handleIssue}
-              placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다."
-            />
+            <S.Issue rows={4} value={newContents.issue} onChange={handleIssue} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
           </S.GroupWrap>
           {/* <S.GroupWrap className={"columnDirection"}>
             

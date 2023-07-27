@@ -921,7 +921,7 @@ function WorkerGroupStatus() {
       )}
       {isEditOpen && (
         <ModalEdit
-          width={"80%"}
+          width={"95%"}
           rowHeaders={rowHeadersNum}
           columns={columnsNewEmp}
           columnOptions={columnOptions}

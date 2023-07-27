@@ -36,7 +36,7 @@ export const ButtonTitleWrap = styled("div")`
   width: 100%;
 `;
 export const Title = styled("div")`
-  font-family: "Noto Sans KR";
+  font-family: NotoSansKR, Arial;
   font-weight: 900;
   font-size: 20px;
   line-height: 29px;

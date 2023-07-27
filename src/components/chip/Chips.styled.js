@@ -22,8 +22,9 @@ export const ChipWrap = styled("div")`
 export const ChipItem = styled(Chip)`
   scale: 1.1;
   font-size: 20px;
+
   &.chip__backColor--boss {
-    background: blue;
+    background: #3d85c6;
     color: white;
 
     .MuiChip-deleteIcon {
@@ -31,11 +32,7 @@ export const ChipItem = styled(Chip)`
     }
   }
   &.chip__backColor--rest {
-    background: red;
-    color: white;
-
-    .MuiChip-deleteIcon {
-      color: white;
-    }
+    background: #f8c1d6;
+    color: black;
   }
 `;

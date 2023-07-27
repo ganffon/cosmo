@@ -73,7 +73,16 @@ export class Button {
         } else {
           this.el.innerText = value ? elName : elName2;
           this.el.disabled = value === 2 ? false : true;
+          this.el.className = value === 2 ? "customButton grid__button--apply" : "customButton grid__button--disabled";
         }
+        break;
+      case "inspDocumentApply":
+        if (elName2 === "") {
+          this.el.innerText = elName;
+        } else {
+          this.el.innerText = value ? elName : elName2;
+        }
+        this.el.className = value ? "customButton grid__button--apply" : "customButton";
         break;
       default:
         if (elName2 === "") {

@@ -34,7 +34,6 @@ function QualitySpc(props) {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [gridData, setGridData] = useState(null);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isModalManageSelectOpen, setIsModalManageSelectOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,11 +63,10 @@ function QualitySpc(props) {
   const [lotNo, setLotNo] = useState("");
   const [inspVal, setInspVal] = useState("");
   const refSingleGrid = useRef(null);
-  const refSecondGrid = useRef(null);
   const refGridModalSelect = useRef(null);
   const refModalGrid = useRef(null);
   const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
-  const [gridDataHeader, setGridDataHeader] = useState(null);
+
   const prodID = useRef("");
   const workOrderId = useRef("");
   const lineNm = useRef("라인명");
@@ -81,7 +79,7 @@ function QualitySpc(props) {
   const specMin = useRef("LSL");
   const specMax = useRef("USL");
   const memoryId = useRef("");
-  const [realColumns, setRealColumns] = useState([col.text("date", CN.work_date, false, false, false, C.WIDTH_SHORT)]);
+  const [realColumns, setRealColumns] = useState([col.text("date", CN.work_date, false, false, C.WIDTH_SHORT, "center")]);
   const resetRef = () => {
     prodID.current = "품목코드";
     prodCD.current = "품목코드";
@@ -154,52 +152,7 @@ function QualitySpc(props) {
       setDblClickGrid("ModalSelectProd");
       setColumnsSelect(columnProdSelect);
       setIsModalSelectOpen(true);
-
       actSelectProd();
-    }
-  };
-
-  const onEditingFinishGrid = (e) => {
-    disRow.handleEditingFinishGridCheck(e);
-  };
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setSearchToggle(!searchToggle);
-    }
-  };
-  const handleInputTextChange = (e) => {
-    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
-  };
-  const onClickEditModeSave = () => {
-    actEdit();
-  };
-  const [actEdit] = uEdit.useEdit(
-    refSingleGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_01,
-    restURI.inspectionResultUpload
-  );
-
-  const onClickEditModeExit = () => {
-    setIsEditMode(false);
-    setDisableRowToggle(!disableRowToggle);
-    onClickSearch();
-  };
-
-  const onClickNew = () => {
-    setIsModalOpen(true);
-  };
-  const onClickEdit = () => {
-    setDisableRowToggle(!disableRowToggle);
-    setIsEditMode(true);
-  };
-  const onClickDelete = () => {
-    const data = refSingleGrid?.current?.gridInst?.getCheckedRows();
-    if (data.length !== 0) {
-      setIsDeleteAlertOpen(true);
     }
   };
 
@@ -263,9 +216,6 @@ function QualitySpc(props) {
   };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
-    setIsModalManageSelectOpen(false);
-  };
-  const onClickManageModalSelectClose = () => {
     setIsModalManageSelectOpen(false);
   };
   function onClickModalClose() {
@@ -335,15 +285,15 @@ function QualitySpc(props) {
     try {
       actSearchGridTop();
 
-      const updatedColumns = [col.text("date", CN.work_date, false, false, false, C.WIDTH_SHORT)];
+      const updatedColumns = [col.text("date", CN.work_date, false, false, C.WIDTH_SHORT, "center")];
 
       for (let i = 1; i <= sampleCnt; i++) {
-        updatedColumns.push(col.text("sample" + i, "시료 " + i, false, false, false, C.WIDTH_SHORT));
+        updatedColumns.push(col.text("sample" + i, "시료 " + i, false, false, C.WIDTH_SHORT, "center"));
       }
 
       updatedColumns.push(
-        col.text("avg", CN.average, false, false, false, C.WIDTH_SHORT),
-        col.text("deviation", CN.diviation, false, false, false, C.WIDTH_SHORT)
+        col.text("avg", CN.average, false, false, C.WIDTH_SHORT, "center"),
+        col.text("deviation", CN.diviation, false, false, C.WIDTH_SHORT, "center")
       );
 
       setRealColumns(updatedColumns);
@@ -388,9 +338,6 @@ function QualitySpc(props) {
       } else {
         readURI = readURI.slice(0, readURI.length - 1);
       }
-      let gridData = await restAPI.get(readURI);
-
-      setGridDataHeader(gridData?.data?.data?.rows);
     } catch {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -593,7 +540,7 @@ function QualitySpc(props) {
         onDblClickModalGrid={onDblClickGridModal}
       />
     );
-  }, []);
+  });
   return (
     <ContentsArea>
       <LS.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
