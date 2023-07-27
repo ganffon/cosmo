@@ -398,25 +398,6 @@
         "id": "production-lot-tracking",
         "path": "production-lot-tracking",
         "under": null
-      },
-      {
-        "name": "로우데이터",
-        "id": "raw-datas",
-        "path": null,
-        "under": [
-          {
-            "name": "온습도 Raw 데이터",
-            "id": "temp-raws",
-            "path": "temp-raws",
-            "under": null
-          },
-          {
-            "name": "충진기 생산 count Raw 데이터",
-            "id": "count-raws",
-            "path": "count-raws",
-            "under": null
-          }
-        ]
       }
     ]
   },
@@ -476,20 +457,26 @@
         ]
       },
       {
-        "name": "설비정보",
-        "id": "equipment-info",
+        "name": "Raw Data",
+        "id": "raw-data",
         "path": null,
         "under": [
           {
-            "name": "설비RawData현황",
+            "name": "설비 데이터",
             "id": "equipment-rawdata-view",
             "path": "equipment-rawdata-view",
             "under": null
           },
           {
-            "name": "설비알람이력현황",
-            "id": "equipment-alarm-view",
-            "path": "equipment-alarm-view",
+            "name": "온습도 데이터",
+            "id": "temp-raws",
+            "path": "temp-raws",
+            "under": null
+          },
+          {
+            "name": "충진기 생산 횟수",
+            "id": "count-raws",
+            "path": "count-raws",
             "under": null
           }
         ]
