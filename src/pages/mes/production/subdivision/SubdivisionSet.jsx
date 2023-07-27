@@ -24,7 +24,7 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail, barcode
     col.text("prod_nm", CN.prod_nm, C.U, true),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
     col.number("total_qty", CN.total_qty, false, C.WIDTH_SHORT, false),
-    col.button("barcode_no", "바코드 출력", "바코드 출력", barcodePrintHeader, false),
+    col.button("barcode_no", "바코드 출력", "바코드 출력", barcodePrintHeader),
     col.text("remark", CN.remark, isEditModeHeader, false, C.WIDTH_MIDDLE),
     col.date("create_at", CN.create_at, false, C.WIDTH_LONG),
     col.text("create_user_nm", CN.create_user_nm, false, false, C.WIDTH_SHORT),
