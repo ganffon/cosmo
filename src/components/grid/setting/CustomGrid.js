@@ -234,7 +234,7 @@ export function Password(value, fg) {
       return value.value.toString().replace(value.value.toString(), () => {
         let passwordStr = "";
         for (let i = 0; i < value.value.toString().length; i++) {
-          passwordStr = passwordStr + "●";
+          passwordStr = passwordStr + "*";
         }
         return passwordStr;
       });

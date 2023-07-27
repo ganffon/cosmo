@@ -686,6 +686,7 @@ function WorkerGroupStatus() {
   const GridMain = useMemo(() => {
     return (
       <GridSingle
+        header={header}
         refGrid={refGrid}
         data={gridData}
         rowHeaders={rowHeadersNumCheck}
@@ -767,6 +768,7 @@ function WorkerGroupStatus() {
     return (
       <ModalAddEmp
         width={"60%"}
+        header={header}
         rowHeaders={rowHeadersNum}
         columns={columnsAddEmp}
         columnOptions={columnOptions}
@@ -929,6 +931,7 @@ function WorkerGroupStatus() {
       {isAddNewOpen && (
         <ModalAddNew
           width={"95%"}
+          header={header}
           rowHeaders={rowHeadersNum}
           columns={columnsNewEmp}
           columnOptions={columnOptions}
@@ -951,6 +954,7 @@ function WorkerGroupStatus() {
       {isEditOpen && (
         <ModalEdit
           width={"95%"}
+          header={header}
           rowHeaders={rowHeadersNum}
           columns={columnsNewEmp}
           columnOptions={columnOptions}

@@ -438,6 +438,7 @@ function ModalAddNew(props) {
   const Grid = useMemo(() => {
     return (
       <GridSingle
+        header={header}
         rowHeaders={rowHeaders}
         columns={columns}
         columnOptions={columnOptions}
@@ -453,6 +454,7 @@ function ModalAddNew(props) {
   const GridSupport = useMemo(() => {
     return (
       <GridSingle
+        header={header}
         rowHeaders={rowHeaders}
         columns={columns}
         columnOptions={columnOptions}
@@ -560,9 +562,19 @@ function ModalAddNew(props) {
           </S.GroupWrap>
           <S.GroupWrap className={"columnDirection"}>
             <S.Title>작업이슈</S.Title>
-            <S.Issue rows={4} value={newContents.remark} onChange={handleRemark} placeholder="작업이슈에 대해 작성해주세요." />
+            <S.Issue
+              rows={4}
+              value={newContents.remark}
+              onChange={handleRemark}
+              placeholder="작업이슈에 대해 작성해주세요."
+            />
             <S.Title>파견현황</S.Title>
-            <S.Issue rows={4} value={newContents.issue} onChange={handleIssue} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
+            <S.Issue
+              rows={4}
+              value={newContents.issue}
+              onChange={handleIssue}
+              placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다."
+            />
           </S.GroupWrap>
           {/* <S.GroupWrap className={"columnDirection"}>
             

@@ -23,7 +23,7 @@ function UserSet(isEditMode) {
     col.id("uid", CN.uid, C.HIDDEN_ID),
     col.text("id", CN.id, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("user_nm", CN.user_nm, isEditMode, C.U, C.WIDTH_MIDDLE),
-    col.password("pwd", CN.pwd, isEditMode),
+    // col.password("pwd", CN.pwd, isEditMode),
     col.text("email", CN.email, isEditMode, C.U, C.WIDTH_MIDDLE),
     col.check("pwd_fg", CN.pwd_fg, false),
     col.check("admin_fg", CN.admin_fg, isEditMode),
