@@ -20,7 +20,7 @@ function ProductTypeSet(isEditMode) {
   const columns = [
     col.text("prod_type_id", CN.prod_type_id, C.U, C.HIDDEN_ID),
     col.text("prod_type_cd", CN.prod_type_cd, C.U, C.U, C.WIDTH_MIDDLE),
-    col.text("prod_type_nm", CN.prod_type_nm, isEditMode, C.U, C.WIDTH_MIDDLE),
+    // col.text("prod_type_nm", CN.prod_type_nm, isEditMode, C.U, C.WIDTH_MIDDLE),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
     col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
