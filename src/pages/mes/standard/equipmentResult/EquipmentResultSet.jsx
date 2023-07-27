@@ -78,6 +78,9 @@ function EquipmentResultSet() {
       C.U,
       C.HIDDEN_ID
     ),
+    col.number("mng_insp_value", CN.mng_insp_value, true),
+    col.number("aft_insp_value", CN.aft_insp_value, true),
+    col.number("nig_insp_value", CN.nig_insp_value, true),
     col.id("insp_result_id", CN.insp_result_id, C.HIDDEN_ID),
     col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
     col.id("work_order_detail_id", CN.work_order_detail_id, C.HIDDEN_ID),
@@ -98,9 +101,7 @@ function EquipmentResultSet() {
     col.text("insp_item_nm", CN.insp_item_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("insp_item_desc", CN.insp_item_desc, C.U, C.U, C.WIDTH_LONG),
     col.text("spec_std", CN.spec_std, C.U, C.U, C.WIDTH_MIDDLE),
-    col.number("mng_insp_value", CN.mng_insp_value, true),
-    col.number("aft_insp_value", CN.aft_insp_value, true),
-    col.number("nig_insp_value", CN.nig_insp_value, true),
+
     col.number("spec_min", CN.spec_min),
     col.number("spec_max", CN.spec_max),
     col.number("spec_lcl", CN.spec_lcl),
