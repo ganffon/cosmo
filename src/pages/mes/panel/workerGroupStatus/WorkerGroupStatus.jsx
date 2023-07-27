@@ -23,12 +23,20 @@ import BackDrop from "components/backdrop/BackDrop";
 import ModalEdit from "./ModalEdit";
 import ModalAddEmp from "./ModalAddEmp";
 import Condition from "custom/Condition";
-import URI from "api/URI";
 
 function WorkerGroupStatus() {
   const { isMenuSlide } = useContext(LayoutContext);
-  const { columns, columnsSelectEmp, columnsNewEmp, columnsAddEmp, columnOptions, header, rowHeadersNumCheck, rowHeadersNum, columnsWorkType } =
-    WorkerGroupStatusSet();
+  const {
+    columns,
+    columnsSelectEmp,
+    columnsNewEmp,
+    columnsAddEmp,
+    columnOptions,
+    header,
+    rowHeadersNumCheck,
+    rowHeadersNum,
+    columnsWorkType,
+  } = WorkerGroupStatusSet();
   const workType = [
     {
       name: "오전",
@@ -136,7 +144,9 @@ function WorkerGroupStatus() {
       let conditionWorkTime;
       let conditionWorkGroup;
       comboValue.workTypeKey ? (conditionWorkTime = `&shift_type=${comboValue.workTypeKey}`) : (conditionWorkTime = "");
-      comboValue.workGroupKey ? (conditionWorkGroup = `&worker_group_nm=${comboValue.workGroupKey}`) : (conditionWorkGroup = "");
+      comboValue.workGroupKey
+        ? (conditionWorkGroup = `&worker_group_nm=${comboValue.workGroupKey}`)
+        : (conditionWorkGroup = "");
 
       const URI = restURI.workerGroupStatus + `?start_date=${dateText.startDate}&end_date=${dateText.endDate}`;
       const result = await restAPI.get(URI + conditionWorkTime + conditionWorkGroup);
@@ -673,6 +683,17 @@ function WorkerGroupStatus() {
     onSearchAfterEdit();
   }, [gridData]);
 
+  const GridMain = useMemo(() => {
+    return (
+      <GridSingle
+        refGrid={refGrid}
+        data={gridData}
+        rowHeaders={rowHeadersNumCheck}
+        columns={columns}
+        onClickGrid={onClickGrid}
+      />
+    );
+  }, [gridData]);
   const GridAddSelect = useMemo(() => {
     return (
       <ModalSelect
@@ -821,9 +842,7 @@ function WorkerGroupStatus() {
             <BtnComponent btnName={"Edit"} onClick={onEdit} />
             <BtnComponent btnName={"Delete"} onClick={onDelete} />
           </S.ButtonWrap>
-          <S.GridWrap>
-            <GridSingle refGrid={refGrid} data={gridData} rowHeaders={rowHeadersNumCheck} columns={columns} onClickGrid={onClickGrid} />
-          </S.GridWrap>
+          <S.GridWrap>{GridMain}</S.GridWrap>
         </S.BottomLeftWrap>
         <S.BottomRightWrap>
           <S.MainWrap>
@@ -888,11 +907,21 @@ function WorkerGroupStatus() {
             </S.MidWrap>
             <S.BottomWrap>
               <S.Title className={"alignTop"}>작업이슈</S.Title>
-              <S.Issue disabled rows={4} value={mainContents.remark || ""} placeholder="작업이슈에 대해 작성해주세요." />
+              <S.Issue
+                disabled
+                rows={4}
+                value={mainContents.remark || ""}
+                placeholder="작업이슈에 대해 작성해주세요."
+              />
             </S.BottomWrap>
             <S.BottomWrap>
               <S.Title className={"alignTop"}>파견현황</S.Title>
-              <S.Issue disabled rows={4} value={mainContents.issue || ""} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
+              <S.Issue
+                disabled
+                rows={4}
+                value={mainContents.issue || ""}
+                placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다."
+              />
             </S.BottomWrap>
           </S.MainWrap>
         </S.BottomRightWrap>
