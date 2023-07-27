@@ -30,7 +30,7 @@ function PackingInputSet(onCancelYield) {
     col.date("work_packing_date", CN.work_packing_date),
     col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
     col.number("packing_complete_qty", CN.packing_complete_qty),
-    col.button("complete_fg", "계산취소", "계산취소", onCancelYield, "-"),
+    col.button("complete_fg", "계산취소", "계산취소", onCancelYield, "-", "packingInput"),
     // col.id("complete_fg", CN.complete_fg2, C.HIDDEN_ID),
   ];
   const columnsInput = [

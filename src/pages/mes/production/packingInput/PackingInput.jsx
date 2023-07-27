@@ -54,35 +54,32 @@ function PackingInput(props) {
     const Grid = refPackingGrid?.current?.gridInst;
     const lastRowKey = Grid.getRowCount() - 1;
     if (rowKey === String(lastRowKey)) {
-      const completeFlag = Grid.getValue(rowKey, "complete_fg");
-      if (completeFlag === true) {
-        try {
-          setIsBackDrop(true);
-          const ID = Grid.getValue(rowKey, "work_packing_id");
-          const URI = restURI.prdPackingInputCancel.replace("{id}", ID);
-          const result = await restAPI.patch(URI);
+      try {
+        setIsBackDrop(true);
+        const ID = Grid.getValue(rowKey, "work_packing_id");
+        const URI = restURI.prdPackingInputCancel.replace("{id}", ID);
+        const result = await restAPI.patch(URI);
 
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: result?.data?.message,
-            severity: "success",
-            location: "bottomRight",
-          });
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
 
-          onSearch("click");
-          handleReset();
-        } catch (err) {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: err?.response?.data?.message,
-            severity: "error",
-            location: "bottomRight",
-          });
-        } finally {
-          setIsBackDrop(false);
-        }
+        onSearch("click");
+        handleReset();
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      } finally {
+        setIsBackDrop(false);
       }
     }
   }
@@ -137,10 +134,12 @@ function PackingInput(props) {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.prdPackingInputOnly + `?line_id=${lineId}`);
-      // const data = result?.data?.data?.rows.map((data) =>
-      //   data.complete_fg === false ? { ...data, complete_fg: "미완료" } : { ...data, complete_fg: "완료" }
-      // );
-      setPackingGridData(result?.data?.data?.rows);
+      const maxRowKey = result?.data?.data?.rows.length - 1;
+      const data = result?.data?.data?.rows;
+      if (data[maxRowKey].complete_fg === true) {
+        data[maxRowKey].complete_fg = 2;
+      }
+      setPackingGridData(data);
 
       setIsSnackOpen({
         ...isSnackOpen,

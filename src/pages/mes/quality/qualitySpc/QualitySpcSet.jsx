@@ -50,17 +50,17 @@ function QualitySpcSet(isEditMode) {
   ];
   const columnsSelectManage = [
     col.id("proc_nm", CN.proc_nm, C.HIDDEN_ID),
-    col.text("equip_nm", CN.equip_nm, false, false, false, C.WIDTH_SHORT),
-    col.text("insp_item_type_nm", CN.insp_item_type_nm, false, false, C.WIDTH_SHORT), //점검유형
-    col.text("insp_item_nm", CN.insp_item_nm, false, false, C.WIDTH_SHORT), //점검항목
+    col.text("equip_nm", CN.equip_nm),
+    col.text("insp_item_type_nm", CN.insp_item_type_nm), //점검유형
+    col.text("insp_item_nm", CN.insp_item_nm), //점검항목
     col.text("insp_item_desc", CN.insp_item_desc, false, true, C.WIDTH_SHORT), //세부내용
-    col.text("spec_std", CN.spec_std, false, false, C.WIDTH_SHORT),
-    col.text("spec_min", CN.spec_min, false, false, C.WIDTH_SHORT),
-    col.text("spec_max", CN.spec_max, false, false, C.WIDTH_SHORT),
-    col.text("spec_lcl", CN.spec_lcl, false, false, C.WIDTH_SHORT),
-    col.text("spec_ucl", CN.spec_ucl, false, false, C.WIDTH_SHORT),
+    col.text("spec_std", CN.spec_std),
+    col.number("spec_min", CN.spec_min),
+    col.number("spec_max", CN.spec_max),
+    col.number("spec_lcl", CN.spec_lcl),
+    col.number("spec_ucl", CN.spec_ucl),
     col.text("infc_memory_id", CN.inv_to_store_id, false, true, C.WIDTH_SHORT),
-    col.text("tag_id", CN.tag_id, false, false, C.WIDTH_SHORT),
+    col.text("tag_id", CN.tag_id, false, true, C.WIDTH_SHORT),
   ];
   const columnsModal = [
     col.id("insp_result_id", CN.insp_result_id, C.HIDDEN_ID),

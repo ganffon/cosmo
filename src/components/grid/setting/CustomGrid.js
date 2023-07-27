@@ -67,6 +67,14 @@ export class Button {
         this.el.innerText = elName;
         this.el.disabled = value ? false : true;
         break;
+      case "packingInput":
+        if (elName2 === "") {
+          this.el.innerText = elName;
+        } else {
+          this.el.innerText = value ? elName : elName2;
+          this.el.disabled = value === 2 ? false : true;
+        }
+        break;
       default:
         if (elName2 === "") {
           this.el.innerText = elName;
