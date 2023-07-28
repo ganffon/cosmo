@@ -400,7 +400,7 @@ const password = (name = "", header = "", isEditMode = false) => {
     align: "left",
     editor: isEditMode ? "password" : false,
     formatter: function (value) {
-      return CustomGrid.Password(value, false);
+      return CustomGrid.Password(value, true);
     },
     hidden: false,
     sortable: false,
@@ -418,7 +418,7 @@ const rPassword = (name = "", header = "", isEditMode = false) => {
     align: "left",
     editor: isEditMode ? "password" : false,
     formatter: function (value) {
-      return CustomGrid.Password(value, false);
+      return CustomGrid.Password(value, true);
     },
     hidden: false,
     sortable: false,

@@ -6,7 +6,7 @@ import * as col from "custom/GridColumnSet";
 function WorkerGroupStatusSet() {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
-  const header = {};
+  const header = col.multi(["shift_type", "work_start_time", "work_end_time"]);
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -16,15 +16,13 @@ function WorkerGroupStatusSet() {
     col.id("worker_group_status_id", CN.worker_group_status_id, C.HIDDEN_ID),
     col.id("master_emp_id", CN.master_emp_id, C.HIDDEN_ID),
     col.text("master_emp_nm", CN.master_emp_nm, false, true),
+
+    col.text("shift_type", CN.shift_type, C.U, C.U, C.WIDTH_SUPER_SHORT),
+    col.text("worker_group_nm", CN.worker_group_nm, C.U, C.U, C.WIDTH_SUPER_SHORT),
     col.text("work_start_date", CN.work_start_date, C.U, C.U, C.U, "center"),
-
-    col.text("shift_type", CN.shift_type),
-    col.text("worker_group_nm", CN.worker_group_nm),
+    col.text("work_start_time", CN.work_start_time, C.U, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.text("work_end_date", CN.work_end_date, C.U, C.U, C.U, "center"),
-
-    col.text("work_start_time", CN.work_start_time, C.U, C.U, C.U, "center"),
-
-    col.text("work_end_time", CN.work_end_time, C.U, C.U, C.U, "center"),
+    col.text("work_end_time", CN.work_end_time, C.U, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.text("remark", CN.remark, C.U, false),
   ];
   const columnsSelectEmp = [
@@ -49,9 +47,9 @@ function WorkerGroupStatusSet() {
     col.select("work_type_nm", CN.work_type_nm, true),
     col.check("leader_fg", CN.leader_fg, true),
     col.date("work_start_date", CN.work_start_date, true),
-    col.text("work_start_time", CN.work_start_time, true, C.U, C.U, "center"),
+    col.text("work_start_time", CN.work_start_time, true, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.date("work_end_date", CN.work_end_date, true),
-    col.text("work_end_time", CN.work_end_time, true, C.U, C.U, "center"),
+    col.text("work_end_time", CN.work_end_time, true, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];
   const columnsAddEmp = [
@@ -63,9 +61,9 @@ function WorkerGroupStatusSet() {
     col.select("work_type_cd", CN.work_type_cd, true),
     col.select("work_type_nm", CN.work_type_nm, true),
     col.date("work_start_date", CN.work_start_date, true),
-    col.text("work_start_time", CN.work_start_time, true, C.U, C.U, "center"),
+    col.text("work_start_time", CN.work_start_time, true, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.date("work_end_date", CN.work_end_date, true),
-    col.text("work_end_time", CN.work_end_time, true, C.U, C.U, "center"),
+    col.text("work_end_time", CN.work_end_time, true, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.check("leader_fg", CN.leader_fg, true),
     col.text("remark", CN.remark, true, C.U, C.WIDTH_LONG),
   ];

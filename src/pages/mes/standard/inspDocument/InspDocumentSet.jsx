@@ -36,7 +36,7 @@ function InspDocumentSet(
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.date("insp_document_reg_date", CN.insp_document_reg_date, isEditModeHeader),
     col.date("apply_date", CN.apply_date),
-    col.button("apply_fg", CN.apply_fg, "적용중", onApply, "적용하기", isEditModeHeader),
+    col.button("apply_fg", CN.apply_fg, "적용중", onApply, "적용하기", "inspDocumentApply", isEditModeHeader),
     col.text("contents", CN.contents, isEditModeHeader, C.U, C.WIDTH_MIDDLE),
     col.text("remark", CN.remark, isEditModeHeader, C.U, C.WIDTH_LONG),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),

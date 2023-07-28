@@ -229,11 +229,23 @@ function ModalEdit(props) {
       RE.Time(e, refGrid, "work_end_time");
     }
   };
+  const onSupportEditingFinish = (e) => {
+    if (Condition(e, ["work_start_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refSupportGrid, "work_start_time");
+    }
+    if (Condition(e, ["work_end_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refSupportGrid, "work_end_time");
+    }
+  };
   const onLoadEditData = async () => {
     try {
       setIsBackDrop(true);
       // const result = await restAPI.get(restURI.workerGroupStatusDetail + `?worker_group_status_id=${editContents.workId}`);
-      const result = await restAPI.get(restURI.workerGroupStatusDetailByUpdate + `?worker_group_status_id=${editContents.workId}`);
+      const result = await restAPI.get(
+        restURI.workerGroupStatusDetailByUpdate + `?worker_group_status_id=${editContents.workId}`
+      );
 
       setGridOriginalData(result?.data?.data?.rows[0]?.worker); // 수정하는 상황에서 기존에 등록되어있던 gridData 기억용
       setGridData(result?.data?.data?.rows[0]?.worker); // 실제로 뿌려주는 용도
@@ -356,6 +368,7 @@ function ModalEdit(props) {
   const Grid = useMemo(() => {
     return (
       <GridSingle
+        header={header}
         rowHeaders={rowHeaders}
         columns={columns}
         columnOptions={columnOptions}
@@ -370,12 +383,13 @@ function ModalEdit(props) {
   const GridSupport = useMemo(() => {
     return (
       <GridSingle
+        header={header}
         rowHeaders={rowHeaders}
         columns={columns}
         columnOptions={columnOptions}
         // onClickGrid={onClickGrid}
         onDblClickGrid={onDblClickEditSupportGrid}
-        onEditingFinish={onEditingFinish}
+        onEditingFinish={onSupportEditingFinish}
         data={gridSupportData}
         refGrid={refSupportGrid}
         isEditMode={true}
@@ -476,17 +490,37 @@ function ModalEdit(props) {
           </S.GroupWrap> */}
           <S.GroupWrap className={"columnDirection"}>
             <S.Title>작업이슈</S.Title>
-            <S.Issue rows={4} value={editContents.remark} onChange={handleRemark} placeholder="작업이슈에 대해 작성해주세요." />
+            <S.Issue
+              rows={4}
+              value={editContents.remark}
+              onChange={handleRemark}
+              placeholder="작업이슈에 대해 작성해주세요."
+            />
             <S.Title>파견현황</S.Title>
-            <S.Issue rows={4} value={editContents.issue} onChange={handleIssue} placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다." />
+            <S.Issue
+              rows={4}
+              value={editContents.issue}
+              onChange={handleIssue}
+              placeholder="파견직의 이름, 작업시간, 작업내용을 작성 바랍니다."
+            />
           </S.GroupWrap>
         </S.ContentLeft>
         <S.ContentRight>
           <S.ButtonWrap>
             <BtnComponent btnName={"Save"} onClick={onEditSave} />
           </S.ButtonWrap>
-          <S.GridWrap>{Grid}</S.GridWrap>
-          <S.GridWrap>{GridSupport}</S.GridWrap>
+          <div style={{ width: "100%", height: "100%" }}>
+            <div style={{ display: "flex" }}>
+              <S.GridTitle>작업자</S.GridTitle>
+            </div>
+            <S.GridWrap>{Grid}</S.GridWrap>
+          </div>
+          <div style={{ width: "100%", height: "100%" }}>
+            <div style={{ display: "flex" }}>
+              <S.GridTitle>근무지원 (다른 조원을 작성)</S.GridTitle>
+            </div>
+            <S.GridWrap>{GridSupport}</S.GridWrap>
+          </div>
         </S.ContentRight>
       </S.Content>
     </S.ModalWrapBox>

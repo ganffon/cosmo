@@ -41,7 +41,7 @@ function SubdivisionSet(isEditModeHeader, isEditModeDetail, isNewDetail, barcode
     col.date("subdivision_date", CN.subdivision_date, isEditModeDetail, C.WIDTH_SHORT),
     col.text("subdivision_time", CN.subdivision_time, isEditModeDetail, false, C.WIDTH_MIDDLE, "center"),
     col.id("subdivision_emp_id", CN.subdivision_emp_id, C.HIDDEN_ID),
-    col.button("barcode_no", "바코드 출력", "바코드 출력", barcodePrintDetail, false),
+    col.button("barcode_no", "바코드 출력", "바코드 출력", barcodePrintDetail),
     col.text("remark", CN.remark, isEditModeDetail, false, C.WIDTH_MIDDLE),
 
     col.date("create_at", CN.create_at, false, C.WIDTH_LONG),

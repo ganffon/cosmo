@@ -37,6 +37,8 @@ function GridTabEdit(props) {
     setWorkerInfo = () => {},
     empListTemp = [],
     flag = null,
+    mappingFlag = false,
+    isSelectEmpOpen = false,
   } = props;
   const [value, setValue] = React.useState(0);
   const [activeTab, setActiveTab] = React.useState(null);
@@ -124,6 +126,7 @@ function GridTabEdit(props) {
   };
 
   const updateDataset = (index) => {
+    console.log("데이터 업데이트");
     let result = [];
     for (let i = 0; i < refGrid.length; i++) {
       refGrid[i]?.current?.gridInst?.finishEditing();
@@ -136,10 +139,14 @@ function GridTabEdit(props) {
 
       result = [];
     }
+    getActiveGrid(refGrid[value]);
   };
 
   React.useEffect(() => {
-    getActiveGrid(refGrid[0]);
+    updateDataset();
+    if (isSelectEmpOpen !== true) {
+      getActiveGrid(refGrid[value]);
+    }
     splitData();
   }, [data]);
 
@@ -148,10 +155,16 @@ function GridTabEdit(props) {
   }, [gridTabTitle]);
 
   React.useEffect(() => {
+    updateDataset();
+    getActiveGrid(refGrid[value]);
     if (workerDataEdit.length > 0) {
       setWorkerList();
     }
   }, [emp]);
+
+  React.useEffect(() => {
+    handleChange(null, value);
+  }, [mappingFlag]);
 
   const setWorkerList = () => {
     if (InfoButton === true) {
@@ -175,8 +188,7 @@ function GridTabEdit(props) {
   };
 
   const handleChange = (event, newValue) => {
-    setSelectedTab(newValue);
-    updateDataset(newValue);
+    updateDataset();
     getActiveGrid(refGrid[newValue]);
     setValue(newValue);
   };
@@ -246,9 +258,9 @@ function GridTabEdit(props) {
       value,
       data,
       refGrid,
-      emp,
+      //emp,
       toggle,
-      workerDataEdit.current,
+      // workerDataEdit.current,
       empListTemp.current,
     ]
   );
