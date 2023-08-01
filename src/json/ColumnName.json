@@ -11,7 +11,7 @@
   "id": "로그인ID",
   "user_nm": "사용자",
   "pwd": "비밀번호",
-  "pwd_fg": "패스워드\n변경여부",
+  "pwd_fg": "패스워드 초기화",
   "admin_fg": "관리자\n유무",
   "super_admin_fg": "개발자\n유무",
 
@@ -468,5 +468,6 @@
   "work_type_cd": "근무 유형 코드",
   "is_work": "정상근무",
   "leader_fg": "조장",
-  "insp_cycle": "검사주기"
+  "insp_cycle": "검사주기",
+  "auth_type": "권한 유형"
 }

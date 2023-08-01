@@ -6,6 +6,7 @@ export const ContentsArea = styled("div")`
   overflow: hidden;
   background-color: #efefef;
   padding: 20px;
+  font-family: NotoSansKR;
 
   display: flex;
   ${(props) => (!props.hidden && props.flexColumn ? "flex-direction: column;" : "")}

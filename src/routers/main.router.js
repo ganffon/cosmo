@@ -95,7 +95,8 @@ import QualitySpc from "pages/mes/quality/qualitySpc/QualitySpc";
 import InspDocument from "pages/mes/standard/inspDocument/InspDocument";
 import InspResult from "pages/mes/quality/inspResult/InspResult";
 import WorkType from "pages/mes/standard/workType/WorkType";
-import SubdivisionAll from "pages/mes/production/subdivisionAll/SubdivisionAll";
+import SubdivisionAll from "pages/mes/panel/subdivisionAll/SubdivisionPanelAll";
+import TemporarySetup from "pages/mes/standard/temporarySetup/TemporarySetup";
 
 export default function MainRouter() {
   const pages = [
@@ -167,7 +168,7 @@ export default function MainRouter() {
     { path: "unit", component: Unit },
     { path: "menu-manage", component: MenuManage },
     { path: "menu-list", component: MenuList },
-    { path: "setup", component: Setup },
+    { path: "setup", component: TemporarySetup },
     { path: "insp-result-upload", component: InspResultUpload },
     { path: "weight-report", component: WeightReport },
     { path: "equipment-rawdata-view", component: EquipmentRawDataView },

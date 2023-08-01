@@ -1,11 +1,8 @@
 import ExcelJS from "exceljs";
-import CN from "json/ColumnName.json";
-import { Button } from "@mui/material";
 import restAPI from "api/restAPI";
 import { saveAs } from "file-saver";
-import { getDate } from "date-fns";
-import { now } from "moment/moment";
 import BtnComponent from "components/button/BtnComponent";
+import * as S from "./ExcelExport.styles.js";
 
 function ExcelExport(props) {
   const {
@@ -229,12 +226,11 @@ function ExcelExport(props) {
       }
     }
   };
+
   return (
-    <>
-      <BtnComponent btnName={"ExcelDownload"} onClick={downLoadFile}>
-        테스트 버튼
-      </BtnComponent>
-    </>
+    <S.ButtonWrap>
+      <BtnComponent btnName={"ExcelDownload"} onClick={downLoadFile} />
+    </S.ButtonWrap>
   );
 }
 
