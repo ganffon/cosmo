@@ -37,9 +37,10 @@ function GridTab(props) {
     setWorkerInfo = () => {},
     empListTemp = [],
     flag = false,
+    setActiveTab = () => {},
+    setWorkerDataForExcel = () => {},
   } = props;
   const [value, setValue] = React.useState(0);
-  const [activeTab, setActiveTab] = React.useState(null);
   const [toggle, setToggle] = React.useState(false);
 
   const [gridData, setGridData] = React.useState([]);
@@ -91,7 +92,7 @@ function GridTab(props) {
         }
       }
     }
-
+    setWorkerDataForExcel(workerData[value]);
     setWorkerData(workerData);
 
     if (empListTemp?.current?.length === 0) {
@@ -109,7 +110,9 @@ function GridTab(props) {
       for (let i = 0; i < initialWorkerData.length; i++) {
         initialWorkerData[i][0].tabId = gridTabId[i];
       }
+      console.log(initialWorkerData);
 
+      setWorkerDataForExcel(initialWorkerData[value]);
       setWorkerData(initialWorkerData);
     }
     setToggle(!toggle);
@@ -167,17 +170,17 @@ function GridTab(props) {
   };
 
   React.useEffect(() => {
-    // initializeWorker();
-
-    // setWorkerListData();
+    console.log(gridTabTitle);
+    setActiveTab(refGrid[0]);
     getActiveGrid(refGrid[0]);
+
     splitData();
   }, [data]);
 
   React.useEffect(() => {
     initializeWorker();
     setWorkerListData();
-  }, [gridTabTitle, empListTemp.current, refGrid]);
+  }, [gridTabTitle, empListTemp.current, refGrid, empListTemp]);
 
   const setWorkerList = () => {
     if (InfoButton === true) {
@@ -203,6 +206,9 @@ function GridTab(props) {
   }, [emp]);
 
   const handleChange = (event, newValue) => {
+    console.log(gridTabTitle[newValue]);
+    setWorkerDataForExcel(workerData[newValue]);
+    setActiveTab(refGrid[newValue]);
     updateDataset(newValue);
     getActiveGrid(refGrid[newValue]);
     setValue(newValue);

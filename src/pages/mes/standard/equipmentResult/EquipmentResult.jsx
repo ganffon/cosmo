@@ -37,16 +37,15 @@ import BasicTabs from "components/gridtab/gridTab";
 import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
+import ExcelExport from "components/excelExport/ExcelExport";
 
 function EquipmentResult() {
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const selectEmpState = useRef("");
 
-  let detailDataList = [];
   const refGridHeader = useRef(null);
   //const refGridDetail = useRef(null);
-  const refGridDetail = useRef(null);
   const refGridNew = useRef(null);
   const refGridSelectOrder = useRef(null);
   const refGridSelectEmp = useRef(null);
@@ -57,13 +56,17 @@ function EquipmentResult() {
 
   const editOrNewFlag = useRef(null);
 
-  const tabDataList = useRef([]);
+  const exportFileName = "일일운전점검일지";
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [isResultNewOpen, setIsResultNewOpen] = useState(false);
   const [isSelectOrderOpen, setIsSelectOrderOpen] = useState(false);
   const [isSelectEmpOpen, setIsSelectEmpOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
+
+  const [workerDataForExcel, setWorkerDataForExcel] = useState([]);
+
+  const [activeTab, setActiveTab] = useState(null);
 
   const refCurrentGrid = useRef(null);
 
@@ -89,9 +92,6 @@ function EquipmentResult() {
   const [gridDataNew, setGridDataNew] = useState(null);
   const [gridDataSelectOrder, setGridDataSelectOrder] = useState(null);
   const [gridDataSelectEmp, setGridDataSelectEmp] = useState(null);
-
-  const [getWorkerId, setGetWorkerId] = useState(null);
-  const [getTabTabId, setGetTabTabId] = useState(null);
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -950,14 +950,13 @@ function EquipmentResult() {
         InfoButton={false}
         emp={emp}
         empListTemp={empListTemp}
+        setActiveTab={setActiveTab}
+        setWorkerDataForExcel={setWorkerDataForExcel}
       />
     );
   }, [gridDataDetail]);
 
   const modalResultNew = useMemo(() => {
-    console.log("탭커런트");
-    console.log(tabListArr);
-    console.log("탭커런트2");
     return (
       <ModalResultNew
         onClose={onResultNewClose}
@@ -1075,7 +1074,17 @@ function EquipmentResult() {
           <S.GridDetailWrap>
             <S.TitleButtonRight>
               <S.Title>세부운전점검일지</S.Title>
-              <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              <S.ButtonWrap>
+                <ExcelExport
+                  fileName={exportFileName}
+                  headerData={mainInfo}
+                  detailData={
+                    activeTab?.current?.gridInst?.store?.data?.rawData
+                  }
+                  workerList={workerDataForExcel}
+                />
+                <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
+              </S.ButtonWrap>
             </S.TitleButtonRight>
 
             <S.InfoWrap>

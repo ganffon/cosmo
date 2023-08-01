@@ -54,6 +54,7 @@ function InspDocument() {
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeInput, setIsEditModeInput] = useState(false);
   const [isEditModeDetail, setIsEditModeDetail] = useState(false);
+  const [isDataLoadMode, setIsDataLoadMode] = useState(false); //관리계획서 신규등록 화면에서 불러오기를 하면 라인을 수정못하도록 Lock 하기 위한 state
   const [isNewDocumentOpen, setIsNewDocumentOpen] = useState(false);
   const [isAddInputOpen, setIsAddInputOpen] = useState(false);
   const [isAddDetailOpen, setIsAddDetailOpen] = useState(false);
@@ -108,6 +109,7 @@ function InspDocument() {
     isEditModeHeader,
     isEditModeInput,
     isEditModeDetail,
+    isDataLoadMode,
     lineList,
     inspMethodList,
     inspToolList,
@@ -481,6 +483,7 @@ function InspDocument() {
         equip_id: raw.equip_id,
         insp_item_id: raw.insp_item_id,
         insp_item_desc: raw.insp_item_desc,
+        insp_cycle: raw.insp_cycle,
         spec_std: raw.spec_std,
         spec_min: String(raw.spec_min) ? Number(raw.spec_min) : null,
         spec_max: String(raw.spec_max) ? Number(raw.spec_max) : null,
@@ -526,6 +529,7 @@ function InspDocument() {
         location: "bottomRight",
       });
       onSearch();
+      setIsDataLoadMode(false);
       setIsNewDocumentOpen(false);
     } catch (err) {
       setIsSnackOpen({
@@ -1252,16 +1256,22 @@ function InspDocument() {
           columnsHeader={columnsNewHeader}
           columnsInput={columnsNewInput}
           columnsDetail={columnsNewDetail}
+          columnsAddHeader={columnsAddHeader}
           rowHeaders={rowHeadersNum}
           header={header}
           refGridHeader={refGridModalNewHeader}
           refGridInput={refGridModalNewInput}
           refGridDetail={refGridModalNewDetail}
-          onModalNewClose={() => setIsNewDocumentOpen(false)}
+          onModalNewClose={() => {
+            setIsDataLoadMode(false);
+            setIsNewDocumentOpen(false);
+          }}
           onDblModalNewHeader={onDblModalNewHeader}
           onDblModalNewInput={onDblModalNewInput}
           onDblModalNewDetail={onDblModalNewDetail}
           onNewSave={onNewSave}
+          setIsDataLoadMode={setIsDataLoadMode}
+          isDataLoadMode={isDataLoadMode}
         />
       )}
       {isAddInputOpen && (

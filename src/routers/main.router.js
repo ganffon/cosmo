@@ -95,6 +95,7 @@ import QualitySpc from "pages/mes/quality/qualitySpc/QualitySpc";
 import InspDocument from "pages/mes/standard/inspDocument/InspDocument";
 import InspResult from "pages/mes/quality/inspResult/InspResult";
 import WorkType from "pages/mes/standard/workType/WorkType";
+import SubdivisionAll from "pages/mes/production/subdivisionAll/SubdivisionAll";
 
 export default function MainRouter() {
   const pages = [
@@ -198,6 +199,7 @@ export default function MainRouter() {
     { path: "insp-document", component: InspDocument },
     { path: "quality-result-view", component: InspResult },
     { path: "work-type", component: WorkType },
+    { path: "subdivision-panel-all", component: SubdivisionAll },
   ];
   return (
     <Layout>

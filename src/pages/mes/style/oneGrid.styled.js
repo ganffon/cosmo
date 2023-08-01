@@ -17,6 +17,10 @@ export const ToolWrap = styled("div")`
   align-items: center;
   padding: 5px 5px;
 `;
+export const Arrow = styled("img")`
+  width: 100px;
+  height: 50px;
+`;
 export const SearchWrap = styled("div")`
   display: flex;
 `;

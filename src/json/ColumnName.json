@@ -467,5 +467,6 @@
   "work_type_nm": "근무유형",
   "work_type_cd": "근무 유형 코드",
   "is_work": "정상근무",
-  "leader_fg": "조장"
+  "leader_fg": "조장",
+  "insp_cycle": "검사주기"
 }

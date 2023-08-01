@@ -16,7 +16,13 @@ import Calculate from "img/Component/button/calculate.png";
 import TooltipStore from "constant/Tooltip";
 
 function BtnComponent(props) {
-  const { btnName, height = null, width = null, onClick = () => {}, toolTipTitle = null } = props;
+  const {
+    btnName,
+    height = null,
+    width = null,
+    onClick = () => {},
+    toolTipTitle = null,
+  } = props;
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
@@ -29,7 +35,9 @@ function BtnComponent(props) {
     }, 300);
   };
   const checkTooltip = (columnName) => {
-    const matchingTooltip = Object.values(TooltipStore).find((tooltipItem) => tooltipItem.columnName === columnName);
+    const matchingTooltip = Object.values(TooltipStore).find(
+      (tooltipItem) => tooltipItem.columnName === columnName
+    );
 
     if (matchingTooltip) {
       const tooltipContent = matchingTooltip.tooltip;
@@ -138,6 +146,12 @@ function BtnComponent(props) {
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "115px";
       break;
+    case "ExcelDownload":
+      icon = Sync;
+      title = "엑셀 다운로드";
+      btnHeight = height ? height : "34px";
+      btnWidth = width ? width : "115px";
+      break;
     case "Yield":
       icon = Calculate;
       title = "수율 계산";
@@ -174,7 +188,9 @@ function BtnComponent(props) {
   ) : (
     <>
       <S.BtnBack
-        onMouseOver={btnName === "DataLoad" || btnName === "Mapping" ? hoverButton : null}
+        onMouseOver={
+          btnName === "DataLoad" || btnName === "Mapping" ? hoverButton : null
+        }
         onMouseOut={hoverOut}
         height={btnHeight}
         width={btnWidth}

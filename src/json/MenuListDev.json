@@ -620,6 +620,12 @@
             "under": null
           },
           {
+            "name": "소분 공정(종합)",
+            "id": "subdivision-panel-all",
+            "path": "subdivision-panel-all",
+            "under": null
+          },
+          {
             "name": "계량/투입 공정",
             "id": "weight-panel",
             "path": "weight-panel",
