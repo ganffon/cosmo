@@ -188,13 +188,11 @@ function ModalDataLoad(props) {
             options={lineOpt || null}
             getOptionLabel={(option) => option?.line_nm || ""}
             onChange={(e, newValue) => {
-              console.dir(e.target.tagName);
               setComboValue({
                 ...comboValue,
                 line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
               });
               if (e.target.tagName === "svg") {
-                console.log("?!");
                 handleSearch();
               } else {
                 handleSearch(!newValue?.line_id ? null : newValue?.line_id);

@@ -398,6 +398,12 @@
         "id": "production-lot-tracking",
         "path": "production-lot-tracking",
         "under": null
+      },
+      {
+        "name": "근무이력조회",
+        "id": "worker-group-history",
+        "path": "worker-group-history",
+        "under": null
       }
     ]
   },

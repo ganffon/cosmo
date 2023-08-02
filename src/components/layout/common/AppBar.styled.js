@@ -43,13 +43,33 @@ const UserText = styled(Typography)`
 
 export const MenuTitleBox = styled(Typography)`
   display: flex;
-  & > :last-child {
-    font-family: "NotoSansKR";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 20px;
-    color: #000000;
+  align-items: center;
+  // & > :last-child {
+  //   font-family: NotoSansKR;
+  //   font-style: normal;
+  //   font-weight: 700;
+  //   font-size: 15px;
+  //   line-height: 20px;
+  //   color: #000000;
+  // }
+`;
+export const StrongText = styled("div")`
+  font-family: NotoSansKR;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  color: #000000;
+`;
+export const Bookmark = styled("div")`
+  font-size: 25px;
+  margin-left: 10px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  color: gray;
+  &.onStar {
+    color: #ecc34a;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
   }
 `;
 

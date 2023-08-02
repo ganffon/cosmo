@@ -29,25 +29,21 @@ function ExcelExport(props) {
     return fullDate;
   };
   const downLoadFile = async () => {
+    //확장자 설정
+    const extension = "xlsx";
+
     //데이터 임시 생성 추후에 지우거나 수정해야함
-
-    let setData = [];
-
-    for (let i = 0; i < 43; i++) {
-      setData.push({
-        오전조: i,
-        오후조: i + 2,
-        야간조: i + 3,
-      });
-    }
     if (fileName !== null) {
       try {
         // Step 1: 다운로드 - 엑셀 파일을 백엔드 API로부터 다운로드 받기
         //일일운전점검일지.xlsx
-
-        const response = await restAPI.get(`/ftp/${fileName}.xlsx`, {
-          responseType: "blob",
-        });
+        //?filename=FIL-001&extension=xlsx
+        const response = await restAPI.get(
+          `/sys/file/download?filename=${fileName}&extension=${extension}`,
+          {
+            responseType: "blob",
+          }
+        );
         // Step 2: Blob을 File 객체로 변환 (file-saver 라이브러리 사용)
         const file = new File([response.data], `${fileName}.xlsx`, {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -208,6 +204,8 @@ function ExcelExport(props) {
             detailData[i].nig_insp_value;
           worksheet.getCell(`${remarkCol}${Number(remarkRow) + i}`).value =
             detailData[i].remark;
+          worksheet.getCell(`${cycleCol}${Number(cycleRow) + i}`).value =
+            detailData[i].insp_cycle;
         }
 
         //데이터 삽입구간 종료

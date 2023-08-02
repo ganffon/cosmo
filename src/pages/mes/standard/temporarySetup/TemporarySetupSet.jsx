@@ -57,12 +57,12 @@ function TemporarySetupSet(isEditMode, AuthTypeGbnList) {
    */
   const inputSet = [
     {
-      id: "setup_cd",
-      name: CN.setup_cd,
+      id: "id",
+      name: CN.id,
     },
     {
-      id: "setup_nm",
-      name: CN.setup_nm,
+      id: "user_nm",
+      name: CN.user_nm,
     },
   ];
 

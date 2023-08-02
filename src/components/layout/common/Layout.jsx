@@ -64,6 +64,7 @@ const Layout = ({ children }) => {
   useEffect(() => {
     let fullMenuName;
     const MenuJSON = isRealMenu ? MenuList : MenuListDev;
+
     for (let i = 0; findPath(MenuJSON)[0].length > i; i++) {
       if (location.pathname.split("/")[1] === "mes" && location.pathname.split("/")[2] === undefined) {
         window.document.title = `FacdoriOn | Dashboard`;

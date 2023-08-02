@@ -16,6 +16,7 @@ function GridTab(props) {
     tabLength,
     gridTabTitle,
     gridTabId,
+    tabListCode = [],
     rowHeaders,
     refGrid,
     refCurrentGrid,
@@ -39,6 +40,7 @@ function GridTab(props) {
     flag = false,
     setActiveTab = () => {},
     setWorkerDataForExcel = () => {},
+    setFileNameForExcelExport = () => {},
   } = props;
   const [value, setValue] = React.useState(0);
   const [toggle, setToggle] = React.useState(false);
@@ -110,8 +112,6 @@ function GridTab(props) {
       for (let i = 0; i < initialWorkerData.length; i++) {
         initialWorkerData[i][0].tabId = gridTabId[i];
       }
-      console.log(initialWorkerData);
-
       setWorkerDataForExcel(initialWorkerData[value]);
       setWorkerData(initialWorkerData);
     }
@@ -170,10 +170,9 @@ function GridTab(props) {
   };
 
   React.useEffect(() => {
-    console.log(gridTabTitle);
+    setFileNameForExcelExport(tabListCode[0]);
     setActiveTab(refGrid[0]);
     getActiveGrid(refGrid[0]);
-
     splitData();
   }, [data]);
 
@@ -206,7 +205,7 @@ function GridTab(props) {
   }, [emp]);
 
   const handleChange = (event, newValue) => {
-    console.log(gridTabTitle[newValue]);
+    setFileNameForExcelExport(tabListCode[newValue]);
     setWorkerDataForExcel(workerData[newValue]);
     setActiveTab(refGrid[newValue]);
     updateDataset(newValue);

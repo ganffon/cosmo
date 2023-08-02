@@ -469,5 +469,6 @@
   "is_work": "정상근무",
   "leader_fg": "조장",
   "insp_cycle": "검사주기",
-  "auth_type": "권한 유형"
+  "auth_type": "권한 유형",
+  "shift_date": "근무일"
 }
