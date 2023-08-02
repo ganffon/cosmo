@@ -9,7 +9,7 @@ import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
-import UserSet from "pages/mes/standard/user/UserSet";
+import TemporarySetupSet from "./TemporarySetupSet";
 import useInputSet from "custom/useInputSet";
 import * as disRow from "custom/useDisableRowCheck";
 import * as uSearch from "custom/useSearch";
@@ -20,25 +20,31 @@ import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
-import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function User() {
+function TemporarySetup() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+
+  const [AuthTypeGbnList] = [
+    [
+      { text: "시스템 관리자", value: "시스템 관리자" },
+      { text: "현장 관리자", value: "현장 관리자" },
+      { text: "작업자", value: "작업자" },
+    ],
+  ];
   const [searchToggle, setSearchToggle] = useState(false);
 
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = UserSet(isEditMode);
-  const SWITCH_NAME_01 = "user";
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = TemporarySetupSet(isEditMode, AuthTypeGbnList);
+  const SWITCH_NAME_01 = "temporarySetup";
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -82,20 +88,8 @@ function User() {
     restURI.user
   );
 
-  const [actEdit] = uEdit.useEdit(refSingleGrid, isBackDrop, setIsBackDrop, isSnackOpen, setIsSnackOpen, SWITCH_NAME_01, restURI.user);
-  const [actSave] = uSave.useSave(
-    refModalGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    SWITCH_NAME_01,
-    restURI.user,
-    onClickModalClose
-  );
-  const onClickNew = () => {
-    setIsModalOpen(true);
-  };
+  const [actEdit] = uEdit.useEdit(refSingleGrid, isBackDrop, setIsBackDrop, isSnackOpen, setIsSnackOpen, SWITCH_NAME_01, restURI.auth);
+
   const onClickEdit = () => {
     setIsEditMode(true);
     setDisableRowToggle(!disableRowToggle);
@@ -127,21 +121,9 @@ function User() {
     refModalGrid?.current?.gridInst?.appendRow();
   };
   let rowKey;
-  const onClickModalGrid = (e) => {
-    rowKey = e.rowKey;
-  };
-
-  const onClickModalSave = () => {
-    actSave();
-  };
-  function onClickModalClose() {
-    setIsModalOpen(false);
-    setSearchToggle(!searchToggle);
-  }
 
   const onClickGrid = (e) => {
-    // disRow.handleClickGridCheck(e, isEditMode, ["admin_fg"]);
-    disRow.handleClickGridCheck(e, isEditMode, ["pwd_fg"]);
+    disRow.handleClickGridCheck(e, isEditMode, ["auth_read", "auth_create", "auth_update", "auth_delete"]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -182,7 +164,6 @@ function User() {
             </>
           ) : (
             <>
-              <BtnComponent btnName={"New"} onClick={onClickNew} />
               <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
               <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
             </>
@@ -204,38 +185,11 @@ function User() {
         </S.GridWrap>
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
-      {isDeleteAlertOpen ? (
-        <NoticeAlertModal
-          textContent={"정말 삭제하시겠습니까?"}
-          textFontSize={"20px"}
-          height={"200px"}
-          width={"400px"}
-          isDelete={true}
-          isCancel={true}
-          onDelete={handleDelete}
-          onCancel={() => {
-            setIsDeleteAlertOpen(false);
-          }}
-        />
-      ) : null}
-      {isModalOpen ? (
-        <ModalNew
-          onClickModalAddRow={onClickModalAddRow}
-          onClickModalCancelRow={null}
-          onClickModalSave={onClickModalSave}
-          onClickModalClose={onClickModalClose}
-          columns={columnsModal}
-          columnOptions={columnOptions}
-          header={header}
-          rowHeaders={rowHeadersModal}
-          refModalGrid={refModalGrid}
-          onClickModalGrid={onClickModalGrid}
-          requirecolumns={["id", "user_nm", "pwd"]}
-        />
-      ) : null}
+      {isDeleteAlertOpen ? <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} /> : null}
+
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );
 }
 
-export default User;
+export default TemporarySetup;

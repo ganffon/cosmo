@@ -736,6 +736,22 @@ class supportWorkGroupStatusDetail {
   }
 }
 
+class temporarySetup {
+  constructor(raw) {
+    this.uid = raw.uid;
+    let tmpAuthType = "";
+    if (raw.auth_type === "시스템 관리자") {
+      tmpAuthType = "SYS_ADMIN";
+    } else if (raw.auth_type === "현장 관리자") {
+      tmpAuthType = "WORK_ADMIN";
+    } else if (raw.auth_type === "작업자") {
+      tmpAuthType = "WORKER";
+    }
+    // this.auth_type = raw.auth_type;
+    this.auth_type = tmpAuthType;
+  }
+}
+
 /**
  * @param {string} componentName 소문자로 시작
  * @param {any} raw 처리 할 데이터
@@ -926,6 +942,10 @@ function GetPutParams(componentName, raw) {
     case "workType":
       params = new WorkType(raw);
       break;
+    case "temporarySetup":
+      params = new temporarySetup(raw);
+      break;
+
     default:
   }
 

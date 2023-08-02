@@ -276,7 +276,9 @@ function ModalResultNew(props) {
         setIsBackDrop(true);
         const dataHeader = {
           insp_result_id: mainInfo.inspResultId,
-          insp_result_date: dateCheck.checkDate,
+          insp_result_date: mainInfo.insp_result_date
+            ? mainInfo.insp_result_date
+            : dateCheck.checkDate,
 
           remark: mainInfo.remark ? mainInfo.remark : null,
         };

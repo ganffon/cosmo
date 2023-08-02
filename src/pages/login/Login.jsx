@@ -11,9 +11,11 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import BackDrop from "components/backdrop/BackDrop";
 import Cookies from "js-cookie";
+import PwdChangeModal from "./PwdChangeModal";
 
 function Login() {
   const [isBackDrop, setIsBackDrop] = useState(false);
+  const [isPwdChange, setIsPwdChange] = useState(false);
 
   const [loginInfo, setLoginInfo] = useState({
     loginFactoryID: "",
@@ -21,6 +23,9 @@ function Login() {
     loginID: Cookies.get("loginID"),
     loginPW: "",
   });
+  const closeModalPrintOpen = () => {
+    setIsPwdChange(false);
+  };
   const [alertOpen, setAlertOpen] = useState({
     open: false,
     location: "bottomRight",
@@ -99,6 +104,21 @@ function Login() {
           setLoginCookie("userFactoryID", res?.data?.data?.rows[0]?.user_factory_id, 7);
           setLoginCookie("factoryID", loginInfo.loginFactoryID, 7);
           setLoginCookie("admin", res?.data?.data?.rows[0]?.admin_fg, 7);
+          if (res?.data?.data?.rows[0]?.pwd_fg) {
+            setLoginInfo({
+              ...loginInfo,
+              loginPW: "",
+            });
+
+            setAlertOpen({
+              ...alertOpen,
+              open: true,
+              message: "비밀번호 변경이 필요합니다.",
+            });
+
+            setIsPwdChange(true);
+            return;
+          }
           localStorage.setItem("loginState", true);
           navigate("/mes");
         })
@@ -211,6 +231,7 @@ function Login() {
                 autoComplete="current-password"
                 variant="outlined"
                 size="small"
+                value={loginInfo.loginPW}
                 onKeyDown={onKeyDown}
                 onChange={changeLoginInfo}
               />
@@ -223,6 +244,7 @@ function Login() {
       </S.MainBox>
       <NoticeSnack state={alertOpen} setState={setAlertOpen} />
       <BackDrop isBackDrop={isBackDrop} />
+      {isPwdChange && <PwdChangeModal onClose={closeModalPrintOpen} loginID={loginInfo.loginID} />}
       <S.BackGroundImg />
     </S.LoginLayout>
   );

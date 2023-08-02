@@ -185,11 +185,11 @@ function ProductionLotTracking() {
         let gridData = await restAPI.get(readURI);
 
         setGridDataBottomRight(gridData?.data?.data.rows);
-      } catch {
+      } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
           open: true,
-          message: "조회 실패",
+          message: err?.response?.data?.message,
           severity: "error",
         });
       } finally {
@@ -372,7 +372,6 @@ function ProductionLotTracking() {
               data={gridDataMiddleLeft}
               draggable={false}
               refGrid={refMiddleRightGrid}
-              onClickGrid={findLotInfo}
             />
           </LS.GridWrap>
         </LS.ContentMiddleLeft>
@@ -406,6 +405,7 @@ function ProductionLotTracking() {
               data={gridDataBottomLeft}
               draggable={false}
               refGrid={refBottomLeftGrid}
+              onClickGrid={findLotInfo}
             />
           </LS.GridWrap>
         </LS.ContentBottomLeft>

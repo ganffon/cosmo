@@ -8,22 +8,16 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeSnack from "components/alert/NoticeSnack";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 import GridSingle from "components/grid/GridSingle";
+import ModalDataLoad from "./ModalDataLoad";
+import restAPI from "api/restAPI";
+import restURI from "json/restURI.json";
 
 function ModalNew(props) {
   const {
-    onClickModalAddRow = () => {},
-    onClickModalCancelRow = () => {},
-    onClickModalSave = () => {},
     onModalNewClose = () => {},
-    onClickModalDetailClose = () => {},
-    onClickEditModalSave = () => {},
-    onClickGridModalDetail = () => {},
     onDblModalNewHeader = () => {},
     onDblModalNewInput = () => {},
     onDblModalNewDetail = () => {},
-    onEditingFinishGridModalHeader = () => {},
-    onEditingFinishGridModalDetail = () => {},
-    onClickGridModalHeader = () => {},
     onNewSave = () => {},
     refGridHeader = null,
     refGridInput = null,
@@ -32,16 +26,23 @@ function ModalNew(props) {
     columnsHeader = [],
     columnsInput = [],
     columnsDetail = [],
+    columnsAddHeader = [],
     columnOptions,
     header,
     rowHeaders,
     data = [],
+    setIsDataLoadMode,
+    isDataLoadMode,
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
+  const [isDataLoadLineSelectOpen, setIsDataLoadLineSelectOpen] = useState(false);
+  const [gridHeaderData, setGridHeaderData] = useState([]);
+  const [gridDataInput, setGridDataInput] = useState(null);
+  const [gridDataDetail, setGridDataDetail] = useState(null);
 
   useEffect(() => {
     refGridHeader?.current?.gridInst?.appendRow();
@@ -138,57 +139,35 @@ function ModalNew(props) {
     }
   };
 
-  const modalSaveNew = () => {
-    removeNullRow();
-    requireColumnsValidation();
-    if (requireColumnsValidation() === "nullValidationError") {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: `필수값을 입력해주세요.`,
-        severity: "error",
-      });
-    } else {
-      onClickModalSave();
-    }
-    //onClickModalSave();
+  const onEditingFinishHeader = () => {
+    const Grid = refGridHeader?.current?.gridInst;
+    const gridData = Grid?.getData();
+    const resultData = gridData?.map((item, index) => {
+      //최종적으로 만들어진 데이터에 uniqueKey와 rowKey를 재선언함
+      return { ...item, uniqueKey: `@dataKey${Date.now()}-${index}`, rowKey: index };
+    });
+    setGridHeaderData(resultData);
   };
 
-  const modalSaveEdit = () => {
-    removeNullRow();
-    requireColumnsValidation();
-    if (requireColumnsValidation() === "nullValidationError") {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: `필수값을 입력해주세요.`,
-        severity: "error",
-      });
-    } else {
-      onClickEditModalSave();
-    }
-    //onClickModalSave();
-  };
+  const onDblModalDataLoad = async (e) => {
+    if (e?.targetType === "cell") {
+      const lineID = e?.instance?.store?.data?.rawData[e?.rowKey].line_id;
+      const lineNM = e?.instance?.store?.data?.rawData[e?.rowKey].line_nm;
+      const inspDocumentID = e?.instance?.store?.data?.rawData[e?.rowKey].insp_document_id;
 
-  // const GridDetail = useMemo(() => {
-  //   return (
-  //     <GridModal
-  //       data={gridDataDetail}
-  //       columns={columnsModalDetail}
-  //       columnOptions={columnOptions}
-  //       header={header}
-  //       rowHeaders={rowHeaders}
-  //       refGrid={refGridModalDetail}
-  //       draggable={false}
-  //       onClick={(e) => {
-  //         handleClickedRowKey(e);
-  //         onClickGridModalDetail(e);
-  //       }}
-  //       onDblClick={onDblClickGridModalDetail}
-  //       onEditingFinish={onEditingFinishGridModalDetail}
-  //     />
-  //   );
-  // }, [gridDataDetail]);
+      const result = await restAPI.get(restURI.inspDocumentInput + `?insp_document_id=${inspDocumentID}`);
+      setGridDataInput(result?.data?.data?.rows);
+      const result2 = await restAPI.get(restURI.inspDocumentDetail + `?insp_document_id=${inspDocumentID}`);
+      setGridDataDetail(result2?.data?.data?.rows);
+
+      const Grid = refGridHeader?.current?.gridInst;
+
+      Grid.setValue(0, "line_id", lineID);
+      Grid.setValue(0, "line_nm", lineNM);
+
+      setIsDataLoadLineSelectOpen(false);
+    }
+  };
 
   const GridHeader = useMemo(() => {
     return (
@@ -198,12 +177,13 @@ function ModalNew(props) {
         rowHeaders={rowHeaders}
         header={header}
         refGrid={refGridHeader}
-        data={data}
+        data={gridHeaderData}
         isEditMode={true}
         onDblClickGrid={onDblModalNewHeader}
+        onEditingFinish={onEditingFinishHeader}
       />
     );
-  }, []);
+  }, [isDataLoadMode]);
   const GridInput = useMemo(() => {
     return (
       <GridSingle
@@ -212,13 +192,13 @@ function ModalNew(props) {
         rowHeaders={rowHeaders}
         header={header}
         refGrid={refGridInput}
-        data={data}
+        data={gridDataInput}
         isEditMode={true}
         onClickGrid={(e) => handleClickedRowKey(e)}
         onDblClickGrid={onDblModalNewInput}
       />
     );
-  }, []);
+  }, [gridDataInput]);
   const GridDetail = useMemo(() => {
     return (
       <GridSingle
@@ -227,13 +207,13 @@ function ModalNew(props) {
         rowHeaders={rowHeaders}
         header={header}
         refGrid={refGridDetail}
-        data={data}
+        data={gridDataDetail}
         isEditMode={true}
         onClickGrid={(e) => handleClickedRowKey(e)}
         onDblClickGrid={onDblModalNewDetail}
       />
     );
-  }, []);
+  }, [gridDataDetail]);
 
   return (
     <ModalWrapMulti width={"95%"} height={"95%"}>
@@ -248,6 +228,13 @@ function ModalNew(props) {
           <S.ShadowBoxButtonHeader>
             <S.Title>제품</S.Title>
             <S.ButtonWrap>
+              <BtnComponent
+                btnName={"DataLoad"}
+                onClick={() => {
+                  setIsDataLoadMode(true);
+                  setIsDataLoadLineSelectOpen(true);
+                }}
+              />
               <BtnComponent btnName={"Save"} onClick={onNewSave} />
             </S.ButtonWrap>
           </S.ShadowBoxButtonHeader>
@@ -294,34 +281,20 @@ function ModalNew(props) {
           <S.GridHeaderWrap>{GridDetail}</S.GridHeaderWrap>
         </S.ShadowBoxDetail>
       </S.ScrollBox>
-      {/* <S.GridTopTitleBox>{modalTitle}</S.GridTopTitleBox>
-      <S.GridBoxTop>
-        <GridModal
-          data={isNewDetail ? gridDataHeaderRowID : null}
-          columns={columnsModalHeader}
+      {isDataLoadLineSelectOpen && (
+        <ModalDataLoad
           columnOptions={columnOptions}
+          columns={columnsAddHeader}
+          rowHeaders={rowHeaders}
           header={header}
-          rowHeaders={rowHeadersHeader}
-          refGrid={refGridModalHeader}
-          draggable={false}
-          onClick={onClickGridModalHeader}
-          onDblClick={onDblClickGridModalHeader}
-          onEditingFinish={onEditingFinishGridModalHeader}
+          refGrid={refGridDetail}
+          data={data}
+          isEditMode={true}
+          onClickGrid={(e) => handleClickedRowKey(e)}
+          onModalDataLoadClose={() => setIsDataLoadLineSelectOpen(false)}
+          onDblModalDataLoad={onDblModalDataLoad}
         />
-      </S.GridBoxTop>
-      <S.ButtonBox>
-        {!isNewDetail && <BtnComponent btnName="DataLoad" onClick={onDataLoad} />}
-        <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
-        <BtnComponent
-          btnName="CancelRow"
-          onClick={() => {
-            onClickModalCancelRow();
-            handleCancelRow();
-          }}
-        />
-        <BtnComponent btnName="Save" onClick={isNewDetail ? modalSaveEdit : modalSaveNew} />
-      </S.ButtonBox>
-      <S.GridBoxBottom>{GridDetail}</S.GridBoxBottom> */}
+      )}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
     </ModalWrapMulti>
   );

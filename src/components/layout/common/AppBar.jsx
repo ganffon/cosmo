@@ -1,6 +1,6 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useState } from "react";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 // ⬇️ import MUI
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,10 +19,18 @@ function AppBar() {
     setCurrentMenuName("Dashboard");
   }, []);
 
+  const [activeBookmark, setActiveBookmark] = useState("");
+  const onBookmark = (e) => {
+    setActiveBookmark("onStar");
+  };
+
   let menuLists = [];
   if (currentMenuName) {
     menuLists = currentMenuName.split("|");
   }
+
+  const location = useLocation();
+  console.log(location.pathname);
 
   return (
     <S.AppBarBox isAllScreen={isAllScreen}>
@@ -42,7 +50,14 @@ function AppBar() {
         <S.MenuTitleBox>
           {menuLists.map((page, index) =>
             index + 1 === menuLists.length ? (
-              <S.MenuTitle key={index}>{page}</S.MenuTitle>
+              <>
+                <S.MenuTitle key={index}>
+                  <S.StrongText>{page}</S.StrongText>
+                </S.MenuTitle>
+                <S.Bookmark onClick={onBookmark} className={activeBookmark}>
+                  ★
+                </S.Bookmark>
+              </>
             ) : (
               <S.MenuBox key={index}>
                 <S.MenuTitle>{page}</S.MenuTitle>

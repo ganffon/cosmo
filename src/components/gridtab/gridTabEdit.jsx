@@ -126,7 +126,6 @@ function GridTabEdit(props) {
   };
 
   const updateDataset = (index) => {
-    console.log("데이터 업데이트");
     let result = [];
     for (let i = 0; i < refGrid.length; i++) {
       refGrid[i]?.current?.gridInst?.finishEditing();

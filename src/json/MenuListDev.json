@@ -398,6 +398,12 @@
         "id": "production-lot-tracking",
         "path": "production-lot-tracking",
         "under": null
+      },
+      {
+        "name": "근무이력조회",
+        "id": "worker-group-history",
+        "path": "worker-group-history",
+        "under": null
       }
     ]
   },
@@ -617,6 +623,12 @@
             "name": "소분 공정",
             "id": "subdivision-panel",
             "path": "subdivision-panel",
+            "under": null
+          },
+          {
+            "name": "소분 공정(종합)",
+            "id": "subdivision-panel-all",
+            "path": "subdivision-panel-all",
             "under": null
           },
           {

@@ -229,6 +229,7 @@ function Line(props) {
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
+
       <S.ShadowBoxGrid isAllScreen={isAllScreen}>
         {isEditMode ? (
           <S.ButtonWrap>

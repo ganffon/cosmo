@@ -392,7 +392,7 @@ const rDate = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SH
   };
 };
 
-const password = (name = "", header = "", isEditMode = false) => {
+const password = (name = "", header = "", isEditMode = false, hidden = false) => {
   return {
     name: name,
     header: header,
@@ -402,7 +402,7 @@ const password = (name = "", header = "", isEditMode = false) => {
     formatter: function (value) {
       return CustomGrid.Password(value, true);
     },
-    hidden: false,
+    hidden: hidden,
     sortable: false,
     filter: false,
     whiteSpace: false,

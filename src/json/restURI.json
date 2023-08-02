@@ -145,5 +145,7 @@
   "spc": "/spc/by-opc",
   "inspResultEmp": "/qms/insp-result-emp",
   "workerGroupStatusDetailByUpdate": "/prd/worker-group-status-detail/by-update",
-  "workType": "/std/work-type"
+  "workType": "/std/work-type",
+  "auth": "/aut/user/auth",
+  "workerGroupHistory": "/prd/worker-group-status-detail/history"
 }
