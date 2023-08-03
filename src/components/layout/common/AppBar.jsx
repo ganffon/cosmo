@@ -9,28 +9,111 @@ import Logo from "img/Logo/cosmo.png";
 import AvatarButton from "./AvatarButton";
 import { LayoutContext } from "./Layout";
 import * as S from "./AppBar.styled";
+import restAPI from "api/restAPI";
+import restURI from "json/restURI.json";
+import NoticeSnack from "components/alert/NoticeSnack";
+
+import GetBookmarkList from "custom/GetBookmarkList";
 
 function AppBar() {
-  const { isMenuSlide, setIsMenuSlide, setIsMouseOver, currentMenuName, setCurrentMenuName, isAllScreen } =
-    useContext(LayoutContext);
+  const {
+    isMenuSlide,
+    setIsMenuSlide,
+    setIsMouseOver,
+    currentMenuName,
+    setCurrentMenuName,
+    isAllScreen,
+    activeBookmark,
+    setActiveBookmark,
+    bookmarkList,
+    setBookmarkList,
+  } = useContext(LayoutContext);
+  const [isSnackOpen, setIsSnackOpen] = useState({
+    open: false,
+  });
   const navigate = useNavigate();
   const gotoDashboard = useCallback(() => {
     navigate("/mes");
     setCurrentMenuName("Dashboard");
   }, []);
+  const location = useLocation();
+  const locationLength = location.pathname.split("/").length - 1;
+  const menuKey = location.pathname.split("/")[locationLength];
 
-  const [activeBookmark, setActiveBookmark] = useState("");
-  const onBookmark = (e) => {
-    setActiveBookmark("onStar");
+  const getBookmark = async () => {
+    try {
+      const result = await restAPI.get(restURI.bookmark + `?&uid=${Cookies.get("userUID")}`);
+      const data = result?.data?.data?.rows;
+      const list = GetBookmarkList(data);
+      setBookmarkList(list);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+    }
+  };
+
+  const onBookmark = async (e) => {
+    switch (activeBookmark) {
+      case "onBookmark":
+        try {
+          const data = { menu_key: menuKey };
+          await restAPI.delete(restURI.bookmark, { data });
+          setActiveBookmark("");
+          getBookmark();
+
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: "즐겨찾기 해제",
+            severity: "success",
+            location: "bottomRight",
+          });
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        } finally {
+        }
+        break;
+      default:
+        try {
+          await restAPI.post(restURI.bookmark, { menu_key: menuKey });
+          setActiveBookmark("onBookmark");
+          getBookmark();
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: "즐겨찾기 등록",
+            severity: "success",
+            location: "bottomRight",
+          });
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        } finally {
+        }
+    }
   };
 
   let menuLists = [];
   if (currentMenuName) {
-    menuLists = currentMenuName.split("|");
+    menuLists = currentMenuName.split("/");
   }
-
-  const location = useLocation();
-  console.log(location.pathname);
 
   return (
     <S.AppBarBox isAllScreen={isAllScreen}>
@@ -54,9 +137,11 @@ function AppBar() {
                 <S.MenuTitle key={index}>
                   <S.StrongText>{page}</S.StrongText>
                 </S.MenuTitle>
-                <S.Bookmark onClick={onBookmark} className={activeBookmark}>
-                  ★
-                </S.Bookmark>
+                {page !== "Dashboard" && (
+                  <S.Bookmark onClick={onBookmark} className={activeBookmark}>
+                    ★
+                  </S.Bookmark>
+                )}
               </>
             ) : (
               <S.MenuBox key={index}>
@@ -83,6 +168,7 @@ function AppBar() {
         </S.UserTextBackground>
         <AvatarButton />
       </S.RightBox>
+      <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
     </S.AppBarBox>
   );
 }

@@ -98,6 +98,7 @@ import WorkType from "pages/mes/standard/workType/WorkType";
 import SubdivisionAll from "pages/mes/panel/subdivisionAll/SubdivisionPanelAll";
 import TemporarySetup from "pages/mes/standard/temporarySetup/TemporarySetup";
 import WorkerGroupHistory from "pages/mes/production/workerGroupHistory/WorkerGroupHistory";
+import Notice from "pages/mes/standard/notice/Notice";
 
 export default function MainRouter() {
   const pages = [
@@ -203,6 +204,7 @@ export default function MainRouter() {
     { path: "work-type", component: WorkType },
     { path: "subdivision-panel-all", component: SubdivisionAll },
     { path: "worker-group-history", component: WorkerGroupHistory },
+    { path: "notice", component: Notice },
   ];
   return (
     <Layout>

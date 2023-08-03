@@ -177,11 +177,7 @@ function ModalNew(props) {
     <ModalWrap width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
-        <S.ButtonClose
-          color="primary"
-          aria-label="close"
-          onClick={onClickModalClose}
-        >
+        <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
           <CloseIcon />
         </S.ButtonClose>
       </S.HeaderBox>
@@ -191,14 +187,7 @@ function ModalNew(props) {
           {buttonType === "ACS" && (
             <>
               <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
-              <BtnComponent
-                btnName="CancelRow"
-                onClick={
-                  onClickModalCancelRow
-                    ? onClickModalCancelRow
-                    : onClickModalCancelRowInnerFunction
-                }
-              />
+              <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRowInnerFunction} />
               <BtnComponent
                 btnName="Save"
                 onClick={() => {
@@ -217,9 +206,7 @@ function ModalNew(props) {
               />
             </>
           )}
-          {buttonType === "Save" && (
-            <BtnComponent btnName="Save" onClick={onClickModalSave} />
-          )}
+          {buttonType === "Save" && <BtnComponent btnName="Save" onClick={onClickModalSave} />}
         </S.ButtonWrap>
       </S.ButtonBox>
       <S.GridBox>{Grid}</S.GridBox>

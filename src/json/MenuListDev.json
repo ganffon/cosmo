@@ -266,6 +266,12 @@
             "under": null
           }
         ]
+      },
+      {
+        "name": "공지사항",
+        "id": "notice",
+        "path": "notice",
+        "under": null
       }
     ]
   },

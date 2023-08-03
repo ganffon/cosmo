@@ -1,56 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
+import { LayoutContext } from "./Layout";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import * as S from "./AvatarButton.styled";
 import { Version } from "Version";
 import doriFace from "img/Component/doriFace.svg";
-
-const avatarCharacter = (loginID) => {
-  return loginID.charAt(0).toUpperCase();
-};
+import logout from "img/Component/avatar/logout.png";
+import bookmark from "img/Component/avatar/bookmark.png";
+import star from "img/Component/avatar/star.png";
 
 function AvatarButton() {
+  const { bookmarkList } = useContext(LayoutContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const [bookmarks, setBookmarks] = useState([]);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
-  const [openChild, setOpenChild] = useState(false);
-  const onClickAvatar = (event) => {
-    setAnchorEl(event.currentTarget);
+  const openBookmark = Boolean(anchorEl2);
+  const onClickAvatar = (e) => {
+    setAnchorEl(e.currentTarget);
   };
 
   const onClickClose = () => {
+    console.log("?!");
     setAnchorEl(null);
-  };
-  useEffect(() => {
-    const storedBookmarks = localStorage.getItem("bookmarks");
-    if (storedBookmarks) {
-      setBookmarks(JSON.parse(storedBookmarks));
-    }
-  }, []);
-  const addBookmark = (newBookmarkName, newBookmarkUri) => {
-    const newBookmark = { name: newBookmarkName, uri: "/mes/line-dept" };
-    const updatedBookmarks = [...bookmarks, newBookmark];
-    setBookmarks(updatedBookmarks);
-    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
   };
   const onClickLogout = () => {
     localStorage.setItem("loginState", false);
     navigate("/login");
   };
-  const onMouseOverEvent = (e) => {
+  const onMouseOverBookmark = (e) => {
     setAnchorEl2(e.currentTarget);
-    setOpenChild(true);
   };
   const onClickFavorite = (bookmark) => {
-    navigate(bookmark.uri);
-    setOpenChild(false);
+    navigate(bookmark.path);
+    setAnchorEl2(null);
+    setAnchorEl(null);
   };
   const handleClose = (e) => {
-    setOpenChild(false);
+    setAnchorEl2(null);
   };
   return (
     <div>
@@ -77,29 +66,42 @@ function AvatarButton() {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={onClickLogout}>📴 Logout</MenuItem>
-        <MenuItem onMouseOver={onMouseOverEvent} onMouseLeave={handleClose}>
+        <MenuItem
+          onClick={onClickLogout}
+          onMouseEnter={() => {
+            console.log("?!");
+          }}
+        >
+          <S.MenuImg src={logout} />
+          Logout
+        </MenuItem>
+        <MenuItem onMouseEnter={onMouseOverBookmark}>
+          <S.MenuImg src={bookmark} />
           즐겨찾기
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl2}
-            open={openChild}
-            anchorOrigin={{
-              vertical: "center",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: -10,
-              horizontal: 100,
-            }}
-          >
-            <MenuItem onClick={() => addBookmark("새로운 즐겨찾기")}>즐겨찾기 추가</MenuItem>
-            {bookmarks?.map((bookmark, index) => (
-              <MenuItem key={index} onClick={() => onClickFavorite(bookmark)}>
-                {bookmark?.name}
-              </MenuItem>
-            ))}
-          </Menu>
+          {bookmarkList.length !== 0 && (
+            <Menu
+              id="bookmarkMenu"
+              anchorEl={anchorEl2}
+              open={openBookmark}
+              anchorOrigin={{
+                vertical: "center",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: 10,
+                horizontal: 110,
+              }}
+            >
+              <div onMouseLeave={handleClose}>
+                {bookmarkList?.map((bookmark, index) => (
+                  <MenuItem key={index} onClick={() => onClickFavorite(bookmark)}>
+                    <S.MenuImg src={star} className={"bookmarkImg"} />
+                    {bookmark?.name}
+                  </MenuItem>
+                ))}
+              </div>
+            </Menu>
+          )}
         </MenuItem>
         <S.Version>Ver.{Version}</S.Version>
       </Menu>

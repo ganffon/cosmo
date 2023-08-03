@@ -21,6 +21,7 @@ function DateSingle(props) {
         type="date"
         format="yyyy-MM-dd"
         defaultValue={DateTime().dateFull}
+        value={dateText[id] || ""}
         ref={refDate}
         InputProps={{
           sx: { height: 90, fontSize: "35px", fontFamily: "NotoSansKR_B" },

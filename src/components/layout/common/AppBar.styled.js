@@ -44,6 +44,7 @@ const UserText = styled(Typography)`
 export const MenuTitleBox = styled(Typography)`
   display: flex;
   align-items: center;
+  gap: 10px;
   // & > :last-child {
   //   font-family: NotoSansKR;
   //   font-style: normal;
@@ -63,11 +64,10 @@ export const StrongText = styled("div")`
 `;
 export const Bookmark = styled("div")`
   font-size: 25px;
-  margin-left: 10px;
   margin-bottom: 3px;
   cursor: pointer;
   color: gray;
-  &.onStar {
+  &.onBookmark {
     color: #ecc34a;
     text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
   }
@@ -85,6 +85,7 @@ export const Arrow = styled("span")`
 
 export const MenuBox = styled("span")`
   display: flex;
+  gap: 10px;
 `;
 
 export const MenuTitle = styled("span")`
