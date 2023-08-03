@@ -40,7 +40,10 @@ export const SearchTitle = styled("div")`
   text-align: center;
   color: rgba(255, 255, 255, 1);
 `;
-export const Icon = styled("img")``;
+export const Icon = styled("img")`
+  width: 20px;
+  height: 20px;
+`;
 
 export const BtnBack = styled("button")`
   height: ${(props) => props.height};

@@ -751,6 +751,15 @@ class temporarySetup {
     this.auth_type = tmpAuthType;
   }
 }
+class notice {
+  constructor(raw) {
+    this.title = raw.title;
+    this.contents = raw.contents;
+    this.writer_uid = raw.writer_uid;
+    this.notice_start_date = raw.notice_start_date;
+    this.notice_end_date = raw.notice_end_date;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -944,6 +953,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "temporarySetup":
       params = new temporarySetup(raw);
+      break;
+    case "notice":
+      params = new notice(raw);
       break;
 
     default:

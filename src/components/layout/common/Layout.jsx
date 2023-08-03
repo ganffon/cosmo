@@ -7,6 +7,10 @@ import * as S from "./Layout.styled";
 import { useLocation } from "react-router-dom";
 import MenuList from "json/MenuList.json";
 import MenuListDev from "json/MenuListDev.json";
+import restAPI from "api/restAPI";
+import restURI from "json/restURI.json";
+import Cookies from "js-cookie";
+import GetBookmarkList from "custom/GetBookmarkList";
 
 export const LayoutContext = createContext();
 
@@ -17,6 +21,8 @@ const Layout = ({ children }) => {
   const [isMouseOver, setIsMouseOver] = useState(false); //🔸V2MenuDepth On/Off 상태 Flag
   const [isAllScreen, setIsAllScreen] = useState(false); //🔸전체화면 Flag
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeBookmark, setActiveBookmark] = useState(""); //북마크 On/Off 클래스명 전달
+  const [bookmarkList, setBookmarkList] = useState([]); //북마크 List 전달
   const [menuNameChangeSave, setMenuNameChangeSave] = useState({
     lv1MenuName: "",
     lv2MenuName: "",
@@ -30,6 +36,31 @@ const Layout = ({ children }) => {
     update: true,
     delete: true,
   }); //🔸메뉴별 조회, 등록, 수정, 삭제 권한 값 저장
+
+  const [isSnackOpen, setIsSnackOpen] = useState({
+    open: false,
+  });
+
+  useEffect(() => {
+    const getBookmark = async () => {
+      try {
+        const result = await restAPI.get(restURI.bookmark + `?&uid=${Cookies.get("userUID")}`);
+        const data = result?.data?.data?.rows;
+        const list = GetBookmarkList(data);
+        setBookmarkList(list);
+      } catch (err) {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: err?.response?.data?.message,
+          severity: "error",
+          location: "bottomRight",
+        });
+      } finally {
+      }
+    };
+    getBookmark();
+  }, []);
 
   const findPath = (obj) => {
     let fullPath = [];
@@ -78,15 +109,41 @@ const Layout = ({ children }) => {
           const menuName = findPath(MenuJSON)[2][i].split("★");
 
           if (menuName.length === 2) {
-            fullMenuName = menuName[0] + `　|　` + menuName[1];
+            fullMenuName = menuName[0] + `/` + menuName[1];
           } else if (menuName.length === 3) {
-            fullMenuName = menuName[0] + `　|　` + menuName[1] + `　|　` + menuName[2];
+            fullMenuName = menuName[0] + `/` + menuName[1] + `/` + menuName[2];
           }
           break;
         }
       }
     }
     setCurrentMenuName(fullMenuName);
+
+    const actBookmark = async (menuPath) => {
+      //메뉴 들어올 때 북마크 여부 판별해서 표현
+      const result = await restAPI.get(restURI.bookmark + `?menu_key=${menuPath}&uid=${Cookies.get("userUID")}`);
+      if (result?.data?.data?.rows[0]) {
+        setActiveBookmark("onBookmark");
+      } else {
+        setActiveBookmark("");
+      }
+    };
+
+    actBookmark(location.pathname.split("/")[2]);
+
+    const GetBookmark = async () => {
+      try {
+        const result = await restAPI.get(restURI.bookmark + `?&uid=${Cookies.get("userUID")}`);
+        const data = result?.data?.data?.rows;
+        const list = GetBookmarkList(data);
+        setBookmarkList(list);
+      } catch (err) {
+        console.log(err);
+      } finally {
+      }
+    };
+
+    GetBookmark();
   }, [location.pathname]);
 
   return (
@@ -107,6 +164,10 @@ const Layout = ({ children }) => {
           authMenuCode,
           setAuthMenuCode,
           superAdmin,
+          activeBookmark,
+          setActiveBookmark,
+          bookmarkList,
+          setBookmarkList,
         }}
       >
         <AppBar />

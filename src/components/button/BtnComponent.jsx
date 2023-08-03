@@ -12,17 +12,12 @@ import Ok from "img/Component/button/ok.svg";
 import Save from "img/Component/button/save.svg";
 import Sync from "img/Component/button/sync.svg";
 import Clean from "img/Component/button/clean.png";
+import Detail from "img/Component/button/detail.png";
 import Calculate from "img/Component/button/calculate.png";
 import TooltipStore from "constant/Tooltip";
 
 function BtnComponent(props) {
-  const {
-    btnName,
-    height = null,
-    width = null,
-    onClick = () => {},
-    toolTipTitle = null,
-  } = props;
+  const { btnName, height = null, width = null, onClick = () => {}, toolTipTitle = null } = props;
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
@@ -35,9 +30,7 @@ function BtnComponent(props) {
     }, 300);
   };
   const checkTooltip = (columnName) => {
-    const matchingTooltip = Object.values(TooltipStore).find(
-      (tooltipItem) => tooltipItem.columnName === columnName
-    );
+    const matchingTooltip = Object.values(TooltipStore).find((tooltipItem) => tooltipItem.columnName === columnName);
 
     if (matchingTooltip) {
       const tooltipContent = matchingTooltip.tooltip;
@@ -170,6 +163,12 @@ function BtnComponent(props) {
       btnHeight = height ? height : "34px";
       btnWidth = width ? width : "115px";
       break;
+    case "Detail":
+      icon = Detail;
+      title = "상세보기";
+      btnHeight = height ? height : "34px";
+      btnWidth = width ? width : "115px";
+      break;
     default:
   }
   return btnName === "Search" ? (
@@ -188,9 +187,7 @@ function BtnComponent(props) {
   ) : (
     <>
       <S.BtnBack
-        onMouseOver={
-          btnName === "DataLoad" || btnName === "Mapping" ? hoverButton : null
-        }
+        onMouseOver={btnName === "DataLoad" || btnName === "Mapping" ? hoverButton : null}
         onMouseOut={hoverOut}
         height={btnHeight}
         width={btnWidth}

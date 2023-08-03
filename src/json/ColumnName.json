@@ -470,5 +470,10 @@
   "leader_fg": "조장",
   "insp_cycle": "검사주기",
   "auth_type": "권한 유형",
-  "shift_date": "근무일"
+  "shift_date": "근무일",
+  "notice_title": "제목",
+  "notice_content": "내용",
+  "writer_user_nm": "공지작성자",
+  "notice_start_date": "공지시작일",
+  "notice_end_date": "공지종료일"
 }

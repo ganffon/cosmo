@@ -99,12 +99,14 @@ function Login() {
       await restAPI
         .get(restURI.login + `?factory_id=${loginInfo.loginFactoryID}&id=${loginInfo.loginID}&pwd=${loginInfo.loginPW}`)
         .then((res) => {
-          setLoginCookie("userName", res?.data?.data?.rows[0]?.user_nm, 7);
-          setLoginCookie("userUID", res?.data?.data?.rows[0]?.uid, 7);
-          setLoginCookie("userFactoryID", res?.data?.data?.rows[0]?.user_factory_id, 7);
+          console.log(res?.data?.data?.rows[0]?.user);
+          // "4B9AD03F-0A27-EE11-9D71-088FC39FE11D"
+          setLoginCookie("userName", res?.data?.data?.rows[0]?.user.user_nm, 7);
+          setLoginCookie("userUID", res?.data?.data?.rows[0]?.user.uid, 7);
+          setLoginCookie("userFactoryID", res?.data?.data?.rows[0]?.user.user_factory_id, 7);
           setLoginCookie("factoryID", loginInfo.loginFactoryID, 7);
-          setLoginCookie("admin", res?.data?.data?.rows[0]?.admin_fg, 7);
-          if (res?.data?.data?.rows[0]?.pwd_fg) {
+          setLoginCookie("admin", res?.data?.data?.rows[0]?.user.admin_fg, 7);
+          if (res?.data?.data?.rows[0]?.user.pwd_fg) {
             setLoginInfo({
               ...loginInfo,
               loginPW: "",

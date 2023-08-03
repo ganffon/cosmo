@@ -751,6 +751,15 @@ class workerGroupStatusAddSupportEmp {
     this.remark = raw.remark;
   }
 }
+class notice {
+  constructor(raw) {
+    this.title = raw.title;
+    this.contents = raw.contents;
+    this.writer_uid = raw.writer_uid;
+    this.notice_start_date = raw.notice_start_date;
+    this.notice_end_date = raw.notice_end_date;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -959,6 +968,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "workerGroupStatusAddSupportEmp":
         params = new workerGroupStatusAddSupportEmp(raw);
+        break;
+      case "notice":
+        params = new notice(raw);
         break;
       default:
     }

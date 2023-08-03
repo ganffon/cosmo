@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 // ⬇️ import MUI
 import Divider from "@mui/material/Divider";
 // ⬇️ reference of page
@@ -18,6 +18,7 @@ import Quality from "img/Menu/quality.svg";
 import Standard from "img/Menu/standard.svg";
 import Inventory from "img/Menu/inventory.svg";
 import Star from "img/Menu/star.svg";
+import GetBookmarkList from "custom/GetBookmarkList";
 
 const hostName = window.location.hostname;
 const IPFlag = hostName.split(".")[0];
@@ -65,8 +66,18 @@ const menuListIcon = (key) => {
 
 function V2MenuDepth(props) {
   const { lv2Menu, refMenu, lv1MenuID } = props;
-  const { isMouseOver, setIsMouseOver, setIsModalOpen, authMenuCode, setAuthMenuCode, superAdmin } =
-    useContext(LayoutContext);
+  const {
+    isMouseOver,
+    setIsMouseOver,
+    setIsModalOpen,
+    authMenuCode,
+    setAuthMenuCode,
+    superAdmin,
+    activeBookmark,
+    setActiveBookmark,
+    bookmarkList,
+    setBookmarkList,
+  } = useContext(LayoutContext);
   const navigate = useNavigate();
   const [alertOpen, setAlertOpen] = useState({
     open: false,
@@ -103,6 +114,29 @@ function V2MenuDepth(props) {
       return result;
     }
   }
+  const actBookmark = async (menu) => {
+    //메뉴 들어올 때 북마크 여부 판별해서 표현
+    const result = await restAPI.get(restURI.bookmark + `?menu_key=${menu.id}&uid=${Cookies.get("userUID")}`);
+    if (result?.data?.data?.rows[0]) {
+      setActiveBookmark("onBookmark");
+    } else {
+      setActiveBookmark("");
+    }
+
+    GetBookmark();
+  };
+
+  const GetBookmark = async () => {
+    try {
+      const result = await restAPI.get(restURI.bookmark + `?&uid=${Cookies.get("userUID")}`);
+      const data = result?.data?.data?.rows;
+      const list = GetBookmarkList(data);
+      setBookmarkList(list);
+    } catch (err) {
+      console.log(err);
+    } finally {
+    }
+  };
 
   const handleClickMenu = async (menu, e) => {
     e.preventDefault();
@@ -110,6 +144,7 @@ function V2MenuDepth(props) {
     const admin = Cookies.get("admin");
     if (loginID !== "ispark" && admin !== "true") {
       try {
+        actBookmark(menu);
         const res = await restAPI.get(
           `${restURI.authMenuCheck}?menu_cd=${menu.id}&uid=${Cookies.get("userUID")}&user_factory_id=${Cookies.get(
             "userFactoryID"
@@ -144,6 +179,7 @@ function V2MenuDepth(props) {
         alert("Menu Click => Auth API Err");
       }
     } else {
+      actBookmark(menu);
       setAuthMenuCode({
         ...authMenuCode,
         readOnly: false,
