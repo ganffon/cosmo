@@ -330,7 +330,7 @@ function PackingInput(props) {
     }
   };
   const handleChangeYield = (e) => {
-    setCurrentYield(RE.DecimalOnePoint(e?.target?.value));
+    setCurrentYield(RE.DecimalTwoPoints(e?.target?.value));
   };
   const onKeyDownYieldCalc = (e) => {
     if (e?.key === "Enter") {

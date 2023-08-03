@@ -883,15 +883,12 @@ function WorkerGroupStatus() {
                 />
                 <S.ChipButtonWrap>
                   <BtnComponent btnName={"Add"} height={"120px"} width={"84px"} onClick={onAdd} />
-                  {/* <BtnComponent btnName={"Edit"} height={"60px"} width={"84px"} onClick={onEdit} /> */}
                 </S.ChipButtonWrap>
               </S.ChipWrap>
-              {/* <div style={{ marginTop: "10px" }}></div> */}
-              <S.ChipWrap>
+              {/* <S.ChipWrap>
                 <S.Title className={"alignTop"}>근무지원</S.Title>
                 <Chips
                   height={"80px"}
-                  // width={"995px"}
                   width={"calc(100% - 235px)"}
                   chipData={chipSupportData}
                   setChipData={setSupportChipData}
@@ -903,9 +900,8 @@ function WorkerGroupStatus() {
                 />
                 <S.ChipButtonWrap>
                   <BtnComponent btnName={"Add"} height={"80px"} width={"84px"} onClick={onSupportAdd} />
-                  {/* <BtnComponent btnName={"Edit"} height={"60px"} width={"84px"} onClick={onEdit} /> */}
                 </S.ChipButtonWrap>
-              </S.ChipWrap>
+              </S.ChipWrap> */}
             </S.MidWrap>
             <S.BottomWrap>
               <S.Title className={"alignTop"}>작업이슈</S.Title>

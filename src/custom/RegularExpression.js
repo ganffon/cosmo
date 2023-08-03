@@ -107,4 +107,9 @@ const DecimalOnePoint = (value) => {
   return pattern.test(value) ? value : "";
 };
 
-export { Time, TimeInput, NumComma, removeNonNumeric, validateTimeFormat, DecimalOnePoint };
+const DecimalTwoPoints = (value) => {
+  const pattern = /^[0-9]+(\.[0-9]{0,2})?$/;
+  return pattern.test(value) ? value : "";
+};
+
+export { Time, TimeInput, NumComma, removeNonNumeric, validateTimeFormat, DecimalOnePoint, DecimalTwoPoints };

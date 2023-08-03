@@ -33,15 +33,15 @@ function WorkerGroupHistorySet() {
   ];
 
   const columnsDetail = [
-    col.text("shift_date", CN.shift_date, false, false, C.WIDTH_SHORT, "center"),
-    col.text("shift_type", CN.shift_type, false, false, C.WIDTH_MIDDLE, "center"),
-    col.text("worker_group_nm", CN.worker_group_nm, false, false, C.WIDTH_MIDDLE, "center"),
-    col.text("work_type_nm", CN.work_type_nm, false, false, C.WIDTH_MIDDLE, "center"),
-    col.text("emp_nm", CN.emp_nm, false, false, C.WIDTH_MIDDLE, "center"),
-    col.date("work_start_date", CN.work_start_date),
-    col.text("work_start_time", CN.work_start_time, C.U, C.U, C.U, "center"),
-    col.date("work_end_date", CN.work_end_date),
-    col.text("work_end_time", CN.work_end_time, C.U, C.U, C.U, "center"),
+    col.text("shift_date", CN.shift_date, false, false, C.WIDTH_SHORT, "center", true, true),
+    col.text("shift_type", CN.shift_type, false, false, C.WIDTH_MIDDLE, "center", true, true),
+    col.text("worker_group_nm", CN.worker_group_nm, false, false, C.WIDTH_MIDDLE, "center", true, true),
+    col.text("work_type_nm", CN.work_type_nm, false, false, C.WIDTH_MIDDLE, "center", true, true),
+    col.text("emp_nm", CN.emp_nm, false, false, C.WIDTH_MIDDLE, "center", true, true),
+    col.text("work_start_date", CN.shift_date, false, false, C.WIDTH_SHORT, "center", true, true),
+    col.text("work_start_time", CN.work_start_time, C.U, C.U, C.U, "center", true, true),
+    col.text("work_end_date", CN.shift_date, false, false, C.WIDTH_SHORT, "center", true, true),
+    col.text("work_end_time", CN.work_end_time, C.U, C.U, C.U, "center", true, true),
   ];
   const columnsSelectProd = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
