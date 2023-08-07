@@ -14,6 +14,7 @@ import Sync from "img/Component/button/sync.svg";
 import Clean from "img/Component/button/clean.png";
 import Detail from "img/Component/button/detail.png";
 import Calculate from "img/Component/button/calculate.png";
+import Download from "img/Component/button/download.png";
 import TooltipStore from "constant/Tooltip";
 
 function BtnComponent(props) {
@@ -140,10 +141,10 @@ function BtnComponent(props) {
       btnWidth = width ? width : "115px";
       break;
     case "ExcelDownload":
-      icon = Sync;
+      icon = Download;
       title = "엑셀 다운로드";
       btnHeight = height ? height : "34px";
-      btnWidth = width ? width : "115px";
+      btnWidth = width ? width : "140px";
       break;
     case "Yield":
       icon = Calculate;
