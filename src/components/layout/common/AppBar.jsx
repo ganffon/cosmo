@@ -133,16 +133,17 @@ function AppBar() {
         <S.MenuTitleBox>
           {menuLists.map((page, index) =>
             index + 1 === menuLists.length ? (
-              <>
-                <S.MenuTitle key={index}>
+              <S.MenuBox key={index}>
+                <S.MenuTitle>
                   <S.StrongText>{page}</S.StrongText>
                 </S.MenuTitle>
+
                 {page !== "Dashboard" && (
                   <S.Bookmark onClick={onBookmark} className={activeBookmark}>
                     ★
                   </S.Bookmark>
                 )}
-              </>
+              </S.MenuBox>
             ) : (
               <S.MenuBox key={index}>
                 <S.MenuTitle>{page}</S.MenuTitle>
