@@ -21,7 +21,6 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Line(props) {
-  //
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -38,24 +37,6 @@ function Line(props) {
   const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = LineSet(isEditMode);
 
   const SWITCH_NAME_01 = "line";
-
-  // function onButton(e, rowKey) {
-  //   if (e.target.id.includes("On")) {
-  //     e.target.id = "Off" + rowKey;
-  //     const el = document.querySelector(`#Off${rowKey}`);
-  //     el.innerText = "미적용";
-  //   } else {
-  //     if (e.target.id.indexOf("On") === -1 && e.target.id.indexOf("Off") === -1) {
-  //       e.target.id = "Off" + rowKey;
-  //       const el = document.querySelector(`#Off${rowKey}`);
-  //       el.innerText = "미적용";
-  //     } else {
-  //       e.target.id = "On" + rowKey;
-  //       const el = document.querySelector(`#On${rowKey}`);
-  //       el.innerText = "적용";
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋

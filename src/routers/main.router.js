@@ -99,6 +99,7 @@ import SubdivisionAll from "pages/mes/panel/subdivisionAll/SubdivisionPanelAll";
 import TemporarySetup from "pages/mes/standard/temporarySetup/TemporarySetup";
 import WorkerGroupHistory from "pages/mes/production/workerGroupHistory/WorkerGroupHistory";
 import Notice from "pages/mes/standard/notice/Notice";
+import SysOptionManage from "pages/mes/standard/sysOptionManage/SysOptionManage";
 
 export default function MainRouter() {
   const pages = [
@@ -205,6 +206,7 @@ export default function MainRouter() {
     { path: "subdivision-panel-all", component: SubdivisionAll },
     { path: "worker-group-history", component: WorkerGroupHistory },
     { path: "notice", component: Notice },
+    { path: "sys-option-manage", component: SysOptionManage },
   ];
   return (
     <Layout>

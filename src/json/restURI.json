@@ -149,5 +149,6 @@
   "auth": "/aut/user/auth",
   "workerGroupHistory": "/prd/worker-group-status-detail/history",
   "bookmark": "/sys/bookmark",
-  "notice": "/std/notice"
+  "notice": "/std/notice",
+  "sysOptionManage": "/sys/option"
 }

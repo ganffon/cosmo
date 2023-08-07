@@ -475,5 +475,9 @@
   "notice_content": "내용",
   "writer_user_nm": "공지작성자",
   "notice_start_date": "공지시작일",
-  "notice_end_date": "공지종료일"
+  "notice_end_date": "공지종료일",
+  "option_id": "옵션ID",
+  "option_cd": "옵션코드",
+  "option_nm": "옵션명",
+  "value": "옵션값"
 }

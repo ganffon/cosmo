@@ -760,6 +760,12 @@ class notice {
     this.notice_end_date = raw.notice_end_date;
   }
 }
+class option {
+  constructor(raw) {
+    this.option_id = raw.option_id;
+    this.value = raw.value;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -956,6 +962,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "notice":
       params = new notice(raw);
+      break;
+    case "option":
+      params = new option(raw);
       break;
 
     default:
