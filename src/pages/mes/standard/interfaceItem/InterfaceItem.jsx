@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import InterfaceItemSet from "pages/mes/standard/interfaceItem/InterfaceItemSet";
@@ -26,9 +26,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function InterfaceItem(props) {
-  LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -44,15 +42,10 @@ function InterfaceItem(props) {
     infc_item_type_id: null,
   });
   const [infcItemTypeOpt, infcItemTypeList] = Cbo.useInfcItemType();
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = InterfaceItemSet(isEditMode, infcItemTypeList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = InterfaceItemSet(
+    isEditMode,
+    infcItemTypeList
+  );
 
   const SWITCH_NAME_01 = "infcItem";
 
@@ -61,20 +54,14 @@ function InterfaceItem(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -197,19 +184,10 @@ function InterfaceItem(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    infc_item_type_id:
-                      newValue?.infc_item_type_id === undefined
-                        ? null
-                        : newValue?.infc_item_type_id,
+                    infc_item_type_id: newValue?.infc_item_type_id === undefined ? null : newValue?.infc_item_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.infc_item_type_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.infc_item_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>

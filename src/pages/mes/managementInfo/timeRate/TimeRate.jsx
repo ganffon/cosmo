@@ -3,7 +3,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import strGridJson from "./MonthlyLineCapaData.json";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
@@ -19,7 +19,6 @@ import * as Set from "./TimeRateSet";
 import Grid from "@toast-ui/react-grid";
 
 const TimeRate = ({ toggle }) => {
-  LoginStateChk();
   const refSingleGrid = useRef(null);
   const refSingleGrid2 = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -221,13 +220,20 @@ const TimeRate = ({ toggle }) => {
           <S.TimeRateTop>
             <S.Title>비가동 입력 데이터 기준</S.Title>
             <S.ChartWrap2>
-              {responseData && <Chart options={cOptions} series={responseData?.data?.rows[0]?.graph} type="line" height={350} />}
+              {responseData && (
+                <Chart options={cOptions} series={responseData?.data?.rows[0]?.graph} type="line" height={350} />
+              )}
             </S.ChartWrap2>
           </S.TimeRateTop>
           <S.TimeRateBottom>
             <S.GridWrap>
               {responseData && (
-                <GridSingle header={complexColumns} columns={customColumns} data={responseData?.data?.rows[0]?.grid} refGrid={refSingleGrid2} />
+                <GridSingle
+                  header={complexColumns}
+                  columns={customColumns}
+                  data={responseData?.data?.rows[0]?.grid}
+                  refGrid={refSingleGrid2}
+                />
               )}
             </S.GridWrap>
           </S.TimeRateBottom>
@@ -236,13 +242,20 @@ const TimeRate = ({ toggle }) => {
           <S.TimeRateTop>
             <S.Title>충진 자동 카운트 데이터 기준</S.Title>
             <S.ChartWrap2>
-              {responseSysData && <Chart options={cOptions} series={responseSysData?.data?.rows[0]?.graph} type="line" height={350} />}
+              {responseSysData && (
+                <Chart options={cOptions} series={responseSysData?.data?.rows[0]?.graph} type="line" height={350} />
+              )}
             </S.ChartWrap2>
           </S.TimeRateTop>
           <S.TimeRateBottom>
             <S.GridWrap>
               {responseSysData && (
-                <GridSingle header={autoComplexColumns} columns={autoColumn} data={responseSysData?.data?.rows[0]?.grid} refGrid={refSingleGrid} />
+                <GridSingle
+                  header={autoComplexColumns}
+                  columns={autoColumn}
+                  data={responseSysData?.data?.rows[0]?.grid}
+                  refGrid={refSingleGrid}
+                />
               )}
             </S.GridWrap>
           </S.TimeRateBottom>

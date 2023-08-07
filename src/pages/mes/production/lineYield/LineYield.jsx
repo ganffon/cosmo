@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as S from "./LineYield.styled";
 import ContentsArea from "components/layout/common/ContentsArea";
@@ -16,7 +16,6 @@ import GetPostParams from "api/GetPostParams";
 import * as disRow from "custom/useDisableRowCheck";
 
 function LineYield() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refMainGrid = useRef(null);

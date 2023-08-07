@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import ContentsArea from "components/layout/common/ContentsArea";
 import InputSearch from "components/input/InputSearch";
@@ -31,7 +31,6 @@ import * as C from "constant/Grid.js";
 import ModalDate from "components/modal/ModalDate";
 
 function QualitySpc(props) {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -79,7 +78,9 @@ function QualitySpc(props) {
   const specMin = useRef("LSL");
   const specMax = useRef("USL");
   const memoryId = useRef("");
-  const [realColumns, setRealColumns] = useState([col.text("date", CN.work_date, false, false, C.WIDTH_SHORT, "center")]);
+  const [realColumns, setRealColumns] = useState([
+    col.text("date", CN.work_date, false, false, C.WIDTH_SHORT, "center"),
+  ]);
   const resetRef = () => {
     prodID.current = "품목코드";
     prodCD.current = "품목코드";
@@ -481,7 +482,11 @@ function QualitySpc(props) {
       refGrid = refModalGrid;
 
       for (let i = 0; i < columnName.length; i++) {
-        refGrid?.current?.gridInst?.setValue(dblClickRowKey, columnName[i], e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]);
+        refGrid?.current?.gridInst?.setValue(
+          dblClickRowKey,
+          columnName[i],
+          e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
+        );
       }
     } else if (dblClickGrid === "Manage") {
       refGrid = refModalGrid;
@@ -592,7 +597,14 @@ function QualitySpc(props) {
                 <InputPaper width={"180px"} name={"설비명"} value={equipNm.current || ""} btn={false} />
               </LS.InputPaperWrap>
               <LS.InputPaperWrap>
-                <LS.InputText id="outlined-number" label="시료수" type="number" onChange={handleChange} value={sampleCnt} size="small" />
+                <LS.InputText
+                  id="outlined-number"
+                  label="시료수"
+                  type="number"
+                  onChange={handleChange}
+                  value={sampleCnt}
+                  size="small"
+                />
               </LS.InputPaperWrap>
               <LS.InputPaperWrap>
                 <InputPaper width={"180px"} name={"LSL"} value={specMin.current || ""} btn={false} />
@@ -609,10 +621,21 @@ function QualitySpc(props) {
         <LS.CntGridContainer>
           {/* <LS.CntGridContainer rowTemplate={"100% 0%"}> */}
           <LS.ChartWrap>
-            {xbarChartData && <Chart id={"chart"} options={cOptions} series={xbarChartData} type="line" width={"99%"} height={"99%"} />}
+            {xbarChartData && (
+              <Chart id={"chart"} options={cOptions} series={xbarChartData} type="line" width={"99%"} height={"99%"} />
+            )}
           </LS.ChartWrap>
           <LS.ChartWrap>
-            {rChartData && <Chart id={"chart"} options={rChartOptions} series={rChartData} type="line" width={"99%"} height={"99%"} />}
+            {rChartData && (
+              <Chart
+                id={"chart"}
+                options={rChartOptions}
+                series={rChartData}
+                type="line"
+                width={"99%"}
+                height={"99%"}
+              />
+            )}
           </LS.ChartWrap>
         </LS.CntGridContainer>
         {/* <LS.ChartWrap>

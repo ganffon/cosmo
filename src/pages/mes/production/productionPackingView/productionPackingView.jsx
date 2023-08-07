@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as S from "./productionPackingView.styled";
 import * as MS from "./productionPackingModel.styled";
@@ -24,7 +24,6 @@ import BackDrop from "components/backdrop/BackDrop";
 import { TextField } from "@mui/material";
 
 function ProductionPackingView() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({

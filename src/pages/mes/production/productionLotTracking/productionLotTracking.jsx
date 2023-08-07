@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as LS from "./productionLotTracking.styled";
 import InputSearch from "components/input/InputSearch";
@@ -23,7 +23,6 @@ import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 
 function ProductionLotTracking() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);

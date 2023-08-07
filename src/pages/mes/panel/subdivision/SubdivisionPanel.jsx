@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionPanelSet from "./SubdivisionPanelSet";
@@ -21,7 +21,6 @@ import BarcodeScan from "./BarcodeScan";
 import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
 
 function SubdivisionPanel() {
-  LoginStateChk();
   const { isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");

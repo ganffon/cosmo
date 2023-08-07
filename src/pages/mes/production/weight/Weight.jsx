@@ -1,4 +1,3 @@
-import { LoginStateChk } from "custom/LoginStateChk";
 import { LayoutContext } from "components/layout/common/Layout";
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import * as uSearch from "custom/useSearch";
@@ -29,7 +28,6 @@ import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 
 function Weight() {
-  LoginStateChk();
   const SWITCH_NAME_01 = "weight";
   const SWITCH_NAME_02 = "weightDetail";
 

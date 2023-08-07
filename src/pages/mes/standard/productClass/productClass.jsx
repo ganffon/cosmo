@@ -1,4 +1,3 @@
-import { LoginStateChk } from "custom/LoginStateChk";
 import * as S from "pages/mes/style/oneGrid.styled";
 import { useContext, useEffect, useRef, useState } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
@@ -24,7 +23,6 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 
 function ProductClass() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const refModalGrid = useRef(null);

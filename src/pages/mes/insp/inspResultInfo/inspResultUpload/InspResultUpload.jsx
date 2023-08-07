@@ -1,14 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNEDS from "components/button/ButtonNEDS";
-import ButtonSES from "components/button/ButtonSES";
-import GridSingle from "components/grid/GridSingle";
-import ModalNew from "components/modal/ModalNew";
-import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
-import BackDrop from "components/backdrop/BackDrop";
-import InputSearch from "components/input/InputSearch";
 import InspResultUploadSet from "./InspResultUploadSet";
 import * as disRow from "custom/useDisableRowCheck";
 import useInputSet from "custom/useInputSet";
@@ -22,7 +13,6 @@ import Abcs from "./ExcelUpload";
 import ContentsArea from "components/layout/common/ContentsArea";
 
 function InspResultUpload(props) {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);

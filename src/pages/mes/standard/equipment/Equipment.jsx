@@ -4,7 +4,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import EquipmentSet from "pages/mes/standard/equipment/EquipmentSet";
@@ -23,9 +23,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function Equipment() {
-  LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const refModalSelectGrid = useRef(null);
@@ -52,16 +50,8 @@ function Equipment() {
   const [searchToggle, setSearchToggle] = useState(false);
   const [processOpt, processList] = Cbo.useProcess();
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnsModalSelect,
-    columnOptions,
-    inputSet,
-  } = EquipmentSet(isEditMode, processList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnsModalSelect, columnOptions, inputSet } =
+    EquipmentSet(isEditMode, processList);
   const SWITCH_NAME_01 = "equipment";
 
   useEffect(() => {
@@ -69,10 +59,7 @@ function Equipment() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     setTimeout(() => {
@@ -80,10 +67,7 @@ function Equipment() {
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const [actSearchSelect] = uSearch.useSearchSelect(
     refModalSelectGrid,
     isBackDrop,

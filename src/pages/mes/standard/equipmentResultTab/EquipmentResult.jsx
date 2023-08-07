@@ -3,7 +3,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import EquipmentResultSet from "pages/mes/standard/equipmentResult/EquipmentResultSet";
@@ -26,7 +26,6 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import ModalWrap from "components/modal/ModalWrap";
 
 function EquipmentResult() {
-  LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const selectEmpState = useRef("");
 

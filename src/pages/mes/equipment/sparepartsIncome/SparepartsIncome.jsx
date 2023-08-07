@@ -1,5 +1,4 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
 import { useContext, useEffect, useRef, useState } from "react";
 import restURI from "json/restURI.json";
 import * as S from "./SparepartsIncome.styled";
@@ -20,11 +19,8 @@ import * as uDelete from "custom/useDelete";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
-import BtnComponent from "components/button/BtnComponent";
-import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function SparepartIncome() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen } = useContext(LayoutContext);
 
   /* 변수 선언 영역 시작 */
@@ -69,19 +65,10 @@ function SparepartIncome() {
     onClickGridHeader,
     inputSet,
   } = SparepartsIncomeSet();
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
-  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refGridHeader
-  );
-  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(
-    isEditModeDetail,
-    refGridDetail
-  );
+  const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
+  const [disRowDetail, setDisRowDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
 
   const onClickEditModeHeaderSave = () => {
     actEdit();
@@ -91,10 +78,7 @@ function SparepartIncome() {
     setIsEditModeHeader(false);
     setSearchToggle(!searchToggle);
   };
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditModeHeader,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditModeHeader, refSingleGrid);
 
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
@@ -219,11 +203,7 @@ function SparepartIncome() {
     <ContentsArea>
       <S.ContentsLeft>
         <S.SearchLeftWrap>
-          <S.Date
-            datePickerSet={"range"}
-            dateText={dateText}
-            setDateText={setDateText}
-          />
+          <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
           <S.SearchLeftTopWrap>
             {isEditModeHeader ? (
               <ButtonSES
@@ -277,10 +257,7 @@ function SparepartIncome() {
       </S.ContentsRight>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew

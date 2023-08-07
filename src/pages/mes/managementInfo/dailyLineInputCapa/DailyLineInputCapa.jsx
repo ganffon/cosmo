@@ -2,22 +2,16 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
-import ButtonSearch from "components/button/ButtonSearch";
-import SplitterLayout from "react-splitter-layout";
 import "react-splitter-layout/lib/index.css";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
-import TextField from "@mui/material/TextField";
-import InputSearch from "components/input/InputSearch";
 import * as C from "./DailyLineInputCapa.styled";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
 const DailyLineInputCapa = ({ toggle }) => {
-  LoginStateChk();
   const refSingleGrid = useRef(null);
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -334,18 +328,32 @@ const DailyLineInputCapa = ({ toggle }) => {
           <S.PartCapaLeft>
             <S.Title>투입량</S.Title>
             <S.ChartWrap>
-              {responseData && <Chart id={"chart"} options={stackedOptions} series={stackedTmpData} type="bar" height={350} />}
+              {responseData && (
+                <Chart id={"chart"} options={stackedOptions} series={stackedTmpData} type="bar" height={350} />
+              )}
             </S.ChartWrap>
           </S.PartCapaLeft>
           <S.PartCapaRight>
             <S.Title>생산량</S.Title>
             <S.ChartWrap>
-              {responseData && <Chart id={"chart"} options={cOptions} series={responseData.data.rows[0].lineGraph} type="bar" height={350} />}
+              {responseData && (
+                <Chart
+                  id={"chart"}
+                  options={cOptions}
+                  series={responseData.data.rows[0].lineGraph}
+                  type="bar"
+                  height={350}
+                />
+              )}
             </S.ChartWrap>
           </S.PartCapaRight>
         </S.FlexTop>
         <S.LineCapaBottom>
-          <S.GridWrap2>{responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}</S.GridWrap2>
+          <S.GridWrap2>
+            {responseData && (
+              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />
+            )}
+          </S.GridWrap2>
         </S.LineCapaBottom>
       </S.TopWrap>
 

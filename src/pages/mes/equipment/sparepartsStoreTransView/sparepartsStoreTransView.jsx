@@ -1,11 +1,8 @@
 import * as S from "pages/mes/style/oneGrid.styled";
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonSES from "components/button/ButtonSES";
-import ButtonNEDS from "components/button/ButtonNEDS";
 import * as uSearch from "custom/useSearch";
 import ButtonSearch from "components/button/ButtonSearch";
-import { LoginStateChk } from "custom/LoginStateChk";
 
 import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";
@@ -37,8 +34,6 @@ function SparepartsStoreTransView() {
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
   });
-
-  LoginStateChk();
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [searchToggle, setSearchToggle] = useState(false);
 

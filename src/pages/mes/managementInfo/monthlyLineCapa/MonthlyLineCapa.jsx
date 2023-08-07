@@ -10,7 +10,7 @@ import GetTestValAndCreateAt, {
 } from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
@@ -28,7 +28,6 @@ import { BackDrop } from "components/backdrop/BackDrop.styled";
 import NoticeSnack from "components/alert/NoticeSnack";
 
 const MonthlyLineCapa = ({ toggle }) => {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,

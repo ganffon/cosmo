@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import PackingPanelSet from "./PackingPanelSet";
@@ -43,7 +43,7 @@ function PackingPanel() {
   const currentRowKey = useRef("");
   const barcodeNo = useRef("");
   const lotNo = useRef("");
-  LoginStateChk();
+
   const { isMenuSlide, currentMenuName } = useContext(LayoutContext);
   const [selectDate, setSelectDate] = useState({
     startDate: DateTime().dateFull,

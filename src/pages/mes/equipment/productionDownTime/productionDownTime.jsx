@@ -1,11 +1,9 @@
 import GridSingle from "components/grid/GridSingle";
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
 import * as S from "pages/mes/style/oneGrid.styled";
 import { useContext, useState, useEffect, useRef } from "react";
 import ProductionDownTimeSet from "./productionDownTimeSet";
 import * as disRow from "custom/useDisableRowCheck";
-import InputSearch from "components/input/InputSearch";
 import DateTime from "components/datetime/DateTime";
 import * as LS from "./productionDownTime.styled";
 import * as uSearch from "custom/useSearch";
@@ -29,7 +27,6 @@ import { TextField } from "@mui/material";
 import restAPI from "api/restAPI";
 
 function ProductionDownTime() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({

@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as S from "./WorkerGroupHistory.styled";
 import DateTime from "components/datetime/DateTime";
@@ -23,7 +23,6 @@ import BackDrop from "components/backdrop/BackDrop";
 import { TextField } from "@mui/material";
 
 function WorkerGroupHistory() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [comboValue, setComboValue] = useState({
     line_id: null,

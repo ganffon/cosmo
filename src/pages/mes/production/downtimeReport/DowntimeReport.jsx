@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import DowntimeReportSet from "./DowntimeReportSet";
@@ -17,7 +17,6 @@ import DateRange from "components/datetime/DateRange";
 import DateTime from "components/datetime/DateTime";
 
 function DowntimeReport(props) {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);

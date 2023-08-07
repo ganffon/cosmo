@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import TemporarySetupSet from "./TemporarySetupSet";
@@ -22,7 +22,6 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
 function TemporarySetup() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -43,7 +42,10 @@ function TemporarySetup() {
   ];
   const [searchToggle, setSearchToggle] = useState(false);
 
-  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = TemporarySetupSet(isEditMode, AuthTypeGbnList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = TemporarySetupSet(
+    isEditMode,
+    AuthTypeGbnList
+  );
   const SWITCH_NAME_01 = "temporarySetup";
 
   useEffect(() => {
@@ -88,7 +90,15 @@ function TemporarySetup() {
     restURI.user
   );
 
-  const [actEdit] = uEdit.useEdit(refSingleGrid, isBackDrop, setIsBackDrop, isSnackOpen, setIsSnackOpen, SWITCH_NAME_01, restURI.auth);
+  const [actEdit] = uEdit.useEdit(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_01,
+    restURI.auth
+  );
 
   const onClickEdit = () => {
     setIsEditMode(true);
@@ -185,7 +195,9 @@ function TemporarySetup() {
         </S.GridWrap>
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
-      {isDeleteAlertOpen ? <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} /> : null}
+      {isDeleteAlertOpen ? (
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
+      ) : null}
 
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

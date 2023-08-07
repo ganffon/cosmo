@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import PackingSet from "./PackingSet";
@@ -31,7 +31,6 @@ import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 
 function Packing() {
-  LoginStateChk();
   const { isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");

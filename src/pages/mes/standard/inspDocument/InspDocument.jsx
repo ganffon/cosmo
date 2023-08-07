@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import InputPaper from "components/input/InputPaper";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
@@ -29,7 +29,6 @@ import GetPostParams from "api/GetPostParams";
 import ModalAddDetail from "./ModalAddDetail";
 
 function InspDocument() {
-  LoginStateChk();
   const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const refGridSelect = useRef(null);

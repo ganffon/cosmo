@@ -2,19 +2,14 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
-import Grid from "@toast-ui/react-grid";
-import GridTheme from "components/grid/setting/GridTheme";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
-import ButtonSearch from "components/button/ButtonSearch";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
 const EquipStatus = ({ toggle }) => {
-  LoginStateChk();
   let isFirst = true;
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -218,10 +213,19 @@ const EquipStatus = ({ toggle }) => {
           <S.Title>비가동(현장등록) 유형 별</S.Title>
           {/* <S.EquipStatusChartWrap>{sDonutChartData && <DonutChart data={sDonutChartData} />}</S.EquipStatusChartWrap> */}
           <S.EquipStatusChartWrap>
-            {sDonutChartData && <Chart options={donutOptions} series={sDonutChartData.map((item) => item.y)} type="donut" height={"100%"} />}
+            {sDonutChartData && (
+              <Chart
+                options={donutOptions}
+                series={sDonutChartData.map((item) => item.y)}
+                type="donut"
+                height={"100%"}
+              />
+            )}
           </S.EquipStatusChartWrap>
           <S.GridWrap3>
-            {responseData && <GridSingle columns={monthlyColumns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />}
+            {responseData && (
+              <GridSingle columns={monthlyColumns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />
+            )}
           </S.GridWrap3>
         </S.Left>
         <S.Right>
@@ -232,7 +236,9 @@ const EquipStatus = ({ toggle }) => {
               <Chart options={cWithHorizontal} series={sBarChartData} type="bar" height={300} />
             </S.EquipStatusChartWrap>
           )}
-          <S.GridWrap3>{barGrid && <GridSingle columns={sysColumns} data={barGrid.data.rows[0].grid} refGrid={refSecondGrid} />}</S.GridWrap3>
+          <S.GridWrap3>
+            {barGrid && <GridSingle columns={sysColumns} data={barGrid.data.rows[0].grid} refGrid={refSecondGrid} />}
+          </S.GridWrap3>
         </S.Right>
       </S.AllWrap>
     </ContentsArea>

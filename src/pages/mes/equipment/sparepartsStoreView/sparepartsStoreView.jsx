@@ -2,8 +2,6 @@ import * as S from "pages/mes/style/oneGrid.styled";
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as uSearch from "custom/useSearch";
-import ButtonSearch from "components/button/ButtonSearch";
-import { LoginStateChk } from "custom/LoginStateChk";
 import SparepartsStoreViewSet from "./sparepartsStoreViewSet";
 import InputSearch from "components/input/InputSearch";
 import useInputSet from "custom/useInputSet";
@@ -37,7 +35,6 @@ function SparepartsStoreView() {
     datePickerSet,
   } = SparepartsStoreViewSet(productGbnList, productModelList, productTypeList, productTypeSmallList);
 
-  LoginStateChk();
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [searchToggle, setSearchToggle] = useState(false);
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import RadialBarChart, { RadialBarChartModule, CountModule, TempModule } from "./TempViewSet";
@@ -11,7 +11,7 @@ import BackDrop from "components/backdrop/BackDrop";
 
 const TempView = () => {
   let isFirst = true;
-  LoginStateChk();
+
   const [now, setNow] = useState("");
 
   const [tempResponseData, setTempResponseData] = useState(null);

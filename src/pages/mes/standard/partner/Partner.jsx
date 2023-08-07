@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import PartnerSet from "pages/mes/standard/partner/PartnerSet";
@@ -22,7 +22,6 @@ import * as Cbo from "custom/useCboSet";
 import ContentsArea from "components/layout/common/ContentsArea";
 
 function Partner(props) {
-  LoginStateChk();
   const [partnerTypeOpt, partnerTypeList] = Cbo.usePartnerTypeList();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);

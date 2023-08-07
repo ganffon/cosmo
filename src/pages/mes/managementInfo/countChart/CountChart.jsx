@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
 import "react-splitter-layout/lib/index.css";
 import restAPI from "api/restAPI";
@@ -12,7 +11,6 @@ import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 
 const CountChart = ({ toggle }) => {
-  LoginStateChk();
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -101,7 +99,9 @@ const CountChart = ({ toggle }) => {
       <S.TopWrap>
         <S.countChartFirst>
           <S.Title>시간별 충진 Count</S.Title>
-          <S.ChartWrap2>{responseData && <Chart options={cOptions} series={responseData} type="bar" height={"100%"} />}</S.ChartWrap2>
+          <S.ChartWrap2>
+            {responseData && <Chart options={cOptions} series={responseData} type="bar" height={"100%"} />}
+          </S.ChartWrap2>
         </S.countChartFirst>
       </S.TopWrap>
       {/* <SplitterLayout vertical></SplitterLayout> */}
