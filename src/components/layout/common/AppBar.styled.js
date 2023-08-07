@@ -45,14 +45,6 @@ export const MenuTitleBox = styled(Typography)`
   display: flex;
   align-items: center;
   gap: 10px;
-  // & > :last-child {
-  //   font-family: NotoSansKR;
-  //   font-style: normal;
-  //   font-weight: 700;
-  //   font-size: 15px;
-  //   line-height: 20px;
-  //   color: #000000;
-  // }
 `;
 export const StrongText = styled("span")`
   font-family: NotoSansKR;

@@ -155,17 +155,7 @@ function AppBar() {
       </S.LeftBox>
       <S.RightBox>
         <S.UserTextBackground>
-          <S.UserText>
-            {
-              // BASEURI +
-              //   " ｜ " +
-              //   NEWTAB +
-              //   " ｜ " +
-              //   (VERSION === undefined ? "" : VERSION) +
-              Cookies.get("userName")
-            }
-            님 환영합니다.
-          </S.UserText>
+          <S.UserText>{Cookies.get("userName")}님 환영합니다.</S.UserText>
         </S.UserTextBackground>
         <AvatarButton />
       </S.RightBox>

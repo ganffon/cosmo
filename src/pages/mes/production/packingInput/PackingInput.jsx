@@ -41,7 +41,7 @@ function PackingInput(props) {
     open: false,
   });
   const [saveMode, setSaveMode] = useState("");
-  const [currentYield, setCurrentYield] = useState("75.0"); // 사용자가 조정하는 수율 값
+  const [currentYield, setCurrentYield] = useState("75.00"); // 사용자가 조정하는 수율 값
   const [weightAlert, setWeightAlert] = useState({ open: false, qty: "" }); //재고 부족 알림
   const [comboValue, setComboValue] = useState({
     line_id: null,
