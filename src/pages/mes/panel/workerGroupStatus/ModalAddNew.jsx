@@ -244,16 +244,16 @@ function ModalAddNew(props) {
     Grid.setValue(rowKey, "work_end_date", newContents.endDate);
     Grid.setValue(rowKey, "work_end_time", newContents.endTime);
   };
-  const onSupportAddRow = () => {
-    const Grid = refSupportGrid?.current?.gridInst;
-    const rowKey = Grid.getRowCount();
-    Grid.appendRow();
+  // const onSupportAddRow = () => {
+  //   const Grid = refSupportGrid?.current?.gridInst;
+  //   const rowKey = Grid?.getRowCount();
+  //   Grid.appendRow();
 
-    Grid.setValue(rowKey, "work_start_date", newContents.startDate);
-    Grid.setValue(rowKey, "work_start_time", newContents.startTime);
-    Grid.setValue(rowKey, "work_end_date", newContents.endDate);
-    Grid.setValue(rowKey, "work_end_time", newContents.endTime);
-  };
+  //   Grid.setValue(rowKey, "work_start_date", newContents.startDate);
+  //   Grid.setValue(rowKey, "work_start_time", newContents.startTime);
+  //   Grid.setValue(rowKey, "work_end_date", newContents.endDate);
+  //   Grid.setValue(rowKey, "work_end_time", newContents.endTime);
+  // };
   useEffect(() => {
     const Grid = refGrid?.current?.gridInst;
     const SupportGrid = refSupportGrid?.current?.gridInst;
@@ -264,13 +264,13 @@ function ModalAddNew(props) {
       Grid.setValue(i, "work_end_date", newContents.endDate);
       Grid.setValue(i, "work_end_time", newContents.endTime);
     }
-    const supportMaxRow = SupportGrid.getRowCount();
-    for (let i = 0; supportMaxRow >= i; i++) {
-      SupportGrid.setValue(i, "work_start_date", newContents.startDate);
-      SupportGrid.setValue(i, "work_start_time", newContents.startTime);
-      SupportGrid.setValue(i, "work_end_date", newContents.endDate);
-      SupportGrid.setValue(i, "work_end_time", newContents.endTime);
-    }
+    // const supportMaxRow = SupportGrid.getRowCount();
+    // for (let i = 0; supportMaxRow >= i; i++) {
+    //   SupportGrid.setValue(i, "work_start_date", newContents.startDate);
+    //   SupportGrid.setValue(i, "work_start_time", newContents.startTime);
+    //   SupportGrid.setValue(i, "work_end_date", newContents.endDate);
+    //   SupportGrid.setValue(i, "work_end_time", newContents.endTime);
+    // }
   }, [newContents]);
   let rowKey;
   const onClickGrid = (e) => {
@@ -294,24 +294,24 @@ function ModalAddNew(props) {
     }
     rowKey = undefined;
   };
-  const onSupportCancelRow = () => {
-    // refGrid?.current?.gridInst?.removeRow(rowKey.current);
-    if (rowKey !== undefined) {
-      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
-      const gridInstance = refSupportGrid.current?.getInstance();
-      // 선택한 Row가 있는 경우, 해당 Row 삭제
-      gridInstance?.removeRow(rowKey);
-    } else {
-      // 선택한 Row가 없는 경우, 마지막 Row 제거
-      const gridInstance = refSupportGrid.current?.getInstance();
-      const rowCount = refSupportGrid.current?.getInstance()?.getData()?.length;
-      if (rowCount > 0) {
-        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
-        gridInstance?.removeRow(lastRowKey);
-      }
-    }
-    rowKey = undefined;
-  };
+  // const onSupportCancelRow = () => {
+  //   // refGrid?.current?.gridInst?.removeRow(rowKey.current);
+  //   if (rowKey !== undefined) {
+  //     // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+  //     const gridInstance = refSupportGrid.current?.getInstance();
+  //     // 선택한 Row가 있는 경우, 해당 Row 삭제
+  //     gridInstance?.removeRow(rowKey);
+  //   } else {
+  //     // 선택한 Row가 없는 경우, 마지막 Row 제거
+  //     const gridInstance = refSupportGrid.current?.getInstance();
+  //     const rowCount = refSupportGrid.current?.getInstance()?.getData()?.length;
+  //     if (rowCount > 0) {
+  //       const lastRowKey = gridInstance?.getRowAt(rowCount - 1)?.rowKey;
+  //       gridInstance?.removeRow(lastRowKey);
+  //     }
+  //   }
+  //   rowKey = undefined;
+  // };
   const onEditingFinish = (e) => {
     if (Condition(e, ["work_start_time"])) {
       //🔸시간 정규표현식 적용
@@ -504,18 +504,6 @@ function ModalAddNew(props) {
               {"D조"}
             </S.workButton>
           </S.GroupWrap>
-          {/* <S.GroupWrap>
-            <S.Title>작성자</S.Title>
-            <InputPaper
-              width={"300px"}
-              height={"60px"}
-              value={newContents.writer}
-              size={"30px"}
-              btn={true}
-              onClickSelect={onClickSelect}
-              onClickRemove={onClickRemove}
-            />
-          </S.GroupWrap> */}
           <S.GroupWrap>
             <S.Title>시작일자</S.Title>
             <S.DatePicker
@@ -581,22 +569,22 @@ function ModalAddNew(props) {
           </S.GroupWrap> */}
         </S.ContentLeft>
         <S.ContentRight>
-          <S.RowsGridContainer Template={"5% 60% 35%"}>
-            <S.ButtonWrap>
-              <BtnComponent btnName={"Save"} onClick={onNewSave} />
-            </S.ButtonWrap>
-            <div style={{ width: "100%", height: "100%" }}>
-              <div style={{ display: "flex" }}>
-                <S.GridTitle>작업자</S.GridTitle>
-                <S.ButtonWrap>
-                  <BtnComponent btnName={"AddRow"} onClick={onNewAddRow} />
-                  <BtnComponent btnName={"CancelRow"} onClick={onNewCancelRow} />
-                </S.ButtonWrap>
-              </div>
-              <S.GridWrap>{Grid}</S.GridWrap>
+          {/* <S.RowsGridContainer Template={"5% 60% 35%"}> */}
+          <S.ButtonWrap>
+            <BtnComponent btnName={"Save"} onClick={onNewSave} />
+          </S.ButtonWrap>
+          <div style={{ width: "100%", height: "calc(100% - 50px)" }}>
+            <div style={{ display: "flex", height: "50px" }}>
+              <S.GridTitle>작업자</S.GridTitle>
+              <S.ButtonWrap>
+                <BtnComponent btnName={"AddRow"} onClick={onNewAddRow} />
+                <BtnComponent btnName={"CancelRow"} onClick={onNewCancelRow} />
+              </S.ButtonWrap>
             </div>
+            <S.GridWrap>{Grid}</S.GridWrap>
+          </div>
 
-            <div style={{ width: "100%", height: "100%" }}>
+          {/* <div style={{ width: "100%", height: "100%" }}>
               <div style={{ display: "flex" }}>
                 <S.GridTitle>근무지원 (다른 조원을 작성)</S.GridTitle>
                 <S.ButtonWrap>
@@ -605,8 +593,8 @@ function ModalAddNew(props) {
                 </S.ButtonWrap>
               </div>
               <S.GridWrap>{GridSupport}</S.GridWrap>
-            </div>
-          </S.RowsGridContainer>
+            </div> */}
+          {/* </S.RowsGridContainer> */}
         </S.ContentRight>
       </S.Content>
     </S.ModalWrapBox>

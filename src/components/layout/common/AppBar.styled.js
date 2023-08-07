@@ -45,16 +45,8 @@ export const MenuTitleBox = styled(Typography)`
   display: flex;
   align-items: center;
   gap: 10px;
-  // & > :last-child {
-  //   font-family: NotoSansKR;
-  //   font-style: normal;
-  //   font-weight: 700;
-  //   font-size: 15px;
-  //   line-height: 20px;
-  //   color: #000000;
-  // }
 `;
-export const StrongText = styled("div")`
+export const StrongText = styled("span")`
   font-family: NotoSansKR;
   font-style: normal;
   font-weight: 700;
@@ -62,7 +54,7 @@ export const StrongText = styled("div")`
   line-height: 20px;
   color: #000000;
 `;
-export const Bookmark = styled("div")`
+export const Bookmark = styled("span")`
   font-size: 25px;
   margin-bottom: 3px;
   cursor: pointer;
@@ -75,8 +67,7 @@ export const Bookmark = styled("div")`
 
 export const Arrow = styled("span")`
   display: flex;
-  height: 20px;
-  font-family: "NotoSansKR";
+  font-family: NotoSansKR;
   font-style: normal;
   font-size: 10px;
   line-height: 20px;
@@ -89,9 +80,9 @@ export const MenuBox = styled("span")`
 `;
 
 export const MenuTitle = styled("span")`
-  height: 20px;
   display: flex;
-  font-family: "NotoSansKR";
+  align-items: center;
+  font-family: NotoSansKR;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

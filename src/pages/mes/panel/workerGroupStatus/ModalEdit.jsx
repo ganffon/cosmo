@@ -509,18 +509,18 @@ function ModalEdit(props) {
           <S.ButtonWrap>
             <BtnComponent btnName={"Save"} onClick={onEditSave} />
           </S.ButtonWrap>
-          <div style={{ width: "100%", height: "100%" }}>
-            <div style={{ display: "flex" }}>
+          <div style={{ width: "100%", height: "calc(100% - 50px)" }}>
+            <div style={{ display: "flex", height: "50px" }}>
               <S.GridTitle>작업자</S.GridTitle>
             </div>
             <S.GridWrap>{Grid}</S.GridWrap>
           </div>
-          <div style={{ width: "100%", height: "100%" }}>
+          {/* <div style={{ width: "100%", height: "100%" }}>
             <div style={{ display: "flex" }}>
               <S.GridTitle>근무지원 (다른 조원을 작성)</S.GridTitle>
             </div>
             <S.GridWrap>{GridSupport}</S.GridWrap>
-          </div>
+          </div> */}
         </S.ContentRight>
       </S.Content>
     </S.ModalWrapBox>

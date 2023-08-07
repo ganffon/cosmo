@@ -496,8 +496,6 @@ function WeightPanel() {
         const stdQty = Grid.getRowAt(0).spec_std;
         // const totQty = Grid.getRowAt(0).input_qty;
         const totQty = Grid.getRowAt(0).total_qty;
-        console.log(`stdQty = ${stdQty}`);
-        console.log(`totQty = ${totQty}`);
         for (let i = 1; i < Grid?.getRowCount(); i++) {
           let eachQty = Grid.getRowAt(i).spec_std;
           // let eachBag = Grid.getRowAt(i).bag_qty;

@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  createRef,
-} from "react";
+import { useContext, useState, useEffect, useRef, useMemo, createRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
@@ -53,6 +46,7 @@ function EquipmentResult() {
   const empListTemp = useRef([]);
   const tabListTmp = useRef([]);
   const tabListId = useRef([]);
+  const tabListCode = useRef([]);
 
   const editOrNewFlag = useRef(null);
 
@@ -63,6 +57,8 @@ function EquipmentResult() {
   const [isSelectOrderOpen, setIsSelectOrderOpen] = useState(false);
   const [isSelectEmpOpen, setIsSelectEmpOpen] = useState(false);
   const [isBackDrop, setIsBackDrop] = useState(false);
+
+  const [fileNameForExcelExport, setFileNameForExcelExport] = useState(null);
 
   const [workerDataForExcel, setWorkerDataForExcel] = useState([]);
 
@@ -326,13 +322,8 @@ function EquipmentResult() {
       setIsResultNewOpen(true);
       try {
         setIsBackDrop(true);
-        const result = await restAPI.get(
-          restURI.qmsInspResultDetail +
-            `?insp_result_id=${mainInfo.inspResultId}`
-        );
-        const employeeResult = await restAPI.get(
-          restURI.inspResultEmp + `?insp_result_id=${mainInfo.inspResultId}`
-        );
+        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${mainInfo.inspResultId}`);
+        const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${mainInfo.inspResultId}`);
 
         empListTemp.current = employeeResult?.data?.data?.rows;
 
@@ -397,15 +388,9 @@ function EquipmentResult() {
         // inputTextChange.line_nm
         //   ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
         //   : (conditionLine = "");
-        comboValue.line_id
-          ? (conditionLineID = `&line_id=${comboValue.line_id}`)
-          : (conditionLineID = "");
-        inputTextChange.prod_cd
-          ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`)
-          : (conditionProdCd = "");
-        inputTextChange.prod_nm
-          ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`)
-          : (conditionProdNm = "");
+        comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
+        inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
+        inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -477,9 +462,7 @@ function EquipmentResult() {
       });
       const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
 
-      const employeeResult = await restAPI.get(
-        restURI.inspResultEmp + `?insp_result_id=${inspResultId}`
-      );
+      const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${inspResultId}`);
 
       empListTemp.current = employeeResult?.data?.data?.rows;
 
@@ -494,18 +477,13 @@ function EquipmentResult() {
 
       try {
         // setIsBackDrop(true);
-        const result = await restAPI.get(
-          restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`
-        );
+        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
 
         setGridDataDetail(result?.data?.data?.rows);
 
         for (let i = 0; i < tabListTmp.current.length; i++) {
           for (let j = 0; j < result?.data?.data?.rows.length; j++) {
-            if (
-              tabListTmp.current[i] ===
-              result?.data?.data?.rows[j].insp_filing_id
-            ) {
+            if (tabListTmp.current[i] === result?.data?.data?.rows[j].insp_filing_id) {
               //detailDataList[i].push(result?.data?.data?.rows[j]);
             }
           }
@@ -532,32 +510,27 @@ function EquipmentResult() {
   const getTabList = async () => {
     tabListTmp.current = [];
     tabListId.current = [];
+    tabListCode.current = [];
     tabListTmp.current = await restAPI.get(restURI.inspFiling);
     tabListArr = [];
     let bacListIdArr = [];
+    let codeListArr = [];
     for (let i = 0; i < tabListTmp?.current?.data?.data?.rows.length; i++) {
-      if (
-        tabListArr.indexOf(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm === -1
-        )
-      ) {
-        tabListArr.push(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm
-        );
+      if (tabListArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm === -1)) {
+        console.log(tabListTmp?.current?.data?.data?.rows[i]);
+        tabListArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm);
       }
-      if (
-        bacListIdArr.indexOf(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_id === -1
-        )
-      ) {
-        bacListIdArr.push(
-          tabListTmp?.current?.data?.data?.rows[i].insp_filing_id
-        );
+      if (bacListIdArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_id === -1)) {
+        bacListIdArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_id);
+      }
+      if (codeListArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_cd === -1)) {
+        codeListArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_cd);
       }
     }
 
     tabListTmp.current = tabListArr;
     tabListId.current = bacListIdArr;
+    tabListCode.current = codeListArr;
   };
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
@@ -571,9 +544,7 @@ function EquipmentResult() {
 
   const onSelectOrder = () => {
     setIsSelectOrderOpen(true);
-    actSelectOrder(
-      `?complete_fg=INCOMPLETE&reg_date=${dateSelectOrder.startDate}`
-    );
+    actSelectOrder(`?complete_fg=INCOMPLETE&reg_date=${dateSelectOrder.startDate}`);
   };
   const onRemoveOrder = () => {
     resetInfo();
@@ -667,8 +638,7 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrder +
-          `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}`
+        restURI.prdOrder + `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}`
       );
       setGridDataSelectOrder(result?.data?.data?.rows);
       setIsSnackOpen({
@@ -707,8 +677,7 @@ function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrderDetail +
-          `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
+        restURI.prdOrderDetail + `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
       );
       setGridDataNew(result?.data?.data?.rows);
     } catch (err) {
@@ -741,24 +710,6 @@ function EquipmentResult() {
             nig_emp_id: emp.nigEmpId === "" ? null : emp.nigEmpId,
             remark: remarkChange.remark ? remarkChange.remark : null,
           };
-
-          // const Grid = refGridNew?.current?.gridInst;
-          // Grid?.finishEditing();
-          // let result = [];
-          // for (let i = 0; i < Grid?.getRowCount(); i++) {
-          //   result.push(Grid?.getRowAt(i));
-          // }
-
-          // const dataDetail = result.map((raw) => {
-          //   return {
-          //     work_order_detail_id: raw.work_order_detail_id,
-          //     mng_insp_value: raw.mng_insp_value,
-          //     aft_insp_value: raw.aft_insp_value,
-          //     nig_insp_value: raw.nig_insp_value,
-          //     insp_result_fg: null,
-          //     remark: raw.remark,
-          //   };
-          // });
           let result = [];
           for (let i = 0; i < refGridArray.length; i++) {
             const Grid = refGridArray[i]?.current?.gridInst;
@@ -843,10 +794,7 @@ function EquipmentResult() {
         };
 
         try {
-          const result = await restAPI.put(
-            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
-            query
-          );
+          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -939,6 +887,7 @@ function EquipmentResult() {
         tabLength={tabListTmp.current.length}
         gridTabTitle={tabListTmp.current}
         gridTabId={tabListId.current}
+        tabListCode={tabListCode.current}
         rowHeaders={rowHeadersCheck}
         columnOptions={columnOptions}
         columns={columnsDetail}
@@ -950,6 +899,7 @@ function EquipmentResult() {
         InfoButton={false}
         emp={emp}
         empListTemp={empListTemp}
+        setFileNameForExcelExport={setFileNameForExcelExport}
         setActiveTab={setActiveTab}
         setWorkerDataForExcel={setWorkerDataForExcel}
       />
@@ -1008,11 +958,7 @@ function EquipmentResult() {
     <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
-          <DateRange
-            dateText={dateText}
-            setDateText={setDateText}
-            onClickSearch={onClickSearch}
-          />
+          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
           <S.ComboBox
             disablePortal
             id="lineCbo"
@@ -1023,13 +969,10 @@ function EquipmentResult() {
             onChange={(_, newValue) => {
               setComboValue({
                 ...comboValue,
-                line_id:
-                  newValue?.line_id === undefined ? null : newValue?.line_id,
+                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
               });
             }}
-            renderInput={(params) => (
-              <TextField {...params} label={CN.line_nm} size="small" />
-            )}
+            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
           />
           <InputSearch
             id={"prod_cd"}
@@ -1074,30 +1017,20 @@ function EquipmentResult() {
           <S.GridDetailWrap>
             <S.TitleButtonRight>
               <S.Title>세부운전점검일지</S.Title>
-              <S.ButtonWrap>
+              <S.TitleButton>
                 <ExcelExport
-                  fileName={exportFileName}
+                  fileName={fileNameForExcelExport}
                   headerData={mainInfo}
-                  detailData={
-                    activeTab?.current?.gridInst?.store?.data?.rawData
-                  }
+                  detailData={activeTab?.current?.gridInst?.store?.data?.rawData}
                   workerList={workerDataForExcel}
                 />
                 <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
-              </S.ButtonWrap>
+              </S.TitleButton>
             </S.TitleButtonRight>
 
             <S.InfoWrap>
               {inputInfo.map((v, idx) => {
-                return (
-                  <InputPaper
-                    key={v.id}
-                    id={v.id}
-                    name={v.name}
-                    width={"220px"}
-                    value={mainInfo[v.id] || ""}
-                  />
-                );
+                return <InputPaper key={v.id} id={v.id} name={v.name} width={"220px"} value={mainInfo[v.id] || ""} />;
               })}
             </S.InfoWrap>
             {GridTab}

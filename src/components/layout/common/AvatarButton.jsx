@@ -23,7 +23,6 @@ function AvatarButton() {
   };
 
   const onClickClose = () => {
-    console.log("?!");
     setAnchorEl(null);
   };
   const onClickLogout = () => {
@@ -66,12 +65,7 @@ function AvatarButton() {
           horizontal: "left",
         }}
       >
-        <MenuItem
-          onClick={onClickLogout}
-          onMouseEnter={() => {
-            console.log("?!");
-          }}
-        >
+        <MenuItem onClick={onClickLogout}>
           <S.MenuImg src={logout} />
           Logout
         </MenuItem>

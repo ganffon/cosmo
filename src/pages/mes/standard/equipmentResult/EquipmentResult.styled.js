@@ -33,6 +33,7 @@ export const SearchWrap = styled("div")`
 export const ButtonWrap = styled("div")`
   display: flex;
   align-items: center;
+  gap: 10px;
 `;
 
 export const GridWrap = styled("div")`
