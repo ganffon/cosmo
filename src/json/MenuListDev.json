@@ -254,6 +254,12 @@
             "under": null
           },
           {
+            "name": "설정관리",
+            "id": "sys-option-manage",
+            "path": "sys-option-manage",
+            "under": null
+          },
+          {
             "name": "권한관리",
             "id": "setup",
             "path": "setup",
