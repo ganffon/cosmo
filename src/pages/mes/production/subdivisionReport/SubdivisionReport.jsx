@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import SubdivisionSet from "./SubdivisionReportSet";
@@ -17,7 +17,6 @@ import restAPI from "api/restAPI";
 import BtnComponent from "components/button/BtnComponent";
 
 function SubdivisionReport() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({

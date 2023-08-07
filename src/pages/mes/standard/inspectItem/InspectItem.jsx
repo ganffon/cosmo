@@ -4,7 +4,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import InspectItemSet from "pages/mes/standard/inspectItem/InspectItemSet";
@@ -24,9 +24,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function InspectItem(props) {
-  LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -42,15 +40,10 @@ function InspectItem(props) {
     insp_item_type_id: null,
   });
   const [inspItemTypeOpt, inspItemTypeList] = Cbo.useInspItemType();
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = InspectItemSet(isEditMode, inspItemTypeList);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = InspectItemSet(
+    isEditMode,
+    inspItemTypeList
+  );
 
   const SWITCH_NAME_01 = "inspItem";
 
@@ -59,10 +52,7 @@ function InspectItem(props) {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     setTimeout(() => {
@@ -70,10 +60,7 @@ function InspectItem(props) {
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -197,19 +184,10 @@ function InspectItem(props) {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    insp_item_type_id:
-                      newValue?.insp_item_type_id === undefined
-                        ? null
-                        : newValue?.insp_item_type_id,
+                    insp_item_type_id: newValue?.insp_item_type_id === undefined ? null : newValue?.insp_item_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.insp_item_type_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.insp_item_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>

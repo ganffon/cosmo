@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import WorkerGroupSet from "pages/mes/standard/workerGroup/WorkerGroupSet";
@@ -21,7 +21,6 @@ import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 
 function WorkerGroup(props) {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);

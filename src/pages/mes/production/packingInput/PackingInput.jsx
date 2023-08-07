@@ -3,7 +3,7 @@ import { LayoutContext } from "components/layout/common/Layout";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import PackingInputSet from "./PackingInputSet";
 import * as disRow from "custom/useDisableRowCheck";
@@ -22,7 +22,6 @@ import * as RE from "custom/RegularExpression";
 import GetPostParams from "api/GetPostParams";
 
 function PackingInput(props) {
-  LoginStateChk();
   const { isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const refPackingGrid = useRef(null);

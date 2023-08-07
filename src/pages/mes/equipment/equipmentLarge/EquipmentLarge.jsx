@@ -1,12 +1,8 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import ButtonNEDS from "components/button/ButtonNEDS";
-import ButtonSES from "components/button/ButtonSES";
 import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
-import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import EquipmentLargeSet from "pages/mes/equipment/equipmentLarge/EquipmentLargeSet";
@@ -23,7 +19,6 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function EquipmentLarge(props) {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);

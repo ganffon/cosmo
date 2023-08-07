@@ -1,6 +1,6 @@
 import GridSingle from "components/grid/GridSingle";
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import * as S from "pages/mes/style/oneGrid.styled";
 import * as US from "./userHistory.styled";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -17,7 +17,6 @@ import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 function UserHistory() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [userActionOpt, userActionList] = Cbo.useUserActionList();

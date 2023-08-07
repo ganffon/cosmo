@@ -1,4 +1,3 @@
-import { LoginStateChk } from "custom/LoginStateChk";
 import ContentsArea from "components/layout/common/ContentsArea";
 import * as S from "pages/mes/style/oneGrid.styled";
 import InputSearch from "../../../../components/input/InputSearch";
@@ -20,7 +19,6 @@ import AlertDelete from "../../../../components/onlySearchSingleGrid/modal/Alert
 import NoticeAlertModal from "../../../../components/alert/NoticeAlertModal";
 
 function Notice(props) {
-  LoginStateChk();
   const { currentMenuName, isAllScreen } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);

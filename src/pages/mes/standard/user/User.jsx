@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import UserSet from "pages/mes/standard/user/UserSet";
@@ -23,7 +23,6 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function User() {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -82,7 +81,15 @@ function User() {
     restURI.user
   );
 
-  const [actEdit] = uEdit.useEdit(refSingleGrid, isBackDrop, setIsBackDrop, isSnackOpen, setIsSnackOpen, SWITCH_NAME_01, restURI.user);
+  const [actEdit] = uEdit.useEdit(
+    refSingleGrid,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    SWITCH_NAME_01,
+    restURI.user
+  );
   const [actSave] = uSave.useSave(
     refModalGrid,
     isBackDrop,

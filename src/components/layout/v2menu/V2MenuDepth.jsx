@@ -139,6 +139,11 @@ function V2MenuDepth(props) {
   };
 
   const handleClickMenu = async (menu, e) => {
+    if (localStorage.getItem("loginState") === "false") {
+      // 로그아웃 된 상태라면 메뉴 클릭 시 로그인 화면으로 강제 이동
+      navigate("/login");
+      return;
+    }
     e.preventDefault();
     const loginID = Cookies.get("loginID");
     const admin = Cookies.get("admin");

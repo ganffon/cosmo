@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import SetupSet from "pages/mes/standard/setup/SetupSet";
@@ -22,9 +22,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
 function Setup() {
-  LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -37,15 +35,7 @@ function Setup() {
   });
   const [searchToggle, setSearchToggle] = useState(false);
 
-  const {
-    rowHeaders,
-    rowHeadersModal,
-    header,
-    columns,
-    columnsModal,
-    columnOptions,
-    inputSet,
-  } = SetupSet(isEditMode);
+  const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnOptions, inputSet } = SetupSet(isEditMode);
   const SWITCH_NAME_01 = "setup";
 
   useEffect(() => {
@@ -53,20 +43,14 @@ function Setup() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
   useEffect(() => {
     setTimeout(() => {
       onClickSearch();
     }, 100);
   }, [searchToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
 
   const [actDelete] = uDelete.useDelete(
     refSingleGrid,
@@ -161,12 +145,7 @@ function Setup() {
   }
 
   const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, [
-      "auth_read",
-      "auth_create",
-      "auth_update",
-      "auth_delete",
-    ]);
+    disRow.handleClickGridCheck(e, isEditMode, ["auth_read", "auth_create", "auth_update", "auth_delete"]);
   };
   const onEditingFinishGrid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -230,10 +209,7 @@ function Setup() {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew

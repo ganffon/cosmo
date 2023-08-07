@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import WeightPanelSet from "./WeightPanelSet";
@@ -29,7 +29,6 @@ import QuestionInput from "img/Component/quesitonInput.png";
 import DatePicker from "components/datetime/DatePicker";
 
 function WeightPanel() {
-  LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({

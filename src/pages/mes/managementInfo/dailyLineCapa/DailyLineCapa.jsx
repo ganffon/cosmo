@@ -10,14 +10,11 @@ import GetTestValAndCreateAt, {
 } from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
-import ButtonSearch from "components/button/ButtonSearch";
 import "react-splitter-layout/lib/index.css";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
-import InputSearch from "components/input/InputSearch";
 import TextField from "@mui/material/TextField";
 import BackDrop from "components/backdrop/BackDrop";
 import BtnComponent from "components/button/BtnComponent";
@@ -27,7 +24,6 @@ import CN from "json/ColumnName.json";
 import NoticeSnack from "components/alert/NoticeSnack";
 
 const DailyLineCapa = ({ toggle }) => {
-  LoginStateChk();
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
     line_id: null,

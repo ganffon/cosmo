@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import DownTimePanelSet from "./DownTimePanelSet";
@@ -22,7 +22,6 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnPanel from "components/button/BtnPanel";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 function DownTimePanel() {
-  LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [downtimeDate, setDowntimeDate] = useState({});
   const [nowDateTime, setNowDateTime] = useState({

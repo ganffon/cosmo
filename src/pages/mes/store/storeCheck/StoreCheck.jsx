@@ -4,7 +4,7 @@ import ModalDate from "components/modal/ModalDate";
 import ModalSelect from "components/modal/ModalSelect";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
 import StoreCheckSet from "./StoreCheckSet";
@@ -27,9 +27,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 function StoreCheck() {
-  LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -90,13 +88,7 @@ function StoreCheck() {
     columnOptions,
     inputSet,
     datePickerSet,
-  } = StoreCheckSet(
-    isEditMode,
-    productGbnList,
-    productModelList,
-    productTypeList,
-    productTypeSmallList
-  );
+  } = StoreCheckSet(isEditMode, productGbnList, productModelList, productTypeList, productTypeSmallList);
   const SWITCH_NAME_01 = "storeCheck";
   const SWITCH_NAME_02 = "storeCheckNewLOT";
 
@@ -105,10 +97,7 @@ function StoreCheck() {
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide, refSingleGrid.current]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
-    currentMenuName,
-    inputSet
-  );
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   useEffect(() => {
     setTimeout(() => {
@@ -120,10 +109,7 @@ function StoreCheck() {
     onClickStockSearch();
   }, [searchModalToggle]);
 
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
-    isEditMode,
-    refSingleGrid
-  );
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
   const [actSelectProd] = uSearch.useSearchSelect(
     refGridSelect,
     isBackDrop,
@@ -291,16 +277,7 @@ function StoreCheck() {
     setSearchToggle(!searchToggle);
   };
   const onDblClickModalGrid = (e) => {
-    if (
-      Condition(e, [
-        "prod_gbn_nm",
-        "model_nm",
-        "prod_type_nm",
-        "prod_type_small_nm",
-        "prod_cd",
-        "prod_nm",
-      ])
-    ) {
+    if (Condition(e, ["prod_gbn_nm", "model_nm", "prod_type_nm", "prod_type_small_nm", "prod_cd", "prod_nm"])) {
       setDblClickRowKey(e?.rowKey);
       setDblClickGrid("ModalProd");
       setColumnsSelect(columnsSelectProd);
@@ -338,12 +315,7 @@ function StoreCheck() {
       "prod_cd",
       "prod_nm",
     ];
-    const columnNameStore = [
-      "store_id",
-      "store_nm",
-      "location_id",
-      "location_nm",
-    ];
+    const columnNameStore = ["store_id", "store_nm", "location_id", "location_nm"];
     if (dblClickGrid === "ModalProd") {
       refGrid = refModalGrid;
       columnName = columnNameProd;
@@ -437,11 +409,7 @@ function StoreCheck() {
       <S.ShadowBoxButton>
         <S.ToolWrap>
           <S.SearchWrap>
-            <DatePicker
-              datePickerSet={datePickerSet}
-              dateText={dateText}
-              setDateText={setDateText}
-            />
+            <DatePicker datePickerSet={datePickerSet} dateText={dateText} setDateText={setDateText} />
             <S.ComboWrap>
               <S.ComboBox
                 disablePortal
@@ -452,15 +420,10 @@ function StoreCheck() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_gbn_id:
-                      newValue?.prod_gbn_id === undefined
-                        ? null
-                        : newValue?.prod_gbn_id,
+                    prod_gbn_id: newValue?.prod_gbn_id === undefined ? null : newValue?.prod_gbn_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_gbn_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_gbn_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -472,15 +435,10 @@ function StoreCheck() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    model_id:
-                      newValue?.model_id === undefined
-                        ? null
-                        : newValue?.model_id,
+                    model_id: newValue?.model_id === undefined ? null : newValue?.model_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.model_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.model_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -492,15 +450,10 @@ function StoreCheck() {
                 onChange={(_, newValue) => {
                   setComboValue({
                     ...comboValue,
-                    prod_type_id:
-                      newValue?.prod_type_id === undefined
-                        ? null
-                        : newValue?.prod_type_id,
+                    prod_type_id: newValue?.prod_type_id === undefined ? null : newValue?.prod_type_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField {...params} label={CN.prod_type_nm} size="small" />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
               <S.ComboBox
@@ -514,18 +467,10 @@ function StoreCheck() {
                   setComboValue({
                     ...comboValue,
                     prod_type_small_id:
-                      newValue?.prod_type_small_id === undefined
-                        ? null
-                        : newValue?.prod_type_small_id,
+                      newValue?.prod_type_small_id === undefined ? null : newValue?.prod_type_small_id,
                   });
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={CN.prod_type_small_nm}
-                    size="small"
-                  />
-                )}
+                renderInput={(params) => <TextField {...params} label={CN.prod_type_small_nm} size="small" />}
                 onKeyDown={onKeyDown}
               />
             </S.ComboWrap>

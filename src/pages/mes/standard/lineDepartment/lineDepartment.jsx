@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as S from "pages/mes/style/oneGrid.styled";
 import * as disRow from "custom/useDisableRowCheck";
@@ -27,7 +27,6 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 
 function LineDepartment(props) {
-  LoginStateChk();
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [departmentOpt, departmentList] = Cbo.useDept();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);

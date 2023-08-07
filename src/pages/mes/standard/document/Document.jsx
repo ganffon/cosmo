@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import InputPaper from "components/input/InputPaper";
 import GridSingle from "components/grid/GridSingle";
 import ModalNewDetail from "components/modal/ModalNewDetail";
@@ -27,7 +27,6 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import Modaldocument from "./ModalDocument";
 
 function Document() {
-  LoginStateChk();
   const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");

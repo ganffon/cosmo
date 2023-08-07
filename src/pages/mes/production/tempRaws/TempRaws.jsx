@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "../../managementInfo/manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import restAPI from "api/restAPI";
@@ -14,7 +14,6 @@ import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
 
 const TempRaws = () => {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,

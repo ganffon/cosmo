@@ -1,25 +1,23 @@
 import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import ButtonSearch from "components/button/ButtonSearch";
 import CountRawsSet from "./CountRawsSet";
-import * as C from './CountRaws.styled'
+import * as C from "./CountRaws.styled";
 import "tui-grid/dist/tui-grid.css";
 import Grid from "@toast-ui/react-grid";
-import CountRawsModal from './CountRawsModal';
+import CountRawsModal from "./CountRawsModal";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
 
 const TempRaws = () => {
-  LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
     endDate: DateTime().dateFull,
@@ -53,8 +51,8 @@ const TempRaws = () => {
     setIsBackDrop(true);
     restAPI
       .get(restURI.countRaws, {
-        params: { 
-          reg_date: dateText.startDate
+        params: {
+          reg_date: dateText.startDate,
         },
       })
       .then((response) => {
@@ -83,15 +81,14 @@ const TempRaws = () => {
       })
       .finally(() => {
         setIsBackDrop(false);
-      })
-      
+      });
   };
   useEffect(() => {
     GetMonthlyLineCapaData();
   }, []);
 
   const { columnsDetail, columnOptions, rowHeadersNum, header } = CountRawsSet();
-  const columnsHeader = ({
+  const columnsHeader = {
     height: 80,
     complexColumns: [
       {
@@ -100,8 +97,8 @@ const TempRaws = () => {
         childNames: ["scan_dt", "scan_value"],
       },
     ],
-  });
-  const columnsHeader2 = ({
+  };
+  const columnsHeader2 = {
     height: 80,
     complexColumns: [
       {
@@ -110,8 +107,8 @@ const TempRaws = () => {
         childNames: ["scan_dt", "scan_value"],
       },
     ],
-  });
-  const columnsHeader3 = ({
+  };
+  const columnsHeader3 = {
     height: 80,
     complexColumns: [
       {
@@ -120,7 +117,7 @@ const TempRaws = () => {
         childNames: ["scan_dt", "scan_value"],
       },
     ],
-  });
+  };
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
@@ -128,19 +125,14 @@ const TempRaws = () => {
     refGridDetail2?.current?.gridInst?.refreshLayout();
     refGridDetail3?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
-  
-  
+
   return (
     <ContentsArea>
       <C.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <C.ToolWrap>
           <C.SearchWrap>
-          <C.Date
-            datePickerSet={"single"}
-            dateText={dateText.startDate}
-            setDateText={setDateText}
-          />  
-        </C.SearchWrap>
+            <C.Date datePickerSet={"single"} dateText={dateText.startDate} setDateText={setDateText} />
+          </C.SearchWrap>
           <C.ButtonWrap>
             <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
           </C.ButtonWrap>
@@ -148,35 +140,35 @@ const TempRaws = () => {
       </C.ShadowBoxButton>
       <C.ShadowBoxGrid isAllScreen={isAllScreen}>
         <C.GridContainer>
-          <C.CntTextWrapper >
+          <C.CntTextWrapper>
             <C.GridWrap isAllScreen={isAllScreen}>
               {gridDataDetail && (
-              <GridSingle
-                columnOptions={columnOptions}
-                columns={columnsDetail}
-                rowHeaders={rowHeadersNum}
-                header={columnsHeader}
-                data={gridDataDetail}
-                refGrid={refGridDetail}
-              />
+                <GridSingle
+                  columnOptions={columnOptions}
+                  columns={columnsDetail}
+                  rowHeaders={rowHeadersNum}
+                  header={columnsHeader}
+                  data={gridDataDetail}
+                  refGrid={refGridDetail}
+                />
               )}
-            </C.GridWrap >
-          </C.CntTextWrapper>
-          <C.CntTextWrapper >
-            <C.GridWrap isAllScreen={isAllScreen}>
-            {gridDataDetail && (
-              <GridSingle
-                columnOptions={columnOptions}
-                columns={columnsDetail}
-                rowHeaders={rowHeadersNum}
-                header={columnsHeader2}
-                data={grid2DataDetail}
-                refGrid={refGridDetail2}
-              />
-            )}
             </C.GridWrap>
           </C.CntTextWrapper>
-          <C.CntTextWrapper >
+          <C.CntTextWrapper>
+            <C.GridWrap isAllScreen={isAllScreen}>
+              {gridDataDetail && (
+                <GridSingle
+                  columnOptions={columnOptions}
+                  columns={columnsDetail}
+                  rowHeaders={rowHeadersNum}
+                  header={columnsHeader2}
+                  data={grid2DataDetail}
+                  refGrid={refGridDetail2}
+                />
+              )}
+            </C.GridWrap>
+          </C.CntTextWrapper>
+          <C.CntTextWrapper>
             <C.GridWrap isAllScreen={isAllScreen}>
               {gridDataDetail && (
                 <GridSingle
@@ -192,8 +184,7 @@ const TempRaws = () => {
           </C.CntTextWrapper>
         </C.GridContainer>
       </C.ShadowBoxGrid>
-        
-        
+
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
   );

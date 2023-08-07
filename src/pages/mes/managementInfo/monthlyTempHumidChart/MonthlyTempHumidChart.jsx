@@ -1,9 +1,14 @@
 import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import GetTestValAndCreateAt, { GetTestValAndCreateAtDay, GetTestValAndCreateAtString, GetDateDay, GetDateMonth } from "pages/mes/dashboard/asdb";
+import GetTestValAndCreateAt, {
+  GetTestValAndCreateAtDay,
+  GetTestValAndCreateAtString,
+  GetDateDay,
+  GetDateMonth,
+} from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
@@ -17,7 +22,6 @@ import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 
 const MonthlyTempHumidChart = ({ toggle }) => {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().year + "-" + DateTime().month,
@@ -108,19 +112,39 @@ const MonthlyTempHumidChart = ({ toggle }) => {
   };
 
   const chart1 = useMemo(() => {
-    return <S.ChartWrap2>{responseData && <Chart options={chartOptions} series={responseData[0]} type="rangeArea" height={"100%"} />}</S.ChartWrap2>;
+    return (
+      <S.ChartWrap2>
+        {responseData && <Chart options={chartOptions} series={responseData[0]} type="rangeArea" height={"100%"} />}
+      </S.ChartWrap2>
+    );
   }, [responseData]);
   const chart2 = useMemo(() => {
-    return <S.ChartWrap2>{responseData && <Chart options={chartOptions} series={responseData[1]} type="rangeArea" height={"100%"} />}</S.ChartWrap2>;
+    return (
+      <S.ChartWrap2>
+        {responseData && <Chart options={chartOptions} series={responseData[1]} type="rangeArea" height={"100%"} />}
+      </S.ChartWrap2>
+    );
   }, [responseData]);
   const chart3 = useMemo(() => {
-    return <S.ChartWrap2>{responseData && <Chart options={chartOptions} series={responseData[2]} type="rangeArea" height={"100%"} />}</S.ChartWrap2>;
+    return (
+      <S.ChartWrap2>
+        {responseData && <Chart options={chartOptions} series={responseData[2]} type="rangeArea" height={"100%"} />}
+      </S.ChartWrap2>
+    );
   }, [responseData]);
   const chart4 = useMemo(() => {
-    return <S.ChartWrap2>{responseData && <Chart options={chartOptions} series={responseData[3]} type="rangeArea" height={"100%"} />}</S.ChartWrap2>;
+    return (
+      <S.ChartWrap2>
+        {responseData && <Chart options={chartOptions} series={responseData[3]} type="rangeArea" height={"100%"} />}
+      </S.ChartWrap2>
+    );
   }, [responseData]);
   const chart5 = useMemo(() => {
-    return <S.ChartWrap2>{responseData && <Chart options={chartOptions} series={responseData[4]} type="rangeArea" height={"100%"} />}</S.ChartWrap2>;
+    return (
+      <S.ChartWrap2>
+        {responseData && <Chart options={chartOptions} series={responseData[4]} type="rangeArea" height={"100%"} />}
+      </S.ChartWrap2>
+    );
   }, [responseData]);
   return (
     <ContentsArea>

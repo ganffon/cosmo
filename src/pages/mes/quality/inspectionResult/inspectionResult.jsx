@@ -1,5 +1,5 @@
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import ContentsArea from "components/layout/common/ContentsArea";
 import InputSearch from "components/input/InputSearch";
@@ -28,7 +28,6 @@ import * as uDelete from "custom/useDelete";
 import ModalExcelUpload from "components/modal/ModalExcelUpload.jsx";
 
 function InspectionResult(props) {
-  LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [gridData, setGridData] = useState(null);
@@ -255,8 +254,11 @@ function InspectionResult(props) {
     setIsBackDrop(true);
     try {
       let conditionProdID;
-      prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
-      let readURI = `/qms/insp-result-upload?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
+      let readURI =
+        `/qms/insp-result-upload?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
 
       if (inputTextChange && inputBoxID) {
         let cnt = 1;
@@ -315,7 +317,11 @@ function InspectionResult(props) {
       refGrid = refModalGrid;
 
       for (let i = 0; i < columnName.length; i++) {
-        refGrid?.current?.gridInst?.setValue(dblClickRowKey, columnName[i], e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]);
+        refGrid?.current?.gridInst?.setValue(
+          dblClickRowKey,
+          columnName[i],
+          e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]]
+        );
       }
     } else if (dblClickGrid === "ExcelUploadModal") {
       for (let i = 0; i < columnName.length; i++) {

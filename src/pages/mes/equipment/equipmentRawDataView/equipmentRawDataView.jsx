@@ -1,6 +1,5 @@
 import * as S from "./equipmentRawDataView.styled";
 import { LayoutContext } from "components/layout/common/Layout";
-import { LoginStateChk } from "custom/LoginStateChk";
 import { useContext, useRef, useState, useEffect } from "react";
 import CN from "json/ColumnName.json";
 import * as Cbo from "custom/useCboSet";
@@ -9,17 +8,14 @@ import DateTime from "components/datetime/DateTime";
 import TextField from "@mui/material/TextField";
 import restAPI from "api/restAPI";
 import GridSingle from "components/grid/GridSingle";
-import ButtonSearch from "components/button/ButtonSearch";
 import EquipmentRawDataViewSet from "./equipmentRawDataViewSet";
 import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
 import TempRawsModal from "./TempRawsModal";
 import BtnComponent from "components/button/BtnComponent";
-import * as btn from "../../../../components/button/BtnComponent.styled";
 import GraphImg from "img/Component/button/vector.svg";
 
 function EquipmentRawDataView() {
-  LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);

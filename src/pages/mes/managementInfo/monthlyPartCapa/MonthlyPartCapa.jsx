@@ -10,7 +10,7 @@ import GetTestValAndCreateAt, {
 } from "pages/mes/dashboard/asdb";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
@@ -57,7 +57,6 @@ const DonutChart = ({ data }) => {
 };
 
 const MonthlyPartCapa = ({ toggle }) => {
-  LoginStateChk();
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
     line_id: null,

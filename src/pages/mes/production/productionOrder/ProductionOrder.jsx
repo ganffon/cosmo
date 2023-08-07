@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
 import ProductionOrderSet from "./ProductionOrderSet";
@@ -27,7 +27,6 @@ import { TextField } from "@mui/material";
 import CN from "json/ColumnName.json";
 
 function ProductionOrder() {
-  LoginStateChk();
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 

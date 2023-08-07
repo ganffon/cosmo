@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import restAPI from "api/restAPI";
@@ -13,7 +13,6 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import * as Set from "./PerformanceRateSet";
 
 const PerformanceRate = ({ toggle }) => {
-  LoginStateChk();
   const refSingleGrid = useRef(null);
   const refSingleGrid2 = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);

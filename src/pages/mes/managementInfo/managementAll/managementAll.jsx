@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
 import ButtonSearch from "components/button/ButtonSearch";
@@ -16,9 +16,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 
 let isFirst = true;
 const ManagementAll = () => {
-  LoginStateChk();
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     endDate: DateTime().dateFull,
   });
@@ -27,16 +25,16 @@ const ManagementAll = () => {
   const [columns, setColumns] = useState(null);
   const [dataIndex, setDataIndex] = useState(0);
   const [cOptions, setCOptions] = useState(null);
-  const [chartType, setChartType] = useState('line');
+  const [chartType, setChartType] = useState("line");
   const handleChange = (event) => {
     setYear(event.target.value);
   };
   const GetMonthlyLineCapaData = () => {
     restAPI
       .get(restURI.monthlyLine, {
-        params: { 
-          reg_date: year//endDate.slice(0, 4)
-          , line_nm: '' 
+        params: {
+          reg_date: year, //endDate.slice(0, 4)
+          line_nm: "",
         },
       })
       .then((response) => {
@@ -76,8 +74,8 @@ const ManagementAll = () => {
           },
         };
         setColumns(monthlyColumns);
-        setCOptions(mCOptions)
-        setChartType('line')
+        setCOptions(mCOptions);
+        setChartType("line");
       })
       .catch((error) => {
         // 오류 처리 로직
@@ -87,7 +85,7 @@ const ManagementAll = () => {
   const GetDailyLineCapaData = () => {
     restAPI
       .get(restURI.dailyLine, {
-        params: { reg_date:  DateTime().dateFull, line_nm:''},
+        params: { reg_date: DateTime().dateFull, line_nm: "" },
       })
       .then((response) => {
         // API 응답 데이터 처리 로직
@@ -100,7 +98,7 @@ const ManagementAll = () => {
           }),
           { header: "합계", name: "total" },
         ];
-        
+
         const dCOptions = {
           plotOptions: {
             // 차트 시각화 옵션
@@ -126,32 +124,28 @@ const ManagementAll = () => {
             },
           },
         };
-        setCOptions(dCOptions)
+        setCOptions(dCOptions);
         setColumns(dailyColumns);
-        setChartType('line')
+        setChartType("line");
       })
       .catch((error) => {
         // 오류 처리 로직
         // console.error('API 호출 중 오류 발생:', error);
       });
   };
-  
-  const dataFunctions = [
-    GetMonthlyLineCapaData,
-    GetDailyLineCapaData,
-  ];  
+
+  const dataFunctions = [GetMonthlyLineCapaData, GetDailyLineCapaData];
   useEffect(() => {
     const fetchData = async () => {
       await dataFunctions[dataIndex]();
       setDataIndex((dataIndex + 1) % dataFunctions.length);
     };
-    
+
     if (isFirst) {
-      
       fetchData();
-      isFirst = false
+      isFirst = false;
     }
-    // 
+    //
     const interval = setInterval(fetchData, 5000);
 
     return () => {
@@ -177,10 +171,7 @@ const ManagementAll = () => {
     dailyDateHeaders.push(dateString);
   }
 
-  
-
-  
-// console.log(responseData.data.rows[0].grid[0].M1)
+  // console.log(responseData.data.rows[0].grid[0].M1)
   return (
     <ContentsArea>
       <S.Top>
@@ -194,11 +185,7 @@ const ManagementAll = () => {
           />
         )}
       </S.Top>
-      <S.Bottom>
-        {responseData && (
-          <GridSingle columns={columns} data={responseData.data.rows[0].grid} />
-        )}
-      </S.Bottom>
+      <S.Bottom>{responseData && <GridSingle columns={columns} data={responseData.data.rows[0].grid} />}</S.Bottom>
       {/* <SplitterLayout vertical></SplitterLayout> */}
     </ContentsArea>
   );

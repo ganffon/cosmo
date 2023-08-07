@@ -6,7 +6,7 @@ import GridSingle from "components/grid/GridSingle";
 import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
-import { LoginStateChk } from "custom/LoginStateChk";
+
 import restAPI from "api/restAPI";
 import BackDrop from "components/backdrop/BackDrop";
 import InputSearch from "components/input/InputSearch";
@@ -19,14 +19,13 @@ import * as S from "pages/mes/style/oneGrid.styled";
 
 function OneGrid(props) {
   const { componentName } = props;
-  LoginStateChk();
+
   const COMPONENT = GetComponent(componentName);
   const COMPONENT_NAME = componentName;
   // const COMPONENT = LineSet(isEditMode);
   // const COMPONENT_NAME = "LineSet";
 
-  const { currentMenuName, isAllScreen, isMenuSlide } =
-    useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -78,9 +77,7 @@ function OneGrid(props) {
   };
   const handleDelete = async () => {
     refSingleGrid?.current?.gridInst?.finishEditing();
-    const data = refSingleGrid?.current?.gridInst
-      ?.getCheckedRows()
-      ?.map((raw) => GetDeleteParams(COMPONENT_NAME, raw));
+    const data = refSingleGrid?.current?.gridInst?.getCheckedRows()?.map((raw) => GetDeleteParams(COMPONENT_NAME, raw));
     if (data.length !== 0) {
       setIsBackDrop(true);
       await restAPI
@@ -271,10 +268,7 @@ function OneGrid(props) {
       </S.ShadowBoxGrid>
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       {isDeleteAlertOpen ? (
-        <AlertDelete
-          handleDelete={handleDelete}
-          setIsDeleteAlertOpen={setIsDeleteAlertOpen}
-        />
+        <AlertDelete handleDelete={handleDelete} setIsDeleteAlertOpen={setIsDeleteAlertOpen} />
       ) : null}
       {isModalOpen ? (
         <ModalNew
