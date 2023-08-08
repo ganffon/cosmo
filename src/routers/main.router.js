@@ -107,6 +107,7 @@ export default function MainRouter() {
     { path: "factory", component: Factory },
     { path: "line", component: Line },
     { path: "user", component: User },
+    { path: "user2", component: User },
     { path: "employee", component: Employee },
     { path: "process", component: Process },
     { path: "equipment", component: Equipment },
@@ -139,7 +140,7 @@ export default function MainRouter() {
     { path: "equipment-class", component: EquipmentSmall },
     { path: "equipment-detail", component: EquipmentDetail },
     { path: "equipment-result", component: EquipmentResult },
-    { path: "equipment-result-tab", component: EquipmentResultTab },
+    { path: "equipment-result2", component: EquipmentResult },
     { path: "equipment", component: EquipmentMedium },
     { path: "equipment", component: EquipmentMedium },
     { path: "store-view", component: StoreView },
@@ -201,12 +202,14 @@ export default function MainRouter() {
     { path: "daily-line-input-capa", component: DailyLineInputCapa },
     { path: "quality-spc", component: QualitySpc },
     { path: "insp-document", component: InspDocument },
+    { path: "insp-document2", component: InspDocument },
     { path: "quality-result-view", component: InspResult },
     { path: "work-type", component: WorkType },
     { path: "subdivision-panel-all", component: SubdivisionAll },
     { path: "worker-group-history", component: WorkerGroupHistory },
     { path: "notice", component: Notice },
     { path: "sys-option-manage", component: SysOptionManage },
+    { path: "sys-option-manage2", component: SysOptionManage },
   ];
   return (
     <Layout>
