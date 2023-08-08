@@ -1,8 +1,12 @@
 import MenuList from "json/MenuList.json";
 import MenuListDev from "json/MenuListDev.json";
+import MenuListChk from "json/MenuListChk.json";
+import Cookies from "js-cookie";
 function GetBookmarkList(data) {
   const isRealMenu = JSON.parse(process.env.REACT_APP_MENU);
-  const MenuJSON = isRealMenu ? MenuList : MenuListDev;
+  // const MenuJSON = isRealMenu ? MenuList : MenuListDev;
+  const CheckingID = Cookies.get("loginID");
+  const MenuJSON = isRealMenu ? (CheckingID === "mfg10" ? MenuListChk : MenuList) : MenuListDev;
 
   let bookmark = [];
   try {

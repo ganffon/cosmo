@@ -7,6 +7,7 @@ import * as S from "./Layout.styled";
 import { useLocation } from "react-router-dom";
 import MenuList from "json/MenuList.json";
 import MenuListDev from "json/MenuListDev.json";
+import MenuListChk from "json/MenuListChk.json";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import Cookies from "js-cookie";
@@ -94,7 +95,8 @@ const Layout = ({ children }) => {
   const location = useLocation();
   useEffect(() => {
     let fullMenuName;
-    const MenuJSON = isRealMenu ? MenuList : MenuListDev;
+    const CheckingID = Cookies.get("loginID");
+    const MenuJSON = isRealMenu ? (CheckingID === "mfg10" ? MenuListChk : MenuList) : MenuListDev;
 
     for (let i = 0; findPath(MenuJSON)[0].length > i; i++) {
       if (location.pathname.split("/")[1] === "mes" && location.pathname.split("/")[2] === undefined) {

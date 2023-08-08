@@ -3,9 +3,11 @@ import V2MenuList from "./V2MenuList.jsx";
 import V2MenuDepth from "./V2MenuDepth.jsx";
 import MenuList from "json/MenuList.json";
 import MenuListDev from "json/MenuListDev.json";
+import MenuListChk from "json/MenuListChk.json";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
 import * as S from "./V2MenuFold.styled";
+import Cookies from "js-cookie";
 
 function V2MenuFold() {
   const { isMenuSlide, setIsMouseOver, setIsMenuSlide, isAllScreen, superAdmin } = useContext(LayoutContext);
@@ -39,11 +41,11 @@ function V2MenuFold() {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-
+  const CheckingID = Cookies.get("loginID");
   return (
     <S.MenuFold isMenuSlide={isMenuSlide} ref={refMenuHeader}>
       <S.Drawer>
-        {(isRealMenu ? MenuList : MenuListDev).map((lv1Menu) => (
+        {(isRealMenu ? (CheckingID === "mfg10" ? MenuListChk : MenuList) : MenuListDev).map((lv1Menu) => (
           <V2MenuList key={lv1Menu.id} lv1Menu={lv1Menu} setLv1MenuID={setLv1MenuID} setLv2Menu={setLv2Menu} />
         ))}
       </S.Drawer>
