@@ -307,6 +307,11 @@ class workType {
     this.work_type_id = raw.work_type_id;
   }
 }
+class ProductRouting {
+  constructor(raw) {
+    this.prod_mapping_id = raw.prod_mapping_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -500,6 +505,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "workType":
       params = new workType(raw);
+      break;
+    case "ProductRouting":
+      params = new ProductRouting(raw);
       break;
 
     default:

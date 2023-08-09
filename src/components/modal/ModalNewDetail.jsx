@@ -44,6 +44,27 @@ function ModalNewDetail(props) {
     }
   }, []);
 
+  const onClickModalCancelRowInnerFunction = () => {
+    const Grid = refGridModalDetail.current?.gridInst;
+    const coords = Grid.getFocusedCell();
+    let rowKey = coords.rowKey;
+    if (rowKey !== null) {
+      // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
+      const gridInstance = refGridModalDetail.current?.getInstance();
+      // 선택한 Row가 있는 경우, 해당 Row 삭제
+      gridInstance?.removeRow(rowKey);
+    } else {
+      // 선택한 Row가 없는 경우, 마지막 Row 제거
+      const gridInstance = refGridModalDetail.current?.getInstance();
+      const rowCount = refGridModalDetail.current?.getInstance()?.getData()?.length;
+      if (rowCount > 0) {
+        const lastRowKey = gridInstance.getRowAt(rowCount - 1).rowKey;
+        gridInstance?.removeRow(lastRowKey);
+      }
+    }
+    rowKey = null;
+  };
+
   const GridDetail = useMemo(() => {
     return (
       <GridModal
@@ -90,7 +111,7 @@ function ModalNewDetail(props) {
       </S.GridBoxTop>
       <S.ButtonBox>
         <BtnComponent btnName="AddRow" onClick={onClickModalAddRow} />
-        <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRow} />
+        <BtnComponent btnName="CancelRow" onClick={onClickModalCancelRowInnerFunction} />
         <BtnComponent btnName="Save" onClick={isNewDetail ? onClickEditModalSave : onClickModalSave} />
       </S.ButtonBox>
       <S.GridBoxBottom>{GridDetail}</S.GridBoxBottom>

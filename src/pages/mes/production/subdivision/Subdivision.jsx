@@ -757,31 +757,6 @@ function Subdivision() {
               <BtnComponent btnName={"Search"} onClick={onClickSearch} />
             </S.ButtonWrap>
           </S.SearchWrapDate>
-          {/* <S.SearchWrap>
-            <S.InputPaperWrap>
-              <InputPaper
-                width={"180px"}
-                name={"품목코드"}
-                namePositionTop={"-12px"}
-                value={prodCD.current || ""}
-                btn={false}
-              />
-            </S.InputPaperWrap>
-            <S.InputPaperWrap>
-              <InputPaper
-                width={"240px"}
-                name={"품목"}
-                namePositionTop={"-12px"}
-                value={prodNM.current || ""}
-                btn={true}
-                onClickSelect={onClickProd}
-                onClickRemove={onClickProdCancel}
-              />
-            </S.InputPaperWrap>
-            <S.ButtonWrap>
-              <BtnComponent btnName={"Search"} onClick={onClickSearch} />
-            </S.ButtonWrap>
-          </S.SearchWrap> */}
         </S.SearchLeftWrap>
         <S.ContentsHeader>
           <S.ContentsHeaderWrap>

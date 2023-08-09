@@ -75,13 +75,13 @@ function ModalNew(props) {
     }
   };
 
-  let rowKey;
-  const onClickModalGridInnerFunction = (e) => {
-    rowKey = e.rowKey;
-  };
+  const onClickModalGridInnerFunction = (e) => {};
 
   const onClickModalCancelRowInnerFunction = () => {
-    if (rowKey !== undefined) {
+    const Grid = refModalGrid.current?.gridInst;
+    const coords = Grid.getFocusedCell();
+    let rowKey = coords.rowKey;
+    if (rowKey !== null) {
       // 선택한 Row가 있는 경우, 해당 Row의 키를 기반으로 데이터에서 찾아 제거
       const gridInstance = refModalGrid.current?.getInstance();
       // 선택한 Row가 있는 경우, 해당 Row 삭제
@@ -95,7 +95,7 @@ function ModalNew(props) {
         gridInstance?.removeRow(lastRowKey);
       }
     }
-    rowKey = undefined;
+    rowKey = null;
   };
 
   const requireColumnsValidation = () => {

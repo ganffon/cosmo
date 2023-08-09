@@ -4,7 +4,7 @@ import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function DowntimeReportSet() {
+function DowntimeReportSet(onDowntimeInput) {
   const data = [];
   const rowHeaders = ["rowNum"];
   /** 🔸columns ❗
@@ -28,10 +28,17 @@ function DowntimeReportSet() {
     col.text("end_time", CN.end_time, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
     col.text("downtime", CN.downtime, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
     col.text("downtime_status", CN.downtime_status, C.U, C.U, C.WIDTH_SUPER_SHORT, "center", C.U, true),
+    col.button("send_fg", "비가동 등록", "비가동 등록", onDowntimeInput, "등록 완료", "downtimeInput"),
+    // col.text("send_fg", CN.send_fg),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
     col.text("update_at", CN.update_at, C.U, true, C.WIDTH_LONG, "center"),
   ];
-
+  const columnsDowntime = [
+    col.id("downtime_type_id", CN.downtime_type_id, C.HIDDEN_ID),
+    col.text("downtime_type_nm", CN.downtime_type_nm, false, false, C.WIDTH_MIDDLE, C.U, true, true),
+    col.id("downtime_id", CN.downtime_id, C.HIDDEN_ID),
+    col.text("downtime_nm", CN.downtime_nm, false, false, C.WIDTH_MIDDLE, C.U, true, true),
+  ];
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -73,7 +80,7 @@ function DowntimeReportSet() {
    * 🔸날짜기간조회 - "range"
    * 🔸날짜안씀 - null
    */
-  const datePickerSet = Range;
+  const datePickerSet = "range";
 
   /**
    * 🔸inputSet id 값이 ⭐ BE : query params
@@ -89,6 +96,7 @@ function DowntimeReportSet() {
     data,
     rowHeaders,
     columns,
+    columnsDowntime,
     columnOptions,
     header,
     datePickerSet,

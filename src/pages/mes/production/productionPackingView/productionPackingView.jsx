@@ -34,7 +34,6 @@ function ProductionPackingView() {
   const refGridSelect = useRef(null);
   const refGridModalHeader = useRef(null);
   const refGridModalDetail = useRef(null);
-  const [gridDataHeader, setGridDataHeader] = useState(null);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
   const [isInputSelectOpen, setIsInputSelectOpen] = useState(false);
@@ -63,21 +62,9 @@ function ProductionPackingView() {
 
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
 
-  const headerRowID = useRef("");
   const modalSelectHeaderRowID = useRef("");
 
   const [columnsSelect, setColumnsSelect] = useState([]);
-
-  const onClickDetailInputButton = async (rowKey) => {
-    const gridDetailId = refGridDetail?.current?.gridInst.store.data.rawData[rowKey].work_weigh_id;
-    setIsBackDrop(true);
-    let readURI = restURI.prdWeight`/prd/weigh/${gridDetailId}`;
-    let gridData = await restAPI.get(readURI);
-    setGridDataModalHeader(gridData?.data?.data?.rows);
-
-    setIsInputSelectOpen(true);
-    setIsBackDrop(false);
-  };
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -105,15 +92,20 @@ function ProductionPackingView() {
   useEffect(() => {
     onClickSearch();
   }, []);
-
+  const [isEnd, setIsEnd] = useState(false);
   const onClickSearch = () => {
     // actSearchHeader();
-    actSearchDetail();
+    const startDate = dateText.startDate;
+    const endDate = dateText.endDate;
+    if (startDate > endDate) {
+      setIsEnd(true);
+    } else {
+      actSearchDetail();
+    }
   };
 
   const onDblClickGridSelect = (e) => {
     //🔸Select Grid에서 DblClick
-    let refGrid;
     let columnName;
 
     if (dblClickGrid === "Search") {
@@ -136,23 +128,10 @@ function ProductionPackingView() {
   };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
-    //actSearchDetail(headerClickRowID);
   };
 
   const onClickInputSelectClose = () => {
     setIsInputSelectOpen(false);
-    //actSearchDetail(headerClickRowID);
-  };
-  const onClickRemoveProd = () => {
-    setInputSearchValue([(prodCD.current = ""), (prodNM.current = "")]);
-  };
-
-  const onClickGridHeader = (e) => {
-    headerRowID.current = e?.instance.getValue(e?.rowKey, "work_packing_id");
-
-    if (headerRowID.current !== null) {
-      actSearchDetail();
-    }
   };
 
   const onClickModalGridSelectGridHeader = (e) => {
@@ -167,37 +146,6 @@ function ProductionPackingView() {
     width: "80%",
     height: "90%",
   });
-
-  const actSearchHeader = async () => {
-    setIsBackDrop(true);
-    try {
-      let conditionProdID, conditionLineID;
-      prodCD.current !== "품목코드"
-        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
-        : (conditionProdID = "");
-      comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
-
-      let readURI =
-        restURI.prdPacking +
-        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
-        conditionProdID +
-        conditionLineID;
-
-      let gridData = await restAPI.get(readURI);
-
-      setGridDataHeader(gridData?.data?.data?.rows);
-    } catch {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: "조회 실패",
-        severity: "error",
-      });
-    } finally {
-      setIsBackDrop(false);
-      setGridDataDetail([]);
-    }
-  };
 
   const actSearchModalSelectGridDetail = async () => {
     try {
@@ -238,7 +186,6 @@ function ProductionPackingView() {
         conditionProdID +
         conditionLineID +
         `&complete_fg=true`;
-      // const readURI = `/prd/packing-detail?work_packing_id=${headerRowID.current}`;
 
       let gridData = await restAPI.get(readURI);
       setGridDataDetail(gridData?.data?.data?.rows);
@@ -256,20 +203,6 @@ function ProductionPackingView() {
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
   };
-  const GridTop = useMemo(() => {
-    return (
-      <GridSingle
-        columnOptions={columnOptions}
-        columns={columnsHeader}
-        rowHeaders={rowHeadersNum}
-        header={header}
-        data={gridDataHeader}
-        draggable={false}
-        refGrid={refGridHeader}
-        onClickGrid={onClickGridHeader}
-      />
-    );
-  }, [gridDataHeader]);
 
   const onClickProd = () => {
     setDblClickGrid("Search");
@@ -292,12 +225,6 @@ function ProductionPackingView() {
     <ContentsArea isAllScreen={isAllScreen}>
       <S.SearchCondition>
         <S.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
-        {/* <InputSearch
-          id={"line_nm"}
-          name={"라인명"}
-          handleInputTextChange={handleInputTextChange}
-          onClickSearch={onClickSearch}
-        /> */}
         <S.ComboBox
           disablePortal
           id="lineCbo"

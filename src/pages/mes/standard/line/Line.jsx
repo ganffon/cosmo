@@ -64,7 +64,7 @@ function Line(props) {
     setIsDeleteAlertOpen,
     searchToggle,
     setSearchToggle,
-    URI.STD.LINE.BASE,
+    URI.STD.LINE.MAIN,
     SWITCH_NAME_01
   );
   const [actSearch] = uSearch.useSearch(
@@ -88,7 +88,7 @@ function Line(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    URI.STD.LINE.BASE
+    URI.STD.LINE.MAIN
   );
   const [actSave] = uSave.useSave(
     refModalGrid,
@@ -97,7 +97,7 @@ function Line(props) {
     isSnackOpen,
     setIsSnackOpen,
     SWITCH_NAME_01,
-    URI.STD.LINE.BASE,
+    URI.STD.LINE.MAIN,
     onClickModalClose
   );
 

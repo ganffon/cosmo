@@ -63,7 +63,7 @@ import Packing from "pages/mes/production/packing/Packing";
 import PackingPanel from "pages/mes/panel/packing/PackingPanel";
 import WeightReport from "pages/mes/production/weightReport/WeightReport";
 import EquipmentResult from "pages/mes/standard/equipmentResult/EquipmentResult";
-import EquipmentResultTab from "pages/mes/standard/equipmentResultTab/EquipmentResult";
+import ProductRouting from "pages/mes/standard/productRouting/ProductRouting";
 
 import ProductionPackingView from "pages/mes/production/productionPackingView/productionPackingView";
 import EquipmentRawDataView from "pages/mes/equipment/equipmentRawDataView/equipmentRawDataView";
@@ -210,6 +210,7 @@ export default function MainRouter() {
     { path: "notice", component: Notice },
     { path: "sys-option-manage", component: SysOptionManage },
     { path: "sys-option-manage2", component: SysOptionManage },
+    { path: "product-routing", component: ProductRouting },
   ];
   return (
     <Layout>
