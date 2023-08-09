@@ -32,17 +32,11 @@ function ProductionPackingView() {
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
   const refGridSelect = useRef(null);
-  const refGridModalHeader = useRef(null);
-  const refGridModalDetail = useRef(null);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
-  const [isInputSelectOpen, setIsInputSelectOpen] = useState(false);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridDataSelect, setGridDataSelect] = useState(null);
-
-  const [gridDataModalHeader, setGridDataModalHeader] = useState(null);
-  const [gridDataModalDetail, setGridDataModalDetail] = useState(null);
 
   const prodCD = useRef("품목코드");
   const prodNM = useRef("품목");
@@ -61,9 +55,6 @@ function ProductionPackingView() {
   });
 
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
-
-  const modalSelectHeaderRowID = useRef("");
-
   const [columnsSelect, setColumnsSelect] = useState([]);
 
   useEffect(() => {
@@ -88,24 +79,19 @@ function ProductionPackingView() {
     inputSet,
     columnsSelectProd,
   } = ProductionPackingViewSet();
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+
   useEffect(() => {
     onClickSearch();
   }, []);
-  const [isEnd, setIsEnd] = useState(false);
+
   const onClickSearch = () => {
     // actSearchHeader();
-    const startDate = dateText.startDate;
-    const endDate = dateText.endDate;
-    if (startDate > endDate) {
-      setIsEnd(true);
-    } else {
-      actSearchDetail();
-    }
+    actSearchDetail();
   };
 
   const onDblClickGridSelect = (e) => {
     //🔸Select Grid에서 DblClick
+    let refGrid;
     let columnName;
 
     if (dblClickGrid === "Search") {
@@ -130,41 +116,10 @@ function ProductionPackingView() {
     setIsModalSelectOpen(false);
   };
 
-  const onClickInputSelectClose = () => {
-    setIsInputSelectOpen(false);
-  };
-
-  const onClickModalGridSelectGridHeader = (e) => {
-    modalSelectHeaderRowID.current = e?.instance.getValue(e?.rowKey, "work_weigh_id");
-
-    if (modalSelectHeaderRowID.current !== null) {
-      actSearchModalSelectGridDetail();
-    }
-  };
-
   const [modalSelectSize, setModalSelectSize] = useState({
     width: "80%",
     height: "90%",
   });
-
-  const actSearchModalSelectGridDetail = async () => {
-    try {
-      setIsBackDrop(true);
-      const readURI = `/prd/weigh-detail?work_weigh_id=${modalSelectHeaderRowID.current}`;
-
-      let gridData = await restAPI.get(readURI);
-      setGridDataModalDetail(gridData?.data?.data?.rows);
-    } catch {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: "조회 실패",
-        severity: "error",
-      });
-    } finally {
-      setIsBackDrop(false);
-    }
-  };
 
   const onClickProdCancel = () => {
     resetProd();
@@ -175,17 +130,16 @@ function ProductionPackingView() {
     try {
       setIsBackDrop(true);
       let conditionProdID, conditionLineID;
-      prodCD.current !== "품목코드"
-        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
-        : (conditionProdID = "");
+      prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
       comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
 
       let readURI =
         restURI.prdPackingDetail +
-        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
+        `?start_date=${dateText.startDate}&end_date=${dateText.endDate}&report_fg=true` +
         conditionProdID +
         conditionLineID +
         `&complete_fg=true`;
+      // const readURI = `/prd/packing-detail?work_packing_id=${headerRowID.current}`;
 
       let gridData = await restAPI.get(readURI);
       setGridDataDetail(gridData?.data?.data?.rows);
@@ -200,10 +154,6 @@ function ProductionPackingView() {
       setIsBackDrop(false);
     }
   };
-  const handleInputTextChange = (e) => {
-    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
-  };
-
   const onClickProd = () => {
     setDblClickGrid("Search");
     setColumnsSelect(columnsSelectProd);
@@ -284,35 +234,6 @@ function ProductionPackingView() {
           refGridSelect={refGridSelect}
           onDblClickGridSelect={onDblClickGridSelect}
         />
-      ) : null}
-      {isInputSelectOpen ? (
-        <ModalWrap width={"95%"} height={"95%"}>
-          <MS.HeaderBox>
-            <MS.TitleBox>투입일지</MS.TitleBox>
-            <MS.ButtonClose color="primary" aria-label="close" onClick={onClickInputSelectClose}>
-              <CloseIcon />
-            </MS.ButtonClose>
-          </MS.HeaderBox>
-          <MS.GridBoxTop>
-            <GridModal
-              data={gridDataModalHeader}
-              columns={columnsModalHeader}
-              columnOptions={columnOptions}
-              header={header}
-              refGrid={refGridModalHeader}
-              onClick={onClickModalGridSelectGridHeader}
-            />
-          </MS.GridBoxTop>
-          <MS.GridBoxBottom>
-            <GridModal
-              data={gridDataModalDetail}
-              columns={columnsModalDetail}
-              columnOptions={columnOptions}
-              header={header}
-              refGrid={refGridModalDetail}
-            />
-          </MS.GridBoxBottom>
-        </ModalWrap>
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />

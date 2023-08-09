@@ -296,7 +296,6 @@ function PackingInput(props) {
                 const result = await restAPI.get(restURI.prdPackingInputWeight + `?work_packing_id=${ID}`);
 
                 setWeightGridData(result?.data?.data?.rows);
-                selectedRowKey.current = e.rowKey;
               } catch (err) {
                 setSaveMode("");
                 setIsSnackOpen({
@@ -326,6 +325,7 @@ function PackingInput(props) {
           }
         }
       }
+      selectedRowKey.current = e.rowKey;
     }
   };
   const handleChangeYield = (e) => {

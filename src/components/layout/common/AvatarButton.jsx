@@ -5,7 +5,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import * as S from "./AvatarButton.styled";
-import { Version } from "Version";
+import { Version } from "Version.js";
 import doriFace from "img/Component/doriFace.svg";
 import logout from "img/Component/avatar/logout.png";
 import bookmark from "img/Component/avatar/bookmark.png";
