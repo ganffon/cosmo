@@ -89,6 +89,8 @@
   "prdPacking": "/prd/packing",
   "prdPackingDetail": "/prd/packing-detail",
   "productionDownTime": "/prd/work-downtime",
+  "downTimeInput": "/prd/sys-downtime/send/work-downtime",
+
   "prdLotTracking": "/prd/lot-tracking",
   "qmsInspResult": "/qms/insp-result",
   "qmsInspResultInclude": "/qms/insp-result/{id}/include-details",
@@ -150,5 +152,6 @@
   "workerGroupHistory": "/prd/worker-group-status-detail/history",
   "bookmark": "/sys/bookmark",
   "notice": "/std/notice",
-  "sysOptionManage": "/sys/option"
+  "sysOptionManage": "/sys/option",
+  "prodMapping": "/std/prod-mapping"
 }

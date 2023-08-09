@@ -84,6 +84,27 @@ export class Button {
         }
         this.el.className = value ? "customButton grid__button--apply" : "customButton";
         break;
+      case "downtimeInput":
+        if (elName2 === "") {
+          this.el.innerText = elName;
+        } else {
+          switch (value) {
+            case 0:
+              this.el.innerText = elName;
+              this.el.disabled = false;
+              break;
+            case 1:
+              this.el.innerText = elName2;
+              this.el.disabled = true;
+              break;
+            case 2:
+              this.el.innerText = elName;
+              this.el.disabled = true;
+              break;
+            default:
+          }
+        }
+        break;
       default:
         if (elName2 === "") {
           this.el.innerText = elName;

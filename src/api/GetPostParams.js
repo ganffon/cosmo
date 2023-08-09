@@ -760,6 +760,15 @@ class notice {
     this.notice_end_date = raw.notice_end_date;
   }
 }
+class ProductRouting {
+  constructor(raw) {
+    this.prod_id = raw.prod_id_fdr;
+    this.mapping_id = raw.prod_id;
+    this.mapping_cd = raw.prod_cd;
+    this.mapping_nm = raw.prod_nm;
+    this.mapping_system = raw.mapping_system;
+  }
+}
 
 /**
  * 🔍 Grid Cell 이 Combo 인 경우
@@ -971,6 +980,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "notice":
         params = new notice(raw);
+        break;
+      case "ProductRouting":
+        params = new ProductRouting(raw);
         break;
       default:
     }
