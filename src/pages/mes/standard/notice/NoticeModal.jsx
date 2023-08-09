@@ -11,6 +11,7 @@ import restAPI from "../../../../api/restAPI";
 import restURI from "json/restURI.json";
 import BackDrop from "../../../../components/backdrop/BackDrop";
 import NoticeSnack from "../../../../components/alert/NoticeSnack";
+import ModalWrapMulti from "components/modal/ModalWrapMulti";
 
 function NoticeModal(props) {
   const {
@@ -140,7 +141,7 @@ function NoticeModal(props) {
   };
 
   return (
-    <ModalWrap width={width} height={height}>
+    <ModalWrapMulti width={width} height={height}>
       <S.HeaderBox>
         <S.TitleBox>{`${currentMenuName}`}</S.TitleBox>
         <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalClose}>
@@ -150,7 +151,6 @@ function NoticeModal(props) {
 
       <S.ContentWrap>
         <S.ContentTitle>
-          {" "}
           <InputPaper
             width={"700px"}
             height={"40px"}
@@ -164,24 +164,13 @@ function NoticeModal(props) {
           />
         </S.ContentTitle>
         <S.DateWrap>
-          <S.ContentMiddle>
-            <S.DateTitleWrapStart>
-              <S.Date
-                datePickerSet={"single"}
-                dateText={startDateText}
-                setDateText={setStartDateText}
-                dateTitle={"시작일"}
-              />
-            </S.DateTitleWrapStart>
-            <S.DateTitleWrapEnd>
-              <S.Date
-                datePickerSet={"single"}
-                dateText={endDateText}
-                setDateText={setEndDateText}
-                dateTitle={"종료일"}
-              />
-            </S.DateTitleWrapEnd>
-          </S.ContentMiddle>
+          <S.Date
+            datePickerSet={"single"}
+            dateText={startDateText}
+            setDateText={setStartDateText}
+            dateTitle={"시작일"}
+          />
+          <S.Date datePickerSet={"single"} dateText={endDateText} setDateText={setEndDateText} dateTitle={"종료일"} />
         </S.DateWrap>
         <S.ContentBottom>
           {readOnly ? (
@@ -199,19 +188,18 @@ function NoticeModal(props) {
         {readOnly ? (
           <></>
         ) : (
-          <S.buttonWrap>
-            {" "}
+          <S.ButtonWrap>
             {isEditMode ? (
               <BtnComponent btnName={"Save"} onClick={onClickEditSave} />
             ) : (
               <BtnComponent btnName={"Save"} onClick={onClickSave} />
             )}
-          </S.buttonWrap>
+          </S.ButtonWrap>
         )}
       </S.ContentWrap>
       <BackDrop isBackDrop={isBackDrop} />
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
-    </ModalWrap>
+    </ModalWrapMulti>
   );
 }
 

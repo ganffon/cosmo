@@ -12,6 +12,7 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import Cookies from "js-cookie";
 import GetBookmarkList from "custom/GetBookmarkList";
+import VersionTxt from "Version.txt";
 
 export const LayoutContext = createContext();
 
@@ -147,6 +148,16 @@ const Layout = ({ children }) => {
 
     GetBookmark();
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (VersionTxt) {
+      const timerInterval = setInterval(() => {}, 1000);
+
+      return () => {
+        clearInterval(timerInterval);
+      };
+    }
+  }, []);
 
   return (
     <S.LayoutBox>

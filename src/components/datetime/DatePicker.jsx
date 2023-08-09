@@ -17,7 +17,7 @@ function DatePicker(props) {
           className="date"
           type="date"
           format="yyyy-MM-dd"
-          defaultValue={datePickerSet === "single" ? DateTime().dateFull : DateTime(-7).dateFull}
+          // defaultValue={datePickerSet === "single" ? DateTime().dateFull : DateTime(-7).dateFull}
           value={dateText.startDate || (datePickerSet === "single" ? DateTime().dateFull : DateTime(-7).dateFull)}
           InputProps={{ sx: { height: 40 } }}
           label={datePickerSet === "single" ? (dateTitle === "" ? "날짜" : dateTitle) : "기간"}
@@ -29,7 +29,7 @@ function DatePicker(props) {
           id="endDate"
           type="date"
           format="yyyy-MM-dd"
-          defaultValue={DateTime().dateFull}
+          // defaultValue={DateTime().dateFull}
           value={dateText.endDate || DateTime().dateFull}
           InputProps={{
             sx: { height: 40 },
