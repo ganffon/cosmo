@@ -5,7 +5,7 @@ export const ContentsArea = styled("div")`
   height: 100vh;
   overflow: hidden;
   background-color: #efefef;
-  padding: 20px;
+  padding: 10px 30px 10px 10px;
   font-family: NotoSansKR;
 
   display: flex;

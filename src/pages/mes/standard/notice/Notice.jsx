@@ -2,7 +2,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import * as S from "pages/mes/style/oneGrid.styled";
 import InputSearch from "../../../../components/input/InputSearch";
 import useInputSet from "../../../../custom/useInputSet";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { LayoutContext } from "../../../../components/layout/common/Layout";
 import StoreSet from "../store/StoreSet";
 import NoticeSet from "./NoticeSet";
@@ -155,6 +155,21 @@ function Notice(props) {
     onClickSearch();
   }, [searchToggle]);
 
+  const gridMain = useMemo(() => {
+    return (
+      <GridSingle
+        columnOptions={columnOptions}
+        columns={columns}
+        rowHeaders={rowHeaders}
+        header={header}
+        data={gridData}
+        draggable={false}
+        refGrid={refSingleGrid}
+        onClickGrid={onClickGrid}
+      />
+    );
+  }, [gridData]);
+
   return (
     <ContentsArea>
       <S.ShadowBoxButton>
@@ -184,18 +199,7 @@ function Notice(props) {
           <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
           <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
         </S.ButtonWrap>
-        <S.GridWrap>
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columns}
-            rowHeaders={rowHeaders}
-            header={header}
-            data={gridData}
-            draggable={false}
-            refGrid={refSingleGrid}
-            onClickGrid={onClickGrid}
-          />
-        </S.GridWrap>
+        <S.GridWrap>{gridMain}</S.GridWrap>
       </S.ShadowBoxGrid>
       {isModalOpen ? (
         <NoticeModal onClickModalClose={onClickModalClose} isEditMode={isEditMode} onClickData={onClickData} />

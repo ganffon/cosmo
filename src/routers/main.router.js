@@ -100,6 +100,8 @@ import TemporarySetup from "pages/mes/standard/temporarySetup/TemporarySetup";
 import WorkerGroupHistory from "pages/mes/production/workerGroupHistory/WorkerGroupHistory";
 import Notice from "pages/mes/standard/notice/Notice";
 import SysOptionManage from "pages/mes/standard/sysOptionManage/SysOptionManage";
+import FdrComponent from "pages/mes/standard/fdrComponent/FdrComponent";
+import BuildReport from "pages/admin/buildReport/BuildReport";
 
 export default function MainRouter() {
   const pages = [
@@ -211,6 +213,8 @@ export default function MainRouter() {
     { path: "sys-option-manage", component: SysOptionManage },
     { path: "sys-option-manage2", component: SysOptionManage },
     { path: "product-routing", component: ProductRouting },
+    { path: "fdr-component", component: FdrComponent },
+    { path: "build-report", component: BuildReport },
   ];
   return (
     <Layout>
