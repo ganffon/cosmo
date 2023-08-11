@@ -20,6 +20,18 @@
             "id": "menu-list",
             "path": "menu-list",
             "under": null
+          },
+          {
+            "name": "배포내역",
+            "id": "build-report",
+            "path": "build-report",
+            "under": null
+          },
+          {
+            "name": "컴포넌트 개발",
+            "id": "fdr-component",
+            "path": "fdr-component",
+            "under": null
           }
         ]
       }
