@@ -154,5 +154,6 @@
   "notice": "/std/notice",
   "sysOptionManage": "/sys/option",
   "prodMapping": "/std/prod-mapping",
-  "buildReport": "/sys/deploy-version"
+  "buildReport": "/sys/deploy-version",
+  "buildReportLatest": "/sys/deploy-version/latest"
 }

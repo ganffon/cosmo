@@ -15,7 +15,7 @@ import NoticeSnack from "components/alert/NoticeSnack";
 
 import GetBookmarkList from "custom/GetBookmarkList";
 
-function AppBar() {
+function AppBar(props) {
   const {
     isMenuSlide,
     setIsMenuSlide,
@@ -28,6 +28,7 @@ function AppBar() {
     bookmarkList,
     setBookmarkList,
   } = useContext(LayoutContext);
+  const { isVersionAlert } = props;
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
@@ -154,8 +155,15 @@ function AppBar() {
         </S.MenuTitleBox>
       </S.LeftBox>
       <S.RightBox>
+        {isVersionAlert && (
+          <S.UserTextBackground className={"pink"}>
+            <S.UserText>
+              <S.BuildAlert>{` ※ 현재 구 버전을 사용중입니다. 웹 화면을 새로고침(F5) 해주세요!`}</S.BuildAlert>
+            </S.UserText>
+          </S.UserTextBackground>
+        )}
         <S.UserTextBackground>
-          <S.UserText>{Cookies.get("userName")}님 환영합니다.</S.UserText>
+          <S.UserText>{`${Cookies.get("userName")}님 환영합니다.`}</S.UserText>
         </S.UserTextBackground>
         <AvatarButton />
       </S.RightBox>

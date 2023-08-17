@@ -9,21 +9,15 @@ function DateTime(custom = 0) {
   const year = String(today.getFullYear());
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const date = String(today.getDate()).padStart(2, "0");
-  const day = new Array(
-    "일요일",
-    "월요일",
-    "화요일",
-    "수요일",
-    "목요일",
-    "금요일",
-    "토요일"
-  );
+  const day = new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
   const days = day[today.getDay()];
   const dateFull = `${year}-${month}-${date}`;
 
   const hour = String(today.getHours()).padStart(2, "0");
   const minute = String(today.getMinutes()).padStart(2, "0");
   const seconds = String(today.getSeconds()).padStart(2, "0");
+
+  const version = year.slice(2, 4) + month + date + hour + minute;
 
   return {
     today,
@@ -35,6 +29,7 @@ function DateTime(custom = 0) {
     hour,
     minute,
     seconds,
+    version,
   };
 }
 

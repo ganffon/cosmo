@@ -6,7 +6,7 @@ import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function BuildReportSet(onEdit, onDetail, onApply) {
+function BuildReportSet(onEditBtn, onApplyBtn) {
   const data = [];
   const rowNumCheck = ["checkbox", "rowNum"];
   const rowNum = ["rowNum"];
@@ -21,12 +21,12 @@ function BuildReportSet(onEdit, onDetail, onApply) {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const columns = [
+    col.id("deploy_version_id", CN.deploy_version_id, C.HIDDEN_ID),
     col.text("version", CN.version, C.U, C.U, C.WIDTH_MIDDLE),
-    col.button("edit", CN.edit, "수정", onEdit),
-    col.text("build_title", CN.buildTitle, C.U, C.U, "500"),
-    col.button("detail", CN.detail, "세부내용", onDetail),
-    col.text("build_contents", CN.buildContents, C.U, C.U, "700"),
-    col.button("apply_fg", CN.apply_fg, "적용", onApply, "미적용", "Toggle"),
+    col.button("edit", CN.edit, "수정", onEditBtn),
+    col.text("title", CN.buildTitle, C.U, C.U, "500"),
+    col.text("contents", CN.buildContents, C.U, C.U, "800"),
+    col.button("apply_fg", CN.apply_fg, "적용", onApplyBtn, "미적용", "Toggle"),
   ];
 
   const columnOptions = {

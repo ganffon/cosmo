@@ -16,8 +16,10 @@ import BackDrop from "components/backdrop/BackDrop";
 import Chart from "react-apexcharts";
 import ContentsArea from "components/layout/common/ContentsArea";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
+import { LoginStateChk } from "custom/LoginStateChk";
 
 const Dashboard = () => {
+  LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [result, setResult] = useState([]);
   const [leftWidth, setLeftWidth] = useState("30%");
