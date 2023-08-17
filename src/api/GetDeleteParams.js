@@ -312,6 +312,11 @@ class ProductRouting {
     this.prod_mapping_id = raw.prod_mapping_id;
   }
 }
+class BuildReport {
+  constructor(raw) {
+    this.deploy_version_id = raw.deploy_version_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -508,6 +513,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "ProductRouting":
       params = new ProductRouting(raw);
+      break;
+    case "BuildReport":
+      params = new BuildReport(raw);
       break;
 
     default:

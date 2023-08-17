@@ -12,10 +12,12 @@ import restURI from "json/restURI.json";
 import BackDrop from "components/backdrop/BackDrop";
 import Cookies from "js-cookie";
 import PwdChangeModal from "./PwdChangeModal";
+import BuildHistory from "./BuildHistory";
 
 function Login() {
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isPwdChange, setIsPwdChange] = useState(false);
+  const [isBuildHistoryOpen, setIsBuildHistoryOpen] = useState(false);
 
   const [loginInfo, setLoginInfo] = useState({
     loginFactoryID: "",
@@ -34,6 +36,7 @@ function Login() {
   });
   const [factoryDataOption, setFactoryDataOption] = useState([]);
   const [selectedFactory, setSelectedFactory] = useState([]);
+  const [buildDate, setBuildDate] = useState("");
 
   useEffect(() => {
     async function factoryDataSetting() {
@@ -55,6 +58,30 @@ function Login() {
     factoryDataSetting();
 
     window.document.title = `FacdoriOn`;
+
+    const latestBuildVersion = async () => {
+      try {
+        setIsBackDrop(true);
+        const result = await restAPI.get(restURI.buildReportLatest);
+        const version = result?.data?.data?.rows[0]?.version;
+        const date =
+          version.slice(0, 2) +
+          "." +
+          version.slice(2, 4) +
+          "." +
+          version.slice(4, 6) +
+          " " +
+          version.slice(6, 8) +
+          ":" +
+          version.slice(8, 10);
+        setBuildDate(date);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsBackDrop(false);
+      }
+    };
+    latestBuildVersion();
   }, []);
 
   const setLoginCookie = (cookieID, cookieData, days) => {
@@ -239,12 +266,18 @@ function Login() {
             <S.LoginButton id="loginBtn" variant="contained" size="small" onClick={goLogin}>
               로그인
             </S.LoginButton>
+            <S.DividingLine />
+            <S.BuildWrap>
+              <S.BuildText onClick={() => setIsBuildHistoryOpen(true)}>- Build History</S.BuildText>
+              <S.BuildDate>{buildDate}</S.BuildDate>
+            </S.BuildWrap>
           </S.LoginForm>
         </S.RightBox>
       </S.MainBox>
       <NoticeSnack state={alertOpen} setState={setAlertOpen} />
       <BackDrop isBackDrop={isBackDrop} />
       {isPwdChange && <PwdChangeModal onClose={closeModalPrintOpen} loginID={loginInfo.loginID} />}
+      {isBuildHistoryOpen && <BuildHistory onClose={() => setIsBuildHistoryOpen(false)} />}
       <S.BackGroundImg />
     </S.LoginLayout>
   );

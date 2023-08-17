@@ -20,7 +20,8 @@ export const LeftBox = styled("div")`
 
 export const RightBox = styled("div")`
   display: flex;
-  margin-right: 10px;
+  gap: 10px;
+  padding-right: 10px;
   align-items: center;
 `;
 
@@ -93,19 +94,43 @@ export const MenuTitle = styled("span")`
 export const UserTextBackground = styled("div")`
   height: 60%;
   background: #d6f1ff;
-  border-radius: 5px 0px 5px 5px;
+  border-radius: 5px;
   margin-top: 10px;
   padding-top: 2px;
   padding-left: 10px;
   padding-right: 10px;
+  cursor: default;
+  &.pink {
+    background: rgb(255, 200, 200, 0.5);
+  }
 `;
 export const UserText = styled("div")`
   height: 10px;
-  left: 1712px;
   font-family: "NotoSansKR";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
 
   color: #333333;
+  display: flex;
+`;
+export const BuildAlert = styled("div")`
+  height: 10px;
+  font-family: "NotoSansKR";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  color: red;
+  animation: blink infinite 0.8s;
+  @keyframes blink {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;

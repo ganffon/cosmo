@@ -12,6 +12,7 @@ import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
 import Cookies from "js-cookie";
 import GetBookmarkList from "custom/GetBookmarkList";
+import { Version } from "Version.js";
 
 export const LayoutContext = createContext();
 
@@ -148,6 +149,31 @@ const Layout = ({ children }) => {
     GetBookmark();
   }, [location.pathname]);
 
+  const [isVersionAlert, setIsVersionAlert] = useState(false);
+  const latestVersion = async () => {
+    try {
+      const result = await restAPI.get(restURI.buildReportLatest);
+      const latestVersion = result?.data?.data?.rows[0].version;
+      const historyVersion = Version;
+      //현재 Web 버전 보다 BE에 기록된 버전이 최신이라면 Alert Open
+      if (+latestVersion > +historyVersion) {
+        setIsVersionAlert(true);
+      }
+    } catch (err) {
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    latestVersion();
+    const interval = setInterval(() => {
+      latestVersion();
+    }, 50000); // 5분 마다 버전 비교를 함
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <S.LayoutBox>
       <LayoutContext.Provider
@@ -172,7 +198,7 @@ const Layout = ({ children }) => {
           setBookmarkList,
         }}
       >
-        <AppBar />
+        <AppBar isVersionAlert={isVersionAlert} />
         <S.MainBox>
           <V2MenuFold />
           <S.ContentsBox id="ContentsBox" isAllScreen={isAllScreen} isMenuSlide={isMenuSlide}>

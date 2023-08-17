@@ -129,3 +129,30 @@ export const Dori = styled("img")`
   animation-delay: 0.2s;
   animation-fill-mode: both;
 `;
+
+export const DividingLine = styled("div")`
+  width: 100%;
+  height: 2px;
+  background: rgb(200, 200, 200);
+  margin: 15px 0px 10px 0px;
+`;
+export const BuildWrap = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+`;
+export const BuildText = styled("div")`
+  text-decoration: none;
+  color: #699ecf;
+  cursor: pointer;
+  &:hover {
+    color: #4167be;
+  }
+`;
+export const BuildDate = styled("div")`
+  text-decoration: none;
+  color: black;
+  cursor: default;
+  font-size: 0.9rem;
+  margin-right: 5px;
+`;
