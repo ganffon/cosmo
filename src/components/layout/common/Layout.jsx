@@ -112,9 +112,9 @@ const Layout = ({ children }) => {
           const menuName = findPath(MenuJSON)[2][i].split("★");
 
           if (menuName.length === 2) {
-            fullMenuName = menuName[0] + `/` + menuName[1];
+            fullMenuName = menuName[0] + `|` + menuName[1];
           } else if (menuName.length === 3) {
-            fullMenuName = menuName[0] + `/` + menuName[1] + `/` + menuName[2];
+            fullMenuName = menuName[0] + `|` + menuName[1] + `|` + menuName[2];
           }
           break;
         }
