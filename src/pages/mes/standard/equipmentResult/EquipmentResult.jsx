@@ -32,7 +32,7 @@ import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 import ExcelExport from "components/excelExport/ExcelExport";
 
-function EquipmentResult() {
+export function EquipmentResult() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const selectEmpState = useRef("");
 
@@ -1088,5 +1088,3 @@ function EquipmentResult() {
     </ContentsArea>
   );
 }
-
-export default EquipmentResult;

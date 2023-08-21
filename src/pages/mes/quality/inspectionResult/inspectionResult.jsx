@@ -27,7 +27,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal.jsx";
 import * as uDelete from "custom/useDelete";
 import ModalExcelUpload from "components/modal/ModalExcelUpload.jsx";
 
-function InspectionResult(props) {
+export function InspectionResult(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [gridData, setGridData] = useState(null);
@@ -475,5 +475,3 @@ function InspectionResult(props) {
     </ContentsArea>
   );
 }
-
-export default InspectionResult;

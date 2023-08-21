@@ -28,7 +28,7 @@ import QuestionWeight from "img/Component/quesitonWeight.png";
 import QuestionInput from "img/Component/quesitonInput.png";
 import DatePicker from "components/datetime/DatePicker";
 
-function WeightPanel() {
+export function WeightPanel() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
@@ -839,5 +839,3 @@ function WeightPanel() {
     </ContentsArea>
   );
 }
-
-export default WeightPanel;

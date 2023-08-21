@@ -21,7 +21,7 @@ import { TextField } from "@mui/material";
 import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-const MonthlyTempHumidChart = ({ toggle }) => {
+export const MonthlyTempHumidChart = ({ toggle }) => {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().year + "-" + DateTime().month,
@@ -199,5 +199,3 @@ const MonthlyTempHumidChart = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default MonthlyTempHumidChart;

@@ -21,7 +21,7 @@ import restURI from "json/restURI.json";
 import * as Cbo from "custom/useCboSet";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-function Partner(props) {
+export function Partner(props) {
   const [partnerTypeOpt, partnerTypeList] = Cbo.usePartnerTypeList();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
@@ -235,5 +235,3 @@ function Partner(props) {
     </ContentsArea>
   );
 }
-
-export default Partner;

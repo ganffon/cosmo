@@ -16,7 +16,7 @@ import CN from "json/ColumnName.json";
 import BackDrop from "components/backdrop/BackDrop";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
-function UserHistory() {
+export function UserHistory() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [userActionOpt, userActionList] = Cbo.useUserActionList();
@@ -144,5 +144,3 @@ function UserHistory() {
     </ContentsArea>
   );
 }
-
-export default UserHistory;

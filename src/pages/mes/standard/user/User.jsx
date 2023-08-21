@@ -22,7 +22,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function User() {
+export function User() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -244,5 +244,3 @@ function User() {
     </ContentsArea>
   );
 }
-
-export default User;

@@ -4,7 +4,7 @@ import FdrDate from "components/datetime/FdrDate";
 import { useState } from "react";
 import DateTime from "components/datetime/DateTime";
 
-function FdrComponent(props) {
+export function FdrComponent(props) {
   const [date, setDate] = useState({ startDate: DateTime().dateFull, endDate: DateTime().dateFull });
   return (
     <ContentsArea>
@@ -15,5 +15,3 @@ function FdrComponent(props) {
     </ContentsArea>
   );
 }
-
-export default FdrComponent;

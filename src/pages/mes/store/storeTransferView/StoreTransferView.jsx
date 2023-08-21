@@ -18,7 +18,7 @@ import * as S from "./StoreTransferView.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-function StoreTransferView() {
+export function StoreTransferView() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -193,4 +193,3 @@ function StoreTransferView() {
     </ContentsArea>
   );
 }
-export default StoreTransferView;

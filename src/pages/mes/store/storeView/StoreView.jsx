@@ -20,7 +20,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import * as S from "pages/mes/style/oneGrid.styled";
 
-function StoreView() {
+export function StoreView() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -205,4 +205,3 @@ function StoreView() {
     </ContentsArea>
   );
 }
-export default StoreView;

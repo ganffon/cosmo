@@ -25,7 +25,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function Downtime() {
+export function Downtime() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -274,5 +274,3 @@ function Downtime() {
     </ContentsArea>
   );
 }
-
-export default Downtime;

@@ -17,7 +17,7 @@ import DateTime from "components/datetime/DateTime";
 import NoticeSnack from "components/alert/NoticeSnack";
 import GetDeleteParams from "api/GetDeleteParams";
 
-function BuildReport(props) {
+export function BuildReport(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -395,5 +395,3 @@ function BuildReport(props) {
     </ContentsArea>
   );
 }
-
-export default BuildReport;

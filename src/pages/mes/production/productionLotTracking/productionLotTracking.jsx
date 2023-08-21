@@ -22,7 +22,7 @@ import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 
-function ProductionLotTracking() {
+export function ProductionLotTracking() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -442,5 +442,3 @@ function ProductionLotTracking() {
     </ContentsArea>
   );
 }
-
-export default ProductionLotTracking;

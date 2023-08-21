@@ -11,7 +11,7 @@ import BackDrop from "components/backdrop/BackDrop";
 import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 import jsonStr from "./WeightInfoJson.json";
-const WeightInfo = ({ toggle }) => {
+export const WeightInfo = ({ toggle }) => {
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -132,5 +132,3 @@ const WeightInfo = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default WeightInfo;

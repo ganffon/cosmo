@@ -23,7 +23,7 @@ import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
 import NoticeSnack from "components/alert/NoticeSnack";
 
-const DailyLineCapa = ({ toggle }) => {
+export const DailyLineCapa = ({ toggle }) => {
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
     line_id: null,
@@ -197,5 +197,3 @@ const DailyLineCapa = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default DailyLineCapa;

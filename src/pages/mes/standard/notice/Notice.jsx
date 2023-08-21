@@ -18,7 +18,7 @@ import NoticeModal from "./NoticeModal";
 import AlertDelete from "../../../../components/onlySearchSingleGrid/modal/AlertDelete";
 import NoticeAlertModal from "../../../../components/alert/NoticeAlertModal";
 
-function Notice(props) {
+export function Notice(props) {
   const { currentMenuName, isAllScreen } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -230,5 +230,3 @@ function Notice(props) {
     </ContentsArea>
   );
 }
-
-export default Notice;

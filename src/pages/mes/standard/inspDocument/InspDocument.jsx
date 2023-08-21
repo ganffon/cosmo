@@ -28,7 +28,7 @@ import ModalAddInput from "./ModalAddInput";
 import GetPostParams from "api/GetPostParams";
 import ModalAddDetail from "./ModalAddDetail";
 
-function InspDocument() {
+export function InspDocument() {
   const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const refGridSelect = useRef(null);
@@ -1346,5 +1346,3 @@ function InspDocument() {
     </ContentsAreaHidden>
   );
 }
-
-export default InspDocument;

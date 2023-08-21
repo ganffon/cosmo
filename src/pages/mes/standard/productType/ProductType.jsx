@@ -23,7 +23,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 
-function ProductType() {
+export function ProductType() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -264,5 +264,3 @@ function ProductType() {
     </ContentsArea>
   );
 }
-
-export default ProductType;

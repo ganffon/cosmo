@@ -9,7 +9,7 @@ import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-const EquipStatus = ({ toggle }) => {
+export const EquipStatus = ({ toggle }) => {
   let isFirst = true;
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -244,5 +244,3 @@ const EquipStatus = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default EquipStatus;

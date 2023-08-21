@@ -21,7 +21,7 @@ import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-function Setup() {
+export function Setup() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -230,5 +230,3 @@ function Setup() {
     </ContentsArea>
   );
 }
-
-export default Setup;

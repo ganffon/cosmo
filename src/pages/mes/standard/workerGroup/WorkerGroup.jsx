@@ -20,7 +20,7 @@ import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-function WorkerGroup(props) {
+export function WorkerGroup(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -231,5 +231,3 @@ function WorkerGroup(props) {
     </ContentsArea>
   );
 }
-
-export default WorkerGroup;

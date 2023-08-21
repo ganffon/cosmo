@@ -27,7 +27,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
 import GetDeleteParams from "api/GetDeleteParams";
 
-function Subdivision() {
+export function Subdivision() {
   const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
@@ -908,5 +908,3 @@ function Subdivision() {
     </ContentsArea>
   );
 }
-
-export default Subdivision;

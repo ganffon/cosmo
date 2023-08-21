@@ -17,7 +17,7 @@ import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-function WeightReport() {
+export function WeightReport() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
@@ -180,5 +180,3 @@ function WeightReport() {
     </ContentsArea>
   );
 }
-
-export default WeightReport;

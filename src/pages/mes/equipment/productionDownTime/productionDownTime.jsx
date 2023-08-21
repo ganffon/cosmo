@@ -26,7 +26,7 @@ import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 import restAPI from "api/restAPI";
 
-function ProductionDownTime() {
+export function ProductionDowntime() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
@@ -499,5 +499,3 @@ function ProductionDownTime() {
     </ContentsArea>
   );
 }
-
-export default ProductionDownTime;

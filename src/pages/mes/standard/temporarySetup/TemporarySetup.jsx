@@ -21,7 +21,7 @@ import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-function TemporarySetup() {
+export function TemporarySetup() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -203,5 +203,3 @@ function TemporarySetup() {
     </ContentsArea>
   );
 }
-
-export default TemporarySetup;

@@ -22,7 +22,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 
-function ProductClass() {
+export function ProductClass() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const refModalGrid = useRef(null);
@@ -277,5 +277,3 @@ function ProductClass() {
     </ContentsArea>
   );
 }
-
-export default ProductClass;

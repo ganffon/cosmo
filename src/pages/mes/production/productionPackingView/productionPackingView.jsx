@@ -23,7 +23,7 @@ import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
 import { TextField } from "@mui/material";
 
-function ProductionPackingView() {
+export function ProductionPackingView() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
@@ -130,7 +130,9 @@ function ProductionPackingView() {
     try {
       setIsBackDrop(true);
       let conditionProdID, conditionLineID;
-      prodCD.current !== "품목코드" ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`) : (conditionProdID = "");
+      prodCD.current !== "품목코드"
+        ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
+        : (conditionProdID = "");
       comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
 
       let readURI =
@@ -240,5 +242,3 @@ function ProductionPackingView() {
     </ContentsArea>
   );
 }
-
-export default ProductionPackingView;

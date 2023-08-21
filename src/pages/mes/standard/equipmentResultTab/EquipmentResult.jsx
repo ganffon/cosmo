@@ -25,7 +25,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import ModalWrap from "components/modal/ModalWrap";
 
-function EquipmentResult() {
+export function EquipmentResultTab() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const selectEmpState = useRef("");
 
@@ -981,5 +981,3 @@ function EquipmentResult() {
     </ContentsArea>
   );
 }
-
-export default EquipmentResult;

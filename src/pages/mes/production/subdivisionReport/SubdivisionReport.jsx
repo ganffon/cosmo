@@ -16,7 +16,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import restAPI from "api/restAPI";
 import BtnComponent from "components/button/BtnComponent";
 
-function SubdivisionReport() {
+export function SubdivisionReport() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
@@ -216,5 +216,3 @@ function SubdivisionReport() {
     </ContentsArea>
   );
 }
-
-export default SubdivisionReport;

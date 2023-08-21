@@ -27,7 +27,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import InputPaper from "components/input/InputPaper.jsx";
 
-function InspResult(props) {
+export function InspResult(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -385,5 +385,3 @@ function InspResult(props) {
     </ContentsArea>
   );
 }
-
-export default InspResult;

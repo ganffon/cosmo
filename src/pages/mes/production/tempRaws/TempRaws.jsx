@@ -13,7 +13,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
 
-const TempRaws = () => {
+export const TempRaws = () => {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
@@ -108,5 +108,3 @@ const TempRaws = () => {
     </ContentsArea>
   );
 };
-
-export default TempRaws;

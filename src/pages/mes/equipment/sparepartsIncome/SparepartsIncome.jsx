@@ -20,7 +20,7 @@ import NoticeSnack from "components/alert/NoticeSnack";
 import AlertDelete from "components/onlySearchSingleGrid/modal/AlertDelete";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-function SparepartIncome() {
+export function SparepartIncome() {
   const { currentMenuName, isAllScreen } = useContext(LayoutContext);
 
   /* 변수 선언 영역 시작 */
@@ -277,4 +277,3 @@ function SparepartIncome() {
     </ContentsArea>
   );
 }
-export default SparepartIncome;

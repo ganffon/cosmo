@@ -22,7 +22,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function Equipment() {
+export function Equipment() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -364,5 +364,3 @@ function Equipment() {
     </ContentsArea>
   );
 }
-
-export default Equipment;

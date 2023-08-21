@@ -12,7 +12,7 @@ import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 import * as Set from "./PerformanceRateSet";
 
-const PerformanceRate = ({ toggle }) => {
+export const PerformanceRate = ({ toggle }) => {
   const refSingleGrid = useRef(null);
   const refSingleGrid2 = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -254,5 +254,3 @@ const PerformanceRate = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default PerformanceRate;

@@ -56,7 +56,7 @@ const DonutChart = ({ data }) => {
   );
 };
 
-const MonthlyPartCapa = ({ toggle }) => {
+export const MonthlyPartCapa = ({ toggle }) => {
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
     line_id: null,
@@ -233,5 +233,3 @@ const MonthlyPartCapa = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default MonthlyPartCapa;

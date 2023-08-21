@@ -18,7 +18,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import * as Set from "./TimeRateSet";
 import Grid from "@toast-ui/react-grid";
 
-const TimeRate = ({ toggle }) => {
+export const TimeRate = ({ toggle }) => {
   const refSingleGrid = useRef(null);
   const refSingleGrid2 = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -265,5 +265,3 @@ const TimeRate = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default TimeRate;

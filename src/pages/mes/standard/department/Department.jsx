@@ -23,7 +23,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 
-function Department(props) {
+export function Department(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -265,5 +265,3 @@ function Department(props) {
     </ContentsArea>
   );
 }
-
-export default Department;

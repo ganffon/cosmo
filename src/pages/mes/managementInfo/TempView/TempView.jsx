@@ -9,7 +9,7 @@ import * as S from "./TempView.styled";
 import DateTime from "components/datetime/DateTime";
 import BackDrop from "components/backdrop/BackDrop";
 
-const TempView = () => {
+export const TempView = () => {
   let isFirst = true;
 
   const [now, setNow] = useState("");
@@ -227,5 +227,3 @@ const TempView = () => {
     </ContentsArea>
   );
 };
-
-export default TempView;

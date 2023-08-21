@@ -25,7 +25,7 @@ import ContentsAreaHidden from "components/layout/common/ContentsAreaHidden";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function ControlPlan() {
+export function ControlPlan() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
@@ -827,5 +827,3 @@ function ControlPlan() {
     </ContentsAreaHidden>
   );
 }
-
-export default ControlPlan;

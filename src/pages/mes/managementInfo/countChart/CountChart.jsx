@@ -10,7 +10,7 @@ import BackDrop from "components/backdrop/BackDrop";
 import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-const CountChart = ({ toggle }) => {
+export const CountChart = ({ toggle }) => {
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -109,5 +109,3 @@ const CountChart = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default CountChart;

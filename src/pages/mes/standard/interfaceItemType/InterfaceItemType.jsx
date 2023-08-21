@@ -22,7 +22,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function InterfaceItemType(props) {
+export function InterfaceItemType(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -238,5 +238,3 @@ function InterfaceItemType(props) {
     </ContentsArea>
   );
 }
-
-export default InterfaceItemType;

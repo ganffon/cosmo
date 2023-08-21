@@ -21,7 +21,7 @@ import Alert from "img/Component/alert.png";
 import * as RE from "custom/RegularExpression";
 import GetPostParams from "api/GetPostParams";
 
-function PackingInput(props) {
+export function PackingInput(props) {
   const { isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const refPackingGrid = useRef(null);
@@ -474,5 +474,3 @@ function PackingInput(props) {
     </ContentsArea>
   );
 }
-
-export default PackingInput;

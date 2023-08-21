@@ -24,7 +24,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 import DateTime from "components/datetime/DateTime";
 
-function Unit(props) {
+export function Unit(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -278,5 +278,3 @@ function Unit(props) {
     </ContentsArea>
   );
 }
-
-export default Unit;
