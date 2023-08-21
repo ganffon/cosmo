@@ -113,7 +113,7 @@ function AppBar(props) {
 
   let menuLists = [];
   if (currentMenuName) {
-    menuLists = currentMenuName.split("/");
+    menuLists = currentMenuName.split("|");
   }
 
   return (
