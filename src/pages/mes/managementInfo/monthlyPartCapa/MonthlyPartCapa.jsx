@@ -152,7 +152,9 @@ const MonthlyPartCapa = ({ toggle }) => {
     dateHeaders.push(i + 1 + "월");
   }
   const columns = [
-    { header: "품종", name: "prod_type_small_nm" },
+    // { header: "품종", name: "prod_type_small_nm" },
+    { header: "품목", name: "prod_nm" },
+    { header: "규격", name: "prod_std", hidden: true },
     ...dateHeaders.map((date, index) => {
       return { header: date, name: `M${index + 1}` };
     }),
