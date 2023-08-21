@@ -21,7 +21,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function WorkType(props) {
+export function WorkType(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -246,5 +246,3 @@ function WorkType(props) {
     </ContentsArea>
   );
 }
-
-export default WorkType;

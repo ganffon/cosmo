@@ -18,7 +18,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function EquipmentMedium(props) {
+export function EquipmentMedium(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -241,5 +241,3 @@ function EquipmentMedium(props) {
     </ContentsArea>
   );
 }
-
-export default EquipmentMedium;

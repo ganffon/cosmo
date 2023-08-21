@@ -15,7 +15,7 @@ import useInputSet from "custom/useInputSet";
 import * as uEdit from "custom/useEdit";
 import InputSearch from "components/input/InputSearch";
 
-function SysOptionManage() {
+export function SysOptionManage() {
   LoginStateChk();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [searchToggle, setSearchToggle] = useState(false);
@@ -154,5 +154,3 @@ function SysOptionManage() {
     </ContentsArea>
   );
 }
-
-export default SysOptionManage;

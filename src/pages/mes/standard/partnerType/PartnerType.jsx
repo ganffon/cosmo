@@ -20,7 +20,7 @@ import * as S from "pages/mes/style/oneGrid.styled";
 import restURI from "json/restURI.json";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-function PartnerType(props) {
+export function PartnerType(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -233,5 +233,3 @@ function PartnerType(props) {
     </ContentsArea>
   );
 }
-
-export default PartnerType;

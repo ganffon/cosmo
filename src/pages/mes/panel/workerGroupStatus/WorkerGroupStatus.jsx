@@ -24,7 +24,7 @@ import ModalEdit from "./ModalEdit";
 import ModalAddEmp from "./ModalAddEmp";
 import Condition from "custom/Condition";
 
-function WorkerGroupStatus() {
+export function WorkerGroupStatus() {
   const { isMenuSlide } = useContext(LayoutContext);
   const {
     columns,
@@ -995,5 +995,3 @@ function WorkerGroupStatus() {
     </ContentsArea>
   );
 }
-
-export default WorkerGroupStatus;

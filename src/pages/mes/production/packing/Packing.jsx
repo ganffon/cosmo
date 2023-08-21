@@ -30,7 +30,7 @@ import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 
-function Packing() {
+export function Packing() {
   const { isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
@@ -1156,5 +1156,3 @@ function Packing() {
     </ContentsArea>
   );
 }
-
-export default Packing;

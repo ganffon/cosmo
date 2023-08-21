@@ -21,7 +21,7 @@ import DownTimeInput from "./DownTimeInput";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnPanel from "components/button/BtnPanel";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
-function DownTimePanel() {
+export function DowntimePanel() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [downtimeDate, setDowntimeDate] = useState({});
   const [nowDateTime, setNowDateTime] = useState({
@@ -480,5 +480,3 @@ function DownTimePanel() {
     </ContentsArea>
   );
 }
-
-export default DownTimePanel;

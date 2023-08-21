@@ -22,7 +22,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
-function InspectFiling(props) {
+export function InspectFiling(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -245,5 +245,3 @@ function InspectFiling(props) {
     </ContentsArea>
   );
 }
-
-export default InspectFiling;

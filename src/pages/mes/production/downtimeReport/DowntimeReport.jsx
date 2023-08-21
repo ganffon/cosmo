@@ -19,7 +19,7 @@ import DownTimeInput from "./DownTimeInput";
 import ModalSelect from "components/modal/ModalSelect";
 import restAPI from "api/restAPI";
 
-function DowntimeReport(props) {
+export function DowntimeReport(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refSelect = useRef(null);
@@ -243,5 +243,3 @@ function DowntimeReport(props) {
     </ContentsArea>
   );
 }
-
-export default DowntimeReport;

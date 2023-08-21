@@ -22,7 +22,7 @@ import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
 import { TextField } from "@mui/material";
 
-function WorkerGroupHistory() {
+export function WorkerGroupHistory() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [comboValue, setComboValue] = useState({
     line_id: null,
@@ -124,5 +124,3 @@ function WorkerGroupHistory() {
     </ContentsArea>
   );
 }
-
-export default WorkerGroupHistory;

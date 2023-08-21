@@ -1,6 +1,6 @@
-import MenuList from "json/MenuList.json";
-import MenuListDev from "json/MenuListDev.json";
-import MenuListChk from "json/MenuListChk.json";
+import MenuList from "routers/MenuList.js";
+import MenuListDev from "routers/MenuListDev.js";
+import MenuListChk from "routers/MenuListChk.js";
 import Cookies from "js-cookie";
 function GetBookmarkList(data) {
   const isRealMenu = JSON.parse(process.env.REACT_APP_MENU);

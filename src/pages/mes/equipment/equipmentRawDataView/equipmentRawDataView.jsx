@@ -15,7 +15,7 @@ import TempRawsModal from "./TempRawsModal";
 import BtnComponent from "components/button/BtnComponent";
 import GraphImg from "img/Component/button/vector.svg";
 
-function EquipmentRawDataView() {
+export function EquipmentRawDataView() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
@@ -217,5 +217,3 @@ function EquipmentRawDataView() {
     </ContentsArea>
   );
 }
-
-export default EquipmentRawDataView;

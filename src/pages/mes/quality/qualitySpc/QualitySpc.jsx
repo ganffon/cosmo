@@ -30,7 +30,7 @@ import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import ModalDate from "components/modal/ModalDate";
 
-function QualitySpc(props) {
+export function QualitySpc(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -733,5 +733,3 @@ function QualitySpc(props) {
     </ContentsArea>
   );
 }
-
-export default QualitySpc;

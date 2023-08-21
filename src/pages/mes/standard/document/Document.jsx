@@ -26,7 +26,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import Modaldocument from "./ModalDocument";
 
-function Document() {
+export function Document() {
   const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
@@ -900,5 +900,3 @@ function Document() {
     </ContentsAreaHidden>
   );
 }
-
-export default Document;

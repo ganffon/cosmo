@@ -12,7 +12,7 @@ import restURI from "json/restURI.json";
 import Abcs from "./ExcelUpload";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-function InspResultUpload(props) {
+export function InspResultUpload(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -156,5 +156,3 @@ function InspResultUpload(props) {
     </ContentsArea>
   );
 }
-
-export default InspResultUpload;

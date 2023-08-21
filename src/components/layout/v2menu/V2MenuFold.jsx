@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import V2MenuList from "./V2MenuList.jsx";
 import V2MenuDepth from "./V2MenuDepth.jsx";
-import MenuList from "json/MenuList.json";
-import MenuListDev from "json/MenuListDev.json";
-import MenuListChk from "json/MenuListChk.json";
+import MenuList from "routers/MenuList.js";
+import MenuListDev from "routers/MenuListDev.js";
+import MenuListChk from "routers/MenuListChk.js";
 // ⬇️ reference of page
 import { LayoutContext } from "../common/Layout";
 import * as S from "./V2MenuFold.styled";

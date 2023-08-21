@@ -16,7 +16,7 @@ import GetDeleteParams from "api/GetDeleteParams";
 import * as S from "./MenuList.styled";
 import MenuListSet from "pages/admin/menuList/MenuListSet";
 
-function MenuList(props) {
+export function MenuList(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -286,5 +286,3 @@ function MenuList(props) {
     </S.ContentsArea>
   );
 }
-
-export default MenuList;

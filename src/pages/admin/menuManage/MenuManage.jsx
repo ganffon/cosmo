@@ -16,7 +16,7 @@ import GetDeleteParams from "api/GetDeleteParams";
 import * as S from "./MenuManage.styled";
 import MenuManageSet from "pages/admin/menuManage/MenuManageSet";
 
-function MenuManage(props) {
+export function MenuManage(props) {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -285,5 +285,3 @@ function MenuManage(props) {
     </S.ContentsArea>
   );
 }
-
-export default MenuManage;

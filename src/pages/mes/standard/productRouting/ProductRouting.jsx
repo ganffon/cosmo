@@ -19,7 +19,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import GetDeleteParams from "api/GetDeleteParams";
 
-function ProductRouting() {
+export function ProductRouting() {
   const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
@@ -420,5 +420,3 @@ function ProductRouting() {
     </ContentsArea>
   );
 }
-
-export default ProductRouting;

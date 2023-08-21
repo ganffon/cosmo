@@ -26,7 +26,7 @@ import BtnComponent from "components/button/BtnComponent";
 import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 
-function LineDepartment(props) {
+export function LineDepartment(props) {
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [departmentOpt, departmentList] = Cbo.useDept();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -452,4 +452,3 @@ function LineDepartment(props) {
     </ContentsArea>
   );
 }
-export default LineDepartment;

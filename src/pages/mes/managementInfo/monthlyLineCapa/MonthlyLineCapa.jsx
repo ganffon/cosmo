@@ -27,7 +27,7 @@ import CN from "json/ColumnName.json";
 import { BackDrop } from "components/backdrop/BackDrop.styled";
 import NoticeSnack from "components/alert/NoticeSnack";
 
-const MonthlyLineCapa = ({ toggle }) => {
+export const MonthlyLineCapa = ({ toggle }) => {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
@@ -201,15 +201,3 @@ const MonthlyLineCapa = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default MonthlyLineCapa;
-
-const InputBox = styled("div")`
-  display: flex;
-`;
-
-const InputSet = styled(TextField)`
-  width: 60px;
-  margin-left: 10px;
-  margin-top: 5px;
-`;

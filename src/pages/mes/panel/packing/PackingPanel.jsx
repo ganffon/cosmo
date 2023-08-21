@@ -33,7 +33,7 @@ import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 
-function PackingPanel() {
+export function PackingPanel() {
   const workPackingID = useRef("");
   const workOrderID = useRef("");
   const workWeightID = useRef("");
@@ -1032,5 +1032,3 @@ function PackingPanel() {
     </ContentsArea>
   );
 }
-
-export default PackingPanel;

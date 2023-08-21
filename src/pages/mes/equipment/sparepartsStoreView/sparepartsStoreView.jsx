@@ -18,7 +18,7 @@ import BtnComponent from "components/button/BtnComponent";
 
 import * as Cbo from "custom/useCboSet";
 
-function SparepartsStoreView() {
+export function SparePartsStoreView() {
   const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
@@ -209,4 +209,3 @@ function SparepartsStoreView() {
     </ContentsArea>
   );
 }
-export default SparepartsStoreView;

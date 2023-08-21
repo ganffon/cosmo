@@ -27,7 +27,7 @@ import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
 import { TextField } from "@mui/material";
 
-function Weight() {
+export function Weight() {
   const SWITCH_NAME_01 = "weight";
   const SWITCH_NAME_02 = "weightDetail";
 
@@ -888,5 +888,3 @@ function Weight() {
     </ContentsArea>
   );
 }
-
-export default Weight;

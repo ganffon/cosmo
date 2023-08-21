@@ -26,7 +26,7 @@ import * as Cbo from "custom/useCboSet";
 import { TextField } from "@mui/material";
 import CN from "json/ColumnName.json";
 
-function ProductionOrder() {
+export function ProductionOrder() {
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
@@ -712,5 +712,3 @@ function ProductionOrder() {
     </ContentsArea>
   );
 }
-
-export default ProductionOrder;

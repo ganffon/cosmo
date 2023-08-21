@@ -17,7 +17,7 @@ import * as Cbo from "custom/useCboSet";
 import SparepartsStoreTransViewSet from "./sparepartsStoreTransViewSet";
 import ContentsArea from "components/layout/common/ContentsArea";
 
-function SparepartsStoreTransView() {
+export function SparepartsStoreTransView() {
   const [productGbnOpt, productGbnList] = Cbo.useProductGbn();
   const [productModelOpt, productModelList] = Cbo.useProductModel();
   const [productTypeOpt, productTypeList] = Cbo.useProductType();
@@ -197,4 +197,3 @@ function SparepartsStoreTransView() {
     </ContentsArea>
   );
 }
-export default SparepartsStoreTransView;

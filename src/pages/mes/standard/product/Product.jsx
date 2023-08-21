@@ -26,7 +26,7 @@ import restAPI from "api/restAPI";
 import Condition from "custom/Condition";
 import ModalSelect from "components/modal/ModalSelect";
 
-function Product() {
+export function Product() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -460,4 +460,3 @@ function Product() {
     </ContentsArea>
   );
 }
-export default Product;

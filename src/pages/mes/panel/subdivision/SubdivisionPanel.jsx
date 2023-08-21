@@ -20,7 +20,7 @@ import BtnPanel from "components/button/BtnPanel";
 import BarcodeScan from "./BarcodeScan";
 import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
 
-function SubdivisionPanel() {
+export function SubdivisionPanel() {
   const { isMenuSlide } = useContext(LayoutContext);
 
   const prodID = useRef("");
@@ -1190,5 +1190,3 @@ function SubdivisionPanel() {
     </ContentsArea>
   );
 }
-
-export default SubdivisionPanel;

@@ -25,7 +25,7 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 
 import restAPI from "api/restAPI";
 
-function SparepartsRelease() {
+export function SparePartsRelease() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const refModalGrid = useRef(null);
@@ -590,4 +590,3 @@ function SparepartsRelease() {
     </ContentsArea>
   );
 }
-export default SparepartsRelease;

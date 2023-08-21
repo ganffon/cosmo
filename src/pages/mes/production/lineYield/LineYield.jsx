@@ -15,7 +15,7 @@ import BackDrop from "components/backdrop/BackDrop";
 import GetPostParams from "api/GetPostParams";
 import * as disRow from "custom/useDisableRowCheck";
 
-function LineYield() {
+export function LineYield() {
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
 
   const refMainGrid = useRef(null);
@@ -269,5 +269,3 @@ function LineYield() {
     </ContentsArea>
   );
 }
-
-export default LineYield;

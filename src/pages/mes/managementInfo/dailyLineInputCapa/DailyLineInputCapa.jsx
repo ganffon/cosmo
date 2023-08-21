@@ -11,7 +11,7 @@ import * as C from "./DailyLineInputCapa.styled";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 
-const DailyLineInputCapa = ({ toggle }) => {
+export const DailyLineInputCapa = ({ toggle }) => {
   const refSingleGrid = useRef(null);
   const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
@@ -361,5 +361,3 @@ const DailyLineInputCapa = ({ toggle }) => {
     </ContentsArea>
   );
 };
-
-export default DailyLineInputCapa;

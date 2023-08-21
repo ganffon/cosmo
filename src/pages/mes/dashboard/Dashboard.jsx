@@ -18,7 +18,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import * as CustomGrid from "components/grid/setting/CustomGrid";
 import { LoginStateChk } from "custom/LoginStateChk";
 
-const Dashboard = () => {
+export const Dashboard = () => {
   LoginStateChk();
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [result, setResult] = useState([]);
@@ -72,27 +72,6 @@ const Dashboard = () => {
     refSecondGrid?.current?.gridInst?.refreshLayout();
     // addDivToHeader();
   }, [isMenuSlide]);
-  const getTimeHeader = () => ({
-    height: 80,
-    complexColumns: [
-      {
-        header: "E1 라인",
-        name: "E1",
-        childNames: ["e1_performance", "e1_target"],
-        // renderer: CustomGrid.ColumnHeaderMultiLine,
-      },
-      {
-        header: "E2 라인",
-        name: "E2",
-        childNames: ["e2_performance", "e2_target"],
-      },
-      {
-        header: "E3 라인",
-        name: "E3",
-        childNames: ["e3_performance", "e3_target"],
-      },
-    ],
-  });
 
   const GetDashboardData = async () => {
     restAPI
@@ -405,5 +384,3 @@ const Dashboard = () => {
     </ContentsArea>
   );
 };
-
-export default Dashboard;
