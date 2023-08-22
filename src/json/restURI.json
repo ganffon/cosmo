@@ -155,5 +155,6 @@
   "sysOptionManage": "/sys/option",
   "prodMapping": "/std/prod-mapping",
   "buildReport": "/sys/deploy-version",
-  "buildReportLatest": "/sys/deploy-version/latest"
+  "buildReportLatest": "/sys/deploy-version/latest",
+  "buildReportLatestNotApply": "/sys/deploy-version/latest/not-apply"
 }

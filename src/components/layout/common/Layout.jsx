@@ -150,24 +150,27 @@ const Layout = ({ children }) => {
   }, [location.pathname]);
 
   const [isVersionAlert, setIsVersionAlert] = useState(false);
-  const latestVersion = async () => {
+  const compareVersion = async () => {
     try {
       const result = await restAPI.get(restURI.buildReportLatest);
-      const latestVersion = result?.data?.data?.rows[0].version;
-      const historyVersion = Version;
+      const latestVersion = result?.data?.data?.rows[0]?.version; //최신버전
+      const historyVersion = Version; // 이전버전
       //현재 Web 버전 보다 BE에 기록된 버전이 최신이라면 Alert Open
-      if (+latestVersion > +historyVersion) {
-        setIsVersionAlert(true);
+      if (latestVersion) {
+        if (+latestVersion > +historyVersion) {
+          setIsVersionAlert(true);
+        }
       }
     } catch (err) {
+      console.log(err);
     } finally {
     }
   };
 
   useEffect(() => {
-    latestVersion();
+    compareVersion();
     const interval = setInterval(() => {
-      latestVersion();
+      compareVersion();
     }, 50000); // 5분 마다 버전 비교를 함
     return () => {
       clearInterval(interval);

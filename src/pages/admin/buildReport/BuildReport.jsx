@@ -255,7 +255,6 @@ export function BuildReport(props) {
       setIsBackDrop(false);
     }
   };
-
   const newBuildReport = () => {
     return (
       <ModalWrapMulti width={"50%"} height={"80%"}>
