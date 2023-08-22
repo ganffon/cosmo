@@ -55,3 +55,53 @@ function generateMainIndexFile(pagesPath) {
 
 const pagesPath = "./pages"; // pages 폴더 경로
 generateMainIndexFile(pagesPath);
+
+// const fs = require("fs");
+// const path = require("path");
+
+// function indexExport(dirPath) {
+//   const files = fs.readdirSync(dirPath);
+//   const exportStatements = [];
+//   let hasSubdirectories = false; // 하위 디렉토리의 존재 여부를 추적하기 위한 변수
+//   const tempData = [];
+//   for (const file of files) {
+//     const fullPath = path.join(dirPath, file);
+//     const isDirectory = fs.statSync(fullPath).isDirectory();
+
+//     if (isDirectory) {
+//       const subDirExportStatements = indexExport(fullPath);
+
+//       if (subDirExportStatements.length > 0) {
+//         hasSubdirectories = true;
+//         const subDirIndexPath = path.join(dirPath, "index.js");
+//         const subDirIndexContent = subDirExportStatements.join("\n");
+//         tempData.push(subDirIndexContent);
+//         exportStatements.push(`export * from './${file}';`);
+//         if (hasSubdirectories) {
+//           if (subDirIndexPath.includes("mes\\index")) {
+//             fs.writeFileSync(subDirIndexPath, exportStatements.join("\n"));
+//           } else {
+//             fs.writeFileSync(subDirIndexPath, tempData.join("\n"));
+//           }
+//         }
+//       }
+//     } else if (file.endsWith(".jsx")) {
+//       const fileName = path.basename(file, ".jsx");
+//       const fileDirName = path.basename(dirPath); // 파일이 위치한 디렉토리 이름
+//       exportStatements.push(`export * from './${fileDirName}/${fileName}.jsx';`);
+//     }
+//   }
+
+//   return exportStatements;
+// }
+
+// function mainIndexFile(pagesPath) {
+//   const exportStatements = indexExport(pagesPath);
+//   const indexFilePath = path.join(pagesPath, "index.js");
+//   const indexFileContent = exportStatements.join("\n");
+//   fs.writeFileSync(indexFilePath, indexFileContent);
+//   console.log("index.js file generated successfully.");
+// }
+
+// const pagesPath = "./pages"; // pages 폴더 경로
+// mainIndexFile(pagesPath);
