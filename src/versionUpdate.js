@@ -13,11 +13,13 @@
  *
  *      [1] Web에서 배포내용 작성 -> BE에 신규 버전이 자동 생성되기 때문
  *
- *      [2] node versionUpdate.js 실행 -> BE에 생성된 신규 버전을 Version.js에 갱신
+ *      [2] node versionUpdate.js 실행 -> BE에 생성된 신규 버전을 Version.js 로 가져와 갱신시킴
  *
  *      [3] npm run build
  *
  *      [4] 프론트 서버에 build 파일 옮겨서 배포
+ *
+ *      [5] Web에서 작성한 배포를 "적용" 시켜주어야 함 -> 적용된 것중에 최신 버전과 기존 Web 버전을 5분마다 비교하여 업데이트 알림을 띄움
  *
  */
 const restURI = require("./json/restURI.json");
