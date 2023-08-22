@@ -2,6 +2,10 @@ const convertURL = (id) => {
   const path = id.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
   return path;
 };
+/**
+ * 코스모신소재 mfg10 아이디로 들어갔을 때만 적용되는 메뉴
+ * 현장 점검용 메뉴입니다.
+ */
 const MenuListChk = [
   {
     name: "기준정보",
