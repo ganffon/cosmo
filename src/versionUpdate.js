@@ -28,18 +28,14 @@ const path = require("path");
 async function getVersion() {
   try {
     axios.defaults.baseURL = "http://51.73.47.26:3000";
+    // axios.defaults.baseURL = "http://61.78.123.204:3002";
 
     const result = await axios.get(restURI.buildReportLatestNotApply);
 
-    if (result && result.data && result.data.data && result.data.data.rows) {
-      console.log("Received Version: ", result.data.data.rows[0].version);
-      return result.data.data.rows[0].version;
-    } else {
-      console.log("No version data received.");
-      return null;
-    }
+    console.log("🟩　적용된 버전 : ", result?.data?.data?.rows[0]?.version);
+    return result?.data?.data?.rows[0]?.version;
   } catch (err) {
-    console.error("Error fetching version: ", err);
+    console.error("❌　에러발생 : ", err);
     return null;
   }
 }
@@ -47,7 +43,7 @@ async function getVersion() {
 function generateVersionFile(dirPath) {
   getVersion().then((version) => {
     if (!version) {
-      console.error("No version to write.");
+      console.error("🟥　신규 버전이 존재하지 않음! 배포내역 작성부터 해야함!");
       return;
     }
 
@@ -57,9 +53,9 @@ function generateVersionFile(dirPath) {
 
     try {
       fs.writeFileSync(versionFilePath, versionContent);
-      console.log("Version.js file generated successfully.");
+      console.log("🟩　Version.js 파일 생성 및 갱신 성공!");
     } catch (writeErr) {
-      console.error("Error writing to Version.js: ", writeErr);
+      console.error("❌　Version.js 파일 작성할 때 에러 : ", writeErr);
     }
   });
 }

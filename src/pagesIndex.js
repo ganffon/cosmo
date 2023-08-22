@@ -50,7 +50,7 @@ function generateMainIndexFile(pagesPath) {
   const indexFilePath = path.join(pagesPath, "index.js");
   const indexFileContent = exportStatements.join("\n");
   fs.writeFileSync(indexFilePath, indexFileContent);
-  console.log("index.js file generated successfully.");
+  console.log("🟩　index.js 파일 생성 및 갱신 성공!");
 }
 
 const pagesPath = "./pages"; // pages 폴더 경로
