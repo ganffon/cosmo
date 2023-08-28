@@ -254,23 +254,27 @@ function ModalAddNew(props) {
   //   Grid.setValue(rowKey, "work_end_date", newContents.endDate);
   //   Grid.setValue(rowKey, "work_end_time", newContents.endTime);
   // };
+
+  const refPrevNewContents = useRef(newContents);
   useEffect(() => {
-    const Grid = refGrid?.current?.gridInst;
-    const SupportGrid = refSupportGrid?.current?.gridInst;
-    const maxRow = Grid.getRowCount();
-    for (let i = 0; maxRow >= i; i++) {
-      Grid.setValue(i, "work_start_date", newContents.startDate);
-      Grid.setValue(i, "work_start_time", newContents.startTime);
-      Grid.setValue(i, "work_end_date", newContents.endDate);
-      Grid.setValue(i, "work_end_time", newContents.endTime);
+    // newContents 안에서 remark, issue 2개가 수정되는 경우는 useEffect 동작 안하도록 수정함.
+    const isOtherFieldsChanged = Object.keys(newContents).some((key) => {
+      if (key === "remark" || key === "issue") {
+        return false;
+      }
+      return newContents[key] !== refPrevNewContents.current[key];
+    });
+    if (isOtherFieldsChanged) {
+      const Grid = refGrid?.current?.gridInst;
+      const maxRow = Grid.getRowCount();
+      for (let i = 0; maxRow >= i; i++) {
+        Grid.setValue(i, "work_start_date", newContents.startDate);
+        Grid.setValue(i, "work_start_time", newContents.startTime);
+        Grid.setValue(i, "work_end_date", newContents.endDate);
+        Grid.setValue(i, "work_end_time", newContents.endTime);
+      }
+      refPrevNewContents.current = newContents;
     }
-    // const supportMaxRow = SupportGrid.getRowCount();
-    // for (let i = 0; supportMaxRow >= i; i++) {
-    //   SupportGrid.setValue(i, "work_start_date", newContents.startDate);
-    //   SupportGrid.setValue(i, "work_start_time", newContents.startTime);
-    //   SupportGrid.setValue(i, "work_end_date", newContents.endDate);
-    //   SupportGrid.setValue(i, "work_end_time", newContents.endTime);
-    // }
   }, [newContents]);
   let rowKey;
   const onClickGrid = (e) => {

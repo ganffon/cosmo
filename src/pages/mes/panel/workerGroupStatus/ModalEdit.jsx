@@ -208,14 +208,25 @@ function ModalEdit(props) {
       setEditContents({ ...editContents, [e.target.id]: timeValue });
     }
   };
+  const refPrevEditContents = useRef(editContents);
   useEffect(() => {
-    const Grid = refGrid?.current?.gridInst;
-    const maxRow = Grid.getRowCount();
-    for (let i = 0; maxRow >= i; i++) {
-      Grid.setValue(i, "work_start_date", editContents.startDate);
-      Grid.setValue(i, "work_start_time", editContents.startTime);
-      Grid.setValue(i, "work_end_date", editContents.endDate);
-      Grid.setValue(i, "work_end_time", editContents.endTime);
+    // editContents 안에서 remark, issue 2개가 수정되는 경우는 useEffect 동작 안하도록 수정함.
+    const isOtherFieldsChanged = Object.keys(editContents).some((key) => {
+      if (key === "remark" || key === "issue") {
+        return false;
+      }
+      return editContents[key] !== refPrevEditContents.current[key];
+    });
+    if (isOtherFieldsChanged) {
+      const Grid = refGrid?.current?.gridInst;
+      const maxRow = Grid.getRowCount();
+      for (let i = 0; maxRow >= i; i++) {
+        Grid.setValue(i, "work_start_date", editContents.startDate);
+        Grid.setValue(i, "work_start_time", editContents.startTime);
+        Grid.setValue(i, "work_end_date", editContents.endDate);
+        Grid.setValue(i, "work_end_time", editContents.endTime);
+      }
+      refPrevEditContents.current = editContents;
     }
   }, [editContents]);
 
