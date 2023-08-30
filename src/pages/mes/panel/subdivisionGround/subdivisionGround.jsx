@@ -514,29 +514,60 @@ export function SubdivisionGround() {
       deleteId = refInnerWeightGrid?.current?.gridInst?.store?.data?.rawData[lastRowKey].work_subdivision_detail_id;
     }
 
-    const result = await restAPI
-      .delete(`/prd/subdivision-detail/` + deleteId)
-      .then((res) => {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: res?.data?.message,
-          severity: "success",
-        });
-        getSubdivisionDataWeight(weightHeaderUID);
-        setIsDeleteAlertOpen(false);
-      })
-      .catch((res) => {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: res?.response?.data?.message ?? res?.message,
-          severity: "error",
-        });
-      })
-      .finally(() => {
-        setIsBackDrop(false);
+    // const result = await restAPI
+    //   .delete(`/prd/subdivision-detail/` + deleteId)
+    //   .then((res) => {
+    //     setIsSnackOpen({
+    //       ...isSnackOpen,
+    //       open: true,
+    //       message: res?.data?.message,
+    //       severity: "success",
+    //     });
+    //     getSubdivisionDataWeight(weightHeaderUID);
+    //     setIsDeleteAlertOpen(false);
+    //   })
+    //   .catch((res) => {
+    //     setIsSnackOpen({
+    //       ...isSnackOpen,
+    //       open: true,
+    //       message: res?.response?.data?.message ?? res?.message,
+    //       severity: "error",
+    //     });
+    //   })
+    //   .finally(() => {
+    //     setIsBackDrop(false);
+    //   });
+
+    try {
+      setIsBackDrop(true);
+
+      const result = await restAPI.delete(`/prd/subdivision-detail/` + deleteId);
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: result?.data?.message,
+        severity: "success",
+        location: "bottomRight",
       });
+      getSubdivisionDataWeight(weightHeaderUID);
+      searchCommonGrid();
+      const scaleGrid = refInnerGrid.current?.gridInst;
+      if (scaleGrid.getRowCount() === 1) {
+        setBagFlag(true);
+      }
+
+      setIsDeleteAlertOpen(false);
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
 
   //소분 행 삭제 팝업 확인
