@@ -257,7 +257,7 @@ export function BuildReport(props) {
   };
   const newBuildReport = () => {
     return (
-      <ModalWrapMulti width={"50%"} height={"80%"}>
+      <ModalWrapMulti width={"38%"} height={"80%"}>
         <S.HeaderBox>
           <S.Title className={"bold"}>{"배포 정보 작성"}</S.Title>
           <S.ButtonClose
@@ -303,7 +303,7 @@ export function BuildReport(props) {
   };
   const editBuildReport = () => {
     return (
-      <ModalWrapMulti width={"50%"} height={"80%"}>
+      <ModalWrapMulti width={"38%"} height={"80%"}>
         <S.HeaderBox>
           <S.Title className={"bold"}>{"배포 정보 작성"}</S.Title>
           <S.ButtonClose
