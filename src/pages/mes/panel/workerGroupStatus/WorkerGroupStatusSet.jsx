@@ -13,17 +13,18 @@ function WorkerGroupStatusSet() {
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
   const columns = [
-    col.id("worker_group_status_id", CN.worker_group_status_id, C.HIDDEN_ID),
-    col.id("master_emp_id", CN.master_emp_id, C.HIDDEN_ID),
     col.text("master_emp_nm", CN.master_emp_nm, false, true),
 
+    col.date("shift_date", CN.shift_date),
     col.text("shift_type", CN.shift_type, C.U, C.U, C.WIDTH_SUPER_SHORT),
     col.text("worker_group_nm", CN.worker_group_nm, C.U, C.U, C.WIDTH_SUPER_SHORT),
-    col.text("work_start_date", CN.work_start_date, C.U, C.U, C.U, "center"),
-    col.text("work_start_time", CN.work_start_time, C.U, C.U, C.WIDTH_SUPER_SHORT, "center"),
-    col.text("work_end_date", CN.work_end_date, C.U, C.U, C.U, "center"),
-    col.text("work_end_time", CN.work_end_time, C.U, C.U, C.WIDTH_SUPER_SHORT, "center"),
-    col.text("remark", CN.remark, C.U, false),
+    col.text("work_start_date", CN.work_start_date, C.U, true, C.U, "center"),
+    col.text("work_start_time", CN.work_start_time, C.U, true, C.WIDTH_SUPER_SHORT, "center"),
+    col.text("work_end_date", CN.work_end_date, C.U, true, C.U, "center"),
+    col.text("work_end_time", CN.work_end_time, C.U, true, C.WIDTH_SUPER_SHORT, "center"),
+    col.text("remark", CN.issue, C.U, false, C.WIDTH_MIDDLE),
+    col.id("worker_group_status_id", CN.worker_group_status_id, C.HIDDEN_ID),
+    col.id("master_emp_id", CN.master_emp_id, C.HIDDEN_ID),
   ];
   const columnsSelectEmp = [
     col.text("dept_nm", CN.dept_nm, false, false, C.WIDTH_MIDDLE, false, false, true),

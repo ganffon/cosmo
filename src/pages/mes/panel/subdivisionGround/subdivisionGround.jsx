@@ -409,7 +409,7 @@ export function SubdivisionGround() {
       (nowDate.getSeconds() < 9 ? "0" + nowDate.getSeconds() : nowDate.getSeconds());
     rawData.work_subdivision_id = weightHeaderUID;
     rawData.lot_no = lotNo;
-    rawData.qty = Number(weightValues[1].value) - Number(totalWeight);
+    rawData.qty = Number(weightValues[0].value) - Number(totalWeight);
     rawData.subdivision_date = nowDateFull;
     rawData.subdivision_time = nowTimeFull;
     let result = [];

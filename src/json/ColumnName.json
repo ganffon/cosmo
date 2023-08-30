@@ -482,5 +482,6 @@
   "value": "옵션값",
   "date": "일자",
   "hour_time": "시간",
-  "bag_count": "Bag 갯수"
+  "bag_count": "Bag 갯수",
+  "issue": "작업이슈"
 }
