@@ -196,7 +196,6 @@ function V2MenuDepth(props) {
       setIsMouseOver(false);
       setIsModalOpen(false);
       if (e?.button === 0) {
-        console.log(menu.path);
         navigate(menu.path);
       } else if (e?.button === 1) {
         window.open(BASE_URL + menu.path, "_blank");
