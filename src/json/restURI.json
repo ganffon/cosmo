@@ -156,5 +156,6 @@
   "prodMapping": "/std/prod-mapping",
   "buildReport": "/sys/deploy-version",
   "buildReportLatest": "/sys/deploy-version/latest",
-  "buildReportLatestNotApply": "/sys/deploy-version/latest/not-apply"
+  "buildReportLatestNotApply": "/sys/deploy-version/latest/not-apply",
+  "subdivisionPanel": "/prd/subdivision/panel"
 }

@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import LockIcon from "@mui/icons-material/Lock";
-import * as C from "constant/Layout";
+import { Autocomplete } from "@mui/material";
 
 export const BarcodeArea = styled("div")`
   height: 100%;
@@ -42,13 +42,13 @@ export const ScreenTopTitleBox = styled("div")`
   font-size: 22px;
 `;
 export const ItemInfoBox = styled("div")`
-  height: 180px;
+  height: 450px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 40px 20px;
+  align-items: start;
+  gap: 20px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
@@ -58,6 +58,7 @@ export const ItemInfoBox = styled("div")`
 export const DataInterfaceBox = styled("div")`
   flex-grow: 1;
   width: 100%;
+  height: 600px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -239,13 +240,21 @@ export const Title = styled(Typography)`
 `;
 export const ScaleLock = styled("div")`
   width: 100%;
-  height: 100%;
+  height: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 export const ScaleLockIcon = styled(LockIcon)`
   width: 30%;
-  height: 30%;
+  height: 40%;
   color: gray;
+`;
+
+export const ComboBox = styled(Autocomplete)`
+  width: 235px;
+  height: 20px;
+`;
+export const InputBoxs = styled(TextField)`
+  width: 100%;
 `;

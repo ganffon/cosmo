@@ -610,15 +610,15 @@ const MenuList = [
         path: null,
         under: [
           {
-            name: "소분 공정",
+            name: "소분 공정(대량)",
             id: "SubdivisionPanel",
             path: convertURL("SubdivisionPanel"),
             under: null,
           },
           {
-            name: "소분 공정(종합)",
-            id: "SubdivisionPanelAll",
-            path: convertURL("SubdivisionPanelAll"),
+            name: "소분 공정(소량)",
+            id: "SubdivisionGround",
+            path: convertURL("SubdivisionGround"),
             under: null,
           },
           {

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef, useMemo } from "react";
+import React, { useContext, useState, useEffect, useRef, useMemo } from "react";
 
 import { LayoutContext } from "components/layout/common/Layout";
 import DateTime from "components/datetime/DateTime";
@@ -19,10 +19,14 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import BtnPanel from "components/button/BtnPanel";
 import BarcodeScan from "./BarcodeScan";
 import SubdivisionBarcodePrint from "components/printer/barcode/subdivisionBarcodePrint";
+import { TextField } from "@mui/material";
+import * as Cbo from "../../../../custom/useCboSet";
+import useInputSet from "../../../../custom/useInputSet";
+import { InputBoxs } from "./SubdivisionPanel.styled";
 
 export function SubdivisionPanel() {
   const { isMenuSlide } = useContext(LayoutContext);
-
+  const { currentMenuName } = useContext(LayoutContext);
   const prodID = useRef("");
   const prodCD = useRef("");
   const prodNM = useRef("");
@@ -30,6 +34,11 @@ export function SubdivisionPanel() {
   const lot = useRef("");
   const workSubdivisionID = useRef("");
 
+  //제품 List
+  const [productOpt, productList] = Cbo.useProd();
+  const [selectedProd, setSelectedProd] = useState(null);
+  const [selectedWorkerGroup, setSelectedWorkerGroup] = useState(null);
+  const [selectedRemark, setSelectedRemark] = useState("");
   const [totalQty, setTotalQty] = useState("");
 
   const [scaleInfo, setScaleInfo] = useState({
@@ -48,6 +57,13 @@ export function SubdivisionPanel() {
     open: false,
   });
 
+  const [comboValue, setComboValue] = useState({
+    workGroupKey: "",
+  });
+  const [comboValueProd, setComboValueProd] = useState({
+    productId: "",
+  });
+
   const [isLockScale, setIsLockScale] = useState(true);
 
   const [isWarning, setIsWarning] = useState({
@@ -64,7 +80,10 @@ export function SubdivisionPanel() {
     columnsSelectProd,
     columnsSelectLoadHeader,
     columnsSelectLoadDetail,
+    inputSet,
   } = SubdivisionPanelSet(onClickGridButton);
+
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
   const refGridSingle = useRef(null);
   const refGridSelect = useRef(null);
@@ -97,6 +116,25 @@ export function SubdivisionPanel() {
     width: "80%",
     height: "90%",
   });
+  //작업조 하드코딩
+  const workGroup = [
+    {
+      text: `A조`,
+      value: `A조`,
+    },
+    {
+      text: `B조`,
+      value: `B조`,
+    },
+    {
+      text: `C조`,
+      value: `C조`,
+    },
+    {
+      text: `D조`,
+      value: `D조`,
+    },
+  ];
 
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
 
@@ -209,13 +247,26 @@ export function SubdivisionPanel() {
   };
 
   async function onClickGridButton(e, rowKey) {
+    const Header = refGridSelect?.current?.gridInst;
+    const rowID = Header.getValue(rowKey, "work_subdivision_id");
+    workSubdivisionID.current = rowID;
     if (workSubdivisionID.current) {
       try {
-        const Header = refGridSelect?.current?.gridInst;
-        const workSubdivisionID = Header.getValue(rowKey, "work_subdivision_id");
-        const result = await restAPI.get(restURI.subdivisionDetail + `?work_subdivision_id=${workSubdivisionID}`);
+        const result = await restAPI.get(
+          restURI.subdivisionDetail + `?work_subdivision_id=${workSubdivisionID.current}`
+        );
         setGridDataHeader(result?.data?.data?.rows);
-
+        setSelectedWorkerGroup({
+          ...selectedWorkerGroup,
+          text: Header.getValue(rowKey, "worker_group_nm"),
+          value: Header.getValue(rowKey, "worker_group_nm"),
+        });
+        setSelectedProd({
+          ...selectedProd,
+          prod_nm: Header.getValue(rowKey, "prod_nm"),
+          prod_id: Header.getValue(rowKey, "prod_id"),
+        });
+        setSelectedRemark(Header.getValue(rowKey, "remark"));
         setIsSnackOpen({
           ...isSnackOpen,
           open: true,
@@ -240,8 +291,10 @@ export function SubdivisionPanel() {
     if (!workSubdivisionID.current) {
       let obj = [];
       obj.push({
-        // prod_id: prodID.current,
         subdivision_date: date.current,
+        worker_group_nm: comboValue.workGroupKey,
+        remark: selectedRemark,
+        prod_id: comboValueProd.productId,
       });
       try {
         const result = await restAPI.post(restURI.subdivisions, obj);
@@ -260,9 +313,28 @@ export function SubdivisionPanel() {
     }
   };
   const onClickStart = () => {
-    if (prodID.current === "") {
+    if (selectedProd === null || selectedProd === undefined) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "제품을 선택해주세요.",
+        severity: "error",
+        location: "bottomRight",
+      });
+    } else if (selectedWorkerGroup === null || selectedWorkerGroup === undefined) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "작업조를 선택해주세요.",
+        severity: "error",
+        location: "bottomRight",
+      });
+    } else {
       setIsBarcodeScanOpen(true);
     }
+    // if (prodID.current === "") {
+    //   setIsBarcodeScanOpen(true);
+    // }
   };
   const [isDelete, setIsDelete] = useState(false);
   const onClickDelete = () => {
@@ -279,6 +351,9 @@ export function SubdivisionPanel() {
         location: "bottomRight",
       });
       resetRequire();
+      setSelectedProd(null);
+      setSelectedWorkerGroup(null);
+      setSelectedRemark("");
       resetScaleInfo();
       setIsLockScale(true);
       setIsDelete(false);
@@ -352,6 +427,9 @@ export function SubdivisionPanel() {
 
         resetRequire();
         resetScaleInfo();
+        setSelectedProd(null);
+        setSelectedWorkerGroup(null);
+        setSelectedRemark("");
         setIsLockScale(true);
         setIsEnd(false);
 
@@ -843,24 +921,15 @@ export function SubdivisionPanel() {
       />
     );
   }, [barcodePrintInfo, componentRef.current]);
-
+  const handleInputTextChange = (e) => {
+    setInputTextChange({ ...inputTextChange, remark: e.target.value });
+    setSelectedRemark(e.target.value);
+  };
   return (
     <ContentsArea flexColumn={false}>
       <S.ContentsLeft ref={refBarcodeScan}>
         <S.ItemInfoBox>
           <S.ScreenTopTitleBox>일일소분일지</S.ScreenTopTitleBox>
-          {/* <InputPaper
-            width={"500px"}
-            height={"60px"}
-            name={"품목코드"}
-            nameSize={"20px"}
-            namePositionTop={"-30px"}
-            value={prodCD.current || ""}
-            size={"26px"}
-            btn={false}
-            onClickSelect={onClickSelect}
-            onClickRemove={onClickRemove}
-          /> */}
           <InputPaper
             width={"235px"}
             height={"60px"}
@@ -881,6 +950,54 @@ export function SubdivisionPanel() {
             onTextChange={handleChangeTotal}
             size={"26px"}
           />
+          <S.ComboBox
+            disablePortal
+            id="workGroupCombo"
+            size="small"
+            options={workGroup || null}
+            value={selectedWorkerGroup || null}
+            key={(option) => option?.text}
+            getOptionLabel={(option) => option?.text || ""}
+            onChange={(_, newValue) => {
+              // setComboValue(selectedWorkerGroup);
+              const result = workGroup?.find((workerGroup) => workerGroup?.text === newValue?.text);
+              setSelectedWorkerGroup(result);
+              setComboValue({
+                ...comboValue,
+                workGroupKey: newValue?.value === undefined ? null : newValue?.value,
+              });
+            }}
+            isOptionEqualToValue={(option, value) => option.text === value.text}
+            renderInput={(params) => <TextField {...params} label={"작업조"} size="small" />}
+          />
+          <S.ComboBox
+            disablePortal
+            id="productCbo"
+            size="small"
+            key={(option) => option?.prod_id}
+            options={productOpt || null}
+            value={selectedProd || null}
+            getOptionLabel={(option) => option?.prod_nm || ""}
+            onChange={(_, newValue) => {
+              // setComboValue(selectedWorkerGroup);
+              const result = productOpt?.find((prodList) => prodList?.prod_nm === newValue?.prod_nm);
+              setSelectedProd(result);
+              setComboValueProd({
+                ...comboValue,
+                productId: newValue?.prod_id === undefined ? null : newValue?.prod_id,
+              });
+            }}
+            isOptionEqualToValue={(option, value) => option.prod_nm === value.prod_nm}
+            renderInput={(params) => <TextField {...params} label={"제품"} size="small" />}
+          />
+          <S.InputBoxs
+            id={"remark"}
+            label={"비고"}
+            size={"small"}
+            autoComplete={"off"}
+            onChange={handleInputTextChange}
+            value={selectedRemark}
+          />
         </S.ItemInfoBox>
 
         {isLockScale ? (
@@ -888,7 +1005,7 @@ export function SubdivisionPanel() {
             <BtnPanel
               title={"시작하기"}
               subTitle={"Start"}
-              height={"180px"}
+              height={"100px"}
               width={"250px"}
               color={"#1491CE"}
               fontSize={"26px"}
@@ -899,7 +1016,7 @@ export function SubdivisionPanel() {
             <BtnPanel
               title={"불러오기"}
               subTitle={"Load"}
-              height={"180px"}
+              height={"100px"}
               width={"250px"}
               color={"#FFFFFF"}
               fontSize={"26px"}
@@ -924,7 +1041,7 @@ export function SubdivisionPanel() {
             <BtnPanel
               title={"작업보류"}
               subTitle={"Hold"}
-              height={"180px"}
+              height={"100px"}
               width={"250px"}
               color={"#555555"}
               fontSize={"26px"}
@@ -935,7 +1052,7 @@ export function SubdivisionPanel() {
             <BtnPanel
               title={"Bag 소분완료"}
               subTitle={"End"}
-              height={"180px"}
+              height={"100px"}
               width={"250px"}
               color={"#1491CE"}
               fontSize={"26px"}
@@ -966,7 +1083,7 @@ export function SubdivisionPanel() {
                 />
                 <InputPaper
                   width={"230px"}
-                  height={"110px"}
+                  height={"60px"}
                   id={"before"}
                   name={"소분 전"}
                   nameColor={"black"}
@@ -979,7 +1096,7 @@ export function SubdivisionPanel() {
                 />
                 <InputPaper
                   width={"230px"}
-                  height={"110px"}
+                  height={"60px"}
                   id={"after"}
                   name={"소분 후"}
                   nameColor={"black"}

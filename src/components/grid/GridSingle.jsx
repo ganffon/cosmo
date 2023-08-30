@@ -65,39 +65,38 @@ function GridSingle(props) {
       return false;
     }
   };
-
   useEffect(() => {
     const Grid = refGrid?.current?.gridInst;
+
+    let tooltipTimeout;
     const handleMouseOver = (e) => {
       const { targetType, nativeEvent, columnName } = e;
+      setTooltipPosition({
+        ...tooltipPosition,
+        x: nativeEvent.layerX,
+        y: nativeEvent.layerY,
+      });
 
-      setTooltipPosition({ ...tooltipPosition, x: nativeEvent.layerX, y: nativeEvent.layerY });
-
-      if (targetType === "columnHeader" && nativeEvent.ctrlKey) {
-        const tooltipText = checkTooltip(columnName);
-        if (tooltipText) {
-          setTooltipText(tooltipText);
-          setTooltipVisible(true);
-        }
-      } else {
-        setTooltipVisible(false);
+      if (targetType === "columnHeader") {
+        tooltipTimeout = setTimeout(() => {
+          const tooltipText = checkTooltip(columnName);
+          if (tooltipText) {
+            setTooltipText(tooltipText);
+            setTooltipVisible(true);
+          }
+        }, 1000);
       }
+    };
+    const handleMouseOut = (e) => {
+      clearTimeout(tooltipTimeout);
+      setTooltipVisible(false);
     };
 
     if (Grid) {
       Grid.eventBus.on("mouseover", handleMouseOver);
+      Grid.eventBus.on("mouseout", handleMouseOut);
     }
   }, []);
-
-  // const afterEnterMoveBottom = (e) => {
-  //   const Grid = refGrid?.current?.gridInst;
-  //   const coords = Grid?.getFocusedCell();
-  //   if (e?.columnName === coords?.columnName) {
-  //     if (coords) {
-  //       Grid.startEditing(coords?.rowKey + 1, coords?.columnName);
-  //     }
-  //   }
-  // };
 
   return (
     <>
