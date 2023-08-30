@@ -479,5 +479,8 @@
   "option_id": "옵션ID",
   "option_cd": "옵션코드",
   "option_nm": "옵션명",
-  "value": "옵션값"
+  "value": "옵션값",
+  "date": "일자",
+  "hour_time": "시간",
+  "bag_count": "Bag 갯수"
 }

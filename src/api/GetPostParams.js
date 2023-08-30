@@ -448,6 +448,24 @@ class subdivisionDetail {
     this.remark = raw.remark;
   }
 }
+class subdivisionGround {
+  constructor(raw) {
+    this.prod_id = raw.prod_id;
+    this.remark = raw.remark;
+    this.worker_group_nm = raw.workGroupKey;
+    this.subdivision_date = raw.subdivision_date;
+  }
+}
+
+class subdivisionGroundDetail {
+  constructor(raw) {
+    this.work_subdivision_id = raw.work_subdivision_id;
+    this.lot_no = raw.lot_no;
+    this.qty = raw.qty;
+    this.subdivision_date = raw.subdivision_date;
+    this.subdivision_time = raw.subdivision_time;
+  }
+}
 class createSubdivisionDetailBarcode {
   constructor(raw) {
     this.barcode_type = "SUBDIVISION_DETAIL";
@@ -983,6 +1001,12 @@ function GetPostParams(componentName, raw) {
         break;
       case "ProductRouting":
         params = new ProductRouting(raw);
+        break;
+      case "subdivisionGround":
+        params = new subdivisionGround(raw);
+        break;
+      case "subdivisionGroundDetail":
+        params = new subdivisionGroundDetail(raw);
         break;
       default:
     }

@@ -492,6 +492,23 @@ const useUserActionList = () => {
   }, []);
   return [userActionOpt, userActionList];
 };
+let prodList = [];
+const useProd = () => {
+  const [prodOpt, setProdOpt] = useState([]);
+  useEffect(() => {
+    const getCboOpt = async () => {
+      await restAPI.get(restURI.product).then((res) => {
+        setProdOpt(cboMUISort(res?.data?.data?.rows, "prod_nm"));
+        prodClassList = res?.data?.data?.rows.map((data) => {
+          return GetCboParams(data, "prod_id", "prod_nm");
+        });
+        prodList = cboGridSort(prodClassList);
+      });
+    };
+    getCboOpt();
+  }, []);
+  return [prodOpt, prodList];
+};
 
 export {
   useLine,
@@ -521,4 +538,5 @@ export {
   useInspFiling,
   usePartnerTypeList,
   useUserActionList,
+  useProd,
 };

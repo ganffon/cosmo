@@ -23,7 +23,7 @@ function BuildHistory(props) {
   }, []);
 
   return (
-    <ModalWrapMulti width={"30%"} height={"80%"}>
+    <ModalWrapMulti width={"40%"} height={"80%"}>
       <S.HeaderBox>
         <S.TitleBox>Build History</S.TitleBox>
         <S.ButtonClose color="primary" aria-label="close" onClick={onClose}>
