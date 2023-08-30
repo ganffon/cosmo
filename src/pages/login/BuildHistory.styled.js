@@ -57,6 +57,7 @@ export const MainTitle = styled("h2")`
 export const MainDate = styled("h5")``;
 export const MainContents = styled("pre")`
   width: 100%;
+  white-space: pre-wrap;
 `;
 
 export const DividingLine = styled("div")`
