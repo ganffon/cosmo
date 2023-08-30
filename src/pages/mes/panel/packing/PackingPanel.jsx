@@ -755,7 +755,7 @@ export function PackingPanel() {
     return () => {
       window.removeEventListener("keydown", onBarcodeScan);
     };
-  }, [barcodeScan.lot]);
+  }, [barcodeScan]);
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
       handleGridHeaderSearch();
