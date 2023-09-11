@@ -215,19 +215,17 @@ export function SubdivisionPanel() {
       const Header = refGridSelect?.current?.gridInst;
       const rowID = Header.getValue(e?.rowKey, "work_subdivision_id");
       const params = `?work_subdivision_id=${rowID}`;
-      if (rowID !== workSubdivisionID.current && rowID !== null) {
-        prodID.current = Header.getValue(e?.rowKey, "prod_id");
-        prodCD.current = Header.getValue(e?.rowKey, "prod_cd");
-        prodNM.current = Header.getValue(e?.rowKey, "prod_nm");
-        date.current = Header.getValue(e?.rowKey, "subdivision_date");
-        lot.current = Header.getValue(e?.rowKey, "lot_no");
-        setTotalQty(Header.getValue(e?.rowKey, "total_qty"));
-        workSubdivisionID.current = rowID;
-        if (e?.columnName === "select") {
-          onClickGridButton(e?.rowKey);
-        } else {
-          actSelectLoadDetail(params);
-        }
+      prodID.current = Header.getValue(e?.rowKey, "prod_id");
+      prodCD.current = Header.getValue(e?.rowKey, "prod_cd");
+      prodNM.current = Header.getValue(e?.rowKey, "prod_nm");
+      date.current = Header.getValue(e?.rowKey, "subdivision_date");
+      lot.current = Header.getValue(e?.rowKey, "lot_no");
+      setTotalQty(Header.getValue(e?.rowKey, "total_qty"));
+      workSubdivisionID.current = rowID;
+      if (e?.columnName === "select") {
+        onClickGridButton(e?.rowKey);
+      } else {
+        actSelectLoadDetail(params);
       }
     }
   };
@@ -484,7 +482,7 @@ export function SubdivisionPanel() {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
       const data = result?.data?.data?.rows[0];
-      setScaleInfo({ ...scaleInfo, inputLot: lot.current, before: String(data.value) });
+      setScaleInfo({ ...scaleInfo, inputLot: lot.current, before: data.value === null ? "" : String(data.value) });
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -502,9 +500,7 @@ export function SubdivisionPanel() {
       setIsBackDrop(true);
       const result = await restAPI.get(restURI.opcWeight + `?proc=SUBDIVISION`);
       const data = result?.data?.data?.rows[0];
-      const leaveBag = result?.data?.data?.rows[1].value;
-      setScaleInfo({ ...scaleInfo, after: String(data.value) });
-      setTotalQty(String(leaveBag));
+      setScaleInfo({ ...scaleInfo, after: data.value === null ? "" : String(data.value) });
     } catch (err) {
       setIsSnackOpen({
         ...isSnackOpen,
@@ -605,11 +601,11 @@ export function SubdivisionPanel() {
             const resultData = result?.data?.data?.rows;
             setGridDataHeader(resultData);
             resetScaleInfo();
-            // let totalQty = 0;
-            // for (let i = 0; resultData.length > i; i++) {
-            //   totalQty = totalQty + resultData[i].subdivision_qty;
-            // }
-            // setTotalQty(totalQty);
+            let totalQty = 0;
+            for (let i = 0; resultData.length > i; i++) {
+              totalQty = totalQty + resultData[i].subdivision_qty;
+            }
+            setTotalQty(totalQty);
             setIsBarcodeScanOpen(true);
             refBtnNext?.current?.blur();
 
@@ -1089,7 +1085,7 @@ export function SubdivisionPanel() {
                   nameColor={"black"}
                   nameSize={"20px"}
                   namePositionTop={"-30px"}
-                  size={"70px"}
+                  size={"30px"}
                   value={scaleInfo.before || ""}
                   onTextChange={handleChange}
                   readOnly={false}
@@ -1102,7 +1098,7 @@ export function SubdivisionPanel() {
                   nameColor={"black"}
                   nameSize={"20px"}
                   namePositionTop={"-30px"}
-                  size={"70px"}
+                  size={"30px"}
                   value={scaleInfo.after || ""}
                   onTextChange={handleChange}
                   readOnly={false}

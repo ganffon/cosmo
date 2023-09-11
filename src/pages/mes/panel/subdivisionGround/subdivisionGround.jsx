@@ -228,13 +228,7 @@ export function SubdivisionGround() {
   };
 
   const carryingUpBag = async () => {
-    let nowDate = new Date();
-    let nowDateFull =
-      nowDate.getFullYear() +
-      "-" +
-      (nowDate.getMonth() + 1 < 9 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1) +
-      "-" +
-      nowDate.getDate();
+    let nowDateFull = DateTime().dateFull;
     const workGroup = comboValue.workGroupKey;
     const prodId = comboValueProd.productId;
     const rawData = comboValue;
@@ -391,22 +385,10 @@ export function SubdivisionGround() {
     setIsBagDownAlertOpen(true);
   };
   const moveMaterialFunction = async (lotNo) => {
-    let nowDate = new Date();
-    let nowDateFull =
-      nowDate.getFullYear() +
-      "-" +
-      (nowDate.getMonth() + 1 < 9 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1) +
-      "-" +
-      nowDate.getDate();
+    let nowDateFull = DateTime().dateFull;
     const weightValues = await getWeight();
     const rawData = {};
-    // ((nowDate.getHours())<9?"0"+(nowDate.getHours())
-    let nowTimeFull =
-      (nowDate.getHours() < 9 ? "0" + nowDate.getHours() : nowDate.getHours()) +
-      ":" +
-      (nowDate.getMinutes() < 9 ? "0" + nowDate.getMinutes() : nowDate.getMinutes()) +
-      ":" +
-      (nowDate.getSeconds() < 9 ? "0" + nowDate.getSeconds() : nowDate.getSeconds());
+    let nowTimeFull = DateTime().hour + ":" + DateTime().minute;
     rawData.work_subdivision_id = weightHeaderUID;
     rawData.lot_no = lotNo;
     rawData.qty = Number(weightValues[0].value) - Number(totalWeight);

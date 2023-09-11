@@ -21,12 +21,12 @@ function BuildReportSet(onEditBtn, onApplyBtn) {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const columns = [
-    col.id("deploy_version_id", CN.deploy_version_id, C.HIDDEN_ID),
     col.text("version", CN.version, C.U, C.U, C.WIDTH_MIDDLE),
     col.button("edit", CN.edit, "수정", onEditBtn),
     col.text("title", CN.buildTitle, C.U, C.U, "500"),
     col.text("contents", CN.buildContents, C.U, C.U, "800"),
     col.button("apply_fg", CN.apply_fg, "적용", onApplyBtn, "미적용", "Toggle"),
+    col.id("deploy_version_id", CN.deploy_version_id, C.HIDDEN_ID),
   ];
 
   const columnOptions = {
