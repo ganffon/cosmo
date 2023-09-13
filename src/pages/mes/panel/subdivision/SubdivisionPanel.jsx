@@ -145,6 +145,9 @@ export function SubdivisionPanel() {
     date.current = "";
     lot.current = "";
     workSubdivisionID.current = "";
+    setSelectedWorkerGroup({ ...selectedWorkerGroup, text: "", value: "" });
+    setSelectedProd({ ...selectedProd, prod_nm: "", prod_id: "" });
+    setSelectedRemark("");
     setTotalQty("");
 
     setGridDataHeader([]);
@@ -245,54 +248,57 @@ export function SubdivisionPanel() {
   };
 
   async function onClickGridButton(e, rowKey) {
-    const Header = refGridSelect?.current?.gridInst;
-    const rowID = Header.getValue(rowKey, "work_subdivision_id");
-    workSubdivisionID.current = rowID;
-    if (workSubdivisionID.current) {
-      try {
-        const result = await restAPI.get(
-          restURI.subdivisionDetail + `?work_subdivision_id=${workSubdivisionID.current}`
-        );
-        setGridDataHeader(result?.data?.data?.rows);
-        setSelectedWorkerGroup({
-          ...selectedWorkerGroup,
-          text: Header.getValue(rowKey, "worker_group_nm"),
-          value: Header.getValue(rowKey, "worker_group_nm"),
-        });
-        setSelectedProd({
-          ...selectedProd,
-          prod_nm: Header.getValue(rowKey, "prod_nm"),
-          prod_id: Header.getValue(rowKey, "prod_id"),
-        });
-        setSelectedRemark(Header.getValue(rowKey, "remark"));
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: result?.data?.message,
-          severity: "success",
-          location: "bottomRight",
-        });
-        setIsModalSubdivisionOpen(false);
-        setIsLockScale(false);
-      } catch (err) {
-        setIsSnackOpen({
-          ...isSnackOpen,
-          open: true,
-          message: err?.response?.data?.message,
-          severity: "error",
-          location: "bottomRight",
-        });
+    if (rowKey !== undefined) {
+      const Header = refGridSelect?.current?.gridInst;
+      const rowID = Header.getValue(rowKey, "work_subdivision_id");
+      workSubdivisionID.current = rowID;
+      if (workSubdivisionID.current) {
+        try {
+          const result = await restAPI.get(
+            restURI.subdivisionDetail + `?work_subdivision_id=${workSubdivisionID.current}`
+          );
+          setGridDataHeader(result?.data?.data?.rows);
+          setSelectedWorkerGroup({
+            ...selectedWorkerGroup,
+            text: Header.getValue(rowKey, "worker_group_nm"),
+            value: Header.getValue(rowKey, "worker_group_nm"),
+          });
+          setSelectedProd({
+            ...selectedProd,
+            prod_nm: Header.getValue(rowKey, "prod_nm"),
+            prod_id: Header.getValue(rowKey, "prod_id"),
+          });
+          setSelectedRemark(Header.getValue(rowKey, "remark"));
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: result?.data?.message,
+            severity: "success",
+            location: "bottomRight",
+          });
+          setIsModalSubdivisionOpen(false);
+          setIsLockScale(false);
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        }
       }
     }
   }
+
   const onGetWorkSubdivisionID = async () => {
     if (!workSubdivisionID.current) {
       let obj = [];
       obj.push({
         subdivision_date: date.current,
-        worker_group_nm: comboValue.workGroupKey,
+        worker_group_nm: selectedWorkerGroup.value,
         remark: selectedRemark,
-        prod_id: comboValueProd.productId,
+        prod_id: selectedProd.prod_id,
       });
       try {
         const result = await restAPI.post(restURI.subdivisions, obj);
