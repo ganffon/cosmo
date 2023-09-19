@@ -157,5 +157,6 @@
   "buildReport": "/sys/deploy-version",
   "buildReportLatest": "/sys/deploy-version/latest",
   "buildReportLatestNotApply": "/sys/deploy-version/latest/not-apply",
-  "subdivisionPanel": "/prd/subdivision/panel"
+  "subdivisionPanel": "/prd/subdivision/panel",
+  "performanceToOrder": "/kpi/performance/to-order"
 }

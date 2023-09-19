@@ -14,4 +14,8 @@ export const ContentsArea = styled("div")`
   & .selectedBack {
     background-color: #fdf0f6;
   }
+
+  & .subtotalBack {
+    background-color: #fdf0f6;
+  }
 `;

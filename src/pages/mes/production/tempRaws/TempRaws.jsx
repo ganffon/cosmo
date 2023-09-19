@@ -83,7 +83,7 @@ export const TempRaws = () => {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <S.Date datePickerSet={"single"} dateText={dateText.startDate} setDateText={setDateText} />
+            <S.Date datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
           </S.SearchWrap>
           <S.ButtonWrap>
             <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />

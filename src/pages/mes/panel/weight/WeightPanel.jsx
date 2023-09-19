@@ -68,7 +68,7 @@ export function WeightPanel() {
     columnsSelectStore,
     columnsInput,
     columnsInputDetail,
-  } = WeightPanelSet(onInput, onBarcodeScan);
+  } = WeightPanelSet(onInput);
 
   const resetRequire = () => {
     setSelectInfo({
@@ -586,7 +586,6 @@ export function WeightPanel() {
     handleInputSaveInfo(rowKey);
     setIsModalInputSaveOpen(true);
   }
-  function onBarcodeScan(e, rowKey) {}
   const GridHeader = useMemo(() => {
     return (
       <GridSingle

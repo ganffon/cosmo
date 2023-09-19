@@ -131,7 +131,7 @@ export const CountRaws = () => {
       <C.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <C.ToolWrap>
           <C.SearchWrap>
-            <C.Date datePickerSet={"single"} dateText={dateText.startDate} setDateText={setDateText} />
+            <C.Date datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
           </C.SearchWrap>
           <C.ButtonWrap>
             <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
