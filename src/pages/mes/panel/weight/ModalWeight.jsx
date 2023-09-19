@@ -37,7 +37,13 @@ function ModalWeight(props) {
   } = props;
   const { currentMenuName } = useContext(LayoutContext);
 
-  const { columnsWeight, columnsWeightAutoCalc } = WeightPanelSet(onInput, onBarcodeScanButton, onCopyRow, onCancelRow);
+  const { columnsWeight, columnsWeightAutoCalc } = WeightPanelSet(
+    onInput,
+    onBarcodeScanButton,
+    onCopyRow,
+    onCancelRow,
+    onOpcWeight
+  );
 
   const [inputChange, setInputChange] = useState();
 
@@ -81,13 +87,31 @@ function ModalWeight(props) {
   function onCancelRow(e, rowKey) {
     CustomGrid.cancelRow(refGridWeight, setGridDataWeight, rowKey);
   }
-  function onBarcodeScanButton(rowKey) {
+  function onBarcodeScanButton(e, rowKey) {
     const Grid = refGridWeight?.current?.gridInst;
     targetRowKey.current = rowKey;
     tagID.current = Grid.getValue(rowKey, "tag_id");
     weight.current = Grid.getValue(rowKey, "weight");
     constantValue.current = Grid.getValue(rowKey, "constant_value");
     setIsBarcodeScanOpen(true);
+  }
+  async function onOpcWeight(e, rowKey) {
+    const grid = refGridWeight?.current?.gridInst;
+    const tagID = grid.getValue(rowKey, "tag_id");
+    const weight = grid.getValue(rowKey, "weight");
+    const constantValue = grid.getValue(rowKey, "constant_value");
+
+    try {
+      const data = await restAPI.get(
+        restURI.opcWeight + `?tag_id=${tagID}&weight=${weight}&constant_value=${constantValue}`
+      );
+      const result = data?.data?.data?.rows[0].value;
+      if (result !== null && result !== undefined) {
+        grid.setValue(rowKey, "total_qty", result);
+      }
+    } catch (err) {
+    } finally {
+    }
   }
 
   function getTimeDifferenceInSeconds(timeStamp1, timeStamp2) {

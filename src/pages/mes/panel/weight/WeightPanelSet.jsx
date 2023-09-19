@@ -7,7 +7,8 @@ function WeightPanelSet(
   onInput = () => {},
   onBarcodeScanButton = () => {},
   onCopyRow = () => {},
-  onCancelRow = () => {}
+  onCancelRow = () => {},
+  onOpcWeight = () => {}
 ) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
@@ -58,6 +59,7 @@ function WeightPanelSet(
     col.button("copyRow", "Lot 추가", "Lot 추가", onCopyRow, "", "copy"),
     col.button("cancelRow", "Lot 취소", "Lot 취소", onCancelRow, "", "cancel", true),
     col.text("lot_no", CN.lot_no, true, C.U, C.WIDTH_MIDDLE),
+    col.button("opcWeight", "저울", "계량값 연동", onOpcWeight),
     col.number("total_qty", CN.total_qty2, true),
     col.number("bag_qty", CN.bag_qty, true),
     col.number("input_qty", CN.input_qty),
