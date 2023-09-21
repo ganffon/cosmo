@@ -14,4 +14,8 @@ const TabSingleGridWrap = styled("div")`
   height: 100%;
 `;
 
-export { TabGridWrap, InputNewTab, TabSingleGridWrap };
+const ValidationRow = styled(".test")`
+  color: red;
+`;
+
+export { TabGridWrap, InputNewTab, TabSingleGridWrap, ValidationRow };

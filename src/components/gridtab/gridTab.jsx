@@ -125,6 +125,211 @@ function GridTab(props) {
 
   */
 
+  const valueValidation = async (obj) => {
+    let gridInstTmp;
+    setTimeout(() => {
+      gridInstTmp = obj?.current?.getInstance();
+      let rawDataTmp = obj?.current?.gridInst?.store?.data?.rawData;
+      for (let i = 0; i < rawDataTmp.length; i++) {
+        const element = rawDataTmp[i];
+        console.log(element);
+        let rowKey = element.rowKey;
+        const morValue = Number(element.mng_insp_value);
+        const aftValue = Number(element.aft_insp_value);
+        const nitValue = Number(element.nig_insp_value);
+        console.log(`keys : ${rowKey} + ${element.proc_nm}`);
+        if (element.spec_min !== null && element.spec_min === null) {
+          const specMin = Number(element.spec_min);
+          if (
+            element.mng_insp_value !== null &&
+            element.mng_insp_value !== ""
+          ) {
+            if (specMin > morValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "mng_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.aft_insp_value !== null &&
+            element.aft_insp_value !== ""
+          ) {
+            if (specMin > aftValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "aft_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.nig_insp_value !== null &&
+            element.nig_insp_value !== ""
+          ) {
+            if (specMin > nitValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "nig_insp_value",
+                "redText"
+              );
+            }
+          }
+        } else if (element.spec_min === null && element.spec_max !== null) {
+          const specMax = Number(element.spec_max);
+          if (
+            element.mng_insp_value !== null &&
+            element.mng_insp_value !== ""
+          ) {
+            if (specMax < morValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "mng_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.aft_insp_value !== null &&
+            element.aft_insp_value !== ""
+          ) {
+            if (specMax < aftValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "aft_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.nig_insp_value !== null &&
+            element.nig_insp_value !== ""
+          ) {
+            if (specMax < nitValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "nig_insp_value",
+                "redText"
+              );
+            }
+          }
+        } else if (element.spec_min !== null && element.spec_max !== null) {
+          const specMin = Number(element.spec_min);
+          const specMax = Number(element.spec_max);
+          if (
+            element.mng_insp_value !== null &&
+            element.mng_insp_value !== ""
+          ) {
+            if (specMax < morValue || specMin > morValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "mng_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.aft_insp_value !== null &&
+            element.aft_insp_value !== ""
+          ) {
+            if (specMax < aftValue || specMin > aftValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "aft_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.nig_insp_value !== null &&
+            element.nig_insp_value !== ""
+          ) {
+            if (specMax < nitValue || specMin > nitValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "nig_insp_value",
+                "redText"
+              );
+            }
+          }
+        }
+      }
+    }, 400);
+  };
+
   const splitData = (index) => {
     if (data) {
       // 종류별로 데이터를 분류하기 위한 빈 객체 생성
@@ -174,6 +379,7 @@ function GridTab(props) {
     setActiveTab(refGrid[0]);
     getActiveGrid(refGrid[0]);
     splitData();
+    valueValidation(refGrid[0]);
   }, [data]);
 
   React.useEffect(() => {
@@ -211,6 +417,7 @@ function GridTab(props) {
     updateDataset(newValue);
     getActiveGrid(refGrid[newValue]);
     setValue(newValue);
+    valueValidation(refGrid[newValue]);
   };
 
   function TabGrid(props) {
