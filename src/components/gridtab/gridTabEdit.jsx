@@ -39,6 +39,7 @@ function GridTabEdit(props) {
     flag = null,
     mappingFlag = false,
     isSelectEmpOpen = false,
+    validationFunction = () => {},
   } = props;
   const [value, setValue] = React.useState(0);
   const [activeTab, setActiveTab] = React.useState(null);
@@ -147,6 +148,7 @@ function GridTabEdit(props) {
       getActiveGrid(refGrid[value]);
     }
     splitData();
+    validationFunction(refGrid[value]);
   }, [data]);
 
   React.useEffect(() => {
@@ -246,6 +248,8 @@ function GridTabEdit(props) {
                 rowHeaders={rowHeaders}
                 data={splitDataSetArr[index]}
                 refGrid={refGrid[index]}
+                isEditMode={true}
+                onEditingFinish={() => validationFunction(refGrid[index])}
               />
             </S.TabSingleGridWrap>
           </S.TabGridWrap>

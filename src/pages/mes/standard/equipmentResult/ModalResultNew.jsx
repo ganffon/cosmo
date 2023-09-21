@@ -105,6 +105,211 @@ function ModalResultNew(props) {
   const getActiveTab = () => {
     onMapping();
     setMappingFlag(!mappingFlag);
+    valueValidation(activeTab);
+  };
+
+  const valueValidation = async (obj) => {
+    let gridInstTmp;
+    setTimeout(() => {
+      gridInstTmp = obj?.current?.getInstance();
+      let rawDataTmp = obj?.current?.gridInst?.store?.data?.rawData;
+      for (let i = 0; i < rawDataTmp.length; i++) {
+        const element = rawDataTmp[i];
+        let rowKey = element.rowKey;
+        const morValue = Number(element.mng_insp_value);
+        const aftValue = Number(element.aft_insp_value);
+        const nitValue = Number(element.nig_insp_value);
+        console.log(`keys : ${rowKey} + ${element.proc_nm}`);
+        if (element.spec_min !== null && element.spec_min === null) {
+          const specMin = Number(element.spec_min);
+          if (
+            element.mng_insp_value !== null &&
+            element.mng_insp_value !== ""
+          ) {
+            if (specMin > morValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "mng_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.aft_insp_value !== null &&
+            element.aft_insp_value !== ""
+          ) {
+            if (specMin > aftValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "aft_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.nig_insp_value !== null &&
+            element.nig_insp_value !== ""
+          ) {
+            if (specMin > nitValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "nig_insp_value",
+                "redText"
+              );
+            }
+          }
+        } else if (element.spec_min === null && element.spec_max !== null) {
+          const specMax = Number(element.spec_max);
+          if (
+            element.mng_insp_value !== null &&
+            element.mng_insp_value !== ""
+          ) {
+            if (specMax < morValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "mng_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.aft_insp_value !== null &&
+            element.aft_insp_value !== ""
+          ) {
+            if (specMax < aftValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "aft_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.nig_insp_value !== null &&
+            element.nig_insp_value !== ""
+          ) {
+            if (specMax < nitValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "nig_insp_value",
+                "redText"
+              );
+            }
+          }
+        } else if (element.spec_min !== null && element.spec_max !== null) {
+          const specMin = Number(element.spec_min);
+          const specMax = Number(element.spec_max);
+          if (
+            element.mng_insp_value !== null &&
+            element.mng_insp_value !== ""
+          ) {
+            if (specMax < morValue || specMin > morValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "mng_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.aft_insp_value !== null &&
+            element.aft_insp_value !== ""
+          ) {
+            if (specMax < aftValue || specMin > aftValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "aft_insp_value",
+                "redText"
+              );
+            }
+          }
+          if (
+            element.nig_insp_value !== null &&
+            element.nig_insp_value !== ""
+          ) {
+            if (specMax < nitValue || specMin > nitValue) {
+              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "insp_item_type_nm",
+                "redText"
+              );
+              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
+              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
+              gridInstTmp?.addCellClassName(
+                rowKey,
+                "nig_insp_value",
+                "redText"
+              );
+            }
+          }
+        }
+      }
+    }, 400);
   };
 
   const onMapping = async () => {
@@ -276,8 +481,8 @@ function ModalResultNew(props) {
         setIsBackDrop(true);
         const dataHeader = {
           insp_result_id: mainInfo.inspResultId,
-          insp_result_date: mainInfo.insp_result_date
-            ? mainInfo.insp_result_date
+          insp_result_date: mainInfo.inspResultDate
+            ? mainInfo.inspResultDate
             : dateCheck.checkDate,
 
           remark: mainInfo.remark ? mainInfo.remark : null,
@@ -381,6 +586,7 @@ function ModalResultNew(props) {
         flag={flag}
         mappingFlag={mappingFlag}
         isSelectEmpOpen={isSelectEmpOpen}
+        validationFunction={valueValidation}
       />
     );
   }, [refGridArrayModal, emp, mappingFlag]);
