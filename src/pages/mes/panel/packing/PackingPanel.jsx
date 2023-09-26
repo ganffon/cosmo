@@ -229,20 +229,35 @@ export function PackingPanel() {
   const onDblClickPackingHeader = async (e) => {
     if (e?.rowKey !== undefined) {
       const Grid = refGridPackingHeader?.current?.gridInst;
-      setInfo({
-        ...info,
-        workOrderID: Grid.getValue(e?.rowKey, "work_order_id"),
-        lineID: Grid.getValue(e?.rowKey, "line_id"),
-        lineNM: Grid.getValue(e?.rowKey, "line_nm"),
-        lineDeptID: Grid.getValue(e?.rowKey, "line_dept_id"),
-        prodID: Grid.getValue(e?.rowKey, "prod_id"),
-        prodCD: Grid.getValue(e?.rowKey, "prod_cd"),
-        prodNM: Grid.getValue(e?.rowKey, "prod_nm"),
-        storeID: Grid.getValue(e?.rowKey, "inv_to_store_id"),
-        locationID: Grid.getValue(e?.rowKey, "inv_to_location_id"),
-      });
       workPackingID.current = Grid.getValue(e?.rowKey, "work_packing_id");
       workOrderID.current = Grid.getValue(e?.rowKey, "work_order_id");
+
+      try {
+        setIsBackDrop(true);
+        const result = await restAPI.get(restURI.packingLatest + `?line_id=${Grid.getValue(e?.rowKey, "line_id")}`);
+        const data = result?.data?.data?.rows[0];
+        setInfo({
+          ...info,
+          lotNo: data?.lot_no ? data?.lot_no : "",
+          packingWeight: data?.packing_qty ? data?.packing_qty : "",
+          packingQty: data?.packing_cnt ? data?.packing_cnt : "",
+          remark: data?.remark ? data?.remark : "",
+
+          workOrderID: Grid.getValue(e?.rowKey, "work_order_id"),
+          lineID: Grid.getValue(e?.rowKey, "line_id"),
+          lineNM: Grid.getValue(e?.rowKey, "line_nm"),
+          lineDeptID: Grid.getValue(e?.rowKey, "line_dept_id"),
+          prodID: Grid.getValue(e?.rowKey, "prod_id"),
+          prodCD: Grid.getValue(e?.rowKey, "prod_cd"),
+          prodNM: Grid.getValue(e?.rowKey, "prod_nm"),
+          storeID: Grid.getValue(e?.rowKey, "inv_to_store_id"),
+          locationID: Grid.getValue(e?.rowKey, "inv_to_location_id"),
+        });
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsBackDrop(false);
+      }
       setIsPackingHeaderOpen(false);
     }
   };
