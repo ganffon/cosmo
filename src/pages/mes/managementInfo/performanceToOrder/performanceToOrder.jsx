@@ -183,34 +183,6 @@ export function PerformanceToOrder(props) {
         <BtnComponent btnName={"Search"} onClick={onClickSearch} />
       </S.SearchWrap>
       <S.GridWrap>{gridMain}</S.GridWrap>
-      {/* <S.ShadowBoxButton>
-        <S.ToolWrap>
-          <S.SearchWrap></S.SearchWrap>
-          <S.ButtonWrap>
-            <BtnComponent btnName={"Search"} onClick={onClickSearch} />
-          </S.ButtonWrap>
-        </S.ToolWrap>
-      </S.ShadowBoxButton>
-
-      <S.ShadowBoxGrid isAllScreen={isAllScreen}>
-        <S.ButtonWrap>
-          <BtnComponent btnName={"Edit"} />
-          <BtnComponent btnName={"DataLoad"} toolTipTitle={"lineButton"} />
-        </S.ButtonWrap>
-
-        <S.GridWrap>
-          <GridSingle
-            columnOptions={columnOptions}
-            columns={columns}
-            rowHeaders={rowHeaders}
-            header={header}
-            data={gridData}
-            draggable={false}
-            refGrid={refSingleGrid}
-            onEditingFinish={onEditingFinishGrid}
-          />
-        </S.GridWrap>
-      </S.ShadowBoxGrid> */}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>

@@ -541,6 +541,12 @@ const MenuListChk = [
             path: convertURL("DailyLineInputCapa"),
             under: null,
           },
+          {
+            name: "지시대비실적",
+            id: "PerformanceToOrder",
+            path: convertURL("PerformanceToOrder"),
+            under: null,
+          },
         ],
       },
       {

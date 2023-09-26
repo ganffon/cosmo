@@ -38,9 +38,11 @@ const Time = (e, refGrid, columnName) => {
 
 //숫자만 입력받는 정규표현식
 const removeNonNumeric = (inputString) => {
-  if (inputString) {
+  if (typeof inputString === "string") {
     const regex = /[^0-9]/g;
     return inputString.replace(regex, "");
+  } else if (typeof inputString === "number") {
+    return inputString;
   }
 };
 const validateTimeFormat = (inputString) => {
