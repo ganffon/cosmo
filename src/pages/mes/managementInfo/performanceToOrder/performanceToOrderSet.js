@@ -13,6 +13,7 @@ function PerformanceToOrderSet(isEditMode) {
     col.text("work_order_no", CN.work_order_no, C.U, false),
     col.date("work_start_date", CN.work_start_date),
     col.date("work_end_date", CN.work_end_date),
+    col.date("complete_date", CN.complete_date),
     col.text("line_nm", CN.line_nm, C.U, C.U, C.WIDTH_SHORT),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
