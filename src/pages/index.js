@@ -211,6 +211,8 @@ export * from './mes/standard/sysOptionManage/SysOptionManage.jsx';
 export * from './mes/standard/sysOptionManage/SysOptionManageSet.jsx';
 export * from './mes/standard/temporarySetup/TemporarySetup.jsx';
 export * from './mes/standard/temporarySetup/TemporarySetupSet.jsx';
+export * from './mes/standard/theoreticalProduction/TheoreticalProduction.jsx';
+export * from './mes/standard/theoreticalProduction/TheoreticalProductionSet.jsx';
 export * from './mes/standard/unit/Unit.jsx';
 export * from './mes/standard/unit/UnitSet.jsx';
 export * from './mes/standard/user/User.jsx';

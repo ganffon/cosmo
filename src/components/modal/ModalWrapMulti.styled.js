@@ -16,6 +16,7 @@ const Overlay = styled("div")`
 const Inner = styled("div")`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: ${(props) => props.width};
   min-width: ${(props) => props.width};
   height: ${(props) => props.height};

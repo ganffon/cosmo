@@ -4,11 +4,14 @@ import ModalWrap from "components/modal/ModalWrap";
 import Cancel from "img/Component/button/cancelWhite.svg";
 
 import Delete from "img/Component/button/delete2.svg";
+import ModalWrapMulti from "components/modal/ModalWrapMulti";
 
 function NoticeAlertModal(props) {
   const {
     textContent = "내용을 입력하세요!",
+    textSubContent = "",
     textFontSize = "40px",
+    subTextFontSize = "10px",
     isConfirm = false,
     isModify = false,
     isDelete = false,
@@ -17,6 +20,7 @@ function NoticeAlertModal(props) {
     height = "500px",
     width = "500px",
     fontColor = "#000000",
+    subFontColor = "",
     confirmColor = null,
     modifyColor = null,
     deleteColor = null,
@@ -27,25 +31,8 @@ function NoticeAlertModal(props) {
     onCancel = () => {},
   } = props;
 
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleClick = () => {
-    setIsClicked(true);
-    setTimeout(() => {
-      setIsClicked(false);
-    }, 300);
-  };
-
-  let contentText;
-
-  if (textContent === null) {
-    contentText = "내용을 입력하세요";
-  } else {
-    contentText = textContent;
-  }
-
   return (
-    <ModalWrap height={height} width={width}>
+    <ModalWrapMulti height={height} width={width}>
       <S.HeaderBox>
         <S.Title size={"15px"}> {title}</S.Title>
       </S.HeaderBox>
@@ -53,6 +40,9 @@ function NoticeAlertModal(props) {
         <S.Content size={textFontSize} fontColor={fontColor}>
           {textContent}
         </S.Content>
+        <S.SubContent size={subTextFontSize} fontColor={subFontColor}>
+          {textSubContent}
+        </S.SubContent>
       </S.ContentBox>
       <S.ButtonWrap>
         {isConfirm ? (
@@ -84,7 +74,7 @@ function NoticeAlertModal(props) {
         ) : null}
         {isCancel ? (
           <S.NoticeButton
-            backgroundColor={cancelColor ? cancelColor : "#1491ce"}
+            backgroundColor={cancelColor ? cancelColor : "#cccccc"}
             fontColor={"#ffffff"}
             onClick={onCancel}
           >
@@ -92,7 +82,7 @@ function NoticeAlertModal(props) {
           </S.NoticeButton>
         ) : null}
       </S.ButtonWrap>
-    </ModalWrap>
+    </ModalWrapMulti>
   );
 }
 export default NoticeAlertModal;

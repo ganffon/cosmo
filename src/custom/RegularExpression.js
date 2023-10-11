@@ -36,6 +36,17 @@ const Time = (e, refGrid, columnName) => {
   }
 };
 
+function onlyNum(value) {
+  if (value && value !== null && value !== undefined) {
+    return value
+      .toString()
+      .replace(/[^0-9.]/g, "")
+      .replace(/(\..*)\./g, "$1");
+  } else {
+    return null;
+  }
+}
+
 //숫자만 입력받는 정규표현식
 const removeNonNumeric = (inputString) => {
   if (typeof inputString === "string") {
@@ -114,4 +125,36 @@ const DecimalTwoPoints = (value) => {
   return pattern.test(value) ? value : "";
 };
 
-export { Time, TimeInput, NumComma, removeNonNumeric, validateTimeFormat, DecimalOnePoint, DecimalTwoPoints };
+const DecimalFourPoints = (value) => {
+  const pattern = /^[0-9]+(\.[0-9]{0,4})?$/;
+  return pattern.test(value) ? value : "";
+};
+
+const DecimalTwo = (value) => {
+  if (typeof value !== "string") {
+    value = String(value);
+  }
+
+  // 문자와 숫자를 분리합니다.
+  const numericValue = value.replace(/[^\d.]/g, "");
+
+  // 소수점 3자리 이상이면 2자리까지만 반올림
+  if (numericValue.includes(".") && numericValue.split(".")[1].length > 2) {
+    return parseFloat(numericValue).toFixed(2);
+  }
+
+  return numericValue;
+};
+
+export {
+  Time,
+  TimeInput,
+  NumComma,
+  removeNonNumeric,
+  validateTimeFormat,
+  DecimalOnePoint,
+  DecimalTwoPoints,
+  DecimalFourPoints,
+  onlyNum,
+  DecimalTwo,
+};
