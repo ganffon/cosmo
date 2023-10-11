@@ -39,9 +39,6 @@ export function WeightPanel() {
     endDate: DateTime().dateFull,
   });
 
-  const refBarcodeScan = useRef(null);
-  const refBarcodeTimeStamp = useRef(null);
-
   const [selectInfo, setSelectInfo] = useState({});
   const [selectInputInfo, setSelectInputInfo] = useState({});
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -52,7 +49,11 @@ export function WeightPanel() {
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [isBarcodeScanOpen, setIsBarcodeScanOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState({
+    open: false,
+    title: "",
+    message: "",
+  });
   const [isWarning, setIsWarning] = useState({
     open: false,
     title: "",
@@ -360,6 +361,59 @@ export function WeightPanel() {
   const onClickRemoveStore = () => {
     resetStore();
     setRemoveToggle(!removeToggle);
+  };
+  const onCheckERPLot = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refGridWeight?.current?.gridInst;
+      Grid?.finishEditing();
+
+      let data = [];
+      for (let i = 0; i < Grid?.getRowCount(); i++) {
+        data.push(Grid?.getRowAt(i));
+      }
+
+      const checkData = data.map((raw) => {
+        return {
+          work_weigh_date: DateTime().dateFull,
+          prod_id: raw.prod_id,
+          prod_nm: raw.prod_nm,
+          lot_no: raw.lot_no === null ? "" : raw.lot_no,
+        };
+      });
+
+      if (checkData) {
+        const res = await restAPI.post(restURI.weightCheckERPLot, checkData);
+        const result = res?.data?.data?.rows;
+        if (result.length > 0) {
+          const headerMsg = `LotNo 정보가 ERP에 존재하지 않습니다.\n그래도 진행하시겠습니까?\n　\n`;
+          const mainMsg = result
+            .map((item, index) => `${index + 1}. ${item.prod_nm}의 LOT NO : ${item.lot_no}`)
+            .join("\n");
+          //ERP LOT 경고 메세지 호출
+          setIsAlertOpen({
+            ...isAlertOpen,
+            open: true,
+            title: "주의",
+            message: headerMsg,
+            subMessage: mainMsg,
+          });
+        } else {
+          //실제 저장 함수 호출
+          onClickWeightSave();
+        }
+      }
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+    }
   };
   const onClickWeightSave = async () => {
     if (selectInputInfo.empNM) {
@@ -754,7 +808,8 @@ export function WeightPanel() {
           refGridWeightAutoCalc={refGridWeightAutoCalc}
           onClickSelect={onClickSelect}
           onClickRemove={onClickRemove}
-          onClickWeightSave={onClickWeightSave}
+          // onClickWeightSave={onClickWeightSave}
+          onClickWeightSave={onCheckERPLot}
           onEditingFinishWeight={onEditingFinishWeight}
           onEditingFinishWeightAutoCalc={onEditingFinishWeightAutoCalc}
           selectInputInfo={selectInputInfo}
@@ -814,6 +869,26 @@ export function WeightPanel() {
           isConfirm={true}
           onConfirm={() => {
             setIsWarning(false);
+          }}
+        />
+      ) : null}
+      {isAlertOpen.open ? (
+        <NoticeAlertModal
+          title={isAlertOpen.title}
+          textContent={isAlertOpen.message}
+          textSubContent={isAlertOpen.subMessage}
+          textFontSize={"20px"}
+          subTextFontSize={"16px"}
+          height={"350px"}
+          width={"450px"}
+          isConfirm={true}
+          isCancel={true}
+          onConfirm={() => {
+            setIsAlertOpen(false);
+            onClickWeightSave();
+          }}
+          onCancel={() => {
+            setIsAlertOpen(false);
           }}
         />
       ) : null}

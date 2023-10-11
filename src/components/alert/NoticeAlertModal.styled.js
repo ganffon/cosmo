@@ -6,8 +6,6 @@ export const Background = styled("div")`
 `;
 
 export const HeaderBox = styled("div")`
-  grid-column: 1 / -1;
-  grid-row: 1 / 1;
   display: flex;
   justify-content: space-between;
   font-family: "NotoSansKR";
@@ -32,16 +30,15 @@ export const Title = styled("div")`
 `;
 
 export const ContentBox = styled("div")`
-  grid-column: 1 / -1;
-  grid-row: 10 / 10;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   border-radius: 10px 10px 0px 0px;
-  height: 40px;
+  padding: 5px 20px;
 `;
 export const Content = styled("pre")`
   white-space: pre-wrap;
-  justify-content: center; /* 수평 중앙 정렬 */
+  justify-content: center;
   width: 100%;
   font-family: "NotoSansKR";
   font-style: normal;
@@ -49,9 +46,15 @@ export const Content = styled("pre")`
   text-align: center;
   color: ${(props) => props.fontColor};
 `;
+export const SubContent = styled("pre")`
+  white-space: pre-wrap;
+  width: 100%;
+  font-family: NotoSansKR;
+  font-style: normal;
+  font-size: ${(props) => props.size};
+  color: ${(props) => props.fontColor};
+`;
 export const ButtonWrap = styled("div")`
-  grid-column: 1 / -1;
-  grid-row: 20 / 20;
   display: flex;
   justify-content: end;
   padding-right: 10px;

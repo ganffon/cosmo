@@ -4,6 +4,7 @@ import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 import * as S from "./GridTooltip.styled";
 import TooltipStore from "constant/Tooltip";
+import * as RE from "custom/RegularExpression";
 
 function GridSingle(props) {
   const {
@@ -98,6 +99,27 @@ function GridSingle(props) {
     }
   }, []);
 
+  const onRegularExpression = (e) => {
+    const grid = refGrid?.current?.getInstance();
+    const column = grid.getColumn(e.columnName);
+
+    switch (column.className) {
+      case "gridNumber":
+        grid.setValue(e?.rowKey, e?.columnName, RE.onlyNum(e?.value));
+        break;
+      case "gridDecimalTwoPoints":
+        grid.setValue(e?.rowKey, e?.columnName, RE.DecimalTwoPoints(e?.value));
+        break;
+      case "gridDecimalFourPoints":
+        grid.setValue(e?.rowKey, e?.columnName, RE.DecimalFourPoints(e?.value));
+        break;
+      // case "gridTime":
+      //   grid.setValue(e?.rowKey, e?.columnName, onlyTime(e?.value));
+      //   break;
+      default:
+    }
+  };
+
   return (
     <>
       <Grid
@@ -120,7 +142,7 @@ function GridSingle(props) {
         }}
         onDblclick={onDblClickGrid}
         onEditingFinish={(e) => {
-          // afterEnterMoveBottom(e);
+          onRegularExpression(e);
           onEditingFinish(e);
         }}
       />

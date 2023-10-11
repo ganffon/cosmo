@@ -87,6 +87,12 @@ const MenuList = [
             path: convertURL("ProductRouting"),
             under: null,
           },
+          // {
+          //   name: "이론생산량관리",
+          //   id: "TheoreticalProduction",
+          //   path: convertURL("TheoreticalProduction"),
+          //   under: null,
+          // },
         ],
       },
       {

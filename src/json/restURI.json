@@ -159,5 +159,6 @@
   "buildReportLatestNotApply": "/sys/deploy-version/latest/not-apply",
   "subdivisionPanel": "/prd/subdivision/panel",
   "performanceToOrder": "/kpi/performance/to-order",
-  "packingLatest": "/prd/packing/latest"
+  "packingLatest": "/prd/packing/latest",
+  "weightCheckERPLot": "/prd/weigh-detail/check-create"
 }

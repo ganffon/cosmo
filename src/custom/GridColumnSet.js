@@ -263,6 +263,7 @@ const number = (
   rowSpan = false
 ) => {
   return {
+    className: "gridNumber",
     name: name,
     header: header,
     minWidth: minWidth,
@@ -292,6 +293,61 @@ const rNumber = (
   return {
     name: name,
     header: "* " + header,
+    minWidth: minWidth,
+    align: "right",
+    editor: isEditMode ? "text" : false,
+    formatter: function (value) {
+      return CustomGrid.NumComma(value);
+    },
+    hidden: hidden,
+    sortable: sortable,
+    filter: filter,
+    whiteSpace: false,
+    rowSpan: rowSpan,
+  };
+};
+
+const decimalTwo = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  hidden = false,
+  sortable = false,
+  filter = false,
+  rowSpan = false
+) => {
+  return {
+    className: "gridDecimalTwoPoints",
+    name: name,
+    header: header,
+    minWidth: minWidth,
+    align: "right",
+    editor: isEditMode ? "text" : false,
+    formatter: function (value) {
+      return CustomGrid.NumComma(value);
+    },
+    hidden: hidden,
+    sortable: sortable,
+    filter: filter,
+    whiteSpace: false,
+    rowSpan: rowSpan,
+  };
+};
+const decimalFour = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  hidden = false,
+  sortable = false,
+  filter = false,
+  rowSpan = false
+) => {
+  return {
+    className: "gridDecimalFourPoints",
+    name: name,
+    header: header,
     minWidth: minWidth,
     align: "right",
     editor: isEditMode ? "text" : false,
@@ -458,6 +514,8 @@ export {
   button,
   number,
   rNumber,
+  decimalTwo,
+  decimalFour,
   select,
   rSelect,
   date,
