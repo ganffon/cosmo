@@ -168,6 +168,7 @@ export function Product() {
   };
   const onClickEditModeSave = () => {
     actEdit();
+    setIsEditMode(false);
   };
   const onClickEditModeExit = () => {
     setIsEditMode(false);
