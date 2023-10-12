@@ -76,6 +76,7 @@ class product {
     this.unit_id = raw.unit_id;
     this.rev = raw.rev;
     this.prod_std = raw.prod_std;
+    this.bag_qty = !isNaN(parseFloat(raw.bag_qty)) ? Number(raw.bag_qty.replace(/,/g, "")) : null;
     this.lot_fg = raw.lot_fg ? true : false;
     this.use_fg = raw.use_fg ? true : false;
     this.active_fg = raw.active_fg ? true : false;
