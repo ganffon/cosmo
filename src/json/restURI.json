@@ -160,5 +160,6 @@
   "subdivisionPanel": "/prd/subdivision/panel",
   "performanceToOrder": "/kpi/performance/to-order",
   "packingLatest": "/prd/packing/latest",
-  "weightCheckERPLot": "/prd/weigh-detail/check-create"
+  "weightCheckERPLot": "/prd/weigh-detail/check-create",
+  "prdOrderTheoryProduction": "prd/order-theory-production"
 }

@@ -22,19 +22,32 @@ export const ContentTop = styled("div")`
   background: #ffffff;
   margin-bottom: 10px;
 `;
-/*
-export const ContentTop = styled("div")`
-  height: 40px;
-  width: 100%;
+
+export const OrderTheoryProduction = styled("div")`
+  // height: 150px;
   border-radius: 10px;
   border-color: rgb(200, 200, 200);
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
-  margin-bottom: 8px;
-  padding: 5px 5px 5px 5px;
-  display: flex;
-  justify-content: space-between;
+  background: #ffffff;
+  margin-bottom: 10px;
 `;
-*/
+export const TheoryInputWrap = styled("div")`
+  width: 100%;
+  // height: calc(100% - 150px);
+  padding: 15px;
+  display: flex;
+  flex-flow: wrap;
+  gap: 20px;
+`;
+export const InputWrap = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+export const InputTitle = styled("div")`
+  width: 110px;
+  font-size: 0.9rem;
+`;
 export const SearchCondition = styled("div")`
   height: 60px;
   width: 100%;
