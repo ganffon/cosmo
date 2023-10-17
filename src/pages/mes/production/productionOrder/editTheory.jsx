@@ -44,6 +44,7 @@ function EditTheory(props) {
     bottomSaggerFillingQty: "",
     yieldValue: "",
   });
+
   const [calc, setCalc] = useState({
     plasticityTime: "",
     topSaggerTheoryQty: "",
@@ -53,6 +54,7 @@ function EditTheory(props) {
     theoryInputQty: "",
     theoryProdQty: "",
   });
+
   useEffect(() => {
     const getOrder = async () => {
       try {
@@ -75,24 +77,26 @@ function EditTheory(props) {
     getOrder();
     setInputText({
       ...inputText,
-      plasticityLength: theoryData.plasticity_length,
-      rollerSpeed: theoryData.roller_speed,
-      saggerLength: theoryData.sagger_length,
-      topSaggerQty: theoryData.top_sagger_qty,
-      topSaggerFillingQty: theoryData.top_sagger_filling_qty,
-      bottomSaggerQty: theoryData.bottom_sagger_qty,
-      bottomSaggerFillingQty: theoryData.bottom_sagger_filling_qty,
-      yieldValue: theoryData.yield,
+      plasticityLength: theoryData.plasticity_length === 0 ? "" : theoryData.plasticity_length,
+      rollerSpeed: theoryData.roller_speed === 0 ? "" : theoryData.roller_speed,
+      saggerLength: theoryData.sagger_length === 0 ? "" : theoryData.sagger_length,
+      topSaggerQty: theoryData.top_sagger_qty === 0 ? "" : theoryData.top_sagger_qty,
+      topSaggerFillingQty: theoryData.top_sagger_filling_qty === 0 ? "" : theoryData.top_sagger_filling_qty,
+      bottomSaggerQty: theoryData.bottom_sagger_qty === 0 ? "" : theoryData.bottom_sagger_qty,
+      bottomSaggerFillingQty: theoryData.bottom_sagger_filling_qty === 0 ? "" : theoryData.bottom_sagger_filling_qty,
+      yieldValue: theoryData.yield === 0 ? "" : theoryData.yield,
     });
     setCalc({
       ...calc,
-      plasticityTime: theoryData.plasticity_time,
-      topSaggerTheoryQty: theoryData.top_sagger_theory_qty,
-      topSaggerFillingTheoryQty: theoryData.top_sagger_filling_theory_qty,
-      bottomSaggerTheoryQty: theoryData.bottom_sagger_theory_qty,
-      bottomSaggerFillingTheoryQty: theoryData.bottom_sagger_filling_theory_qty,
-      theoryInputQty: theoryData.theory_input_qty,
-      theoryProdQty: theoryData.theory_prod_qty,
+      plasticityTime: theoryData.plasticity_time === 0 ? "" : theoryData.plasticity_time,
+      topSaggerTheoryQty: theoryData.top_sagger_theory_qty === 0 ? "" : theoryData.top_sagger_theory_qty,
+      topSaggerFillingTheoryQty:
+        theoryData.top_sagger_filling_theory_qty === 0 ? "" : theoryData.top_sagger_filling_theory_qty,
+      bottomSaggerTheoryQty: theoryData.bottom_sagger_theory_qty === 0 ? "" : theoryData.bottom_sagger_theory_qty,
+      bottomSaggerFillingTheoryQty:
+        theoryData.bottom_sagger_filling_theory_qty === 0 ? "" : theoryData.bottom_sagger_filling_theory_qty,
+      theoryInputQty: theoryData.theory_input_qty === 0 ? "" : theoryData.theory_input_qty,
+      theoryProdQty: theoryData.theory_prod_qty === 0 ? "" : theoryData.theory_prod_qty,
     });
   }, []);
   const handleTheoryAutoCal = (e) => {
