@@ -17,14 +17,15 @@ import * as uEdit from "custom/useEdit";
 import * as uDelete from "custom/useDelete";
 import * as disRow from "custom/useDisableRowCheck";
 import * as S from "./ProductionOrder.styled";
-import ModalNew from "components/modal/ModalNew";
-import ModalDate from "components/modal/ModalDate";
 import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsAreaHidden";
 import BtnComponent from "components/button/BtnComponent";
 import * as Cbo from "custom/useCboSet";
 import { TextField } from "@mui/material";
 import CN from "json/ColumnName.json";
+import CreateOrder from "./createTheory";
+import InputPaper from "components/input/InputPaper";
+import EditTheory from "./editTheory";
 
 export function ProductionOrder() {
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
@@ -37,6 +38,7 @@ export function ProductionOrder() {
   const refGridModalMid = useRef(null);
   const refGridModalBottom = useRef(null);
   const refGridSelect = useRef(null);
+  const refTheoryGrid = useRef(null);
 
   const [isEditModeHeader, setIsEditModeHeader] = useState(false);
   const [isEditModeMid, setIsEditModeMid] = useState(false);
@@ -44,6 +46,7 @@ export function ProductionOrder() {
 
   const [isModalHeaderOpen, setIsModalHeaderOpen] = useState(false);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
+  const [isTheoryOpen, setIsTheoryOpen] = useState(false);
 
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isMidDeleteAlertOpen, setIsMidDeleteAlertOpen] = useState(false);
@@ -57,11 +60,27 @@ export function ProductionOrder() {
 
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataMid, setGridDataMid] = useState(null);
+  const [theoryData, setTheoryData] = useState({
+    plasticity_length: "",
+    roller_speed: "",
+    plasticity_time: "",
+    sagger_length: "",
+    top_sagger_qty: "",
+    top_sagger_theory_qty: "",
+    top_sagger_filling_qty: "",
+    top_sagger_filling_theory_qty: "",
+    bottom_sagger_qty: "",
+    bottom_sagger_theory_qty: "",
+    bottom_sagger_filling_qty: "",
+    bottom_sagger_filling_theory_qty: "",
+    yield: "",
+    theory_input_qty: "",
+    theory_prod_qty: "",
+  });
 
   const [gridDataBottom, setGridDataBottom] = useState(null);
   const [gridDataSelect, setGridDataSelect] = useState(null);
   const [headerModalControl, setHeaderModalControl] = useState(null);
-  const [inputSearchValue, setInputSearchValue] = useState([]);
 
   const SWITCH_NAME_01 = "order";
   const SWITCH_NAME_02 = "orderInput";
@@ -102,6 +121,62 @@ export function ProductionOrder() {
     width: "80%",
     height: "90%",
   });
+  const [theory, setTheory] = useState({
+    plasticityLength: "",
+    rollerSpeed: "",
+    plasticityTime: "",
+    saggerLength: "",
+    topSaggerQty: "",
+    topSaggerTheoryQty: "",
+    topSaggerFillingQty: "",
+    topSaggerFillingTheoryQty: "",
+    bottomSaggerQty: "",
+    bottomSaggerTheoryQty: "",
+    bottomSaggerFillingQty: "",
+    bottomSaggerFillingTheoryQty: "",
+    yieldValue: "",
+    theoryInputQty: "",
+    theoryProdQty: "",
+  });
+  const resetTheory = () => {
+    setTheory({
+      ...theory,
+      plasticityLength: "",
+      rollerSpeed: "",
+      plasticityTime: "",
+      saggerLength: "",
+      topSaggerQty: "",
+      topSaggerTheoryQty: "",
+      topSaggerFillingQty: "",
+      topSaggerFillingTheoryQty: "",
+      bottomSaggerQty: "",
+      bottomSaggerTheoryQty: "",
+      bottomSaggerFillingQty: "",
+      bottomSaggerFillingTheoryQty: "",
+      yieldValue: "",
+      theoryInputQty: "",
+      theoryProdQty: "",
+    });
+    setTheoryData({
+      ...theoryData,
+      plasticity_length: "",
+      roller_speed: "",
+      plasticity_time: "",
+      sagger_length: "",
+      top_sagger_qty: "",
+      top_sagger_theory_qty: "",
+      top_sagger_filling_qty: "",
+      top_sagger_filling_theory_qty: "",
+      bottom_sagger_qty: "",
+      bottom_sagger_theory_qty: "",
+      bottom_sagger_filling_qty: "",
+      bottom_sagger_filling_theory_qty: "",
+      yield: "",
+      theory_input_qty: "",
+      theory_prod_qty: "",
+    });
+    headerRowID.current = "";
+  };
   const {
     columnOptions,
     rowHeadersNumCheck,
@@ -127,29 +202,25 @@ export function ProductionOrder() {
 
   const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
 
-  const handleInputTextChange = (e) => {
-    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
-  };
   const onClickSearch = () => {
     headerRowID.current = "";
+    resetTheory();
     actSearchGridTop();
     refGridMid?.current?.gridInst?.clear();
     refGridBottom?.current?.gridInst?.clear();
   };
-
-  const onClickSelectSearch = () => {
-    actSelectDocument();
-  };
   const onClickGridHeader = (e) => {
-    if (!isEditModeHeader) {
+    if (e?.targetType === "cell") {
       headerRowID.current = e?.instance.getValue(e?.rowKey, "work_order_id");
-
-      if (headerRowID.current !== null) {
-        actSearchMidDI();
-        actSearchBottomDI();
+      if (!isEditModeHeader) {
+        if (headerRowID.current !== null) {
+          actSearchTheory();
+          actSearchMidDI();
+          actSearchBottomDI();
+        }
+      } else {
+        disRow.handleClickGridCheck(e, isEditModeHeader, ["complete_fg"]);
       }
-    } else {
-      disRow.handleClickGridCheck(e, isEditModeHeader, ["complete_fg"]);
     }
   };
 
@@ -244,6 +315,25 @@ export function ProductionOrder() {
     }
   };
 
+  const actSearchTheory = async () => {
+    try {
+      setIsBackDrop(true);
+      const readURI = restURI.prdOrderTheoryProduction + `?work_order_id=${headerRowID.current}`;
+      let theoryData = await restAPI.get(readURI);
+      setTheoryData(theoryData?.data?.data?.rows[0]);
+    } catch {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: "조회 실패",
+        severity: "error",
+      });
+    } finally {
+      setDisableRowToggle(!disableRowToggle);
+      setIsBackDrop(false);
+    }
+  };
+
   const actSearchMidDI = async () => {
     try {
       setIsBackDrop(true);
@@ -321,7 +411,7 @@ export function ProductionOrder() {
   };
 
   const onClickModalSaveHeader = async (e) => {
-    actSave();
+    // actSave();
   };
   const onClickModalSelectClose = () => {
     setDateModal({ ...dateModal, startDate: DateTime(-7).dateFull, endDate: DateTime().dateFull });
@@ -477,6 +567,11 @@ export function ProductionOrder() {
     SWITCH_NAME_03,
     restURI.prdOrderDetail
   );
+  const onEditTheory = () => {
+    if (headerRowID.current !== "") {
+      setIsTheoryOpen(true);
+    }
+  };
 
   const GridTop = useMemo(() => {
     return (
@@ -497,9 +592,8 @@ export function ProductionOrder() {
 
   const GridModal = useMemo(() => {
     return (
-      <ModalNew
-        title={"생산품목"}
-        height={"30%"}
+      <CreateOrder
+        height={"85%"}
         onClickModalSave={onClickModalSaveHeader}
         onClickModalClose={onClickModalCloseHeader}
         onDblClickModalGrid={onDblClickModalHeader}
@@ -508,8 +602,6 @@ export function ProductionOrder() {
         header={header}
         rowHeaders={rowHeadersNum}
         refModalGrid={refGridModalHeader}
-        isAddOneRow={true}
-        buttonType={"Save"}
       />
     );
   }, [gridDataHeader, isEditModeHeader]);
@@ -570,6 +662,144 @@ export function ProductionOrder() {
         </S.TitleButtonWrap>
         <S.GridTopWrap>{GridTop}</S.GridTopWrap>
       </S.ContentTop>
+      <S.OrderTheoryProduction>
+        <S.TitleButtonWrap>
+          <S.TitleMid>이론생산량</S.TitleMid>
+          <S.ButtonTop>
+            <S.InnerButtonWrap>
+              <BtnComponent btnName={"Edit"} onClick={onEditTheory} />
+            </S.InnerButtonWrap>
+          </S.ButtonTop>
+        </S.TitleButtonWrap>
+        <S.TheoryInputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"소성길이"}</S.InputTitle>
+            <InputPaper
+              id={"plasticityLength"}
+              value={(theoryData?.plasticity_length ? theoryData?.plasticity_length + " mm" : "") || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"롤러속도"}</S.InputTitle>
+            <InputPaper
+              id={"rollerSpeed"}
+              value={theoryData?.roller_speed ? theoryData?.roller_speed + " mm/min" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"소성시간(Day)"}</S.InputTitle>
+            <InputPaper
+              id={"plasticityTime"}
+              value={theoryData?.plasticity_time ? theoryData?.plasticity_time + " cycle" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"사야길이"}</S.InputTitle>
+            <InputPaper
+              id={"saggerLength"}
+              value={theoryData?.sagger_length ? theoryData?.sagger_length + " mm" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"사야수량(상)"}</S.InputTitle>
+            <InputPaper
+              id={"topSaggerQty"}
+              value={theoryData?.top_sagger_qty ? theoryData?.top_sagger_qty + " ea" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"이론사야수량(상)"}</S.InputTitle>
+            <InputPaper
+              id={"topSaggerTheoryQty"}
+              value={theoryData?.top_sagger_theory_qty ? theoryData?.top_sagger_theory_qty + " ea" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"충진량(상)"}</S.InputTitle>
+            <InputPaper
+              id={"topSaggerFillingQty"}
+              value={theoryData?.top_sagger_filling_qty ? theoryData?.top_sagger_filling_qty + " kg" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"이론충진량(상)"}</S.InputTitle>
+            <InputPaper
+              id={"topSaggerFillingTheoryQty"}
+              value={
+                theoryData?.top_sagger_filling_theory_qty ? theoryData?.top_sagger_filling_theory_qty + " kg" : "" || ""
+              }
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"사야수량(하)"}</S.InputTitle>
+            <InputPaper
+              id={"bottomSaggerQty"}
+              value={theoryData?.bottom_sagger_qty ? theoryData?.bottom_sagger_qty + " ea" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"이론사야수량(하)"}</S.InputTitle>
+            <InputPaper
+              id={"bottomSaggerTheoryQty"}
+              value={theoryData?.bottom_sagger_theory_qty ? theoryData?.bottom_sagger_theory_qty + " ea" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"충진량(하)"}</S.InputTitle>
+            <InputPaper
+              id={"bottomSaggerFillingQty"}
+              value={theoryData?.bottom_sagger_filling_qty ? theoryData?.bottom_sagger_filling_qty + " kg" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"이론충진량(하)"}</S.InputTitle>
+            <InputPaper
+              id={"bottomSaggerFillingTheoryQty"}
+              value={
+                theoryData?.bottom_sagger_filling_theory_qty
+                  ? theoryData?.bottom_sagger_filling_theory_qty + " kg"
+                  : "" || ""
+              }
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"수율"}</S.InputTitle>
+            <InputPaper
+              id={"yieldValue"}
+              value={theoryData?.yield ? theoryData?.yield + " %" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"이론원부재투입량"}</S.InputTitle>
+            <InputPaper
+              id={"theoryInputQty"}
+              value={theoryData?.theory_input_qty ? theoryData?.theory_input_qty + " kg" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.InputTitle>{"이론제품생산량"}</S.InputTitle>
+            <InputPaper
+              id={"theoryProdQty"}
+              value={theoryData?.theory_prod_qty ? theoryData?.theory_prod_qty + " kg" : "" || ""}
+              width={"120px"}
+            />
+          </S.InputWrap>
+        </S.TheoryInputWrap>
+      </S.OrderTheoryProduction>
       <S.ContentMid>
         <S.TitleButtonWrap>
           <S.TitleMid>투입품목</S.TitleMid>
@@ -650,7 +880,7 @@ export function ProductionOrder() {
         </S.GridBottomWrap>
       </S.ContentBottom>
 
-      {isModalHeaderOpen ? GridModal : null}
+      {isModalHeaderOpen && GridModal}
       {isModalSelectOpen && (
         <ModalSelect
           width={modalSelectSize.width}
@@ -663,6 +893,18 @@ export function ProductionOrder() {
           gridDataSelect={gridDataSelect}
           refGridSelect={refGridSelect}
           onDblClickGridSelect={onDblClickGridSelect}
+        />
+      )}
+      {isTheoryOpen && (
+        <EditTheory
+          onClose={() => {
+            setIsTheoryOpen(false);
+          }}
+          height={"85%"}
+          theoryData={theoryData}
+          headerID={headerRowID.current}
+          refTheoryGrid={refTheoryGrid}
+          resetTheory={resetTheory}
         />
       )}
       {isMidDeleteAlertOpen ? (
