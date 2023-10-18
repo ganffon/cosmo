@@ -30,18 +30,6 @@ export const Logo = styled("img")`
   cursor: pointer;
 `;
 
-/*
-const MenuTitle = styled(Typography)`
-  color: black;
-`;
-
-const UserText = styled(Typography)`
-  font-size: 13px;
-  color: black;
-  margin-top: 5px;
-`;
-*/
-
 export const MenuTitleBox = styled(Typography)`
   display: flex;
   align-items: center;
@@ -91,7 +79,7 @@ export const MenuTitle = styled("span")`
   color: #777777;
 `;
 
-export const UserTextBackground = styled("div")`
+export const TextBackground = styled("div")`
   height: 60%;
   background: #d6f1ff;
   border-radius: 5px;
@@ -100,8 +88,13 @@ export const UserTextBackground = styled("div")`
   padding-left: 10px;
   padding-right: 10px;
   cursor: default;
-  &.pink {
+
+  &.versionAlert {
     background: rgb(255, 200, 200, 0.5);
+  }
+
+  &.sysAlarm {
+    background: rgb(252, 235, 151, 0.5);
   }
 `;
 export const UserText = styled("div")`
@@ -133,4 +126,12 @@ export const BuildAlert = styled("div")`
       transform: scale(1);
     }
   }
+`;
+export const SysAlarm = styled("div")`
+  height: 10px;
+  font-family: "NotoSansKR";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  color: red;
 `;

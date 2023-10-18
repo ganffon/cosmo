@@ -20,10 +20,13 @@ function PerformanceToOrderSet(isEditMode) {
     col.text("prod_gbn_nm", CN.prod_gbn_nm),
     col.text("model_nm", CN.model_nm),
     col.text("prod_class_nm", CN.prod_class_nm),
-    col.number("work_order_qty", CN.work_order_qty),
-    col.number("work_input_qty", CN.total_input_qty),
+
+    col.number("work_input_qty", CN.work_input_qty),
+    col.number("theory_input_qty", CN.theory_input_qty),
     col.number("work_input_rate", CN.work_input_rate),
+
     col.number("work_packing_qty", CN.work_packing_qty),
+    col.number("theory_prod_qty", CN.theory_prod_qty),
     col.number("work_packing_rate", CN.work_packing_rate),
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
   ];
@@ -36,17 +39,39 @@ function PerformanceToOrderSet(isEditMode) {
 
   const header = {
     //🔸headerMerge
-    // height: 100,
-    // complexColumns: [
-    //   {
-    //     header: "test",
-    //     name: "test_test",
-    //     childNames: ["line_cd", "line_nm"],
-    //     renderer: CustomGrid.ColumnHeaderMultiLine,
-    //   },
-    // ],
+    height: 100,
+    complexColumns: [
+      {
+        header: "투입량",
+        name: "투입량",
+        childNames: ["work_input_qty", "theory_input_qty", "work_input_rate"],
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        header: "생산량",
+        name: "생산량",
+        childNames: ["work_packing_qty", "theory_prod_qty", "work_packing_rate"],
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+    ],
     //🔸multiLine
     columns: [
+      {
+        name: "work_input_qty",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "work_packing_qty",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "theory_input_qty",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "theory_prod_qty",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
       {
         name: "work_input_rate",
         renderer: CustomGrid.ColumnHeaderMultiLine,

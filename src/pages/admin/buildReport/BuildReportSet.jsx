@@ -1,7 +1,4 @@
-//라인관리✨
-import restURI from "json/restURI.json";
 import CN from "json/ColumnName.json";
-import * as CustomGrid from "components/grid/setting/CustomGrid";
 import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
@@ -23,9 +20,9 @@ function BuildReportSet(onEditBtn, onApplyBtn) {
   const columns = [
     col.text("version", CN.version, C.U, C.U, C.WIDTH_MIDDLE),
     col.button("edit", CN.edit, "수정", onEditBtn),
-    col.text("title", CN.buildTitle, C.U, C.U, "500"),
+    col.text("title", CN.buildTitle, C.U, C.U, "300"),
     col.text("contents", CN.buildContents, C.U, C.U, "800"),
-    col.button("apply_fg", CN.apply_fg, "적용", onApplyBtn, "미적용", "Toggle"),
+    col.button("apply_fg", CN.apply_fg, "적용중", onApplyBtn, "적용하기", "Toggle"),
     col.id("deploy_version_id", CN.deploy_version_id, C.HIDDEN_ID),
   ];
 
