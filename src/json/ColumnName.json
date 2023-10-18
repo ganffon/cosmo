@@ -484,7 +484,10 @@
   "hour_time": "시간",
   "bag_count": "Bag 갯수",
   "issue": "작업이슈",
-  "work_packing_qty": "생산량",
-  "work_input_rate": "투입율\n(지시대비투입량)",
-  "work_packing_rate": "달성율\n(지시대비생산량)"
+  "work_input_qty": "실투입량\n(A)",
+  "theory_input_qty": "이론투입량\n(B)",
+  "work_input_rate": "백분율\n(C=A/B)",
+  "work_packing_qty": "실생산량\n(D)",
+  "theory_prod_qty": "이론생산량\n(E)",
+  "work_packing_rate": "백분율\n(F=D/E)"
 }

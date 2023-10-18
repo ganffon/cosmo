@@ -161,5 +161,6 @@
   "performanceToOrder": "/kpi/performance/to-order",
   "packingLatest": "/prd/packing/latest",
   "weightCheckERPLot": "/prd/weigh-detail/check-create",
-  "prdOrderTheoryProduction": "prd/order-theory-production"
+  "prdOrderTheoryProduction": "/prd/order-theory-production",
+  "sysAlarm": "/sys/alarm"
 }
