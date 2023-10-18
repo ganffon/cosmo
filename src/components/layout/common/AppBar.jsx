@@ -1,10 +1,8 @@
-import React, { useContext, useCallback, useState, useEffect } from "react";
+import React, { useContext, useCallback, useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
-// ⬇️ import MUI
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-// ⬇️ reference of page
 import Logo from "img/Logo/cosmo.png";
 import AvatarButton from "./AvatarButton";
 import { LayoutContext } from "./Layout";
@@ -135,48 +133,44 @@ function AppBar(props) {
     }
   };
 
-  // const [isSysAlarm, setIsSysAlarm] = useState(false);
-  // const [alarmList, setAlarmList] = useState([]);
-  // const getSysAlarm = async () => {
-  //   try {
-  //     const result = await restAPI.get(restURI.sysAlarm);
-  //     const list = result?.data?.data?.rows;
-  //     setAlarmList(list);
-  //     if (list?.length > 0) {
-  //       setIsSysAlarm(true);
-  //     } else {
-  //       setIsSysAlarm(false);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //   }
-  // };
+  const [isSysAlarm, setIsSysAlarm] = useState(false);
+  const refAlarmList = useRef([]);
+
+  const getSysAlarm = async () => {
+    try {
+      const result = await restAPI.get(restURI.sysAlarm);
+      const list = result?.data?.data?.rows;
+      refAlarmList.current = list;
+      if (list?.length > 0) {
+        setIsSysAlarm(true);
+      } else {
+        setIsSysAlarm(false);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+    }
+  };
+
+  const [alarmIndex, setAlarmIndex] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAlarmIndex((prevIndex) => (prevIndex + 1) % refAlarmList.current.length);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     compareVersion();
-    // getSysAlarm();
+    getSysAlarm();
     const interval = setInterval(() => {
       compareVersion();
-      // getSysAlarm();
+      getSysAlarm();
     }, 50000); // 5분 마다 버전 비교를 함
     return () => {
       clearInterval(interval);
     };
   }, []);
-
-  // const [alarmIndex, setAlarmIndex] = useState(0);
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     console.log("isSysAlarm.alarmList");
-  //     console.log(alarmList);
-  //     console.log(`index: ${alarmIndex}`);
-  //     console.log(`length: ${alarmList.length}`);
-  //     setAlarmIndex((prevIndex) => (prevIndex + 1) % alarmList.length);
-  //   }, 5000);
-
-  //   return () => clearInterval(timer);
-  // }, []);
 
   return (
     <S.AppBarBox isAllScreen={isAllScreen}>
@@ -224,13 +218,13 @@ function AppBar(props) {
             </S.UserText>
           </S.TextBackground>
         )}
-        {/* {isSysAlarm && (
+        {isSysAlarm && (
           <S.TextBackground className={"sysAlarm"}>
             <S.UserText>
-              <S.SysAlarm>{alarmList[0]}</S.SysAlarm>
+              <S.SysAlarm>{refAlarmList.current[alarmIndex]}</S.SysAlarm>
             </S.UserText>
           </S.TextBackground>
-        )} */}
+        )}
         <S.TextBackground>
           <S.UserText>{`${Cookies.get("userName")}님 환영합니다.`}</S.UserText>
         </S.TextBackground>

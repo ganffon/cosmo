@@ -149,51 +149,6 @@ const Layout = ({ children }) => {
     GetBookmark();
   }, [location.pathname]);
 
-  // const [isVersionAlert, setIsVersionAlert] = useState(false);
-  // const compareVersion = async () => {
-  //   try {
-  //     const result = await restAPI.get(restURI.buildReportLatest);
-  //     const latestVersion = result?.data?.data?.rows[0]?.version; //최신버전
-  //     const historyVersion = Version; // 이전버전
-  //     //현재 Web 버전 보다 BE에 기록된 버전이 최신이라면 Alert Open
-  //     if (latestVersion) {
-  //       if (+latestVersion > +historyVersion) {
-  //         setIsVersionAlert(true);
-  //       }
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //   }
-  // };
-
-  // const [isSysAlarm, setIsSysAlarm] = useState({ open: false, alarmList: [] });
-
-  // const getSysAlarm = async () => {
-  //   try {
-  //     const result = await restAPI.get(restURI.sysAlarm);
-  //     const alarmList = result?.data?.data?.rows;
-  //     if (alarmList?.length > 0) {
-  //       setIsSysAlarm({ ...isSysAlarm, open: true, alarmList: alarmList });
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   compareVersion();
-  //   getSysAlarm();
-  //   const interval = setInterval(() => {
-  //     compareVersion();
-  //     getSysAlarm();
-  //   }, 50000); // 5분 마다 버전 비교를 함
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
   return (
     <S.LayoutBox>
       <LayoutContext.Provider
@@ -218,7 +173,6 @@ const Layout = ({ children }) => {
           setBookmarkList,
         }}
       >
-        {/* <AppBar isVersionAlert={isVersionAlert} isSysAlarm={isSysAlarm} /> */}
         <AppBar />
         <S.MainBox>
           <V2MenuFold />
