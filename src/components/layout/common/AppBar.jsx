@@ -134,13 +134,15 @@ function AppBar(props) {
   };
 
   const [isSysAlarm, setIsSysAlarm] = useState(false);
-  const refAlarmList = useRef([]);
+  const [isAlarmTooltipOpen, setIsAlarmTooltipOpen] = useState(false);
+  const refAlarmList = useRef({ tooltip: "", list: [] });
 
   const getSysAlarm = async () => {
     try {
       const result = await restAPI.get(restURI.sysAlarm);
       const list = result?.data?.data?.rows;
-      refAlarmList.current = list;
+      refAlarmList.current.list = list;
+      refAlarmList.current.tooltip = refAlarmList.current.list.map((item, index) => `${index + 1}. ${item}`).join("\n");
       if (list?.length > 0) {
         setIsSysAlarm(true);
       } else {
@@ -155,7 +157,7 @@ function AppBar(props) {
   const [alarmIndex, setAlarmIndex] = useState(0);
   useEffect(() => {
     const timer = setInterval(() => {
-      setAlarmIndex((prevIndex) => (prevIndex + 1) % refAlarmList.current.length);
+      setAlarmIndex((prevIndex) => (prevIndex + 1) % refAlarmList.current.list.length);
     }, 10000);
     return () => clearInterval(timer);
   }, []);
@@ -220,8 +222,12 @@ function AppBar(props) {
         )}
         {isSysAlarm && (
           <S.TextBackground className={"sysAlarm"}>
-            <S.UserText>
-              <S.SysAlarm>{refAlarmList.current[alarmIndex]}</S.SysAlarm>
+            <S.UserText
+              onMouseEnter={() => setIsAlarmTooltipOpen(true)}
+              onMouseOut={() => setIsAlarmTooltipOpen(false)}
+            >
+              <S.SysAlarm>{refAlarmList.current.list[alarmIndex]}</S.SysAlarm>
+              {isAlarmTooltipOpen && <S.SysAlarmTooltip>{refAlarmList.current.tooltip}</S.SysAlarmTooltip>}
             </S.UserText>
           </S.TextBackground>
         )}
