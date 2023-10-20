@@ -156,6 +156,12 @@ export function EquipmentResult() {
     nigEmpNm: "",
   });
 
+  const [errorCount, setErrorCount] = useState({
+    mngErrorCount: "",
+    aftErrorCount: "",
+    nigErrorCount: "",
+  });
+
   const [onclickEmp, setOnclickEmp] = useState([
     {
       gridTabId: "",
@@ -384,9 +390,6 @@ export function EquipmentResult() {
       try {
         setIsBackDrop(true);
         let conditionLineID, conditionProdCd, conditionProdNm;
-        // inputTextChange.line_nm
-        //   ? (conditionLine = `&line_nm=${inputTextChange.line_nm}`)
-        //   : (conditionLine = "");
         comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
         inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
         inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
@@ -475,19 +478,9 @@ export function EquipmentResult() {
       // });
 
       try {
-        // setIsBackDrop(true);
         const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
 
         setGridDataDetail(result?.data?.data?.rows);
-
-        for (let i = 0; i < tabListTmp.current.length; i++) {
-          for (let j = 0; j < result?.data?.data?.rows.length; j++) {
-            if (tabListTmp.current[i] === result?.data?.data?.rows[j].insp_filing_id) {
-              //detailDataList[i].push(result?.data?.data?.rows[j]);
-            }
-          }
-        }
-        //console.log(detailDataList);
       } catch (err) {
         setIsSnackOpen({
           ...isSnackOpen,
@@ -495,10 +488,7 @@ export function EquipmentResult() {
           message: err?.response?.data?.message,
           severity: "error",
         });
-      } finally {
-        // setIsBackDrop(false);
       }
-      // }
     }
 
     for (let i = 0; i < tabListTmp?.current?.data?.data?.rows.length; i++) {
@@ -516,7 +506,6 @@ export function EquipmentResult() {
     let codeListArr = [];
     for (let i = 0; i < tabListTmp?.current?.data?.data?.rows.length; i++) {
       if (tabListArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm === -1)) {
-        console.log(tabListTmp?.current?.data?.data?.rows[i]);
         tabListArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm);
       }
       if (bacListIdArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_id === -1)) {
@@ -690,136 +679,6 @@ export function EquipmentResult() {
     } finally {
       setIsBackDrop(false);
       setIsSelectOrderOpen(false);
-    }
-  };
-
-  const onSaveNew = async () => {
-    if (!isBackDrop) {
-      if (!isEditMode) {
-        if (info.orderId) {
-          setIsBackDrop(true);
-          const dataHeader = {
-            work_order_id: info.orderId,
-            line_dept_id: info.lineDeptId,
-            line_id: info.lineId,
-            prod_id: info.prodId,
-            insp_result_date: dateCheck.checkDate,
-            mng_emp_id: emp.mngEmpId === "" ? null : emp.mngEmpId,
-            aft_emp_id: emp.aftEmpId === "" ? null : emp.aftEmpId,
-            nig_emp_id: emp.nigEmpId === "" ? null : emp.nigEmpId,
-            remark: remarkChange.remark ? remarkChange.remark : null,
-          };
-          let result = [];
-          for (let i = 0; i < refGridArray.length; i++) {
-            const Grid = refGridArray[i]?.current?.gridInst;
-            Grid?.finishEditing();
-            for (let i = 0; i < Grid?.getRowCount(); i++) {
-              result.push(Grid?.getRowAt(i));
-            }
-          }
-          const dataDetail = result.map((raw) => {
-            return {
-              work_order_detail_id: raw.work_order_detail_id,
-              mng_insp_value: raw.mng_insp_value,
-              aft_insp_value: raw.aft_insp_value,
-              nig_insp_value: raw.nig_insp_value,
-              insp_result_fg: null,
-              remark: raw.remark,
-            };
-          });
-          const query = {
-            header: dataHeader,
-            details: dataDetail,
-          };
-
-          try {
-            const result = await restAPI.post(restURI.qmsInspResult, query);
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: result?.data?.message,
-              severity: "success",
-              location: "bottomRight",
-            });
-            resetInfo();
-            resetEmp();
-            setGridDataNew([]);
-
-            setIsResultNewOpen(false);
-            onClickSearch();
-          } catch (err) {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: err?.response?.data?.message,
-              severity: "error",
-              location: "bottomRight",
-            });
-          } finally {
-            setIsBackDrop(false);
-          }
-        }
-      } else {
-        setIsBackDrop(true);
-        const dataHeader = {
-          insp_result_id: mainInfo.inspResultId,
-          insp_result_date: dateCheck.checkDate,
-          mng_emp_id: mainInfo.mngEmpId === "" ? null : mainInfo.mngEmpId,
-          aft_emp_id: mainInfo.aftEmpId === "" ? null : mainInfo.aftEmpId,
-          nig_emp_id: mainInfo.nigEmpId === "" ? null : mainInfo.nigEmpId,
-          remark: mainInfo.remark ? mainInfo.remark : null,
-        };
-        let result = [];
-        for (let i = 0; i < refGridArray.length; i++) {
-          const Grid = refGridArray[i]?.current?.gridInst;
-          Grid?.finishEditing();
-          for (let i = 0; i < Grid?.getRowCount(); i++) {
-            result.push(Grid?.getRowAt(i));
-          }
-        }
-        const dataDetail = result.map((raw) => {
-          return {
-            work_order_detail_id: raw.work_order_detail_id,
-            mng_insp_value: raw.mng_insp_value,
-            aft_insp_value: raw.aft_insp_value,
-            nig_insp_value: raw.nig_insp_value,
-            insp_result_fg: null,
-            remark: raw.remark,
-          };
-        });
-        const query = {
-          header: dataHeader,
-          details: dataDetail,
-        };
-
-        try {
-          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: result?.data?.message,
-            severity: "success",
-            location: "bottomRight",
-          });
-          resetInfo();
-          resetEmp();
-          setGridDataNew([]);
-
-          setIsResultNewOpen(false);
-          setIsEditMode(false);
-          onClickSearch();
-        } catch (err) {
-          setIsSnackOpen({
-            ...isSnackOpen,
-            open: true,
-            message: err?.response?.data?.message,
-            severity: "error",
-            location: "bottomRight",
-          });
-        } finally {
-          setIsBackDrop(false);
-        }
-      }
     }
   };
 

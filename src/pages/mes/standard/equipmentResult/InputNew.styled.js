@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { Paper, TextField } from "@mui/material";
 import styled from "styled-components";
 
 export const Wrap = styled("div")`
@@ -25,6 +25,21 @@ export const InfoTitle = styled("div")`
   margin-left: 30px;
   margin-top: 5px;
 `;
+
+export const InfoCounter = styled(Paper)`
+  padding: 2px 4px 0px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  background: ${(props) => (props.readOnly ? "#f7f7f7" : "#ffffff")};
+  border: 1px solid rgba(217, 217, 217, 1);
+  box-shadow: none;
+  margin-left: 10px;
+  color: ${(props) => (props.count === 0 ? "black" : "red")};
+`;
+
 export const InputWrapDivide = styled("div")`
   padding-left: 10px;
   width: 100%;

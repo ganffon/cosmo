@@ -260,10 +260,11 @@ const number = (
   hidden = false,
   sortable = false,
   filter = false,
-  rowSpan = false
+  rowSpan = false,
+  className = false
 ) => {
   return {
-    className: "gridNumber",
+    className: className ? "gridNumber" : null,
     name: name,
     header: header,
     minWidth: minWidth,
