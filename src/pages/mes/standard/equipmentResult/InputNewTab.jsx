@@ -1,43 +1,25 @@
 import InputPaper from "components/input/InputPaper";
 import * as S from "./InputNew.styled";
-import React, { useEffect, useMemo } from "react";
-import DatePicker from "components/datetime/DatePicker";
-import DateTime from "components/datetime/DateTime";
+import { useMemo } from "react";
 
 function InputNewTab(props) {
   const {
-    onSelectOrder = () => {},
-    onRemoveOrder = () => {},
     onSelectMorning = () => {},
     onRemoveMorning = () => {},
     onSelectAfternoon = () => {},
     onRemoveAfternoon = () => {},
     onSelectNight = () => {},
     onRemoveNight = () => {},
-    onTextChange = () => {},
-    onTextChangeEdit = () => {},
-    dateText = {},
-    setDateText = {},
-    info = {},
     emp = {},
     mainInfo = {},
-    textChange = {},
     isEditMode = false,
     button = false,
-    setGetWorkerId = () => {},
-    setGetTabTabId = () => {},
+    counterArr = [],
+    morCounter = 0,
+    aftCounter = 0,
+    nigCounter = 0,
+    isEditOrNewFlag = false,
   } = props;
-
-  const datePickerChange = (e) => {
-    setDateText({ ...dateText, [e.target.id]: e.target.value });
-  };
-
-  const testFunc = () => {
-    setGetWorkerId(emp.nigEmpNm);
-    setGetTabTabId(emp.tabId);
-  };
-
-  useEffect(() => {}, [emp]);
 
   const InputWrap = useMemo(() => {
     return (
@@ -45,7 +27,7 @@ function InputNewTab(props) {
         <S.InputWrap>
           <S.InfoTitle width={"110px"}>오전 조</S.InfoTitle>
           <InputPaper
-            width={"220px"}
+            width={isEditOrNewFlag ? "220px" : "150px"}
             height={"40px"}
             value={isEditMode ? mainInfo.mngEmpNm || "" : emp.mngEmpNm || ""}
             size={"20px"}
@@ -53,11 +35,18 @@ function InputNewTab(props) {
             onClickSelect={onSelectMorning}
             onClickRemove={onRemoveMorning}
           />
+          {isEditOrNewFlag ? null : (
+            <S.InfoCounter width={"50px"} readOnly={true} count={counterArr[0]}>
+              {counterArr[0]}
+            </S.InfoCounter>
+          )}
         </S.InputWrap>
+
         <S.InputWrap>
           <S.InfoTitle width={"110px"}>오후 조</S.InfoTitle>
+
           <InputPaper
-            width={"220px"}
+            width={isEditOrNewFlag ? "220px" : "150px"}
             height={"40px"}
             value={isEditMode ? mainInfo.aftEmpNm || "" : emp.aftEmpNm || ""}
             size={"20px"}
@@ -65,11 +54,17 @@ function InputNewTab(props) {
             onClickSelect={onSelectAfternoon}
             onClickRemove={onRemoveAfternoon}
           />
+          {isEditOrNewFlag ? null : (
+            <S.InfoCounter width={"50px"} readOnly={true} count={counterArr[1]}>
+              {counterArr[1]}
+            </S.InfoCounter>
+          )}
         </S.InputWrap>
+
         <S.InputWrap>
           <S.InfoTitle width={"110px"}>야간 조</S.InfoTitle>
           <InputPaper
-            width={"220px"}
+            width={isEditOrNewFlag ? "220px" : "150px"}
             height={"40px"}
             value={isEditMode ? mainInfo.nigEmpNm || "" : emp.nigEmpNm || ""}
             size={"20px"}
@@ -77,10 +72,15 @@ function InputNewTab(props) {
             onClickSelect={onSelectNight}
             onClickRemove={onRemoveNight}
           />
+          {isEditOrNewFlag ? null : (
+            <S.InfoCounter width={"50px"} readOnly={true} count={counterArr[2]}>
+              {counterArr[2]}
+            </S.InfoCounter>
+          )}
         </S.InputWrap>
       </>
     );
-  }, [emp]);
+  }, [emp, nigCounter, aftCounter, morCounter]);
 
   return (
     <S.Wrap>

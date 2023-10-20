@@ -40,6 +40,7 @@ function GridTabEdit(props) {
     mappingFlag = false,
     isSelectEmpOpen = false,
     validationFunction = () => {},
+    isEditOrNewFlag = false,
   } = props;
   const [value, setValue] = React.useState(0);
   const [activeTab, setActiveTab] = React.useState(null);
@@ -190,6 +191,7 @@ function GridTabEdit(props) {
 
   const handleChange = (event, newValue) => {
     updateDataset();
+    validationFunction(refGrid[newValue]);
     getActiveGrid(refGrid[newValue]);
     setValue(newValue);
   };
@@ -238,6 +240,7 @@ function GridTabEdit(props) {
                     ? workerDataEdit[index][0]
                     : workerDataEdit[index]
                 }
+                isEditOrNewFlag={isEditOrNewFlag}
               />
             </S.InputNewTab>
             <S.TabSingleGridWrap>

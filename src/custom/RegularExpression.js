@@ -40,8 +40,9 @@ function onlyNum(value) {
   if (value && value !== null && value !== undefined) {
     return value
       .toString()
-      .replace(/[^0-9.]/g, "")
-      .replace(/(\..*)\./g, "$1");
+      .replace(/[^0-9.-]/g, "") // 마이너스 기호를 포함하기 위해 '-' 추가
+      .replace(/(\..*)\./g, "$1")
+      .replace(/(?!^)-/g, ""); // 처음에 오는 마이너스 기호를 제외하고 모든 '-' 제거
   } else {
     return null;
   }

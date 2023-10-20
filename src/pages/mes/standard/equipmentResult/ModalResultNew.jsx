@@ -116,205 +116,106 @@ function ModalResultNew(props) {
       for (let i = 0; i < rawDataTmp.length; i++) {
         const element = rawDataTmp[i];
         let rowKey = element.rowKey;
-        const morValue = Number(element.mng_insp_value);
-        const aftValue = Number(element.aft_insp_value);
-        const nitValue = Number(element.nig_insp_value);
-        console.log(`keys : ${rowKey} + ${element.proc_nm}`);
-        if (element.spec_min !== null && element.spec_min === null) {
+        let findRowMor = false,
+          findRowAft = false,
+          findRowNit = false;
+        if (element.spec_min !== null && element.spec_max === null) {
           const specMin = Number(element.spec_min);
-          if (
-            element.mng_insp_value !== null &&
-            element.mng_insp_value !== ""
-          ) {
+
+          if (element.mng_insp_value !== null && element.mng_insp_value !== "") {
+            const morValue = Number(element.mng_insp_value);
             if (specMin > morValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "mng_insp_value",
-                "redText"
-              );
+              findRowMor = true;
             }
           }
-          if (
-            element.aft_insp_value !== null &&
-            element.aft_insp_value !== ""
-          ) {
+          if (element.aft_insp_value !== null && element.aft_insp_value !== "") {
+            const aftValue = Number(element.aft_insp_value);
             if (specMin > aftValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "aft_insp_value",
-                "redText"
-              );
+              findRowAft = true;
             }
           }
-          if (
-            element.nig_insp_value !== null &&
-            element.nig_insp_value !== ""
-          ) {
+          if (element.nig_insp_value !== null && element.nig_insp_value !== "") {
+            const nitValue = Number(element.nig_insp_value);
             if (specMin > nitValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "nig_insp_value",
-                "redText"
-              );
+              findRowNit = true;
             }
           }
         } else if (element.spec_min === null && element.spec_max !== null) {
           const specMax = Number(element.spec_max);
-          if (
-            element.mng_insp_value !== null &&
-            element.mng_insp_value !== ""
-          ) {
+          if (element.mng_insp_value !== null && element.mng_insp_value !== "") {
+            const morValue = Number(element.mng_insp_value);
             if (specMax < morValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "mng_insp_value",
-                "redText"
-              );
+              findRowMor = true;
             }
           }
-          if (
-            element.aft_insp_value !== null &&
-            element.aft_insp_value !== ""
-          ) {
+          if (element.aft_insp_value !== null && element.aft_insp_value !== "") {
+            const aftValue = Number(element.aft_insp_value);
             if (specMax < aftValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "aft_insp_value",
-                "redText"
-              );
+              findRowAft = true;
             }
           }
-          if (
-            element.nig_insp_value !== null &&
-            element.nig_insp_value !== ""
-          ) {
+          if (element.nig_insp_value !== null && element.nig_insp_value !== "") {
+            const nitValue = Number(element.nig_insp_value);
             if (specMax < nitValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "nig_insp_value",
-                "redText"
-              );
+              findRowNit = true;
             }
           }
         } else if (element.spec_min !== null && element.spec_max !== null) {
           const specMin = Number(element.spec_min);
           const specMax = Number(element.spec_max);
-          if (
-            element.mng_insp_value !== null &&
-            element.mng_insp_value !== ""
-          ) {
+          if (element.mng_insp_value !== null && element.mng_insp_value !== "") {
+            const morValue = Number(element.mng_insp_value);
             if (specMax < morValue || specMin > morValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "mng_insp_value",
-                "redText"
-              );
+              findRowMor = true;
             }
           }
-          if (
-            element.aft_insp_value !== null &&
-            element.aft_insp_value !== ""
-          ) {
+          if (element.aft_insp_value !== null && element.aft_insp_value !== "") {
+            const aftValue = Number(element.aft_insp_value);
             if (specMax < aftValue || specMin > aftValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "aft_insp_value",
-                "redText"
-              );
+              findRowAft = true;
             }
           }
-          if (
-            element.nig_insp_value !== null &&
-            element.nig_insp_value !== ""
-          ) {
+          if (element.nig_insp_value !== null && element.nig_insp_value !== "") {
+            const nitValue = Number(element.nig_insp_value);
             if (specMax < nitValue || specMin > nitValue) {
-              gridInstTmp?.addCellClassName(rowKey, "proc_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "insp_item_type_nm",
-                "redText"
-              );
-              gridInstTmp?.addCellClassName(rowKey, "insp_item_nm", "redText");
-              gridInstTmp?.addCellClassName(rowKey, "equip_nm", "redText");
-              gridInstTmp?.addCellClassName(
-                rowKey,
-                "nig_insp_value",
-                "redText"
-              );
+              findRowNit = true;
             }
           }
+        }
+        if (findRowMor === true || findRowAft === true || findRowNit === true) {
+          gridInstTmp.addCellClassName(rowKey, "proc_nm", "redText");
+          gridInstTmp.addCellClassName(rowKey, "equip_nm", "redText");
+          gridInstTmp.addCellClassName(rowKey, "insp_item_type_nm", "redText");
+          gridInstTmp.addCellClassName(rowKey, "insp_item_nm", "redText");
+          gridInstTmp.addCellClassName(rowKey, "insp_item_desc", "redText");
+        } else {
+          gridInstTmp.removeCellClassName(rowKey, "proc_nm", "redText");
+          gridInstTmp.removeCellClassName(rowKey, "equip_nm", "redText");
+          gridInstTmp.removeCellClassName(rowKey, "insp_item_type_nm", "redText");
+          gridInstTmp.removeCellClassName(rowKey, "insp_item_nm", "redText");
+          gridInstTmp.removeCellClassName(rowKey, "insp_item_desc", "redText");
+        }
+        if (findRowMor === true) {
+          gridInstTmp.addCellClassName(rowKey, "mng_insp_value", "redText");
+        } else {
+          gridInstTmp.removeCellClassName(rowKey, "mng_insp_value", "redText");
+        }
+        if (findRowAft === true) {
+          gridInstTmp.addCellClassName(rowKey, "aft_insp_value", "redText");
+        } else {
+          gridInstTmp.removeCellClassName(rowKey, "aft_insp_value", "redText");
+        }
+        if (findRowNit === true) {
+          gridInstTmp.addCellClassName(rowKey, "nig_insp_value", "redText");
+        } else {
+          gridInstTmp.removeCellClassName(rowKey, "nig_insp_value", "redText");
         }
       }
     }, 400);
   };
 
   const onMapping = async () => {
-    let timeString =
-      DateTime().hour + ":" + DateTime().minute + ":" + DateTime().seconds;
+    let timeString = DateTime().hour + ":" + DateTime().minute + ":" + DateTime().seconds;
 
     const morningStart = "06:00:00";
     const morningEnd = "13:59:59";
@@ -324,13 +225,8 @@ function ModalResultNew(props) {
 
     if (morningStart <= timeString && timeString <= morningEnd) {
       if (activeTab?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        const workOrderIdForNew = activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "mng_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "mng_insp_value");
@@ -338,14 +234,9 @@ function ModalResultNew(props) {
       }
     } else if (afternoonStart <= timeString && timeString <= afternoonEnd) {
       if (activeTab?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
+        const workOrderIdForNew = activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
 
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "aft_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "aft_insp_value");
@@ -353,14 +244,9 @@ function ModalResultNew(props) {
       }
     } else {
       if (activeTab?.current?.gridInst?.store?.data?.rawData?.length > 0) {
-        const workOrderIdForNew =
-          activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
+        const workOrderIdForNew = activeTab?.current?.gridInst.store.data.rawData[0].work_order_id;
 
-        if (
-          workOrderIdForNew === null ||
-          workOrderIdForNew === "" ||
-          workOrderIdForNew === undefined
-        ) {
+        if (workOrderIdForNew === null || workOrderIdForNew === "" || workOrderIdForNew === undefined) {
           await getRawData(clickedWorkOrderId.current, "nig_insp_value");
         } else {
           await getRawData(workOrderIdForNew, "nig_insp_value");
@@ -370,25 +256,16 @@ function ModalResultNew(props) {
   };
 
   const getRawData = async (workOrderId, Term) => {
-    const result = await restAPI.get(
-      restURI.getOrderDetailsRawData + "?work_order_id=" + workOrderId
-    );
+    const result = await restAPI.get(restURI.getOrderDetailsRawData + "?work_order_id=" + workOrderId);
     const rowLength = result?.data?.data?.count;
     const rowData = result?.data?.data?.rows;
-    const GridRowDataLength =
-      activeTab?.current?.gridInst?.store?.data?.rawData?.length;
+    const GridRowDataLength = activeTab?.current?.gridInst?.store?.data?.rawData?.length;
 
     const GridRowData = activeTab?.current?.gridInst;
     for (let i = 0; i < GridRowDataLength; i++) {
       for (let j = 0; j < rowLength; j++) {
-        if (
-          GridRowData?.store?.data?.rawData[i].tag_id === rowData[j].node_id
-        ) {
-          GridRowData?.setValue(
-            GridRowData.store.data.rawData[i].rowKey,
-            Term,
-            String(rowData[j].value)
-          );
+        if (GridRowData?.store?.data?.rawData[i].tag_id === rowData[j].node_id) {
+          GridRowData?.setValue(GridRowData.store.data.rawData[i].rowKey, Term, String(rowData[j].value));
         }
       }
     }
@@ -481,9 +358,7 @@ function ModalResultNew(props) {
         setIsBackDrop(true);
         const dataHeader = {
           insp_result_id: mainInfo.inspResultId,
-          insp_result_date: mainInfo.inspResultDate
-            ? mainInfo.inspResultDate
-            : dateCheck.checkDate,
+          insp_result_date: mainInfo.inspResultDate ? mainInfo.inspResultDate : dateCheck.checkDate,
 
           remark: mainInfo.remark ? mainInfo.remark : null,
         };
@@ -525,10 +400,7 @@ function ModalResultNew(props) {
           emps: dataEmps,
         };
         try {
-          const result = await restAPI.put(
-            restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId),
-            query
-          );
+          const result = await restAPI.put(restURI.qmsInspResultInclude.replace("{id}", mainInfo.inspResultId), query);
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
@@ -587,6 +459,7 @@ function ModalResultNew(props) {
         mappingFlag={mappingFlag}
         isSelectEmpOpen={isSelectEmpOpen}
         validationFunction={valueValidation}
+        isEditOrNewFlag={true}
       />
     );
   }, [refGridArrayModal, emp, mappingFlag]);
@@ -623,9 +496,7 @@ function ModalResultNew(props) {
   return (
     <ModalWrapMulti width={width} height={height}>
       <S.HeaderBox>
-        <S.TitleBox>
-          {isEditMode ? `[일일운전점검일지 수정]` : `[일일운전점검일지 신규]`}
-        </S.TitleBox>
+        <S.TitleBox>{isEditMode ? `[일일운전점검일지 수정]` : `[일일운전점검일지 신규]`}</S.TitleBox>
         <S.ButtonClose color="primary" aria-label="close" onClick={onClose}>
           <CloseIcon />
         </S.ButtonClose>
