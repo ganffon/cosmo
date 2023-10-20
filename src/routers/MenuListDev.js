@@ -383,12 +383,6 @@ const MenuListDev = [
             under: null,
           },
           {
-            name: "일일운전점검일지(Tab)",
-            id: "EquipmentResultTab",
-            path: convertURL("EquipmentResultTab"),
-            under: null,
-          },
-          {
             name: "포장투입일지",
             id: "PackingInput",
             path: convertURL("PackingInput"),

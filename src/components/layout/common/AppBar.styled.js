@@ -106,6 +106,8 @@ export const UserText = styled("div")`
 
   color: #333333;
   display: flex;
+
+  position: relative;
 `;
 export const BuildAlert = styled("div")`
   height: 10px;
@@ -134,4 +136,17 @@ export const SysAlarm = styled("div")`
   font-weight: 900;
   font-size: 14px;
   color: red;
+`;
+
+export const SysAlarmTooltip = styled("pre")`
+  background: white;
+  border-radius: 10px;
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  z-index: 10000;
+  box-shadow: 5px 0px 10px 1px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  font-family: NotoSansKR;
+  line-height: 1.5rem;
 `;
