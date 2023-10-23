@@ -254,19 +254,19 @@ class infcItem {
 }
 class infcMemory {
   constructor(raw) {
-    this.sortby = String(raw.sortby) ? Number(raw.sortby) : null;
+    this.sortby = raw.sortby === null || raw.sortby === "" ? null : Number(raw.sortby);
     this.infc_item_type_id = raw.infc_item_type_id;
     this.infc_item_id = raw.infc_item_id;
     this.line_id = raw.line_id;
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.plc_ip = raw.plc_ip;
-    this.plc_port = String(raw.plc_port) ? Number(raw.plc_port) : null;
+    this.plc_port = raw.plc_port === null || raw.plc_port === "" ? null : Number(raw.plc_port);
     this.device_address = raw.device_address;
     this.tag_id = raw.tag_id;
     this.unit_nm = raw.unit_nm;
-    this.weight = String(raw.weight) ? Number(raw.weight) : null;
-    this.constant_value = String(raw.constant_value) ? Number(raw.constant_value) : null;
+    this.weight = raw.weight === null || raw.weight === "" ? null : Number(raw.weight);
+    this.constant_value = raw.constant_value === null || raw.constant_value === "" ? null : Number(raw.constant_value);
     this.infc_memory_nm = raw.infc_memory_nm;
     this.history_fg = raw.history_fg ? true : false;
     this.remark = raw.remark;
@@ -373,8 +373,8 @@ class spareReceive {
     this.supplier_id = raw.supplier_id;
     this.stmt_no = raw.stmt_no;
     this.reg_date = raw.reg_date;
-    this.total_price = String(raw.total_price) ? Number(raw.total_price) : null;
-    this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
+    this.total_price = raw.total_price === null || raw.total_price === "" ? null : Number(raw.total_price);
+    this.total_qty = raw.total_qty === null || raw.total_qty === "" ? null : Number(raw.total_qty);
     this.order_id = raw.order_id;
     this.spare_receive_uid = raw.spare_receive_uid;
     this.emp_nm = raw.emp_nm;
@@ -388,12 +388,12 @@ class spareReceiveDetail {
     this.unit_id = raw.unit_id;
     this.lot_no = raw.lot_no;
     this.manufactured_lot_no = raw.manufactured_lot_no;
-    this.qty = String(raw.qty) ? Number(raw.qty) : null;
-    this.price = String(raw.price) ? Number(raw.price) : null;
+    this.qty = raw.qty === null || raw.qty === "" ? null : Number(raw.qty);
+    this.price = raw.price === null || raw.price === "" ? null : Number(raw.price);
     this.money_unit_id = raw.money_unit_id;
-    this.exchange = String(raw.exchange) ? Number(raw.exchange) : null;
-    this.total_price = String(raw.total_price) ? Number(raw.total_price) : null;
-    this.unit_qty = String(raw.unit_qty) ? Number(raw.unit_qty) : null;
+    this.exchange = raw.exchange === null || raw.exchange === "" ? null : Number(raw.exchange);
+    this.total_price = raw.total_price === null || raw.total_price === "" ? null : Number(raw.total_price);
+    this.unit_qty = raw.unit_qty === null || raw.unit_qty === "" ? null : Number(raw.unit_qty);
     this.insp_fg = raw.insp_fg ? true : false;
     this.carry_fg = raw.carry_fg ? true : false;
     this.order_detail_id = raw.order_detail_id;
@@ -418,7 +418,7 @@ class controlPlan {
 class controlPlanDetail {
   constructor(raw) {
     this.control_plan_id = raw.control_plan_id;
-    this.proc_no = String(raw.proc_no) ? Number(raw.proc_no) : null;
+    this.proc_no = raw.proc_no === null || raw.proc_no === "" ? null : Number(raw.proc_no);
     this.insp_document_detail_id = raw.insp_document_detail_id;
     this.insp_document_id = raw.insp_document_id;
     this.order_input_fg = raw.order_input_fg ? true : false;
@@ -437,9 +437,13 @@ class subdivisionDetail {
   constructor(raw) {
     this.work_subdivision_id = raw.work_subdivision_id;
     this.lot_no = raw.lot_no;
-    this.before_qty = String(raw.before_subdivision_qty) ? Number(raw.before_subdivision_qty) : null;
-    this.after_qty = String(raw.after_subdivision_qty) ? Number(raw.after_subdivision_qty) : null;
-    this.qty = String(raw.subdivision_qty) ? Number(raw.subdivision_qty) : null;
+    this.before_qty =
+      raw.before_subdivision_qty === null || raw.before_subdivision_qty === ""
+        ? null
+        : Number(raw.before_subdivision_qty);
+    this.after_qty =
+      raw.after_subdivision_qty === null || raw.after_subdivision_qty === "" ? null : Number(raw.after_subdivision_qty);
+    this.qty = raw.subdivision_qty === null || raw.subdivision_qty === "" ? null : Number(raw.subdivision_qty);
     this.subdivision_emp_id = raw.subdivision_emp_id;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
@@ -512,7 +516,7 @@ class sparepartsOutgo {
     this.prod_id = raw.prod_id;
     this.release_date = raw.outgo_date;
     this.lot_no = raw.lot_no;
-    this.release_qty = String(raw.stock) ? Number(raw.stock) : null;
+    this.release_qty = raw.stock === null || raw.stock === "" ? null : Number(raw.stock);
     this.equip_detail_id = raw.equip_detail_id;
     this.line_id = raw.line_id;
     this.inv_from_store_id = raw.store_id;
@@ -547,7 +551,7 @@ class order {
     this.prod_nm = raw.prod_nm;
     this.work_start_date = raw.work_start_date;
     this.work_end_date = raw.work_end_date === "" || raw.work_end_date === null ? "2099-12-31" : raw.work_end_date;
-    this.work_order_qty = String(raw.work_order_qty) ? Number(raw.work_order_qty) : null;
+    this.work_order_qty = raw.work_order_qty === null || raw.work_order_qty === "" ? null : Number(raw.work_order_qty);
     this.complete_fg = raw.complete_fg;
     this.complete_date = raw.complete_date === "" || raw.complete_date === null ? null : raw.complete_date;
     this.remark = raw.remark;
@@ -560,8 +564,8 @@ class packing {
     this.line_dept_id = raw.line_dept_id;
     this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
-    this.packing_qty = String(raw.packing_qty) ? Number(raw.packing_qty) : null;
-    this.packing_cnt = String(raw.packing_cnt) ? Number(raw.packing_cnt) : null;
+    this.packing_qty = raw.packing_qty === null || raw.packing_qty === "" ? null : Number(raw.packing_qty);
+    this.packing_cnt = raw.packing_cnt === null || raw.packing_cnt === "" ? null : Number(raw.packing_cnt);
     this.work_packing_date = raw.work_packing_date;
     this.work_packing_time = raw.work_packing_time;
     this.packing_emp_id = raw.packing_emp_id;
@@ -573,7 +577,7 @@ class packing {
 class packingDetail {
   constructor(raw) {
     this.work_packing_id = raw.work_packing_id;
-    this.packing_qty = String(raw.packing_qty) ? Number(raw.packing_qty) : null;
+    this.packing_qty = raw.packing_qty === null || raw.packing_qty === "" ? null : Number(raw.packing_qty);
     this.packing_emp_id = raw.packing_emp_id;
     this.work_packing_date = raw.work_packing_date === "" ? null : raw.work_packing_date;
     this.work_packing_time = raw.work_packing_time === "" ? null : raw.work_packing_time;
@@ -608,9 +612,9 @@ class weightDetail {
     this.work_order_input_id = raw.work_order_input_id;
     this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
-    this.total_qty = String(raw.total_qty) ? Number(raw.total_qty) : null;
-    this.bag_qty = String(raw.bag_qty) ? Number(raw.bag_qty) : null;
-    this.input_qty = String(raw.input_qty) ? Number(raw.input_qty) : null;
+    this.total_qty = raw.total_qty === null || raw.total_qty === "" ? null : Number(raw.total_qty);
+    this.bag_qty = raw.bag_qty === null || raw.bag_qty === "" ? null : Number(raw.bag_qty);
+    this.input_qty = raw.input_qty === null || raw.input_qty === "" ? null : Number(raw.input_qty);
     this.remark = raw.remark;
   }
 }
@@ -661,17 +665,17 @@ class inspectionResultUpload {
     this.prod_id = raw.prod_id;
     this.lot_no = raw.lot_no;
     this.work_date = raw.work_date;
-    this.insp_item = raw.insp_item === "" || !raw.insp_item ? null : raw.insp_item;
-    this.insp_min = raw.insp_min === "" || !raw.insp_min ? null : raw.insp_min;
-    this.insp_max = raw.insp_max === "" || !raw.insp_max ? null : raw.insp_max;
-    this.insp_value = raw.insp_value === "" || !raw.insp_value ? null : raw.insp_value;
+    this.insp_item = raw.insp_item === null || raw.insp_item === "" ? null : Number(raw.insp_item);
+    this.insp_min = raw.insp_min === null || raw.insp_min === "" ? null : Number(raw.insp_min);
+    this.insp_max = raw.insp_max === null || raw.insp_max === "" ? null : Number(raw.insp_max);
+    this.insp_value = raw.insp_value === null || raw.insp_value === "" ? null : Number(raw.insp_value);
     this.remark = raw.remark;
   }
 }
 class workYield {
   constructor(raw) {
     this.line_id = raw.line_id;
-    this.yield_value = String(raw.yield_value) ? Number(raw.yield_value) : null;
+    this.yield_value = raw.yield_value === null || raw.yield_value === "" ? null : Number(raw.yield_value);
     this.remark = raw.remark;
   }
 }
@@ -690,22 +694,24 @@ class PackingInput {
 class inspDocumentInput {
   constructor(raw) {
     this.insp_document_id = raw.insp_document_id;
-    this.sortby = raw.sortby === "" ? null : Number(raw.sortby);
+    this.sortby = raw.sortby === null || raw.sortby === "" ? null : Number(raw.sortby);
     this.prod_id = raw.prod_id;
     this.insp_item_id = raw.insp_item_id;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = raw.spec_min === "" ? null : Number(raw.spec_min);
-    this.spec_max = raw.spec_max === "" ? null : Number(raw.spec_max);
-    this.spec_lcl = raw.spec_lcl === "" ? null : Number(raw.spec_lcl);
-    this.spec_ucl = raw.spec_ucl === "" ? null : Number(raw.spec_ucl);
+    this.spec_min = raw.spec_min === null || raw.spec_min === "" ? null : Number(raw.spec_min);
+    this.spec_max = raw.spec_max === null || raw.spec_max === "" ? null : Number(raw.spec_max);
+    this.spec_lcl = raw.spec_lcl === null || raw.spec_lcl === "" ? null : Number(raw.spec_lcl);
+    this.spec_ucl = raw.spec_ucl === null || raw.spec_ucl === "" ? null : Number(raw.spec_ucl);
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_tool_id = raw.insp_tool_id;
     this.insp_method_id = raw.insp_method_id;
     this.special_property = raw.special_property;
-    this.worker_sample_cnt = raw.worker_sample_cnt === "" ? null : Number(raw.worker_sample_cnt);
+    this.worker_sample_cnt =
+      raw.worker_sample_cnt === null || raw.worker_sample_cnt === "" ? null : Number(raw.worker_sample_cnt);
     this.worker_insp_cycle = raw.worker_insp_cycle;
-    this.inspector_sample_cnt = raw.inspector_sample_cnt === "" ? null : Number(raw.inspector_sample_cnt);
+    this.inspector_sample_cnt =
+      raw.inspector_sample_cnt === null || raw.inspector_sample_cnt === "" ? null : Number(raw.inspector_sample_cnt);
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id;
     this.remark = raw.remark;
@@ -714,23 +720,25 @@ class inspDocumentInput {
 class inspDocumentDetail {
   constructor(raw) {
     this.insp_document_id = raw.insp_document_id;
-    this.sortby = raw.sortby === "" ? null : Number(raw.sortby);
+    this.sortby = raw.sortby === null || raw.sortby === "" ? null : Number(raw.sortby);
     this.proc_id = raw.proc_id;
     this.equip_id = raw.equip_id;
     this.insp_item_id = raw.insp_item_id;
     this.insp_item_desc = raw.insp_item_desc;
     this.spec_std = raw.spec_std;
-    this.spec_min = raw.spec_min === "" ? null : Number(raw.spec_min);
-    this.spec_max = raw.spec_max === "" ? null : Number(raw.spec_max);
-    this.spec_lcl = raw.spec_lcl === "" ? null : Number(raw.spec_lcl);
-    this.spec_ucl = raw.spec_ucl === "" ? null : Number(raw.spec_ucl);
+    this.spec_min = raw.spec_min === null || raw.spec_min === "" ? null : Number(raw.spec_min);
+    this.spec_max = raw.spec_max === null || raw.spec_max === "" ? null : Number(raw.spec_max);
+    this.spec_lcl = raw.spec_lcl === null || raw.spec_lcl === "" ? null : Number(raw.spec_lcl);
+    this.spec_ucl = raw.spec_ucl === null || raw.spec_ucl === "" ? null : Number(raw.spec_ucl);
     this.insp_filing_id = raw.insp_filing_id;
     this.insp_tool_id = raw.insp_tool_id;
     this.insp_method_id = raw.insp_method_id;
     this.special_property = raw.special_property;
-    this.worker_sample_cnt = raw.worker_sample_cnt === "" ? null : Number(raw.worker_sample_cnt);
+    this.worker_sample_cnt =
+      raw.worker_sample_cnt === null || raw.worker_sample_cnt === "" ? null : Number(raw.worker_sample_cnt);
     this.worker_insp_cycle = raw.worker_insp_cycle;
-    this.inspector_sample_cnt = raw.inspector_sample_cnt === "" ? null : Number(raw.inspector_sample_cnt);
+    this.inspector_sample_cnt =
+      raw.inspector_sample_cnt === null || raw.inspector_sample_cnt === "" ? null : Number(raw.inspector_sample_cnt);
     this.inspector_insp_cycle = raw.inspector_insp_cycle;
     this.infc_memory_id = raw.infc_memory_id;
     this.remark = raw.remark;
