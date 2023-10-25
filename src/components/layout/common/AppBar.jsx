@@ -168,7 +168,7 @@ function AppBar(props) {
     const interval = setInterval(() => {
       compareVersion();
       getSysAlarm();
-    }, 50000); // 5분 마다 버전 비교를 함
+    }, 300000); // 5분 마다 버전 비교를 함
     return () => {
       clearInterval(interval);
     };

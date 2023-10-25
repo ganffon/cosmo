@@ -142,7 +142,7 @@ export function Product() {
     isSnackOpen,
     setIsSnackOpen,
     setGridDataSelect,
-    restURI.storeLocation
+    restURI.storeIncludeLocation
   ); //➡️ Modal Select Search EquipProc
   const onClickNew = () => {
     setIsModalOpen(true);

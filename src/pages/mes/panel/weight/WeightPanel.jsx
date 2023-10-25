@@ -428,9 +428,9 @@ export function WeightPanel() {
           work_order_input_id: raw.work_order_input_id,
           prod_id: raw.prod_id,
           lot_no: raw.lot_no,
-          total_qty: String(raw.total_qty) ? Number(raw.total_qty) : null,
-          bag_qty: String(raw.bag_qty) ? Number(raw.bag_qty) : null,
-          input_qty: String(raw.input_qty) ? Number(raw.input_qty) : null,
+          total_qty: raw.total_qty === "" || raw.total_qty == null ? null : Number(raw.total_qty),
+          bag_qty: raw.bag_qty === "" || raw.bag_qty == null ? null : Number(raw.bag_qty),
+          input_qty: raw.input_qty === "" || raw.input_qty == null ? null : Number(raw.input_qty),
           remark: raw.remark,
         };
       });
