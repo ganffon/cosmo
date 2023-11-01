@@ -170,22 +170,20 @@ function GridTabEdit(props) {
 
   const setWorkerList = () => {
     if (InfoButton === true) {
-      if (selectEmpState === "mng") {
+      if (selectEmpState === "mng" || selectEmpState === "mngDelete") {
         workerDataEdit[value][0].mngEmpId = emp.mngEmpId;
         workerDataEdit[value][0].mngEmpNm = emp.mngEmpNm;
-      } else if (selectEmpState === "aft") {
+      } else if (selectEmpState === "aft" || selectEmpState === "aftDelete") {
         workerDataEdit[value][0].aftEmpId = emp.aftEmpId;
         workerDataEdit[value][0].aftEmpNm = emp.aftEmpNm;
-      } else if (selectEmpState === "nig") {
+      } else if (selectEmpState === "nig" || selectEmpState === "nigDelete") {
         workerDataEdit[value][0].nigEmpId = emp.nigEmpId;
         workerDataEdit[value][0].nigEmpNm = emp.nigEmpNm;
       }
     }
-
     setWorkerInfo(workerDataEdit);
     if (workerDataEdit[value]) {
     }
-
     setToggle(!toggle);
   };
 
@@ -200,12 +198,7 @@ function GridTabEdit(props) {
     const { children, value, index, ...other } = props;
 
     return (
-      <div
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
+      <div hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
         {value === index && (
           <Box sx={{ p: 3 }}>
             <Typography>{children}</Typography>
@@ -235,11 +228,7 @@ function GridTabEdit(props) {
                 onRemoveAfternoon={onRemoveAfternoon}
                 onSelectNight={onSelectNight}
                 onRemoveNight={onRemoveNight}
-                emp={
-                  Array.isArray(workerDataEdit[index])
-                    ? workerDataEdit[index][0]
-                    : workerDataEdit[index]
-                }
+                emp={Array.isArray(workerDataEdit[index]) ? workerDataEdit[index][0] : workerDataEdit[index]}
                 isEditOrNewFlag={isEditOrNewFlag}
               />
             </S.InputNewTab>
