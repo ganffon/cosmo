@@ -571,6 +571,7 @@ class packing {
     this.packing_emp_id = raw.packing_emp_id;
     this.inv_to_store_id = raw.inv_to_store_id;
     this.inv_to_location_id = raw.inv_to_location_id;
+    this.rework_fg = raw.rework_fg ? true : false;
     this.remark = raw.remark;
   }
 }

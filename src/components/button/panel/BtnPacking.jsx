@@ -7,7 +7,7 @@ function BtnPacking(props) {
     <S.ButtonSetWrap>
       <BtnPanel
         title={"등록"}
-        height={"150px"}
+        height={"120px"}
         width={"200px"}
         color={"#1491CE"}
         fontSize={"26px"}

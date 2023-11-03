@@ -67,9 +67,30 @@ export const RightWrap = styled("div")`
   height: 100%;
   width: 300px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: NotoSansKR_B;
   font-size: 20px;
 `;
+export const ReworkChkWrap = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 60px;
+  margin-top: 30px;
+  margin-right: 50px;
+`;
+export const CheckboxContainer = styled("div")`
+  width: 25px;
+  height: 25px;
+`;
+export const ReworkChk = styled("input")`
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  accent-color: #f5329498;
+`;
+export const ReworkChkTitle = styled("label")``;
 export const ScreenTitleBox = styled("div")`
   height: 40px;
   width: 80%;

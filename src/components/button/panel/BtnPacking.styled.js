@@ -36,6 +36,6 @@ export const ButtonSetWrap = styled("div")`
   width: 100%;
   height: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 10px;
 `;

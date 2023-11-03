@@ -1,30 +1,25 @@
 import { LayoutContext } from "components/layout/common/Layout";
 
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import * as S from "./productionPackingView.styled";
-import * as MS from "./productionPackingModel.styled";
 import DateTime from "components/datetime/DateTime";
 import InputPaper from "components/input/InputPaper";
 import ProductionPackingViewSet from "./productionPackingViewSet";
-import CloseIcon from "@mui/icons-material/Close";
 import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
 import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
 import * as Cbo from "custom/useCboSet";
 import CN from "json/ColumnName.json";
-import useInputSet from "custom/useInputSet";
 import * as uSearch from "custom/useSearch";
 import ModalSelect from "components/modal/ModalSelect";
-import ModalWrap from "components/modal/ModalWrap";
-import GridModal from "components/grid/GridModal";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
 import { TextField } from "@mui/material";
 
 export function ProductionPackingView() {
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   const [comboValue, setComboValue] = useState({
     line_id: null,
@@ -55,7 +50,6 @@ export function ProductionPackingView() {
   });
 
   const [dblClickGrid, setDblClickGrid] = useState(""); //🔸DblClick을 호출한 Grid가 어떤것인지? : "Header" or "Detail"
-  const [columnsSelect, setColumnsSelect] = useState([]);
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -67,18 +61,7 @@ export function ProductionPackingView() {
     }
   }, [isMenuSlide]);
 
-  const {
-    columnOptions,
-    rowHeadersNumCheck,
-    rowHeadersNum,
-    header,
-    columnsHeader,
-    columnsDetail,
-    columnsModalHeader,
-    columnsModalDetail,
-    inputSet,
-    columnsSelectProd,
-  } = ProductionPackingViewSet();
+  const { columnOptions, rowHeadersNum, header, columns, columnsSelectProd } = ProductionPackingViewSet();
 
   useEffect(() => {
     onClickSearch();
@@ -91,7 +74,6 @@ export function ProductionPackingView() {
 
   const onDblClickGridSelect = (e) => {
     //🔸Select Grid에서 DblClick
-    let refGrid;
     let columnName;
 
     if (dblClickGrid === "Search") {
@@ -158,7 +140,6 @@ export function ProductionPackingView() {
   };
   const onClickProd = () => {
     setDblClickGrid("Search");
-    setColumnsSelect(columnsSelectProd);
     setIsModalSelectOpen(true);
     actSelectProd();
   };
@@ -214,7 +195,7 @@ export function ProductionPackingView() {
         <S.GridWrap>
           <GridSingle
             columnOptions={columnOptions}
-            columns={columnsDetail}
+            columns={columns}
             rowHeaders={rowHeadersNum}
             header={header}
             data={gridDataDetail}

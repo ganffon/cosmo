@@ -6,7 +6,7 @@ import * as col from "custom/GridColumnSet";
 function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
-  const header = {};
+  const header = col.multi(["rework_fg"]);
   const columnOptions = {
     resizable: true,
     minWidth: C.WIDTH_SHORT,
@@ -14,26 +14,20 @@ function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint)
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
   const columnsHeader = [
-    col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
-    col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
     col.text("work_order_no", CN.work_order_no, false, false, C.WIDTH_SHORT),
-    col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
     col.text("line_dept_nm", CN.line_dept_nm, false, false, C.WIDTH_SHORT),
-    col.id("line_id", CN.line_id, C.HIDDEN_ID),
     col.text("line_nm", CN.line_nm, false, false, C.WIDTH_SHORT),
-    col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
     col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE),
     col.text("prod_std", CN.prod_std, false, false, C.WIDTH_MIDDLE),
     col.date("work_packing_date", CN.work_packing_date, false, C.WIDTH_SHORT),
-    col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
+    col.check("rework_fg", "재처리\n여부", isEditModeHeader),
+    col.text("lot_no", CN.lot_no, false, false, C.WIDTH_SHORT),
     col.number("packing_qty", CN.packing_qty, false, C.WIDTH_SHORT, false),
     col.number("packing_cnt", CN.packing_cnt, false, C.WIDTH_SHORT, false),
     // col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
     // col.select("packing_emp_nm", CN.packing_emp_nm, isEditModeHeader, C.WIDTH_SHORT),
-    col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
     col.text("store_nm", CN.store_nm, false, false, C.WIDTH_SHORT),
-    col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
     col.text("location_nm", CN.location_nm, false, false, C.WIDTH_SHORT),
     col.button("Print", "프린트", "프린트", onPrintClick),
     col.text("remark", CN.remark, isEditModeHeader, false, C.WIDTH_MIDDLE),
@@ -41,6 +35,13 @@ function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint)
     col.text("create_user_nm", CN.create_user_nm, false, false, C.WIDTH_SHORT, "center"),
     col.date("update_at", CN.update_at, false, C.WIDTH_LONG),
     col.text("update_user_nm", CN.update_user_nm, false, false, C.WIDTH_SHORT, "center"),
+    col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),
+    col.id("work_order_id", CN.work_order_id, C.HIDDEN_ID),
+    col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
+    col.id("line_id", CN.line_id, C.HIDDEN_ID),
+    col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
+    col.id("inv_to_store_id", CN.inv_to_store_id, C.HIDDEN_ID),
+    col.id("inv_to_location_id", CN.inv_to_location_id, C.HIDDEN_ID),
   ];
   const columnsDetail = [
     col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
@@ -72,6 +73,7 @@ function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint)
     col.select("prod_nm", CN.prod_nm, true, C.WIDTH_MIDDLE),
     col.select("prod_std", CN.prod_std, true, C.WIDTH_MIDDLE),
     col.date("work_packing_date", CN.work_packing_date, true, C.WIDTH_SHORT),
+    col.check("rework_fg", "재처리\n여부", true),
     col.text("lot_no", CN.lot_no, true, false, C.WIDTH_MIDDLE),
     col.number("packing_qty", CN.packing_qty, true, C.WIDTH_SHORT, false),
     col.number("packing_cnt", CN.packing_cnt, true, C.WIDTH_SHORT, false),

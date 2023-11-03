@@ -18,7 +18,7 @@ import * as Cbo from "custom/useCboSet";
 import { getParams } from "api/getParams";
 
 export function PerformanceToOrder(props) {
-  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);

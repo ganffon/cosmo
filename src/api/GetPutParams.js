@@ -593,6 +593,7 @@ class packing {
   constructor(raw) {
     this.work_packing_id = raw.work_packing_id;
     this.packing_emp_id = raw.packing_emp_id;
+    this.rework_fg = raw.rework_fg ? true : false;
     this.remark = raw.remark;
   }
 }

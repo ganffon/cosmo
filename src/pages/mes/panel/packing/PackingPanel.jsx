@@ -364,6 +364,7 @@ export function PackingPanel() {
           work_packing_date: info.startDate,
           inv_to_store_id: info.storeID,
           inv_to_location_id: info.locationID,
+          rework_fg: reworkFlag,
           remark: info.remark,
         },
       ];
@@ -372,7 +373,7 @@ export function PackingPanel() {
       handleGridHeaderSearch();
       setInfo({ startDate: DateTime().dateFull });
       onBarcodePrint(workPackingID);
-
+      setReworkFlag(false);
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
@@ -853,6 +854,7 @@ export function PackingPanel() {
     return (
       <GridSingle
         columns={columnsHeader}
+        header={header}
         columnOptions={columnOptions}
         rowHeaders={rowHeadersNumCheck}
         data={gridDataHeader}
@@ -900,6 +902,14 @@ export function PackingPanel() {
     );
   }, [gridDataNewDetail, info.lineNM]);
 
+  const [reworkFlag, setReworkFlag] = useState(false);
+  const onReworkChk = (e) => {
+    if (e.target.checked) {
+      setReworkFlag(true);
+    } else {
+      setReworkFlag(false);
+    }
+  };
   return (
     <ContentsArea>
       <S.TopWrap>
@@ -910,6 +920,12 @@ export function PackingPanel() {
           </S.BarcodeBoxWrap>
         </S.LeftWrap>
         <S.RightWrap>
+          <S.ReworkChkWrap>
+            <S.CheckboxContainer>
+              <S.ReworkChk id={"reworkFlag"} type={"checkbox"} onChange={onReworkChk} checked={reworkFlag} />
+            </S.CheckboxContainer>
+            <S.ReworkChkTitle htmlFor={"reworkFlag"}>{"재처리 여부"}</S.ReworkChkTitle>
+          </S.ReworkChkWrap>
           <BtnPacking onClickNew={onClickNew} onClickDelete={onClickDelete} />
         </S.RightWrap>
       </S.TopWrap>
