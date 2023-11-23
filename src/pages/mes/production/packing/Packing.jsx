@@ -822,6 +822,8 @@ export function Packing() {
         targetWeight.current = e?.instance.getValue(e?.rowKey, "packing_qty");
         handleGridHeaderClick(false);
       }
+    } else {
+      disRow.handleClickGridCheck(e, isEditModeHeader, ["rework_fg"]);
     }
   };
   const onDblClickGridHeader = (e) => {

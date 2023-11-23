@@ -923,6 +923,7 @@ export function SubdivisionPanel() {
       />
     );
   }, [barcodePrintInfo, componentRef.current]);
+
   const handleInputTextChange = (e) => {
     setInputTextChange({ ...inputTextChange, remark: e.target.value });
     setSelectedRemark(e.target.value);

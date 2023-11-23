@@ -1,5 +1,3 @@
-import restURI from "json/restURI.json";
-import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
@@ -7,7 +5,7 @@ import * as col from "custom/GridColumnSet";
 function PackingPanelSet(isEditMode, onPerformance, onReprint) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
-  const header = {};
+  const header = col.multi(["rework_fg"]);
   const columnOptions = {
     resizable: true,
     frozenBorderWidth: 3,
@@ -22,6 +20,7 @@ function PackingPanelSet(isEditMode, onPerformance, onReprint) {
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE),
+    col.check("rework_fg", "재처리\n여부"),
     col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
     col.number("packing_qty", CN.packing_qty, isEditMode),
     col.number("packing_no", CN.packing_no),

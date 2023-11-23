@@ -558,7 +558,9 @@ class order {
     this.work_order_id = raw.work_order_id;
     this.work_order_date = raw.work_order_date;
     this.work_start_date = raw.work_start_date;
+    this.work_start_time = raw.work_start_time;
     this.work_end_date = raw.work_end_date;
+    this.work_end_time = raw.work_end_time;
     this.work_order_qty = raw.work_order_qty === null || raw.work_order_qty === "" ? null : Number(raw.work_order_qty);
     this.complete_fg = raw.complete_fg ? true : false;
     this.complete_date = raw.complete_date;
@@ -593,6 +595,7 @@ class packing {
   constructor(raw) {
     this.work_packing_id = raw.work_packing_id;
     this.packing_emp_id = raw.packing_emp_id;
+    this.rework_fg = raw.rework_fg ? true : false;
     this.remark = raw.remark;
   }
 }

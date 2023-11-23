@@ -26,10 +26,11 @@ import CN from "json/ColumnName.json";
 import CreateOrder from "./createTheory";
 import InputPaper from "components/input/InputPaper";
 import EditTheory from "./editTheory";
+import * as RE from "custom/RegularExpression";
 
 export function ProductionOrder() {
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
 
   const refGridHeader = useRef(null);
   const refGridMid = useRef(null);
@@ -282,6 +283,25 @@ export function ProductionOrder() {
 
   const onEditingFinishGridHeader = (e) => {
     disRow.handleEditingFinishGridCheck(e);
+
+    if (Condition(e, ["work_start_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refGridHeader, "work_start_time");
+    }
+    if (Condition(e, ["work_end_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refGridHeader, "work_end_time");
+    }
+  };
+  const onEditingFinishModal = (e) => {
+    if (Condition(e, ["work_start_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refGridModalHeader, "work_start_time");
+    }
+    if (Condition(e, ["work_end_time"])) {
+      //🔸시간 정규표현식 적용
+      RE.Time(e, refGridModalHeader, "work_end_time");
+    }
   };
   const onEditingFinishGridMid = (e) => {
     disRow.handleEditingFinishGridCheck(e);
@@ -597,6 +617,7 @@ export function ProductionOrder() {
         onClickModalSave={onClickModalSaveHeader}
         onClickModalClose={onClickModalCloseHeader}
         onDblClickModalGrid={onDblClickModalHeader}
+        onEditingFinishModal={onEditingFinishModal}
         columns={columnsModalHeader}
         columnOptions={columnOptions}
         header={header}

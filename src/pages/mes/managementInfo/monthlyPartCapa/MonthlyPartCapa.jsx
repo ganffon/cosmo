@@ -66,12 +66,11 @@ export const MonthlyPartCapa = ({ toggle }) => {
     open: false,
   });
   const refSingleGrid = useRef(null);
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
-    startDate: DateTime().dateFull,
+    startDate: DateTime().year,
   });
   const [year, setYear] = useState(new Date().getFullYear());
-  const [textInput, setTextInput] = useState("");
   const [responseData, setResponseData] = useState(null);
   const [isAuto, setIsAuto] = useState(true);
 
@@ -81,26 +80,21 @@ export const MonthlyPartCapa = ({ toggle }) => {
       setIsAuto(toggle);
     }
   }, [toggle, isAuto]);
-  const onKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearchButtonClick();
-    }
-  };
+
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
+
   const handleSearchButtonClick = () => {
-    // setSearchButtonClicked();
-    GetMonthlyLineCapaData();
+    getMonthlyLineCapaData();
   };
-  const handleTextChange = (event) => {
-    setTextInput(event.target.value);
-  };
+
   const handleChange = (event) => {
     setYear(event.target.value);
   };
-  const GetMonthlyLineCapaData = async () => {
+
+  const getMonthlyLineCapaData = async () => {
     try {
       setIsBackDrop(true);
       let lineID;
@@ -130,7 +124,7 @@ export const MonthlyPartCapa = ({ toggle }) => {
     }
   };
 
-  // GetMonthlyLineCapaData(dateText.endDate, textInput);
+  // getMonthlyLineCapaData(dateText.endDate, textInput);
   const cOptions = {
     plotOptions: {
       // 차트 시각화 옵션
@@ -174,7 +168,6 @@ export const MonthlyPartCapa = ({ toggle }) => {
                 defaultValue={year}
                 size="small"
               />
-              {/* <S.InputText key={"line_nm"} id={"line_nm"} label={"라인"} size="small" onKeyDown={onKeyPress} onChange={handleTextChange} /> */}
               <S.ComboBox
                 disablePortal
                 id="lineCbo"
