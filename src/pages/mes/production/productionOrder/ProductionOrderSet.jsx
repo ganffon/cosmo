@@ -29,6 +29,14 @@ function ProductionOrderSet(
         name: "complete_fg",
         renderer: CustomGrid.ColumnHeaderMultiLine,
       },
+      {
+        name: "work_start_time",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "work_end_time",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
     ],
   };
   const datePickerSet = null;
@@ -46,7 +54,9 @@ function ProductionOrderSet(
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE, false, false, false, false, false),
     col.text("prod_std", CN.prod_std, false, false, C.WIDTH_MIDDLE, false, false, false, false, false),
     col.date("work_start_date", CN.work_start_date, isEditModeHeader, C.WIDTH_SHORT),
+    col.text("work_start_time", CN.work_start_time, isEditModeHeader, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.date("work_end_date", CN.work_end_date, isEditModeHeader, C.WIDTH_SHORT),
+    col.text("work_end_time", CN.work_end_time, isEditModeHeader, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.number("work_order_qty", CN.work_order_qty, isEditModeHeader, C.WIDTH_SHORT, false),
     col.check("complete_fg", CN.complete_fg, isEditModeHeader, false, C.WIDTH_SHORT),
     col.date("complete_date", CN.complete_date, isEditModeHeader, C.WIDTH_SHORT),
@@ -141,8 +151,10 @@ function ProductionOrderSet(
     col.select("prod_nm", CN.prod_nm, true, C.WIDTH_SHORT),
     col.id("line_dept_id", CN.line_dept_id, C.HIDDEN_ID),
     col.select("line_dept_nm", CN.line_dept_nm, true, C.WIDTH_SHORT),
-    col.date("work_start_date", CN.work_start_date, true, C.WIDTH_SHORT),
-    col.date("work_end_date", CN.work_end_date, true, C.WIDTH_SHORT),
+    col.date("work_start_date", CN.work_start_date, true),
+    col.text("work_start_time", CN.work_start_time, true, C.U, C.WIDTH_SUPER_SHORT, "center"),
+    col.date("work_end_date", CN.work_end_date, true),
+    col.text("work_end_time", CN.work_end_time, true, C.U, C.WIDTH_SUPER_SHORT, "center"),
     col.number("work_order_qty", CN.work_order_qty, true, C.WIDTH_SHORT, false),
     col.check("complete_fg", CN.complete_fg, true, false, C.WIDTH_SHORT),
     col.date("complete_date", CN.complete_date, true, C.WIDTH_SHORT),

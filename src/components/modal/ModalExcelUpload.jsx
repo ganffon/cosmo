@@ -54,7 +54,10 @@ function ModalExcelUpload(props) {
     }
     const headers = gridData.length > 0 ? gridData[i] : [];
     const newHeaders = headers.map((header, index) => {
-      if ((header === "D5" || header === "D50" || header === "D95" || header === "Dmin" || header === "Dmax") && index !== headers.indexOf(header)) {
+      if (
+        (header === "D5" || header === "D50" || header === "D95" || header === "Dmin" || header === "Dmax") &&
+        index !== headers.indexOf(header)
+      ) {
         return `${header}_`;
       }
       const value = header.richText ? header?.richText[0]?.text + header?.richText[1]?.text : header;
@@ -199,6 +202,7 @@ function ModalExcelUpload(props) {
           severity: "error",
         });
       }
+      setIsBackDrop(false);
     }
   };
   const handleFileUpload = (event) => {
@@ -309,7 +313,13 @@ function ModalExcelUpload(props) {
           <InputPaper width={"180px"} value={prodCD || ""} btn={false} />
         </LS.InputPaperWrap>
         <LS.InputPaperWrap pLeft="0px" justify="flex-start">
-          <InputPaper width={"240px"} value={prodNM || ""} btn={true} onClickSelect={onClickProdSelect} onClickRemove={resetProd} />
+          <InputPaper
+            width={"240px"}
+            value={prodNM || ""}
+            btn={true}
+            onClickSelect={onClickProdSelect}
+            onClickRemove={resetProd}
+          />
         </LS.InputPaperWrap>
         <LS.ButtonWrap>
           <BtnComponent btnName={"Save"} onClick={onClickSave} />
@@ -341,7 +351,13 @@ function ModalExcelUpload(props) {
                 <div>
                   <label htmlFor="fileInput">
                     <FolderIcon />
-                    <input id="fileInput" type="file" accept=".xlsx" onChange={handleFileUpload} style={{ display: "none" }} />
+                    <input
+                      id="fileInput"
+                      type="file"
+                      accept=".xlsx"
+                      onChange={handleFileUpload}
+                      style={{ display: "none" }}
+                    />
                   </label>
                 </div>
               </>

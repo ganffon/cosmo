@@ -22,7 +22,7 @@ const text = (
   header = "",
   isEditMode = false,
   hidden = false,
-  minWidth = C.WIDTH_SHORT,
+  width = C.WIDTH_SHORT,
   align = "left",
   sortable = false,
   filter = false,
@@ -32,7 +32,8 @@ const text = (
   return {
     name: name,
     header: header,
-    minWidth: minWidth,
+    minWidth: C.WIDTH_SUPER_SHORT,
+    width: width,
     editor: isEditMode ? "text" : false,
     align: align,
     hidden: hidden,

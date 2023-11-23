@@ -11,9 +11,7 @@ function PerformanceToOrderSet(isEditMode) {
   const rowNum = ["rowNum"];
   const columns = [
     col.text("work_order_no", CN.work_order_no, C.U, false),
-    col.date("work_start_date", CN.work_start_date),
-    col.date("work_end_date", CN.work_end_date),
-    col.date("complete_date", CN.complete_date),
+
     col.text("line_nm", CN.line_nm, C.U, C.U, C.WIDTH_SHORT),
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
@@ -29,6 +27,10 @@ function PerformanceToOrderSet(isEditMode) {
     col.number("work_rework_packing_qty", CN.work_rework_packing_qty),
     col.number("theory_prod_qty", CN.theory_prod_qty),
     col.number("work_packing_rate", CN.work_packing_rate),
+
+    col.date("work_start_date", CN.work_start_date),
+    col.date("work_end_date", CN.work_end_date),
+    col.date("complete_date", CN.complete_date),
 
     col.text("remark", CN.remark, C.U, C.U, C.WIDTH_LONG),
   ];

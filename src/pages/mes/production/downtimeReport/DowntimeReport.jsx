@@ -173,6 +173,10 @@ export function DowntimeReport(props) {
     }
   };
 
+  useEffect(() => {
+    onClickSearch();
+  }, []);
+
   return (
     <ContentsArea>
       <S.ShadowBoxButton>

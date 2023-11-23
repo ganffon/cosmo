@@ -1,6 +1,5 @@
 import DateTime from "components/datetime/DateTime";
 import * as S from "./DatePicker.styled";
-import { useEffect } from "react";
 
 function DatePicker(props) {
   const { datePickerSet, dateText, setDateText, dateTitle = "" } = props;

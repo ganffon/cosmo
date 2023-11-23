@@ -13,14 +13,14 @@ import BtnComponent from "components/button/BtnComponent";
 
 export const DailyLineInputCapa = ({ toggle }) => {
   const refSingleGrid = useRef(null);
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().dateFull,
     endDate: DateTime().dateFull,
   });
   const [year, setYear] = useState(new Date().getFullYear());
-  const [textInput, setTextInput] = useState("");
   const [responseData, setResponseData] = useState(null);
+  const [stackData, setStackData] = useState(null);
   const [isAuto, setIsAuto] = useState(true);
 
   useEffect(() => {
@@ -29,41 +29,34 @@ export const DailyLineInputCapa = ({ toggle }) => {
       setIsAuto(toggle);
     }
   }, [toggle, isAuto]);
-  const onKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearchButtonClick();
-    }
-  };
+
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refSingleGrid?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
+
+  useEffect(() => {
+    const year = dateText.startDate.slice(0, 4);
+    setYear(year);
+  }, [dateText]);
+
   const handleSearchButtonClick = () => {
-    // setSearchButtonClicked();
-    GetMonthlyLineCapaData();
+    getDailyLineInputCapaData();
   };
-  const handleTextChange = (event) => {
-    setTextInput(event.target.value);
-  };
-  const handleChange = (event) => {
-    setYear(event.target.value);
-  };
-  const GetMonthlyLineCapaData = () => {
-    restAPI
-      .get(restURI.monthlyProd, {
-        params: {
-          reg_date: year,
-          line_nm: textInput,
-        },
-      })
-      .then((response) => {
-        // API 응답 데이터 처리 로직
-        setResponseData(response.data);
-      })
-      .catch((error) => {
-        // 오류 처리 로직
-        // console.error('API 호출 중 오류 발생:', error);
-      });
+
+  const getDailyLineInputCapaData = async () => {
+    try {
+      const res = await restAPI.get(restURI.monthlyProd, { params: { reg_date: year } });
+      setResponseData(res.data.data.rows[0]);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      const res = await restAPI.get(restURI.kpiInputByPeriod, { params: { date: dateText.startDate } });
+      setStackData(res.data.data.rows);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const stackedOptions = {
     colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)", "rgb(233, 204, 71)", "rgb(225, 73, 124)"],
@@ -74,7 +67,7 @@ export const DailyLineInputCapa = ({ toggle }) => {
         columnWidth: "60%", // 막대 너비
         dataLabels: {
           total: {
-            enabled: true,
+            enabled: false,
             style: {
               fontSize: "13px",
               fontWeight: 900,
@@ -280,7 +273,7 @@ export const DailyLineInputCapa = ({ toggle }) => {
     },
   ];
   const cOptions = {
-    colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)"],
+    colors: ["rgb(107, 232, 168)", "rgb(80, 151, 244)", "rgb(233, 204, 71)", "rgb(225, 73, 124)"],
     plotOptions: {
       // 차트 시각화 옵션
       bar: {
@@ -296,14 +289,13 @@ export const DailyLineInputCapa = ({ toggle }) => {
       enabled: true,
     },
   };
-  // GetMonthlyLineCapaData(dateText.endDate, textInput);
 
   const dateHeaders = [];
   for (let i = 0; i < 12; i++) {
     dateHeaders.push(i + 1 + "월");
   }
   const columns = [
-    { header: "품종", name: "prod_type_small_nm" },
+    { header: "품목", name: "prod_nm" },
     ...dateHeaders.map((date, index) => {
       return { header: date, name: `M${index + 1}` };
     }),
@@ -315,7 +307,7 @@ export const DailyLineInputCapa = ({ toggle }) => {
         <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
           <S.ToolWrap>
             <S.SearchWrap>
-              <S.Date datePickerSet={"single"} dateText={dateText.endDate} setDateText={setDateText} />
+              <S.Date datePickerSet={"single"} dateText={dateText} setDateText={setDateText} />
             </S.SearchWrap>
             <S.ButtonWrap>
               <BtnComponent btnName={"Search"} onClick={handleSearchButtonClick} />
@@ -328,31 +320,21 @@ export const DailyLineInputCapa = ({ toggle }) => {
           <S.PartCapaLeft>
             <S.Title>투입량</S.Title>
             <S.ChartWrap>
-              {responseData && (
-                <Chart id={"chart"} options={stackedOptions} series={stackedTmpData} type="bar" height={350} />
-              )}
+              {stackData && <Chart id={"chart"} options={stackedOptions} series={stackData} type="bar" height={350} />}
             </S.ChartWrap>
           </S.PartCapaLeft>
           <S.PartCapaRight>
             <S.Title>생산량</S.Title>
             <S.ChartWrap>
               {responseData && (
-                <Chart
-                  id={"chart"}
-                  options={cOptions}
-                  series={responseData.data.rows[0].lineGraph}
-                  type="bar"
-                  height={350}
-                />
+                <Chart id={"chart"} options={cOptions} series={responseData.lineGraph} type="bar" height={350} />
               )}
             </S.ChartWrap>
           </S.PartCapaRight>
         </S.FlexTop>
         <S.LineCapaBottom>
           <S.GridWrap2>
-            {responseData && (
-              <GridSingle columns={columns} data={responseData.data.rows[0].grid} refGrid={refSingleGrid} />
-            )}
+            {responseData && <GridSingle columns={columns} data={responseData.grid} refGrid={refSingleGrid} />}
           </S.GridWrap2>
         </S.LineCapaBottom>
       </S.TopWrap>

@@ -550,7 +550,9 @@ class order {
     this.prod_cd = raw.prod_cd;
     this.prod_nm = raw.prod_nm;
     this.work_start_date = raw.work_start_date;
+    this.work_start_time = raw.work_start_time;
     this.work_end_date = raw.work_end_date === "" || raw.work_end_date === null ? "2099-12-31" : raw.work_end_date;
+    this.work_end_time = raw.work_end_time;
     this.work_order_qty = raw.work_order_qty === null || raw.work_order_qty === "" ? null : Number(raw.work_order_qty);
     this.complete_fg = raw.complete_fg;
     this.complete_date = raw.complete_date === "" || raw.complete_date === null ? null : raw.complete_date;
