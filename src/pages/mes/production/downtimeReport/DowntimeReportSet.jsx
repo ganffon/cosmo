@@ -3,6 +3,7 @@ import CN from "json/ColumnName.json";
 import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
+import * as CustomGrid from "components/grid/setting/CustomGrid";
 
 function DowntimeReportSet(onDowntimeInput) {
   const data = [];
@@ -20,14 +21,14 @@ function DowntimeReportSet(onDowntimeInput) {
   const columns = [
     col.id("sys_downtime_id", CN.sys_downtime_id, C.HIDDEN_ID),
     col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
-    col.text("line_nm", CN.line_nm, C.U, C.U, C.WIDTH_SUPER_SHORT, "center", C.U, true),
-    col.text("downtime_date", CN.downtime_date, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
-    col.text("start_date", CN.start_date, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
-    col.text("start_time", CN.start_time, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
-    col.text("end_date", CN.end_date, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
-    col.text("end_time", CN.end_time, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
-    col.text("downtime", CN.downtime, C.U, C.U, C.WIDTH_MIDDLE, "center", C.U, true),
-    col.text("downtime_status", CN.downtime_status, C.U, C.U, C.WIDTH_SUPER_SHORT, "center", C.U, true),
+    col.text("line_nm", CN.line_nm, C.U, C.U, C.WIDTH_SHORT, "center", C.U, true),
+    col.text("downtime_date", CN.downtime_date, C.U, C.U, C.WIDTH_SHORT, "center", C.U, true),
+    col.text("start_date", CN.start_date, C.U, C.U, C.WIDTH_SHORT, "center", C.U, true),
+    col.text("start_time", CN.work_start_time, C.U, C.U, C.WIDTH_SUPER_SHORT, "center"),
+    col.text("end_date", CN.end_date, C.U, C.U, C.WIDTH_SHORT, "center", C.U, true),
+    col.text("end_time", CN.work_end_time, C.U, C.U, C.WIDTH_SUPER_SHORT, "center"),
+    col.text("downtime", CN.downtime, C.U, C.U, C.WIDTH_SHORT, "center"),
+    col.text("downtime_status", CN.downtime_status, C.U, C.U, C.WIDTH_SHORT, "center", C.U, true),
     col.button("send_fg", "비가동 등록", "비가동 등록", onDowntimeInput, "등록 완료", "downtimeInput"),
     // col.text("send_fg", CN.send_fg),
     col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
@@ -59,7 +60,11 @@ function DowntimeReportSet(onDowntimeInput) {
     //🔸multiLine
     // columns: [
     //   {
-    //     name: "line_cd",
+    //     name: "start_time",
+    //     renderer: CustomGrid.ColumnHeaderMultiLine,
+    //   },
+    //   {
+    //     name: "end_time",
     //     renderer: CustomGrid.ColumnHeaderMultiLine,
     //   },
     // ],

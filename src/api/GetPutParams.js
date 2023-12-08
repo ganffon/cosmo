@@ -625,7 +625,7 @@ class weight {
 class weightDetail {
   constructor(raw) {
     this.work_weigh_detail_id = raw.work_weigh_detail_id;
-    this.lot_no = raw.lot_no;
+    // this.lot_no = raw.lot_no;
     this.bag_qty = raw.bag_qty === null || raw.bag_qty === "" ? null : Number(raw.bag_qty);
     this.input_qty = raw.input_qty === null || raw.input_qty === "" ? null : Number(raw.input_qty);
     this.total_qty = raw.total_qty === null || raw.total_qty === "" ? null : Number(raw.total_qty);

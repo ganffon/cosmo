@@ -12,6 +12,7 @@ function DateTime(custom = 0) {
   const day = new Array("일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일");
   const days = day[today.getDay()];
   const dateFull = `${year}-${month}-${date}`;
+  const dateMonth = `${year}-${month}`;
 
   const hour = String(today.getHours()).padStart(2, "0");
   const minute = String(today.getMinutes()).padStart(2, "0");
@@ -26,6 +27,7 @@ function DateTime(custom = 0) {
     date,
     days,
     dateFull,
+    dateMonth,
     hour,
     minute,
     seconds,
