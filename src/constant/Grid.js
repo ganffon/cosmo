@@ -16,11 +16,11 @@ export const MODAL_BACK_COLOR = "#f1f8e9";
 
 export const FROZEN_BORDER_COLOR = "#bdbdbd";
 
-export const WIDTH_SUPER_SHORT = 50;
-export const WIDTH_SHORT = 100;
-export const WIDTH_MIDDLE = 150;
-export const WIDTH_LONG = 200;
-export const WIDTH_SUPER_LONG = 250;
+export const WIDTH_SUPER_SHORT = "50";
+export const WIDTH_SHORT = "100";
+export const WIDTH_MIDDLE = "150";
+export const WIDTH_LONG = "200";
+export const WIDTH_SUPER_LONG = "250";
 
 export const U = undefined;
 

@@ -607,6 +607,12 @@ const MenuList = [
             path: convertURL("CountChart"),
             under: null,
           },
+          {
+            name: "품목별 재고현황",
+            id: "InventoryView",
+            path: convertURL("InventoryView"),
+            under: null,
+          },
         ],
       },
     ],

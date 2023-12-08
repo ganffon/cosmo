@@ -116,6 +116,19 @@ const NumComma = (e, refGrid, columnName) => {
   // }
 };
 
+const NumCommaNotGrid = (data) => {
+  const number = Number(data);
+  const decimalLength = number.toString().includes(".") ? number.toString().split(".")[1].length : 0;
+  const int = number.toString().split(".")[0];
+  const decimal = number.toString().split(".")[1];
+  const formattedValue =
+    decimalLength > 0
+      ? int.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "." + decimal
+      : number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  return formattedValue;
+};
+
 const DecimalOnePoint = (value) => {
   const pattern = /^([0-9]+(\.[0-9]?)?)$/;
   return pattern.test(value) ? value : "";
@@ -151,6 +164,7 @@ export {
   Time,
   TimeInput,
   NumComma,
+  NumCommaNotGrid,
   removeNonNumeric,
   validateTimeFormat,
   DecimalOnePoint,

@@ -163,5 +163,6 @@
   "weightCheckERPLot": "/prd/weigh-detail/check-create",
   "prdOrderTheoryProduction": "/prd/order-theory-production",
   "sysAlarm": "/sys/alarm",
-  "kpiInputByPeriod": "/kpi/input/by-period"
+  "kpiInputByPeriod": "/kpi/input/by-period",
+  "KpiProdStockStatusByMonthly": "/kpi/prod-stock-status/by-monthly"
 }

@@ -1,28 +1,23 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
-import strGridJson from "./MonthlyLineCapaData.json";
 import * as S from "../manage.styled";
 import Chart from "react-apexcharts";
 
 import DateTime from "components/datetime/DateTime";
 import GridSingle from "components/grid/GridSingle";
-import ButtonSearch from "components/button/ButtonSearch";
 import "react-splitter-layout/lib/index.css";
 import restAPI from "api/restAPI";
 import restURI from "json/restURI.json";
-import InputSearch from "components/input/InputSearch";
-import TextField from "@mui/material/TextField";
 import BackDrop from "components/backdrop/BackDrop";
 import BtnComponent from "components/button/BtnComponent";
 import ContentsArea from "components/layout/common/ContentsArea";
 import * as Set from "./TimeRateSet";
-import Grid from "@toast-ui/react-grid";
 
 export const TimeRate = ({ toggle }) => {
   const refSingleGrid = useRef(null);
   const refSingleGrid2 = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
   const [dateText, setDateText] = useState({
     startDate: DateTime().year + "-" + DateTime().month,
   });

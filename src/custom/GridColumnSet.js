@@ -22,7 +22,7 @@ const text = (
   header = "",
   isEditMode = false,
   hidden = false,
-  width = C.WIDTH_SHORT,
+  minWidth = C.WIDTH_SHORT,
   align = "left",
   sortable = false,
   filter = false,
@@ -32,8 +32,7 @@ const text = (
   return {
     name: name,
     header: header,
-    minWidth: C.WIDTH_SUPER_SHORT,
-    width: width,
+    minWidth: minWidth,
     editor: isEditMode ? "text" : false,
     align: align,
     hidden: hidden,
@@ -209,6 +208,7 @@ const check = (
     rowSpan: rowSpan,
   };
 };
+
 const button = (
   name = "",
   header = "",
@@ -221,7 +221,7 @@ const button = (
   return {
     name: name,
     header: header,
-    minWidth: C.WIDTH_SHORT,
+    minWidth: C.WIDTH_SUPER_SHORT,
     align: "center",
     editor: false,
     renderer: {
