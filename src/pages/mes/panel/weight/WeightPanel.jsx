@@ -128,6 +128,8 @@ export function WeightPanel() {
     height: "60%",
   });
 
+  const [erpCheckLotInfo, setErpCheckLotInfo] = useState({});
+
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
     refGridHeader?.current?.gridInst?.refreshLayout();
@@ -386,10 +388,12 @@ export function WeightPanel() {
         const res = await restAPI.post(restURI.weightCheckERPLot, checkData);
         const result = res?.data?.data?.rows;
         if (result.length > 0) {
+          setErpCheckLotInfo(result);
           const headerMsg = `LotNo 정보가 ERP에 존재하지 않습니다.\n그래도 진행하시겠습니까?\n　\n`;
           const mainMsg = result
             .map((item, index) => `${index + 1}. ${item.prod_nm}의 LOT NO : ${item.lot_no}`)
             .join("\n");
+
           //ERP LOT 경고 메세지 호출
           setIsAlertOpen({
             ...isAlertOpen,
@@ -424,6 +428,8 @@ export function WeightPanel() {
       }
 
       const dataBottom = result.map((raw) => {
+        const existLot = erpCheckLotInfo.some((erp) => erp.prod_id === raw.prod_id && erp.lot_no === raw.lot_no);
+
         return {
           work_order_input_id: raw.work_order_input_id,
           prod_id: raw.prod_id,
@@ -432,6 +438,7 @@ export function WeightPanel() {
           bag_qty: raw.bag_qty === "" || raw.bag_qty == null ? null : Number(raw.bag_qty),
           input_qty: raw.input_qty === "" || raw.input_qty == null ? null : Number(raw.input_qty),
           remark: raw.remark,
+          exist_lot_fg: existLot,
         };
       });
 
