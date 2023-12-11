@@ -221,7 +221,7 @@ const button = (
   return {
     name: name,
     header: header,
-    minWidth: C.WIDTH_SUPER_SHORT,
+    minWidth: C.WIDTH_SHORT,
     align: "center",
     editor: false,
     renderer: {

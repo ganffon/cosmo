@@ -481,6 +481,12 @@ const MenuList = [
             path: convertURL("CountRaws"),
             under: null,
           },
+          {
+            name: "ERP&계량LOT검증",
+            id: "WeightErpLot",
+            path: convertURL("WeightErpLot"),
+            under: null,
+          },
         ],
       },
     ],

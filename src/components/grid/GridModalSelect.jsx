@@ -4,16 +4,7 @@ import Grid from "@toast-ui/react-grid";
 import GridTheme from "components/grid/setting/GridTheme";
 
 function GridModalSelect(props) {
-  const {
-    columnOptions,
-    columns,
-    rowHeaders,
-    header,
-    data,
-    draggable,
-    refGrid,
-    onDblClick,
-  } = props;
+  const { columnOptions, columns, rowHeaders, header, data, draggable, refGrid, onDblClick } = props;
   useEffect(() => {
     GridTheme();
   }, []);
