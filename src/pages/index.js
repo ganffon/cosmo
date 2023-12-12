@@ -20,6 +20,8 @@ export * from './mes/equipment/equipmentRawDataView/equipmentRawDataViewSet.jsx'
 export * from './mes/equipment/equipmentRawDataView/TempRawsModal.jsx';
 export * from './mes/equipment/equipmentSmall/EquipmentSmall.jsx';
 export * from './mes/equipment/equipmentSmall/EquipmentSmallSet.jsx';
+export * from './mes/equipment/mixedReport/mixedReport.jsx';
+export * from './mes/equipment/mixedReport/mixedReportSet.jsx';
 export * from './mes/equipment/productionDownTime/productionDownTime.jsx';
 export * from './mes/equipment/productionDownTime/productionDownTimeSet.jsx';
 export * from './mes/equipment/sparepartsIncome/SparepartsIncome.jsx';

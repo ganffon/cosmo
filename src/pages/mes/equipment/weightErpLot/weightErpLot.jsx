@@ -5,7 +5,6 @@ import NoticeSnack from "components/alert/NoticeSnack";
 
 import BackDrop from "components/backdrop/BackDrop";
 import WeightErpLotSet from "pages/mes/equipment/weightErpLot/weightErpLotSet";
-import useInputSet from "custom/useInputSet";
 import * as S from "./weightErpLot.styled";
 import restURI from "json/restURI.json";
 import restAPI from "api/restAPI";
@@ -15,16 +14,15 @@ import DateTime from "components/datetime/DateTime";
 import { FdrDateRange } from "components/datetime/fdrDateRange";
 
 export function WeightErpLot(props) {
-  const { currentMenuName, isMenuSlide } = useContext(LayoutContext);
+  const { isMenuSlide } = useContext(LayoutContext);
   const refSingleGrid = useRef(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
-  const [searchToggle, setSearchToggle] = useState(false);
 
-  const { header, columns, columnOptions, inputSet } = WeightErpLotSet();
+  const { header, columns, columnOptions } = WeightErpLotSet();
 
   const filterReducer = (filter, action) => {
     switch (action.type) {
@@ -49,13 +47,11 @@ export function WeightErpLot(props) {
     }
   }, [isMenuSlide]);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
-
   useEffect(() => {
     setTimeout(() => {
       onSearch();
     }, 100);
-  }, [searchToggle]);
+  }, []);
 
   const onSearch = async () => {
     const params = {

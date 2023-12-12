@@ -1,4 +1,3 @@
-import { TList } from "types/data.type";
 import * as S from "./fdrCombo.styled";
 import { TextField } from "@mui/material";
 
