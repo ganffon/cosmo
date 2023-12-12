@@ -17,6 +17,14 @@ export const ContentsArea = styled("div")`
     color: red;
   }
 
+  & .blueText {
+    color: blue;
+  }
+
+  & .boldText {
+    font-weight: 900;
+  }
+
   & .selectedBack {
     background-color: #fdf0f6;
   }

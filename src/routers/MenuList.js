@@ -487,6 +487,12 @@ const MenuList = [
             path: convertURL("WeightErpLot"),
             under: null,
           },
+          {
+            name: "혼합공정&투입실적 비교",
+            id: "MixedReport",
+            path: convertURL("MixedReport"),
+            under: null,
+          },
         ],
       },
     ],

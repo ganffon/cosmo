@@ -3,7 +3,7 @@ import "components/grid/setting/GridStyle.css";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function WeightErpLotSet() {
+function MixedReportSet() {
   const data = [];
   /** 🔸columns ❗
    * editor: false||"text"
@@ -15,28 +15,23 @@ function WeightErpLotSet() {
    * align: "left"||"center"||"right"
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
-  const columns = [
-    col.text("work_order_no", CN.work_order_no, C.U, C.U, C.WIDTH_MIDDLE, C.U, C.U, true, C.U, true),
-    col.text("line_nm", CN.line_nm, C.U, C.U, C.U, C.U, C.U, true, C.U, true),
+  const columnsLeft = [
+    col.text("date", CN.date, C.U, C.U, C.U, "center"),
+    col.text("mes", "MES 투입실적", C.U, C.U, C.U, "center"),
+    col.text("opc", "혼합기 가동", C.U, C.U, C.U, "center"),
+    col.text("difference", "차이", C.U, C.U, C.U, "center"),
+  ];
 
-    col.text("prod_nm", CN.prod_nm, C.U, C.U, C.U, C.U, C.U, true),
-    col.text("prod_std", CN.prod_std, C.U, C.U, C.U, C.U, C.U, true),
-    col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE, C.U, C.U, true),
+  const columnsMES = [
+    col.text("work_weigh_date", CN.input_date, C.U, C.U, C.U, "center"),
+    col.text("work_weigh_time", CN.input_time, C.U, C.U, C.U, "center"),
+    col.text("weigh_emp_cd", CN.emp_cd, C.U, C.U, C.U, "center"),
+    col.text("weigh_emp_nm", CN.input_emp_nm, C.U, C.U, C.U, "center"),
+  ];
 
-    col.number("total_qty", CN.total_qty),
-    col.number("bag_qty", CN.bag_qty),
-    col.number("input_qty", CN.input_qty),
-
-    col.text("work_weigh_date", CN.work_weigh_date, C.U, C.U, C.U, "center", C.U, true),
-    col.text("work_weigh_time", CN.work_weigh_time, C.U, C.U, C.U, "center", C.U, true),
-    col.text("weigh_emp_nm", CN.weigh_emp_nm, C.U, C.U, C.U, "center", C.U, true),
-
-    col.text("work_input_date", CN.input_date, C.U, C.U, C.U, "center", C.U, true),
-    col.text("work_input_time", CN.input_time, C.U, C.U, C.U, "center", C.U, true),
-    col.text("input_emp_nm", CN.input_emp_nm, C.U, C.U, C.U, "center", C.U, true),
-
-    col.text("main_prod_nm", "계량품목", C.U, C.U, C.U, C.U, C.U, true),
-    col.text("main_lot_no", "계량Lot", C.U, C.U, C.WIDTH_MIDDLE, C.U, C.U, true),
+  const columnsOPC = [
+    col.text("work_weigh_date", CN.date, C.U, C.U, C.U, "center"),
+    col.text("work_weigh_time", CN.hour_time, C.U, C.U, C.U, "center"),
   ];
 
   const columnOptions = {
@@ -77,10 +72,12 @@ function WeightErpLotSet() {
 
   return {
     data,
-    columns,
+    columnsLeft,
+    columnsMES,
+    columnsOPC,
     columnOptions,
     header,
   };
 }
 
-export default WeightErpLotSet;
+export default MixedReportSet;
