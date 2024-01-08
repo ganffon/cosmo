@@ -6,7 +6,7 @@ import DateTime from "components/datetime/DateTime";
 import * as S from "./Date.styled";
 
 function DateRange(props) {
-  const { dateText, setDateText, onClickSearch = () => {} } = props;
+  const { title = "기간", dateText, setDateText, onClickSearch = () => {} } = props;
 
   useEffect(() => {
     setDateText({
@@ -34,9 +34,7 @@ function DateRange(props) {
         defaultValue={DateTime(-7).dateFull}
         InputProps={{
           sx: { height: 40 },
-          startAdornment: (
-            <InputAdornment position="start">기간</InputAdornment>
-          ),
+          startAdornment: <InputAdornment position="start">{title}</InputAdornment>,
         }}
         onChange={dateRangeChange}
         onKeyPress={onKeyPress}

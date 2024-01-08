@@ -364,7 +364,15 @@ const decimalFour = (
   };
 };
 
-const select = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, align = "left") => {
+const select = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  align = "left",
+  sortable = false,
+  filter = false
+) => {
   return {
     name: name,
     header: header,
@@ -377,8 +385,8 @@ const select = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_S
         }
       : null,
     hidden: false,
-    sortable: false,
-    filter: false,
+    sortable: sortable,
+    filter: filter,
     whiteSpace: false,
     rowSpan: false,
   };
@@ -404,7 +412,14 @@ const rSelect = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_
   };
 };
 
-const date = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHORT, sortable = false) => {
+const date = (
+  name = "",
+  header = "",
+  isEditMode = false,
+  minWidth = C.WIDTH_SHORT,
+  sortable = false,
+  filter = false
+) => {
   return {
     name: name,
     header: header,
@@ -421,7 +436,7 @@ const date = (name = "", header = "", isEditMode = false, minWidth = C.WIDTH_SHO
       : false,
     hidden: false,
     sortable: sortable,
-    filter: false,
+    filter: filter,
     whiteSpace: false,
     rowSpan: false,
   };

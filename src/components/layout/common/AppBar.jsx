@@ -13,6 +13,7 @@ import NoticeSnack from "components/alert/NoticeSnack";
 
 import GetBookmarkList from "custom/GetBookmarkList";
 import { Version } from "Version.js";
+import DateTime from "components/datetime/DateTime";
 
 function AppBar(props) {
   const {
@@ -149,7 +150,7 @@ function AppBar(props) {
         setIsSysAlarm(false);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
     }
   };
@@ -168,7 +169,7 @@ function AppBar(props) {
     const interval = setInterval(() => {
       compareVersion();
       getSysAlarm();
-    }, 300000); // 5분 마다 버전 비교를 함
+    }, 600000); // 10분 마다 버전 비교를 함
     return () => {
       clearInterval(interval);
     };

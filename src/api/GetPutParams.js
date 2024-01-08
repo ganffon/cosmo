@@ -774,6 +774,18 @@ class option {
     this.value = raw.value;
   }
 }
+class itfOrder {
+  constructor(raw) {
+    this.erp_work_order_no = raw.erp_work_order_no;
+    this.line_dept_cd = raw.line_dept_cd;
+    this.line_dept_nm = raw.line_dept_nm;
+    this.work_order_date = raw.work_order_date;
+    this.work_start_date = raw.work_start_date;
+    this.work_end_date = raw.work_end_date;
+    this.work_order_qty = typeof Number(raw.work_order_qty) === "number" ? Number(raw.work_order_qty) : null;
+    this.order_emp_cd = raw.order_emp_cd;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -973,6 +985,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "option":
       params = new option(raw);
+      break;
+    case "itfOrder":
+      params = new itfOrder(raw);
       break;
 
     default:

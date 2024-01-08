@@ -166,5 +166,8 @@
   "kpiInputByPeriod": "/kpi/input/by-period",
   "KpiProdStockStatusByMonthly": "/kpi/prod-stock-status/by-monthly",
   "prdWeighDetailNonLot": "/prd/weigh-detail/non-lot",
-  "eqmMixed": "/eqm/Mixed"
+  "eqmMixed": "/eqm/Mixed",
+  "erpItfOrder": "/itf/order",
+  "erpItfOrderRequest": "/prd/request",
+  "erpItfOrderByMes": "/itf/order/by-mes"
 }

@@ -471,6 +471,27 @@ class subdivisionGroundDetail {
     this.subdivision_time = raw.subdivision_time;
   }
 }
+class itfOrder {
+  constructor(raw) {
+    this.work_subdivision_id = raw.work_subdivision_id;
+    this.corp_code = raw.corp_code;
+    this.plce_code = raw.plce_code;
+    this.request_no = raw.request_no;
+    this.item_id = raw.prod_id;
+    this.item_cd = raw.prod_cd;
+    this.work_order_id = raw.work_order_id;
+    this.work_order_no = raw.work_order_no;
+    this.line_dept_cd = raw.line_dept_cd;
+    this.line_dept_nm = raw.line_dept_nm;
+    this.work_order_date = raw.work_order_date;
+    this.work_start_date = raw.work_start_date;
+    this.work_end_date = raw.work_end_date;
+    this.work_order_qty = typeof Number(raw.work_order_qty) === "number" ? Number(raw.work_order_qty) : null;
+    this.order_emp_cd = raw.order_emp_cd;
+    this.input_emp_cd = raw.input_emp_cd;
+  }
+}
+
 class createSubdivisionDetailBarcode {
   constructor(raw) {
     this.barcode_type = "SUBDIVISION_DETAIL";
@@ -1019,6 +1040,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "subdivisionGroundDetail":
         params = new subdivisionGroundDetail(raw);
+        break;
+      case "itfOrder":
+        params = new itfOrder(raw);
         break;
       default:
     }

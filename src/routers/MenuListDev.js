@@ -525,6 +525,12 @@ const MenuListDev = [
             path: convertURL("MixedReport"),
             under: null,
           },
+          {
+            name: "ERP 작업지시",
+            id: "ItfOrder",
+            path: convertURL("ItfOrder"),
+            under: null,
+          },
         ],
       },
     ],

@@ -300,19 +300,24 @@ const useSearchSelect = (
         gridData = await restAPI.get(uri);
       }
       if (componentName !== null) {
-        gridData = gridData?.data?.data?.rows.map((raw) => GetSearchParams(componentName, raw));
-        setGridModalSelectData(gridData);
+        const result = gridData?.data?.data?.rows.map((raw) => GetSearchParams(componentName, raw));
+        setGridModalSelectData(result);
       } else {
         setGridModalSelectData(gridData?.data?.data?.rows);
       }
-    } catch {
+    } catch (err) {
+      const errCode = err?.response?.status;
+      const errMsg = err?.response?.data?.message;
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
-        message: "조회 실패",
+        message: errCode === 490 ? errMsg : "조회 실패",
         severity: "error",
         location: "bottomRight",
       });
+      if (errCode === 490) {
+        setGridModalSelectData([]);
+      }
     } finally {
       setIsBackDrop(false);
     }

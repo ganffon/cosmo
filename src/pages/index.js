@@ -34,6 +34,8 @@ export * from './mes/equipment/sparepartsStoreView/sparepartsStoreView.jsx';
 export * from './mes/equipment/sparepartsStoreView/sparepartsStoreViewSet.jsx';
 export * from './mes/equipment/weightErpLot/weightErpLot.jsx';
 export * from './mes/equipment/weightErpLot/weightErpLotSet.jsx';
+export * from './mes/erp/order/ItfOrder.jsx';
+export * from './mes/erp/order/ItfOrderSet.jsx';
 export * from './mes/insp/inspResultInfo/inspResultUpload/ExcelUpload.jsx';
 export * from './mes/insp/inspResultInfo/inspResultUpload/InspResultUpload.jsx';
 export * from './mes/insp/inspResultInfo/inspResultUpload/InspResultUploadSet.jsx';

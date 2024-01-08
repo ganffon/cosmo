@@ -39,42 +39,6 @@ function ModalNew(props) {
     open: false,
   });
 
-  const validationDuplicated = () => {
-    try {
-      refModalGrid?.current?.gridInst?.finishEditing();
-      const gridInstance = refModalGrid?.current?.getInstance();
-      const columnLength = requirecolumns.length;
-      const tmpCoulnmList = requirecolumns;
-
-      const rawDataLength = gridInstance?.store?.data?.rawData.length;
-
-      const rawDatas = gridInstance?.store?.data?.rawData;
-      let arr = [];
-      for (let i = 0; i < rawDataLength; i++) {
-        let tempdataString;
-
-        for (let x = 0; x < columnLength; x++) {
-          let data = rawDatas[i];
-          let tmpData = data[tmpCoulnmList[x]];
-
-          if (x === 0) {
-            tempdataString = tmpData;
-          } else {
-            tempdataString = tempdataString + "/" + tmpData;
-          }
-        }
-        arr[i] = tempdataString;
-      }
-
-      const setArrayLength = new Set(arr).size;
-      if (setArrayLength !== rawDataLength) {
-        throw new Error();
-      }
-    } catch {
-      return "error";
-    }
-  };
-
   const onClickModalGridInnerFunction = (e) => {};
 
   const onClickModalCancelRowInnerFunction = () => {

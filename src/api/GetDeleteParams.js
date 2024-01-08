@@ -317,6 +317,11 @@ class BuildReport {
     this.deploy_version_id = raw.deploy_version_id;
   }
 }
+class itfOrder {
+  constructor(raw) {
+    this.erp_work_order_no = raw.erp_work_order_no;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -516,6 +521,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "BuildReport":
       params = new BuildReport(raw);
+      break;
+    case "itfOrder":
+      params = new itfOrder(raw);
       break;
 
     default:
