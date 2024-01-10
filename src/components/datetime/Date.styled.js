@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 
 const DateBox = styled("div")`
   display: flex;
+  algin-items: center;
 `;
 
 const DateSingle = styled(TextField)`

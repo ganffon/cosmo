@@ -531,6 +531,12 @@ const MenuListDev = [
             path: convertURL("ItfOrder"),
             under: null,
           },
+          {
+            name: "ERP 혼합실적",
+            id: "ItfMixed",
+            path: convertURL("ItfMixed"),
+            under: null,
+          },
         ],
       },
     ],
