@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 export const Background = styled("div")`
   width: 50px;
@@ -32,9 +32,11 @@ export const Title = styled("div")`
 export const ContentBox = styled("div")`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
   border-radius: 10px 10px 0px 0px;
   padding: 5px 20px;
+  height: calc(100% - 90px);
 `;
 export const Content = styled("pre")`
   white-space: pre-wrap;

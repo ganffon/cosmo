@@ -166,5 +166,14 @@
   "kpiInputByPeriod": "/kpi/input/by-period",
   "KpiProdStockStatusByMonthly": "/kpi/prod-stock-status/by-monthly",
   "prdWeighDetailNonLot": "/prd/weigh-detail/non-lot",
-  "eqmMixed": "/eqm/Mixed"
+  "eqmMixed": "/eqm/Mixed",
+  "erpItfOrder": "/itf/order",
+  "erpItfOrderRequest": "/prd/request",
+  "erpItfOrderByMes": "/itf/order/by-mes",
+  "erpItfWork": "/itf/work",
+  "erpItfWorkInput": "/itf/work-input",
+  "erpItfWorkEmp": "/itf/work-emp",
+  "erpItfDeptFrom": "/itf/dept-move/from",
+  "erpItfWorkerGroup": "/itf/worker-group",
+  "erpItfUnit": "/itf/unit"
 }

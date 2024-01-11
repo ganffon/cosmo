@@ -11,7 +11,7 @@ function GridSingle(props) {
     columnOptions = [],
     columns = [],
     rowHeaders = [],
-    header = [],
+    header = {},
     data = [],
     draggable = false,
     refGrid = null,
@@ -25,25 +25,28 @@ function GridSingle(props) {
     GridTheme();
   }, []);
 
-  const handleFocus = () => {
-    if (refGrid) {
-      const Grid = refGrid?.current?.getInstance();
-      const coords = Grid.getFocusedCell();
-      if (coords) {
-        Grid.startEditing(coords.rowKey, coords.columnName);
+  const handleFocus = (e) => {
+    if (e.targetType === "cell") {
+      if (refGrid) {
+        const Grid = refGrid?.current?.getInstance();
+        const coords = Grid.getFocusedCell();
+        if (coords) {
+          Grid.startEditing(coords.rowKey, coords.columnName);
+        }
       }
     }
   };
-  const beforeSelectedRow = useRef("");
+  // const beforeSelectedRow = useRef("");
   const selectedRow = (e) => {
     if (refGrid) {
-      const Grid = refGrid?.current?.gridInst;
-      if (String(beforeSelectedRow.current)) {
-        Grid?.getColumns().map((col) => Grid?.removeCellClassName(beforeSelectedRow.current, col.name, "selectedBack"));
-      }
       if (!isEditMode) {
-        Grid?.getColumns().map((col) => Grid?.addCellClassName(e?.rowKey, col.name, "selectedBack"));
-        beforeSelectedRow.current = e?.rowKey;
+        // const grid = refGrid?.current?.getInstance();
+        // if (e?.rowKey !== null && e?.rowKey !== undefined) {
+        //   for (let i = 0; i < grid.getRowCount(); i++) {
+        //     grid.removeRowClassName(i, "selectedBack");
+        //   }
+        // }
+        // grid.addRowClassName(e?.rowKey, "selectedBack");
       }
     }
   };
@@ -137,7 +140,7 @@ function GridSingle(props) {
         ref={refGrid}
         onClick={(e) => {
           onClickGrid(e);
-          handleFocus();
+          handleFocus(e);
           selectedRow(e);
         }}
         onDblclick={onDblClickGrid}

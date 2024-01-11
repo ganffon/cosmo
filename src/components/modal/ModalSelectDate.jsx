@@ -29,7 +29,7 @@ function ModalSelectDate(props) {
     <ModalWrapMulti width={width} height={height}>
       <S.ContentsArea>
         <S.HeaderBox>
-          <S.TitleBox>{`작업지시 선택`}</S.TitleBox>
+          <S.TitleBox>{`데이터 선택`}</S.TitleBox>
           <S.ButtonClose color="primary" aria-label="close" onClick={onClickModalSelectDateClose}>
             <CloseIcon />
           </S.ButtonClose>

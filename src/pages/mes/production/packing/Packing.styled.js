@@ -94,13 +94,13 @@ export const ContentsRight = styled("div")`
   padding: 10px 10px 10px 5px;
 `;
 export const SearchWrap = styled("div")`
-  background: #ffffff;
   height: 60px;
   width: 100%;
   display: flex;
   border-radius: 10px;
-  border-color: rgb(200, 200, 200);
+  background: #ffffff;
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
+  border-color: rgb(200, 200, 200);
   padding: 5px 5px 5px 10px;
   gap: 10px;
 `;

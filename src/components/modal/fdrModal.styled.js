@@ -1,6 +1,5 @@
-import { CssBoxDesign } from "styles/common";
-import { palette } from "../../constant";
 import styled from "styled-components";
+import Close from "@mui/icons-material/Close";
 
 export const Overlay = styled("div")`
   box-sizing: border-box;
@@ -10,7 +9,7 @@ export const Overlay = styled("div")`
   right: 0;
   bottom: 0;
   background-color: rgb(0, 0, 0, 0.6);
-  z-index: 1000;
+  z-index: 10000;
 `;
 export const Inner = styled("div")`
   width: ${($props) => $props.$width};
@@ -24,15 +23,18 @@ export const Inner = styled("div")`
 
   display: flex;
   flex-direction: column;
-  ${CssBoxDesign}
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const Header = styled("div")`
   width: 100%;
   height: 40px;
-  background: ${palette.black[100]};
+  background: rgb(200, 200, 200);
   border-radius: 10px 10px 0px 0px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0px 15px;
 `;
 
@@ -44,7 +46,7 @@ export const Title = styled("div")`
   cursor: default;
 `;
 
-export const Exit = styled("img")`
+export const CloseIcon = styled(Close)`
   cursor: pointer;
 `;
 
