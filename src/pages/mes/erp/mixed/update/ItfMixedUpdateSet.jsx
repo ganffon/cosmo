@@ -2,7 +2,7 @@ import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function ItfMixedCreateSet() {
+function ItfMixedUpdateSet() {
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -14,16 +14,16 @@ function ItfMixedCreateSet() {
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
   const colPerformance = [
-    col.select("request_no", "생산의뢰번호", true, C.WIDTH_MIDDLE, "center"),
-    col.select("corp_code", "회사코드", true, C.U, "center"),
-    col.select("plce_code", "사업장코드", true, C.U, "center"),
-    col.select("erp_work_order_no", "ERP지시번호", true, C.WIDTH_MIDDLE, "center"),
+    col.text("request_no", "생산의뢰번호", C.U, C.U, C.WIDTH_MIDDLE, "center"),
+    col.text("corp_code", "회사코드", C.U, C.U, C.U, "center"),
+    col.text("plce_code", "사업장코드", C.U, C.U, C.U, "center"),
+    col.text("erp_work_order_no", "ERP지시번호", C.U, C.U, C.WIDTH_MIDDLE, "center"),
     col.id("item_id", "item_id", C.HIDDEN_ID),
-    col.select("item_cd", "품목코드", true),
-    col.select("item_nm", "품목", true),
-    col.select("item_spec", "규격", true),
+    col.text("item_cd", "품목코드"),
+    col.text("item_nm", "품목"),
+    col.text("item_spec", "규격"),
     col.id("order_line_dept_cd", "order_line_dept_cd", C.HIDDEN_ID),
-    col.select("order_line_dept_nm", "라인부서", true),
+    col.text("order_line_dept_nm", "라인부서"),
     col.date("work_order_date", "지시일자"),
     col.number("work_order_qty", "지시량"),
     col.text("order_emp_nm", "지시등록자", C.U, C.U, C.U, "center"),
@@ -37,7 +37,7 @@ function ItfMixedCreateSet() {
     col.select("line_dept_nm", "생산라인부서", true),
     col.id("worker_group_cd", "worker_group_cd", C.HIDDEN_ID),
     col.select("worker_group_nm", "작업조", true, C.U, "center"),
-    col.text("lot_no", "Lot No", true),
+    col.text("lot_no", "Lot No"),
     col.number("work_qty", "생산량", true),
     col.id("unit_cd", "unit_cd", C.HIDDEN_ID),
     col.select("unit_nm", "단위", true, C.U, "center"),
@@ -62,7 +62,6 @@ function ItfMixedCreateSet() {
      * MES 에서 투입자가 ERP에서는 생산자
      */
   ];
-
   const colSummary = [
     col.select("item_id", "ERP품목ID", true),
     col.select("item_cd", "ERP품목코드", true),
@@ -82,35 +81,9 @@ function ItfMixedCreateSet() {
     col.select("weigh_emp_nm", "투입자", true, C.U, "center"),
     col.date("work_weigh_date", "투입일자", true),
   ];
-
   const colEmployee = [
     col.id("work_emp_cd", "work_emp_cd", C.HIDDEN_ID),
     col.text("work_emp_nm", "생산자", C.U, C.U, C.U, "center"),
-  ];
-
-  const colErpOrder = [
-    col.text("erp_yn", "ERP 처리", C.U, C.U, C.WIDTH_SHORT, "center", true, "text"),
-    col.text("erp_date", "ERP 처리일자", C.U, C.U, C.WIDTH_MIDDLE, "center", true, "text"),
-    col.text("erp_work_order_no", "ERP지시번호", C.U, C.U, C.WIDTH_MIDDLE, "center", true, "text"),
-    col.text("corp_code", "회사코드", C.U, C.U, C.WIDTH_SHORT, "center", true, "text"),
-    col.text("plce_code", "사업장코드", C.U, C.U, C.WIDTH_SHORT, "center", true, "text"),
-    col.text("request_no", "생산의뢰번호", C.U, C.U, C.WIDTH_MIDDLE, "center", true, "text"),
-    col.id("item_id", "item_id", C.HIDDEN_ID),
-    col.text("item_cd", "품목코드", C.U, C.U, C.U, C.U, true, "text"),
-    col.text("item_nm", "품목", C.U, C.U, C.U, C.U, true, "text"),
-    col.text("item_spec", "규격", C.U, C.U, C.U, C.U, true, "text"),
-    col.id("line_dept_cd", "line_dept_cd", C.HIDDEN_ID),
-    col.select("line_dept_nm", "라인부서명", C.U, C.U, C.U, true, "text"),
-    col.date("work_order_date", "지시일자", C.U, C.U, true, "text"),
-    col.date("work_start_date", "시작일자", C.U, C.U, true, "text"),
-    col.date("work_end_date", "종료일자", C.U, C.U, true, "text"),
-    col.number("work_order_qty", "지시수량", C.U, C.U, C.U, true, "text"),
-    col.id("order_emp_cd", "order_emp_cd", C.HIDDEN_ID),
-    col.select("order_emp_nm", "지시등록자", C.U, C.U, "center", true, "text"),
-    col.id("input_emp_cd", "input_emp_cd", C.HIDDEN_ID),
-    col.text("input_emp_nm", "I/F등록자", C.U, C.U, C.U, "center", true, "text"),
-    col.text("input_date", "I/F일자", C.U, C.U, C.U, "center", true, "text"),
-    col.id("work_order_id", "작업지시번호", C.HIDDEN_ID),
   ];
 
   const colErpDept = [
@@ -200,7 +173,6 @@ function ItfMixedCreateSet() {
     colDetail,
     colSummary,
     colEmployee,
-    colErpOrder,
     colErpDept,
     colErpLineDept,
     colErpWorkerGroup,
@@ -212,4 +184,4 @@ function ItfMixedCreateSet() {
   };
 }
 
-export default ItfMixedCreateSet;
+export default ItfMixedUpdateSet;

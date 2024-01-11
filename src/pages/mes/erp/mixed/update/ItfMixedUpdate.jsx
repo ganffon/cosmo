@@ -3,22 +3,21 @@ import GridSingle from "components/grid/GridSingle";
 import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
 import * as uSearch from "custom/useSearch";
-import * as S from "./ItfMixedCreate.styled";
+import * as S from "./ItfMixedUpdate.styled";
 import restURI from "json/restURI.json";
 import BtnComponent from "components/button/BtnComponent";
 import restAPI from "api/restAPI";
-import ItfMixedCreateSet from "./ItfMixedCreateSet";
-import DateTime from "components/datetime/DateTime";
+import ItfMixedCreateSet from "./ItfMixedUpdateSet";
 import Condition from "custom/Condition";
 import { FdrModal } from "components/modal/fdrModal";
-import DateRange from "components/datetime/DateRange";
 import CloseIcon from "@mui/icons-material/Close";
 import ModalWrapMulti from "components/modal/ModalWrapMulti";
 
-export function ItfMixedCreate(props) {
-  const { setIsCreateOpen, onSearch } = props;
+export function ItfMixedUpdate(props) {
+  const { setIsUpdateOpen, data, onSearch } = props;
 
   const refPerformanceGrid = useRef(null); // 혼합실적
+  const [performanceData, setPerformanceData] = useState([]);
 
   const refDetailGrid = useRef(null); // 혼합실적상세
   const [detailData, setDetailData] = useState([]);
@@ -33,7 +32,6 @@ export function ItfMixedCreate(props) {
   const targetGrid = useRef("");
   const targetRowKey = useRef("");
 
-  const [isSelectDateRange, setIsSelectDateRange] = useState({ open: false, columns: [] });
   const [isSelect, setIsSelect] = useState({ open: false, columns: [] });
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
@@ -56,7 +54,6 @@ export function ItfMixedCreate(props) {
     colDetail,
     colSummary,
     colEmployee,
-    colErpOrder,
     colErpDept,
     colErpLineDept,
     colErpWorkerGroup,
@@ -66,26 +63,13 @@ export function ItfMixedCreate(props) {
     columnOptions,
   } = ItfMixedCreateSet();
 
-  const [selectDate, setSelectDate] = useState({
-    startDate: DateTime(-7).dateFull,
-    endDate: DateTime().dateFull,
-  });
-
   useEffect(() => {
-    const grid = refPerformanceGrid.current.getInstance();
-    grid.appendRow();
-    grid.refreshLayout();
-  }, []);
+    setPerformanceData(data?.work);
+    setSummaryData(data?.input);
+    setEmployeeData(data?.emp);
 
-  const [actSelectOrder] = uSearch.useSearchSelect(
-    refSelectGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridDataSelect,
-    restURI.erpItfOrder + `?start_date=${selectDate.startDate}&end_date=${selectDate.endDate}`
-  );
+    getDetailData(data?.work[0]?.work_order_id);
+  }, [data]);
 
   const [actSelectDeptFrom] = uSearch.useSearchSelect(
     refSelectGrid,
@@ -144,23 +128,6 @@ export function ItfMixedCreate(props) {
 
   const onDblPerformance = (e) => {
     targetRowKey.current = e?.rowKey;
-    if (
-      Condition(e, [
-        "request_no",
-        "corp_code",
-        "plce_code",
-        "erp_work_order_no",
-        "item_cd",
-        "item_nm",
-        "item_spec",
-        "order_line_dept_cd",
-        "order_line_dept_nm",
-      ])
-    ) {
-      targetGrid.current = "erpOrder";
-      setIsSelectDateRange({ open: true, columns: colErpOrder, height: "700px", width: "90%" });
-      actSelectOrder();
-    }
 
     if (Condition(e, ["dept_cd", "dept_nm"])) {
       targetGrid.current = "erpDept";
@@ -195,13 +162,6 @@ export function ItfMixedCreate(props) {
     }
   };
 
-  const onSelectDateSearch = () => {
-    // Select 창에서 조회 버튼
-    if (targetGrid.current === "erpOrder") {
-      actSelectOrder();
-    }
-  };
-
   const onDblSelect = (e) => {
     // Select 창에서 선택한 데이터 넣어주기
     if (e?.targetType === "cell") {
@@ -209,26 +169,8 @@ export function ItfMixedCreate(props) {
       const rowKey = targetRowKey.current;
       const performanceGrid = refPerformanceGrid?.current?.gridInst;
       const summaryGrid = refSummaryGrid?.current?.gridInst;
-      if (targetGrid.current === "erpOrder") {
-        performanceGrid?.setValue(rowKey, "request_no", data.request_no);
-        performanceGrid?.setValue(rowKey, "corp_code", data.corp_code);
-        performanceGrid?.setValue(rowKey, "plce_code", data.plce_code);
-        performanceGrid?.setValue(rowKey, "erp_work_order_no", data.erp_work_order_no);
-        performanceGrid?.setValue(rowKey, "item_id", data.item_id);
-        performanceGrid?.setValue(rowKey, "item_cd", data.item_cd);
-        performanceGrid?.setValue(rowKey, "item_nm", data.item_nm);
-        performanceGrid?.setValue(rowKey, "item_spec", data.item_spec);
-        performanceGrid?.setValue(rowKey, "order_line_dept_cd", data.line_dept_cd);
-        performanceGrid?.setValue(rowKey, "order_line_dept_nm", data.line_dept_nm);
-        performanceGrid?.setValue(rowKey, "work_order_date", data.work_order_date);
-        performanceGrid?.setValue(rowKey, "work_order_qty", data.work_order_qty);
-        performanceGrid?.setValue(rowKey, "order_emp_nm", data.order_emp_nm);
-        performanceGrid?.setValue(rowKey, "work_start_date", data.work_start_date);
-        performanceGrid?.setValue(rowKey, "work_end_date", data.work_end_date);
-        performanceGrid?.setValue(rowKey, "work_order_id", data.work_order_id);
 
-        getDetailData(data.work_order_id);
-      } else if (targetGrid.current === "erpDept") {
+      if (targetGrid.current === "erpDept") {
         performanceGrid?.setValue(rowKey, "dept_cd", data.dept_cd);
         performanceGrid?.setValue(rowKey, "dept_nm", data.dept_nm);
       } else if (targetGrid.current === "erpLineDept") {
@@ -254,7 +196,6 @@ export function ItfMixedCreate(props) {
         summaryGrid?.setValue(rowKey, "item_cd", data.mapping_cd);
         summaryGrid?.setValue(rowKey, "item_nm", data.mapping_nm);
       }
-      setIsSelectDateRange({ open: false });
       setIsSelect({ open: false });
     }
   };
@@ -300,6 +241,7 @@ export function ItfMixedCreate(props) {
         return acc;
       }, {});
 
+      // 각 그룹별로 가장 빠른 start_date, end_date 설정 및 input_emp 배열 생성
       let mergedData = Object.values(groupedData).map((group) => ({
         ...group,
       }));
@@ -443,7 +385,7 @@ export function ItfMixedCreate(props) {
         work,
         input,
         emp,
-        updateFg: false, // 신규 등록 시 : false || 수정 시 : true
+        updateFg: true, // 신규 등록 시 : false || 수정 시 : true
       };
 
       if (data) {
@@ -457,7 +399,7 @@ export function ItfMixedCreate(props) {
           location: "bottomRight",
         });
 
-        setIsCreateOpen(false);
+        setIsUpdateOpen(false);
 
         onSearch();
       }
@@ -474,7 +416,7 @@ export function ItfMixedCreate(props) {
     }
   };
 
-  const [isLeftExtend, setIsLeftExtend] = useState(true);
+  const [isLeftExtend, setIsLeftExtend] = useState(false);
 
   const onLeftExtend = () => {
     setIsLeftExtend(!isLeftExtend);
@@ -496,7 +438,7 @@ export function ItfMixedCreate(props) {
         columnOptions={columnOptions}
         columns={colPerformance}
         rowHeaders={["rowNum"]}
-        data={[]}
+        data={performanceData}
         draggable={false}
         refGrid={refPerformanceGrid}
         isEditMode={true}
@@ -505,7 +447,7 @@ export function ItfMixedCreate(props) {
         onDblClickGrid={onDblPerformance}
       />
     );
-  }, []);
+  }, [performanceData]);
 
   const gridDetail = useMemo(() => {
     return (
@@ -561,12 +503,12 @@ export function ItfMixedCreate(props) {
   return (
     <ModalWrapMulti width={"95%"} height={"95%"}>
       <S.HeaderBox>
-        <S.TitleBox>{`혼합 실적 I/F 등록`}</S.TitleBox>
+        <S.TitleBox>{`혼합 실적 I/F 수정`}</S.TitleBox>
         <S.ButtonClose
           color="primary"
           aria-label="close"
           onClick={() => {
-            setIsCreateOpen(false);
+            setIsUpdateOpen(false);
           }}
         >
           <CloseIcon />
@@ -584,7 +526,14 @@ export function ItfMixedCreate(props) {
       <S.BottomWrap>
         <S.ShadowBoxGrid height={"99%"} width={isLeftExtend ? "1500px" : "250px"}>
           <S.GridTitleWrap>
-            <S.GridTitle>{"혼합 실적 상세(MES)"}</S.GridTitle>
+            <S.GridTitle>
+              {"혼합 실적 상세(MES)"}
+              {isLeftExtend && (
+                <S.GridTitleSub>
+                  {"상세 데이터 재병합 시 저장되어 있던 기존 혼합 실적 병합 데이터는 초기화 됩니다."}
+                </S.GridTitleSub>
+              )}
+            </S.GridTitle>
             <S.GridButtonWrap>
               <S.ExtendButton onClick={onLeftExtend}>{isLeftExtend ? "< 접기" : "펼치기 >"}</S.ExtendButton>
             </S.GridButtonWrap>
@@ -624,25 +573,6 @@ export function ItfMixedCreate(props) {
           </S.ShadowBoxGrid>
         </S.BottomRightWrap>
       </S.BottomWrap>
-
-      {isSelectDateRange.open && (
-        <FdrModal modalState={isSelectDateRange} setModal={setIsSelectDateRange}>
-          <S.SelectDateErpFilter>
-            <DateRange dateText={selectDate} setDateText={setSelectDate} />
-            <BtnComponent btnName={"Search"} onClick={onSelectDateSearch} />
-          </S.SelectDateErpFilter>
-          <S.SelectDateErpGridWrap>
-            <GridSingle
-              columns={isSelectDateRange.columns}
-              columnOptions={columnOptions}
-              data={gridDataSelect}
-              rowHeaders={["rowNum"]}
-              refGrid={refSelectGrid}
-              onDblClickGrid={onDblSelect}
-            />
-          </S.SelectDateErpGridWrap>
-        </FdrModal>
-      )}
 
       {isSelect.open && (
         <FdrModal modalState={isSelect} setModal={setIsSelect}>

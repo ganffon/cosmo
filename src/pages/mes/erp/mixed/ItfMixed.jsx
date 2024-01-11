@@ -1,11 +1,8 @@
 import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import GridSingle from "components/grid/GridSingle";
-import ModalNew from "components/modal/ModalNew";
 import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
-import * as disRow from "custom/useDisableRowCheck";
-import * as uSearch from "custom/useSearch";
 import * as S from "./ItfMixed.styled";
 import restURI from "json/restURI.json";
 import ContentsAreaHidden from "components/layout/common/ContentsAreaHidden";
@@ -14,24 +11,16 @@ import NoticeAlertModal from "components/alert/NoticeAlertModal";
 import restAPI from "api/restAPI";
 import ItfMixedSet from "./ItfMixedSet";
 import DateTime from "components/datetime/DateTime";
-import Condition from "custom/Condition";
-import { FdrModal } from "components/modal/fdrModal";
 import DateRange from "components/datetime/DateRange";
-import GetPostParams from "api/GetPostParams";
-import GetPutParams from "api/GetPutParams";
-import GetDeleteParams from "api/GetDeleteParams";
-import InputSearch from "components/input/InputSearch";
-import * as Cbo from "custom/useCboSet";
-import { TextField } from "@mui/material";
-import CN from "json/ColumnName.json";
 import { ItfMixedCreate } from "./create/ItfMixedCreate";
+import { ItfMixedUpdate } from "./update/ItfMixedUpdate";
 
 export function ItfMixed(props) {
   const { isMenuSlide } = useContext(LayoutContext);
 
-  const [lineOpt, lineList] = Cbo.useLineIncludeRework();
-
   const refPerformanceGrid = useRef(null); // 혼합실적
+  const refPerformanceCurrentRowKey = useRef(null); // 혼합실적 선택 rowKey
+  const [updateData, setUpdateData] = useState({});
   const [performanceData, setPerformanceData] = useState([]);
 
   const refInputGrid = useRef(null); // 혼합투입
@@ -40,48 +29,17 @@ export function ItfMixed(props) {
   const refEmployeeGrid = useRef(null); // 작업자
   const [employeeData, setEmployeeData] = useState([]);
 
-  const refModalGrid = useRef(null);
-
-  const refSelectGrid = useRef(null);
-  const [gridDataSelect, setGridDataSelect] = useState(null);
-
-  const targetGrid = useRef("");
-  const targetRowKey = useRef("");
-
-  const [comboValue, setComboValue] = useState({
-    line_id: null,
-  });
-
-  const [isEditMode, setIsEditMode] = useState(false); // header 수정
-  const [isEditDetail, setIsEditDetail] = useState(false); // detail 수정
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [isSelectDateRange, setIsSelectDateRange] = useState({ open: false, columns: [] });
-  const [isSelect, setIsSelect] = useState({ open: false, columns: [] });
+  const [isCreateOpen, setIsCreateOpen] = useState(false); // 혼합실적 등록
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false); // 혼합실적 수정
   const [isBackDrop, setIsBackDrop] = useState(false);
-  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+  const [isDeleteAlert, setIsDeleteAlert] = useState({ open: false, type: "" });
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
   });
 
-  const {
-    header,
-    headerNew,
-    colPerformance,
-    colInput,
-    colEmployee,
-    columnsNew,
-    columnsRequest,
-    columnsOrder,
-    columnsLineDept,
-    columnsEmployee,
-    columnOptions,
-  } = ItfMixedSet(isEditMode);
+  const { header, colPerformance, colInput, colEmployee, columnOptions } = ItfMixedSet();
 
   const [dateText, setDateText] = useState({
-    startDate: DateTime(-7).dateFull,
-    endDate: DateTime().dateFull,
-  });
-  const [selectDate, setSelectDate] = useState({
     startDate: DateTime(-7).dateFull,
     endDate: DateTime().dateFull,
   });
@@ -96,36 +54,6 @@ export function ItfMixed(props) {
       onSearch();
     }, 100);
   }, []);
-
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refPerformanceGrid);
-
-  const handleDelete = async () => {
-    try {
-      setIsBackDrop(true);
-      const Grid = refPerformanceGrid?.current?.gridInst;
-      Grid?.finishEditing();
-
-      const data = Grid.getCheckedRows().map((raw) => GetDeleteParams("itfOrder", raw));
-      const res = await restAPI.delete(restURI.erpItfOrder, { data });
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: res?.data?.message,
-        severity: "success",
-      });
-      onSearch();
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-      });
-    } finally {
-      setIsDeleteAlertOpen(false);
-      setIsBackDrop(false);
-    }
-  };
 
   const onSearch = async (editMode = false) => {
     const params = {
@@ -146,6 +74,7 @@ export function ItfMixed(props) {
         open: true,
         message: res?.data?.message,
         severity: "success",
+        location: "bottomRight",
       });
     } catch (err) {
       setIsSnackOpen({
@@ -153,6 +82,7 @@ export function ItfMixed(props) {
         open: true,
         message: err?.response?.data?.message,
         severity: "error",
+        location: "bottomRight",
       });
     } finally {
       setIsBackDrop(false);
@@ -173,111 +103,61 @@ export function ItfMixed(props) {
     }
   }, [performanceData]);
 
-  const onEditSave = async () => {
-    // 수정모드에서의 저장
-    try {
-      setIsBackDrop(true);
-      const Grid = refPerformanceGrid?.current?.gridInst;
-      Grid?.finishEditing();
+  const onEdit = () => {
+    if (refPerformanceCurrentRowKey.current !== "") {
+      const rowKey = refPerformanceCurrentRowKey.current;
+      const performanceGrid = refPerformanceGrid.current.getInstance();
+      const inputGrid = refInputGrid.current.getInstance();
+      const employeeGrid = refEmployeeGrid.current.getInstance();
 
-      const data = Grid.getCheckedRows().map((raw) => GetPutParams("itfOrder", raw));
-      const res = await restAPI.put(restURI.erpItfOrder, data);
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: res?.data?.message,
-        severity: "success",
-      });
-      disRow.handleCheckReset(isEditMode, refPerformanceGrid);
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-      });
-    } finally {
-      setIsBackDrop(false);
-    }
-  };
-  const onEditExit = () => {
-    setIsEditMode(false);
-    onSearch(false);
-  };
-  const onClickModalAddRow = () => {
-    refModalGrid?.current?.gridInst?.appendRow();
-  };
-  let rowKey;
-  const onClickModalGrid = (e) => {
-    rowKey = e.rowKey;
-  };
-  const onClickModalCancelRow = () => {
-    refModalGrid?.current?.gridInst?.removeRow(rowKey);
-  };
-  const onClickModalSave = async () => {
-    try {
-      setIsBackDrop(true);
-      const Grid = refModalGrid?.current?.gridInst;
-      Grid?.finishEditing();
-      let result = [];
-      for (let i = 0; i < Grid?.getRowCount(); i++) {
-        result.push(Grid?.getRowAt(i));
-      }
-      const data = result.map((raw) => GetPostParams("itfOrder", raw));
-      const res = await restAPI.post(restURI.erpItfOrder, data);
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: res?.data?.message,
-        severity: "success",
-      });
-      setIsCreateOpen(false);
-      onSearch();
-    } catch (err) {
-      setIsSnackOpen({
-        ...isSnackOpen,
-        open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
-      });
-    } finally {
-      setIsBackDrop(false);
-    }
-  };
-  function onClickModalClose() {
-    setIsCreateOpen(false);
-  }
+      const work = performanceGrid.getRow(rowKey);
+      const input = inputGrid.getData();
+      const inputData = input.map((item) => {
+        const {
+          input_unit_cd,
+          input_unit_nm,
+          in_date,
+          in_emp_cd,
+          in_emp_nm,
+          stock_in_date,
+          input_lot_no,
+          lot_no: _,
+          ...rest
+        } = item;
 
-  const onClickGrid = (e) => {
-    disRow.handleClickGridCheck(e, isEditMode, []);
-  };
-  const onEditingFinishGrid = (e) => {
-    disRow.handleEditingFinishGridCheck(e);
-  };
+        return {
+          unit_cd: input_unit_cd, // 단위코드
+          unit_nm: input_unit_nm, // 단위
+          work_input_date: in_date, // 투입일자
+          weigh_emp_cd: in_emp_cd, // 계량자코드
+          weigh_emp_nm: in_emp_nm, // 계량자
+          work_weigh_date: stock_in_date, // 계량일자
+          lot_no: input_lot_no, // 투입 Lot
+          prod_class_nm: "수정 시 표기불가",
+          prod_cd: "수정 시 표기불가",
+          prod_nm: "수정 시 표기불가",
+          prod_std: "수정 시 표기불가",
+          ...rest,
+        };
+      });
 
-  const onEdit = async () => {
-    const params = {
-      start_date: dateText.startDate,
-      end_date: dateText.endDate,
-      work_type: "MIX",
-      erp_yn: "N", // "Y" 는 이미 ERP에서 처리 된 데이터라 수정하면 안됨
-    };
-    try {
-      setIsBackDrop(true);
-      const res = await restAPI.get(restURI.erpItfWork, { params });
-      const data = res?.data?.data?.rows;
-      setPerformanceData(data);
-      setDisableRowToggle(!disableRowToggle);
-      setIsEditMode(true);
-    } catch (err) {
+      const emp = employeeGrid.getData();
+      const update = {
+        work: [work],
+        input: inputData,
+        emp,
+      };
+      setUpdateData(update);
+
+      setIsUpdateOpen(true);
+    } else {
       setIsSnackOpen({
         ...isSnackOpen,
         open: true,
-        message: err?.response?.data?.message,
-        severity: "error",
+        message: `ERP에서 처리 된 데이터는 수정 할 수 없습니다.`,
+        severity: "warning",
+        location: "topCenter",
       });
-    } finally {
-      setIsBackDrop(false);
     }
   };
 
@@ -285,183 +165,213 @@ export function ItfMixed(props) {
     setIsCreateOpen(true);
   };
 
-  const onDelete = () => {
-    const Grid = refPerformanceGrid?.current?.gridInst;
-    if (Grid.getCheckedRows().length !== 0) {
-      setIsDeleteAlertOpen(true);
-    }
-  };
-
-  const [actSelectRequest] = uSearch.useSearchSelect(
-    refSelectGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridDataSelect,
-    restURI.erpItfOrderRequest + `?start_date=${selectDate.startDate}&end_date=${selectDate.endDate}`
-  );
-
-  const [actSelectOrder] = uSearch.useSearchSelect(
-    refSelectGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridDataSelect,
-    restURI.erpItfOrderByMes + `?start_date=${selectDate.startDate}&end_date=${selectDate.endDate}`
-  );
-
-  const [actSelectLineDept] = uSearch.useSearchSelect(
-    refSelectGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridDataSelect,
-    restURI.lineDepartmentIncludeRework
-  );
-  const [actSelectEmployee] = uSearch.useSearchSelect(
-    refSelectGrid,
-    isBackDrop,
-    setIsBackDrop,
-    isSnackOpen,
-    setIsSnackOpen,
-    setGridDataSelect,
-    restURI.employee + `?use_fg=true`
-  );
-  const onDblGrid = (e) => {
-    // Main 창에서 더블클릭했을 때 Select 창 열기
-    targetRowKey.current = e?.rowKey;
-    if (Condition(e, ["line_dept_nm"])) {
-      targetGrid.current = "LineDeptMain";
-      setIsSelect({ open: true, columns: columnsLineDept, height: "700px", width: "600px" });
-      actSelectLineDept();
-    }
-    if (Condition(e, ["order_emp_cd", "order_emp_nm"])) {
-      targetGrid.current = "EmployeeOrderMain";
-      setIsSelect({ open: true, columns: columnsEmployee, height: "700px", width: "400px" });
-      actSelectEmployee();
-    }
-    // if (Condition(e, ["input_emp_cd", "input_emp_nm"])) {
-    //   targetGrid.current = "EmployeeInterfaceMain";
-    //   setIsSelect({ open: true, columns: columnsEmployee, height: "700px", width: "400px" });
-    //   actSelectEmployee();
-    // }
-  };
-  const onDblNew = (e) => {
-    // New 창에서 더블클릭했을 때 Select 창 열기
-    const Grid = refModalGrid.current.getInstance();
-    targetRowKey.current = e?.rowKey;
-    if (Condition(e, ["request_no", "corp_code", "plce_code", "prod_cd", "prod_nm", "prod_std"])) {
-      targetGrid.current = "Request";
-      setIsSelectDateRange({ open: true, columns: columnsRequest, height: "700px" });
-      actSelectRequest();
-    }
-    if (Condition(e, ["work_order_no"])) {
-      const itemCd = Grid.getValue(e?.rowKey, "prod_cd");
-      if (itemCd) {
-        targetGrid.current = "Order";
-        setIsSelectDateRange({ open: true, columns: columnsOrder, height: "700px" });
-        actSelectOrder(`&item_id=${itemCd}`);
+  const onClickPerformance = async (e) => {
+    const { rowKey, targetType } = e;
+    if (targetType === "cell") {
+      const performanceGrid = refPerformanceGrid.current.getInstance();
+      const erpYN = performanceGrid.getValue(rowKey, "erp_yn");
+      if (erpYN === "Y") {
+        refPerformanceCurrentRowKey.current = "";
+      } else {
+        refPerformanceCurrentRowKey.current = rowKey;
       }
-    }
-    if (Condition(e, ["line_dept_cd", "line_dept_nm"])) {
-      const workOrderNo = Grid.getValue(e?.rowKey, "work_order_no");
-      if (workOrderNo) {
-        targetGrid.current = "LineDept";
-        setIsSelect({ open: true, columns: columnsLineDept, height: "700px", width: "600px" });
-        actSelectLineDept();
-      }
-    }
-    if (Condition(e, ["order_emp_cd", "order_emp_nm"])) {
-      const workOrderNo = Grid.getValue(e?.rowKey, "work_order_no");
-      if (workOrderNo) {
-        targetGrid.current = "EmployeeOrder";
-        setIsSelect({ open: true, columns: columnsEmployee, height: "700px", width: "400px" });
-        actSelectEmployee();
-      }
-    }
-    if (Condition(e, ["input_emp_cd", "input_emp_nm"])) {
-      const workOrderNo = Grid.getValue(e?.rowKey, "work_order_no");
-      if (workOrderNo) {
-        targetGrid.current = "EmployeeInterface";
-        setIsSelect({ open: true, columns: columnsEmployee, height: "700px", width: "400px" });
-        actSelectEmployee();
+      const lotNo = performanceGrid.getValue(rowKey, "lot_no");
+      if (lotNo) {
+        try {
+          setIsBackDrop(true);
+          const inputResult = await restAPI.get(restURI.erpItfWorkInput + `?lot_no=${lotNo}`);
+          const empResult = await restAPI.get(restURI.erpItfWorkEmp + `?lot_no=${lotNo}`);
+
+          setInputData(inputResult?.data?.data?.rows);
+          setEmployeeData(empResult?.data?.data?.rows);
+        } catch (err) {
+          setIsSnackOpen({
+            ...isSnackOpen,
+            open: true,
+            message: err?.response?.data?.message,
+            severity: "error",
+            location: "bottomRight",
+          });
+        } finally {
+          setIsBackDrop(false);
+        }
+      } else {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "혼합 실적의 Lot 정보를 찾을 수 없습니다.",
+          severity: "error",
+          location: "bottomRight",
+        });
       }
     }
   };
 
-  const onSelectDateSearch = () => {
-    // Select 창에서 조회 버튼
-    if (targetGrid.current === "Request") {
-      actSelectRequest();
-    } else if (targetGrid.current === "Order") {
-      const Grid = refModalGrid.current.getInstance();
-      const itemId = Grid.getValue(targetRowKey.current, "prod_id");
-      actSelectOrder(`&item_id=${itemId}`);
-    }
+  const onDeletePerformance = () => {
+    setIsDeleteAlert({ open: true, type: "performance" });
   };
+  const onDeleteInput = () => {
+    setIsDeleteAlert({ open: true, type: "input" });
+  };
+  const onDeleteEmployee = () => {
+    setIsDeleteAlert({ open: true, type: "employee" });
+  };
+  const handleDeletePerformance = async () => {
+    try {
+      setIsBackDrop(true);
+      const Grid = refPerformanceGrid?.current?.gridInst;
+      Grid?.finishEditing();
 
-  const onDblSelect = (e) => {
-    // Select 창에서 선택한 데이터 넣어주기
-    if (e?.targetType === "cell") {
-      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
-      const rowKey = targetRowKey.current;
-      const mainGrid = refPerformanceGrid?.current?.gridInst;
-      const newGrid = refModalGrid?.current?.gridInst;
-      if (targetGrid.current === "Request") {
-        newGrid?.setValue(rowKey, "request_no", data.request_no);
-        newGrid?.setValue(rowKey, "corp_code", data.corp_code);
-        newGrid?.setValue(rowKey, "plce_code", data.plce_code);
-        newGrid?.setValue(rowKey, "prod_id", data.prod_id);
-        newGrid?.setValue(rowKey, "prod_cd", data.prod_cd);
-        newGrid?.setValue(rowKey, "prod_nm", data.prod_nm);
-        newGrid?.setValue(rowKey, "prod_std", data.prod_std);
-      } else if (targetGrid.current === "Order") {
-        newGrid?.setValue(rowKey, "work_order_id", data.work_order_id);
-        newGrid?.setValue(rowKey, "work_order_no", data.work_order_no);
-        newGrid?.setValue(rowKey, "line_dept_cd", data.line_dept_cd);
-        newGrid?.setValue(rowKey, "line_dept_nm", data.line_dept_nm);
-        newGrid?.setValue(rowKey, "work_order_date", data.work_order_date);
-        newGrid?.setValue(rowKey, "work_start_date", data.work_start_date);
-        newGrid?.setValue(rowKey, "work_end_date", data.work_end_date);
-        newGrid?.setValue(rowKey, "work_order_qty", data.work_order_qty);
-      } else if (targetGrid.current === "LineDept") {
-        newGrid?.setValue(rowKey, "line_dept_cd", data.line_dept_cd);
-        newGrid?.setValue(rowKey, "line_dept_nm", data.line_dept_nm);
-      } else if (targetGrid.current === "EmployeeOrder") {
-        newGrid?.setValue(rowKey, "order_emp_cd", data.emp_cd);
-        newGrid?.setValue(rowKey, "order_emp_nm", data.emp_nm);
-      } else if (targetGrid.current === "EmployeeInterface") {
-        newGrid?.setValue(rowKey, "input_emp_cd", data.emp_cd);
-        newGrid?.setValue(rowKey, "input_emp_nm", data.emp_nm);
-      } else if (targetGrid.current === "LineDeptMain") {
-        mainGrid?.setValue(rowKey, "line_dept_cd", data.line_dept_cd);
-        mainGrid?.setValue(rowKey, "line_dept_nm", data.line_dept_nm);
-        disRow.handleGridSelectCheck(refPerformanceGrid, rowKey);
-      } else if (targetGrid.current === "EmployeeOrderMain") {
-        mainGrid?.setValue(rowKey, "order_emp_cd", data.emp_cd);
-        mainGrid?.setValue(rowKey, "order_emp_nm", data.emp_nm);
-        disRow.handleGridSelectCheck(refPerformanceGrid, rowKey);
-      } else if (targetGrid.current === "EmployeeInterfaceMain") {
-        mainGrid?.setValue(rowKey, "input_emp_cd", data.emp_cd);
-        mainGrid?.setValue(rowKey, "input_emp_nm", data.emp_nm);
-        disRow.handleGridSelectCheck(refPerformanceGrid, rowKey);
+      const checkedRows = Grid?.getCheckedRows();
+
+      const resultData = checkedRows.map((item) => {
+        return { erp_work_order_no: item.erp_work_order_no, lot_no: item.lot_no };
+      });
+      if (resultData) {
+        const result = await restAPI.delete(restURI.erpItfWork, { data: resultData });
+
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
+
+        onSearch();
+        setInputData([]);
+        setEmployeeData([]);
       }
-      setIsSelectDateRange({ open: false });
-      setIsSelect({ open: false });
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+      setIsDeleteAlert({ open: false, type: "" });
     }
   };
-  const [inputChange, setInputChange] = useState({});
+  const handleDeleteInput = async () => {
+    try {
+      setIsBackDrop(true);
+      const performanceGrid = refPerformanceGrid?.current?.gridInst;
+      const performanceRowKey = refPerformanceCurrentRowKey.current;
+      const inputGrid = refInputGrid?.current?.gridInst;
+      inputGrid?.finishEditing();
+      const lotNo = performanceGrid.getValue(performanceRowKey, "lot_no");
+      const checkedRows = inputGrid?.getCheckedRows();
 
-  const handleInputChange = (e) => {
-    setInputChange({ ...inputChange, [e.target.id]: e.target.value });
+      const resultData = checkedRows.map((item) => {
+        return { lot_no: lotNo, input_lot_no: item.input_lot_no };
+      });
+
+      if (resultData) {
+        const result = await restAPI.delete(restURI.erpItfWorkInput, { data: resultData });
+
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
+
+        onSearchAfterDelete(lotNo, "input");
+      }
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+      setIsDeleteAlert({ open: false, type: "" });
+    }
+  };
+  const handleDeleteEmployee = async () => {
+    try {
+      setIsBackDrop(true);
+      const performanceGrid = refPerformanceGrid?.current?.gridInst;
+      const performanceRowKey = refPerformanceCurrentRowKey.current;
+      const employeeGrid = refEmployeeGrid?.current?.gridInst;
+      employeeGrid?.finishEditing();
+      const lotNo = performanceGrid.getValue(performanceRowKey, "lot_no");
+      const checkedRows = employeeGrid?.getCheckedRows();
+
+      const resultData = checkedRows.map((item) => {
+        return { lot_no: lotNo, work_emp_cd: item.work_emp_cd };
+      });
+
+      if (resultData) {
+        const result = await restAPI.delete(restURI.erpItfWorkEmp, { data: resultData });
+
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: result?.data?.message,
+          severity: "success",
+          location: "bottomRight",
+        });
+
+        onSearchAfterDelete(lotNo, "employee");
+      }
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
+      setIsDeleteAlert({ open: false, type: "" });
+    }
   };
 
-  const onKeyDown = (e) => {
-    if (e.key === "Enter") {
-      onSearch(true);
+  const handleDelete = async (type) => {
+    switch (type) {
+      case "performance":
+        await handleDeletePerformance();
+        break;
+      case "input":
+        await handleDeleteInput();
+        break;
+      case "employee":
+        await handleDeleteEmployee();
+        break;
+      default:
+    }
+  };
+
+  const onSearchAfterDelete = async (lotNo, type) => {
+    try {
+      setIsBackDrop(true);
+
+      if (type === "input") {
+        const inputResult = await restAPI.get(restURI.erpItfWorkInput + `?lot_no=${lotNo}`);
+        setInputData(inputResult?.data?.data?.rows);
+      } else if (type === "employee") {
+        const empResult = await restAPI.get(restURI.erpItfWorkEmp + `?lot_no=${lotNo}`);
+        setEmployeeData(empResult?.data?.data?.rows);
+      }
+    } catch (err) {
+      setIsSnackOpen({
+        ...isSnackOpen,
+        open: true,
+        message: err?.response?.data?.message,
+        severity: "error",
+        location: "bottomRight",
+      });
+    } finally {
+      setIsBackDrop(false);
     }
   };
 
@@ -475,10 +385,7 @@ export function ItfMixed(props) {
         data={performanceData}
         draggable={false}
         refGrid={refPerformanceGrid}
-        isEditMode={isEditMode}
-        onClickGrid={onClickGrid}
-        onEditingFinish={onEditingFinishGrid}
-        onDblClickGrid={onDblGrid}
+        onClickGrid={onClickPerformance}
       />
     );
   }, [performanceData]);
@@ -493,10 +400,6 @@ export function ItfMixed(props) {
         data={inputData}
         draggable={false}
         refGrid={refInputGrid}
-        isEditMode={isEditMode}
-        onClickGrid={onClickGrid}
-        onEditingFinish={onEditingFinishGrid}
-        onDblClickGrid={onDblGrid}
       />
     );
   }, [inputData]);
@@ -511,10 +414,6 @@ export function ItfMixed(props) {
         data={employeeData}
         draggable={false}
         refGrid={refEmployeeGrid}
-        isEditMode={isEditMode}
-        onClickGrid={onClickGrid}
-        onEditingFinish={onEditingFinishGrid}
-        onDblClickGrid={onDblGrid}
       />
     );
   }, [employeeData]);
@@ -525,77 +424,43 @@ export function ItfMixed(props) {
         <S.ToolWrap>
           <S.SearchWrap>
             <DateRange title={"시작일"} dateText={dateText} setDateText={setDateText} />
-            <InputSearch
-              id={"request_no"}
-              name={"생산의뢰번호"}
-              handleInputTextChange={handleInputChange}
-              onClickSearch={onSearch}
-              onKeyDown={onKeyDown}
-            />
-            <S.ComboBox
-              disablePortal
-              id="factoryCombo"
-              size="small"
-              key={(option) => option?.line_id}
-              options={lineOpt || null}
-              getOptionLabel={(option) => option?.line_nm || ""}
-              onChange={(_, newValue) => {
-                setComboValue({
-                  ...comboValue,
-                  line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
-                });
-              }}
-              renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
-              onKeyDown={onKeyDown}
-            />
           </S.SearchWrap>
           <S.ButtonWrap>
-            <BtnComponent btnName={"Search"} onClick={() => onSearch(isEditMode)} />
+            <BtnComponent btnName={"Search"} onClick={() => onSearch()} />
           </S.ButtonWrap>
         </S.ToolWrap>
       </S.ShadowBoxButton>
       <S.ShadowBoxGrid>
         <S.GridTitleWrap>
-          <S.GridTitle>{"혼합실적"}</S.GridTitle>
+          <S.GridTitle>{"혼합 실적"}</S.GridTitle>
           <S.GridButtonWrap>
-            {isEditMode ? (
-              <>
-                <BtnComponent btnName={"Save"} onClick={onEditSave} />
-                <BtnComponent btnName={"Cancel"} onClick={onEditExit} />
-              </>
-            ) : (
-              <>
-                <BtnComponent btnName={"New"} onClick={onNew} />
-                <BtnComponent btnName={"Edit"} onClick={onEdit} />
-                <BtnComponent btnName={"Delete"} onClick={onDelete} />
-              </>
-            )}
+            <BtnComponent btnName={"New"} onClick={onNew} />
+            <BtnComponent btnName={"Edit"} onClick={onEdit} />
+            <BtnComponent btnName={"Delete"} onClick={onDeletePerformance} />
           </S.GridButtonWrap>
         </S.GridTitleWrap>
         <S.GridWrap>{gridPerformance}</S.GridWrap>
       </S.ShadowBoxGrid>
       <S.ShadowBoxGrid>
         <S.GridTitleWrap>
-          <S.GridTitle>{"혼합투입 LIST"}</S.GridTitle>
+          <S.GridTitle>{"혼합 생산 목록"}</S.GridTitle>
           <S.GridButtonWrap>
-            <BtnComponent btnName={"New"} onClick={onNew} />
-            <BtnComponent btnName={"Edit"} onClick={onEdit} />
-            <BtnComponent btnName={"Delete"} onClick={onDelete} />
+            <BtnComponent btnName={"Delete"} onClick={onDeleteInput} />
           </S.GridButtonWrap>
         </S.GridTitleWrap>
         <S.GridWrap>{gridInput}</S.GridWrap>
       </S.ShadowBoxGrid>
       <S.ShadowBoxGrid>
         <S.GridTitleWrap>
-          <S.GridTitle>{"작업자 LIST"}</S.GridTitle>
+          <S.GridTitle>{"생산자 목록"}</S.GridTitle>
           <S.GridButtonWrap>
-            <BtnComponent btnName={"Delete"} onClick={onDelete} />
+            <BtnComponent btnName={"Delete"} onClick={onDeleteEmployee} />
           </S.GridButtonWrap>
         </S.GridTitleWrap>
         <S.GridWrap>{gridEmployee}</S.GridWrap>
       </S.ShadowBoxGrid>
 
-      {isDeleteAlertOpen && (
+      {isDeleteAlert.open && (
         <NoticeAlertModal
           textContent={"정말 삭제하시겠습니까?"}
           textFontSize={"20px"}
@@ -603,47 +468,17 @@ export function ItfMixed(props) {
           width={"400px"}
           isDelete={true}
           isCancel={true}
-          onDelete={handleDelete}
+          onDelete={() => {
+            handleDelete(isDeleteAlert.type);
+          }}
           onCancel={() => {
-            setIsDeleteAlertOpen(false);
+            setIsDeleteAlert({ open: false, type: "" });
           }}
         />
       )}
-      {isCreateOpen && <ItfMixedCreate setIsCreateOpen={setIsCreateOpen} />}
-      {isSelectDateRange.open && (
-        <FdrModal modalState={isSelectDateRange} setModal={setIsSelectDateRange}>
-          <S.SelectDateErpFilter>
-            <DateRange dateText={selectDate} setDateText={setSelectDate} />
-            <BtnComponent btnName={"Search"} onClick={onSelectDateSearch} />
-          </S.SelectDateErpFilter>
-          <S.SelectDateErpGridWrap>
-            <GridSingle
-              columns={isSelectDateRange.columns}
-              columnOptions={columnOptions}
-              header={header}
-              data={gridDataSelect}
-              rowHeaders={["rowNum"]}
-              refGrid={refSelectGrid}
-              onDblClickGrid={onDblSelect}
-            />
-          </S.SelectDateErpGridWrap>
-        </FdrModal>
-      )}
-      {isSelect.open && (
-        <FdrModal modalState={isSelect} setModal={setIsSelect}>
-          <S.SelectErpGridWrap>
-            <GridSingle
-              columns={isSelect.columns}
-              columnOptions={columnOptions}
-              header={header}
-              data={gridDataSelect}
-              rowHeaders={["rowNum"]}
-              refGrid={refSelectGrid}
-              onDblClickGrid={onDblSelect}
-            />
-          </S.SelectErpGridWrap>
-        </FdrModal>
-      )}
+      {isCreateOpen && <ItfMixedCreate setIsCreateOpen={setIsCreateOpen} onSearch={onSearch} />}
+      {isUpdateOpen && <ItfMixedUpdate setIsUpdateOpen={setIsUpdateOpen} onSearch={onSearch} data={updateData} />}
+
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsAreaHidden>

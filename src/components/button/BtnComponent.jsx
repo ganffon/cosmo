@@ -23,7 +23,7 @@ function BtnComponent(props) {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipText, setTooltipText] = useState("");
   const [isClicked, setIsClicked] = useState(false);
-  useEffect(() => {}, []);
+
   const handleClick = () => {
     setIsClicked(true);
     setTimeout(() => {
