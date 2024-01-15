@@ -33,8 +33,8 @@ export function ItfMixedCreate(props) {
   const targetGrid = useRef("");
   const targetRowKey = useRef("");
 
-  const [isSelectDateRange, setIsSelectDateRange] = useState({ open: false, columns: [] });
-  const [isSelect, setIsSelect] = useState({ open: false, columns: [] });
+  const [isSelectDateRange, setIsSelectDateRange] = useState({ open: false, columns: [], title: "" });
+  const [isSelect, setIsSelect] = useState({ open: false, columns: [], title: "" });
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
     open: false,
@@ -158,13 +158,13 @@ export function ItfMixedCreate(props) {
       ])
     ) {
       targetGrid.current = "erpOrder";
-      setIsSelectDateRange({ open: true, columns: colErpOrder, height: "700px", width: "90%" });
+      setIsSelectDateRange({ open: true, columns: colErpOrder, height: "700px", width: "90%", title: "ERP 작업지시" });
       actSelectOrder();
     }
 
     if (Condition(e, ["dept_cd", "dept_nm"])) {
       targetGrid.current = "erpDept";
-      setIsSelect({ open: true, columns: colErpDept, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpDept, height: "500px", width: "30%", title: "ERP 부서" });
       const grid = refPerformanceGrid.current.getInstance();
       const orderLineDeptCd = grid.getValue(0, "order_line_dept_cd");
       actSelectDeptFrom(`?line_dept_cd=${orderLineDeptCd}`);
@@ -172,7 +172,7 @@ export function ItfMixedCreate(props) {
 
     if (Condition(e, ["line_dept_cd", "line_dept_nm"])) {
       targetGrid.current = "erpLineDept";
-      setIsSelect({ open: true, columns: colErpLineDept, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpLineDept, height: "500px", width: "30%", title: "라인부서" });
       const grid = refPerformanceGrid.current.getInstance();
       const orderDeptCd = grid.getValue(0, "dept_cd");
       actSelectLineDept(`?line_dept_nm=${orderDeptCd}`);
@@ -180,17 +180,17 @@ export function ItfMixedCreate(props) {
 
     if (Condition(e, ["worker_group_cd", "worker_group_nm"])) {
       targetGrid.current = "erpWorkerGroup";
-      setIsSelect({ open: true, columns: colErpWorkerGroup, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpWorkerGroup, height: "500px", width: "30%", title: "작업조" });
       actSelectWorkerGroup();
     }
     if (Condition(e, ["unit_cd", "unit_nm"])) {
       targetGrid.current = "erpUnit";
-      setIsSelect({ open: true, columns: colErpUnit, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpUnit, height: "500px", width: "30%", title: "단위" });
       actSelectUnit();
     }
     if (Condition(e, ["input_emp_cd", "input_emp_nm"])) {
       targetGrid.current = "erpEmployee";
-      setIsSelect({ open: true, columns: colErpEmployee, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpEmployee, height: "500px", width: "30%", title: "작업자" });
       actSelectEmployee();
     }
   };
@@ -281,66 +281,83 @@ export function ItfMixedCreate(props) {
   const onMerge = () => {
     // 혼합실적 상세 (MES) 가 확장되었을 때만 동작
     if (isLeftExtend) {
-      const detailGrid = refDetailGrid.current.getInstance();
-      const checkData = detailGrid.getCheckedRows();
-
-      // prod_cd와 lot_no 기준으로 데이터 그룹화
-      const groupedData = checkData.reduce((acc, item) => {
-        const { _attributes, ...itemWithoutAttributes } = item;
-        const key = `${item.prod_cd}-${item.lot_no}`;
-        if (!acc[key]) {
-          acc[key] = { ...itemWithoutAttributes };
-        } else {
-          acc[key].work_weigh_date =
-            acc[key].work_weigh_date < item.work_weigh_date ? acc[key].work_weigh_date : item.work_weigh_date;
-          acc[key].work_input_date =
-            acc[key].work_input_date < item.work_input_date ? acc[key].work_input_date : item.work_input_date;
-          acc[key].input_qty += item.input_qty;
-        }
-        return acc;
-      }, {});
-
-      let mergedData = Object.values(groupedData).map((group) => ({
-        ...group,
-      }));
-
       /**
-       * summary의 prod_cd, lot_no 기준으로 병합 된 데이터들의 input_qty를 모두 합쳐서
-       * performance의 work_qty에 출력함
+       * 01. 품목코드와 투입LOT 기준으로 summary
+       * 02. 투입일자, 재공일자는 선택한 데이터 중 가장 빠른 날짜로 입력
+       * 03. 투입자는 가장 빠른 날짜 한명
+       * 04. 생산자는 선택한 데이터 중 중복 제거하여 입력
        */
-      const totalInputQty = mergedData.reduce((acc, item) => acc + item.input_qty, 0);
       const performanceGrid = refPerformanceGrid.current.getInstance();
-      performanceGrid.setValue(0, "work_qty", parseFloat(totalInputQty.toFixed(2)));
+      const requestNo = performanceGrid.getValue(0, "request_no");
+      if (requestNo) {
+        const detailGrid = refDetailGrid.current.getInstance();
+        const checkData = detailGrid.getCheckedRows();
+        if (checkData.length > 0) {
+          // prod_cd와 lot_no 기준으로 데이터 그룹화
+          const groupedData = checkData.reduce((acc, item) => {
+            const { _attributes, ...itemWithoutAttributes } = item;
+            const key = `${item.prod_cd}-${item.lot_no}`;
+            if (!acc[key]) {
+              acc[key] = { ...itemWithoutAttributes };
+            } else {
+              acc[key].work_weigh_date =
+                acc[key].work_weigh_date < item.work_weigh_date ? acc[key].work_weigh_date : item.work_weigh_date;
+              acc[key].work_input_date =
+                acc[key].work_input_date < item.work_input_date ? acc[key].work_input_date : item.work_input_date;
+              acc[key].input_qty += item.input_qty;
+            }
+            return acc;
+          }, {});
 
-      // 전체 데이터셋에서 고유한 input_emp 추출
-      const uniqueEmps = Array.from(
-        new Set(checkData.filter((item) => item.input_emp_cd !== null).map((item) => item.input_emp_cd))
-      ).map((emp_cd) => {
-        const item = checkData.find((item) => item.input_emp_cd === emp_cd);
-        return {
-          work_emp_cd: item.input_emp_cd,
-          work_emp_nm: item.input_emp_nm,
-        };
-      });
+          let mergedData = Object.values(groupedData).map((group) => ({
+            ...group,
+          }));
 
-      const sortByKey = (key) => (a, b) => a[key].localeCompare(b[key]);
+          /**
+           * summary의 prod_cd, lot_no 기준으로 병합 된 데이터들의 input_qty를 모두 합쳐서
+           * performance의 work_qty에 출력함
+           */
+          const totalInputQty = mergedData.reduce((acc, item) => acc + item.input_qty, 0);
 
-      mergedData = mergedData.sort(sortByKey("prod_class_nm"));
+          performanceGrid.setValue(0, "work_qty", parseFloat(totalInputQty.toFixed(2)));
 
-      mergedData = mergedData.map((item, index) => {
-        return {
-          ...item,
-          input_qty: parseFloat(item.input_qty.toFixed(2)),
-          rowKey: index,
-          sortKey: index,
-        };
-      });
+          // 전체 데이터셋에서 고유한 input_emp 추출
+          const uniqueEmps = Array.from(
+            new Set(checkData.filter((item) => item.input_emp_cd !== null).map((item) => item.input_emp_cd))
+          ).map((emp_cd) => {
+            const item = checkData.find((item) => item.input_emp_cd === emp_cd);
+            return {
+              work_emp_cd: item.input_emp_cd,
+              work_emp_nm: item.input_emp_nm,
+            };
+          });
 
-      setSummaryData(mergedData);
-      setEmployeeData(uniqueEmps);
+          const sortByKey = (key) => (a, b) => a[key].localeCompare(b[key]);
 
-      if (checkData.length > 0) {
-        setIsLeftExtend(!isLeftExtend);
+          mergedData = mergedData.sort(sortByKey("prod_class_nm"));
+
+          mergedData = mergedData.map((item, index) => {
+            return {
+              ...item,
+              input_qty: parseFloat(item.input_qty.toFixed(2)),
+              rowKey: index,
+              sortKey: index,
+            };
+          });
+
+          setSummaryData(mergedData);
+          setEmployeeData(uniqueEmps);
+
+          setIsLeftExtend(!isLeftExtend);
+        }
+      } else {
+        setIsSnackOpen({
+          ...isSnackOpen,
+          open: true,
+          message: "혼합 실적의 ERP지시 먼저 입력바랍니다.",
+          severity: "warning",
+          location: "topCenter",
+        });
       }
     } else {
       setIsSnackOpen({
@@ -357,17 +374,17 @@ export function ItfMixedCreate(props) {
     targetRowKey.current = e?.rowKey;
     if (Condition(e, ["unit_cd", "unit_nm"])) {
       targetGrid.current = "erpSummaryUnit";
-      setIsSelect({ open: true, columns: colErpUnit, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpUnit, height: "500px", width: "30%", title: "단위" });
       actSelectUnit();
     }
     if (Condition(e, ["weigh_emp_cd", "weigh_emp_nm"])) {
       targetGrid.current = "erpSummaryEmployee";
-      setIsSelect({ open: true, columns: colErpEmployee, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpEmployee, height: "500px", width: "30%", title: "작업자" });
       actSelectEmployee();
     }
     if (Condition(e, ["item_id", "item_cd", "item_nm"])) {
       targetGrid.current = "erpSummaryItem";
-      setIsSelect({ open: true, columns: colErpItem, height: "500px", width: "30%" });
+      setIsSelect({ open: true, columns: colErpItem, height: "500px", width: "30%", title: "ERP 품목" });
       const grid = refSummaryGrid.current.getInstance();
       const prodCD = grid.getValue(e.rowKey, "prod_cd");
       actSelectErpItem(`?prod_cd=${prodCD}`);
@@ -606,7 +623,7 @@ export function ItfMixedCreate(props) {
           <S.ShadowBoxGrid height={"59%"} width={"100%"}>
             <S.GridTitleWrap>
               <S.GridTitle>
-                {"혼합 실적 병합 목록"}
+                {"혼합 실적 병합 목록(ERP)"}
                 {!isLeftExtend && (
                   <S.GridTitleSub>
                     {"생산중량 수정 시 자동 합산 된 값이 상단의 혼합 실적 생산량에 기입됩니다."}
@@ -618,7 +635,7 @@ export function ItfMixedCreate(props) {
           </S.ShadowBoxGrid>
           <S.ShadowBoxGrid height={"38%"} width={"100%"}>
             <S.GridTitleWrap>
-              <S.GridTitle>{"혼합 생산자 목록"}</S.GridTitle>
+              <S.GridTitle>{"생산자 목록"}</S.GridTitle>
             </S.GridTitleWrap>
             <S.GridWrap>{gridEmployee}</S.GridWrap>
           </S.ShadowBoxGrid>

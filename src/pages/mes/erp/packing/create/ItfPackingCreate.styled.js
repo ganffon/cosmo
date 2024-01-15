@@ -66,27 +66,21 @@ export const GridWrap = styled("div")`
   height: calc(100% - 30px);
 `;
 
-export const BottomWrap = styled("div")`
+export const MidWrap = styled("div")`
   display: flex;
   align-items: center;
   gap: 10px;
-  height: calc(100% - 250px);
+  height: ${($props) => ($props.isBottomExtend ? "180px" : "calc(100% - 460px)")};
   width: 100%;
+  margin-top: 5px;
 `;
 
-export const BottomRightWrap = styled("div")`
+export const BottomWrap = styled("div")`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: ${($props) => ($props.isLeftExtend ? "calc(100% - 1540px)" : "calc(100% - 290px)")};
-`;
-
-export const MidButtonWrap = styled("div")`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 100%;
-  justify-content: center;
+  height: ${($props) => ($props.isBottomExtend ? "520px" : "200px")};
+  width: 100%;
+  margin-top: 5px;
 `;
 
 export const ExtendButton = styled("button")`
@@ -97,6 +91,8 @@ export const ExtendButton = styled("button")`
   padding: 5px;
   border: 1px solid ${palette.black[100]};
 
+  margin-left: 20px;
+
   font-family: NotoSansKR;
 
   &:hover {
@@ -104,13 +100,15 @@ export const ExtendButton = styled("button")`
   }
 `;
 
-export const MergeButton = styled("button")`
-  width: 40px;
-  height: 50%;
+export const CalculateButton = styled("button")`
+  width: 100px;
+  height: 35px;
   background-color: ${palette.blue[300]};
   cursor: pointer;
   border-radius: 10px;
   border: 1px solid ${palette.black[100]};
+
+  font-family: NotoSansKR;
 
   &:hover {
     background-color: ${palette.blue[500]};

@@ -555,7 +555,7 @@ export function ItfMixedUpdate(props) {
           <S.ShadowBoxGrid height={"59%"} width={"100%"}>
             <S.GridTitleWrap>
               <S.GridTitle>
-                {"혼합 실적 병합 목록"}
+                {"혼합 실적 병합 목록(ERP)"}
                 {!isLeftExtend && (
                   <S.GridTitleSub>
                     {"생산중량 수정 시 자동 합산 된 값이 상단의 혼합 실적 생산량에 기입됩니다."}
