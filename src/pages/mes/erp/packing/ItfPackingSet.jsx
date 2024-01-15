@@ -1,8 +1,7 @@
-import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function ItfMixedSet() {
+function ItfPackingSet() {
   /** 🔸columns ❗
    * editor: false||"text"
    * whiteSpace: "nowrap"||"normal"||"pre"||"pre-wrap"||"pre-line"
@@ -13,7 +12,7 @@ function ItfMixedSet() {
    * align: "left"||"center"||"right"
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
-  const colPerformance = [
+  const colPacking = [
     col.text("erp_yn", "ERP 처리", C.U, C.U, C.WIDTH_SHORT, "center", true, "select"),
     col.text("erp_date", "ERP 처리일시", C.U, C.U, C.WIDTH_MIDDLE, "center", true, "select"),
     col.text("erp_work_order_no", "ERP지시번호", C.U, C.U, C.WIDTH_MIDDLE, "center", true, "select"),
@@ -26,19 +25,19 @@ function ItfMixedSet() {
     col.id("dept_cd", "dept_cd", C.HIDDEN_ID),
     col.text("dept_nm", "부서", C.U, C.U, C.WIDTH_MIDDLE, C.U, true, "select"),
     col.id("line_dept_cd", "line_dept_cd", C.HIDDEN_ID),
-    col.select("line_dept_nm", "라인부서", C.U, C.U, C.U, true, "select"),
+    col.text("line_dept_nm", "라인부서", C.U, C.U, C.U, C.U, true, "select"),
     col.date("work_start_date", "시작일자", C.U, C.U, true, "select"),
     col.date("work_end_date", "종료일자", C.U, C.U, true, "select"),
     col.text("lot_no", "Lot No", C.U, C.U, C.U, C.U, true, "select"),
-    col.number("work_qty", "생산중량", C.U, C.U, C.U, true, "select"),
+    col.number("work_qty", "포장중량", C.U, C.U, C.U, true, "select"),
     col.id("unit_cd", "unit_cd", C.HIDDEN_ID),
-    col.select("unit_nm", "단위", C.U, C.U, C.U, true, "select"),
+    col.text("unit_nm", "단위", C.U, C.U, C.U, "center", true, "select"),
     col.id("input_emp_cd", "input_emp_cd", C.HIDDEN_ID),
     col.text("input_emp_nm", "I/F등록자", C.U, C.U, C.U, "center", true, "select"),
     col.text("input_date", "I/F일자", C.U, C.U, C.U, "center", true, "select"),
   ];
 
-  const colInput = [
+  const colMixed = [
     col.id("item_id", "item_id", C.HIDDEN_ID),
     col.text("item_cd", "품목코드", C.U, C.U, C.U, C.U, true, "select"),
     col.text("item_nm", "품목", C.U, C.U, C.U, C.U, true, "select"),
@@ -65,7 +64,7 @@ function ItfMixedSet() {
 
   const colEmployee = [
     col.id("work_emp_cd", "work_emp_cd", C.HIDDEN_ID),
-    col.text("work_emp_nm", "생산자", C.U, C.U, C.U, "center", true, "select"),
+    col.text("work_emp_nm", "포장자", C.U, C.U, C.U, "center", true, "select"),
     col.id("input_emp_cd", "input_emp_cd", C.HIDDEN_ID),
     col.text("input_emp_nm", "I/F등록자", C.U, C.U, C.U, "center", true, "select"),
     col.text("input_date", "I/F일자", C.U, C.U, C.U, "center", true, "select"),
@@ -117,8 +116,8 @@ function ItfMixedSet() {
   };
 
   return {
-    colPerformance,
-    colInput,
+    colPacking,
+    colMixed,
     colEmployee,
     colErpLineDept,
     colErpUnit,
@@ -128,4 +127,4 @@ function ItfMixedSet() {
   };
 }
 
-export default ItfMixedSet;
+export default ItfPackingSet;
