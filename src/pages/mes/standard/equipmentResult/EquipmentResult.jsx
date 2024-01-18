@@ -1,4 +1,11 @@
-import { useContext, useState, useEffect, useRef, useMemo, createRef } from "react";
+import {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  createRef,
+} from "react";
 import { LayoutContext } from "components/layout/common/Layout";
 import GridSingle from "components/grid/GridSingle";
 import ModalSelect from "components/modal/ModalSelect";
@@ -327,8 +334,13 @@ export function EquipmentResult() {
       setIsResultNewOpen(true);
       try {
         setIsBackDrop(true);
-        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${mainInfo.inspResultId}`);
-        const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${mainInfo.inspResultId}`);
+        const result = await restAPI.get(
+          restURI.qmsInspResultDetail +
+            `?insp_result_id=${mainInfo.inspResultId}`
+        );
+        const employeeResult = await restAPI.get(
+          restURI.inspResultEmp + `?insp_result_id=${mainInfo.inspResultId}`
+        );
 
         empListTemp.current = employeeResult?.data?.data?.rows;
 
@@ -390,9 +402,15 @@ export function EquipmentResult() {
       try {
         setIsBackDrop(true);
         let conditionLineID, conditionProdCd, conditionProdNm;
-        comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
-        inputTextChange.prod_cd ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`) : (conditionProdCd = "");
-        inputTextChange.prod_nm ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`) : (conditionProdNm = "");
+        comboValue.line_id
+          ? (conditionLineID = `&line_id=${comboValue.line_id}`)
+          : (conditionLineID = "");
+        inputTextChange.prod_cd
+          ? (conditionProdCd = `&prod_cd=${inputTextChange.prod_cd}`)
+          : (conditionProdCd = "");
+        inputTextChange.prod_nm
+          ? (conditionProdNm = `&prod_nm=${inputTextChange.prod_nm}`)
+          : (conditionProdNm = "");
         const result = await restAPI.get(
           restURI.qmsInspResult +
             `?start_date=${dateText.startDate}&end_date=${dateText.endDate}` +
@@ -464,7 +482,9 @@ export function EquipmentResult() {
       });
       const inspResultId = Grid.getValue(e?.rowKey, "insp_result_id");
 
-      const employeeResult = await restAPI.get(restURI.inspResultEmp + `?insp_result_id=${inspResultId}`);
+      const employeeResult = await restAPI.get(
+        restURI.inspResultEmp + `?insp_result_id=${inspResultId}`
+      );
 
       empListTemp.current = employeeResult?.data?.data?.rows;
 
@@ -478,7 +498,9 @@ export function EquipmentResult() {
       // });
 
       try {
-        const result = await restAPI.get(restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`);
+        const result = await restAPI.get(
+          restURI.qmsInspResultDetail + `?insp_result_id=${inspResultId}`
+        );
 
         setGridDataDetail(result?.data?.data?.rows);
       } catch (err) {
@@ -505,14 +527,32 @@ export function EquipmentResult() {
     let bacListIdArr = [];
     let codeListArr = [];
     for (let i = 0; i < tabListTmp?.current?.data?.data?.rows.length; i++) {
-      if (tabListArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm === -1)) {
-        tabListArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm);
+      if (
+        tabListArr.indexOf(
+          tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm === -1
+        )
+      ) {
+        tabListArr.push(
+          tabListTmp?.current?.data?.data?.rows[i].insp_filing_nm
+        );
       }
-      if (bacListIdArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_id === -1)) {
-        bacListIdArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_id);
+      if (
+        bacListIdArr.indexOf(
+          tabListTmp?.current?.data?.data?.rows[i].insp_filing_id === -1
+        )
+      ) {
+        bacListIdArr.push(
+          tabListTmp?.current?.data?.data?.rows[i].insp_filing_id
+        );
       }
-      if (codeListArr.indexOf(tabListTmp?.current?.data?.data?.rows[i].insp_filing_cd === -1)) {
-        codeListArr.push(tabListTmp?.current?.data?.data?.rows[i].insp_filing_cd);
+      if (
+        codeListArr.indexOf(
+          tabListTmp?.current?.data?.data?.rows[i].insp_filing_cd === -1
+        )
+      ) {
+        codeListArr.push(
+          tabListTmp?.current?.data?.data?.rows[i].insp_filing_cd
+        );
       }
     }
 
@@ -532,7 +572,9 @@ export function EquipmentResult() {
 
   const onSelectOrder = () => {
     setIsSelectOrderOpen(true);
-    actSelectOrder(`?complete_fg=INCOMPLETE&reg_date=${dateSelectOrder.startDate}`);
+    actSelectOrder(
+      `?complete_fg=INCOMPLETE&reg_date=${dateSelectOrder.startDate}`
+    );
   };
   const onRemoveOrder = () => {
     resetInfo();
@@ -626,7 +668,8 @@ export function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrder + `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}`
+        restURI.prdOrder +
+          `?complete_fg=INCOMPLETE&start_date=${dateSelectOrder.startDate}`
       );
       setGridDataSelectOrder(result?.data?.data?.rows);
       setIsSnackOpen({
@@ -665,7 +708,8 @@ export function EquipmentResult() {
     try {
       setIsBackDrop(true);
       const result = await restAPI.get(
-        restURI.prdOrderDetail + `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
+        restURI.prdOrderDetail +
+          `?work_order_id=${Grid.getValue(e?.rowKey, "work_order_id")}`
       );
       setGridDataNew(result?.data?.data?.rows);
     } catch (err) {
@@ -764,6 +808,17 @@ export function EquipmentResult() {
     );
   }, [gridDataDetail]);
 
+  const excelExport = useMemo(() => {
+    return (
+      <ExcelExport
+        fileName={fileNameForExcelExport}
+        headerData={mainInfo}
+        detailData={gridDataDetail}
+        workerList={workerDataForExcel}
+      />
+    );
+  }, [workerDataForExcel, activeTab]);
+
   const modalResultNew = useMemo(() => {
     return (
       <ModalResultNew
@@ -816,7 +871,11 @@ export function EquipmentResult() {
     <ContentsArea>
       <S.ContentTop>
         <S.SearchWrap>
-          <DateRange dateText={dateText} setDateText={setDateText} onClickSearch={onClickSearch} />
+          <DateRange
+            dateText={dateText}
+            setDateText={setDateText}
+            onClickSearch={onClickSearch}
+          />
           <S.ComboBox
             disablePortal
             id="lineCbo"
@@ -827,10 +886,13 @@ export function EquipmentResult() {
             onChange={(_, newValue) => {
               setComboValue({
                 ...comboValue,
-                line_id: newValue?.line_id === undefined ? null : newValue?.line_id,
+                line_id:
+                  newValue?.line_id === undefined ? null : newValue?.line_id,
               });
             }}
-            renderInput={(params) => <TextField {...params} label={CN.line_nm} size="small" />}
+            renderInput={(params) => (
+              <TextField {...params} label={CN.line_nm} size="small" />
+            )}
           />
           <InputSearch
             id={"prod_cd"}
@@ -876,19 +938,22 @@ export function EquipmentResult() {
             <S.TitleButtonRight>
               <S.Title>세부운전점검일지</S.Title>
               <S.TitleButton>
-                <ExcelExport
-                  fileName={fileNameForExcelExport}
-                  headerData={mainInfo}
-                  detailData={activeTab?.current?.gridInst?.store?.data?.rawData}
-                  workerList={workerDataForExcel}
-                />
+                {excelExport}
                 <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
               </S.TitleButton>
             </S.TitleButtonRight>
 
             <S.InfoWrap>
               {inputInfo.map((v, idx) => {
-                return <InputPaper key={v.id} id={v.id} name={v.name} width={"220px"} value={mainInfo[v.id] || ""} />;
+                return (
+                  <InputPaper
+                    key={v.id}
+                    id={v.id}
+                    name={v.name}
+                    width={"220px"}
+                    value={mainInfo[v.id] || ""}
+                  />
+                );
               })}
             </S.InfoWrap>
             {GridTab}

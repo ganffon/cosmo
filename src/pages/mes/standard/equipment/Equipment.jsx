@@ -52,6 +52,7 @@ export function Equipment() {
 
   const { rowHeaders, rowHeadersModal, header, columns, columnsModal, columnsModalSelect, columnOptions, inputSet } =
     EquipmentSet(isEditMode, processList);
+
   const SWITCH_NAME_01 = "equipment";
 
   useEffect(() => {
@@ -273,10 +274,10 @@ export function Equipment() {
         refModalGrid={refModalGrid}
         onClickModalGrid={onClickModalGrid}
         onDblClickModalGrid={onDblClickModalGrid}
-        requirecolumns={["proc_id", "equip_cd", "equip_nm"]}
+        requireColumns={["proc_id", "equip_cd", "equip_nm"]}
       />
     );
-  }, []);
+  }, [processList]);
 
   return (
     <ContentsArea>

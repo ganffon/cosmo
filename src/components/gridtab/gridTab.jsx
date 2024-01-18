@@ -247,28 +247,19 @@ function GridTab(props) {
           if (element.spec_min !== null && element.spec_max === null) {
             const specMin = Number(element.spec_min);
 
-            if (
-              element.mng_insp_value !== null &&
-              element.mng_insp_value !== ""
-            ) {
+            if (element.mng_insp_value !== null && element.mng_insp_value !== "") {
               const morValue = Number(element.mng_insp_value);
               if (specMin > morValue) {
                 findRowMor = true;
               }
             }
-            if (
-              element.aft_insp_value !== null &&
-              element.aft_insp_value !== ""
-            ) {
+            if (element.aft_insp_value !== null && element.aft_insp_value !== "") {
               const aftValue = Number(element.aft_insp_value);
               if (specMin > aftValue) {
                 findRowAft = true;
               }
             }
-            if (
-              element.nig_insp_value !== null &&
-              element.nig_insp_value !== ""
-            ) {
+            if (element.nig_insp_value !== null && element.nig_insp_value !== "") {
               const nitValue = Number(element.nig_insp_value);
               if (specMin > nitValue) {
                 findRowNit = true;
@@ -276,28 +267,19 @@ function GridTab(props) {
             }
           } else if (element.spec_min === null && element.spec_max !== null) {
             const specMax = Number(element.spec_max);
-            if (
-              element.mng_insp_value !== null &&
-              element.mng_insp_value !== ""
-            ) {
+            if (element.mng_insp_value !== null && element.mng_insp_value !== "") {
               const morValue = Number(element.mng_insp_value);
               if (specMax < morValue) {
                 findRowMor = true;
               }
             }
-            if (
-              element.aft_insp_value !== null &&
-              element.aft_insp_value !== ""
-            ) {
+            if (element.aft_insp_value !== null && element.aft_insp_value !== "") {
               const aftValue = Number(element.aft_insp_value);
               if (specMax < aftValue) {
                 findRowAft = true;
               }
             }
-            if (
-              element.nig_insp_value !== null &&
-              element.nig_insp_value !== ""
-            ) {
+            if (element.nig_insp_value !== null && element.nig_insp_value !== "") {
               const nitValue = Number(element.nig_insp_value);
               if (specMax < nitValue) {
                 findRowNit = true;
@@ -306,28 +288,19 @@ function GridTab(props) {
           } else if (element.spec_min !== null && element.spec_max !== null) {
             const specMin = Number(element.spec_min);
             const specMax = Number(element.spec_max);
-            if (
-              element.mng_insp_value !== null &&
-              element.mng_insp_value !== ""
-            ) {
+            if (element.mng_insp_value !== null && element.mng_insp_value !== "") {
               const morValue = Number(element.mng_insp_value);
               if (specMax < morValue || specMin > morValue) {
                 findRowMor = true;
               }
             }
-            if (
-              element.aft_insp_value !== null &&
-              element.aft_insp_value !== ""
-            ) {
+            if (element.aft_insp_value !== null && element.aft_insp_value !== "") {
               const aftValue = Number(element.aft_insp_value);
               if (specMax < aftValue || specMin > aftValue) {
                 findRowAft = true;
               }
             }
-            if (
-              element.nig_insp_value !== null &&
-              element.nig_insp_value !== ""
-            ) {
+            if (element.nig_insp_value !== null && element.nig_insp_value !== "") {
               const nitValue = Number(element.nig_insp_value);
               if (specMax < nitValue || specMin > nitValue) {
                 findRowNit = true;
@@ -335,18 +308,10 @@ function GridTab(props) {
             }
           }
 
-          if (
-            findRowMor === true ||
-            findRowAft === true ||
-            findRowNit === true
-          ) {
+          if (findRowMor === true || findRowAft === true || findRowNit === true) {
             gridInstTmp.addCellClassName(rowKey, "proc_nm", "redText");
             gridInstTmp.addCellClassName(rowKey, "equip_nm", "redText");
-            gridInstTmp.addCellClassName(
-              rowKey,
-              "insp_item_type_nm",
-              "redText"
-            );
+            gridInstTmp.addCellClassName(rowKey, "insp_item_type_nm", "redText");
             gridInstTmp.addCellClassName(rowKey, "insp_item_nm", "redText");
             gridInstTmp.addCellClassName(rowKey, "insp_item_desc", "redText");
 
@@ -414,6 +379,7 @@ function GridTab(props) {
     setActiveTab(refGrid[0]);
     getActiveGrid(refGrid[0]);
     splitData();
+    handleChange("", 0);
     valueValidation(refGrid);
     getErrorCount(splitDataSetArrTmp);
   }, [data]);
@@ -459,12 +425,7 @@ function GridTab(props) {
     const { children, value, index, ...other } = props;
 
     return (
-      <div
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
+      <div hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
         {value === index && (
           <Box sx={{ p: 3 }}>
             <Typography>{children}</Typography>

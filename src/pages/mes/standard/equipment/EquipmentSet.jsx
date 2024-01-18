@@ -1,8 +1,5 @@
 //설비관리✨
-import { useEffect } from "react";
-import restURI from "json/restURI.json";
 import "components/grid/setting/GridStyle.css";
-import * as CustomGrid from "components/grid/setting/CustomGrid";
 import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
@@ -19,6 +16,7 @@ function EquipmentSet(isEditMode, processList) {
    * align: "left"||"center"||"right"
    * filter: false||"select"||{type:"text",operator:"OR"}
    */
+
   const columns = [
     col.id("factory_id", CN.factory_id, C.HIDDEN_ID),
     col.list("proc_id", "proc_nm", CN.proc_nm, processList, isEditMode),
