@@ -18,7 +18,7 @@ function ModalNew(props) {
     onEditingFinishModal = () => {},
     refModalGrid = null,
     columns = [],
-    requirecolumns = [],
+    requireColumns = [],
     columnOptions = [],
     header = [],
     rowHeaders = [],
@@ -66,11 +66,11 @@ function ModalNew(props) {
     try {
       refModalGrid?.current?.gridInst?.finishEditing();
       const gridInstance = refModalGrid?.current?.getInstance();
-      const rawDatas = gridInstance?.store?.data?.rawData;
-      for (let i = 0; i < rawDatas.length; i++) {
-        if (rawDatas[i] !== undefined) {
-          for (let j = 0; j < requirecolumns.length; j++) {
-            const validationData = rawDatas[i][requirecolumns[j]];
+      const rawData = gridInstance?.store?.data?.rawData;
+      for (let i = 0; i < rawData.length; i++) {
+        if (rawData[i] !== undefined) {
+          for (let j = 0; j < requireColumns.length; j++) {
+            const validationData = rawData[i][requireColumns[j]];
             if (validationData === null || validationData === "") {
               throw new Error();
             }
@@ -92,11 +92,11 @@ function ModalNew(props) {
     }
     const rawDataLength = gridInstance?.store?.data?.rawData.length;
     let deleteRawList = [];
-    const rawDatas = gridInstance?.store?.data?.rawData;
+    const rawData = gridInstance?.store?.data?.rawData;
 
     for (let i = 0; i < rawDataLength; i++) {
       let counter = 0;
-      let data = rawDatas[i];
+      let data = rawData[i];
 
       for (let x = 0; x < columnLength; x++) {
         let tmpData = data[columnList[x]];

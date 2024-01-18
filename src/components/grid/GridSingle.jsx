@@ -40,13 +40,13 @@ function GridSingle(props) {
   const selectedRow = (e) => {
     if (refGrid) {
       if (!isEditMode) {
-        // const grid = refGrid?.current?.getInstance();
-        // if (e?.rowKey !== null && e?.rowKey !== undefined) {
-        //   for (let i = 0; i < grid.getRowCount(); i++) {
-        //     grid.removeRowClassName(i, "selectedBack");
-        //   }
-        // }
-        // grid.addRowClassName(e?.rowKey, "selectedBack");
+        const grid = refGrid?.current?.getInstance();
+        if (e?.rowKey !== null && e?.rowKey !== undefined) {
+          for (let i = 0; i < grid.getRowCount(); i++) {
+            grid.removeRowClassName(i, "selectedBack");
+          }
+        }
+        grid.addRowClassName(e?.rowKey, "selectedBack");
       }
     }
   };
