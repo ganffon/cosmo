@@ -43,18 +43,28 @@ function ExcelExport(props) {
           responseType: "blob",
         });
         // Step 2: Blob을 File 객체로 변환 (file-saver 라이브러리 사용)
-        const file = new File([response.data], `${fileName}.xlsx`, {
+        // const file = new File([response.data], `${fileName}.xlsx`, {
+        //   type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        // });
+        const blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
+        const file = new File([blob], `${fileName}.xlsx`);
         // Step 3: 엑셀 파일 내용 변경
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.load(file);
-        const worksheet = fileName === "FIL-002" ? workbook.worksheets[1] : workbook.worksheets[0];
+        const worksheet = fileName === "FIL-002" ? workbook.worksheets[0] : workbook.worksheets[0];
         //헤더데이터 삽입
 
         if (fileName === "FIL-001") {
           //파일명 정의
           fileTypeName = "일일운전점검일지";
+
+          const inspectionTitle = workbook.definedNames.getRanges("타이틀").ranges[0];
+          const inspectionTitleTarget = inspectionTitle.split("!", 2)[1].replaceAll("$", "");
+          worksheet.getCell(
+            `${inspectionTitleTarget}`
+          ).value = `< ${headerData.prodNm} > ${headerData.lineNm} 생산 일일 운전 점검 일지`;
 
           //검사일자
           const inspectionDate = workbook.definedNames.getRanges("점검일자").ranges[0];
@@ -144,8 +154,8 @@ function ExcelExport(props) {
         } else if (fileName === "FIL-002") {
           const splitDataList = detailData.filter((value) => value.insp_filing_cd === fileName);
           fileTypeName = "소성운전점검일지";
-          //기본 데이터 입력 구간 시작
-          //점검일자 입력
+          // 기본 데이터 입력 구간 시작
+          // 점검일자 입력
           const inspectionDate = workbook.definedNames.getRanges("점검일자").ranges[0];
           const inspectionDateTarget = inspectionDate.split("!", 2)[1].replaceAll("$", "");
           worksheet.getCell(`${inspectionDateTarget}`).value = headerData.inspResultDate;
@@ -155,79 +165,62 @@ function ExcelExport(props) {
           worksheet.getCell(`${lineTarget}`).value = headerData.lineNm;
 
           //품목코드 입력
-          const productCode = workbook.definedNames.getRanges("품목코드").ranges[0];
+          const productCode = workbook.definedNames.getRanges("품목명").ranges[0];
           const productCodeTarget = productCode.split("!", 2)[1].replaceAll("$", "");
-          worksheet.getCell(`${productCodeTarget}`).value = headerData.prodNm;
+          worksheet.getCell(`${productCodeTarget}`).value = `< ${headerData.prodNm} >`;
           //기본데이터 입력 종료
-
           //실제 데이터 입력
           //타겟 범위 찾기
           for (let i = 0; i < splitDataList.length; i++) {
-            let targetCell = null;
-            let targetCellMor = null;
-            let targetCellAft = null;
-            let targetCellNig = null;
-            const targetValue = splitDataList[i].insp_item_cd + "_SV";
-            const targetValueMor = splitDataList[i].insp_item_cd + "_오전조";
-            const targetValueAft = splitDataList[i].insp_item_cd + "_오후조";
-            const targetValueNig = splitDataList[i].insp_item_cd + "_야간조";
+            const targetValue = splitDataList[i].insp_item_cd.replace("-", "") + "_SV";
+            const targetValueMor = splitDataList[i].insp_item_cd.replace("-", "") + "_오전조";
+            const targetValueAft = splitDataList[i].insp_item_cd.replace("-", "") + "_오후조";
+            const targetValueNig = splitDataList[i].insp_item_cd.replace("-", "") + "_야간조";
             //표준값 입력
-
-            //표준값 타겟 설정
-            worksheet.eachRow((row, rowNumber) => {
-              row.eachCell((cell, colNumber) => {
-                if (cell.value === targetValue) {
-                  // 원하는 값이 발견된 경우 데이터 입력 타겟의 위치를 +6으로 수정
-                  targetCell = { row: rowNumber, col: colNumber + 6 };
-                }
-                if (cell.value === targetValueMor) {
-                  // 오전조 값이 발견된 경우 데이터 입력 타겟의 위치를 +6으로 수정
-                  targetCellMor = { row: rowNumber, col: colNumber + 6 };
-                }
-                if (cell.value === targetValueAft) {
-                  // 오후조 값이 발견된 경우 데이터 입력 타겟의 위치를 +6으로 수정
-                  targetCellAft = { row: rowNumber, col: colNumber + 6 };
-                }
-                if (cell.value === targetValueNig) {
-                  // 야간조 값이 발견된 경우 데이터 입력 타겟의 위치를 +6으로 수정
-                  targetCellNig = { row: rowNumber, col: colNumber + 6 };
-                }
-              });
-            });
-            if (targetCell !== null) {
-              if (
-                splitDataList[i].spec_std !== null &&
-                splitDataList[i].spec_std !== "" &&
-                splitDataList[i].spec_std !== undefined
-              ) {
-                worksheet.getCell(targetCell.row, targetCell.col).value = splitDataList[i].spec_std;
-              }
+            const svTarget = workbook.definedNames.getRanges(targetValue).ranges[0];
+            if (svTarget !== undefined) {
+              const svTargetData = svTarget.split("!", 2)[1].replaceAll("$", "");
+              worksheet.getCell(
+                `${svTargetData}`
+              ).value = `${splitDataList[i].spec_min} ~ ${splitDataList[i].spec_max}`;
             }
-            if (targetCellMor !== null) {
+
+            //오전조 값 입력
+            const morTarget = workbook.definedNames.getRanges(targetValueMor).ranges[0];
+            if (morTarget !== undefined) {
               if (
                 splitDataList[i].mng_insp_value !== null &&
                 splitDataList[i].mng_insp_value !== "" &&
                 splitDataList[i].mng_insp_value !== undefined
               ) {
-                worksheet.getCell(targetCellMor.row, targetCellMor.col).value = splitDataList[i].mng_insp_value;
+                const morTargetData = morTarget.split("!", 2)[1].replaceAll("$", "");
+                worksheet.getCell(`${morTargetData}`).value = splitDataList[i].mng_insp_value;
               }
             }
-            if (targetCellAft !== null) {
+
+            //오후조 값 입력
+            const aftTarget = workbook.definedNames.getRanges(targetValueAft).ranges[0];
+            if (aftTarget !== undefined) {
               if (
                 splitDataList[i].aft_insp_value !== null &&
                 splitDataList[i].aft_insp_value !== "" &&
                 splitDataList[i].aft_insp_value !== undefined
               ) {
-                worksheet.getCell(targetCellAft.row, targetCellAft.col).value = splitDataList[i].aft_insp_value;
+                const aftTargetData = aftTarget.split("!", 2)[1].replaceAll("$", "");
+                worksheet.getCell(`${aftTargetData}`).value = splitDataList[i].aft_insp_value;
               }
             }
-            if (targetCellNig !== null) {
+
+            //야간조 값 입력
+            const nigTarget = workbook.definedNames.getRanges(targetValueNig).ranges[0];
+            if (nigTarget !== undefined) {
               if (
                 splitDataList[i].nig_insp_value !== null &&
                 splitDataList[i].nig_insp_value !== "" &&
                 splitDataList[i].nig_insp_value !== undefined
               ) {
-                worksheet.getCell(targetCellNig.row, targetCellNig.col).value = splitDataList[i].nig_insp_value;
+                const nigTargetData = nigTarget.split("!", 2)[1].replaceAll("$", "");
+                worksheet.getCell(`${nigTargetData}`).value = splitDataList[i].nig_insp_value;
               }
             }
           }
