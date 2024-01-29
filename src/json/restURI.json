@@ -175,5 +175,6 @@
   "erpItfWorkEmp": "/itf/work-emp",
   "erpItfDeptFrom": "/itf/dept-move/from",
   "erpItfWorkerGroup": "/itf/worker-group",
-  "erpItfUnit": "/itf/unit"
+  "erpItfUnit": "/itf/unit",
+  "getTempHumiSet": "/std/temp-humi-set"
 }

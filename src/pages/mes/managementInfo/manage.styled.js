@@ -62,7 +62,9 @@ export const ShadowBoxGrid = styled("div")`
   background-color: #ffffff;
   width: 100%;
   height: ${(props) =>
-    props.isAllScreen ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)` : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
+    props.isAllScreen
+      ? `calc(100vh - ${APP_BAR_HEIGHT} - 50px)`
+      : `calc(100vh - ${APP_BAR_HEIGHT} - ${SEARCH_BAR_HEIGHT} - 50px)`};
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -516,3 +518,49 @@ export const ContentsArea = styled("div")`
     background-color: #fdf0f6;
   }
 `;
+
+//20240125 추가 개발사항 스타일 시작
+export const InnerButtonTitleWrap = styled("div")`
+  display: flex;
+`;
+
+export const InnerButtonWrap = styled("div")`
+  min-width: 50px;
+  margin-top: 15px;
+  margin-left: 25px;
+`;
+
+export const InnerBtnComponent = styled("button")`
+  height: ${(props) => props.height};
+  width: ${(props) => props.width};
+  border-radius: 6px;
+  padding: 5px 20px 5px 20px;
+  background: #ffffff;
+  border: 1px solid rgba(20, 145, 206, 1);
+  gap: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-family: NotoSansKR, Arial;
+  align-items: center;
+  color: rgba(20, 145, 206, 1);
+  &:hover {
+    background: rgba(87, 181, 243, 0.05);
+  }
+  &.clicked {
+    animation: clickEffect 0.3s;
+    @keyframes clickEffect {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.97);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
+`;
+
+//20240125 추가 개발사항 스타일 종료

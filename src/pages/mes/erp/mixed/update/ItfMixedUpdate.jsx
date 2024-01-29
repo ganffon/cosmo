@@ -69,6 +69,18 @@ export function ItfMixedUpdate(props) {
     setEmployeeData(data?.emp);
 
     getDetailData(data?.work[0]?.work_order_id);
+
+    setTimeout(() => {
+      const gridPerformance = refPerformanceGrid.current.getInstance();
+      const gridSummary = refSummaryGrid.current.getInstance();
+
+      for (let i = 0; i < gridPerformance.getRowCount(); i++) {
+        gridPerformance.removeRowClassName(i, "selectedBack");
+      }
+      for (let i = 0; i < gridSummary.getRowCount(); i++) {
+        gridSummary.removeRowClassName(i, "selectedBack");
+      }
+    }, 100);
   }, [data]);
 
   const [actSelectDeptFrom] = uSearch.useSearchSelect(

@@ -787,6 +787,16 @@ class itfOrder {
   }
 }
 
+class tempHumiSetting {
+  constructor(raw) {
+    this.temp_humi_set_id = raw.temp_humi_set_id;
+    this.temp_top = Number(raw.temp_top);
+    this.temp_bottom = Number(raw.temp_bottom);
+    this.humi_top = Number(raw.humi_top);
+    this.humi_bottom = Number(raw.humi_bottom);
+  }
+}
+
 /**
  * @param {string} componentName 소문자로 시작
  * @param {any} raw 처리 할 데이터
@@ -988,6 +998,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "itfOrder":
       params = new itfOrder(raw);
+      break;
+    case "tempHumiSetting":
+      params = new tempHumiSetting(raw);
       break;
 
     default:
