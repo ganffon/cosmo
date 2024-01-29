@@ -128,7 +128,7 @@ export function WeightPanel() {
     height: "60%",
   });
 
-  const [erpCheckLotInfo, setErpCheckLotInfo] = useState({});
+  const [erpCheckLotInfo, setErpCheckLotInfo] = useState([]);
 
   useEffect(() => {
     //🔸좌측 메뉴 접고, 펴기, 팝업 오픈 ➡️ 그리드 사이즈 리셋
@@ -403,6 +403,7 @@ export function WeightPanel() {
             subMessage: mainMsg,
           });
         } else {
+          setErpCheckLotInfo([]);
           //실제 저장 함수 호출
           onClickWeightSave();
         }

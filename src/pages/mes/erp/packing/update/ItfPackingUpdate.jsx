@@ -71,6 +71,18 @@ export function ItfPackingUpdate(props) {
     setEmployeeData(data?.emp);
 
     getDetailData(data?.work[0]?.work_order_id);
+
+    setTimeout(() => {
+      const gridPacking = refPackingGrid.current.getInstance();
+      const gridMixed = refMixedGrid.current.getInstance();
+
+      for (let i = 0; i < gridPacking.getRowCount(); i++) {
+        gridPacking.removeRowClassName(i, "selectedBack");
+      }
+      for (let i = 0; i < gridMixed.getRowCount(); i++) {
+        gridMixed.removeRowClassName(i, "selectedBack");
+      }
+    }, 100);
   }, [data]);
 
   const [selectDate, setSelectDate] = useState({
