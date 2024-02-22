@@ -5,7 +5,8 @@ import * as C from "constant/Layout";
 import { Autocomplete } from "@mui/material";
 
 export const ContentsArea = styled("div")`
-  height: ${(props) => (props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`)};
+  height: ${(props) =>
+    props.isAllScreen ? "100vh" : `calc(100vh - ${C.APP_BAR_HEIGHT})`};
   width: 100%;
   background-color: rgb(255, 255, 255);
   padding: 5px 25px 5px 10px;
@@ -37,6 +38,7 @@ export const SearchCondition = styled("div")`
 export const ButtonTop = styled("div")`
   width: 100%;
   height: 60px;
+  gap: 10px;
   display: flex;
   padding-right: 10px;
   align-items: center;
@@ -145,6 +147,11 @@ export const ContentWrap = styled("div")`
   box-shadow: rgb(17 17 26 / 10%) 0px 4px 16px, rgb(17 17 26 / 5%) 0px 8px 32px;
 `;
 export const ComboBox = styled(Autocomplete)`
+  width: 350px;
+  margin-top: 5px;
+`;
+
+export const ExcelModalWrap = styled("div")`
   width: 350px;
   margin-top: 5px;
 `;
