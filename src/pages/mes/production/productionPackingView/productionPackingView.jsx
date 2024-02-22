@@ -17,6 +17,7 @@ import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
 import BackDrop from "components/backdrop/BackDrop";
 import { TextField } from "@mui/material";
+import ProductionPackingViewModal from "./productionPackingViewModal";
 
 export function ProductionPackingView() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -32,6 +33,7 @@ export function ProductionPackingView() {
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [gridDataSelect, setGridDataSelect] = useState(null);
+  const [isExcelPopupOpen, setIsExcelPopupOpen] = useState(false);
 
   const prodCD = useRef("품목코드");
   const prodNM = useRef("품목");
@@ -72,6 +74,10 @@ export function ProductionPackingView() {
     actSearchDetail();
   };
 
+  const onClickExcelDownload = () => {
+    setIsExcelPopupOpen(true);
+  };
+
   const onDblClickGridSelect = (e) => {
     //🔸Select Grid에서 DblClick
     let columnName;
@@ -96,6 +102,10 @@ export function ProductionPackingView() {
   };
   const onClickModalSelectClose = () => {
     setIsModalSelectOpen(false);
+  };
+
+  const onClickExcelModalClose = () => {
+    setIsExcelPopupOpen(false);
   };
 
   const [modalSelectSize, setModalSelectSize] = useState({
@@ -187,6 +197,7 @@ export function ProductionPackingView() {
           />
         </S.InputPaperWrap>
         <S.ButtonTop>
+          <BtnComponent btnName={"ExcelDownload"} onClick={onClickExcelDownload} />
           <BtnComponent btnName={"Search"} onClick={onClickSearch} />
         </S.ButtonTop>
       </S.SearchCondition>
@@ -217,6 +228,9 @@ export function ProductionPackingView() {
           refGridSelect={refGridSelect}
           onDblClickGridSelect={onDblClickGridSelect}
         />
+      ) : null}
+      {isExcelPopupOpen ? (
+        <ProductionPackingViewModal width={"550px"} height={"120px"} setModal={onClickExcelModalClose} />
       ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
