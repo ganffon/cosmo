@@ -46,6 +46,7 @@ export const ButtonWrap = styled("div")`
   display: flex;
   justify-content: flex-end;
   padding: 5px 10px 5px 0px;
+  gap: 10px;
 `;
 export const GridHeaderWrap = styled("div")`
   width: calc(100% - 0.5rem);

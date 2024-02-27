@@ -214,12 +214,13 @@ export function InspResult(props) {
         },
       })
       .then((response) => {
+        console.log(response);
         // API 응답 데이터 처리 로직
         setResponseData(response.data);
       })
       .catch((error) => {
         // 오류 처리 로직
-        // console.error('API 호출 중 오류 발생:', error);
+        console.error("API 호출 중 오류 발생:", error);
       });
   };
   const GetData = () => {
@@ -238,7 +239,7 @@ export function InspResult(props) {
       })
       .catch((error) => {
         // 오류 처리 로직
-        // console.error('API 호출 중 오류 발생:', error);
+        console.error("API 호출 중 오류 발생2:", error);
       });
   };
 

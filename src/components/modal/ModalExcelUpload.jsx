@@ -55,13 +55,18 @@ function ModalExcelUpload(props) {
     const headers = gridData.length > 0 ? gridData[i] : [];
     const newHeaders = headers.map((header, index) => {
       if (
-        (header === "D5" || header === "D50" || header === "D95" || header === "Dmin" || header === "Dmax") &&
+        (header === "D5" ||
+          header === "D50" ||
+          header === "D95" ||
+          header === "Dmin" ||
+          header === "Dmax") &&
         index !== headers.indexOf(header)
       ) {
         return `${header}_`;
       }
-      const value = header.richText ? header?.richText[0]?.text + header?.richText[1]?.text : header;
-
+      const value = header.richText
+        ? header?.richText[0]?.text + header?.richText[1]?.text
+        : header;
       return value;
     });
     return newHeaders;
@@ -72,14 +77,18 @@ function ModalExcelUpload(props) {
     if (!gridData) {
       return;
     }
-    for (let index = 2; index < gridData.length; index++) {
+    for (let index = 2; index < gridData[i].length; index++) {
       if (gridData[i][index] === "담당") {
         break;
       }
       const cellValue = gridData[i][index];
-      const value = cellValue.richText ? cellValue?.richText[0]?.text + cellValue?.richText[1]?.text : cellValue;
+      const value = cellValue.richText
+        ? cellValue?.richText[0]?.text + cellValue?.richText[1]?.text
+        : cellValue;
 
-      const header = columns.some((col) => col.header === value) ? `${value}_` : value;
+      const header = columns.some((col) => col.header === value)
+        ? `${value}_`
+        : value;
       const column = { name: value, renderer: "text", header };
       columns.push(column);
     }
@@ -115,7 +124,7 @@ function ModalExcelUpload(props) {
     const parsedRows = rows.map((row) => {
       const columnCount = columns.length;
 
-      for (let i = 8; i <= columnCount; i++) {
+      for (let i = 8; i <= columnCount + 1; i++) {
         const parsedCell = {};
         parsedCell["prod_id"] = prodID;
 
@@ -129,10 +138,13 @@ function ModalExcelUpload(props) {
           setIsSnackOpen({
             ...isSnackOpen,
             open: true,
-            message: row[colHeader[2]] + " " + colHeader[i] + "의 값을 확인해주세요.",
+            message:
+              row[colHeader[2]] + " " + colHeader[i] + "의 값을 확인해주세요.",
             severity: "error",
           });
-          setErrMsg(row[colHeader[2]] + " " + colHeader[i] + "의 값을 확인해주세요.");
+          setErrMsg(
+            row[colHeader[2]] + " " + colHeader[i] + "의 값을 확인해주세요."
+          );
         }
         parsedCell["insp_value"] = inspValue; //String(row[colHeader[i]]);
         parsedCell["remark"] = "";
@@ -290,7 +302,10 @@ function ModalExcelUpload(props) {
   };
   const UploadInsp = async () => {
     try {
-      const response = await restAPI.post(restURI.inspResultUploadExcel, jsonData);
+      const response = await restAPI.post(
+        restURI.inspResultUploadExcel,
+        jsonData
+      );
     } catch (error) {
       console.error(error);
     }
@@ -344,7 +359,9 @@ function ModalExcelUpload(props) {
               </>
             ) : (
               <>
-                <LS.DragAndDropFile>첨부할 파일을 드래그해주세요</LS.DragAndDropFile>
+                <LS.DragAndDropFile>
+                  첨부할 파일을 드래그해주세요
+                </LS.DragAndDropFile>
                 {/* <LS.BtnComponent height={"34px"} width={"80px"} onClick={handleFileUpload}>
                   <LS.SearchTitle>선택</LS.SearchTitle>
                 </LS.BtnComponent> */}

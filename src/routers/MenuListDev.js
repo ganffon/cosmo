@@ -570,12 +570,12 @@ const MenuListDev = [
             path: convertURL("InspectionResult"),
             under: null,
           },
-          {
-            name: "검사결과현황",
-            id: "InspResult",
-            path: convertURL("InspResult"),
-            under: null,
-          },
+          // {
+          //   name: "검사결과현황",
+          //   id: "InspResult",
+          //   path: convertURL("InspResult"),
+          //   under: null,
+          // },
         ],
       },
       {

@@ -19,6 +19,10 @@ function InspectionResultSet(isEditMode) {
     col.number("insp_max", CN.insp_max, isEditMode),
     col.number("insp_value", CN.insp_value, isEditMode),
     col.text("remark", CN.remark, isEditMode, false),
+    col.text("create_at", CN.create_at, C.U, C.U, C.WIDTH_LONG, "center"),
+    col.text("create_user_nm", CN.create_user_nm, C.U, C.U, C.U, "center"),
+    col.text("update_at", CN.update_at, C.U, C.U, C.WIDTH_LONG, "center"),
+    col.text("update_user_nm", CN.update_user_nm, C.U, C.U, C.U, "center"),
   ];
   const columnsSelectProd = [
     col.id("prod_id", CN.prod_id, C.HIDDEN_ID),

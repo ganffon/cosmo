@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import * as S from "./productionPackingViewModal.styled";
+import React, { useRef, useState } from "react";
+import * as S from "./WeightReportExcelModal.styled";
 import { FdrModal } from "components/modal/fdrModal";
 import BtnComponent from "components/button/BtnComponent";
 import DatePicker from "components/datetime/DatePicker";
@@ -14,7 +14,7 @@ import ExcelJS from "exceljs";
 import NoticeSnack from "components/alert/NoticeSnack";
 import BackDrop from "components/backdrop/BackDrop";
 
-export default function ProductionPackingViewModal(props) {
+export default function WeightReportExcelModal(props) {
   const { setModal = () => {} } = props;
   const [lineOpt, lineList] = Cbo.useLineIncludeRework();
   // const [dataList, setDataList] = useState([]);
@@ -42,12 +42,10 @@ export default function ProductionPackingViewModal(props) {
       let conditionLineID;
       comboValue.line_id ? (conditionLineID = `&line_id=${comboValue.line_id}`) : (conditionLineID = "");
       let readURI =
-        restURI.prdPackingDetail +
-        `?start_date=${dateText.startDate}&end_date=${dateText.startDate}&report_fg=true` +
-        conditionLineID +
-        `&complete_fg=true`;
+        restURI.prdWeightDetail +
+        `?input_start_date=${dateText.startDate}&input_end_date=${dateText.startDate}` +
+        conditionLineID;
       // const readURI = `/prd/packing-detail?work_packing_id=${headerRowID.current}`;
-
       const tmpDataList = await restAPI.get(readURI);
 
       insertExcelData(tmpDataList);
@@ -72,8 +70,13 @@ export default function ProductionPackingViewModal(props) {
         severity: "error",
       });
     } else {
-      setIsBackDrop(true);
-      downLoadFile(datalist);
+      const sortDataList = datalist.sort((a, b) =>
+        (a.work_input_date + a.work_input_time).localeCompare(a.work_input_date + a.work_input_time)
+      );
+
+      console.log(sortDataList);
+      //   setIsBackDrop(true);
+      downLoadFile(sortDataList);
     }
   };
   const getDateFunction = () => {
@@ -97,10 +100,10 @@ export default function ProductionPackingViewModal(props) {
   };
 
   const downLoadFile = async (props) => {
-    const fileTypeName = "일일포장일지";
+    const fileTypeName = "일일계량일지";
     const extension = "xlsx";
-    const lineName = props?.[0]?.line_nm;
-    const fileName = "FIL-004";
+
+    const fileName = "FIL-003";
     try {
       const response = await restAPI.get(`/sys/file/download?filename=${fileName}&extension=${extension}`, {
         responseType: "blob",
@@ -124,35 +127,59 @@ export default function ProductionPackingViewModal(props) {
       let endRowNumForProdName = 9;
       let startRowNumForLotNo = 9;
       let endRowNumForLotNo = 9;
-      let startRowNumForPacking = 9;
-      let endRowNumForPacking = 9;
+      let startRowNum = 9;
+      let endRowNum = 9;
+      let rowNum = 1;
       //타겟 지정 구간 시작
       for (let i = 0; i < props.length; i++) {
         // debugger;
         const dataListForInsert = props;
-        //넘버링관령 사항 처리
-        worksheet.getCell(`B${9 + i}`).value = i + 1;
-        worksheet.getCell(`B${9 + i}`).alignment = {
-          vertical: "middle",
-          horizontal: "center",
-        };
-        worksheet.getCell(`B${9 + i}`).border = {
-          left: { style: "medium", color: { argb: "000000" } },
-          bottom: { style: "thin", color: { argb: "000000" } },
-          right: { style: "thin", color: { argb: "000000" } },
-        };
-        //품목명관련 사항 처리
 
-        if (dataListForInsert[i]?.prod_nm !== dataListForInsert[i + 1]?.prod_nm) {
+        //넘버링관령 사항 처리
+        // worksheet.getCell(`B${9 + i}`).value = i + 1;
+        // worksheet.getCell(`B${9 + i}`).alignment = {
+        //   vertical: "middle",
+        //   horizontal: "center",
+        // };
+        // worksheet.getCell(`B${9 + i}`).border = {
+        //   left: { style: "medium", color: { argb: "000000" } },
+        //   bottom: { style: "thin", color: { argb: "000000" } },
+        //   right: { style: "thin", color: { argb: "000000" } },
+        // };
+        if (dataListForInsert[i]?.work_weigh_id !== dataListForInsert[i + 1]?.work_weigh_id) {
+          endRowNum = i + 9;
+          worksheet.mergeCells(`B${startRowNum}:B${endRowNum}`);
+
+          worksheet.getCell(`B${startRowNum}`).value = rowNum;
+          worksheet.getCell(`B${startRowNum}`).alignment = {
+            vertical: "middle",
+            horizontal: "center",
+          };
+          worksheet.getCell(`B${startRowNum}`).border = {
+            left: { style: "medium", color: { argb: "000000" } },
+            bottom: { style: "thin", color: { argb: "000000" } },
+            right: { style: "thin", color: { argb: "000000" } },
+          };
+          rowNum++;
+
+          startRowNum = 10 + i;
+        } else {
+          endRowNum = i + 9;
+        }
+
+        //제품분류 사항 처리
+
+        if (dataListForInsert[i]?.prod_class_nm !== dataListForInsert[i + 1]?.prod_class_nm) {
           endRowNumForProdName = i + 9;
           worksheet.mergeCells(`C${startRowNumForProdName}:D${endRowNumForProdName}`);
+
           worksheet.getCell(`C${startRowNumForProdName}`).border = {
             top: { style: "thin", color: { argb: "000000" } },
             left: { style: "thin", color: { argb: "000000" } },
             bottom: { style: "thin", color: { argb: "000000" } },
             right: { style: "thin", color: { argb: "000000" } },
           };
-          worksheet.getCell(`C${startRowNumForProdName}`).value = dataListForInsert[i]?.prod_nm;
+          worksheet.getCell(`C${startRowNumForProdName}`).value = dataListForInsert[i]?.prod_class_nm;
           worksheet.getCell(`C${startRowNumForProdName}`).alignment = {
             vertical: "middle",
             horizontal: "center",
@@ -162,6 +189,7 @@ export default function ProductionPackingViewModal(props) {
         } else {
           endRowNumForProdName = i + 9;
         }
+
         //lot_no구간
         if (dataListForInsert[i]?.lot_no !== dataListForInsert[i + 1]?.lot_no) {
           endRowNumForLotNo = i + 9;
@@ -180,111 +208,164 @@ export default function ProductionPackingViewModal(props) {
 
           startRowNumForLotNo = 10 + i;
         } else {
-          endRowNumForLotNo = i + 9;
+          if (dataListForInsert[i]?.prod_class_nm !== dataListForInsert[i + 1]?.prod_class_nm) {
+            endRowNumForLotNo = i + 9;
+            worksheet.mergeCells(`E${startRowNumForLotNo}:G${endRowNumForLotNo}`);
+            worksheet.getCell(`E${startRowNumForLotNo}`).border = {
+              top: { style: "thin", color: { argb: "000000" } },
+              left: { style: "thin", color: { argb: "000000" } },
+              bottom: { style: "thin", color: { argb: "000000" } },
+              right: { style: "thin", color: { argb: "000000" } },
+            };
+            worksheet.getCell(`E${startRowNumForLotNo}`).value = dataListForInsert[i]?.lot_no;
+            worksheet.getCell(`E${startRowNumForLotNo}`).alignment = {
+              vertical: "middle",
+              horizontal: "center",
+            };
+
+            startRowNumForLotNo = 10 + i;
+          } else {
+            endRowNumForLotNo = i + 9;
+          }
         }
-        //bag번호
+
+        //총중량
         worksheet.mergeCells(`H${9 + i}:I${9 + i}`);
-        worksheet.getCell(`H${9 + i}`).value = dataListForInsert[i]?.packing_no;
+        worksheet.getCell(`H${9 + i}`).value = dataListForInsert[i]?.total_qty;
+        worksheet.getCell(`H${9 + i}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
         worksheet.getCell(`H${9 + i}`).border = {
           top: { style: "thin", color: { argb: "000000" } },
           left: { style: "thin", color: { argb: "000000" } },
           bottom: { style: "thin", color: { argb: "000000" } },
           right: { style: "thin", color: { argb: "000000" } },
         };
-        worksheet.getCell(`H${9 + i}`).alignment = {
+
+        //bag중량
+        worksheet.mergeCells(`J${9 + i}:K${9 + i}`);
+        worksheet.getCell(`J${9 + i}`).value = dataListForInsert[i]?.bag_qty;
+        worksheet.getCell(`J${9 + i}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-
-        //포장중량
-        worksheet.mergeCells(`J${9 + i}:K${9 + i}`);
-        worksheet.getCell(`J${9 + i}`).value = dataListForInsert[i]?.packing_qty;
         worksheet.getCell(`J${9 + i}`).border = {
           top: { style: "thin", color: { argb: "000000" } },
           left: { style: "thin", color: { argb: "000000" } },
           bottom: { style: "thin", color: { argb: "000000" } },
           right: { style: "thin", color: { argb: "000000" } },
         };
-        worksheet.getCell(`J${9 + i}`).alignment = {
+
+        //투입중량
+        worksheet.mergeCells(`R${9 + i}:S${9 + i}`);
+        worksheet.getCell(`R${9 + i}`).value = dataListForInsert[i]?.input_qty;
+        worksheet.getCell(`R${9 + i}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
 
-        // 날짜 각각 뿌려주는 버전
-        // //포장일자
-        // worksheet.mergeCells(`L${9 + i}:M${9 + i}`);
-        // worksheet.getCell(`L${9 + i}`).value =
-        //   dataListForInsert[i]?.work_packing_date;
-        // worksheet.getCell(`L${9 + i}`).border = {
-        //   top: { style: "thin", color: { argb: "000000" } },
-        //   left: { style: "thin", color: { argb: "000000" } },
-        //   bottom: { style: "thin", color: { argb: "000000" } },
-        //   right: { style: "thin", color: { argb: "000000" } },
-        // };
-        // worksheet.getCell(`L${9 + i}`).alignment = {
-        //   vertical: "middle",
-        //   horizontal: "center",
-        // };
+        worksheet.getCell(`R${9 + i}`).border = {
+          top: { style: "thin", color: { argb: "000000" } },
+          left: { style: "thin", color: { argb: "000000" } },
+          bottom: { style: "thin", color: { argb: "000000" } },
+          right: { style: "thin", color: { argb: "000000" } },
+        };
 
-        // 날짜 병합버전
-        if (dataListForInsert[i]?.work_packing_date !== dataListForInsert[i + 1]?.work_packing_date) {
-          endRowNumForPacking = i + 9;
-          worksheet.mergeCells(`L${startRowNumForPacking}:M${endRowNumForPacking}`);
-          worksheet.getCell(`L${startRowNumForPacking}`).border = {
-            top: { style: "thin", color: { argb: "000000" } },
-            left: { style: "thin", color: { argb: "000000" } },
-            bottom: { style: "thin", color: { argb: "000000" } },
-            right: { style: "thin", color: { argb: "000000" } },
-          };
-          worksheet.getCell(`L${startRowNumForPacking}`).value = dataListForInsert[i]?.work_packing_date;
-          worksheet.getCell(`L${startRowNumForPacking}`).alignment = {
-            vertical: "middle",
-            horizontal: "center",
-          };
+        //투입 일자
 
-          startRowNumForPacking = 10 + i;
-        } else {
-          endRowNumForPacking = i + 9;
-        }
+        worksheet.mergeCells(`T${9 + i}:U${9 + i}`);
+        worksheet.getCell(`T${9 + i}`).value = dataListForInsert[i]?.work_input_date;
+        worksheet.getCell(`T${9 + i}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell(`T${9 + i}`).border = {
+          top: { style: "thin", color: { argb: "000000" } },
+          left: { style: "thin", color: { argb: "000000" } },
+          bottom: { style: "thin", color: { argb: "000000" } },
+          right: { style: "thin", color: { argb: "000000" } },
+        };
 
-        //포장 시간
+        //투입시간
+        worksheet.mergeCells(`V${9 + i}:W${9 + i}`);
+        worksheet.getCell(`V${9 + i}`).value = dataListForInsert[i]?.work_input_time;
+        worksheet.getCell(`V${9 + i}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell(`V${9 + i}`).border = {
+          top: { style: "thin", color: { argb: "000000" } },
+          left: { style: "thin", color: { argb: "000000" } },
+          bottom: { style: "thin", color: { argb: "000000" } },
+          right: { style: "thin", color: { argb: "000000" } },
+        };
+
+        //투입작업자
+        worksheet.mergeCells(`X${9 + i}:Y${9 + i}`);
+        worksheet.getCell(`X${9 + i}`).value = dataListForInsert[i]?.input_emp_nm;
+        worksheet.getCell(`X${9 + i}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell(`X${9 + i}`).border = {
+          top: { style: "thin", color: { argb: "000000" } },
+          left: { style: "thin", color: { argb: "000000" } },
+          bottom: { style: "thin", color: { argb: "000000" } },
+          right: { style: "thin", color: { argb: "000000" } },
+        };
+        //비고
+        worksheet.mergeCells(`Z${9 + i}:AC${9 + i}`);
+        worksheet.getCell(`Z${9 + i}`).value = dataListForInsert[i]?.remark;
+        worksheet.getCell(`Z${9 + i}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell(`Z${9 + i}`).border = {
+          top: { style: "thin", color: { argb: "000000" } },
+          left: { style: "thin", color: { argb: "000000" } },
+          bottom: { style: "thin", color: { argb: "000000" } },
+          right: { style: "thin", color: { argb: "000000" } },
+        };
+        //계량일
+        worksheet.mergeCells(`L${9 + i}:M${9 + i}`);
+        worksheet.getCell(`L${9 + i}`).value = dataListForInsert[i]?.work_weigh_date;
+        worksheet.getCell(`L${9 + i}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
+        worksheet.getCell(`L${9 + i}`).border = {
+          top: { style: "thin", color: { argb: "000000" } },
+          left: { style: "thin", color: { argb: "000000" } },
+          bottom: { style: "thin", color: { argb: "000000" } },
+          right: { style: "thin", color: { argb: "000000" } },
+        };
+
+        //계량 시간
         worksheet.mergeCells(`N${9 + i}:O${9 + i}`);
-        worksheet.getCell(`N${9 + i}`).value = dataListForInsert[i]?.work_packing_time;
+        worksheet.getCell(`N${9 + i}`).value = dataListForInsert[i]?.work_weigh_time;
+        worksheet.getCell(`N${9 + i}`).alignment = {
+          vertical: "middle",
+          horizontal: "center",
+        };
         worksheet.getCell(`N${9 + i}`).border = {
           top: { style: "thin", color: { argb: "000000" } },
           left: { style: "thin", color: { argb: "000000" } },
           bottom: { style: "thin", color: { argb: "000000" } },
           right: { style: "thin", color: { argb: "000000" } },
         };
-        worksheet.getCell(`N${9 + i}`).alignment = {
+        //계량 작업자
+        worksheet.mergeCells(`P${9 + i}:Q${9 + i}`);
+        worksheet.getCell(`P${9 + i}`).value = dataListForInsert[i]?.weigh_emp_nm;
+        worksheet.getCell(`P${9 + i}`).alignment = {
           vertical: "middle",
           horizontal: "center",
         };
-        //포장 작업자
-        worksheet.mergeCells(`P${9 + i}:R${9 + i}`);
-        worksheet.getCell(`P${9 + i}`).value = dataListForInsert[i]?.packing_emp_nm;
         worksheet.getCell(`P${9 + i}`).border = {
           top: { style: "thin", color: { argb: "000000" } },
           left: { style: "thin", color: { argb: "000000" } },
           bottom: { style: "thin", color: { argb: "000000" } },
           right: { style: "thin", color: { argb: "000000" } },
-        };
-        worksheet.getCell(`P${9 + i}`).alignment = {
-          vertical: "middle",
-          horizontal: "center",
-        };
-        //비고
-        worksheet.mergeCells(`S${9 + i}:U${9 + i}`);
-        worksheet.getCell(`S${9 + i}`).value = dataListForInsert[i]?.remark;
-        worksheet.getCell(`S${9 + i}`).border = {
-          top: { style: "thin", color: { argb: "000000" } },
-          left: { style: "thin", color: { argb: "000000" } },
-          bottom: { style: "thin", color: { argb: "000000" } },
-          right: { style: "thin", color: { argb: "000000" } },
-        };
-        worksheet.getCell(`S${9 + i}`).alignment = {
-          vertical: "middle",
-          horizontal: "center",
         };
       }
       //타겟 지정 구간 종료

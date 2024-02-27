@@ -16,6 +16,7 @@ import InputSearch from "components/input/InputSearch";
 import restAPI from "api/restAPI";
 import ContentsArea from "components/layout/common/ContentsArea";
 import BtnComponent from "components/button/BtnComponent";
+import WeightReportExcelModal from "./WeightReportExcelModal";
 
 export function WeightReport() {
   const { isAllScreen, isMenuSlide } = useContext(LayoutContext);
@@ -31,6 +32,7 @@ export function WeightReport() {
   const [gridDataHeader, setGridDataHeader] = useState(null);
   const [gridDataDetail, setGridDataDetail] = useState(null);
   const [inputTextChange, setInputTextChange] = useState({});
+  const [isExcelPopupOpen, setIsExcelPopupOpen] = useState(false);
 
   const [isBackDrop, setIsBackDrop] = useState(false);
   const [isSnackOpen, setIsSnackOpen] = useState({
@@ -49,6 +51,13 @@ export function WeightReport() {
     refGridHeader?.current?.gridInst?.refreshLayout();
     refGridDetail?.current?.gridInst?.refreshLayout();
   }, [isMenuSlide]);
+
+  const onClickExcelDownload = () => {
+    setIsExcelPopupOpen(true);
+  };
+  const onClickExcelModalClose = () => {
+    setIsExcelPopupOpen(false);
+  };
 
   const onClickSearch = async () => {
     try {
@@ -160,6 +169,7 @@ export function WeightReport() {
           />
         </S.ComboWrap>
         <S.ButtonWrap>
+          <BtnComponent btnName={"ExcelDownload"} onClick={onClickExcelDownload} />
           <BtnComponent btnName={"Search"} onClick={onClickSearch} />
         </S.ButtonWrap>
       </S.ShadowBoxButtonHeader>
@@ -175,6 +185,9 @@ export function WeightReport() {
           refGrid={refGridDetail}
         />
       </S.GridDetailWrap>
+      {isExcelPopupOpen ? (
+        <WeightReportExcelModal width={"550px"} height={"110px"} setModal={onClickExcelModalClose} />
+      ) : null}
       <NoticeSnack state={isSnackOpen} setState={setIsSnackOpen} />
       <BackDrop isBackDrop={isBackDrop} />
     </ContentsArea>
