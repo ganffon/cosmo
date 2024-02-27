@@ -28,7 +28,8 @@ import * as uDelete from "custom/useDelete";
 import ModalExcelUpload from "components/modal/ModalExcelUpload.jsx";
 
 export function InspectionResult(props) {
-  const { currentMenuName, isAllScreen, isMenuSlide } = useContext(LayoutContext);
+  const { currentMenuName, isAllScreen, isMenuSlide } =
+    useContext(LayoutContext);
   const [isEditMode, setIsEditMode] = useState(false);
   const [gridData, setGridData] = useState(null);
   const [isModalSelectOpen, setIsModalSelectOpen] = useState(false);
@@ -50,7 +51,10 @@ export function InspectionResult(props) {
   const refSingleGrid = useRef(null);
   const refGridModalSelect = useRef(null);
   const refModalGrid = useRef(null);
-  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(isEditMode, refSingleGrid);
+  const [disableRowToggle, setDisableRowToggle] = disRow.useDisableRowCheck(
+    isEditMode,
+    refSingleGrid
+  );
 
   const prodID = useRef("");
   const prodCD = useRef("품목코드");
@@ -86,7 +90,10 @@ export function InspectionResult(props) {
     rowHeadersNum,
   } = InspectionResultSet(isEditMode);
 
-  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(currentMenuName, inputSet);
+  const [inputBoxID, inputTextChange, setInputTextChange] = useInputSet(
+    currentMenuName,
+    inputSet
+  );
 
   const [dateText, setDateText] = useState({
     startDate: DateTime(-7).dateFull,
@@ -258,7 +265,8 @@ export function InspectionResult(props) {
         ? (conditionProdID = `&prod_cd=${prodCD.current}&prod_nm=${prodNM.current}`)
         : (conditionProdID = "");
       let readURI =
-        `/qms/insp-result-upload?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` + conditionProdID;
+        `/qms/insp-result-upload?start_date=${dateText.startDate}&end_date=${dateText.endDate}&` +
+        conditionProdID;
 
       if (inputTextChange && inputBoxID) {
         let cnt = 1;
@@ -273,7 +281,12 @@ export function InspectionResult(props) {
                 readURI = "?";
                 cnt++;
               }
-              readURI = readURI + inputBoxID[i] + "=" + inputTextChange[inputBoxID[i]] + "&";
+              readURI =
+                readURI +
+                inputBoxID[i] +
+                "=" +
+                inputTextChange[inputBoxID[i]] +
+                "&";
             }
           }
           //🔸마지막에 찍힌 & 기호 제거
@@ -307,10 +320,12 @@ export function InspectionResult(props) {
       prodNM.current = "";
       for (let i = 0; i < columnName.length; i++) {
         if (columnName[i] === "prod_cd") {
-          prodCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          prodCD.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
         if (columnName[i] === "prod_nm") {
-          prodNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          prodNM.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
       }
     } else if (dblClickGrid === "ModalSelectProd") {
@@ -326,13 +341,16 @@ export function InspectionResult(props) {
     } else if (dblClickGrid === "ExcelUploadModal") {
       for (let i = 0; i < columnName.length; i++) {
         if (columnName[i] === "prod_cd") {
-          excelProdCD.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          excelProdCD.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
         if (columnName[i] === "prod_nm") {
-          excelProdNM.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          excelProdNM.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
         if (columnName[i] === "prod_id") {
-          excelProdID.current = e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
+          excelProdID.current =
+            e?.instance?.store?.data?.rawData[e?.rowKey][columnName[i]];
         }
       }
     }
@@ -381,7 +399,11 @@ export function InspectionResult(props) {
       <S.ShadowBoxButton isMenuSlide={isMenuSlide} isAllScreen={isAllScreen}>
         <S.ToolWrap>
           <S.SearchWrap>
-            <LS.Date datePickerSet={"range"} dateText={dateText} setDateText={setDateText} />
+            <LS.Date
+              datePickerSet={"range"}
+              dateText={dateText}
+              setDateText={setDateText}
+            />
             <S.SearchWrap>
               {inputSet.map((v) => (
                 <InputSearch
@@ -395,7 +417,12 @@ export function InspectionResult(props) {
               ))}
             </S.SearchWrap>
             <LS.InputPaperWrap>
-              <InputPaper width={"180px"} name={"품목코드"} value={prodCD.current || ""} btn={false} />
+              <InputPaper
+                width={"180px"}
+                name={"품목코드"}
+                value={prodCD.current || ""}
+                btn={false}
+              />
             </LS.InputPaperWrap>
             <LS.InputPaperWrap>
               <InputPaper
@@ -425,7 +452,11 @@ export function InspectionResult(props) {
               <BtnComponent btnName={"New"} onClick={onClickNew} />
               <BtnComponent btnName={"Edit"} onClick={onClickEdit} />
               <BtnComponent btnName={"Delete"} onClick={onClickDelete} />
-              <BtnComponent btnName={"ExcelUpload"} onClick={onClickExcelUpload} width={"130px"} />
+              <BtnComponent
+                btnName={"ExcelUpload"}
+                onClick={onClickExcelUpload}
+                width={"130px"}
+              />
             </>
           )}
         </S.ButtonWrap>
