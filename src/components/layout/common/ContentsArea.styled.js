@@ -17,6 +17,11 @@ export const ContentsArea = styled("div")`
     color: red;
   }
 
+  & .redTextBold {
+    color: red;
+    background-color: rgb(245, 245, 245);
+  }
+
   & .blueText {
     color: blue;
   }
