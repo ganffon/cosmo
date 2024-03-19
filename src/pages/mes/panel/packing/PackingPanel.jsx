@@ -152,30 +152,34 @@ export function PackingPanel() {
   );
 
   const onClickGridHeader = async (e) => {
-    if (currentRowKey.current !== e?.rowKey) {
-      if (e?.rowKey !== undefined) {
-        currentRowKey.current = e?.rowKey;
-        const Header = refGridHeader?.current?.gridInst;
-        workWeightID.current = Header.getValue(e?.rowKey, "work_weigh_id");
-        if (workWeightID.current) {
-          try {
-            setIsBackDrop(true);
-            const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`);
-            setGridDataDetail(result?.data?.data?.rows);
-          } catch (err) {
-            setIsSnackOpen({
-              ...isSnackOpen,
-              open: true,
-              message: err?.response?.data?.message,
-              severity: "error",
-              location: "bottomRight",
-            });
-          } finally {
-            workWeightID.current = "";
-            setIsBackDrop(false);
+    if (!isEditMode) {
+      if (currentRowKey.current !== e?.rowKey) {
+        if (e?.rowKey !== undefined) {
+          currentRowKey.current = e?.rowKey;
+          const Header = refGridHeader?.current?.gridInst;
+          workWeightID.current = Header.getValue(e?.rowKey, "work_weigh_id");
+          if (workWeightID.current) {
+            try {
+              setIsBackDrop(true);
+              const result = await restAPI.get(restURI.prdWeightDetail + `?work_weigh_id=${workWeightID.current}`);
+              setGridDataDetail(result?.data?.data?.rows);
+            } catch (err) {
+              setIsSnackOpen({
+                ...isSnackOpen,
+                open: true,
+                message: err?.response?.data?.message,
+                severity: "error",
+                location: "bottomRight",
+              });
+            } finally {
+              workWeightID.current = "";
+              setIsBackDrop(false);
+            }
           }
         }
       }
+    } else {
+      disRow.handleClickGridCheck(e, isEditMode, ["rework_fg"]);
     }
   };
   const closeModalPrintOpen = () => {
@@ -643,6 +647,7 @@ export function PackingPanel() {
           work_packing_date: DateTime().dateFull,
           work_packing_time: DateTime().hour + ":" + DateTime().minute,
           barcode_no: barcodeScan.barcodeNo,
+          rework_fg: performanceReworkFlag,
         },
       ];
 
@@ -910,6 +915,8 @@ export function PackingPanel() {
       setReworkFlag(false);
     }
   };
+
+  const [performanceReworkFlag, setPerformanceReworkFlag] = useState(false);
   return (
     <ContentsArea>
       <S.TopWrap>
@@ -924,7 +931,7 @@ export function PackingPanel() {
             <S.CheckboxContainer>
               <S.ReworkChk id={"reworkFlag"} type={"checkbox"} onChange={onReworkChk} checked={reworkFlag} />
             </S.CheckboxContainer>
-            <S.ReworkChkTitle htmlFor={"reworkFlag"}>{"재처리 여부"}</S.ReworkChkTitle>
+            <S.ReworkChkTitle htmlFor={"reworkFlag"}>{"재처리 일괄 적용"}</S.ReworkChkTitle>
           </S.ReworkChkWrap>
           <BtnPacking onClickNew={onClickNew} onClickDelete={onClickDelete} />
         </S.RightWrap>
@@ -1027,6 +1034,8 @@ export function PackingPanel() {
           barcodeScan={barcodeScan}
           onEmpConfirm={onEmpConfirm}
           onClickSelect={onClickSelectEmp}
+          setPerformanceReworkFlag={setPerformanceReworkFlag}
+          performanceReworkFlag={performanceReworkFlag}
         />
       )}
       {isGridSelectEmp ? (

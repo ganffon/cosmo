@@ -78,7 +78,7 @@ export const ReworkChkWrap = styled("div")`
   gap: 10px;
   height: 60px;
   margin-top: 30px;
-  margin-right: 50px;
+  margin-right: 30px;
 `;
 export const CheckboxContainer = styled("div")`
   width: 25px;
@@ -90,7 +90,9 @@ export const ReworkChk = styled("input")`
   height: 100%;
   accent-color: #f5329498;
 `;
-export const ReworkChkTitle = styled("label")``;
+export const ReworkChkTitle = styled("label")`
+  font-size: 1.1rem;
+`;
 export const ScreenTitleBox = styled("div")`
   height: 40px;
   width: 80%;

@@ -14,9 +14,23 @@ function BarcodeScan(props) {
     setBarcodeScan = () => {},
     barcodeScan = {},
     onClickSelect = () => {},
+    setPerformanceReworkFlag = () => {},
+    performanceReworkFlag = false,
   } = props;
 
   const refBarcode = useRef(null);
+
+  const onReworkChk = (e) => {
+    if (e.target.checked) {
+      setPerformanceReworkFlag(true);
+    } else {
+      setPerformanceReworkFlag(false);
+    }
+  };
+
+  useEffect(() => {
+    setPerformanceReworkFlag(false);
+  }, []);
 
   return (
     <ModalWrapMulti width={width} height={height}>
@@ -54,6 +68,19 @@ function BarcodeScan(props) {
               value={barcodeScan.empNM || ""}
             />
             <BtnComponent btnName={"Ok"} height={"60px"} onClick={onEmpConfirm} />
+          </S.InputWrap>
+          <S.InputWrap>
+            <S.ReworkChkWrap>
+              <S.CheckboxContainer>
+                <S.ReworkChk
+                  id={"reworkFlag"}
+                  type={"checkbox"}
+                  onChange={onReworkChk}
+                  checked={performanceReworkFlag}
+                />
+              </S.CheckboxContainer>
+              <S.ReworkChkTitle htmlFor={"reworkFlag"}>{"재처리 여부"}</S.ReworkChkTitle>
+            </S.ReworkChkWrap>
           </S.InputWrap>
         </S.Content>
       </S.ModalWrap>

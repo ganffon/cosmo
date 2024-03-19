@@ -45,3 +45,21 @@ export const Title = styled("div")`
   font-family: NotoSansKR;
   font-size: 30px;
 `;
+
+export const ReworkChkWrap = styled("div")`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 180px;
+`;
+export const CheckboxContainer = styled("div")`
+  width: 25px;
+  height: 25px;
+`;
+export const ReworkChk = styled("input")`
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  accent-color: #f5329498;
+`;
+export const ReworkChkTitle = styled("label")``;
