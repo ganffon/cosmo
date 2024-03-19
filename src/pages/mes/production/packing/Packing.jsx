@@ -233,13 +233,8 @@ export function Packing() {
     startDate: DateTime().dateFull,
     endDate: DateTime().dateFull,
   });
-  const [modalSelectSize, setModalSelectSize] = useState({
-    width: "80%",
-    height: "90%",
-  });
 
   const [columnsSelect, setColumnsSelect] = useState([]);
-  const [inputTextChange, setInputTextChange] = useState({});
 
   const [disRowHeader, setDisRowHeader] = disRow.useDisableRowCheck(isEditModeHeader, refGridHeader);
   const [disRowHeaderDetail, setDisRowHeaderDetail] = disRow.useDisableRowCheck(isEditModeDetail, refGridDetail);
@@ -336,9 +331,6 @@ export function Packing() {
       return;
     }
   }
-  const handleInputTextChange = (e) => {
-    setInputTextChange({ ...inputTextChange, [e.target.id]: e.target.value });
-  };
   const onClickNew = () => {
     setIsModalOpen(true);
   };
@@ -777,15 +769,7 @@ export function Packing() {
     }
     setIsModalSelectDateOpen(false);
   };
-  const options = [
-    { label: "S", value: "S" },
-    { label: "R", value: "R" },
-    { label: "X", value: "X" },
-  ];
 
-  const handleOptionChange = (optionValue) => {
-    setSelectedOption(optionValue);
-  };
   const onClickSearchSelectDate = () => {
     actSelectOrder(`?reg_date=${dateOrder.startDate}`);
   };
@@ -824,6 +808,11 @@ export function Packing() {
       }
     } else {
       disRow.handleClickGridCheck(e, isEditModeHeader, ["rework_fg"]);
+    }
+  };
+  const onClickGridDetailHeader = (e) => {
+    if (isEditModeDetail) {
+      disRow.handleClickGridCheck(e, isEditModeDetail, ["rework_fg"]);
     }
   };
   const onDblClickGridHeader = (e) => {
@@ -888,6 +877,7 @@ export function Packing() {
         data={gridDataDetail}
         draggable={false}
         refGrid={refGridDetail}
+        onClickGrid={onClickGridDetailHeader}
         onEditingFinish={onEditingFinishGridDetail}
         onDblClickGrid={onDblClickGridDetail}
         isEditMode={isEditModeDetail}
@@ -939,8 +929,8 @@ export function Packing() {
   const GridModalSelect = useMemo(() => {
     return (
       <ModalSelect
-        width={modalSelectSize.width}
-        height={modalSelectSize.height}
+        width={"80%"}
+        height={"90%"}
         onClickModalSelectClose={onClickModalSelectClose}
         columns={columnsSelect}
         columnOptions={columnOptions}

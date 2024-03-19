@@ -20,7 +20,7 @@ function PackingPanelSet(isEditMode, onPerformance, onReprint) {
     col.text("prod_cd", CN.prod_cd, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE),
-    col.check("rework_fg", "재처리\n여부"),
+    col.check("rework_fg", "재처리\n여부", isEditMode),
     col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
     col.number("packing_qty", CN.packing_qty, isEditMode),
     col.number("packing_no", CN.packing_no),
