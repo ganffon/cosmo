@@ -489,6 +489,7 @@
   "work_input_rate": "백분율\n(C=A/B)",
   "work_packing_qty": "실생산량\n(D)",
   "work_rework_packing_qty": "재처리량\n(E)",
-  "theory_prod_qty": "이론생산량\n(F)",
-  "work_packing_rate": "백분율\n(G=(D+E)/F)"
+  "work_lot_change_qty": "LOT변경량\n(F)",
+  "theory_prod_qty": "이론생산량\n(G)",
+  "work_packing_rate": "백분율\n(G=(D+E+F)/G)"
 }

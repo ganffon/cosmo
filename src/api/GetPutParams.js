@@ -797,6 +797,17 @@ class tempHumiSetting {
     this.humi_bottom = Number(raw.humi_bottom);
   }
 }
+class lotChange {
+  constructor(raw) {
+    this.lot_change_id = raw.lot_change_id;
+    this.prod_id = raw.prod_id;
+    this.input_lot_no = raw.input_lot_no;
+    this.input_date = raw.input_date;
+    this.remark = raw.remark;
+    this.input_packing_no = Number(raw.input_packing_no);
+    this.input_qty = Number(raw.input_qty);
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -1002,6 +1013,9 @@ function GetPutParams(componentName, raw) {
       break;
     case "tempHumiSetting":
       params = new tempHumiSetting(raw);
+      break;
+    case "lotChange":
+      params = new lotChange(raw);
       break;
 
     default:

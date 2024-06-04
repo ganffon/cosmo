@@ -491,6 +491,16 @@ class itfOrder {
     this.input_emp_cd = raw.input_emp_cd;
   }
 }
+class lotChange {
+  constructor(raw) {
+    this.prod_id = raw.prod_id;
+    this.input_lot_no = raw.input_lot_no;
+    this.input_packing_no = typeof Number(raw.input_packing_no) === "number" ? Number(raw.input_packing_no) : null;
+    this.input_qty = typeof Number(raw.input_qty) === "number" ? Number(raw.input_qty) : null;
+    this.input_date = raw.input_date;
+    this.remark = raw.remark;
+  }
+}
 
 class createSubdivisionDetailBarcode {
   constructor(raw) {
@@ -1043,6 +1053,9 @@ function GetPostParams(componentName, raw) {
         break;
       case "itfOrder":
         params = new itfOrder(raw);
+        break;
+      case "lotChange":
+        params = new lotChange(raw);
         break;
       default:
     }

@@ -345,6 +345,12 @@ const MenuListDev = [
             path: convertURL("ProductionOrder"),
             under: null,
           },
+          {
+            name: "LOT변경지시",
+            id: "LotChangeOrder",
+            path: convertURL("LotChangeOrder"),
+            under: null,
+          },
         ],
       },
       {
