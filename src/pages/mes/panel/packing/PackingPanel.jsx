@@ -66,6 +66,7 @@ export function PackingPanel() {
   const [isModalSelectEmp, setIsModalSelectEmp] = useState(false);
   const [isGridSelectEmp, setIsGridSelectEmp] = useState(false);
   const [isModalSelectMulti, setIsModalSelectMulti] = useState(false);
+  const [isModalSLotChange, setIsLotChange] = useState(false);
   const [isBarcodeScanOpen, setIsBarcodeScanOpen] = useState(false);
   const [barcodeScan, setBarcodeScan] = useState({});
   const [isModalPrintOpen, setIsModalPrintOpen] = useState(false);
@@ -85,14 +86,16 @@ export function PackingPanel() {
     columnsSelectHeader,
     columnsSelectDetail,
     columnsSelectEmp,
+    columnsLotChange,
     inputSet,
-  } = PackingPanelSet(isEditMode, onPerformance, onReprint);
+  } = PackingPanelSet(isEditMode, onPerformance, onReprint, onLotChange);
 
   const refGridHeader = useRef(null);
   const refGridDetail = useRef(null);
   const refGridPackingHeader = useRef(null);
   const refGridNewHeader = useRef(null);
   const refGridSelectHeader = useRef(null);
+  const refGridLotChange = useRef(null);
   const refGridSelectEmp = useRef(null);
   const refBarcodeTimeStamp = useRef(null);
 
@@ -104,6 +107,7 @@ export function PackingPanel() {
   const [gridDataSelectHeader, setGridDataSelectHeader] = useState(null);
   const [gridDataSelectDetail, setGridDataSelectDetail] = useState(null);
   const [gridDataSelectEmp, setGridDataSelectEmp] = useState(null);
+  const [gridDataSelectLotChange, setGridDataSelectLotChange] = useState(null);
 
   const [info, setInfo] = useState({ startDate: DateTime().dateFull });
   const [isWarning, setIsWarning] = useState({
@@ -150,6 +154,61 @@ export function PackingPanel() {
     setGridDataSelectEmp,
     restURI.employee + `?use_fg=true&worker_fg=true`
   );
+
+  const [actSelectLotChange] = uSearch.useSearchSelect(
+    refGridLotChange,
+    isBackDrop,
+    setIsBackDrop,
+    isSnackOpen,
+    setIsSnackOpen,
+    setGridDataSelectLotChange,
+    restURI.lotChange + `?complete_fg=ORDER`
+  );
+
+  async function onLotChange(e, rowKey) {
+    const grid = refGridHeader.current.getInstance();
+    const lotChangeFg = grid.getValue(rowKey, "lot_change_fg");
+    targetID.current = grid?.getValue(rowKey, "work_packing_detail_id");
+    const packingDate = grid?.getValue(rowKey, "work_packing_date");
+    if (!packingDate) {
+      alert("실적 등록 후 LOT 변경 가능합니다.");
+      return;
+    }
+    if (lotChangeFg) {
+      try {
+        await restAPI.patch(restURI.lotChangeCancel.replace("{id}", targetID.current));
+        handleGridHeaderSearch();
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      setIsLotChange(true);
+      actSelectLotChange();
+    }
+  }
+
+  const onLotChangeClose = () => {
+    setIsLotChange(false);
+  };
+
+  const onSelectLotChange = async (e) => {
+    //LotChange Modal에서 더블클릭 선택 시 동작
+    if (e?.targetType === "cell") {
+      const data = e?.instance?.store?.data?.rawData[e?.rowKey];
+      const Grid = refGridLotChange?.current?.gridInst;
+      const lotChangeId = Grid.getValue(e.rowKey, "lot_change_id");
+
+      try {
+        await restAPI.patch(restURI.lotChangeExecute.replace("{id}", lotChangeId), {
+          work_packing_detail_id: targetID.current,
+        });
+        setIsLotChange(false);
+        handleGridHeaderSearch();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
 
   const onClickGridHeader = async (e) => {
     if (!isEditMode) {
@@ -1013,6 +1072,20 @@ export function PackingPanel() {
           refGridSelect={refGridSelectHeader}
         />
       ) : null}
+      {isModalSLotChange && (
+        <ModalSelect
+          width={"80%"}
+          height={"80%"}
+          onClickModalSelectClose={onLotChangeClose}
+          columns={columnsLotChange}
+          columnOptions={columnOptions}
+          header={header}
+          gridDataSelect={gridDataSelectLotChange}
+          rowHeaders={rowHeadersNum}
+          refSelectGrid={refGridLotChange}
+          onDblClickGridSelect={onSelectLotChange}
+        />
+      )}
       {isWarning.open ? (
         <NoticeAlertModal
           textContent={isWarning.message}

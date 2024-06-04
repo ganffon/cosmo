@@ -322,6 +322,11 @@ class itfOrder {
     this.erp_work_order_no = raw.erp_work_order_no;
   }
 }
+class lotChange {
+  constructor(raw) {
+    this.lot_change_id = raw.lot_change_id;
+  }
+}
 
 /**
  * @param {string} componentName 소문자로 시작
@@ -524,6 +529,9 @@ function GetDeleteParams(componentName, raw) {
       break;
     case "itfOrder":
       params = new itfOrder(raw);
+      break;
+    case "lotChange":
+      params = new lotChange(raw);
       break;
 
     default:

@@ -12,7 +12,7 @@ function ProductionPackingViewSet() {
     frozenCount: 0, // 🔸frozenColumn은 여기 값만 수정
   };
   const rowHeadersNum = ["rowNum"];
-  const header = col.multi(["rework_fg"]);
+  const header = col.multi(["rework_fg", "lot_change_fg"]);
   const datePickerSet = null;
 
   const columns = [
@@ -21,6 +21,7 @@ function ProductionPackingViewSet() {
     col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE),
     col.text("prod_std", CN.prod_std, false, false, C.WIDTH_MIDDLE),
     col.check("rework_fg", "재처리\n여부"),
+    col.check("lot_change_fg", "LOT\n변경", false),
     col.text("lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
     col.id("work_packing_detail_id", CN.work_packing_detail_id, C.HIDDEN_ID),
     col.id("work_packing_id", CN.work_packing_id, C.HIDDEN_ID),

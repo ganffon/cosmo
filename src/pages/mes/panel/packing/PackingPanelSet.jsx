@@ -2,7 +2,7 @@ import CN from "json/ColumnName.json";
 import * as C from "constant/Grid.js";
 import * as col from "custom/GridColumnSet";
 
-function PackingPanelSet(isEditMode, onPerformance, onReprint) {
+function PackingPanelSet(isEditMode, onPerformance, onReprint, onLotChange) {
   const rowHeadersNumCheck = ["checkbox", "rowNum"];
   const rowHeadersNum = ["rowNum"];
   const header = col.multi(["rework_fg"]);
@@ -21,6 +21,7 @@ function PackingPanelSet(isEditMode, onPerformance, onReprint) {
     col.text("prod_nm", CN.prod_nm, C.U, C.U, C.WIDTH_MIDDLE),
     col.text("prod_std", CN.prod_std, C.U, C.U, C.WIDTH_MIDDLE),
     col.check("rework_fg", "재처리\n여부", isEditMode),
+    col.button("lot_change_fg", "LOT변경", "변경", onLotChange, "변경취소", "lotChange"),
     col.text("lot_no", CN.lot_no, C.U, C.U, C.WIDTH_MIDDLE),
     col.number("packing_qty", CN.packing_qty, isEditMode),
     col.number("packing_no", CN.packing_no),
@@ -144,6 +145,18 @@ function PackingPanelSet(isEditMode, onPerformance, onReprint) {
     col.text("emp_cd", CN.emp_cd, C.U, C.U, C.U, false, false, true),
     col.text("emp_nm", CN.emp_nm, C.U, C.U, C.U, false, false, true),
   ];
+  const columnsLotChange = [
+    col.id("lot_change_id", "lot_change_id", C.HIDDEN_ID),
+    col.id("prod_id", CN.prod_id, C.HIDDEN_ID),
+    col.text("prod_cd", CN.prod_cd, false, false, C.WIDTH_MIDDLE),
+    col.text("prod_nm", CN.prod_nm, false, false, C.WIDTH_MIDDLE),
+    col.text("prod_std", CN.prod_std, false, false, C.WIDTH_MIDDLE),
+    col.text("input_lot_no", CN.lot_no, false, false, C.WIDTH_MIDDLE),
+    col.text("input_packing_no", CN.packing_no, false, false, C.WIDTH_SHORT),
+    col.number("input_qty", CN.qty, false, C.WIDTH_SHORT),
+    col.date("input_date", CN.work_packing_date, false, C.WIDTH_SHORT),
+    col.text("remark", CN.remark, false, false, C.WIDTH_SHORT, false, false, false, false, false),
+  ];
   const inputSet = [
     {
       id: "lot_no",
@@ -193,6 +206,7 @@ function PackingPanelSet(isEditMode, onPerformance, onReprint) {
     columnsSelectHeader,
     columnsSelectDetail,
     columnsSelectEmp,
+    columnsLotChange,
     inputSet,
     inputInfo,
   };

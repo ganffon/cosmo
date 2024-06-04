@@ -49,6 +49,7 @@ function PackingSet(isEditModeHeader, isEditModeDetail, onPrintClick, onReprint)
     col.number("packing_qty", CN.packing_qty, isEditModeDetail, C.WIDTH_SHORT, false),
     col.number("packing_no", CN.packing_no),
     col.check("rework_fg", "재처리 여부", isEditModeDetail),
+    col.check("lot_change_fg", "LOT 변경", false),
     col.button("reprint", "재출력", "재출력", onReprint),
     col.id("packing_emp_id", CN.packing_emp_id, C.HIDDEN_ID),
     col.select("packing_emp_nm", CN.packing_emp_nm, isEditModeDetail),

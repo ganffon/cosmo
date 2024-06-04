@@ -176,5 +176,9 @@
   "erpItfDeptFrom": "/itf/dept-move/from",
   "erpItfWorkerGroup": "/itf/worker-group",
   "erpItfUnit": "/itf/unit",
-  "getTempHumiSet": "/std/temp-humi-set"
+  "getTempHumiSet": "/std/temp-humi-set",
+
+  "lotChange": "/prd/lot-change",
+  "lotChangeExecute": "/prd/lot-change/{id}",
+  "lotChangeCancel": "/prd/lot-change/{id}/cancel"
 }

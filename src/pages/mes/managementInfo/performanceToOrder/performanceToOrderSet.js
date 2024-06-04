@@ -25,6 +25,7 @@ function PerformanceToOrderSet(isEditMode) {
 
     col.number("work_packing_qty", CN.work_packing_qty),
     col.number("work_rework_packing_qty", CN.work_rework_packing_qty),
+    col.number("work_lot_change_qty", CN.work_lot_change_qty),
     col.number("theory_prod_qty", CN.theory_prod_qty),
     col.number("work_packing_rate", CN.work_packing_rate),
 
@@ -54,7 +55,13 @@ function PerformanceToOrderSet(isEditMode) {
       {
         header: "생산량",
         name: "생산량",
-        childNames: ["work_packing_qty", "work_rework_packing_qty", "theory_prod_qty", "work_packing_rate"],
+        childNames: [
+          "work_packing_qty",
+          "work_rework_packing_qty",
+          "work_lot_change_qty",
+          "theory_prod_qty",
+          "work_packing_rate",
+        ],
         renderer: CustomGrid.ColumnHeaderMultiLine,
       },
     ],
@@ -70,6 +77,10 @@ function PerformanceToOrderSet(isEditMode) {
       },
       {
         name: "work_rework_packing_qty",
+        renderer: CustomGrid.ColumnHeaderMultiLine,
+      },
+      {
+        name: "work_lot_change_qty",
         renderer: CustomGrid.ColumnHeaderMultiLine,
       },
       {

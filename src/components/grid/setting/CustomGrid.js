@@ -105,6 +105,23 @@ export class Button {
           }
         }
         break;
+      case "lotChange":
+        if (elName2 === "") {
+          this.el.innerText = elName;
+        } else {
+          switch (value) {
+            case false:
+              this.el.innerText = elName;
+              this.el.disabled = false;
+              break;
+            case true:
+              this.el.innerText = elName2;
+              this.el.disabled = false;
+              break;
+            default:
+          }
+        }
+        break;
       default:
         if (elName2 === "") {
           this.el.innerText = elName;
