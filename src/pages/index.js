@@ -254,5 +254,7 @@ export * from "./mes/store/storeTransferView/StoreTransferView.jsx";
 export * from "./mes/store/storeTransferView/StoreTransferViewSet.jsx";
 export * from "./mes/store/storeView/StoreView.jsx";
 export * from "./mes/store/storeView/StoreViewSet.jsx";
+export * from "./mes/store/outgoingLotHistory/OutgoingLotHistory.jsx";
+export * from "./mes/store/outgoingLotHistory/OutgoingLotHistorySet.jsx";
 
 export * from "./notfound/NotFound.jsx";
