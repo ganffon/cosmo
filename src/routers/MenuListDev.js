@@ -327,6 +327,19 @@ const MenuListDev = [
           },
         ],
       },
+      {
+        name: "제품재고",
+        id: "inventory-product",
+        path: null,
+        under: [
+          {
+            name: "출하LOT이력",
+            id: "OutgoingLotHistory",
+            path: convertURL("OutgoingLotHistory"),
+            under: null,
+          },
+        ],
+      },
     ],
   },
   {
