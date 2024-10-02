@@ -43,6 +43,7 @@ function OutgoingLotHistorySet() {
       C.WIDTH_SHORT,
       "center"
     ),
+    col.number("customer_qty", "고객사 중량"),
     col.text("barcode", "사내 바코드", false, false, C.WIDTH_MIDDLE),
     col.text("lot_no", "사내 LOT"),
     col.text(
@@ -53,6 +54,7 @@ function OutgoingLotHistorySet() {
       C.WIDTH_SHORT,
       "center"
     ),
+    col.number("packing_qty", "사내 중량"),
     col.id("emp_id", "emp_id", C.HIDDEN_ID),
     col.text("emp_cd", CN.emp_cd, false, false, C.WIDTH_SHORT),
     col.text(
